@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.glb binary
+*.gltf -text
+*.webp binary
+*.png binary
+*.jpg binary
+*.ktx2 binary
+*.blend binary
+*.svg text
+
+# Keep vendored three.js out of language stats and diffs.
+vendor/** linguist-vendored
+# The session archive is generated history, collapse it in PR diffs.
+blender/montclair-state/scripts/** linguist-generated
+models/** linguist-generated

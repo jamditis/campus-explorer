@@ -1,0 +1,9 @@
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws59/render59.py').read()
+add="""camz('WS64_CAM_oblique_Kasser_north',(-170,70,195),(-224,16),30,None,0.0)
+camz('WS66_CAM_oblique_RHD_from_SE',(-150,-150,190),(-280,-10),30,None,0.0)
+camz('WS66_CAM_eye_RHD_from_College_Ave_E',(-232,-70,0),(-290,-40),28,1.7,4.0)
+camz('WS66_CAM_eye_RHD_from_Kasser_north_lawn',(-205,40,0),(-280,5),28,1.7,4.0)
+camz('WS66_CAM_closeup_RHD_SE_core_College_Ave',(-240,-62,0),(-258,-44),30,2.5,3.0)
+"""
+src=src.replace("base=bpy.data.objects.get('Sun')",add+"base=bpy.data.objects.get('Sun')",1)
+exec(compile(src,'render59+66','exec'))

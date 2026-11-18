@@ -1,0 +1,1 @@
+- 2026-10-14: assets/backdrop_data/far/dem30.tif (USGS 3DEP exportImage, public domain), ortho_far.jpg (NJOGIS Orthos_Natural_2020), urls.txt. Montclair Heights: data/mh_osm.json (OSM ODbL), grid_mh_1m.npz, ortho2020_mh.jpg, refs/mh (CC BY-SA, see meta.txt).

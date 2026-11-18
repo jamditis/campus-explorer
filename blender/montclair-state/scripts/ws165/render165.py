@@ -1,0 +1,8 @@
+cams163="camz('WS163_CAM_oblique_NormalAve_W_LotS_from_SW',(-350,-292,0),(-306,-246),24,30.0,0.0)\ncamz('WS163_CAM_eye_NormalAve_W_from_E_walk',(-279,-257.0,0),(-322,-248.5),26,1.7,1.0)\ncamz('WS163_CAM_eye_Lot3_aisle_drive_from_NormalAve_S',(-309.5,-269.5,0),(-306.5,-236),26,1.7,1.0)\ncamz('WS163_CAM_closeup_aisle_mouth_depressed_curb',(-301.5,-259.5,0),(-310,-251.5),30,1.6,0.2)\n"
+cams160="camz('WS160_CAM_oblique_Panzer_gym_roof_from_SE',(-222,-246,0),(-268,-192),24,46.0,0.0)\ncamz('WS160_CAM_eye_Panzer_N_walk_spur_from_College_Ave',(-226.5,-160,0),(-236,-170.5),28,1.7,0.5)\n"
+cams162="camz('WS162_CAM_oblique_Lot3_from_W_high',(-345,-215,0),(-292,-205),24,34.0,0.0)\ncamz('WS162_CAM_eye_Lot3_aisle_from_S',(-300.0,-240,0),(-293.5,-205),26,1.7,1.0)\ncamz('WS162_CAM_eye_Lot3_from_Sprague_walk_NW',(-318,-186,0),(-292,-206),26,1.7,1.0)\ncamz('WS162_CAM_closeup_Lot3_stalls_door_pad',(-296.5,-183.5,0),(-286.8,-175.3),30,1.7,0.8)\n"
+cams161="camz('WS161_CAM_oblique_Panzer_gym_SW_from_Lot3',(-353.4,-255.9,0),(-276.1,-202.1),26,38.0,0.0)\ncamz('WS161_CAM_eye_Panzer_W_facade_from_Lot3_aisle',(-306.7,-197.0,0),(-285.7,-177.3),26,1.7,5.0)\ncamz('WS161_CAM_eye_Panzer_S_block_from_SW',(-314.0,-249.7,0),(-284.7,-225.8),26,1.7,3.0)\ncamz('WS161_CAM_closeup_Panzer_W_door_clerestory',(-295.1,-178.1,0),(-285.3,-174.3),28,1.7,3.5)\n"
+cams165="camz('WS165_CAM_closeup_bed_front_at_walk_from_SE',(-296.8,-255.2,0),(-302.6,-249.6),30,1.6,0.25)\ncamz('WS165_CAM_eye_aisle_mouth_tree_from_Normal_Ave_SE',(-283.0,-262.0,0),(-299.0,-243.0),24,1.7,6.0)\n"
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws158/render158.py').read()
+src=src.replace('add="""','add="""'+cams165+cams163+cams162+cams160+cams161,1)
+exec(compile(src,'render158','exec'))

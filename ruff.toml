@@ -1,0 +1,14 @@
+# Blender 4.5 LTS bundles Python 3.11.
+target-version = "py311"
+line-length = 100
+# The session archive is a historical record of one-off bpy scripts that were
+# exec'd inside Blender with shared globals. CI only syntax-checks it
+# (see .github/workflows/ci.yml); new reusable code lives in tools/ and blender/*.py.
+extend-exclude = ["blender/montclair-state/scripts", "vendor"]
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[lint.per-file-ignores]
+# Box-side export helpers copied from the modelling box; terse by design.
+"tools/web-export/*.py" = ["E402", "E501", "E712", "E731", "E741", "UP031"]

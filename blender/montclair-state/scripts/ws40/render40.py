@@ -1,0 +1,41 @@
+import bpy, os, bmesh
+from datetime import datetime
+from mathutils import Vector
+from mathutils.bvhtree import BVHTree
+sc=bpy.context.scene; R='/workspace/nj-scenes/montclair-state'
+dg=bpy.context.evaluated_depsgraph_get()
+def bvh(n):
+    o=bpy.data.objects[n]; e=o.evaluated_get(dg); m=e.to_mesh(); bm=bmesh.new(); bm.from_mesh(m); bm.transform(o.matrix_world); t=BVHTree.FromBMesh(bm); bm.free(); e.to_mesh_clear(); return t
+TT=[bvh(n) for n in ('Terrain_LiDAR_DTM_1m','Footpaths_OSM','WS27_CollegeAve_carriageway_2020ortho')]
+def gz(x,y): return max(t.ray_cast(Vector((x,y,200)),Vector((0,0,-1)))[0].z for t in TT if t.ray_cast(Vector((x,y,200)),Vector((0,0,-1)))[0] is not None)
+SX,SY=float(os.environ['SX']),float(os.environ['SY']); SZ=gz(SX,SY)
+def cam(n,loc,tgt,lens,eye=None):
+    if eye is not None: loc=(loc[0],loc[1],gz(loc[0],loc[1])+eye)
+    c=bpy.data.objects.get(n)
+    if not c: c=bpy.data.objects.new(n,bpy.data.cameras.new(n)); sc.collection.objects.link(c)
+    c.location=loc; c.data.lens=lens; c.data.clip_start=0.1; c.data.clip_end=3000
+    c.rotation_euler=(Vector(tgt)-Vector(loc)).to_track_quat('-Z','Y').to_euler()
+cam('WS35_CAM_oblique_Kasser_Cole_frontage_from_SW',(-240,-150,152),(-192,-100,128),26)
+cam('WS35_CAM_eye_Kasser_steps_from_CollegeAve_SW',(-211,-99,0),(-200,-91,128.0),24,1.6)
+cam('WS40_CAM_eye_steps_from_CollegeAve_W',(-205,-95,0),(-191,-92,128.6),24,1.6)
+cam('WS40_CAM_eye_down_steps_from_deck_E',(-183,-89,0),(-197,-92,128.0),24,1.6)
+cam('WS40_CAM_closeup_steps_foot_sidewalk',(-198,-101,0),(-192,-93,128.2),28,1.5)
+base=bpy.data.objects.get('Sun'); sc.world=bpy.data.worlds['WP2_World_GOLDEN']
+if base: base.hide_render=True
+for k in ('MORNING','GOLDEN','OVERCAST'):
+    o=bpy.data.objects.get('WP2_Sun_'+k)
+    if o: o.hide_render=(k!='GOLDEN')
+cx0,cx1,cy0,cy1=map(float,os.environ.get('CULL','-330,-80,-230,40').split(','))
+for o in sc.objects:
+    if o.type in ('CAMERA','LIGHT') or o.hide_render or o.name.startswith('Terrain_LiDAR'): continue
+    bb=[o.matrix_world@Vector(c) for c in o.bound_box]; xs=[v.x for v in bb]; ys=[v.y for v in bb]
+    if max(xs)<cx0 or min(xs)>cx1 or max(ys)<cy0 or min(ys)>cy1: o.hide_render=True
+ts=datetime.now().strftime('%Y%m%d-%H%M')
+for ONLY,LABEL in [x.split('=') for x in os.environ['CAMS'].split(',') if x]:
+    sc.camera=bpy.data.objects[ONLY]
+    sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=int(os.environ.get('SAMP','24')); sc.cycles.use_denoising=True
+    sc.render.resolution_x=1280; sc.render.resolution_y=720; sc.render.resolution_percentage=int(os.environ.get('PCT','75'))
+    sc.render.image_settings.file_format='JPEG'; sc.render.image_settings.quality=90
+    sc.render.threads_mode='FIXED'; sc.render.threads=4; sc.render.use_simplify=True; sc.render.simplify_subdivision_render=min(sc.render.simplify_subdivision_render,2); sc.cycles.texture_limit_render='2048'
+    fp=f"{R}/renders/{os.environ.get('DIR','wip')}/{ts}_{LABEL}_{os.environ.get('OUT_TAG','GOLDEN_ws35_goldenhour')}.jpg"; sc.render.filepath=fp
+    bpy.ops.render.render(write_still=True); print('WROTE',fp,flush=True)

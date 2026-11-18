@@ -1,0 +1,21 @@
+#!/bin/bash
+# Session dP WIPs (copy of render_dO_wip_20261021dO.sh, _dP suffix; + mh6 = Morehead west windows 016/017 close-up, partial south-leaf fix, with 015/014 neighbours) (Oct 21 2026; all FROM MAIN).
+cd /workspace/nj-scenes/montclair-state
+B=../tools/blender_slot.sh; PY=north/scripts/render_wip_20261020cw.py
+O=${OUTDIR:-/workspace/nj-scenes/montclair-state/renders/wip}; T=${1:-$(date +%Y%m%d-%H%M)}; S=${SPP:-24}
+run() { free -m | head -2; env SPP=$S PCT=${PCT:-100} OUT=$O/${T}_$1_dP.jpg CAM=$1 "${@:2}" $B -b ${BLEND:-montclair_state.blend} --python $PY 2>&1 | grep -E "RENDERED|SOFT|VIEW|hid trees|Error"; }
+for v in ${VIEWS:-obl lawn mh bed}; do case $v in
+ obl) run CAM_oblique_sprague_roof_letters env LOC=${OLOC:-5.0,20.0,175.0} TGT=${OTGT:--52.0,50.0,142.0} LENS=${OLENS:-35} TREE_HIDE_SEG_M=6 ;;
+ lawn) run CAM_eye_sprague_lawn_letters env LOC=${LLOC:--20.0,18.0,139.3} TGT=${LTGT:--52.0,40.0,142.5} LENS=${LLENS:-24} TREE_HIDE_SEG_M=4 ;;
+ mh) run CAM_eye_Morehead_west_entrance env LOC=${MLOC:--58.0,-36.0,136.4} TGT=${MTGT:--37.0,-42.3,140.2} LENS=${MLENS:-28} TREE_HIDE_SEG_M=4 ;;
+ mhc) run CAM_closeup_Morehead_entrance_glazing env LOC=${CLOC:--44.70,-40.33,140.70} TGT=${CTGT:--36.93,-42.28,141.75} LENS=${CLENS:-40} TREE_HIDE_SEG_M=3 ;;
+ fdc) run CAM_closeup_sprague_cornerblock_fdc_light_photo09 env LOC=${FLOC:--42.24,24.51,139.6} TGT=${FTGT:--48.71,27.58,139.5} LENS=${FLENS:-35} TREE_HIDE_SEG_M=3 ;;
+ bed) run CAM_closeup_sprague_bed_grasses_photo09 env LOC=${BLOC:--39.6,25.0,139.5} TGT=${BTGT:--47.79,31.47,139.9} LENS=${BLENS:-26} TREE_HIDE_SEG_M=3 ;;
+ mhg) run CAM_closeup_Morehead_west_grille env LOC=${GLOC:--41.06,-31.96,139.68} TGT=${GTGT:--34.28,-33.66,140.44} LENS=${GLENS:-40} TREE_HIDE_SEG_M=3 ;;
+ mhw) run CAM_closeup_Morehead_west_window015 env LOC=${WLOC:--45.92,-30.73,141.6} TGT=${WTGT:--34.28,-33.66,142.1} LENS=${WLENS:-45} TREE_HIDE_SEG_M=3 ;;
+ mhp) run CAM_closeup_Morehead_west_window012_013 env LOC=${PLOC:--43.6,-35.3,139.3} TGT=${PTGT:--35.16,-37.16,139.4} LENS=${PLENS:-30} TREE_HIDE_SEG_M=8 ;;
+ mh4) run CAM_closeup_Morehead_west_window014_012_015 env LOC=${QLOC:--44.4,-33.0,139.0} TGT=${QTGT:--34.7,-35.4,139.6} LENS=${QLENS:-24} TREE_HIDE_SEG_M=8 ;;
+ mh5) run CAM_closeup_Morehead_west_windows010_011 env LOC=${RLOC:--47.0,-44.8,139.0} TGT=${RTGT:--37.79,-47.63,139.3} LENS=${RLENS:-24} TREE_HIDE_SEG_M=8 ;;
+ mh6) run CAM_closeup_Morehead_west_windows016_017 env LOC=${ULOC:--43.6,-27.0,139.0} TGT=${UTGT:--33.40,-30.17,139.0} LENS=${ULENS:-28} TREE_HIDE_SEG_M=8 ;;
+esac; done
+echo DONE_DP_RENDERS; ls -la $O/${T}_*_dP.jpg

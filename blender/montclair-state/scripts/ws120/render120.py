@@ -1,0 +1,15 @@
+import bpy
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws59/render59.py').read()
+src=src.replace("('Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km')","(['Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km']+[o.name for o in bpy.data.objects if o.name.startswith('WS68_RHD_ground')][:1]+[o.name for o in bpy.data.objects if o.name.startswith(('WS113_terrain_fan_fill','WS110_ground_patch'))])",1)
+add="""camz('WS120_CAM_oblique_N_plaza_planter',(-231,-147,0),(-209,-176),28,20.0,0.0)
+camz('WS120_CAM_closeup_planter_from_NW',(-215.5,-162.5,0),(-208.3,-169.5),32,1.7,0.5)
+camz('WS120_CAM_eye_apron_S_wing_door_from_SW',(-224,-207.5,0),(-214,-200.5),30,1.7,0.8)
+camz('WS117_CAM_oblique_Chapin_W_entrance',(-236,-214,0),(-212,-194),28,22.0,0.0)
+camz('WS117_CAM_eye_entrance_stair_from_plaza',(-225.5,-198.9,0),(-209,-198.8),30,1.7,1.0)
+camz('WS117_CAM_eye_terrace_from_N_connector',(-217.0,-183.0,0),(-212,-199),28,1.7,0.8)
+camz('WS119_CAM_eye_N_plaza_terrace_walk_wall',(-218.5,-166.5,0),(-209.5,-184),30,1.7,0.6)
+camz('WS119_CAM_closeup_coping_nosings_from_terrace',(-209.6,-186.5,0),(-215.5,-199.5),30,1.9,0.0)
+camz('WS117_CAM_closeup_stair_rail_cheek',(-219.5,-195.0,0),(-214.5,-199.5),32,2.2,0.5)
+"""
+src=src.replace("base=bpy.data.objects.get('Sun')",add+"base=bpy.data.objects.get('Sun')",1)
+exec(compile(src,'render120','exec'))

@@ -1,0 +1,19 @@
+import bpy
+from mathutils import Vector
+sc=bpy.context.scene; cam=bpy.data.objects['PO_CAM_closeup_feliciano_gutter_downpipe']; sc.camera=cam
+sc.render.resolution_x=1024; sc.render.resolution_y=576
+for ob in bpy.data.objects:
+    if not ob.hide_render: ob.hide_viewport=False; ob.hide_set(False)
+dg=bpy.context.evaluated_depsgraph_get()
+fr=cam.data.view_frame(scene=sc); mw=cam.matrix_world; o=mw.translation
+def ray(px,py):
+    x=px/1024; y=1-py/576
+    tr,br,bl,tl=[mw@v for v in fr]
+    p=bl+(br-bl)*x+(tl-bl)*y; d=(p-o).normalized()
+    h,loc,n,fi,ob,_=sc.ray_cast(dg,o,d)
+    if h:
+        me=ob.evaluated_get(dg).data; f=me.polygons[fi] if fi<len(me.polygons) else None
+        print('PX',px,py,ob.name[:60],'fi',fi,'n',tuple(round(c,3) for c in n),'loc',tuple(round(c,2) for c in loc))
+for px in (860,870,878,884,890,900):
+    for py in (480,510,540):
+        ray(px,py)

@@ -1,0 +1,34 @@
+name: Viewer or tooling bug
+description: The web viewer or a script isn't working
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What you expected and what actually happened.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page URL or script
+      placeholder: "https://jamditis.github.io/campus-explorer/ or tools/web-export/export_web.py"
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options: [Chrome, Firefox, Safari, Edge, Other, Not applicable]
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options: [Desktop, Phone, Tablet, Not applicable]
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or console output
