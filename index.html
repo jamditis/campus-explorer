@@ -22,6 +22,12 @@
 <meta name="twitter:description" content="Orbit, fly and walk through an open 3D model of the Montclair State University campus, built from free public data.">
 <meta name="twitter:image" content="https://jamditis.github.io/campus-explorer/social-card.png">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Campus explorer">
 <link rel="stylesheet" href="./style.css">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/","three-mesh-bvh":"./vendor/three-mesh-bvh.module.js"}}</script>
 </head>
@@ -33,17 +39,20 @@
 <header id="top" class="card">
   <div class="brand">
     <div class="brand-mark" aria-hidden="true">M</div>
-    <div><h1>Montclair State campus</h1><p>Working model · not a survey</p></div>
+    <div class="brand-text"><h1>Montclair State campus</h1><p>Working model · not a survey</p></div>
+    <button type="button" id="fullscreen" class="icon" aria-pressed="false" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" id="panel-toggle" class="icon" aria-expanded="true" aria-controls="panel" aria-label="Controls" title="Show or hide the controls"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   </div>
   <div class="search" role="search">
     <input id="search" type="search" placeholder="Find a building or lot" autocomplete="off" spellcheck="false" role="combobox" aria-label="Find a place on campus" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list">
+    <!-- [html-validate-disable-next prefer-native-element -- the pop-up of an ARIA combobox is a listbox; a select cannot be filtered by typing] -->
     <ul id="search-results" role="listbox" aria-label="Places" hidden></ul>
   </div>
+  <div id="mode-slot"></div>
 </header>
 <section id="panel" class="panel card" aria-label="Viewer controls">
-  <button type="button" id="panel-toggle" class="panel-toggle" aria-expanded="true" aria-controls="panel-body">Controls</button>
   <div id="panel-body">
-    <div class="mode" role="group" aria-label="Navigation mode">
+    <div class="mode" id="mode-group" role="group" aria-label="Navigation mode">
       <button type="button" id="orbit" class="active" aria-pressed="true">Orbit</button>
       <button type="button" id="fly" aria-pressed="false">Fly</button>
       <button type="button" id="walk" aria-pressed="false">Walk</button>
@@ -109,11 +118,12 @@
     <section><h3>Fly and walk</h3><dl>
       <dt>W A S D or arrows</dt><dd>Move</dd><dt>Mouse or right thumb</dt><dd>Look</dd><dt>Shift</dt><dd>Faster</dd><dt>Space</dt><dd>Jump, or rise when flying</dd><dt>Q or C, and E</dt><dd>Down and up when flying</dd><dt>Scroll</dt><dd>Flight speed</dd><dt>V</dt><dd>First or third person</dd><dt>Gamepad</dt><dd>Sticks move and look, A jumps</dd></dl></section>
     <section><h3>Anywhere</h3><dl>
-      <dt>1 2 3</dt><dd>Orbit, fly, walk</dd><dt>/</dt><dd>Find a place</dd><dt>O, T</dt><dd>Overview, top view</dd><dt>L, M</dt><dd>Labels, map</dd><dt>R, G, H</dt><dd>Measure, tour, hunt</dd><dt>[ and ]</dt><dd>Earlier and later sunlight</dd><dt>P, K</dt><dd>Photo, copy link</dd><dt>Esc</dt><dd>Release the mouse or close a tool</dd></dl></section>
+      <dt>1 2 3</dt><dd>Orbit, fly, walk</dd><dt>/</dt><dd>Find a place</dd><dt>O, T</dt><dd>Overview, top view</dd><dt>L, M</dt><dd>Labels, map</dd><dt>R, G, H</dt><dd>Measure, tour, hunt</dd><dt>[ and ]</dt><dd>Earlier and later sunlight</dd><dt>P, K</dt><dd>Photo, copy link</dd><dt>F</dt><dd>Full screen</dd><dt>Esc</dt><dd>Release the mouse or close a tool</dd></dl></section>
   </div>
   <form method="dialog"><button type="submit" id="help-close">Close</button></form>
 </dialog>
 <div id="toast" class="card" role="status" aria-live="polite" hidden></div>
+<button type="button" id="immersive-exit" class="card" hidden>Show controls</button>
 <footer>
   <span id="stream" hidden></span>
   <button type="button" id="load-rest" hidden>Load the full campus</button>

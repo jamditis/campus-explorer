@@ -31,6 +31,7 @@ export const QUALITY = {
   medium: { pixelRatio: 1.5, shadows: 2048, ao: false, cull: 0.008, tex: true, macro: true },
   high: { pixelRatio: 2, shadows: 4096, ao: true, cull: 0.003, tex: true, macro: true },
 };
+const COARSE = matchMedia('(pointer: coarse)').matches;
 const MIN_SCALE = 0.5; // lowest resolution scale the governor may use while the view moves
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
@@ -106,9 +107,13 @@ export function createLook(renderer, scene, camera) {
   })();
   const glowMat = new THREE.PointsMaterial({ map: glowTex, size: 5, sizeAttenuation: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, toneMapped: false });
   const glow = new THREE.Points(new THREE.BufferGeometry(), glowMat); glow.frustumCulled = false; glow.visible = false; glow.name = 'lamp_glow'; scene.add(glow);
-  let lampPoints = [];
+  const lamps = new Map(); // tile root -> [x, y, z, ...]
+  function showLamps() {
+    const all = [].concat(...lamps.values());
+    if (all.length) glow.geometry.setAttribute('position', new THREE.Float32BufferAttribute(all, 3)); else glow.geometry.deleteAttribute('position');
+  }
   function addLamps(root) {
-    const m = new THREE.Matrix4(), p = new THREE.Vector3(); let n = 0;
+    const m = new THREE.Matrix4(), p = new THREE.Vector3(), lampPoints = []; let n = 0;
     root.traverse(o => {
       if (!o.isInstancedMesh || !/^Lamp_/i.test(o.name)) return;
       const bb = o.geometry.boundingBox ?? (o.geometry.computeBoundingBox(), o.geometry.boundingBox);
@@ -118,8 +123,15 @@ export function createLook(renderer, scene, camera) {
         lampPoints.push(p.x, p.y, p.z); n++;
       }
     });
-    if (n) glow.geometry.setAttribute('position', new THREE.Float32BufferAttribute(lampPoints, 3));
+    if (n) { lamps.set(root, lampPoints); showLamps(); }
   }
+
+  // --- flat far ground for the lite profile, which leaves out the 4 km terrain skirt ---
+  const farGround = new THREE.Mesh(new THREE.CircleGeometry(9000, 48).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#8b9070', roughness: 1 }));
+  farGround.name = 'ground_far'; farGround.receiveShadow = true; farGround.visible = false; scene.add(farGround);
+  /** Show a flat ground disc at height `y` under (x, z), or hide it with `on` false. */
+  function setFarGround(on, x = 0, y = 0, z = 0) { farGround.visible = on; farGround.position.set(x, y, z); }
+
 
   // --- post: AO (high quality only) ---
   let composer = null, gtao = null;
@@ -220,7 +232,7 @@ export function createLook(renderer, scene, camera) {
       if (!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
       if (o.isInstancedMesh) o.computeBoundingSphere();
       const bs = (o.isInstancedMesh ? o.boundingSphere : o.geometry.boundingSphere).clone().applyMatrix4(o.matrixWorld);
-      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius });
+      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius, root });
       else o.visible = true;
       if (bs.radius > 400) o.castShadow = false; // far-field ground: receives only
     });
@@ -263,7 +275,9 @@ export function createLook(renderer, scene, camera) {
   let scale = 1, applied = 1, ema = 16, slow = 0, fast = 0, lastDraw = 0, wasMoving = false;
   function applyScale(s) {
     applied = s;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, q.pixelRatio) * s);
+    // phone screens are dense: one device pixel per CSS pixel looks soft, so Low still gets 1.5 there
+    const cap = COARSE && qName === 'low' ? 1.5 : q.pixelRatio;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, cap) * s);
     resize();
   }
   function govern(moving, now) {
@@ -306,9 +320,10 @@ export function createLook(renderer, scene, camera) {
   /** Draw the scene with another camera into `target` without sky or fog (minimap, thumbnails). */
   function renderPlain(cam, target) {
     const fog = scene.fog, auto = sun.shadow.needsUpdate;
-    scene.fog = null; sky.visible = false; glow.visible = false;
+    const far = farGround.visible;
+    scene.fog = null; sky.visible = false; glow.visible = false; farGround.visible = false;
     renderer.setRenderTarget(target); renderer.render(scene, cam); renderer.setRenderTarget(null);
-    scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; sun.shadow.needsUpdate = auto;
+    scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; farGround.visible = far; sun.shadow.needsUpdate = auto;
   }
   function fixMaterials(root) {
     root.traverse(o => {
@@ -348,9 +363,11 @@ export function createLook(renderer, scene, camera) {
     addLamps(root);
     shadowDirty = true;
   }
-  function reset() { items = []; lampPoints = []; glow.geometry.deleteAttribute('position'); shadowDirty = true; }
+  /** Forget a tile that was dropped from memory. */
+  function forget(root) { items = items.filter(it => it.root !== root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
+  function reset() { items = []; lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, setPaint, setSun, resize, reset, sun,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun,
     invalidateShadows() { shadowDirty = true; },
     get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
   };

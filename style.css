@@ -26,8 +26,11 @@ input[type=range]{width:100%;accent-color:var(--accent);margin:4px 0}
 
 /* ---- header and search ---- */
 #top{position:fixed;top:var(--gap);left:var(--gap);width:300px;padding:10px 12px;display:grid;gap:8px;top:max(var(--gap),env(safe-area-inset-top));left:max(var(--gap),env(safe-area-inset-left))}
-.brand{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:8px}
+.brand-text{flex:1;min-width:0}
 .brand h1{font-size:15px;margin:0}.brand p{font-size:12px;margin:2px 0 0;color:var(--muted)}
+button.icon{flex:none;display:grid;place-items:center;width:36px;height:36px;padding:0}
+#mode-slot:empty{display:none}#mode-slot .mode{margin:0}
 .brand-mark{flex:none;width:30px;height:30px;border-radius:7px;background:var(--accent);color:#fff;font:700 18px Georgia,serif;display:grid;place-items:center}
 .search{position:relative}
 #search-results{position:absolute;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);max-height:50vh;overflow:auto;z-index:5}
@@ -37,7 +40,6 @@ input[type=range]{width:100%;accent-color:var(--accent);margin:4px 0}
 
 /* ---- panel ---- */
 .panel{position:fixed;top:var(--gap);right:var(--gap);width:256px;max-height:calc(100% - 60px);overflow:auto;padding:12px;font-size:13px;top:max(var(--gap),env(safe-area-inset-top));right:max(var(--gap),env(safe-area-inset-right))}
-.panel-toggle{display:none;width:100%}
 .mode{display:flex;gap:4px;margin:0 0 8px}.mode button{flex:1}
 #flight-controls,#walk-controls{margin:0 0 8px}
 #flight-controls label{display:inline;margin:0}#speed-label{font-size:12px;font-variant-numeric:tabular-nums}
@@ -76,18 +78,37 @@ footer button{font-size:11px;min-height:0;padding:3px 8px}
 #stream{font-weight:600}
 #performance{margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
 
+/* no browser full screen (iPhone Safari): hide the interface instead */
+body.immersive>:not(#viewer):not(#overlay):not(#immersive-exit):not(#toast){display:none!important}
+#immersive-exit{position:fixed;top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));font-size:12px;opacity:.85;z-index:30}
+canvas,#overlay,header,footer{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+#canvas{touch-action:none}
+
 /* fly and walk: the page is a viewfinder, keep the chrome quiet */
 body[data-mode=walk] #canvas,body[data-mode=fly] #canvas{cursor:crosshair}
 /* clean frames for the standard screenshots */
 body.shoot>:not(#viewer){display:none!important}
 
-@media (max-width:700px){
+/* ---- phones: one top bar (mark, search, full screen, controls) with the mode switch under it ---- */
+@media (max-width:700px),(max-height:520px){
   :root{--gap:8px}
-  #top{right:var(--gap);width:auto;grid-template-columns:auto 1fr;align-items:center;padding:8px 10px}
-  .brand p{display:none}.brand h1{font-size:13px;max-width:11ch;line-height:1.15}
-  .panel{top:66px;top:calc(58px + max(var(--gap),env(safe-area-inset-top)));width:auto;max-width:min(256px,calc(100vw - 16px));max-height:calc(100% - 150px);padding:6px}
-  .panel-toggle{display:block}
-  #panel-body{padding:8px 4px 4px}
+  #top{right:max(var(--gap),env(safe-area-inset-right));width:auto;padding:6px;gap:6px;grid-template-columns:auto 1fr auto auto;align-items:center}
+  .brand{display:contents}.brand-text{display:none}
+  .brand-mark{width:36px;height:36px}
+  .search{grid-column:2;grid-row:1}
+  #fullscreen{grid-column:3;grid-row:1}#panel-toggle{grid-column:4;grid-row:1}
+  #mode-slot{grid-column:1/-1}
+  select,button,input[type=search],input[type=date]{min-height:36px;font-size:14px}
+  input[type=search]{font-size:16px} /* below 16 px iOS zooms the page on focus */
+  .panel{top:calc(var(--top-h,96px) + var(--gap));left:auto;width:min(300px,calc(100vw - 2*var(--gap)));max-height:calc(100dvh - var(--top-h,96px) - 56px);z-index:10}
+  .tools button{font-size:13px}
   .footnote{display:none}
+  #toast{bottom:calc(64px + env(safe-area-inset-bottom))}
+}
+/* phone held sideways: everything on one row */
+@media (max-height:520px) and (min-width:560px){
+  #top{grid-template-columns:auto minmax(120px,1fr) auto auto auto;right:auto;width:min(560px,calc(100vw - 2*var(--gap)))}
+  #mode-slot{grid-column:3;grid-row:1}.search{grid-column:2}#fullscreen{grid-column:4}#panel-toggle{grid-column:5}
+  .panel{right:auto;left:max(var(--gap),env(safe-area-inset-left))}
 }
 @media (prefers-reduced-motion:reduce){.spinner{animation-duration:3s}}

@@ -19,8 +19,9 @@ const idle = fn => (window.requestIdleCallback ? requestIdleCallback(fn, { timeo
 /**
  * @param app the shared app object (see docs/VIEWER.md)
  * @param prepare called with (root, tile) once per tile before it is added: materials, textures, culling
+ * @param release called with (root) when a tile is dropped from memory
  */
-export function createWorld(app, prepare) {
+export function createWorld(app, prepare, release = () => {}) {
   const { renderer, scene, camera } = app;
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   // geometry decoding off the main thread keeps orbiting smooth while tiles stream in
@@ -28,20 +29,24 @@ export function createWorld(app, prepare) {
 
   let group = new THREE.Group(); group.name = 'campus'; scene.add(group);
   let tiles = [], colliders = [], token = 0, abort = null, base = '', paused = false, resume = null;
+  let budget = Infinity, pumping = false, watch = 0;
   const urgent = new Set();
   const progress = { loaded: 0, total: 1, tiles: 0, count: 0 };
 
-  function dispose() {
-    abort?.abort(); abort = null;
+  function free(root) {
     const mats = new Set();
-    group.traverse(o => {
+    root.traverse(o => {
       if (!o.isMesh) return;
       o.geometry.boundsTree = null; o.geometry.dispose();
       for (const m of [].concat(o.material)) if (m) mats.add(m);
     });
     for (const m of mats) { for (const k of MATERIAL_MAPS) m[k]?.dispose(); m.dispose(); }
+  }
+  function dispose() {
+    abort?.abort(); abort = null; clearInterval(watch);
+    free(group);
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
-    tiles = []; colliders = []; urgent.clear(); paused = false; resume = null;
+    tiles = []; colliders = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
     Object.assign(progress, { loaded: 0, total: 1, tiles: 0, count: 0 });
   }
 
@@ -59,7 +64,12 @@ export function createWorld(app, prepare) {
     return new Blob(chunks).arrayBuffer();
   }
 
-  function addColliders(root) {
+  function addColliders(root, tile) {
+    const from = colliders.length;
+    collect(root);
+    for (let i = from; i < colliders.length; i++) colliders[i].tile = tile;
+  }
+  function collect(root) {
     root.traverse(o => {
       if (!o.isMesh || o.isInstancedMesh || !o.visible) return;
       const m = Array.isArray(o.material) ? o.material[0] : o.material;
@@ -115,7 +125,7 @@ export function createWorld(app, prepare) {
       if (my !== token) return;
       group.add(root); tile.root = root; tile.state = 'ready';
       if (tile.center) app.bounds.expandByObject(root);
-      addColliders(root);
+      addColliders(root, tile);
       progress.tiles++;
       app.emit('tile', { tile }); app.emit('progress', progress); app.invalidate();
     } catch (e) {
@@ -127,9 +137,43 @@ export function createWorld(app, prepare) {
     }
   }
 
-  const _focus = new THREE.Vector3(), _dir = new THREE.Vector3();
+  // ---- memory budget (phones): keep only the tiles nearest the view ----
+  const _focus = new THREE.Vector3(), _dir = new THREE.Vector3(), _last = new THREE.Vector3(Infinity, 0, 0);
+  /** The centred tiles that should be in memory now, or null when there is no budget. `slack` widens the set. */
+  function wanted(slack = 0) {
+    if (budget === Infinity) return null;
+    app.focus(_focus);
+    const set = new Set(orderTiles(tiles.filter(t => t.center), { x: _focus.x, z: _focus.z }).slice(0, budget + slack));
+    for (const t of urgent) set.add(t);
+    return set;
+  }
+  function evict(tile) {
+    group.remove(tile.root); free(tile.root); release(tile.root);
+    colliders = colliders.filter(c => c.tile !== tile);
+    tile.root = null; tile.state = 'queued'; progress.tiles--; progress.loaded -= tile.bytes;
+    app.emit('tile:gone', { tile });
+  }
+  async function pump(my) {
+    if (pumping) return; pumping = true;
+    const worker = async () => { for (let t; my === token && (t = nextTile());) await loadTile(t, my); };
+    await Promise.all(Array.from({ length: PARALLEL }, worker));
+    pumping = false;
+  }
+  // As the view moves, drop the tiles that fell out of range (two tiles of slack stop flip-flopping) and fetch the new ones.
+  function rebalance(my) {
+    if (my !== token || budget === Infinity || pumping) return;
+    app.focus(_focus);
+    if (_focus.distanceTo(_last) < 30 && !urgent.size) return;
+    _last.copy(_focus);
+    const keep = wanted(2); let gone = false;
+    for (const t of tiles) if (t.center && t.state === 'ready' && !keep.has(t)) { evict(t); gone = true; }
+    if (gone) { app.emit('progress', progress); app.invalidate(); }
+    pump(my);
+  }
+
   function nextTile() {
-    const pending = tiles.filter(t => t.state === 'queued');
+    const want = wanted();
+    const pending = tiles.filter(t => t.state === 'queued' && (!want || !t.center || want.has(t)));
     if (!pending.length) return null;
     for (const t of pending) if (urgent.has(t)) { urgent.delete(t); return t; }
     app.focus(_focus); camera.getWorldDirection(_dir); _dir.y = 0;
@@ -140,21 +184,22 @@ export function createWorld(app, prepare) {
   /**
    * Load the campus. Resolves when every tile is in (or failed). `limit` keeps only the N nearest centred tiles (testing).
    * `stream: false` stops after the first batch until `world.resume()` is called (data-saver connections).
+   * `budget` caps how many centred tiles stay in memory (phones); `skirt: false` leaves out the far-field ground.
    */
-  async function load({ limit = Infinity, stream = true, focus = null } = {}) {
+  async function load({ limit = Infinity, stream = true, focus = null, budget: cap = Infinity, skirt = true } = {}) {
     dispose();
     const my = ++token; abort = new AbortController();
     base = './models/';
     const man = await (await fetch(base + 'manifest.json', { cache: 'no-cache', signal: abort.signal })).json();
     if (my !== token) return;
-    let list = man.tiles.map(t => ({ ...t, state: 'queued', root: null, got: 0 }));
+    let list = man.tiles.filter(t => skirt || !t.file.endsWith('skirt.glb')).map(t => ({ ...t, state: 'queued', root: null, got: 0 }));
     const b = boundsOf(list);
     const at = focus ?? (b ? { x: (b.minX + b.maxX) / 2, z: (b.minZ + b.maxZ) / 2 } : { x: 0, z: 0 });
     if (limit < Infinity) {
       const keep = new Set(orderTiles(list.filter(t => t.center), at).slice(0, limit));
       list = list.filter(t => !t.center || keep.has(t));
     }
-    tiles = list;
+    tiles = list; budget = cap;
     app.bounds.makeEmpty();
     if (b) app.bounds.set(new THREE.Vector3(b.minX, Infinity, b.minZ), new THREE.Vector3(b.maxX, -Infinity, b.maxZ));
     Object.assign(progress, { loaded: 0, total: tiles.reduce((s, t) => s + t.bytes, 0), tiles: 0, count: tiles.length });
@@ -174,11 +219,17 @@ export function createWorld(app, prepare) {
       if (my !== token) return;
       paused = false; app.emit('progress', progress);
     }
-    const worker = async () => { for (let t; my === token && (t = nextTile());) await loadTile(t, my); };
-    await Promise.all(Array.from({ length: PARALLEL }, worker));
+    await pump(my);
     if (my !== token) return;
     app.emit('scene:complete');
-    warmIdle();
+    if (budget === Infinity) warmIdle();
+    else watch = setInterval(() => rebalance(my), 600);
+  }
+  /** Drop the memory budget and load every tile. */
+  async function loadAll() {
+    if (budget === Infinity) return;
+    budget = Infinity; clearInterval(watch); app.emit('progress', progress);
+    await pump(token); warmIdle();
   }
 
   // The proxy stand-ins are not in the scene graph: drop their BVHs with the scene.
@@ -312,7 +363,8 @@ export function createWorld(app, prepare) {
   }
 
   return {
-    load, dispose, raycast, groundAt, pick, pushOut, warm,
+    load, loadAll, dispose, raycast, groundAt, pick, pushOut, warm,
+    get budget() { return budget; },
     get tiles() { return tiles; },
     get group() { return group; },
     get progress() { return progress; },

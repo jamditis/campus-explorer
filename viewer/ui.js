@@ -37,10 +37,10 @@ export function createUI(app) {
       $('load-bar').value = f; $('load-text').textContent = `Loading the campus… ${Math.round(f * 100)}%`;
       return;
     }
-    const left = p.total - p.loaded, s = $('stream'), b = $('load-rest');
-    b.hidden = !app.world.paused; if (app.world.paused) b.textContent = `Load the full campus (${mb(left)})`;
-    s.hidden = app.world.paused || p.tiles >= p.count;
-    if (!s.hidden) s.textContent = `Loading the rest of the campus · ${Math.round(p.loaded / p.total * 100)}%`;
+    const left = p.total - p.loaded, s = $('stream'), b = $('load-rest'), lite = app.world.budget < Infinity;
+    b.hidden = !app.world.paused && !lite; if (!b.hidden) b.textContent = lite ? 'Load everything' : `Load the full campus (${mb(left)})`;
+    s.hidden = app.world.paused || !lite && p.tiles >= p.count;
+    if (!s.hidden) s.textContent = lite ? 'Lite mode · detail near the view' : `Loading the rest of the campus · ${Math.round(p.loaded / p.total * 100)}%`;
   });
   app.on('scene:start', ({ manifest }) => {
     $('load').hidden = false; $('error').hidden = true; $('load-bar').value = 0;
@@ -52,11 +52,22 @@ export function createUI(app) {
     if (!applyView(start0)) jump(app.overviewPose());
     loadTools();
   });
-  app.on('scene:complete', () => { $('stream').hidden = true; $('load-rest').hidden = true; });
+  app.on('scene:complete', () => { if (app.world.budget === Infinity) { $('stream').hidden = true; $('load-rest').hidden = true; } });
+  // a phone can run out of graphics memory; say so instead of leaving a frozen picture
+  canvas.addEventListener('webglcontextlost', e => {
+    e.preventDefault(); $('error').hidden = false; $('error-title').textContent = 'The browser ran out of graphics memory';
+    $('error-text').textContent = 'Reload to try again in lite mode, which keeps only the part of the campus near the view.';
+    $('retry').onclick = () => { const u = new URL(location.href); u.searchParams.set('lite', '1'); u.searchParams.set('quality', 'low'); location.href = u; };
+  });
   app.on('scene:error', ({ error }) => { $('load').hidden = true; $('error').hidden = false; $('error-text').textContent = String(error.message || error); });
   app.on('tile:error', ({ tile }) => toast(`Part of the campus did not load (${tile.file}).`));
   $('retry').onclick = () => app.load();
-  $('load-rest').onclick = () => { $('load-rest').hidden = true; app.world.resume(); };
+  $('load-rest').onclick = () => {
+    if (app.world.paused) { $('load-rest').hidden = true; return app.world.resume(); }
+    // leaving lite mode loads about 200 MB: make the user say so twice on a phone
+    if ($('load-rest').dataset.armed) { delete $('load-rest').dataset.armed; app.world.loadAll(); }
+    else { $('load-rest').dataset.armed = '1'; $('load-rest').textContent = `Tap again to load ${mb(app.world.progress.total)}`; setTimeout(() => { delete $('load-rest').dataset.armed; app.emit('progress', app.world.progress); }, 4000); }
+  };
 
   function jump(pose) { camera.position.copy(pose.position); controls.target.copy(pose.target); controls.update(); app.invalidate(); }
 
@@ -225,17 +236,44 @@ export function createUI(app) {
     press('tool-hunt', tools.hunt?.active);
   }
 
-  // ---- panel (collapsible on small screens) ----
-  const narrow = matchMedia('(max-width: 700px)');
-  function setPanel(open) { $('panel-body').hidden = !open; $('panel-toggle').setAttribute('aria-expanded', open); }
-  $('panel-toggle').onclick = () => setPanel($('panel-body').hidden);
-  setPanel(!narrow.matches); narrow.addEventListener('change', e => setPanel(!e.matches));
+  // ---- panel: open on a desktop, a drop-down sheet on a phone ----
+  const narrow = matchMedia('(max-width: 700px), (max-height: 520px)');
+  function setPanel(open) { $('panel').hidden = !open; $('panel-toggle').setAttribute('aria-expanded', open); $('panel-toggle').classList.toggle('active', open && narrow.matches); }
+  $('panel-toggle').onclick = () => setPanel($('panel').hidden);
+  // on a phone the mode switch lives in the top bar, where a thumb can reach it without opening the sheet
+  function layout() { (narrow.matches ? $('mode-slot') : $('panel-body')).prepend($('mode-group')); setPanel(!narrow.matches); }
+  layout(); narrow.addEventListener('change', layout);
+  canvas.addEventListener('pointerdown', () => { if (narrow.matches) setPanel(false); });
+  app.on('mode', ({ mode }) => { if (narrow.matches && mode !== 'orbit') setPanel(false); });
+  // other cards sit below the top bar, whatever height it wraps to
+  new ResizeObserver(() => document.documentElement.style.setProperty('--top-h', `${Math.round($('top').getBoundingClientRect().bottom)}px`)).observe($('top'));
+
+  // ---- full screen ----
+  const root = document.documentElement;
+  const canFull = !!(root.requestFullscreen || root.webkitRequestFullscreen) && (document.fullscreenEnabled ?? document.webkitFullscreenEnabled ?? true);
+  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement) || document.body.classList.contains('immersive');
+  function showFull() { const on = isFull(); $('fullscreen').setAttribute('aria-pressed', on); $('immersive-exit').hidden = !document.body.classList.contains('immersive'); }
+  /** Browser full screen where it exists. iPhone Safari has none, so there we hide the interface instead. */
+  async function fullscreen() {
+    if (canFull) {
+      try {
+        if (document.fullscreenElement || document.webkitFullscreenElement) await (document.exitFullscreen ?? document.webkitExitFullscreen).call(document);
+        else await (root.requestFullscreen ?? root.webkitRequestFullscreen).call(root, { navigationUI: 'hide' });
+        return;
+      } catch { /* refused: fall through to hiding the interface */ }
+    }
+    const on = document.body.classList.toggle('immersive');
+    if (on && !matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches) toast('Interface hidden. For true full screen, add this page to your Home Screen.');
+    showFull();
+  }
+  $('fullscreen').onclick = fullscreen; $('immersive-exit').onclick = fullscreen;
+  for (const type of ['fullscreenchange', 'webkitfullscreenchange']) document.addEventListener(type, showFull);
 
   // ---- keyboard shortcuts ----
   const KEYS = {
     Digit1: () => app.setMode('orbit'), Digit2: () => app.setMode('fly'), Digit3: () => app.setMode('walk'),
     KeyO: () => app.overview(), KeyT: () => app.topView(), KeyL: toggles.labels, KeyM: toggles.map, KeyR: toggles.measure,
-    KeyG: toggles.tour, KeyH: toggles.hunt, KeyP: photo, KeyK: share,
+    KeyG: toggles.tour, KeyH: toggles.hunt, KeyP: photo, KeyK: share, KeyF: fullscreen,
     KeyV: () => { if (app.state.mode === 'walk') app.setView(app.state.view === 'first' ? 'third' : 'first'); },
     BracketLeft: () => nudgeSun(-15), BracketRight: () => nudgeSun(15),
     Slash: e => { if (e.shiftKey) toggles.help(); else { if (document.pointerLockElement) document.exitPointerLock(); box.focus(); box.select(); } },

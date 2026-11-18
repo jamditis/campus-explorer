@@ -1,0 +1,16 @@
+{
+  "name": "Campus explorer: Montclair State",
+  "short_name": "Campus explorer",
+  "description": "An open 3D model of the Montclair State University campus. A work in progress, not a survey.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "background_color": "#c9d3dc",
+  "theme_color": "#b3282d",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

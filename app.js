@@ -27,6 +27,7 @@ controls.target.set(-80, 130, -160);
 // ---- the shared app object ----
 const listeners = new Map();
 const FOV = { orbit: 50, fly: 60, walk: 68 };
+const LITE_TILES = 9; // centred tiles kept in memory in the lite profile
 // Default light: a real afternoon. 22 September 2026, 2:45 pm in Montclair puts the sun in the south-west, about 41° up.
 const DEFAULT_TIME = { year: 2026, month: 9, day: 22, hour: 14, minute: 45 };
 const app = {
@@ -48,7 +49,7 @@ const _v = new THREE.Vector3();
 let dirty = 2, lastMove = 0;
 
 app.look = createLook(renderer, scene, camera);
-app.world = createWorld(app, root => app.look.decorate(root));
+app.world = createWorld(app, root => app.look.decorate(root), root => app.look.forget(root));
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
@@ -151,7 +152,10 @@ app.load = async ({ view = null } = {}) => {
   const limit = Number(params.get('tiles')) || Infinity;
   const saver = navigator.connection?.saveData === true && !params.has('all');
   try {
-    await app.world.load({ limit, stream: !saver, focus: view?.target ? { x: view.target[0], z: view.target[2] } : null });
+    await app.world.load({
+      limit, stream: !saver, focus: view?.target ? { x: view.target[0], z: view.target[2] } : null,
+      budget: app.lite ? LITE_TILES : Infinity, skirt: !app.lite,
+    });
   } catch (e) {
     if (e.name === 'AbortError') return;
     console.error(e); app.emit('scene:error', { error: e });
@@ -163,7 +167,11 @@ app.on('scene:start', async ({ manifest }) => {
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
   app.emit('places');
 });
-app.on('scene:ready', () => { app.state.ready = true; });
+app.on('scene:ready', () => {
+  app.state.ready = true;
+  // the lite profile has no terrain skirt: a flat disc keeps the campus from floating
+  if (app.lite) { const c = app.bounds.getCenter(_v); app.look.setFarGround(true, c.x, (isFinite(app.bounds.min.y) ? app.bounds.min.y : 110) - 6, c.z); }
+});
 app.on('scene:complete', () => { app.state.complete = true; });
 
 // ---- frame loop: draw only when something changed ----
@@ -198,9 +206,12 @@ function loop(now) {
 }
 
 // ---- start ----
-const ui = createUI(app);
 const saved = (() => { try { return localStorage.getItem('campus-quality'); } catch { return null; } })();
 const phone = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820;
+// Lite profile: a phone tab cannot hold the whole campus. Keep the tiles near the view and skip the 4 km skirt.
+// ?lite=1 or ?lite=0 forces it either way.
+app.lite = params.has('lite') ? params.get('lite') !== '0' : phone || (navigator.deviceMemory ?? 8) <= 2;
+const ui = createUI(app);
 app.setQuality(params.get('quality') || saved || (phone ? 'low' : 'medium'));
 app.resetTime();
 resize();
