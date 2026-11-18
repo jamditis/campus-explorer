@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { createLook } from './look.js';
 import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -13,33 +14,31 @@ const $ = id => document.getElementById(id);
 const canvas = $('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: new URLSearchParams(location.search).has('capture') });
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.95;
 renderer.setPixelRatio(1);
 const scene = new THREE.Scene();
-const SKY = new THREE.Color('#c9d6e2');
-scene.background = SKY; scene.fog = new THREE.Fog(SKY, 900, 4200);
 const camera = new THREE.PerspectiveCamera(50, 1, 0.3, 20000);
-scene.add(new THREE.HemisphereLight('#e6eefa', '#5f5a48', 0.85));
-const sun = new THREE.DirectionalLight('#fff1da', 1.7); sun.position.set(-400, 700, 300); scene.add(sun);
+const look = createLook(renderer, scene, camera);
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.maxPolarAngle = Math.PI * 0.495;
 controls.minDistance = 3; controls.maxDistance = 6000; controls.screenSpacePanning = false;
 
 let campus = new THREE.Group(); scene.add(campus);
-let core = new THREE.Box3(new THREE.Vector3(-420, 95, -300), new THREE.Vector3(330, 150, 420)), loaded = false, mode = 'orbit', view = 'first';
+const MAIN_CORE = new THREE.Box3(new THREE.Vector3(-420, 95, -300), new THREE.Vector3(330, 150, 420));
+let core = MAIN_CORE.clone(), loaded = false, mode = 'orbit', view = 'first';
 const colliders = []; let bvhReady = false;
 
-function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); look.resize(); }
 addEventListener('resize', resize); resize();
 
-// far-field filler crowns/trunks were built to sit on the Blender far-field skirt, which the browser edition drops
-const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.001$)/;
+// far-field filler crowns/trunks: hidden when the scene has no far-field skirt tile to stand on
+let hasSkirt = false;
+const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // glTF names drop the dot
 const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 function fixMaterials(root) {
   root.traverse(o => {
     if (!o.isMesh) return;
-    if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; return; }
+    if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; return; } // float above the exported skirt too
     if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
     const mats = Array.isArray(o.material) ? o.material : [o.material];
     for (const m of mats) {
@@ -54,33 +53,53 @@ function fixMaterials(root) {
   });
 }
 
+function clearScene() {
+  const mats = new Set();
+  campus.traverse(o => { if (o.isMesh) { o.geometry.disposeBoundsTree?.(); o.geometry.dispose(); for (const m of [].concat(o.material)) if (m) mats.add(m); } });
+  for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
+  scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
+  scene.getObjectByName('ground_far')?.removeFromParent();
+  colliders.length = 0; bvhReady = false; loaded = false; look.reset();
+}
+let loadToken = 0;
 async function loadScene(tile) {
   $('load').hidden = false; $('error').hidden = true;
+  const token = ++loadToken;
+  clearScene();
   try {
     const base = `./models/${tile}/`;
     const man = await (await fetch(base + 'manifest.json', { cache: 'no-cache' })).json();
+    if (token !== loadToken) return; // a newer scene request won
+    hasSkirt = man.tiles.some(t => t.file === 'skirt.glb');
+    look.setPaint(man.paint || [], base);
     $('source-snapshot').textContent = `Source snapshot: model saved ${man.source_saved}${man.source_version ? ' (' + man.source_version + ')' : ''}; browser export ${man.exported}. Later modeling changes may not appear here yet.`;
     $('footnote').firstChild.textContent = `Working model · ${man.source_saved.replace(/, \d{4},.*/, '')} snapshot · Map data © `;
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     let done = 0, bytes = 0; const total = man.total_bytes || 1, t0 = performance.now();
     const coreBox = new THREE.Box3();
-    // context first (terrain + surroundings), then the tiles, a few in parallel
-    const queue = [...man.tiles];
+    // far-field ground and context first, then tiles nearest the view target, a few in parallel
+    const tgt = tile === 'main' ? MAIN_CORE.getCenter(new THREE.Vector3()) : controls.target;
+    const dist = t => t.center ? Math.hypot(t.center[0] - tgt.x, t.center[1] - tgt.z) : -1;
+    const queue = [...man.tiles].sort((a, b) => dist(a) - dist(b));
     const loadOne = async t => {
       const g = await loader.loadAsync(base + t.file);
-      g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); campus.add(g.scene);
-      if (t.file !== 'context.glb') coreBox.expandByObject(g.scene);
+      if (token !== loadToken) return;
+      g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
+      if (t.file !== 'context.glb' && t.file !== 'skirt.glb') coreBox.expandByObject(g.scene);
       done++; bytes += t.bytes;
       $('load-text').textContent = `Loading campus… ${Math.round(bytes / total * 100)}% (${done}/${man.tiles.length} tiles)`;
-      if (done === 1) overview();
+      if (done === 1 && tile === 'main') overview();
     };
     await loadOne(queue.shift());
     const workers = Array.from({ length: 4 }, async () => { while (queue.length) await loadOne(queue.shift()); });
     await Promise.all(workers);
-    core.copy(coreBox.isEmpty() ? new THREE.Box3().setFromObject(campus) : coreBox);
-    // simplified distant ground so the campus doesn't float in the sky
+    if (token !== loadToken) return;
+    core.copy(tile === 'main' ? MAIN_CORE : coreBox.isEmpty() ? new THREE.Box3().setFromObject(campus) : coreBox);
+    // without the real-elevation skirt tile, a simplified distant ground keeps the campus from floating
+    if (!hasSkirt) {
     const ground = new THREE.Mesh(new THREE.CircleGeometry(9000, 64).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#8b9070', roughness: 1 }));
-    ground.position.set(core.getCenter(new THREE.Vector3()).x, core.min.y + 0.5, core.getCenter(new THREE.Vector3()).z); ground.name = 'ground_far'; scene.add(ground);
+    ground.position.set(core.getCenter(new THREE.Vector3()).x, core.min.y + 0.5, core.getCenter(new THREE.Vector3()).z); ground.name = 'ground_far'; ground.receiveShadow = true; scene.add(ground);
+    }
     loaded = true; overview();
     window.__campusLoad = { ms: Math.round(performance.now() - t0), tiles: done, bytes };
     $('load').hidden = true;
@@ -234,7 +253,7 @@ function step(dt) {
   }
 }
 function loop() {
-  const dt = Math.min(clock.getDelta(), 0.1); step(dt); renderer.render(scene, camera);
+  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); look.render();
   frames++; acc += dt; if (acc > 1) { $('performance').textContent = `${Math.round(frames / acc)} fps · ${(renderer.info.render.triangles / 1e6).toFixed(1)} M triangles`; frames = 0; acc = 0; }
   requestAnimationFrame(loop);
 }
@@ -244,11 +263,20 @@ $('orbit').onclick = () => setMode('orbit'); $('fly').onclick = () => setMode('f
 $('reset').onclick = overview; $('top').onclick = topView; $('jump').onclick = jump; $('respawn').onclick = () => respawn(spawnPoint());
 $('view-first').onclick = () => setView('first'); $('view-third').onclick = () => setView('third');
 $('speed').oninput = () => $('speed-label').textContent = $('speed').value + ' m/s';
-$('quality').onchange = e => { renderer.setPixelRatio(e.target.checked ? Math.min(devicePixelRatio, 2) : 1); resize(); };
+const savedQ = localStorage.getItem('campus-quality');
+$('quality').value = ['low', 'medium', 'high'].includes(savedQ) ? savedQ : 'medium';
+const setQuality = v => { look.applyQuality(v); localStorage.setItem('campus-quality', v); resize(); };
+$('quality').onchange = e => setQuality(e.target.value);
+setQuality(new URLSearchParams(location.search).get('quality') || $('quality').value);
 $('retry').onclick = () => loadScene($('tile').value);
 $('tile').onchange = () => loadScene($('tile').value);
 // test hook for headless screenshots: window.__campus.goto(x,y,z, tx,ty,tz)
-window.__campus = { THREE, camera, controls, setMode, topView, overview, get loaded() { return loaded; },
+window.__campusScene = scene;
+window.__campus = { THREE, camera, controls, setMode, topView, overview, look, setQuality, loadScene, get loaded() { return loaded; },
   goto(x, y, z, tx, ty, tz) { setMode('orbit'); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); },
   groundAt: (x, z) => { ensureBVH(); return groundAt(x, 400, z, 0, 600); } };
-loadScene('main');
+const startScene = new URLSearchParams(location.search).get('scene') || 'main';
+$('tile').value = startScene;
+// offer north campus only when its tiles are published
+fetch('./models/north/manifest.json', { method: 'HEAD' }).then(r => { $('tile').querySelector('option[value=north]').disabled = !r.ok; }).catch(() => {});
+loadScene(startScene);

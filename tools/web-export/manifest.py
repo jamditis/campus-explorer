@@ -1,27 +1,32 @@
-# writes web/campus/models/main/manifest.json (tile list, sizes, snapshot time ET)
+# writes models/<scene>/manifest.json (tile list with centres for nearest-first loading, sizes,
+# paint layers, snapshot time ET).  env: OUT, FILE, SOURCE_VERSION, SOURCE_SAVED, TILE
 import datetime
 import glob
 import json
 import os
+import re
 
-S = "/workspace/nj-scenes/web/campus/models/main"
-tiles = [
-    dict(file=os.path.basename(f), bytes=os.path.getsize(f))
-    for f in sorted(glob.glob(S + "/*.glb"))
-]
-tiles.sort(key=lambda t: (t["file"] != "context.glb", t["file"]))
-src = "/workspace/nj-scenes/montclair-state/montclair_state.blend"
+S = os.environ.get("OUT", "/workspace/nj-scenes/web/campus/models/main")
+src = os.environ.get("FILE", "/workspace/nj-scenes/montclair-state/montclair_state.blend")
+TILE = float(os.environ.get("TILE", "160"))
+tiles = []
+for f in sorted(glob.glob(S + "/*.glb")):
+    t = dict(file=os.path.basename(f), bytes=os.path.getsize(f))
+    m = re.match(r"t_(-?\d+)_(-?\d+)\.glb$", t["file"])
+    if m:
+        # Blender XY tile centre -> three.js XZ (z = -y)
+        t["center"] = [(int(m[1]) + 0.5) * TILE, -(int(m[2]) + 0.5) * TILE]
+    tiles.append(t)
+order = {"skirt.glb": 0, "context.glb": 1}
+tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
-ver = (
-    open("/workspace/nj-scenes/web/SOURCE_VERSION").read().strip()
-    if os.path.exists("/workspace/nj-scenes/web/SOURCE_VERSION")
-    else ""
-)
-SS = "/workspace/nj-scenes/web/SOURCE_SAVED"
-saved = open(SS).read().strip() if os.path.exists(SS) else mt.strftime("%B %-d, %Y, %-I:%M %p ET")
+ver = os.environ.get("SOURCE_VERSION", "")
+saved = os.environ.get("SOURCE_SAVED") or mt.strftime("%B %-d, %Y, %-I:%M %p ET")
+paint = json.load(open(S + "/paint.json")) if os.path.exists(S + "/paint.json") else []
 json.dump(
     dict(
         tiles=tiles,
+        paint=paint,
         source_saved=saved,
         source_version=ver,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),

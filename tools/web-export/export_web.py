@@ -12,7 +12,7 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-W = "/workspace/nj-scenes/scripts/web/"
+W = os.environ.get("WORK", "/workspace/nj-scenes/web/build/main") + "/"
 FILE = os.environ.get("FILE", "/workspace/nj-scenes/montclair-state/montclair_state.blend")
 CH = os.environ["CHUNK"]
 OUT = os.environ["OUT"]
@@ -27,7 +27,9 @@ for o in b.objects:
         continue
     sc.collection.objects.link(o)
     for m in o.modifiers:
-        if "skirt" in m.name.lower() and m.type == "NODES":
+        # skirt_under GN pushes the far-field skirt below the campus terrain: keep it for the
+        # dedicated 'skirt' chunk, drop it elsewhere (memory)
+        if "skirt" in m.name.lower() and m.type == "NODES" and CH != "skirt":
             m.show_render = m.show_viewport = False
         else:
             m.show_viewport = m.show_render
@@ -203,6 +205,55 @@ def uv_image(sock):
     return None
 
 
+# ---------- material categories (viewer applies CC0 world-space textures per category) ----------
+CATS = [
+    ("glass", r"glass|glazing|window_pane|curtainwall"),
+    ("asphalt", r"asphalt|tarmac|road|street|lot_|parking|drive|carriageway|Asphalt026"),
+    ("brick", r"brick|Bricks066"),
+    ("rooftile", r"roof_?tile|clay_tile|terracotta|RoofingTiles"),
+    ("pavers", r"paver|herringbone|PavingStones|cobble|plaza"),
+    ("mulch", r"mulch|WoodChips|bed_|planting|soil"),
+    ("grass", r"lawn|grass|turf|Grass004|skirt|terrain|ground|meadow|field"),
+    ("gravel", r"gravel|Gravel022|ballast"),
+    ("plaster", r"stucco|plaster|render|Plaster00"),
+    ("stone", r"stone|granite|marble|limestone|Granite|cast_stone"),
+    (
+        "concrete",
+        r"concrete|curb|kerb|sidewalk|walk|pav|slab|step|stair|apron|ramp|Concrete034|deck|wall",
+    ),
+    ("metal", r"metal|steel|alumin|rail|Metal032|pole|fence"),
+    ("wood", r"wood|timber|bench|Wood049"),
+]
+PAINT = set()
+
+
+def mat_images(nt, dep=0, acc=None):
+    acc = [] if acc is None else acc
+    for n in nt.nodes:
+        if n.type == "TEX_IMAGE" and n.image:
+            acc.append(n.image.name + " " + os.path.basename(n.image.filepath))
+        elif n.type == "GROUP" and n.node_tree and dep < 4:
+            mat_images(n.node_tree, dep + 1, acc)
+    return acc
+
+
+def category(m, glass, leaf):
+    if leaf:
+        return "leaf"
+    if glass:
+        return "glass"
+    imgs = mat_images(m.node_tree) if m.use_nodes and m.node_tree else []
+    for i in imgs:
+        mm = re.search(r"(ws\d+[a-z]?)_mask_tile_", i)
+        if mm:
+            PAINT.add(mm.group(1))
+    key = m.name + " " + " ".join(imgs)
+    for c, rx in CATS:
+        if re.search(rx, key, re.I):
+            return c
+    return ""
+
+
 LEAFT = {}
 RAMPS = {}
 done = set()
@@ -293,6 +344,7 @@ def flatten(m):
             if x.type == "VALTORGB"
             for e in x.color_ramp.elements
         ]
+    m["cat"] = category(m, glass, leaf)
     nt = m.node_tree if m.use_nodes else None
     if nt is None:
         m.use_nodes = True
@@ -373,6 +425,14 @@ for mat in list(bpy.data.materials):
 json.dump(AV, open(cache_p, "w"))
 print("WEB materials", stats, flush=True)
 json.dump(LEAFT, open(OUT + ".leaf.json", "w"))
+json.dump(sorted(PAINT), open(OUT + ".paint.json", "w"))
+# only material categories go out as glTF extras: drop object/mesh custom properties
+for idb in list(bpy.data.objects) + list(bpy.data.meshes):
+    for k in list(idb.keys()):
+        try:
+            del idb[k]
+        except Exception:
+            pass
 
 # ---------- tree thinning (shared Tree_* meshes): keep ~1/3 of leaf cards, enlarge them ----------
 KEEP = float(os.environ.get("LEAFKEEP", "0.35"))
@@ -493,7 +553,7 @@ bpy.ops.export_scene.gltf(
     export_materials="EXPORT",
     export_gn_mesh=True,
     export_gpu_instances=False,
-    export_extras=False,
+    export_extras=True,
     export_animations=False,
     export_skins=False,
     export_morph=False,

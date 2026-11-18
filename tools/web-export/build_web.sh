@@ -1,42 +1,61 @@
 #!/bin/bash
-# Repeatable web export: main .blend -> per-tile GLBs -> optimized (meshopt + webp) -> web/campus/models/main/
-# usage: bash scripts/web/build_web.sh [FILE]   (honours the scene .lock convention: run it inside a session that holds it)
+# Repeatable web export: a campus .blend -> per-tile GLBs -> optimized (meshopt + webp) -> models/<scene>/
+# usage: SCENE=main|north bash tools/web-export/build_web.sh [FILE]
+#   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
+#   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
+#   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer (default: file mtime)
+# Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
+# the memory gate, before every Blender process (the hourly modelling sessions use the same rules).
 set -u
 fail(){ echo "$(date +%T) FAILED: $*" >&2; exit 1; }
-R=/workspace/nj-scenes; W=$R/scripts/web; B=$R/web/build; S=$R/web/campus/models/main
-FILE=${1:-$R/montclair-state/montclair_state.blend}; BL=/workspace/opt/blender/blender
+W=$(cd "$(dirname "$0")" && pwd); R=/workspace/nj-scenes; SCENE=${SCENE:-main}
+SITE=${SITE:-$(cd "$W/../.." && pwd)}; S=$SITE/models/$SCENE; WORK=$R/web/build/$SCENE; B=$WORK
+case $SCENE in
+  main) DEF=$R/montclair-state/montclair_state.blend ;;
+  north) DEF=$R/montclair-state/north/montclair_north.blend ;;
+  *) fail "unknown SCENE $SCENE" ;;
+esac
+FILE=${1:-$DEF}; BL=/workspace/opt/blender/blender; LOCKS="$R/.lock $R/montclair-state/.lock"
+export WORK FILE
 mkdir -p $B/raw $S
-gate(){ until ! pgrep -x blender >/dev/null && [ $(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo) -ge ${GATE:-6000} ]; do sleep 5; done; }
+[ -f $WORK/img_avg.json ] || cp $R/scripts/web/img_avg.json $WORK/ 2>/dev/null
+locked(){ for l in $LOCKS; do [ -e $l ] && return 0; done; return 1; }
+# never start Blender while an hourly session holds either scene lock, while another Blender runs,
+# or below the memory gate; the watchdog (wd.sh) kills the export if MemAvailable drops under 1.5 GB
+gate(){ until ! locked && ! pgrep -x blender >/dev/null && [ $(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo) -ge ${GATE:-6000} ]; do sleep 5; done; }
 if [ "${SKIP_PLAN:-0}" != 1 ]; then
-  gate; FILE=$FILE $BL -b --factory-startup --python-exit-code 1 --python $W/plan_chunks.py 2>&1 | grep -E "^N |MEM|rror"
+  gate; WD_MIN=1500 bash $R/montclair-state/scripts/ws33/wd.sh $BL -b --factory-startup --python-exit-code 1 --python $W/plan_chunks.py 2>&1 | grep -E "^N |MEM|rror"
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "chunk planning"
   python3 $W/make_chunks.py || fail "make_chunks"
 fi
-CHUNKS=$(python3 -c "import json;print(' '.join(json.load(open('$W/chunks.json'))))") || fail "read chunks.json"
+CHUNKS=$(python3 -c "import json;print(' '.join(json.load(open('$WORK/chunks.json'))))") || fail "read chunks.json"
 if [ -z "${ONLY:-}" ]; then
   # Full build: drop raw and published tiles that are no longer in the chunk plan,
   # so removed or moved geometry doesn't linger in the manifest.
   for f in $B/raw/*.glb $S/*.glb; do
     [ -e "$f" ] || continue
-    [[ " $CHUNKS " == *" $(basename "$f" .glb) "* ]] || { echo "prune stale $f"; rm -f "$f"; }
+    [[ " $CHUNKS " == *" $(basename "$f" .glb) "* ]] || { echo "prune stale $f"; rm -f "$f" "$f".leaf.json "$f".paint.json; }
   done
 fi
 for C in $CHUNKS; do
   [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
   gate; echo "$(date +%T) export $C"
   rm -f $B/raw/$C.glb
-  DEC=0.5; [ $C = context ] && DEC=0.3; DECIMATE=$DEC FILE=$FILE CHUNK=$C OUT=$B/raw/$C.glb WD_MIN=900 bash $R/montclair-state/scripts/ws33/wd.sh $BL -b --factory-startup --python-exit-code 1 --python $W/export_web.py 2>&1 | grep --line-buffered -E "WEB (appended|materials|WROTE|MEM)|rror|Trace|WATCH"
+  DEC=0.5; [ $C = context ] && DEC=0.3; [ $C = skirt ] && DEC=0.6
+  DECIMATE=$DEC CHUNK=$C OUT=$B/raw/$C.glb WD_MIN=1500 bash $R/montclair-state/scripts/ws33/wd.sh $BL -b --factory-startup --python-exit-code 1 --python $W/export_web.py 2>&1 | grep --line-buffered -E "WEB (appended|materials|WROTE|MEM)|rror|Trace|WATCH"
   [ "${PIPESTATUS[0]}" -eq 0 ] && [ -s $B/raw/$C.glb ] || fail "export $C (no new GLB; not publishing)"
 done
 cd $R/web/tools
 for f in $B/raw/*.glb; do
   C=$(basename $f .glb); [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
-  RATIO=0.5; ERR=0.0015; [ $C = context ] && { RATIO=0.35; ERR=0.004; }
   echo "$(date +%T) optimize $C"
   node $W/tint_leaves.mjs $f || fail "tint $C"
+  # no palette: materials keep their names and the 'cat' extras the viewer textures by
   npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size 1024 \
-     --simplify false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
+     --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
 done
-python3 $W/manifest.py || fail "manifest"
-ls -la $S; du -sh $R/web/campus
+OUT=$S python3 $W/paint.py || fail "paint"
+OUT=$S python3 $W/manifest.py || fail "manifest"
+find $S -size +95M | grep . && fail "file over 95 MB"
+ls -la $S; du -sh $S
