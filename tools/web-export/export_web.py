@@ -21,8 +21,31 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 with bpy.data.libraries.load(FILE) as (a, b):
     have = set(a.objects)
     b.objects = [n for n in names if n in have]
+objs = list(b.objects)
+# Objects the main file links from other .blend files (Sprague Library and Café Diem live in
+# north/sprague_cafe_src.blend) are not local to FILE: append them from their own library.
+# objects.json records each object's library; LIBS (colon-separated) is the fallback for older plans.
+meta = json.load(open(W + "objects.json")) if os.path.exists(W + "objects.json") else {}
+missing = [n for n in names if n not in have]
+libs = {}
+for n in missing:
+    lib = (meta.get(n) or {}).get("lib")
+    for p in [lib] if lib else [x for x in os.environ.get("LIBS", "").split(":") if x]:
+        libs.setdefault(p, []).append(n)
+got = set()
+for p, want in libs.items():
+    if not os.path.exists(p):
+        print("WEB missing library", p, flush=True)
+        continue
+    with bpy.data.libraries.load(p) as (a, b):
+        b.objects = [n for n in want if n in set(a.objects) and n not in got]
+    for o in b.objects:
+        if o is not None:
+            got.add(o.name)
+            objs.append(o)
+print("WEB from libraries", len(got), "still missing", len(set(missing) - got), flush=True)
 sc = bpy.context.scene
-for o in b.objects:
+for o in objs:
     if o is None:
         continue
     sc.collection.objects.link(o)
@@ -33,7 +56,33 @@ for o in b.objects:
             m.show_render = m.show_viewport = False
         else:
             m.show_viewport = m.show_render
-print("WEB appended", len(b.objects), flush=True)
+print("WEB appended", len(objs), flush=True)
+
+# ---------- unified campus: clip a merged scene's terrain to cells the main scene doesn't cover ----------
+CLIP = W + "clip.json"
+if os.environ.get("MERGE_WITH") and os.path.exists(CLIP):
+    cj = json.load(open(CLIP))
+    CELL = cj["cell"]
+    occ = {tuple(c) for c in cj["cells"]}
+    dg = bpy.context.evaluated_depsgraph_get()
+    for o in list(sc.objects):
+        if o.type != "MESH" or not re.search(r"terrain|apron", o.name, re.I):
+            continue
+        me = bpy.data.meshes.new_from_object(o.evaluated_get(dg))
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        mw = o.matrix_world
+        kill = []
+        for f in bm.faces:
+            c = mw @ f.calc_center_median()
+            if (int(c.x // CELL), int(c.y // CELL)) in occ:
+                kill.append(f)
+        bmesh.ops.delete(bm, geom=kill, context="FACES")
+        bm.to_mesh(me)
+        bm.free()
+        o.modifiers.clear()
+        o.data = me
+        print("WEB clipped", o.name, "faces removed", len(kill), "left", len(me.polygons), flush=True)
 
 # ---------- materials ----------
 ALLOW = re.compile(
@@ -208,9 +257,10 @@ def uv_image(sock):
 # ---------- material categories (viewer applies CC0 world-space textures per category) ----------
 CATS = [
     ("glass", r"glass|glazing|window_pane|curtainwall"),
-    ("asphalt", r"asphalt|tarmac|road|street|lot_|parking|drive|carriageway|Asphalt026"),
+    ("asphalt", r"asphalt|tarmac|road|street|(?<!s)lot_|parking|drive|carriageway|Asphalt026"),
+    ("bark", r"^Bark_|Bark0\d\d"),
     ("brick", r"brick|Bricks066"),
-    ("rooftile", r"roof_?tile|clay_tile|terracotta|RoofingTiles"),
+    ("rooftile", r"roof_?tile|clay_tile|terracotta|RoofingTiles|barrel_tile|tile_course|Eave_tile"),
     ("pavers", r"paver|herringbone|PavingStones|cobble|plaza"),
     ("mulch", r"mulch|WoodChips|bed_|planting|soil"),
     ("grass", r"lawn|grass|turf|Grass004|skirt|terrain|ground|meadow|field"),
