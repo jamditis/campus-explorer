@@ -40,7 +40,7 @@ export function createUI(app) {
     const left = p.total - p.loaded, s = $('stream'), b = $('load-rest'), lite = app.world.budget < Infinity;
     b.hidden = !app.world.paused && !lite; if (!b.hidden) b.textContent = lite ? 'Load everything' : `Load the full campus (${mb(left)})`;
     s.hidden = app.world.paused || !lite && p.tiles >= p.count;
-    if (!s.hidden) s.textContent = lite ? 'Lite mode · detail near the view' : `Loading the rest of the campus · ${Math.round(p.loaded / p.total * 100)}%`;
+    if (!s.hidden) s.textContent = lite ? 'Lite mode: detail near the view only' : `Loading the rest of the campus · ${Math.round(p.loaded / p.total * 100)}%`;
   });
   app.on('scene:start', ({ manifest }) => {
     $('load').hidden = false; $('error').hidden = true; $('load-bar').value = 0;

@@ -25,7 +25,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin:4px 0}
 .row{display:flex;gap:4px}.row>*{flex:1;min-width:0}
 
 /* ---- header and search ---- */
-#top{position:fixed;top:var(--gap);left:var(--gap);width:300px;padding:10px 12px;display:grid;gap:8px;top:max(var(--gap),env(safe-area-inset-top));left:max(var(--gap),env(safe-area-inset-left))}
+#top{position:fixed;top:var(--gap);left:var(--gap);width:344px;padding:10px 12px;display:grid;gap:8px;top:max(var(--gap),env(safe-area-inset-top));left:max(var(--gap),env(safe-area-inset-left))}
 .brand{display:flex;align-items:center;gap:8px}
 .brand-text{flex:1;min-width:0}
 .brand h1{font-size:15px;margin:0}.brand p{font-size:12px;margin:2px 0 0;color:var(--muted)}
@@ -102,7 +102,9 @@ body.shoot>:not(#viewer){display:none!important}
   input[type=search]{font-size:16px} /* below 16 px iOS zooms the page on focus */
   .panel{top:calc(var(--top-h,96px) + var(--gap));left:auto;width:min(300px,calc(100vw - 2*var(--gap)));max-height:calc(100dvh - var(--top-h,96px) - 56px);z-index:10}
   .tools button{font-size:13px}
-  .footnote{display:none}
+  .footnote,#performance{display:none}
+  footer{gap:8px}#stream{white-space:nowrap}
+  footer button{min-height:28px;font-size:12px;white-space:nowrap}
   #toast{bottom:calc(64px + env(safe-area-inset-bottom))}
 }
 /* phone held sideways: everything on one row */
