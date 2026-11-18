@@ -202,6 +202,7 @@ for refs, t in ways.values():
                 corners = [(cx + ux * a - uy * b * side, cy + uy * a + ux * b * side) for a, b in ((-w, -d), (w, -d), (w, d), (-w, d))]
                 synth.append(corners)
                 dr.polygon([px(p) for p in corners], fill=PAL["building"])
+                cd.polygon([px(p) for p in corners], fill=0)  # no far-field tree inside a house
             s0 += random.uniform(19, 26)
 print("synthetic houses", len(synth))
 for c in synth:
@@ -250,7 +251,9 @@ with open(OUT + "/far_trees.bin", "wb") as f:
 print("far trees", len(trees))
 
 # ---------- far houses: extruded OSM footprints with a low hip/flat roof ----------
-P, NRM, COL, IDX = [], [], [], []
+# two meshes: mapped OSM footprints, and the inferred placeholder houses (UNVERIFIED, AGENTS rule)
+GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_placeholder_UNVERIFIED": ([], [], [], [])}
+P, NRM, COL, IDX = GEOM["far_houses_osm"]
 WALL = [(0.62, 0.55, 0.46), (0.55, 0.50, 0.44), (0.66, 0.62, 0.55), (0.50, 0.38, 0.30), (0.58, 0.54, 0.47), (0.45, 0.47, 0.46)]
 ROOF = [(0.20, 0.18, 0.17), (0.27, 0.22, 0.19), (0.17, 0.17, 0.18), (0.32, 0.24, 0.19), (0.24, 0.24, 0.23)]
 nb = 0
@@ -269,6 +272,7 @@ def add_tri(a, b, c, col):
 
 
 for pts, t in buildings:
+    P, NRM, COL, IDX = GEOM["far_houses_placeholder_UNVERIFIED" if t.get("synthetic") else "far_houses_osm"]
     poly = Polygon(pts)
     if not poly.is_valid or poly.area < 12:
         continue
@@ -302,28 +306,33 @@ for pts, t in buildings:
 
 
 def write_glb(path):
-    pos = np.asarray(P, np.float32)
-    nrm = np.asarray(NRM, np.float32)
-    col = np.asarray(COL, np.float32)
-    idx = np.asarray(IDX, np.uint32)
-    blobs = [pos.tobytes(), nrm.tobytes(), col.tobytes(), idx.tobytes()]
+    blobs, acc, meshes, nodes = [], [], [], []
+    for name, (p_, n_, c_, i_) in GEOM.items():
+        if not i_:
+            continue
+        pos = np.asarray(p_, np.float32)
+        arrs = [(pos, "VEC3", 5126), (np.asarray(n_, np.float32), "VEC3", 5126), (np.asarray(c_, np.float32), "VEC3", 5126), (np.asarray(i_, np.uint32), "SCALAR", 5125)]
+        base = len(acc)
+        for k, (a_, typ, ct) in enumerate(arrs):
+            blobs.append(a_.tobytes())
+            d = {"bufferView": len(blobs) - 1, "componentType": ct, "count": len(a_), "type": typ}
+            if k == 0:
+                d["min"], d["max"] = pos.min(0).tolist(), pos.max(0).tolist()
+            acc.append(d)
+        meshes.append({"name": name, "primitives": [{"attributes": {"POSITION": base, "NORMAL": base + 1, "COLOR_0": base + 2}, "indices": base + 3, "material": 0}]})
+        nodes.append({"mesh": len(meshes) - 1, "name": name})
     offs, buf = [], b""
     for bl in blobs:
         offs.append(len(buf))
         buf += bl + b"\0" * ((4 - len(bl) % 4) % 4)
     g = {
         "asset": {"version": "2.0", "generator": "campus-explorer landcover.py"},
-        "scene": 0, "scenes": [{"nodes": [0]}], "nodes": [{"mesh": 0, "name": "far_houses_osm"}],
+        "scene": 0, "scenes": [{"nodes": list(range(len(nodes)))}], "nodes": nodes,
         "materials": [{"name": "far_houses", "pbrMetallicRoughness": {"metallicFactor": 0, "roughnessFactor": 0.9}, "extras": {"cat": ""}}],
-        "meshes": [{"primitives": [{"attributes": {"POSITION": 0, "NORMAL": 1, "COLOR_0": 2}, "indices": 3, "material": 0}]}],
+        "meshes": meshes,
         "buffers": [{"byteLength": len(buf)}],
-        "bufferViews": [{"buffer": 0, "byteOffset": offs[i], "byteLength": len(blobs[i])} for i in range(4)],
-        "accessors": [
-            {"bufferView": 0, "componentType": 5126, "count": len(pos), "type": "VEC3", "min": pos.min(0).tolist(), "max": pos.max(0).tolist()},
-            {"bufferView": 1, "componentType": 5126, "count": len(nrm), "type": "VEC3"},
-            {"bufferView": 2, "componentType": 5126, "count": len(col), "type": "VEC3"},
-            {"bufferView": 3, "componentType": 5125, "count": len(idx), "type": "SCALAR"},
-        ],
+        "bufferViews": [{"buffer": 0, "byteOffset": offs[i], "byteLength": len(blobs[i])} for i in range(len(blobs))],
+        "accessors": acc,
     }
     js = json.dumps(g).encode()
     js += b" " * ((4 - len(js) % 4) % 4)
@@ -334,4 +343,4 @@ def write_glb(path):
 
 
 write_glb(RAW + "/far_houses.raw.glb")
-print("far houses", nb, "tris", len(IDX) // 3)
+print("far houses", nb, {k: len(v[3]) // 3 for k, v in GEOM.items()})

@@ -2,7 +2,7 @@
  "tiles": [
   {
    "file": "skirt.glb",
-   "bytes": 8834636
+   "bytes": 8830736
   },
   {
    "file": "context.glb",
@@ -10,7 +10,7 @@
   },
   {
    "file": "far_houses.glb",
-   "bytes": 1284472
+   "bytes": 1287876
   },
   {
    "file": "n_context.glb",
@@ -449,12 +449,12 @@
   }
  ],
  "source_saved": "November 18, 2026, 5:38 PM ET",
- "source_version": "ws218b",
+ "source_version": "",
  "sources": {
   "main": {
    "saved": "November 18, 2026, 5:38 PM ET",
-   "version": "ws218b",
-   "file": "montclair_state_ws218b.blend"
+   "version": "",
+   "file": "montclair_state.blend"
   },
   "north": {
    "saved": "November 18, 2026, 1:05 PM ET",
@@ -467,6 +467,6 @@
   "half": 2000
  },
  "far_trees": "far_trees.bin",
- "exported": "November 18, 2026, 6:17 PM ET",
- "total_bytes": 210212964
+ "exported": "November 18, 2026, 6:30 PM ET",
+ "total_bytes": 210212468
 }

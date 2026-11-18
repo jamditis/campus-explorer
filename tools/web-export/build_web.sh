@@ -74,7 +74,9 @@ done
 GEO_PY=${GEO_PY:-/workspace/opt/geo/bin/python}; OSM=${OSM:-$R/web/build/landcover}
 if [ $SCENE = main ] && [ -x "$GEO_PY" ] && ls $OSM/*.osm >/dev/null 2>&1; then
   OSM=$OSM OUT=$S RAW=$WORK WORK_MAIN=$WORK WORK_NORTH=$R/web/build/north $GEO_PY $W/landcover.py || fail "landcover"
-  (cd $R/web/tools && npx gltf-transform optimize $WORK/far_houses.raw.glb $S/far_houses.glb --compress meshopt --simplify false --palette false 2>&1 | grep -iE "error" | head -3)
+  rm -f $S/far_houses.glb
+  (cd $R/web/tools && npx gltf-transform optimize $WORK/far_houses.raw.glb $S/far_houses.glb --compress meshopt --simplify false --palette false --join false) \
+    || fail "far houses optimize (not publishing)"
   [ -s $S/far_houses.glb ] || fail "far houses"; rm -f $WORK/far_houses.raw.glb
 fi
 OUT=$S python3 $W/manifest.py || fail "manifest"

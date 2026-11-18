@@ -329,7 +329,7 @@ export function createLook(renderer, scene, camera) {
           m.roughness = 0.03; m.metalness = 0.15; m.envMapIntensity = 1.4;
           m.color.lerp(new THREE.Color('#1c262e'), 0.8);
           if (o.isInstancedMesh || m.side === THREE.BackSide) { m.opacity = Math.max(m.opacity, 0.82); continue; }
-          m.transparent = false; m.opacity = 1; glassInterior(m);
+          m.transparent = false; m.opacity = 1; m.depthWrite = true; glassInterior(m);
         } else if (cat && CATS[cat]) {
           // lawn/terrain colours averaged from aerial-draped materials come out grey: give them a lawn tone
           if (cat === 'grass') { const hsl = {}; m.color.getHSL(hsl); if (hsl.s < 0.18 || hsl.l > 0.45) m.color.setHSL(0.21, 0.32, Math.min(0.32, Math.max(0.2, hsl.l * 0.6))); }
