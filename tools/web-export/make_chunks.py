@@ -35,6 +35,7 @@ if MERGE:
                 yield (i, j)
 
     bld = set()
+    mground = {}
     for n in exported:
         v = md[n]
         x0, x1, y0, y1 = v["bb"][:4]
@@ -42,10 +43,12 @@ if MERGE:
         if n.startswith(("BD_", "MID_")) or w > 700:
             continue
         if GROUND.search(n):
-            occ.update(cells(x0, x1, y0, y1))  # main ground: its whole footprint
+            occ.update(cells(x0, x1, y0, y1))  # main ground: its whole footprint (object-level rules)
+            if v["t"] == "MESH":
+                mground[n] = v["bb"][:4]  # exact footprint for terrain trimming (export_web rasterises these)
         elif v["t"] == "MESH" and v["tri"] > 50 and w < 150 and not TREE.search(n):
             bld.update(cells(x0, x1, y0, y1))  # main buildings and site features
-    json.dump(dict(cell=CELL, cells=sorted(occ)), open(WORK + "/clip.json", "w"))
+    json.dump(dict(cell=CELL, cells=sorted(occ), ground=mground), open(WORK + "/clip.json", "w"))
     print("merge: main ground covers", len(occ), "cells, main buildings", len(bld), "cells of", CELL, "m")
 CLIPPED = re.compile(r"terrain|apron", re.I)
 DROP = re.compile(r"skirt|Context_", re.I)

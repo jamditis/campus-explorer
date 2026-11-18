@@ -17,7 +17,7 @@ for f in sorted(glob.glob(S + "/*.glb")):
         # Blender XY tile centre -> three.js XZ (z = -y)
         t["center"] = [(int(m[1]) + 0.5) * TILE, -(int(m[2]) + 0.5) * TILE]
     tiles.append(t)
-order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1}
+order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
 ver = os.environ.get("SOURCE_VERSION", "")
@@ -38,6 +38,9 @@ json.dump(
         source_saved=head["saved"],
         source_version=head["version"],
         sources=sources,
+        # far-field land cover and trees from tools/web-export/landcover.py (OpenStreetMap + 3DEP DEM)
+        landcover=dict(file="landcover.webp", half=2000) if os.path.exists(S + "/landcover.webp") else None,
+        far_trees="far_trees.bin" if os.path.exists(S + "/far_trees.bin") else None,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),
         total_bytes=sum(t["bytes"] for t in tiles),
     ),
