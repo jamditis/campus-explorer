@@ -45,18 +45,18 @@ Orbit with the mouse, switch to Fly or Walk from the panel, and use Top view for
 - **Layered builds.** A new section starts as a hybrid layered build (terrain, paving, curbs, buildings, planting), then unification passes stitch the seams. Areas that are already fine-tuned are not rebuilt.
 - **Wobble-free edges.** Curbs, walks and lot edges are straight runs or true arcs fitted to the aerial, flush with their neighbours.
 - **Soft light** and a physically based sky set from Montclair's latitude and longitude.
-- **Web edition.** `tools/web-export/` splits the scene into 160 m tiles, exports each in its own low-memory Blender process, and optimizes them with gltf-transform. Procedural materials become flat colours, lawn grass and some interiors are left out, and trees are thinned.
+- **Web edition.** `tools/web-export/` splits each scene (main and north campus) into 160 m tiles, exports each in its own low-memory Blender process, and optimizes them with gltf-transform. Materials keep the model's colours and a category; the viewer lays tileable CC0 textures over them in world space, paints the lot markings from the model's own line work, and adds a sky, sun shadows, fog and (on High) ambient occlusion. Lawn grass blades and some interiors are left out, trees are thinned, and small objects fade out with distance. See [docs/ROADMAP.md](docs/ROADMAP.md) for what is still missing.
 
 ## Refreshing the viewer after a day's modelling
 
-On the modelling box, read-only against the main `.blend`, inside a session that holds the scene lock:
+On the modelling box, read-only against the `.blend` files, between modelling sessions (the script waits for the scene lock):
 
-1. Write the session ID to `web/SOURCE_VERSION` and the main file's save time (ET) to `web/SOURCE_SAVED` in the scenes folder.
-2. Run `tools/web-export/build_web.sh`. It plans tiles, exports each tile in its own low-memory Blender process, tints leaves, optimizes with gltf-transform (meshopt, webp, join, instance) and writes `manifest.json`.
-3. Serve the output with `python3 -m http.server` and take headless screenshots with `tools/web-export/shoot.mjs`.
-4. Copy the new `models/` (and any viewer changes) into a branch of this repo and open a PR. Pages redeploys from `main` a minute or two after merge.
+1. Run `SCENE=main SOURCE_VERSION=<session id> SOURCE_SAVED="<main save time, ET>" bash tools/web-export/build_web.sh` from this checkout, then the same with `SCENE=north`. Point it at a frozen copy of the main file (for example `montclair_state_ws214c.blend`) so a session can't change it mid-export. Before every Blender process it waits for the scene `.lock` to be free, for no other Blender, and for the memory gate. It plans tiles, exports each tile, fixes leaf UVs and tints, optimizes with gltf-transform (meshopt, webp, join, instance, no palette), composes the paint layers and writes `models/<scene>/manifest.json`. Any failed tile stops the build before anything is published; tiles no longer in the plan are pruned.
+2. Leave `textures/` alone unless you are changing the CC0 set (credits in `textures/CREDITS.md`).
+3. Serve the checkout with `python3 -m http.server` and take the standard before/after screenshots with `node tools/web-export/shoot.mjs <url> <outdir>`.
+4. Commit `models/` (and any viewer changes) on a branch and open a PR. Pages redeploys from `main` a minute or two after merge.
 
-The exporter keeps only images on an allowlist and refuses anything named ortho, naip, aerial, photo or mask.
+The exporter keeps only images on an allowlist and refuses anything named ortho, naip, aerial, photo or mask. The paint layers are composed from the model's own authored line-work tiles and are written as `paint_*.webp`.
 
 ## Contributing
 

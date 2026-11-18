@@ -1,100 +1,215 @@
 {
  "tiles": [
   {
+   "file": "skirt.glb",
+   "bytes": 8829280
+  },
+  {
    "file": "context.glb",
-   "bytes": 17435096
+   "bytes": 19821908
   },
   {
    "file": "t_-1_-1.glb",
-   "bytes": 10589860
+   "bytes": 11479744,
+   "center": [
+    -80.0,
+    80.0
+   ]
   },
   {
    "file": "t_-1_-2.glb",
-   "bytes": 10375720
+   "bytes": 11330584,
+   "center": [
+    -80.0,
+    240.0
+   ]
   },
   {
    "file": "t_-1_0.glb",
-   "bytes": 3170392
+   "bytes": 3926156,
+   "center": [
+    -80.0,
+    -80.0
+   ]
   },
   {
    "file": "t_-1_1.glb",
-   "bytes": 3373464
+   "bytes": 4148896,
+   "center": [
+    -80.0,
+    -240.0
+   ]
   },
   {
    "file": "t_-1_2.glb",
-   "bytes": 90944
+   "bytes": 106528,
+   "center": [
+    -80.0,
+    -400.0
+   ]
   },
   {
    "file": "t_-2_-1.glb",
-   "bytes": 20932228
+   "bytes": 21879564,
+   "center": [
+    -240.0,
+    80.0
+   ]
   },
   {
    "file": "t_-2_-2.glb",
-   "bytes": 37048780
+   "bytes": 37395100,
+   "center": [
+    -240.0,
+    240.0
+   ]
   },
   {
    "file": "t_-2_0.glb",
-   "bytes": 3621956
+   "bytes": 4115068,
+   "center": [
+    -240.0,
+    -80.0
+   ]
   },
   {
    "file": "t_-2_1.glb",
-   "bytes": 1521844
+   "bytes": 1742520,
+   "center": [
+    -240.0,
+    -240.0
+   ]
   },
   {
    "file": "t_-3_-1.glb",
-   "bytes": 4400
+   "bytes": 4464,
+   "center": [
+    -400.0,
+    80.0
+   ]
   },
   {
    "file": "t_-3_-2.glb",
-   "bytes": 661492
+   "bytes": 812852,
+   "center": [
+    -400.0,
+    240.0
+   ]
   },
   {
    "file": "t_0_-1.glb",
-   "bytes": 3099892
+   "bytes": 3828680,
+   "center": [
+    80.0,
+    80.0
+   ]
   },
   {
    "file": "t_0_-2.glb",
-   "bytes": 2673436
+   "bytes": 3129232,
+   "center": [
+    80.0,
+    240.0
+   ]
   },
   {
    "file": "t_0_0.glb",
-   "bytes": 4569744
+   "bytes": 5280468,
+   "center": [
+    80.0,
+    -80.0
+   ]
   },
   {
    "file": "t_0_1.glb",
-   "bytes": 4245824
+   "bytes": 4879276,
+   "center": [
+    80.0,
+    -240.0
+   ]
   },
   {
    "file": "t_0_2.glb",
-   "bytes": 2607600
+   "bytes": 3039948,
+   "center": [
+    80.0,
+    -400.0
+   ]
   },
   {
    "file": "t_1_-1.glb",
-   "bytes": 2799728
+   "bytes": 3220792,
+   "center": [
+    240.0,
+    80.0
+   ]
   },
   {
    "file": "t_1_-2.glb",
-   "bytes": 2796836
+   "bytes": 3445116,
+   "center": [
+    240.0,
+    240.0
+   ]
   },
   {
    "file": "t_1_0.glb",
-   "bytes": 2529912
+   "bytes": 3006856,
+   "center": [
+    240.0,
+    -80.0
+   ]
   },
   {
    "file": "t_1_1.glb",
-   "bytes": 1630532
+   "bytes": 1817712,
+   "center": [
+    240.0,
+    -240.0
+   ]
   },
   {
    "file": "t_1_2.glb",
-   "bytes": 1886212
+   "bytes": 2087848,
+   "center": [
+    240.0,
+    -400.0
+   ]
   },
   {
    "file": "t_1_3.glb",
-   "bytes": 2002724
+   "bytes": 2297900,
+   "center": [
+    240.0,
+    -560.0
+   ]
   }
  ],
- "source_saved": "November 18, 2026, 12:36 PM ET",
- "source_version": "ws213b",
- "exported": "November 18, 2026, 1:51 PM ET",
- "total_bytes": 139668616
+ "paint": [
+  {
+   "file": "paint_ws211c.webp",
+   "x0": -256.0,
+   "x1": -214.0,
+   "y0": -88.0,
+   "y1": -62.0
+  },
+  {
+   "file": "paint_ws213.webp",
+   "x0": -286.0,
+   "x1": -218.0,
+   "y0": -95.03999999999999,
+   "y1": -55.0
+  },
+  {
+   "file": "paint_ws213z.webp",
+   "x0": -264.0,
+   "x1": -251.0,
+   "y0": -94.0,
+   "y1": -57.0
+  }
+ ],
+ "source_saved": "November 18, 2026, 1:51 PM ET",
+ "source_version": "ws214c",
+ "exported": "November 18, 2026, 2:43 PM ET",
+ "total_bytes": 161626492
 }

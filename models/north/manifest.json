@@ -1,0 +1,245 @@
+{
+ "tiles": [
+  {
+   "file": "context.glb",
+   "bytes": 5837736
+  },
+  {
+   "file": "t_-1_-1.glb",
+   "bytes": 175700,
+   "center": [
+    -80.0,
+    80.0
+   ]
+  },
+  {
+   "file": "t_-1_0.glb",
+   "bytes": 2507168,
+   "center": [
+    -80.0,
+    -80.0
+   ]
+  },
+  {
+   "file": "t_-1_1.glb",
+   "bytes": 3291648,
+   "center": [
+    -80.0,
+    -240.0
+   ]
+  },
+  {
+   "file": "t_-1_2.glb",
+   "bytes": 2979088,
+   "center": [
+    -80.0,
+    -400.0
+   ]
+  },
+  {
+   "file": "t_-1_3.glb",
+   "bytes": 2449596,
+   "center": [
+    -80.0,
+    -560.0
+   ]
+  },
+  {
+   "file": "t_-1_4.glb",
+   "bytes": 1829176,
+   "center": [
+    -80.0,
+    -720.0
+   ]
+  },
+  {
+   "file": "t_-1_5.glb",
+   "bytes": 2231124,
+   "center": [
+    -80.0,
+    -880.0
+   ]
+  },
+  {
+   "file": "t_-1_6.glb",
+   "bytes": 1898952,
+   "center": [
+    -80.0,
+    -1040.0
+   ]
+  },
+  {
+   "file": "t_-1_7.glb",
+   "bytes": 137012,
+   "center": [
+    -80.0,
+    -1200.0
+   ]
+  },
+  {
+   "file": "t_-2_-1.glb",
+   "bytes": 4430984,
+   "center": [
+    -240.0,
+    80.0
+   ]
+  },
+  {
+   "file": "t_-2_-2.glb",
+   "bytes": 97944,
+   "center": [
+    -240.0,
+    240.0
+   ]
+  },
+  {
+   "file": "t_-2_0.glb",
+   "bytes": 4510580,
+   "center": [
+    -240.0,
+    -80.0
+   ]
+  },
+  {
+   "file": "t_-2_1.glb",
+   "bytes": 2471800,
+   "center": [
+    -240.0,
+    -240.0
+   ]
+  },
+  {
+   "file": "t_-2_2.glb",
+   "bytes": 2186796,
+   "center": [
+    -240.0,
+    -400.0
+   ]
+  },
+  {
+   "file": "t_-2_3.glb",
+   "bytes": 1667004,
+   "center": [
+    -240.0,
+    -560.0
+   ]
+  },
+  {
+   "file": "t_-2_4.glb",
+   "bytes": 738620,
+   "center": [
+    -240.0,
+    -720.0
+   ]
+  },
+  {
+   "file": "t_-2_5.glb",
+   "bytes": 119316,
+   "center": [
+    -240.0,
+    -880.0
+   ]
+  },
+  {
+   "file": "t_-3_-1.glb",
+   "bytes": 2890400,
+   "center": [
+    -400.0,
+    80.0
+   ]
+  },
+  {
+   "file": "t_-3_-2.glb",
+   "bytes": 845324,
+   "center": [
+    -400.0,
+    240.0
+   ]
+  },
+  {
+   "file": "t_-3_-3.glb",
+   "bytes": 686320,
+   "center": [
+    -400.0,
+    400.0
+   ]
+  },
+  {
+   "file": "t_-3_0.glb",
+   "bytes": 1705336,
+   "center": [
+    -400.0,
+    -80.0
+   ]
+  },
+  {
+   "file": "t_-3_1.glb",
+   "bytes": 2785892,
+   "center": [
+    -400.0,
+    -240.0
+   ]
+  },
+  {
+   "file": "t_-3_2.glb",
+   "bytes": 224208,
+   "center": [
+    -400.0,
+    -400.0
+   ]
+  },
+  {
+   "file": "t_-4_-2.glb",
+   "bytes": 272136,
+   "center": [
+    -560.0,
+    240.0
+   ]
+  },
+  {
+   "file": "t_-4_-3.glb",
+   "bytes": 272136,
+   "center": [
+    -560.0,
+    400.0
+   ]
+  },
+  {
+   "file": "t_0_0.glb",
+   "bytes": 3037264,
+   "center": [
+    80.0,
+    -80.0
+   ]
+  },
+  {
+   "file": "t_0_1.glb",
+   "bytes": 2524908,
+   "center": [
+    80.0,
+    -240.0
+   ]
+  },
+  {
+   "file": "t_0_2.glb",
+   "bytes": 455856,
+   "center": [
+    80.0,
+    -400.0
+   ]
+  },
+  {
+   "file": "t_0_7.glb",
+   "bytes": 273236,
+   "center": [
+    80.0,
+    -1200.0
+   ]
+  }
+ ],
+ "paint": [],
+ "source_saved": "October 31, 2026, last north-campus session (date UNVERIFIED; file restored November 18)",
+ "source_version": "montclair_north.blend",
+ "exported": "November 18, 2026, 2:46 PM ET",
+ "total_bytes": 55533260
+}

@@ -52,7 +52,9 @@ for o in bpy.context.scene.objects:
         mats=[s.material.name for s in getattr(o, "material_slots", []) if s.material],
         parent=o.parent.name if o.parent else None,
     )
-json.dump(out, open("/workspace/nj-scenes/scripts/web/objects.json", "w"))
+json.dump(
+    out, open(os.environ.get("WORK", "/workspace/nj-scenes/web/build/main") + "/objects.json", "w")
+)
 print("N", len(out), "visible", sum(1 for v in out.values() if v["v"]))
 for l in open("/proc/self/status"):
     if l.startswith("VmHWM"):
