@@ -1,0 +1,1533 @@
+{
+  "source": "OpenStreetMap contributors",
+  "licence": "ODbL 1.0",
+  "fetched": "2026-11-18",
+  "frame": "three.js metres; x east, -z grid north; origin EPSG:6527 E575880 N738340 ftUS",
+  "places": [
+    {
+      "name": "1286 Valley Road",
+      "kind": "building",
+      "x": -16.94,
+      "z": 201.47,
+      "lat": 40.8581914,
+      "lon": -74.1973956,
+      "r": 7.3,
+      "osm": "way/232850562",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "name": "Abbott & Costello Center",
+      "kind": "building",
+      "x": -139.88,
+      "z": -1144.07,
+      "lat": 40.8703127,
+      "lon": -74.1987989,
+      "r": 14.4,
+      "osm": "way/313032739",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Alexander Kasser Theater",
+      "kind": "building",
+      "x": -216.11,
+      "z": 30.09,
+      "lat": 40.859741,
+      "lon": -74.1997511,
+      "r": 40.0,
+      "osm": "way/312849089",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "theatre"
+      }
+    },
+    {
+      "name": "Alumni Green",
+      "kind": "landmark",
+      "x": -103.25,
+      "z": 33.62,
+      "lat": 40.8597057,
+      "lon": -74.1984125,
+      "r": 64.6,
+      "osm": "way/313023307",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "leisure": "park",
+        "wikidata": "Q34806866"
+      }
+    },
+    {
+      "name": "Alumni House",
+      "kind": "building",
+      "x": -358.99,
+      "z": 271.1,
+      "lat": 40.8575749,
+      "lon": -74.2014556,
+      "r": 8.7,
+      "osm": "way/232846660",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university",
+        "operator": "Montclair State University"
+      }
+    },
+    {
+      "name": "Amphitheater",
+      "kind": "landmark",
+      "x": -172.8,
+      "z": -15.01,
+      "lat": 40.8601458,
+      "lon": -74.1992354,
+      "r": 28.6,
+      "osm": "way/232850516",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "theatre"
+      }
+    },
+    {
+      "name": "Balance Kitchen at Freeman",
+      "kind": "building",
+      "x": -92.41,
+      "z": 246.37,
+      "lat": 40.8577894,
+      "lon": -74.1982925,
+      "r": 33.9,
+      "osm": "way/312845862",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "restaurant"
+      }
+    },
+    {
+      "name": "Ben Samuels Children's Center",
+      "kind": "building",
+      "x": -156.31,
+      "z": -810.4,
+      "lat": 40.8673083,
+      "lon": -74.1990074,
+      "r": 47.1,
+      "osm": "way/313031568",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "childcare"
+      }
+    },
+    {
+      "name": "Blanton Hall",
+      "kind": "building",
+      "x": 141.53,
+      "z": -450.61,
+      "lat": 40.8640589,
+      "lon": -74.195489,
+      "r": 60.9,
+      "osm": "way/313029108",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Bohn Hall",
+      "kind": "building",
+      "x": 228.81,
+      "z": -383.45,
+      "lat": 40.8634513,
+      "lon": -74.1944565,
+      "r": 39.2,
+      "osm": "way/232853538",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Calcia Hall",
+      "kind": "building",
+      "x": -91.24,
+      "z": -183.9,
+      "lat": 40.8616642,
+      "lon": -74.1982611,
+      "r": 42.1,
+      "osm": "way/313024770",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "2"
+      }
+    },
+    {
+      "name": "Center for Autism and Early Childhood Mental Health",
+      "kind": "building",
+      "x": -174.55,
+      "z": 318.26,
+      "lat": 40.8571445,
+      "lon": -74.1992697,
+      "r": 10.0,
+      "osm": "way/232846651",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Center for Computing and Information Science",
+      "kind": "building",
+      "x": 22.02,
+      "z": -215.58,
+      "lat": 40.861946,
+      "lon": -74.1969163,
+      "r": 30.4,
+      "osm": "way/313024779",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Center for Environmental and Life Sciences",
+      "kind": "building",
+      "x": 99.85,
+      "z": -185.2,
+      "lat": 40.86167,
+      "lon": -74.1959944,
+      "r": 37.1,
+      "osm": "way/313026393",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Chapin Hall",
+      "kind": "building",
+      "x": -192.9,
+      "z": 189.07,
+      "lat": 40.8583086,
+      "lon": -74.1994821,
+      "r": 46.2,
+      "osm": "relation/4196109",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Chapin Hall Quad",
+      "kind": "landmark",
+      "x": -139.55,
+      "z": 187.15,
+      "lat": 40.8583242,
+      "lon": -74.1988492,
+      "r": 51.4,
+      "osm": "way/552443363",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "leisure": "park"
+      }
+    },
+    {
+      "name": "Cogeneration Plant",
+      "kind": "building",
+      "x": -303.84,
+      "z": 72.65,
+      "lat": 40.8593604,
+      "lon": -74.2007933,
+      "r": 17.8,
+      "osm": "way/232850536",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Count Basie Hall",
+      "kind": "building",
+      "x": -97.57,
+      "z": -1197.11,
+      "lat": 40.870789,
+      "lon": -74.1982948,
+      "r": 36.8,
+      "osm": "way/313032036",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Dickson Hall",
+      "kind": "building",
+      "x": -158.55,
+      "z": -120.84,
+      "lat": 40.8610985,
+      "lon": -74.1990621,
+      "r": 48.4,
+      "osm": "way/313021892",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Feliciano School of Business",
+      "kind": "building",
+      "x": -223.53,
+      "z": -195.79,
+      "lat": 40.8617755,
+      "lon": -74.1998298,
+      "r": 39.3,
+      "osm": "way/375626230",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Finley Hall",
+      "kind": "building",
+      "x": -39.51,
+      "z": -106.81,
+      "lat": 40.8609684,
+      "lon": -74.1976507,
+      "r": 24.4,
+      "osm": "way/313021890",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Francis A. Sinatra Hall",
+      "kind": "building",
+      "x": -199.35,
+      "z": -955.92,
+      "lat": 40.8686201,
+      "lon": -74.199512,
+      "r": 38.2,
+      "osm": "way/313031583",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Freeman Hall",
+      "kind": "building",
+      "x": -91.66,
+      "z": 196.37,
+      "lat": 40.8582397,
+      "lon": -74.1982816,
+      "r": 27.5,
+      "osm": "way/312845860",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Gilbreth House",
+      "kind": "building",
+      "x": -45.17,
+      "z": 222.82,
+      "lat": 40.858,
+      "lon": -74.1977313,
+      "r": 15.2,
+      "osm": "way/232846662",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "name": "Greenhouse",
+      "kind": "building",
+      "x": -186.39,
+      "z": -712.4,
+      "lat": 40.8664267,
+      "lon": -74.1993682,
+      "r": 13.2,
+      "osm": "way/233913252",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Hawk Crossings - Accipiter",
+      "kind": "building",
+      "x": -282.06,
+      "z": -749.36,
+      "lat": 40.8667625,
+      "lon": -74.2005016,
+      "r": 37.3,
+      "osm": "way/313030885",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Hawk Crossings - Buteo",
+      "kind": "building",
+      "x": -255.74,
+      "z": -830.44,
+      "lat": 40.8674918,
+      "lon": -74.2001862,
+      "r": 43.1,
+      "osm": "way/313030893",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Hawk Crossings - Falco",
+      "kind": "building",
+      "x": -310.98,
+      "z": -663.29,
+      "lat": 40.8659883,
+      "lon": -74.2008482,
+      "r": 46.3,
+      "osm": "way/313030872",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Health Drop-In Center",
+      "kind": "building",
+      "x": 55.09,
+      "z": -287.13,
+      "lat": 40.8625893,
+      "lon": -74.1965211,
+      "r": 9.7,
+      "osm": "way/313027427",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "doctors"
+      }
+    },
+    {
+      "name": "Irvin D. Reid Hall",
+      "kind": "building",
+      "x": 101.68,
+      "z": -308.79,
+      "lat": 40.862783,
+      "lon": -74.1959676,
+      "r": 36.7,
+      "osm": "way/313027434",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "L. Howard Fox Theater",
+      "kind": "landmark",
+      "x": 85.5,
+      "z": -131.85,
+      "lat": 40.86119,
+      "lon": -74.1961668,
+      "r": 0.0,
+      "osm": "node/3189425424",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "theatre"
+      }
+    },
+    {
+      "name": "Life Hall",
+      "kind": "building",
+      "x": 28.65,
+      "z": -56.68,
+      "lat": 40.8605148,
+      "lon": -74.1968442,
+      "r": 51.9,
+      "osm": "way/313021866",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Lot 10",
+      "kind": "parking",
+      "x": -31.16,
+      "z": 99.62,
+      "lat": 40.8591091,
+      "lon": -74.1975601,
+      "r": 24.1,
+      "osm": "way/312932817",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 17",
+      "kind": "parking",
+      "x": 41.41,
+      "z": -415.75,
+      "lat": 40.8637481,
+      "lon": -74.196678,
+      "r": 61.4,
+      "osm": "way/313029107",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 19",
+      "kind": "parking",
+      "x": 212.28,
+      "z": -531.87,
+      "lat": 40.8647885,
+      "lon": -74.1946464,
+      "r": 58.1,
+      "osm": "way/313029928",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "amenity": "parking",
+        "operator": "Montclair State University"
+      }
+    },
+    {
+      "name": "Lot 27",
+      "kind": "parking",
+      "x": -242.59,
+      "z": -654.34,
+      "lat": 40.8659055,
+      "lon": -74.2000373,
+      "r": 61.9,
+      "osm": "way/313030648",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 28",
+      "kind": "parking",
+      "x": -116.94,
+      "z": -902.09,
+      "lat": 40.8681328,
+      "lon": -74.1985366,
+      "r": 40.3,
+      "osm": "way/313031581",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 28S",
+      "kind": "parking",
+      "x": -189.98,
+      "z": -668.29,
+      "lat": 40.8660296,
+      "lon": -74.1994127,
+      "r": 55.6,
+      "osm": "way/313031565",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 29",
+      "kind": "parking",
+      "x": -258.54,
+      "z": -736.9,
+      "lat": 40.8666495,
+      "lon": -74.2002231,
+      "r": 118.9,
+      "osm": "way/313030881",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 3",
+      "kind": "parking",
+      "x": -296.21,
+      "z": 210.17,
+      "lat": 40.8581218,
+      "lon": -74.2007084,
+      "r": 29.3,
+      "osm": "way/312847995",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 30",
+      "kind": "parking",
+      "x": -274.7,
+      "z": -306.75,
+      "lat": 40.8627762,
+      "lon": -74.2004323,
+      "r": 59.6,
+      "osm": "way/313029916",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 30S",
+      "kind": "parking",
+      "x": -359.82,
+      "z": -75.62,
+      "lat": 40.8606974,
+      "lon": -74.2014513,
+      "r": 80.4,
+      "osm": "way/313021899",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 33",
+      "kind": "parking",
+      "x": -347.04,
+      "z": 46.3,
+      "lat": 40.8595991,
+      "lon": -74.2013047,
+      "r": 40.7,
+      "osm": "way/312848723",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 36",
+      "kind": "parking",
+      "x": -326.41,
+      "z": 232.39,
+      "lat": 40.8579226,
+      "lon": -74.2010675,
+      "r": 16.9,
+      "osm": "way/487498693",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 38",
+      "kind": "parking",
+      "x": 16.38,
+      "z": -342.55,
+      "lat": 40.8630897,
+      "lon": -74.196978,
+      "r": 23.0,
+      "osm": "way/313028558",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 4",
+      "kind": "parking",
+      "x": -204.59,
+      "z": 249.35,
+      "lat": 40.8577661,
+      "lon": -74.1996233,
+      "r": 24.7,
+      "osm": "way/312841186",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 42",
+      "kind": "parking",
+      "x": -389.26,
+      "z": 106.96,
+      "lat": 40.8590541,
+      "lon": -74.201808,
+      "r": 35.1,
+      "osm": "way/312848722",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 5",
+      "kind": "parking",
+      "x": -127.93,
+      "z": 270.73,
+      "lat": 40.8575712,
+      "lon": -74.1987149,
+      "r": 36.3,
+      "osm": "way/312841181",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 7",
+      "kind": "parking",
+      "x": -242.85,
+      "z": 89.72,
+      "lat": 40.8592049,
+      "lon": -74.2000706,
+      "r": 21.8,
+      "osm": "way/785130900",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 8",
+      "kind": "parking",
+      "x": -234.66,
+      "z": 75.68,
+      "lat": 40.859331,
+      "lon": -74.1999728,
+      "r": 21.1,
+      "osm": "way/291713841",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "Lot 9",
+      "kind": "parking",
+      "x": -70.88,
+      "z": 192.73,
+      "lat": 40.8582719,
+      "lon": -74.198035,
+      "r": 15.9,
+      "osm": "way/312845867",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "amenity": "parking"
+      }
+    },
+    {
+      "name": "MSU Softball Stadium",
+      "kind": "sports",
+      "x": -28.37,
+      "z": -790.96,
+      "lat": 40.8671293,
+      "lon": -74.1974905,
+      "r": 50.3,
+      "osm": "way/233324747",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "leisure": "stadium"
+      }
+    },
+    {
+      "name": "Maintenance Building",
+      "kind": "building",
+      "x": -357.9,
+      "z": 59.24,
+      "lat": 40.8594829,
+      "lon": -74.201434,
+      "r": 35.6,
+      "osm": "way/232850495",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Memorial Auditorium",
+      "kind": "building",
+      "x": 64.31,
+      "z": -101.11,
+      "lat": 40.8609138,
+      "lon": -74.1964194,
+      "r": 31.7,
+      "osm": "way/313021868",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "theatre"
+      }
+    },
+    {
+      "name": "Montclair District Energy Plant",
+      "kind": "building",
+      "x": -37.97,
+      "z": -482.93,
+      "lat": 40.8643555,
+      "lon": -74.197617,
+      "r": 31.3,
+      "osm": "way/232853403",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Montclair Heights",
+      "kind": "station",
+      "x": -454.15,
+      "z": 266.07,
+      "lat": 40.8576232,
+      "lon": -74.202584,
+      "r": 0.0,
+      "osm": "node/7009814496",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "railway": "station",
+        "operator": "New Jersey Transit Rail Operations",
+        "wikidata": "Q6904595"
+      }
+    },
+    {
+      "name": "Montclair State University",
+      "kind": "station",
+      "x": -28.12,
+      "z": -1063.42,
+      "lat": 40.8695829,
+      "lon": -74.1974764,
+      "r": 0.0,
+      "osm": "node/7009814504",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "railway": "station",
+        "operator": "New Jersey Transit Rail Operations",
+        "wikidata": "Q6904608"
+      }
+    },
+    {
+      "name": "Montclair State University Ice Arena",
+      "kind": "building",
+      "x": -82.87,
+      "z": -645.65,
+      "lat": 40.8658224,
+      "lon": -74.198143,
+      "r": 56.6,
+      "osm": "way/233324743",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "leisure": "ice_rink",
+        "sport": "ice_hockey"
+      }
+    },
+    {
+      "name": "Montclair State University Police",
+      "kind": "building",
+      "x": -355.52,
+      "z": -0.88,
+      "lat": 40.8600242,
+      "lon": -74.2014034,
+      "r": 16.8,
+      "osm": "way/232846896",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "police"
+      }
+    },
+    {
+      "name": "Morehead Hall",
+      "kind": "building",
+      "x": -24.37,
+      "z": 44.03,
+      "lat": 40.8596095,
+      "lon": -74.1974773,
+      "r": 31.0,
+      "osm": "way/312933183",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "NJ Transit Deck",
+      "kind": "parking",
+      "x": -86.66,
+      "z": -1019.18,
+      "lat": 40.8691864,
+      "lon": -74.1981726,
+      "r": 66.3,
+      "osm": "way/233913197",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "parking",
+        "operator": "Montclair State University"
+      }
+    },
+    {
+      "name": "Overlook Corporate Center",
+      "kind": "building",
+      "x": 141.66,
+      "z": -1255.16,
+      "lat": 40.8713043,
+      "lon": -74.1954543,
+      "r": 62.3,
+      "osm": "way/313431637",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "office"
+      }
+    },
+    {
+      "name": "Panzer Athletic Center",
+      "kind": "sports",
+      "x": -267.42,
+      "z": 183.48,
+      "lat": 40.8583612,
+      "lon": -74.2003659,
+      "r": 59.4,
+      "osm": "way/312847981",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "leisure": "sports_centre"
+      }
+    },
+    {
+      "name": "Paul Hall",
+      "kind": "building",
+      "x": -143.32,
+      "z": -1219.26,
+      "lat": 40.87099,
+      "lon": -74.1988367,
+      "r": 37.0,
+      "osm": "way/313032037",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Pittser Field",
+      "kind": "sports",
+      "x": -274.63,
+      "z": -94.01,
+      "lat": 40.8608604,
+      "lon": -74.2004402,
+      "r": 70.0,
+      "osm": "way/232853515",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "leisure": "pitch",
+        "sport": "soccer"
+      }
+    },
+    {
+      "name": "Red Bulls Field House",
+      "kind": "building",
+      "x": -272.82,
+      "z": -163.95,
+      "lat": 40.8614902,
+      "lon": -74.2004158,
+      "r": 11.9,
+      "osm": "way/958074957",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Red Hawk Catholic",
+      "kind": "landmark",
+      "x": 48.22,
+      "z": 75.22,
+      "lat": 40.8593264,
+      "lon": -74.1966176,
+      "r": 12.0,
+      "osm": "way/232850502",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "amenity": "place_of_worship"
+      }
+    },
+    {
+      "name": "Red Hawk Deck",
+      "kind": "parking",
+      "x": -286.37,
+      "z": 8.35,
+      "lat": 40.859939,
+      "lon": -74.2005835,
+      "r": 53.3,
+      "osm": "way/312849085",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "parking",
+        "operator": "Montclair State University"
+      }
+    },
+    {
+      "name": "Red Hawk Diner",
+      "kind": "building",
+      "x": -26.07,
+      "z": -375.87,
+      "lat": 40.863391,
+      "lon": -74.1974802,
+      "r": 16.4,
+      "osm": "way/313028560",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "restaurant"
+      }
+    },
+    {
+      "name": "Richardson Hall",
+      "kind": "building",
+      "x": 84.49,
+      "z": -264.13,
+      "lat": 40.8623813,
+      "lon": -74.1961733,
+      "r": 34.7,
+      "osm": "way/313027426",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Russ Hall",
+      "kind": "building",
+      "x": -150.81,
+      "z": 241.99,
+      "lat": 40.8578307,
+      "lon": -74.1989851,
+      "r": 30.0,
+      "osm": "way/312841182",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Schmitt Hall",
+      "kind": "building",
+      "x": -3.43,
+      "z": -153.35,
+      "lat": 40.8613864,
+      "lon": -74.1972208,
+      "r": 46.5,
+      "osm": "way/313023306",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "School of Communication and Media",
+      "kind": "building",
+      "x": 2.53,
+      "z": -5.48,
+      "lat": 40.8600546,
+      "lon": -74.1971561,
+      "r": 38.5,
+      "osm": "way/1188721159",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "2"
+      }
+    },
+    {
+      "name": "School of Nursing/The Graduate School",
+      "kind": "building",
+      "x": -83.47,
+      "z": -256.97,
+      "lat": 40.862322,
+      "lon": -74.198166,
+      "r": 25.5,
+      "osm": "way/313026395",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Science Quad",
+      "kind": "landmark",
+      "x": 59.53,
+      "z": -213.62,
+      "lat": 40.8619272,
+      "lon": -74.1964714,
+      "r": 47.6,
+      "osm": "way/552443707",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "leisure": "park"
+      }
+    },
+    {
+      "name": "Speech Building",
+      "kind": "building",
+      "x": 85.7,
+      "z": -131.28,
+      "lat": 40.8611849,
+      "lon": -74.1961644,
+      "r": 22.9,
+      "osm": "way/313023807",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Sprague Field",
+      "kind": "sports",
+      "x": -336.09,
+      "z": 157.11,
+      "lat": 40.8586008,
+      "lon": -74.2011793,
+      "r": 64.0,
+      "osm": "way/232846653",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "leisure": "pitch",
+        "sport": "american_football",
+        "wikidata": "Q7580182"
+      }
+    },
+    {
+      "name": "Sprague Library",
+      "kind": "building",
+      "x": -76.96,
+      "z": -32.31,
+      "lat": 40.8602987,
+      "lon": -74.198098,
+      "r": 51.5,
+      "osm": "way/313021863",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "library"
+      }
+    },
+    {
+      "name": "Stone Hall",
+      "kind": "building",
+      "x": 152.12,
+      "z": -259.59,
+      "lat": 40.8623383,
+      "lon": -74.1953713,
+      "r": 48.9,
+      "osm": "way/313028565",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "dormitory"
+      }
+    },
+    {
+      "name": "Student Center",
+      "kind": "building",
+      "x": -3.89,
+      "z": -305.12,
+      "lat": 40.8627532,
+      "lon": -74.19722,
+      "r": 49.0,
+      "osm": "way/313026743",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Student Center Annex",
+      "kind": "building",
+      "x": -79.26,
+      "z": -317.66,
+      "lat": 40.8628685,
+      "lon": -74.1981135,
+      "r": 41.2,
+      "osm": "way/313026744",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Student Center Quad",
+      "kind": "landmark",
+      "x": -41.17,
+      "z": -187.97,
+      "lat": 40.8616994,
+      "lon": -74.197667,
+      "r": 51.8,
+      "osm": "way/313024806",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "leisure": "park"
+      }
+    },
+    {
+      "name": "Student Recreation Center",
+      "kind": "sports",
+      "x": 215.01,
+      "z": -623.91,
+      "lat": 40.8656172,
+      "lon": -74.1946102,
+      "r": 51.6,
+      "osm": "way/313029984",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "yes",
+        "leisure": "sports_centre"
+      }
+    },
+    {
+      "name": "Susan A. Cole Hall",
+      "kind": "building",
+      "x": -112.86,
+      "z": 95.23,
+      "lat": 40.8591512,
+      "lon": -74.198529,
+      "r": 58.3,
+      "osm": "way/312932811",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "3"
+      }
+    },
+    {
+      "name": "TV Tower",
+      "kind": "building",
+      "x": -270.16,
+      "z": -549.01,
+      "lat": 40.8649578,
+      "lon": -74.2003687,
+      "r": 12.5,
+      "osm": "way/233913195",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Tennis Courts",
+      "kind": "sports",
+      "x": -39.63,
+      "z": -724.87,
+      "lat": 40.8665344,
+      "lon": -74.1976267,
+      "r": 33.9,
+      "osm": "way/233324761",
+      "scenes": [
+        "north"
+      ],
+      "tags": {
+        "leisure": "pitch",
+        "sport": "tennis"
+      }
+    },
+    {
+      "name": "University Hall",
+      "kind": "building",
+      "x": -158.15,
+      "z": -266.95,
+      "lat": 40.8624142,
+      "lon": -74.1990514,
+      "r": 55.9,
+      "osm": "relation/4198963",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    },
+    {
+      "name": "Valley Animal Hospital",
+      "kind": "building",
+      "x": 249.11,
+      "z": -185.34,
+      "lat": 40.8616666,
+      "lon": -74.1942239,
+      "r": 20.0,
+      "osm": "way/1549169315",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "commercial",
+        "amenity": "veterinary"
+      }
+    },
+    {
+      "name": "Valley Regency",
+      "kind": "building",
+      "x": 300.87,
+      "z": -296.84,
+      "lat": 40.8626691,
+      "lon": -74.1936052,
+      "r": 39.6,
+      "osm": "way/1549169316",
+      "scenes": [
+        "main"
+      ],
+      "tags": {
+        "building": "yes",
+        "amenity": "events_venue"
+      }
+    },
+    {
+      "name": "Webster Hall",
+      "kind": "building",
+      "x": 115.9,
+      "z": -369.81,
+      "lat": 40.8633321,
+      "lon": -74.1957963,
+      "r": 34.6,
+      "osm": "way/313029100",
+      "scenes": [
+        "main",
+        "north"
+      ],
+      "tags": {
+        "building": "university"
+      }
+    }
+  ]
+}
