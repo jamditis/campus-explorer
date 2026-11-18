@@ -45,6 +45,8 @@ function fixMaterials(root) {
     for (const m of mats) {
       if (!m) continue;
       if (m.map) m.map.anisotropy = 4;
+      // leaf cards exported without an opacity map would show their white texture background: draw them as solid foliage
+      if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.needsUpdate = true; continue; }
       if (m.alphaTest > 0 || (m.transparent && m.map)) { m.alphaTest = 0.45; m.transparent = false; m.side = THREE.DoubleSide; m.userData.leaf = true; }
       else if (m.transparent) { m.depthWrite = false; m.userData.glass = true; }
     }
