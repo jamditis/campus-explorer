@@ -1,0 +1,100 @@
+{
+ "tiles": [
+  {
+   "file": "context.glb",
+   "bytes": 17435096
+  },
+  {
+   "file": "t_-1_-1.glb",
+   "bytes": 10589860
+  },
+  {
+   "file": "t_-1_-2.glb",
+   "bytes": 10375720
+  },
+  {
+   "file": "t_-1_0.glb",
+   "bytes": 3170392
+  },
+  {
+   "file": "t_-1_1.glb",
+   "bytes": 3373464
+  },
+  {
+   "file": "t_-1_2.glb",
+   "bytes": 90944
+  },
+  {
+   "file": "t_-2_-1.glb",
+   "bytes": 20932228
+  },
+  {
+   "file": "t_-2_-2.glb",
+   "bytes": 37048780
+  },
+  {
+   "file": "t_-2_0.glb",
+   "bytes": 3621956
+  },
+  {
+   "file": "t_-2_1.glb",
+   "bytes": 1521844
+  },
+  {
+   "file": "t_-3_-1.glb",
+   "bytes": 4400
+  },
+  {
+   "file": "t_-3_-2.glb",
+   "bytes": 661492
+  },
+  {
+   "file": "t_0_-1.glb",
+   "bytes": 3099892
+  },
+  {
+   "file": "t_0_-2.glb",
+   "bytes": 2673436
+  },
+  {
+   "file": "t_0_0.glb",
+   "bytes": 4569744
+  },
+  {
+   "file": "t_0_1.glb",
+   "bytes": 4245824
+  },
+  {
+   "file": "t_0_2.glb",
+   "bytes": 2607600
+  },
+  {
+   "file": "t_1_-1.glb",
+   "bytes": 2799728
+  },
+  {
+   "file": "t_1_-2.glb",
+   "bytes": 2796836
+  },
+  {
+   "file": "t_1_0.glb",
+   "bytes": 2529912
+  },
+  {
+   "file": "t_1_1.glb",
+   "bytes": 1630532
+  },
+  {
+   "file": "t_1_2.glb",
+   "bytes": 1886212
+  },
+  {
+   "file": "t_1_3.glb",
+   "bytes": 2002724
+  }
+ ],
+ "source_saved": "November 18, 2026, 12:36 PM ET",
+ "source_version": "ws213b",
+ "exported": "November 18, 2026, 1:51 PM ET",
+ "total_bytes": 139668616
+}

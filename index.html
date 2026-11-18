@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Montclair State campus · working model</title>
+<meta name="description" content="Interactive browser preview of a work-in-progress 3D model of the Montclair State University campus.">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/","three-mesh-bvh":"./vendor/three-mesh-bvh.module.js"}}</script>
+</head>
+<body>
+<main id="viewer" aria-label="Interactive campus model">
+  <canvas id="canvas" tabindex="0" aria-label="3D campus view. Use the controls to orbit, fly, or walk in first or third person."></canvas>
+</main>
+<header>
+  <div class="brand-mark" aria-hidden="true">M</div>
+  <div><h1>Montclair State campus</h1><p>Explore the working model</p></div>
+  <span class="draft">Working preview</span>
+</header>
+<section class="panel" aria-label="Viewer controls">
+  <label class="label" for="tile">Campus scene</label>
+  <select id="tile"><option value="main">Main campus</option></select>
+  <div class="mode" role="group" aria-label="Navigation mode">
+    <button id="orbit" class="active" aria-pressed="true">Orbit</button>
+    <button id="fly" aria-pressed="false">Fly</button>
+    <button id="walk" aria-pressed="false">Walk</button>
+  </div>
+  <div class="actions"><button id="reset" title="Return to the campus overview">↺ Overview</button><button id="top">Top view</button></div>
+  <div id="flight-controls" hidden>
+    <label for="speed">Flight speed <output id="speed-label">40 m/s</output></label>
+    <input type="range" id="speed" min="5" max="200" step="5" value="40">
+  </div>
+  <div id="walk-controls" hidden>
+    <div class="mode walk-view" role="group" aria-label="Walking perspective">
+      <button id="view-first" class="active" aria-pressed="true">First person</button>
+      <button id="view-third" aria-pressed="false">Third person</button>
+    </div>
+    <div class="walk-actions"><button id="jump">Jump · Space</button><button id="respawn">↺ Respawn</button></div>
+    <p id="walk-status" role="status" aria-live="polite">Click the view to look around. WASD to move, Shift to run.</p>
+  </div>
+  <p id="help">Drag to orbit · Scroll to zoom<br>Right-drag to pan</p>
+  <label class="quality"><input id="quality" type="checkbox"> Sharper display</label>
+  <details>
+    <summary>About this model</summary>
+    <p id="source-snapshot">Source snapshot: loading…</p>
+    <p>This is a work in progress, not a survey or an as-built record. Building detail, ground grading and geographic alignment remain provisional, and many parts are marked unverified in the source model.</p>
+    <p>The browser edition simplifies the original Blender model: materials are reduced to flat colours plus a few tileable textures, trees are thinned, distant scenery is lighter, and lawn grass and some interiors are left out. It does not change the original model.</p>
+    <p>Walk mode follows the modeled ground and stops at solid walls. Trees and small details do not block you.</p>
+    <p>Selected surface and leaf textures are from <a href="https://ambientcg.com/" target="_blank" rel="noopener">ambientCG</a>, licensed CC0; other leaf atlases are authored for this project. Reference photographs and aerial imagery are not redistributed. Elevation comes from public NJ/USGS LiDAR; some layout follows OpenStreetMap.</p>
+  </details>
+</section>
+<div id="load" role="status" aria-live="polite"><span class="spinner"></span><span id="load-text">Preparing campus…</span></div>
+<section id="error" role="alert" hidden><h2 id="error-title">Couldn’t open this scene</h2><p id="error-text"></p><button id="retry">Try again</button></section>
+<footer>
+  <span id="scene-label">Main campus</span>
+  <span class="footnote" id="footnote">Working model · Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors · ODbL</a></span>
+  <span id="performance" aria-live="off"></span>
+</footer>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
