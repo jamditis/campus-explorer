@@ -4,8 +4,13 @@ USGS 3DEP 10 m DEM the model's skirt is built from. No imagery is used.
 Writes into OUT (models/main):
   landcover.webp   RGB land-cover colour map over the 4 km skirt (x, y in [-2000, 2000] Blender m)
   far_trees.bin    Float32 [x, y, z, crown radius, height] per tree (three.js axes), woods and yards
-  far_houses.glb   (via RAW/far_houses.raw.glb + gltf-transform) OSM building footprints outside the modelled campus, extruded with simple roofs
-env: OSM (folder of .osm map tiles), DEM (skirt_dem_10m.npy), OUT, WORK_MAIN, WORK_NORTH (plans: what is modelled)
+  far_houses.glb   (via RAW/far_houses.raw.glb + gltf-transform) real building footprints outside the modelled campus,
+                   extruded with simple roofs: OSM where mapped, otherwise Microsoft Global ML Building Footprints (ODbL).
+                   Heights come from USGS 3DEP LiDAR (surface minus ground) where it covers the footprint, then OSM
+                   height/levels tags, then the footprint layer's own height estimate. Nothing is invented: where no
+                   footprint exists the ground stays bare.
+env: OSM (folder of .osm map tiles), DEM (skirt_dem_10m.npy), OUT, WORK_MAIN, WORK_NORTH (plans: what is modelled),
+     FOOTPRINTS (Microsoft footprints clipped to the box, GeoJSON lines), NDSM (comma-separated LiDAR grids from ndsm_ept.py)
 Run with a Python that has pyproj, shapely, numpy and Pillow.
 """
 import glob
@@ -13,6 +18,7 @@ import json
 import math
 import os
 import random
+import re
 import struct
 import xml.etree.ElementTree as ET
 
@@ -20,6 +26,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 from pyproj import Transformer
 from shapely.geometry import Polygon
+from shapely.strtree import STRtree
 
 OSM = os.environ.get("OSM", "/workspace/nj-scenes/web/build/landcover")
 DEM = os.environ.get("DEM", "/workspace/nj-scenes/montclair-state/data/skirt_dem_10m.npy")
@@ -65,6 +72,22 @@ for wk in (WM, WN):
         if v["v"] and v["t"] == "MESH" and ("terrain" in n.lower() or "DTM" in n) and 100 < max(x1 - x0, y1 - y0) < 1500:
             modelled.append((x0, x1, y0, y1))
 print("modelled terrain boxes", modelled)
+# modelled buildings and site features (same test make_chunks uses): no far-field footprint may double one
+mbld = []
+for wk in (WM, WN):
+    p = wk + "/objects.json"
+    if os.path.exists(p):
+        for n, v in json.load(open(p)).items():
+            x0, x1, y0, y1 = v["bb"][:4]
+            if v["v"] and v["t"] == "MESH" and v.get("tri", 0) > 50 and max(x1 - x0, y1 - y0) < 150 and not n.startswith(("BD_", "MID_")) \
+                    and not re.search(r"terrain|DTM|ground|apron|lawn|paving|asphalt|walk|curb|grass|tree|shrub|skirt|Context_", n, re.I):
+                mbld.append((x0, x1, y0, y1))
+mbld_a = np.array(mbld) if mbld else np.zeros((0, 4))
+
+
+def in_modelled_building(x, y):
+    a = mbld_a
+    return bool(((a[:, 0] < x) & (x < a[:, 1]) & (a[:, 2] < y) & (y < a[:, 3])).any())
 
 
 def is_modelled(x, y, pad=0.0):
@@ -111,8 +134,6 @@ img = Image.new("RGB", (RES, RES), PAL["base"])
 dr = ImageDraw.Draw(img)
 cls_img = Image.new("L", (RES, RES), 0)
 cd = ImageDraw.Draw(cls_img)
-blk = Image.new("L", (RES, RES), 0)  # 255 = no synthetic house here (roads, buildings, water, woods, parks)
-bd = ImageDraw.Draw(blk)
 CLS = {"wood": 1, "residential": 2, "park": 3, "scrub": 4, "cemetery": 5, "golf": 6}
 px = lambda p: ((p[0] + HALF) / (2 * HALF) * RES, (HALF - p[1]) / (2 * HALF) * RES)
 areas = []
@@ -136,7 +157,6 @@ ORDER = ["residential", "commercial", "industrial", "cemetery", "golf", "grass",
 for _, kind, pts in sorted(areas, key=lambda a: (-a[0], ORDER.index(a[1]) if a[1] in ORDER else 0)):
     dr.polygon([px(p) for p in pts], fill=PAL[kind])
     cd.polygon([px(p) for p in pts], fill=CLS.get(kind, 0))
-    bd.polygon([px(p) for p in pts], fill=0 if kind == "residential" else 255)
 ROADW = {"motorway": 14, "trunk": 12, "primary": 11, "secondary": 9, "tertiary": 8, "residential": 6.5, "unclassified": 6, "service": 4, "living_street": 5}
 for refs, t in ways.values():
     h = t.get("highway")
@@ -147,7 +167,6 @@ for refs, t in ways.values():
         w = max(1, int(round(ROADW[h] / (2 * HALF / RES))))
         dr.line([px(p) for p in pts], fill=PAL["road"], width=w)
         cd.line([px(p) for p in pts], fill=0, width=w + 2)
-        bd.line([px(p) for p in pts], fill=255, width=w + 3)
     elif t.get("railway") in ("rail", "light_rail"):
         dr.line([px(p) for p in pts], fill=PAL["rail"], width=max(1, int(6 / (2 * HALF / RES))))
         cd.line([px(p) for p in pts], fill=0, width=4)
@@ -158,55 +177,38 @@ for refs, t in ways.values():
         if len(pts) > 3:
             dr.polygon([px(p) for p in pts], fill=PAL["building"])
             cd.polygon([px(p) for p in pts], fill=0)
-            bd.polygon([px(p) for p in pts], fill=255)
             buildings.append((pts, t))
-# ---------- synthetic frontage houses (OSM has few house footprints here) ----------
-# Along residential streets outside the modelled campus: a 9-11 x 11-14 m house every ~22 m on both
-# sides, set back from the road, only on residential or untagged land that is free of roads, mapped
-# buildings, water, woods and parks. These are placeholders for the far field, not mapped buildings.
-SYN = {"residential", "unclassified", "living_street", "tertiary"}
-blk_a = np.asarray(blk)
-taken = set()
-synth = []
-
-
-def free(x, y, r=4.5):
-    for dx in (-r, 0, r):
-        for dy in (-r, 0, r):
-            u, v = px((x + dx, y + dy))
-            if not (0 <= u < RES and 0 <= v < RES) or blk_a[int(v), int(u)]:
-                return False
-    return True
-
-
-for refs, t in ways.values():
-    if t.get("highway") not in SYN:
-        continue
-    pts = coords(refs)
-    off = ROADW.get(t.get("highway"), 6) / 2 + 12
-    for (x1, y1), (x2, y2) in zip(pts, pts[1:], strict=False):
-        L = math.hypot(x2 - x1, y2 - y1)
-        if L < 8:
+# ---------- Microsoft Global ML Building Footprints (ODbL) where OSM has no building ----------
+FOOTPRINTS = os.environ.get("FOOTPRINTS", "/workspace/nj-scenes/web/build/footprints/ms_bbox.geojsonl")
+osm_polys = []
+for pts, _t in buildings:
+    p = Polygon(pts)
+    osm_polys.append(p if p.is_valid else p.buffer(0))
+osm_tree = STRtree(osm_polys) if osm_polys else None
+n_ms = n_dup = 0
+if os.path.exists(FOOTPRINTS):
+    for line in open(FOOTPRINTS):
+        f = json.loads(line)
+        if f["geometry"]["type"] != "Polygon":
             continue
-        ux, uy = (x2 - x1) / L, (y2 - y1) / L
-        s0 = random.uniform(4, 14)
-        while s0 < L - 4:
-            for side in (-1, 1):
-                cx = x1 + ux * s0 - uy * off * side
-                cy = y1 + uy * s0 + ux * off * side
-                key = (int(cx // 16), int(cy // 16))
-                if key in taken or abs(cx) > 1950 or abs(cy) > 1950 or is_modelled(cx, cy, 15) or not free(cx, cy):
-                    continue
-                taken.add(key)
-                w, d = random.uniform(9, 11) / 2, random.uniform(11, 14) / 2
-                corners = [(cx + ux * a - uy * b * side, cy + uy * a + ux * b * side) for a, b in ((-w, -d), (w, -d), (w, d), (-w, d))]
-                synth.append(corners)
-                dr.polygon([px(p) for p in corners], fill=PAL["building"])
-                cd.polygon([px(p) for p in corners], fill=0)  # no far-field tree inside a house
-            s0 += random.uniform(19, 26)
-print("synthetic houses", len(synth))
-for c in synth:
-    buildings.append((c + [c[0]], {"building": "house", "synthetic": "yes"}))
+        ring = f["geometry"]["coordinates"][0]
+        e, n = to_sp.transform([c[0] for c in ring], [c[1] for c in ring])
+        pts = [((a - E0) * FT, (b - N0) * FT) for a, b in zip(e, n, strict=True)]
+        p = Polygon(pts)
+        if not p.is_valid or p.area < 12:
+            continue
+        if osm_tree is not None and any(p.intersection(osm_polys[i]).area > 0.3 * min(p.area, osm_polys[i].area) for i in osm_tree.query(p)):
+            n_dup += 1  # OSM already maps this building
+            continue
+        h = f["properties"].get("height")
+        t = {"building": "yes", "source": "microsoft"}
+        if h and h > 0:
+            t["ms_height"] = h
+        dr.polygon([px(q) for q in pts], fill=PAL["building"])
+        cd.polygon([px(q) for q in pts], fill=0)  # no far-field tree inside a building
+        buildings.append((pts, t))
+        n_ms += 1
+print("microsoft footprints", n_ms, "skipped (already in OSM)", n_dup)
 # light per-pixel variation so flat fills don't read as paint
 a = np.asarray(img).astype(np.float32)
 noise = np.random.default_rng(3).normal(0, 1, (RES // 8, RES // 8)).astype(np.float32)
@@ -225,6 +227,48 @@ def zat(x, y):
     c0, r0 = int(np.clip(math.floor(c), 0, 398)), int(np.clip(math.floor(r), 0, 398))
     fc, fr = min(max(c - c0, 0), 1), min(max(r - r0, 0), 1)
     return float(D[r0, c0] * (1 - fc) * (1 - fr) + D[r0, c0 + 1] * fc * (1 - fr) + D[r0 + 1, c0] * (1 - fc) * fr + D[r0 + 1, c0 + 1] * fc * fr)
+
+
+# ---------- LiDAR surface/ground grids (2 m, model metres; see ndsm_ept.py) ----------
+NDSM = [g for g in os.environ.get("NDSM", "/workspace/nj-scenes/web/build/footprints/ndsm_b17.npz").split(",") if os.path.exists(g)]
+LID = []
+for g in NDSM:
+    z = np.load(g)
+    gn = z["gn"]
+    LID.append((z["b"], np.where(gn > 0, z["gs"] / np.maximum(gn, 1), np.nan)))
+LR, LH = 2.0, 2000.0
+LN = int(2 * LH / LR)
+
+
+def lidar_height(poly):
+    """Building height from LiDAR: 75th percentile surface inside the footprint (shrunk 1 m off the eaves)
+    minus the median ground in a 2-8 m ring around it. None when no grid covers it well."""
+    inner = poly.buffer(-1.0)
+    if inner.is_empty or inner.area < 8:
+        inner = poly
+    ring = poly.buffer(8).difference(poly.buffer(2))
+    x0, y0, x1, y1 = ring.bounds
+    c0, c1 = max(0, int((x0 + LH) / LR)), min(LN - 1, int((x1 + LH) / LR))
+    r0, r1 = max(0, int((LH - y1) / LR)), min(LN - 1, int((LH - y0) / LR))
+    if c1 < c0 or r1 < r0:
+        return None
+    cc, rr = np.meshgrid(np.arange(c0, c1 + 1), np.arange(r0, r1 + 1))
+    xs, ys = -LH + (cc + 0.5) * LR, LH - (rr + 0.5) * LR
+    from shapely import contains_xy
+    m_in = contains_xy(inner, xs, ys)
+    m_ring = contains_xy(ring, xs, ys)
+    if m_in.sum() < 2:
+        return None
+    for surf, grd in LID:
+        s_in = surf[r0:r1 + 1, c0:c1 + 1][m_in]
+        g_r = grd[r0:r1 + 1, c0:c1 + 1][m_ring]
+        s_in = s_in[s_in > -1e8]
+        g_r = g_r[~np.isnan(g_r)]
+        if len(s_in) >= max(2, 0.6 * m_in.sum()) and len(g_r) >= 4:
+            h = float(np.percentile(s_in, 75) - np.median(g_r))
+            if 2.0 <= h <= 60:
+                return h
+    return None
 
 
 # ---------- far trees: woods dense, yards and parks sparse ----------
@@ -251,8 +295,9 @@ with open(OUT + "/far_trees.bin", "wb") as f:
 print("far trees", len(trees))
 
 # ---------- far houses: extruded OSM footprints with a low hip/flat roof ----------
-# two meshes: mapped OSM footprints, and the inferred placeholder houses (UNVERIFIED, AGENTS rule)
-GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_placeholder_UNVERIFIED": ([], [], [], [])}
+# two meshes by footprint source: OpenStreetMap and Microsoft Global ML Building Footprints
+GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_microsoft": ([], [], [], [])}
+hsrc = {"lidar": 0, "osm tag": 0, "footprint estimate": 0, "default": 0}
 P, NRM, COL, IDX = GEOM["far_houses_osm"]
 WALL = [(0.62, 0.55, 0.46), (0.55, 0.50, 0.44), (0.66, 0.62, 0.55), (0.50, 0.38, 0.30), (0.58, 0.54, 0.47), (0.45, 0.47, 0.46)]
 ROOF = [(0.20, 0.18, 0.17), (0.27, 0.22, 0.19), (0.17, 0.17, 0.18), (0.32, 0.24, 0.19), (0.24, 0.24, 0.23)]
@@ -271,34 +316,54 @@ def add_tri(a, b, c, col):
     IDX.extend((base, base + 1, base + 2))
 
 
-for pts, t in buildings:
-    P, NRM, COL, IDX = GEOM["far_houses_placeholder_UNVERIFIED" if t.get("synthetic") else "far_houses_osm"]
+# LiDAR height per building, and a scale for the footprint layer's own estimates (which run low here),
+# fitted on the buildings that have both, so footprints outside LiDAR cover match those inside it
+LHT = [lidar_height(Polygon(pts)) if Polygon(pts).is_valid else None for pts, _t in buildings]
+pairs = [(lh, float(t["ms_height"])) for lh, (_p, t) in zip(LHT, buildings, strict=True) if lh and t.get("ms_height")]
+MS_SCALE = float(np.median([a / b for a, b in pairs])) if len(pairs) > 50 else 1.0
+print("lidar-covered footprints", sum(h is not None for h in LHT), "footprint-estimate scale", round(MS_SCALE, 3), "from", len(pairs))
+for (pts, t), lh in zip(buildings, LHT, strict=True):
+    P, NRM, COL, IDX = GEOM["far_houses_microsoft" if t.get("source") == "microsoft" else "far_houses_osm"]
     poly = Polygon(pts)
     if not poly.is_valid or poly.area < 12:
         continue
     cx, cy = poly.centroid.x, poly.centroid.y
-    if abs(cx) > 1960 or abs(cy) > 1960 or is_modelled(cx, cy, 5):
+    if abs(cx) > 1960 or abs(cy) > 1960 or is_modelled(cx, cy, 5) or in_modelled_building(cx, cy):
         continue
-    lv = t.get("building:levels")
-    try:
-        h = float(t.get("height", "").split()[0]) if t.get("height") else (float(lv) * 3.1 + 1 if lv else (7.5 if poly.area < 300 else 10))
-    except ValueError:
-        h = 7.5
+    h = lh
+    if h is not None:
+        hsrc["lidar"] += 1
+    else:
+        lv = t.get("building:levels")
+        try:
+            h = float(t["height"].split()[0]) if t.get("height") else (float(lv) * 3.1 + 1 if lv else None)
+        except ValueError:
+            h = None
+        if h is not None:
+            hsrc["osm tag"] += 1
+        elif t.get("ms_height"):
+            h = max(2.5, float(t["ms_height"]) * MS_SCALE)
+            hsrc["footprint estimate"] += 1
+        else:
+            h = 7.5 if poly.area < 300 else 10  # footprint with no height anywhere: typical house / block
+            hsrc["default"] += 1
     z0 = min(zat(x, y) for x, y in pts) - 0.3
     ring = list(poly.exterior.coords)[:-1]
     if Polygon(ring).exterior.is_ccw is False:
         ring = ring[::-1]
     wc = random.choice(WALL)
     rc = random.choice(ROOF)
-    ztop = z0 + h
+    # h is roof-top height (LiDAR 90th percentile is near the ridge): small houses get a hip, so the eave sits below it
+    small = poly.area < 350 and len(ring) <= 8
+    rise = min(3.5, math.sqrt(poly.area) * 0.28, h * 0.35) if small else 0
+    ztop = z0 + h - rise
     for i in range(len(ring)):
         (x1, y1), (x2, y2) = ring[i], ring[(i + 1) % len(ring)]
         a, b, c, d = (x1, z0, -y1), (x2, z0, -y2), (x2, ztop, -y2), (x1, ztop, -y1)
         add_tri(a, b, c, wc)
         add_tri(a, c, d, wc)
     # roof: small houses get a pyramid-ish hip (apex over the centroid), others stay flat
-    small = poly.area < 350 and len(ring) <= 8
-    apex = (cx, ztop + (min(3.5, math.sqrt(poly.area) * 0.28) if small else 0), -cy)
+    apex = (cx, ztop + rise, -cy)
     for i in range(len(ring)):
         (x1, y1), (x2, y2) = ring[i], ring[(i + 1) % len(ring)]
         add_tri((x1, ztop, -y1), (x2, ztop, -y2), apex, rc)
@@ -343,4 +408,4 @@ def write_glb(path):
 
 
 write_glb(RAW + "/far_houses.raw.glb")
-print("far houses", nb, {k: len(v[3]) // 3 for k, v in GEOM.items()})
+print("far houses", nb, {k: len(v[3]) // 3 for k, v in GEOM.items()}, "heights from", hsrc)
