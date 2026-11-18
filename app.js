@@ -33,7 +33,7 @@ addEventListener('resize', resize); resize();
 
 // far-field filler crowns/trunks: hidden when the scene has no far-field skirt tile to stand on
 let hasSkirt = false;
-const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.001$)/;
+const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // glTF names drop the dot
 const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 function fixMaterials(root) {
   root.traverse(o => {
