@@ -87,6 +87,7 @@ async function loadScene() {
       const g = await loader.loadAsync(base + t.file);
       if (token !== loadToken) return;
       g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
+      if (t.file === 'far_houses.glb') g.scene.traverse(o => { if (o.material) { o.material.envMapIntensity = 0.25; o.material.roughness = 0.95; } });
       if (t.file === 'skirt.glb' && man.landcover) applyLandcover(g.scene, base + man.landcover.file, man.landcover.half);
       done++; bytes += t.bytes;
       $('load-text').textContent = `Loading campus… ${Math.round(bytes / total * 100)}% (${done}/${man.tiles.length} tiles)`;
@@ -137,7 +138,8 @@ function applyLandcover(root, url, half) {
     const p = o.geometry.attributes.position, v = new THREE.Vector3(), uv = new Float32Array(p.count * 2);
     for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld); uv[i * 2] = (v.x + half) / (2 * half); uv[i * 2 + 1] = (v.z + half) / (2 * half); }
     o.geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
-    o.material = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95, envMapIntensity: 0.3 });
+    // lifted to the campus lawn's brightness so the modelled ground doesn't end in a hard tonal edge
+    o.material = new THREE.MeshStandardMaterial({ map: tex, color: new THREE.Color(1.35, 1.35, 1.28), roughness: 0.95, envMapIntensity: 0.3 });
   });
 }
 

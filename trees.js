@@ -114,7 +114,7 @@ export function createTrees(scene, camera) {
     far = new THREE.InstancedMesh(farGeo, new THREE.MeshStandardMaterial({ roughness: 1, envMapIntensity: 0.2 }), n);
     far.name = 'far_trees'; far.castShadow = true; far.receiveShadow = true;
     const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color();
-    const tones = ['#2c3b20', '#34452a', '#3b4a26', '#2a3424', '#40502c', '#46532e'].map(h => new THREE.Color(h));
+    const tones = ['#3f5530', '#4a603a', '#556a36', '#3d4b33', '#5a6e3e', '#64753f'].map(h => new THREE.Color(h));
     for (let i = 0; i < n; i++) {
       const x = a[i * 5], y = a[i * 5 + 1], z = a[i * 5 + 2], r = a[i * 5 + 3], h = a[i * 5 + 4];
       q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (i * 2.399) % 6.283);
