@@ -1,6 +1,8 @@
 # ws216 W35c part 3: the WS215 walk's W edge beside the KX deck drive apron stands up to ~0.3 m above the apron near the road
-# (a 30 cm vertical face; a standard NJ curb reveal is 15 cm). Design: driveway-side curb eased to <= 15 cm reveal over the apron,
-# tapering E over 2.0 m, never below College Ave + 3 cm at the walk's S edge (keeps a small curb to the road).
+# (a 30 cm vertical face; a standard NJ curb reveal is 15 cm) with a 0.3-1.0 m gap to the apron (y -50..-47).
+# Design (rev 2, AGENTS.md rule 6: raise paving, never lower it): close the gap by moving the walk's W-edge column to the apron edge
+# (walk grade unchanged), then RAISE the apron's E-edge strip so the walk stands a standard 15 cm curb above it, tapering to the
+# apron's own plane over 1.0 m. Rev 1 (eased the walk DOWN onto the apron) is fix216b_lower_REJECTED.py.
 import bpy
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
@@ -53,23 +55,21 @@ for key,idx in col.items():
     for i in idx: SL.data.vertices[i].co=Mi@Vector((xa-0.04,W[i].y,W[i].z)); W[i]=Vector((xa-0.04,W[i].y,W[i].z))
     EDGE[round(y,3)]=(xa-0.04,ray(ta,xa+0.0,y)); mv+=1
 print('F216b W-edge columns moved to apron edge',mv,flush=True)
+# AGENTS.md rule 6 (raise paving, never lower it; Codex review on PR #7): the walk keeps its grade. Instead the apron's E-edge strip is
+# raised so the walk stands a standard 15 cm curb above it, tapering back to the apron's own plane over 1.0 m.
 ys=sorted(EDGE)
-def edge_at(y):
-    if not ys: return None
-    k=min(ys,key=lambda b:abs(b-y)); return EDGE[k] if abs(k-y)<0.6 else None
-for key,idx in col.items():
-    x0,y=key
-    e=edge_at(y)
-    if not e or e[1] is None: continue
-    xn=W[idx[0]].x; d=xn-e[0]
-    if d>1.5: continue
-    zt=max(W[i].z for i in idx); target=e[1]-0.012
-    if zt<=target+0.005: continue
-    dz=(target-zt)*(1-d/1.5)
-    kz=ray(tk,xn,sedge(xn)-0.15)
-    if kz is not None: dz=max(dz,(kz+0.03)-zt)
-    if dz>=-0.002: continue
-    for i in idx: SL.data.vertices[i].co=Mi@Vector((W[i].x,W[i].y,W[i].z+dz))
-    n+=1
-SL.data.update()
-print('F216b W-edge columns eased',n,flush=True)
+TS=bvh(SL,top=True)
+Ma=AP.matrix_world; Mai=Ma.inverted(); na=0; mx_=0
+for v in AP.data.vertices:
+    w=Ma@v.co
+    if w.z<123.0 or not (-50.6<=w.y<=-46.6): continue
+    k=min(ys,key=lambda b:abs(b-w.y)) if ys else None
+    xe=EDGE[k][0] if k is not None and abs(k-w.y)<0.6 else xedge(w.y)
+    d=xe-w.x
+    if d<-0.1 or d>1.0: continue
+    zw=ray(TS,xe+0.1,w.y)
+    if zw is None: continue
+    dz=((zw-0.15)-w.z)*(1-max(0.0,d)/1.0)
+    if dz>0.002: v.co=Mai@Vector((w.x,w.y,w.z+dz)); na+=1; mx_=max(mx_,dz)
+AP.data.update()
+print('F216b apron E-edge verts raised',na,'max',round(mx_,3),flush=True)
