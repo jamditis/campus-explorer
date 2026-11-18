@@ -164,10 +164,12 @@ export function createMeasure(app) {
     const s = project(points[points.length - 1]);
     card.style.visibility = s ? '' : 'hidden';
     if (!s) return;
-    // above and to the right of the last point, kept on screen
+    // on the side away from the previous point, so the card does not cover the last segment
+    const prev = project(points[points.length - 2]);
+    const right = !prev || prev.x <= s.x, below = !!prev && prev.y < s.y;
     const w = card.offsetWidth, h = card.offsetHeight;
-    const x = THREE.MathUtils.clamp(s.x + 14, 8, Math.max(8, innerWidth - w - 8));
-    const y = THREE.MathUtils.clamp(s.y - h - 14, 8, Math.max(8, innerHeight - h - 8));
+    const x = THREE.MathUtils.clamp(right ? s.x + 14 : s.x - w - 14, 8, Math.max(8, innerWidth - w - 8));
+    const y = THREE.MathUtils.clamp(below ? s.y + 14 : s.y - h - 14, 8, Math.max(8, innerHeight - h - 8));
     card.style.transform = `translate(${x}px, ${y}px)`;
   }
 

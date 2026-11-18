@@ -3,7 +3,7 @@
   {
    "file": "main/skirt.glb",
    "bytes": 8834636,
-   "scene": "main"
+   "scene": "skirt"
   },
   {
    "file": "main/context.glb",
@@ -19,8 +19,8 @@
    "file": "main/t_-1_-1.glb",
    "bytes": 11479748,
    "center": [
-    -80.0,
-    80.0
+    -80,
+    80
    ],
    "scene": "main"
   },
@@ -28,8 +28,8 @@
    "file": "main/t_-1_-2.glb",
    "bytes": 11330584,
    "center": [
-    -80.0,
-    240.0
+    -80,
+    240
    ],
    "scene": "main"
   },
@@ -37,8 +37,8 @@
    "file": "main/t_-1_0.glb",
    "bytes": 3926156,
    "center": [
-    -80.0,
-    -80.0
+    -80,
+    -80
    ],
    "scene": "main"
   },
@@ -46,71 +46,26 @@
    "file": "main/t_-1_1.glb",
    "bytes": 4148896,
    "center": [
-    -80.0,
-    -240.0
+    -80,
+    -240
    ],
    "scene": "main"
   },
   {
-   "file": "north/t_-1_2.glb",
-   "bytes": 2979088,
+   "file": "main/t_-1_2.glb",
+   "bytes": 106528,
    "center": [
-    -80.0,
-    -400.0
+    -80,
+    -400
    ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-1_3.glb",
-   "bytes": 2449596,
-   "center": [
-    -80.0,
-    -560.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-1_4.glb",
-   "bytes": 1829176,
-   "center": [
-    -80.0,
-    -720.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-1_5.glb",
-   "bytes": 2231124,
-   "center": [
-    -80.0,
-    -880.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-1_6.glb",
-   "bytes": 1898952,
-   "center": [
-    -80.0,
-    -1040.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-1_7.glb",
-   "bytes": 137012,
-   "center": [
-    -80.0,
-    -1200.0
-   ],
-   "scene": "north"
+   "scene": "main"
   },
   {
    "file": "main/t_-2_-1.glb",
    "bytes": 21885820,
    "center": [
-    -240.0,
-    80.0
+    -240,
+    80
    ],
    "scene": "main"
   },
@@ -118,143 +73,53 @@
    "file": "main/t_-2_-2.glb",
    "bytes": 37395100,
    "center": [
-    -240.0,
-    240.0
+    -240,
+    240
    ],
    "scene": "main"
   },
   {
-   "file": "north/t_-2_0.glb",
-   "bytes": 4510580,
+   "file": "main/t_-2_0.glb",
+   "bytes": 4115068,
    "center": [
-    -240.0,
-    -80.0
+    -240,
+    -80
    ],
-   "scene": "north"
+   "scene": "main"
   },
   {
-   "file": "north/t_-2_1.glb",
-   "bytes": 2471800,
+   "file": "main/t_-2_1.glb",
+   "bytes": 1742520,
    "center": [
-    -240.0,
-    -240.0
+    -240,
+    -240
    ],
-   "scene": "north"
+   "scene": "main"
   },
   {
-   "file": "north/t_-2_2.glb",
-   "bytes": 2186796,
+   "file": "main/t_-3_-1.glb",
+   "bytes": 4464,
    "center": [
-    -240.0,
-    -400.0
+    -400,
+    80
    ],
-   "scene": "north"
+   "scene": "main"
   },
   {
-   "file": "north/t_-2_3.glb",
-   "bytes": 1667004,
+   "file": "main/t_-3_-2.glb",
+   "bytes": 812852,
    "center": [
-    -240.0,
-    -560.0
+    -400,
+    240
    ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-2_4.glb",
-   "bytes": 738620,
-   "center": [
-    -240.0,
-    -720.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-2_5.glb",
-   "bytes": 119316,
-   "center": [
-    -240.0,
-    -880.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_-1.glb",
-   "bytes": 2890400,
-   "center": [
-    -400.0,
-    80.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_-2.glb",
-   "bytes": 845324,
-   "center": [
-    -400.0,
-    240.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_-3.glb",
-   "bytes": 686320,
-   "center": [
-    -400.0,
-    400.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_0.glb",
-   "bytes": 1705336,
-   "center": [
-    -400.0,
-    -80.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_1.glb",
-   "bytes": 2785892,
-   "center": [
-    -400.0,
-    -240.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-3_2.glb",
-   "bytes": 224208,
-   "center": [
-    -400.0,
-    -400.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-4_-2.glb",
-   "bytes": 272136,
-   "center": [
-    -560.0,
-    240.0
-   ],
-   "scene": "north"
-  },
-  {
-   "file": "north/t_-4_-3.glb",
-   "bytes": 272136,
-   "center": [
-    -560.0,
-    400.0
-   ],
-   "scene": "north"
+   "scene": "main"
   },
   {
    "file": "main/t_0_-1.glb",
    "bytes": 3828684,
    "center": [
-    80.0,
-    80.0
+    80,
+    80
    ],
    "scene": "main"
   },
@@ -262,8 +127,8 @@
    "file": "main/t_0_-2.glb",
    "bytes": 3129232,
    "center": [
-    80.0,
-    240.0
+    80,
+    240
    ],
    "scene": "main"
   },
@@ -271,8 +136,8 @@
    "file": "main/t_0_0.glb",
    "bytes": 5280468,
    "center": [
-    80.0,
-    -80.0
+    80,
+    -80
    ],
    "scene": "main"
   },
@@ -280,8 +145,8 @@
    "file": "main/t_0_1.glb",
    "bytes": 4879276,
    "center": [
-    80.0,
-    -240.0
+    80,
+    -240
    ],
    "scene": "main"
   },
@@ -289,26 +154,17 @@
    "file": "main/t_0_2.glb",
    "bytes": 3039948,
    "center": [
-    80.0,
-    -400.0
+    80,
+    -400
    ],
    "scene": "main"
-  },
-  {
-   "file": "north/t_0_7.glb",
-   "bytes": 273236,
-   "center": [
-    80.0,
-    -1200.0
-   ],
-   "scene": "north"
   },
   {
    "file": "main/t_1_-1.glb",
    "bytes": 3220792,
    "center": [
-    240.0,
-    80.0
+    240,
+    80
    ],
    "scene": "main"
   },
@@ -316,8 +172,8 @@
    "file": "main/t_1_-2.glb",
    "bytes": 3445112,
    "center": [
-    240.0,
-    240.0
+    240,
+    240
    ],
    "scene": "main"
   },
@@ -325,8 +181,8 @@
    "file": "main/t_1_0.glb",
    "bytes": 3006856,
    "center": [
-    240.0,
-    -80.0
+    240,
+    -80
    ],
    "scene": "main"
   },
@@ -334,8 +190,8 @@
    "file": "main/t_1_1.glb",
    "bytes": 1817712,
    "center": [
-    240.0,
-    -240.0
+    240,
+    -240
    ],
    "scene": "main"
   },
@@ -343,8 +199,8 @@
    "file": "main/t_1_2.glb",
    "bytes": 2087848,
    "center": [
-    240.0,
-    -400.0
+    240,
+    -400
    ],
    "scene": "main"
   },
@@ -352,35 +208,284 @@
    "file": "main/t_1_3.glb",
    "bytes": 2297900,
    "center": [
-    240.0,
-    -560.0
+    240,
+    -560
    ],
    "scene": "main"
+  },
+  {
+   "file": "north/t_-1_1.glb",
+   "bytes": 3291648,
+   "center": [
+    -80,
+    -240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_2.glb",
+   "bytes": 2979088,
+   "center": [
+    -80,
+    -400
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_3.glb",
+   "bytes": 2449596,
+   "center": [
+    -80,
+    -560
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_4.glb",
+   "bytes": 1829176,
+   "center": [
+    -80,
+    -720
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_5.glb",
+   "bytes": 2231124,
+   "center": [
+    -80,
+    -880
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_6.glb",
+   "bytes": 1898952,
+   "center": [
+    -80,
+    -1040
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-1_7.glb",
+   "bytes": 137012,
+   "center": [
+    -80,
+    -1200
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_-1.glb",
+   "bytes": 4430984,
+   "center": [
+    -240,
+    80
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_-2.glb",
+   "bytes": 97944,
+   "center": [
+    -240,
+    240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_0.glb",
+   "bytes": 4510580,
+   "center": [
+    -240,
+    -80
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_1.glb",
+   "bytes": 2471800,
+   "center": [
+    -240,
+    -240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_2.glb",
+   "bytes": 2186796,
+   "center": [
+    -240,
+    -400
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_3.glb",
+   "bytes": 1667004,
+   "center": [
+    -240,
+    -560
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_4.glb",
+   "bytes": 738620,
+   "center": [
+    -240,
+    -720
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-2_5.glb",
+   "bytes": 119316,
+   "center": [
+    -240,
+    -880
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_-1.glb",
+   "bytes": 2890400,
+   "center": [
+    -400,
+    80
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_-2.glb",
+   "bytes": 845324,
+   "center": [
+    -400,
+    240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_-3.glb",
+   "bytes": 686320,
+   "center": [
+    -400,
+    400
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_0.glb",
+   "bytes": 1705336,
+   "center": [
+    -400,
+    -80
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_1.glb",
+   "bytes": 2785892,
+   "center": [
+    -400,
+    -240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-3_2.glb",
+   "bytes": 224208,
+   "center": [
+    -400,
+    -400
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-4_-2.glb",
+   "bytes": 272136,
+   "center": [
+    -560,
+    240
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_-4_-3.glb",
+   "bytes": 272136,
+   "center": [
+    -560,
+    400
+   ],
+   "scene": "north"
+  },
+  {
+   "file": "north/t_0_7.glb",
+   "bytes": 273236,
+   "center": [
+    80,
+    -1200
+   ],
+   "scene": "north"
   }
  ],
  "paint": [
   {
    "file": "main/paint_ws211c.webp",
-   "x0": -256.0,
-   "x1": -214.0,
-   "y0": -88.0,
-   "y1": -62.0
+   "x0": -256,
+   "x1": -214,
+   "y0": -88,
+   "y1": -62
   },
   {
    "file": "main/paint_ws213.webp",
-   "x0": -286.0,
-   "x1": -218.0,
+   "x0": -286,
+   "x1": -218,
    "y0": -95.03999999999999,
-   "y1": -55.0
+   "y1": -55
   },
   {
    "file": "main/paint_ws213z.webp",
-   "x0": -264.0,
-   "x1": -251.0,
-   "y0": -94.0,
-   "y1": -57.0
+   "x0": -264,
+   "x1": -251,
+   "y0": -94,
+   "y1": -57
   }
  ],
+ "ownership": {
+  "file": "ownership.png",
+  "x0": -960,
+  "z0": -1600,
+  "x1": 640,
+  "z1": 800,
+  "cell": 2,
+  "values": {
+   "none": 0,
+   "northEdge": 100,
+   "north": 128,
+   "mainEdge": 228,
+   "main": 255
+  },
+  "patches": [
+   {
+    "name": "University Hall",
+    "owner": "north",
+    "x0": -208,
+    "z0": -322,
+    "x1": -110,
+    "z1": -214
+   },
+   {
+    "name": "Softball stadium west of Dickson Hall",
+    "owner": "north",
+    "x0": -322,
+    "z0": -166,
+    "x1": -222,
+    "z1": -28
+   }
+  ]
+ },
  "sources": [
   {
    "scene": "main",
@@ -395,150 +500,32 @@
    "exported": "November 18, 2026, 2:46 PM ET"
   }
  ],
- "overlaps": [
+ "dropped": [
   {
-   "square": "t_-1_-1",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 175700
-    }
-   ]
+   "file": "north/t_-1_-1.glb",
+   "bytes": 175700,
+   "reason": "every cell it covers belongs to the other model"
   },
   {
-   "square": "t_-1_0",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 2507168
-    }
-   ]
+   "file": "north/t_-1_0.glb",
+   "bytes": 2507168,
+   "reason": "every cell it covers belongs to the other model"
   },
   {
-   "square": "t_-1_1",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 3291648
-    }
-   ]
+   "file": "north/t_0_0.glb",
+   "bytes": 3037264,
+   "reason": "every cell it covers belongs to the other model"
   },
   {
-   "square": "t_-1_2",
-   "owner": "north",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "main",
-     "bytes": 106528
-    }
-   ]
+   "file": "north/t_0_1.glb",
+   "bytes": 2524908,
+   "reason": "every cell it covers belongs to the other model"
   },
   {
-   "square": "t_-2_-1",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 4430984
-    }
-   ]
-  },
-  {
-   "square": "t_-2_-2",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 97944
-    }
-   ]
-  },
-  {
-   "square": "t_-2_0",
-   "owner": "north",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "main",
-     "bytes": 4115068
-    }
-   ]
-  },
-  {
-   "square": "t_-2_1",
-   "owner": "north",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "main",
-     "bytes": 1742520
-    }
-   ]
-  },
-  {
-   "square": "t_-3_-1",
-   "owner": "north",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "main",
-     "bytes": 4464
-    }
-   ]
-  },
-  {
-   "square": "t_-3_-2",
-   "owner": "north",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "main",
-     "bytes": 812852
-    }
-   ]
-  },
-  {
-   "square": "t_0_0",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 3037264
-    }
-   ]
-  },
-  {
-   "square": "t_0_1",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 2524908
-    }
-   ]
-  },
-  {
-   "square": "t_0_2",
-   "owner": "main",
-   "pinned": false,
-   "dropped": [
-    {
-     "scene": "north",
-     "bytes": 455856
-    }
-   ]
+   "file": "north/t_0_2.glb",
+   "bytes": 455856,
+   "reason": "every cell it covers belongs to the other model"
   }
  ],
- "total_bytes": 193868464
+ "total_bytes": 208470472
 }

@@ -6,8 +6,9 @@ Rules learned from corrections. Read at the start of a session.
 
 - **Correction (Joe, during the viewer upgrade):** "the goal is to have a single unified scene with all buildings and textures and everything in one scene, not multiple scenes."
 - **What went wrong:** the viewer work kept the main / north scene switch and built new features (permalinks, places, tests) around a `scene` setting.
-- **Rule:** the campus is one scene everywhere: viewer, links, docs, tools. Do not add or keep a scene switch. New exports must end up in `models/manifest.json` through `tools/web-export/unify.py`.
-- **Still open:** the two Blender files overlap and each holds objects the other lacks. Joined tiles cannot be merged object by object in the viewer, so the real merge belongs in Blender. Say so plainly and mark the seams UNVERIFIED until then.
+- **Rule:** the campus is one scene everywhere: viewer, links, docs, tools. Do not add or keep a scene switch. New exports must end up in `models/manifest.json` through `tools/web-export/unify.mjs`.
+- **How it is done for now:** the two Blender files overlap and each holds objects the other lacks. Joined tiles cannot be merged object by object, so `unify.mjs` divides the ground between the files and the viewer draws each cell from one file. The real merge belongs in Blender; the borders stay UNVERIFIED until then.
+- **Method that worked:** a software top-down render of the tiles (`unify.mjs --preview`) showed what each file covers in seconds, when WebGL renders on this machine took many minutes.
 
 ## 2026-11-18: mesh names in the tiles are not object names
 

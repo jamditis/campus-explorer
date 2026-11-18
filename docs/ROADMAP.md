@@ -22,8 +22,8 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 
 ## Completeness
 
-- [x] One campus scene in the viewer: main and north tiles joined by `tools/web-export/unify.py` (no scene switch)
-- [ ] Merge the main and north Blender files and export one scene. Until then, where both files cover a 160 m square only one file's tile is shown, so some objects near the seams are missing (UNVERIFIED seams; the dropped tiles are listed under `overlaps` in `models/manifest.json`)
+- [x] One campus scene in the viewer: `tools/web-export/unify.mjs` divides the ground between the main and north models on a 2 m grid, and the viewer draws, collides with and shadows each cell from one model only (no scene switch)
+- [ ] Merge the main and north Blender files and export one scene. Until then the borders between them are UNVERIFIED: terrain colour and height step at the border, Sprague Field is half from each file, and the patch rectangles for University Hall and the softball stadium are hand-set
 - [x] Export refresh: `SCENE=main bash tools/web-export/build_web.sh` then `SCENE=north ...`; prunes stale tiles, fails without publishing on any export error, rewrites the campus manifest
 - [x] Place names, search, labels, minimap, guided tour and landmark hunt (names and positions from OpenStreetMap)
 - [x] Georeferenced readout (latitude, longitude, NAVD88 elevation), compass, scale bar and measuring tool

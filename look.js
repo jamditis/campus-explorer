@@ -165,8 +165,48 @@ export function createLook(renderer, scene, camera) {
     }
     paintUniforms.pMap.value = maps; paintUniforms.pBox.value = boxes; paintUniforms.pN.value = paint.length;
   }
-  let macroOn = true;
   const macroUniform = { value: 1 };
+
+  // --- one campus from two models: per pixel, draw only what the cell's owner owns (see tools/web-export/unify.mjs) ---
+  const ownUniforms = { ownMap: { value: EMPTY }, ownBox: { value: new THREE.Vector4(0, 0, 1, 1) } };
+  // ownership values: 0 none, 0.39 north border, 0.50 north, 0.89 main border, 1 main. Borders are drawn by both sides.
+  const OWN_TEST = { main: 'o > 0.3 && o < 0.6', north: 'o > 0.95', skirt: 'o > 0.45 && o < 0.55' };
+  function setOwnership(texture, box) {
+    ownUniforms.ownMap.value = texture ?? EMPTY;
+    if (texture) ownUniforms.ownBox.value.set(box.x0, box.z0, box.x1 - box.x0, box.z1 - box.z0); else ownUniforms.ownBox.value.set(0, 0, 1, 1);
+    shadowDirty = true;
+  }
+  function ownShader(sh, group) {
+    Object.assign(sh.uniforms, ownUniforms);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vOwnPos;')
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+        vec4 ownW = vec4(transformed, 1.0);
+        #ifdef USE_INSTANCING
+          ownW = instanceMatrix * ownW;
+        #endif
+        vOwnPos = (modelMatrix * ownW).xyz;`);
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vOwnPos; uniform sampler2D ownMap; uniform vec4 ownBox;')
+      .replace('void main() {', `void main() {
+        vec2 ownUv = (vOwnPos.xz - ownBox.xy) / ownBox.zw;
+        if (ownUv.x > 0.0 && ownUv.y > 0.0 && ownUv.x < 1.0 && ownUv.y < 1.0) { float o = texture2D(ownMap, ownUv).r; if (${OWN_TEST[group]}) discard; }`);
+  }
+  /** Make a tile material obey the ownership map. Wraps whatever texturize() installed. */
+  function claim(m, group) {
+    if (m.userData.own || !OWN_TEST[group]) return;
+    m.userData.own = group;
+    const inner = m.onBeforeCompile;
+    m.onBeforeCompile = (sh, r) => { inner.call(m, sh, r); ownShader(sh, group); };
+    m.customProgramCacheKey = () => `tp_${m.userData.tp ?? ''}_own_${group}`;
+    m.needsUpdate = true;
+  }
+  // hidden geometry must not cast shadows either: one depth material per model with the same test
+  const ownDepth = {};
+  for (const group of Object.keys(OWN_TEST)) {
+    const d = ownDepth[group] = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide });
+    d.onBeforeCompile = sh => ownShader(sh, group); d.customProgramCacheKey = () => `depth_own_${group}`;
+  }
 
   function texturize(m, cat) {
     const def = CATS[cat]; if (!def || m.userData.tp) return;
@@ -340,8 +380,8 @@ export function createLook(renderer, scene, camera) {
       }
     });
   }
-  /** Prepare one loaded tile: material fixes, textures, culling registration, lamps. */
-  function decorate(root) {
+  /** Prepare one loaded tile: material fixes, textures, ownership, culling registration, lamps. `group`: main, north or skirt. */
+  function decorate(root, group) {
     fixMaterials(root);
     root.traverse(o => {
       if (!o.isMesh) return;
@@ -359,6 +399,14 @@ export function createLook(renderer, scene, camera) {
         }
       }
     });
+    // after texturize(), which installs its own shader hook that claim() wraps
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      for (const m of [].concat(o.material)) if (m && m !== CROWN) claim(m, group);
+      const first = Array.isArray(o.material) ? o.material[0] : o.material;
+      // leaf cards keep the built-in depth material, which knows their cut-out texture
+      if (ownDepth[group] && !first?.userData.leaf) o.customDepthMaterial = ownDepth[group];
+    });
     register(root);
     addLamps(root);
     shadowDirty = true;
@@ -367,7 +415,7 @@ export function createLook(renderer, scene, camera) {
   function forget(root) { items = items.filter(it => it.root !== root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
   function reset() { items = []; lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setOwnership, setSun, resize, reset, sun,
     invalidateShadows() { shadowDirty = true; },
     get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
   };

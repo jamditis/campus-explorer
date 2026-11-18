@@ -5,7 +5,7 @@ How the browser viewer is put together, and the contract its modules follow. Rea
 ## Rules
 
 - No build step. Plain ES modules. Libraries are vendored in `vendor/` and resolved by the import map in `index.html`. No CDN, no bundler, no npm dependency at run time.
-- One campus, one scene. The viewer loads every tile listed in `models/manifest.json` into a single world. There is no scene switch. While the campus is still modelled in two Blender files, `tools/web-export/unify.py` joins their tile sets (see "One campus" below).
+- One campus, one scene. The viewer loads every tile listed in `models/manifest.json` into a single world. There is no scene switch. The campus is still two Blender files; `tools/web-export/unify.mjs` joins them (see "One campus" below).
 - `models/` is generated. The viewer reads it and never changes it.
 - Modules in `viewer/` that do pure maths or data work must not import `three`, so `node --test` can run them without a browser.
 - Anything the viewer infers instead of reading from the model or from a cited source is labelled UNVERIFIED in the interface.
@@ -111,15 +111,29 @@ world.raycast(origin, dir, far, { builtOnly })  // -> { point, normal, distance,
                                  //    builtOnly: use only BVHs that already exist (never stalls a frame, may miss)
 world.groundAt(x, z, fromY, opts) // -> y | null. Highest solid surface at or below fromY (default: above everything)
 world.pick(clientX, clientY)     // -> same as raycast, through the camera
-world.isLoaded(x, z)             // -> true when the tile that covers (x, z) is in the scene
-world.prioritize(x, z)           // -> load the tile that covers (x, z) next
+world.isLoaded(x, z)             // -> true when the tiles that cover (x, z) are in the scene
+world.prioritize(x, z)           // -> load the tiles that cover (x, z) next
+world.solidAt(group, x, z)       // -> does this model ('main', 'north', 'skirt') own, and so draw, the ground at (x, z)
+world.loadAll(), world.budget    // lite profile: the tile budget, and the way out of it
 ```
 
 Leaf cards, glass and instanced meshes (trees, lamps) are not solid. The BVH for a mesh is built the first time a ray needs it, and near the player in idle time.
 
 ## One campus
 
-The campus is one scene in the viewer. It is still two Blender files (`main` and `north`) that share an origin and overlap in the middle, each exported to its own folder of 160 m tiles. `tools/web-export/unify.py` writes `models/manifest.json`, which lists each tile square once. Where both files have a tile for a square, one file owns the square and the other's tile is not shown, so nothing is drawn twice. That is a seam at tile boundaries, not a merge: UNVERIFIED until the Blender files are merged and exported as one scene. Run `python3 tools/web-export/unify.py` after any export.
+The viewer shows one campus. It is still modelled in two Blender files (`main` and `north`) that share an origin and overlap in the middle. Each holds objects the other lacks and each has its own terrain. Drawing both everywhere would double the shared buildings and make the terrains fight, and the exporter joins meshes by material, so tiles cannot be merged object by object.
+
+`tools/web-export/unify.mjs` divides the ground instead. It reads every tile, marks where each model has ground or objects on a 2 m grid, and gives each cell one owner:
+
+| Owner | Where | Stored value |
+|---|---|---|
+| main | The main model has ground or objects (it is the newer, more detailed file) | 255, or 228 within 4 m of a border |
+| north | Only the north model has them, or the cell is inside a rectangle in `PATCHES` | 128, or 100 within 4 m of the outer border |
+| none | Neither. The far-field skirt shows | 0 |
+
+It writes `models/ownership.png` (one byte per cell) and `models/manifest.json` (every tile that still has something to show, with `scene` set to `main`, `north` or `skirt`, and the map's extent under `ownership`). The viewer samples the map per pixel and discards what the cell's owner does not own; `look.js` has the shader test and `world.solidAt()` applies the same test to collision, so hidden geometry is not solid and casts no shadow. Border cells are drawn by both sides so a height difference between the two terrains does not open a gap.
+
+`PATCHES` lists the places where north wins although main has ground there, because main only has a placeholder (University Hall, the softball stadium). These choices, and every border, are UNVERIFIED until the two files are merged in Blender and exported as one scene. To try a change: edit `PATCHES`, run `node tools/web-export/unify.mjs --dry --preview /tmp/campus.png 2`, and look at the top-down picture. CI fails if the committed map is out of date.
 
 ## Styles
 
@@ -130,7 +144,7 @@ One stylesheet. Colours and sizes come from the custom properties at the top of 
 - `node --test` runs the unit tests in `tests/` for the pure modules. CI runs it in the `viewer` job.
 - `node tools/viewer-test/smoke.mjs` serves the checkout, opens the viewer in headless Chromium, loads a few tiles, exercises each mode and tool, and fails on any console error.
 - `node tools/viewer-test/shoot.mjs <outdir>` takes the standard views for before/after comparison.
-- URL switches for testing: `?quality=low|medium|high`, `?tiles=N` (load only the N nearest tiles), `?capture` (keep the drawing buffer for screenshots).
+- URL switches for testing: `?quality=low|medium|high`, `?lite=1|0` (force the phone profile on or off), `?tiles=N` (load only the N nearest tiles), `?capture` (keep the drawing buffer for screenshots).
 
 ## Review checklist
 

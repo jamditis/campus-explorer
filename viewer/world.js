@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
-import { orderTiles, firstBatch, tileAt, boundsOf } from './schedule.js';
+import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -30,6 +30,35 @@ export function createWorld(app, prepare, release = () => {}) {
   let group = new THREE.Group(); group.name = 'campus'; scene.add(group);
   let tiles = [], colliders = [], token = 0, abort = null, base = '', paused = false, resume = null;
   let budget = Infinity, pumping = false, watch = 0;
+
+  // ---- ownership: which model owns each 2 m cell of ground (see tools/web-export/unify.mjs) ----
+  let own = null; // { data, w, h, x0, z0, cell, values, texture }
+  async function loadOwnership(o) {
+    own = null; if (!o) return null;
+    const img = new Image(); img.src = base + o.file; await img.decode();
+    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0);
+    const rgba = g.getImageData(0, 0, c.width, c.height).data, data = new Uint8Array(c.width * c.height);
+    for (let i = 0; i < data.length; i++) data[i] = rgba[i * 4];
+    const texture = new THREE.DataTexture(data, c.width, c.height, THREE.RedFormat); texture.needsUpdate = true; // nearest filter, no mipmaps
+    own = { data, w: c.width, h: c.height, x0: o.x0, z0: o.z0, cell: o.cell, values: o.values, texture, box: o };
+    return own;
+  }
+  const tilesAt = (x, z) => tiles.filter(t => t.center && squareDistance(t, x, z) === 0);
+  /** Ownership value of the cell at (x, z); 0 outside the map. */
+  function ownerAt(x, z) {
+    if (!own) return 0;
+    const c = Math.floor((x - own.x0) / own.cell), r = Math.floor((z - own.z0) / own.cell);
+    return c < 0 || r < 0 || c >= own.w || r >= own.h ? 0 : own.data[r * own.w + c];
+  }
+  /** Is a surface of this model drawn, and so solid, at (x, z)? Mirrors the shader test in look.js. */
+  function solidAt(group, x, z) {
+    if (!own) return true;
+    const v = ownerAt(x, z), V = own.values;
+    if (group === 'main') return v !== V.north && v !== V.northEdge;
+    if (group === 'north') return v !== V.main;
+    return group !== 'skirt' || v !== V.north;
+  }
   const urgent = new Set();
   const progress = { loaded: 0, total: 1, tiles: 0, count: 0 };
 
@@ -47,6 +76,7 @@ export function createWorld(app, prepare, release = () => {}) {
     free(group);
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
     tiles = []; colliders = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
+    own?.texture.dispose(); own = null;
     Object.assign(progress, { loaded: 0, total: 1, tiles: 0, count: 0 });
   }
 
@@ -67,7 +97,7 @@ export function createWorld(app, prepare, release = () => {}) {
   function addColliders(root, tile) {
     const from = colliders.length;
     collect(root);
-    for (let i = from; i < colliders.length; i++) colliders[i].tile = tile;
+    for (let i = from; i < colliders.length; i++) { colliders[i].tile = tile; colliders[i].group = tile.scene; }
   }
   function collect(root) {
     root.traverse(o => {
@@ -203,7 +233,9 @@ export function createWorld(app, prepare, release = () => {}) {
     app.bounds.makeEmpty();
     if (b) app.bounds.set(new THREE.Vector3(b.minX, Infinity, b.minZ), new THREE.Vector3(b.maxX, -Infinity, b.maxZ));
     Object.assign(progress, { loaded: 0, total: tiles.reduce((s, t) => s + t.bytes, 0), tiles: 0, count: tiles.length });
-    app.emit('scene:start', { manifest: man, focus: at });
+    const ownership = await loadOwnership(man.ownership).catch(e => { console.error('ownership map did not load', e); return null; });
+    if (my !== token) return;
+    app.emit('scene:start', { manifest: man, focus: at, ownership });
 
     const first = firstBatch(tiles, at, FIRST_TILES);
     progress.first = first.reduce((s, t) => s + t.bytes, 0);
@@ -265,10 +297,18 @@ export function createWorld(app, prepare, release = () => {}) {
     for (const { c, enter } of _cand) {
       if (best && enter > best.distance) break;
       ensureBVH(c);
-      ray.far = best ? best.distance : far; _hits.length = 0;
-      c.mesh.raycast(ray, _hits);
-      const h = _hits[0];
-      if (h && (!best || h.distance < best.distance)) best = h;
+      const limit = best ? best.distance : far;
+      // a hit in a cell this model does not own is on hidden geometry: step past it and look again
+      let h = null, skipped = 0;
+      for (let tries = 0; tries < 6; tries++) {
+        ray.far = limit - skipped; _hits.length = 0;
+        c.mesh.raycast(ray, _hits);
+        h = _hits[0] ?? null;
+        if (!h || solidAt(c.group, h.point.x, h.point.z)) break;
+        skipped += h.distance + 0.02; ray.ray.origin.copy(origin).addScaledVector(dir, skipped); h = null;
+      }
+      ray.ray.origin.copy(origin);
+      if (h) { h.distance += skipped; if (!best || h.distance < best.distance) best = h; }
     }
     if (!best) return null;
     const normal = best.face ? _n.copy(best.face.normal).transformDirection(best.object.matrixWorld).clone() : new THREE.Vector3(0, 1, 0);
@@ -302,7 +342,7 @@ export function createWorld(app, prepare, release = () => {}) {
     _box.makeEmpty().expandByPoint(a).expandByPoint(b).expandByScalar(radius);
     let touched = false;
     for (const c of colliders) {
-      if (!c.box.intersectsBox(_box)) continue;
+      if (!c.box.intersectsBox(_box) || !solidAt(c.group, a.x, a.z)) continue;
       const bvh = ensureBVH(c), mw = c.mesh.matrixWorld;
       _inv.copy(mw).invert();
       const s = mw.getMaxScaleOnAxis(), r = radius / s;
@@ -365,13 +405,15 @@ export function createWorld(app, prepare, release = () => {}) {
   return {
     load, loadAll, dispose, raycast, groundAt, pick, pushOut, warm,
     get budget() { return budget; },
+    ownerAt, solidAt,
     get tiles() { return tiles; },
     get group() { return group; },
     get progress() { return progress; },
     get paused() { return paused; },
     resume() { resume?.(); resume = null; },
-    isLoaded(x, z) { const t = tileAt(tiles, x, z); return !t || t.state === 'ready' || t.state === 'error'; },
-    prioritize(x, z) { const t = tileAt(tiles, x, z); if (t?.state === 'queued') urgent.add(t); },
+    // a square can hold one tile from each model
+    isLoaded(x, z) { return tilesAt(x, z).every(t => t.state === 'ready' || t.state === 'error'); },
+    prioritize(x, z) { for (const t of tilesAt(x, z)) if (t.state === 'queued') urgent.add(t); },
     tileAt: (x, z) => tileAt(tiles, x, z),
   };
 }

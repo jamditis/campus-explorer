@@ -12,6 +12,8 @@ const PARKING = 350;        // lots only show within this
 const NEAR_MOVING = 12;     // in walk and fly, hide labels nearer than this
 const TRIES_PER_FRAME = 3;  // ground lookups per frame while anchors are missing
 const RETRY_MS = 1500;      // wait before asking again for a place that missed
+const CONFIRM_MS = 4000;    // wait between confirming lookups for a place that hit
+const CONFIRMS = 3;         // hits needed before a place stops being asked
 const HIGHLIGHT_MS = 6000;
 
 /**
@@ -26,7 +28,7 @@ export function createLabels(app) {
   layer.className = 'lbl-layer';
   host.appendChild(layer);
 
-  let labels = [];          // { place, el, w, h, anchor: Vector3, found, nextTry, shown, key, opacity }
+  let labels = [];          // { place, el, w, h, anchor: Vector3, hit, checks, found, nextTry, shown, key, opacity }
   let visible = readStored();
   let highlighted = null;   // place object
   let highlightTimer = 0;
@@ -59,7 +61,7 @@ export function createLabels(app) {
       el.append(text, stem);
       el.addEventListener('click', () => app.goToPlace(place));
       layer.appendChild(el);
-      return { place, el, w: 0, h: 0, anchor: new THREE.Vector3(place.x, floorY() + ABOVE, place.z), found: false, nextTry: 0, shown: false, key: '', opacity: -1 };
+      return { place, el, w: 0, h: 0, anchor: new THREE.Vector3(place.x, floorY() + ABOVE, place.z), hit: false, checks: CONFIRMS, found: false, nextTry: 0, shown: false, key: '', opacity: -1 };
     });
     // one layout read for all labels, here and never per frame (they start hidden but laid out)
     for (const l of labels) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
@@ -67,19 +69,24 @@ export function createLabels(app) {
   }
 
   // Top of the model at a place. builtOnly never stalls a frame; it returns null until the tile's
-  // collision is ready, so places that miss are asked again later.
+  // collision is ready, so places that miss are asked again later. Collision for a tile is built mesh
+  // by mesh, so the first hit can be the terrain under a roof whose mesh is not ready yet: a hit is
+  // confirmed a few times, seconds apart, keeping the highest, before the place stops being asked.
   function pump(now) {
     let budget = TRIES_PER_FRAME;
     for (const l of labels) {
       if (budget <= 0) break;
-      if (l.found) continue;
-      if (now < l.nextTry) { if (!Number.isFinite(l.anchor.y)) l.anchor.y = floorY() + ABOVE; continue; }
+      if (l.found || now < l.nextTry) continue;
       budget--;
       const y = app.world.groundAt(l.place.x, l.place.z, null, { builtOnly: true });
-      if (y != null && Number.isFinite(y)) { l.anchor.y = y + ABOVE; l.found = true; dirty = true; } else {
+      if (y != null && Number.isFinite(y)) {
+        if (!l.hit || y + ABOVE > l.anchor.y + 0.01) { l.anchor.y = y + ABOVE; dirty = true; }
+        l.hit = true;
+        if (--l.checks <= 0) l.found = true; else l.nextTry = now + CONFIRM_MS;
+      } else {
         l.nextTry = now + RETRY_MS;
         const fallback = floorY() + ABOVE;
-        if (l.anchor.y !== fallback) { l.anchor.y = fallback; dirty = true; }
+        if (!l.hit && l.anchor.y !== fallback) { l.anchor.y = fallback; dirty = true; }
       }
     }
   }

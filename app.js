@@ -49,7 +49,7 @@ const _v = new THREE.Vector3();
 let dirty = 2, lastMove = 0;
 
 app.look = createLook(renderer, scene, camera);
-app.world = createWorld(app, root => app.look.decorate(root), root => app.look.forget(root));
+app.world = createWorld(app, (root, tile) => app.look.decorate(root, tile.scene), root => app.look.forget(root));
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
@@ -161,8 +161,9 @@ app.load = async ({ view = null } = {}) => {
     console.error(e); app.emit('scene:error', { error: e });
   }
 };
-app.on('scene:start', async ({ manifest }) => {
+app.on('scene:start', async ({ manifest, ownership }) => {
   app.manifest = manifest;
+  app.look.setOwnership(ownership?.texture ?? null, ownership?.box);
   app.look.setPaint(manifest.paint || [], './models/');
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
   app.emit('places');
