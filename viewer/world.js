@@ -156,6 +156,7 @@ export function createWorld(app, prepare, release = () => {}) {
       group.add(root); tile.root = root; tile.state = 'ready';
       if (tile.center) app.bounds.expandByObject(root);
       addColliders(root, tile);
+      warmIdle(); // collision near the view gets ready in idle time, so picks and the elevation readout do not wait
       progress.tiles++;
       app.emit('tile', { tile }); app.emit('progress', progress); app.invalidate();
     } catch (e) {
@@ -254,14 +255,13 @@ export function createWorld(app, prepare, release = () => {}) {
     await pump(my);
     if (my !== token) return;
     app.emit('scene:complete');
-    if (budget === Infinity) warmIdle();
-    else watch = setInterval(() => rebalance(my), 600);
+    if (budget !== Infinity) watch = setInterval(() => rebalance(my), 600);
   }
   /** Drop the memory budget and load every tile. */
   async function loadAll() {
     if (budget === Infinity) return;
     budget = Infinity; clearInterval(watch); app.emit('progress', progress);
-    await pump(token); warmIdle();
+    await pump(token);
   }
 
   // The proxy stand-ins are not in the scene graph: drop their BVHs with the scene.
@@ -381,8 +381,11 @@ export function createWorld(app, prepare, release = () => {}) {
       await new Promise(r => setTimeout(r));
     }
   }
-  // After everything is in, finish the remaining BVHs nearest-first in idle time so later picks never stall.
+  // Build the BVHs within WARM_RADIUS of the view, nearest first, while the view is still, so picks rarely stall.
+  // The rest of the campus stays unbuilt until someone looks there: BVHs for everything would cost hundreds of MB.
+  const WARM_RADIUS = 250;
   let warming = false;
+  app.on('camera', () => warmIdle());
   function warmIdle() {
     if (warming) return; warming = true;
     const my = token;
@@ -395,7 +398,7 @@ export function createWorld(app, prepare, release = () => {}) {
         const d = c.box.distanceToPoint(_focus) + c.tris * 1e-4; // near and small first
         if (d < nd) { nd = d; next = c; }
       }
-      if (!next) { warming = false; return; }
+      if (!next || nd > WARM_RADIUS) { warming = false; return; }
       if (deadline.timeRemaining() > 4 && app.isIdle()) ensureBVH(next);
       idle(tick);
     };

@@ -69,9 +69,9 @@ export function createLabels(app) {
 
   // One layout read for all labels, here and never per frame (they start hidden but laid out).
   // While the layer is switched off nothing has a size, so this runs again when it is switched on.
-  function measure() {
+  function measure(all = false) {
     if (!visible) return;
-    for (const l of labels) if (!l.w) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
+    for (const l of labels) if (all || !l.w) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
   }
 
   // Top of the model at a place. builtOnly never stalls a frame; it returns null until the tile's
@@ -128,7 +128,9 @@ export function createLabels(app) {
     for (let i = 0; i < items.length; i++) {
       const l = owners[i], it = items[i];
       if (!keep.has(i)) { hide(l); continue; }
-      const key = `translate3d(${it.x.toFixed(1)}px,${it.y.toFixed(1)}px,0)`;
+      // the percentages put the label's bottom centre on the anchor whatever its real size, so a
+      // stale measurement can only affect decluttering, never where the dot lands
+      const key = `translate3d(${(it.x + it.w / 2).toFixed(1)}px,${(it.y + it.h).toFixed(1)}px,0) translate(-50%,-100%)`;
       if (key !== l.key) { l.key = key; l.el.style.transform = key; }
       const op = it.forced ? 1 : Math.round(distanceOpacity(it.dist, FADE_FROM, FAR) * 20) / 20;
       if (op !== l.opacity) { l.opacity = op; l.el.style.opacity = String(op); }
@@ -161,7 +163,8 @@ export function createLabels(app) {
     app.on('tile', () => { for (const l of labels) if (!l.found) l.nextTry = 0; }),
     // the camera event comes after the controls update and before drawing, so labels match this frame
     app.on('camera', () => layout()),
-    app.on('resize', ({ width: w, height: h }) => { width = w; height = h; dirty = true; }),
+    // the label font size changes at the phone breakpoint, so sizes are read again on resize
+    app.on('resize', ({ width: w, height: h }) => { width = w; height = h; measure(true); dirty = true; }),
     app.on('mode', () => { dirty = true; }),
     app.on('place', ({ place }) => {
       highlight(place);
@@ -173,6 +176,7 @@ export function createLabels(app) {
     }),
   ];
   if (app.places?.length) build();
+  document.fonts?.ready.then(() => { measure(true); dirty = true; });
 
   return {
     setVisible,

@@ -1,6 +1,6 @@
 /* Landmark hunt from viewer/hunt.js. A compact card in the free top-centre area, below the
    measuring toolbar when that is open (--msr-bar-h is set by viewer/measure.js). */
-.hunt-card{position:fixed;top:calc(12px + var(--msr-bar-h,0px));left:50%;transform:translateX(-50%);width:300px;max-width:calc(100vw - 790px);max-height:calc(100vh - 140px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius,10px);box-shadow:var(--shadow,0 2px 10px rgba(0,0,0,.08));font-size:13px;color:var(--ink);pointer-events:auto}
+.hunt-card{position:fixed;top:calc(12px + var(--msr-bar-h,0px));left:50%;transform:translateX(-50%);width:300px;max-width:calc(100vw - 2 * (256px + 4 * var(--gap,12px)));max-height:calc(100vh - 140px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius,10px);box-shadow:var(--shadow,0 2px 10px rgba(0,0,0,.08));font-size:13px;color:var(--ink);pointer-events:auto}
 .hunt-card[hidden],.hunt-body[hidden],.hunt-done[hidden],.hunt-hint[hidden],.hunt-arrow[hidden]{display:none}
 .hunt-head{display:flex;align-items:center}
 .hunt-toggle{flex:1;min-width:0;display:flex;align-items:center;gap:8px;border:0;background:none;border-radius:var(--radius,10px);padding:8px 4px 8px 12px;text-align:left;font-size:13px}
@@ -40,6 +40,6 @@
 @keyframes hunt-pop{0%{background:rgba(212,165,49,0);transform:scale(1)}25%{background:rgba(212,165,49,.35);transform:scale(1.04)}100%{background:rgba(212,165,49,0);transform:scale(1)}}
 @keyframes hunt-bit{0%{opacity:1;transform:translate(0,0) rotate(0)}70%{opacity:1}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 60px)) rotate(var(--r))}}
 .hunt-pop{border-radius:6px}
-/* not enough room between the header and the panel: sit under the header instead */
-@media (max-width:1099px){.hunt-card{left:12px;top:calc(76px + var(--msr-bar-h,0px));transform:none;max-width:calc(100vw - 286px)}}
-@media (max-width:640px){.hunt-card{left:8px;right:8px;top:calc(66px + var(--msr-bar-h,0px));width:auto;max-width:none;max-height:calc(100vh - 66px - var(--msr-bar-h,0px) - 46vh)}}
+/* not enough room between the header and the panel: sit under the header (--top-h is its bottom, set by ui.js) */
+@media (max-width:1179px){.hunt-card{left:var(--gap,12px);top:calc(var(--top-h,110px) + var(--gap,12px) + var(--msr-bar-h,0px));transform:none;max-width:calc(100vw - 256px - 3 * var(--gap,12px));max-height:calc(100vh - var(--top-h,110px) - var(--msr-bar-h,0px) - 160px)}}
+@media (max-width:700px),(max-height:520px){.hunt-card{left:var(--gap,8px);right:var(--gap,8px);top:calc(var(--top-h,96px) + var(--gap,8px) + var(--msr-bar-h,0px));width:auto;max-width:none;max-height:calc(100dvh - var(--top-h,96px) - var(--msr-bar-h,0px) - 120px)}}

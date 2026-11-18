@@ -50,7 +50,7 @@ export function createHunt(app) {
   card.append(head, hint, body);
   overlay.append(card);
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  setOpen(!matchMedia('(max-width: 640px)').matches);
+  setOpen(!matchMedia('(max-width: 700px), (max-height: 520px)').matches);
 
   function el(tag, cls, text) {
     const e = document.createElement(tag); e.className = cls;

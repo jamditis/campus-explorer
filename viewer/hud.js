@@ -266,8 +266,9 @@ export function createHud(app) {
     app.emit('hud:map', { on });
   }
   close.addEventListener('click', () => {
+    const had = document.activeElement === close;
     setMap(false);
-    compass.focus(); // focus was on the button that just disappeared
+    if (had) compass.focus(); // focus was on the button that just disappeared
   });
 
   // ---- events ----
