@@ -14,7 +14,7 @@
   },
   {
    "file": "n_context.glb",
-   "bytes": 3307400
+   "bytes": 3271136
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -34,7 +34,7 @@
   },
   {
    "file": "n_t_-1_2.glb",
-   "bytes": 2895808,
+   "bytes": 2895812,
    "center": [
     -80.0,
     -400.0
@@ -50,7 +50,7 @@
   },
   {
    "file": "n_t_-1_4.glb",
-   "bytes": 1829196,
+   "bytes": 1021068,
    "center": [
     -80.0,
     -720.0
@@ -58,7 +58,7 @@
   },
   {
    "file": "n_t_-1_5.glb",
-   "bytes": 2231148,
+   "bytes": 1497008,
    "center": [
     -80.0,
     -880.0
@@ -98,7 +98,7 @@
   },
   {
    "file": "n_t_-2_1.glb",
-   "bytes": 2697360,
+   "bytes": 2697364,
    "center": [
     -240.0,
     -240.0
@@ -122,23 +122,15 @@
   },
   {
    "file": "n_t_-2_4.glb",
-   "bytes": 738628,
+   "bytes": 726472,
    "center": [
     -240.0,
     -720.0
    ]
   },
   {
-   "file": "n_t_-2_5.glb",
-   "bytes": 119320,
-   "center": [
-    -240.0,
-    -880.0
-   ]
-  },
-  {
    "file": "n_t_-3_-1.glb",
-   "bytes": 2713288,
+   "bytes": 2713284,
    "center": [
     -400.0,
     80.0
@@ -467,6 +459,6 @@
   "half": 2000
  },
  "far_trees": "far_trees.bin",
- "exported": "November 18, 2026, 6:30 PM ET",
- "total_bytes": 210212468
+ "exported": "November 18, 2026, 6:33 PM ET",
+ "total_bytes": 208502464
 }
