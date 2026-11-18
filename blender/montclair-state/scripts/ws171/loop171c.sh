@@ -1,0 +1,3 @@
+cd /workspace/nj-scenes/montclair-state
+OUT=/workspace/nj-scenes/montclair-state/montclair_state_ws171c.blend WD_MIN=1500 bash scripts/ws33/wd.sh /workspace/opt/blender/blender -b --factory-startup montclair_state_ws171b.blend --python-expr "import bpy,os;exec(open('/workspace/nj-scenes/montclair-state/scripts/ws171/fix171c.py').read());exec(open('/workspace/nj-scenes/montclair-state/scripts/ws171/probe171e.py').read());bpy.ops.wm.save_as_mainfile(filepath=os.environ['OUT'],copy=True,compress=True);print('SAVED',flush=True)" 2>&1 | grep --line-buffered -E "PROBE|FIX|SAVED|rror|Trace|WATCH"
+echo "$(date +%T) DONE171c"

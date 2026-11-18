@@ -1,0 +1,12 @@
+import bpy
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws59/render59.py').read()
+src=src.replace("('Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km')","('Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km',[o.name for o in bpy.data.objects if o.name.startswith('WS68_RHD_ground')][0])",1)
+add="""camz('WS67_CAM_oblique_CollegeAve_W_to_RHD',(-175,-150,175),(-250,-55),30,None,0.0)
+camz('WS67_CAM_eye_CollegeAve_E_from_RHD_entrance',(-266,-56,0),(-214,-66),28,1.7,1.5)
+camz('WS69_CAM_closeup_gap_strip_curbs',(-242,-63,0),(-251,-55),30,1.7,0.0)
+camz('WS68_CAM_eye_RHD_cogen_lawn_from_S',(-285,-128,0),(-290,-40),26,1.7,4.0)
+camz('WS71_CAM_top_Kasser_S_foot',(-228,-78,0),(-228,-60),30,70.0,0.0)
+camz('WS71_CAM_closeup_Kasser_S_foot_from_road',(-236,-66,0),(-222,-58.5),30,1.7,0.5)
+"""
+src=src.replace("base=bpy.data.objects.get('Sun')",add+"base=bpy.data.objects.get('Sun')",1)
+exec(compile(src,'render71','exec'))

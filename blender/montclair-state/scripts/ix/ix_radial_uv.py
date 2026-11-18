@@ -1,0 +1,60 @@
+# Session ix (2026-10-25): fix the faint zig-zag dark marks inside the amphitheater seat stones.
+# Cause: the brick-joint U coordinate came from ip's build (u = theta*r/BL at the ORIGINAL 8 cm grid positions).
+#  (a) it/iw snapped ~37k verts but only re-derived V, so U kept pre-snap values -> the vertical mortar lines
+#      (Brick Texture mortar + its bump + per-block white noise) kink at every moved vertex -> zig-zags;
+#  (b) u = theta*r makes joints slant across the seat depth (not radial), so each joint line crosses many 8 cm
+#      cells and every per-vertex error shows as a step.
+# Fix: U re-derived from CURRENT vertex positions as theta * R_row / BL, with R_row a constant per row level
+#  (median radius of that level's seat verts), so joints are true radial cuts, continuous across faces and
+#  independent of the grid. V re-derived as before. Applies to seat, riser and aisle stone faces.
+# Run after ip -> iq -> ir -> is -> it -> iu -> iv -> iw. SAVE=1 saves; OUTB=path saves a copy; DRY=1 stats only.
+# Old UVs stored in UV layer 'UVMap_pre_ix' (REVERT=1 copies them back).
+import bpy, bmesh, math, os, numpy as np
+N_ROWS=19; Z_STAGE=132.45; Z_TOP=141.3; RISER=(Z_TOP-Z_STAGE)/N_ROWS; BL=1.8
+ob=bpy.data.objects['Kasser_amphitheater_bowl_hl']; me=ob.data
+names=[s.material.name if s.material else '' for s in ob.material_slots]; print('IX slots',names)
+SEAT=names.index('hn_amphi_seat_stone_blocks'); RIS=names.index('hn_amphi_riser_coursed_stone'); AIS=names.index('io_amphi_aisle_stone')
+if 'UVMap_pre_ix' not in me.uv_layers:
+    nl=me.uv_layers.new(name='UVMap_pre_ix'); src=me.uv_layers['UVMap']
+    buf=np.empty(len(me.loops)*2); src.data.foreach_get('uv',buf); nl.data.foreach_set('uv',buf)
+me.uv_layers.active=me.uv_layers['UVMap']
+for l in me.uv_layers: l.active_render=(l.name=='UVMap')
+if os.environ.get('REVERT'):
+    buf=np.empty(len(me.loops)*2); me.uv_layers['UVMap_pre_ix'].data.foreach_get('uv',buf); me.uv_layers['UVMap'].data.foreach_set('uv',buf); print('IX REVERTED')
+else:
+    bm=bmesh.new(); bm.from_mesh(me); uvl=bm.loops.layers.uv['UVMap']
+    # stage centre = mean of stage-level verts (z within 2 cm of the stage level)
+    st=np.array(list({v.index:v.co[:2] for f in bm.faces if f.material_index==names.index('io_amphi_stage_concrete') for v in f.verts}.values()))
+    CX,CY=st.mean(0); print('IX centre (stage-face verts)',round(CX,2),round(CY,2),len(st))
+    sv=np.array([v.co[:2] for f in bm.faces if f.material_index==SEAT for v in f.verts])
+    TH0=math.atan2((sv[:,1]-CY).mean(),(sv[:,0]-CX).mean()); print('IX bowl mean dir',round(TH0,3))
+    rs={}
+    for f in bm.faces:
+        if f.material_index!=SEAT: continue
+        for v in f.verts:
+            k=int(round((v.co.z-Z_STAGE)/RISER)); rs.setdefault(k,[]).append(math.hypot(v.co.x-CX,v.co.y-CY))
+    R={k:float(np.median(a)) for k,a in rs.items()}; print('IX R_row',{k:round(r,2) for k,r in sorted(R.items())})
+    ks=sorted(R)
+    def Rk(k):
+        if k in R: return R[k]
+        return R[min(ks,key=lambda q:abs(q-k))]
+    th_all=[]; du=[]; n=0
+    for f in bm.faces:
+        if f.material_index not in (SEAT,RIS,AIS): continue
+        lv=[(v.co.z-Z_STAGE)/RISER for v in f.verts]
+        k=int(math.floor(min(lv)+0.25)) if f.material_index!=SEAT else int(round(sum(lv)/len(lv)))
+        rr=Rk(k)
+        # theta continuous across the face (no wrap inside a face)
+        for lp in f.loops:
+            v=lp.vert; th=(math.atan2(v.co.y-CY,v.co.x-CX)-TH0+math.pi)%(2*math.pi)-math.pi; th_all.append(th)
+            u=th*rr/BL
+            du.append(abs(u-lp[uvl].uv.x))
+            if os.environ.get('DRY')!='1': lp[uvl].uv=(u,(v.co.z-Z_STAGE)/RISER+0.5)
+        n+=1
+    th_all=np.array(th_all); du=np.array(du)
+    print('IX faces',n,'theta range',round(float(th_all.min()),3),round(float(th_all.max()),3),'|du| pct50/90/99',[round(float(np.percentile(du,q)),3) for q in (50,90,99)])
+    if os.environ.get('DRY')!='1': bm.to_mesh(me)
+    bm.free(); me.update()
+# per-block noise & brick both read 'UVMap' -> nothing else to change in the shaders
+if os.environ.get('OUTB'): bpy.ops.wm.save_as_mainfile(filepath=os.environ['OUTB'],copy=True); print('IX WROTE')
+elif os.environ.get('SAVE'): bpy.ops.wm.save_mainfile(); print('IX SAVED')

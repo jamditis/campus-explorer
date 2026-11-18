@@ -1,0 +1,1 @@
+import bpy; print('SF_COUNT',len(bpy.data.objects),len(bpy.data.materials),[ (m.name,len(m.vertices),m.use_fake_user) for m in bpy.data.meshes if 'grass_points' in m.name and ('QV_R' in m.name or 'QX_R' in m.name or 'QXP_band' in m.name)])

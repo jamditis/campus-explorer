@@ -1,0 +1,35 @@
+name: Area or feature request
+description: Ask for a building, lot, path, landmark or whole campus to be modelled, or a viewer feature
+labels: ["area request"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request type
+      options:
+        - Building or landmark
+        - Lot, road, path or landscaping
+        - New campus
+        - Web viewer feature
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: what
+    attributes:
+      label: What and where
+      placeholder: "Sprague Library, north entrance plaza"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Details
+      description: What should it include, and why does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Public sources (optional)
+      description: OSM ways, official maps, public-domain or openly licensed photos, plans.

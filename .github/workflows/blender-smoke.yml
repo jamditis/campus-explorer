@@ -1,0 +1,58 @@
+name: blender smoke test
+
+# Not a required check (it downloads Blender), so path filters are fine here.
+on:
+  pull_request:
+    paths:
+      - 'blender/**'
+      - 'tools/**'
+      - '.github/workflows/blender-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'blender/**'
+      - 'tools/**'
+  schedule:
+    - cron: '30 9 * * 1'  # Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blender-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BLENDER_VERSION: 4.5.16
+
+jobs:
+  blender-smoke:
+    name: blender-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache Blender
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/blender
+          key: blender-${{ env.BLENDER_VERSION }}-linux-x64
+      - name: Download Blender ${{ env.BLENDER_VERSION }} LTS
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/blender
+          curl -fsSL "https://download.blender.org/release/Blender4.5/blender-${BLENDER_VERSION}-linux-x64.tar.xz" \
+            | tar -xJ -C ~/blender --strip-components=1
+      - name: System libraries for headless Blender
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0 libsm6 libgl1 libegl1 >/dev/null
+      - name: Smoke test
+        run: ~/blender/blender --background --factory-startup --python-exit-code 1 --python blender/smoke_test.py -- "$RUNNER_TEMP/smoke"
+      - name: Upload smoke render
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blender-smoke
+          path: ${{ runner.temp }}/smoke
+          retention-days: 7
