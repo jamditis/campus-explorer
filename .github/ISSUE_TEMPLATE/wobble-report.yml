@@ -1,0 +1,57 @@
+name: Wobble or geometry report
+description: A wavy edge, seam, hole, floating or buried piece, or anything else that looks broken in the model
+labels: ["wobble", "geometry"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for spotting it. Screenshots from the [live viewer](https://jamditis.github.io/campus-explorer/) or a render are perfect. Please don't attach photos you don't have the rights to share.
+  - type: dropdown
+    id: campus
+    attributes:
+      label: Campus
+      options:
+        - Montclair State University
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Where is it?
+      description: Building, lot, path or road name, and which side. Viewer coordinates help if you have them.
+      placeholder: "Lot 3, south ramp, where the curb meets the walk"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Wobbly or kinked edge (should be straight or a smooth arc)
+        - Seam or gap between surfaces
+        - Hole or missing face
+        - Floating, buried or poking-through piece
+        - Wrong height or slope
+        - Wrong layout compared with reality
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What's wrong, and what should it look like?
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag in a screenshot from the viewer or a render.
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: How do you know? (optional)
+      description: A public source, such as an OSM way, Street View link or official campus map.

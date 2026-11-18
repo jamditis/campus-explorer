@@ -1,0 +1,14 @@
+import bpy, hashlib, json, os
+out=os.environ.get('OUT','/workspace/nj-scenes/montclair-state/data/ty/sig.txt')
+objs=sorted(o.name for o in bpy.data.objects)
+mats=sorted(m.name for m in bpy.data.materials)
+meshes=sorted(m.name for m in bpy.data.meshes)
+cams=sorted(c.name for c in bpy.data.cameras)
+# content hash of object counts + sorted names
+blob='|'.join([
+ f'O{len(objs)}', f'M{len(mats)}', f'E{len(meshes)}', f'C{len(cams)}',
+ hashlib.sha1('\n'.join(objs).encode()).hexdigest()[:12],
+ hashlib.sha1('\n'.join(mats).encode()).hexdigest()[:12],
+])
+open(out,'w').write(f'TYSIG {len(objs)} {len(mats)} {len(meshes)} {len(cams)} {blob}\n')
+print(open(out).read().strip())

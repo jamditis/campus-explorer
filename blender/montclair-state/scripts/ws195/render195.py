@@ -1,0 +1,4 @@
+cams194="camz('WS195_CAM_oblique_RHD_lot_median_from_SW',(-282.0,-122.0,0),(-236.0,-88.0),26,26.0,0.0)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ncamz('WS195_CAM_eye_median_W_nose_from_W',(-263.0,-87.5,0),(-238.0,-88.5),26,1.7,0.3)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ncamz('WS195_CAM_eye_median_from_NE_aisle',(-222.0,-80.5,0),(-250.0,-86.0),26,1.7,0.3)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ncamz('WS195_CAM_closeup_median_W_nose',(-260.0,-91.0,0),(-253.0,-84.5),30,1.8,0.1)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ncamz('WS194_CAM_closeup_ramp_E_edge',(-301.5,-243.5,0),(-305.5,-239.0),30,2.0,0.0)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ncamz('WS194_CAM_eye_ramp_from_S_looking_N',(-309.6,-252.5,0),(-308.0,-234.0),26,1.7,0.5)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n"
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws193/render193.py').read()
+src=src.replace('cams193="','cams193="'+cams194,1)
+exec(compile(src,'render193','exec'))

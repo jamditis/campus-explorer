@@ -1,0 +1,50 @@
+import bpy
+src=open('/workspace/nj-scenes/montclair-state/scripts/ws59/render59.py').read()
+src=src.replace("('Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km')","('Terrain_LiDAR_DTM_1m','Context_skirt_3DEP_ortho_4km',[o.name for o in bpy.data.objects if o.name.startswith('WS68_RHD_ground')][0])",1)
+add="""camz('WS78_CAM_oblique_lot_pocket_regrade',(-212,-128,55),(-240,-87),30,None,0.0)
+camz('WS78_CAM_eye_lot_from_W',(-263,-85.5,0),(-228,-91),28,1.7,0.8)
+camz('WS78_CAM_eye_lot_from_E',(-207,-97,0),(-246,-84),28,1.7,0.8)
+camz('WS78_CAM_closeup_W_seam_island_tip',(-259.5,-91.5,0),(-250,-84.5),26,2.2,0.0)
+camz('WS77_CAM_oblique_island',(-212,-128,55),(-240,-87),30,None,0.0)
+camz('WS77_CAM_eye_island_from_W',(-263,-85.5,0),(-228,-91),28,1.7,0.8)
+camz('WS77_CAM_eye_island_from_E',(-207,-97,0),(-246,-84),28,1.7,0.8)
+camz('WS77_CAM_closeup_island_W_tip',(-259.5,-91.5,0),(-250,-84.5),26,2.2,0.0)
+camz('WS77_CAM_top_island',(-236,-88,0),(-235.6,-86),30,60.0,0.0)
+camz('WS76_CAM_closeup_accessible_stalls',(-243,-76.2,0),(-231,-75.5),28,2.0,0.0)
+camz('WS76_CAM_top_lots',(-258,-78,0),(-257.6,-76),30,75.0,0.0)
+camz('WS76_CAM_closeup_accessible_rows_from_W',(-262,-70,0),(-238,-76),28,1.7,0.0)
+camz('WS76_CAM_closeup_sprague_row_from_S',(-232,-104,0),(-238,-91),28,1.7,0.0)
+camz('WS76_CAM_oblique_lots',(-205,-150,170),(-262,-78),30,None,0.0)
+camz('WS75_CAM_closeup_sprague_lot_from_SE',(-218,-132,0),(-243,-98),28,7.0,0.0)
+camz('WS75_CAM_oblique_sprague_lot',(-205,-170,165),(-245,-105),30,None,0.0)
+camz('WS73_CAM_closeup_north_curb_bend',(-197,-76,0),(-205,-65),28,1.7,0.2)
+camz('WS73_CAM_closeup_south_curb',(-226,-62,0),(-240,-64.5),28,1.6,0.2)
+camz('WS67_CAM_oblique_CollegeAve_W_to_RHD',(-175,-150,175),(-250,-55),30,None,0.0)
+camz('WS67_CAM_eye_CollegeAve_E_from_RHD_entrance',(-266,-56,0),(-214,-66),28,1.7,1.5)
+camz('WS69_CAM_closeup_gap_strip_curbs',(-242,-63,0),(-251,-55),30,1.7,0.0)
+camz('WS68_CAM_eye_RHD_cogen_lawn_from_S',(-285,-128,0),(-290,-40),26,1.7,4.0)
+camz('WS72_CAM_closeup_KasserSW_walk_from_road',(-252,-61,0),(-244,-48),28,1.7,0.3)
+camz('WS72_CAM_closeup_KasserS_east_from_road',(-219,-66.5,0),(-207,-58),28,1.7,0.4)
+camz('WS72_CAM_eye_CollegeAve_W_from_Kasser_frontage_E',(-198,-74,0),(-252,-52),28,1.7,1.5)
+camz('WS72_CAM_oblique_RHD_CollegeAve_W',(-175,-150,175),(-250,-55),30,None,0.0)
+camz('WS71_CAM_top_Kasser_S_foot',(-228,-78,0),(-228,-60),30,70.0,0.0)
+camz('WS71_CAM_closeup_Kasser_S_foot_from_road',(-236,-66,0),(-222,-58.5),30,1.7,0.5)
+"""
+src=src.replace("base=bpy.data.objects.get('Sun')",add+"base=bpy.data.objects.get('Sun')",1)
+src=src.split('ts=datetime')[0]; exec(compile(src,'r','exec'))
+
+import mathutils
+dg=bpy.context.evaluated_depsgraph_get()
+c=bpy.data.objects['WS78_CAM_closeup_W_seam_island_tip']
+sc.render.resolution_x=1280; sc.render.resolution_y=720
+fr=c.data.view_frame(scene=sc); mw=c.matrix_world
+tl,tr_,br,bl=None,None,None,None
+# view_frame order: top-right, bottom-right, bottom-left, top-left
+TR,BR,BL,TL=[mw@v for v in fr]
+o=mw.translation
+for (px,py) in [(400,195),(455,212),(350,172),(500,190),(505,215),(425,205),(380,185),(560,270),(300,160)]:
+    u=px/704; v=py/396
+    top=TL.lerp(TR,u); bot=BL.lerp(BR,u); p=top.lerp(bot,v)
+    d=(p-o).normalized()
+    ok,loc,n,i,ob,m=sc.ray_cast(dg,o,d)
+    print('WS78PX',px,py,ob.name if ob else None,tuple(round(x,2) for x in loc) if ok else None,flush=True)

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Session dY WIPs (Oct 21 2026 ~1:30 PM ET; FROM MAIN): dd T-base tables + rounded chair backs (photo 05); soft light unchanged; copy of the dX script.
+cd /workspace/nj-scenes/montclair-state
+B=../tools/blender_slot.sh; PY=north/scripts/render_wip_20261020cw.py
+O=${OUTDIR:-/workspace/nj-scenes/montclair-state/renders/wip}; T=${1:-$(date +%Y%m%d-%H%M)}; S=${SPP:-24}
+run() { free -m | head -2; env SPP=$S PCT=${PCT:-100} OUT=$O/${T}_$1_dY.jpg CAM=$1 "${@:2}" $B -b ${BLEND:-montclair_state.blend} --python $PY 2>&1 | grep -E "RENDERED|SOFT|VIEW|hid trees|Error"; }
+for v in ${VIEWS:-obl eyeE eyeW closeW}; do case $v in
+ oblN) run CAM_oblique_CCOM_north_wing env LOC=${OLOC:--38.0,82.0,170.0} TGT=${OTGT:--2.0,30.0,141.0} LENS=${OLENS:-28} TREE_HIDE_SEG_M=6 ;;
+ closeN) run CAM_closeup_CCOM_north_wing_walltop env LOC=${CLOC:--9.0,54.0,140.0} TGT=${CTGT:--5.0,40.0,145.5} LENS=${CLENS:-30} TREE_HIDE_SEG_M=4 ;;
+ obl) run CAM_oblique_CCOM_east_lawn env LOC=${OLOC:-85.0,15.0,172.0} TGT=${OTGT:-12.0,15.0,137.0} LENS=${OLENS:-28} TREE_HIDE_SEG_M=6 ;;
+ eyeE) run CAM_eye_CCOM_east_lounge_glazing env LOC=${ELOC:-36.5,-19.0,136.3} TGT=${ETGT:-23.6,-22.2,137.9} LENS=${ELENS:-28} TREE_HIDE_SEG_M=4 ;;
+ closeW) run CAM_closeup_CCOM_east_window_spandrel env LOC=${CLOC:-31.5,-22.6,136.4} TGT=${CTGT:-24.2,-21.8,138.6} LENS=${CLENS:-24} TREE_HIDE_SEG_M=3 ;;
+ eyeN) run CAM_eye_CCOM_north_lawn env LOC=${NLOC:--12.0,58.0,139.1} TGT=${NTGT:-5.0,20.0,138.5} LENS=${NLENS:-24} TREE_HIDE_SEG_M=4 ;;
+ eyeW) run CAM_eye_CCOM_lounge_west_lawn env LOC=${WLOC:--40.0,10.0,139.2} TGT=${WTGT:-0.0,12.0,140.0} LENS=${WLENS:-24} TREE_HIDE_SEG_M=4 ;;
+ closeC) run CAM_closeup_CCOM_south_corridor_floor env LOC=${CLOC:-12.5,-21.9,137.2} TGT=${CTGT:--10,-16.6,136.8} LENS=${CLENS:-20} TREE_HIDE_SEG_M=3 ;;
+ close) run CAM_closeup_CCOM_east_strip_grass env LOC=${CLOC:-43.0,12.0,135.4} TGT=${CTGT:-38.0,22.0,134.7} LENS=${CLENS:-35} TREE_HIDE_SEG_M=3 ;;
+esac; done
+echo DONE_DY_RENDERS; ls -la $O/${T}_*_dY.jpg

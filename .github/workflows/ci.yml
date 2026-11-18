@@ -1,0 +1,78 @@
+name: checks
+
+# Required checks on main: lint, viewer, repo-guard.
+# No path filters: every PR must emit all three, including docs-only PRs.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Ruff
+        run: python3 -m pip install --disable-pip-version-check ruff==0.11.13
+      - name: Ruff (tools, blender helpers, CI scripts)
+        run: python3 -m ruff check --output-format github .
+      - name: Syntax-check the Blender session archive
+        # Historical one-off bpy scripts: only real syntax and comparison errors fail.
+        run: >
+          python3 -m ruff check --isolated --target-version py311
+          --select E9,F63,F7 --output-format github
+          blender/montclair-state/scripts
+      - name: Shell syntax
+        run: |
+          find . -name '*.sh' -not -path './vendor/*' -print0 | xargs -0 -r -n1 bash -n
+
+  viewer:
+    name: viewer
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: JavaScript syntax (viewer and export helpers)
+        run: |
+          set -e
+          for f in $(git ls-files '*.js' '*.mjs' | grep -v '^vendor/'); do
+            echo "node --check $f"
+            cp "$f" "$RUNNER_TEMP/check.mjs"
+            node --check "$RUNNER_TEMP/check.mjs"
+          done
+      - name: HTML validation
+        run: |
+          files=$(git ls-files '*.html' | grep -v '^vendor/' || true)
+          if [ -n "$files" ]; then npx --yes html-validate@9 $files; else echo "no HTML yet"; fi
+      - name: Local references in HTML, import map and model manifest resolve
+        run: python3 tools/ci/check_viewer_refs.py
+      - name: Markdown and HTML links (offline, local targets only)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline --no-progress --include-fragments=false
+            --exclude-path vendor
+            './**/*.md' './**/*.html'
+          fail: true
+
+  repo-guard:
+    name: repo-guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Block .blend files, reference photos, imagery, rasters, oversize files
+        run: python3 tools/ci/repo_guard.py

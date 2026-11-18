@@ -1,0 +1,44 @@
+# Models go up as GitHub Release assets, never into git.
+*.blend
+*.blend[0-9]
+*.blend@
+# Reference photos (including Joe's), renders, exports, backups.
+refs/
+**/refs/
+renders/
+exports/
+backups/
+# Ortho / aerial / LiDAR / DEM inputs. Credit them, do not redistribute.
+*.tif
+*.tiff
+*.jp2
+*.sid
+*.ecw
+*.las
+*.laz
+*.copc
+*.npz
+*.npy
+*ortho*.jpg
+*ortho*.png
+*aerial*.jpg
+*naip*.jpg
+# Render outputs and HDRIs
+*.exr
+*.hdr
+# Build and tool output
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+smoke-out/
+*.log
+*.out
+.DS_Store
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
