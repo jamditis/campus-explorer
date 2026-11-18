@@ -87,6 +87,7 @@ async function loadScene() {
       const g = await loader.loadAsync(base + t.file);
       if (token !== loadToken) return;
       g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
+      if (t.file === 'skirt.glb' && man.landcover) applyLandcover(g.scene, base + man.landcover.file, man.landcover.half);
       done++; bytes += t.bytes;
       $('load-text').textContent = `Loading campus… ${Math.round(bytes / total * 100)}% (${done}/${man.tiles.length} tiles)`;
       if (done === 1) overview();
@@ -103,6 +104,7 @@ async function loadScene() {
     }
     loaded = true; overview();
     setTimeout(() => { if (token === loadToken) { indexGround(); snapTrees(); trees.add(campus); } }, 50);
+    if (man.far_trees) fetch(base + man.far_trees).then(r => r.arrayBuffer()).then(b => { if (token === loadToken) trees.addFar(new Float32Array(b)); }).catch(e => console.warn('far trees', e));
     window.__campusLoad = { ms: Math.round(performance.now() - t0), tiles: done, bytes };
     $('load').hidden = true;
   } catch (e) {
@@ -123,6 +125,20 @@ function topView() {
   const c = core.getCenter(new THREE.Vector3()), s = core.getSize(new THREE.Vector3());
   controls.target.set(c.x, core.min.y, c.z);
   camera.position.set(c.x, core.min.y + Math.max(s.x, s.z) * 1.05, c.z + 0.01); controls.update();
+}
+
+// Far-field land cover (from OpenStreetMap, see tools/web-export/landcover.py) draped over the 4 km skirt
+function applyLandcover(root, url, half) {
+  const tex = new THREE.TextureLoader().load(url);
+  tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; tex.flipY = false;
+  root.traverse(o => {
+    if (!o.isMesh || !/skirt/i.test(o.name + (o.parent?.name || ''))) return;
+    o.updateMatrixWorld(true);
+    const p = o.geometry.attributes.position, v = new THREE.Vector3(), uv = new Float32Array(p.count * 2);
+    for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld); uv[i * 2] = (v.x + half) / (2 * half); uv[i * 2 + 1] = (v.z + half) / (2 * half); }
+    o.geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    o.material = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95, envMapIntensity: 0.3 });
+  });
 }
 
 // ---------------- ground queries (lazy BVH per mesh) ----------------

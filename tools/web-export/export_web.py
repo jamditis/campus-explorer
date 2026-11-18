@@ -58,31 +58,90 @@ for o in objs:
             m.show_viewport = m.show_render
 print("WEB appended", len(objs), flush=True)
 
-# ---------- unified campus: clip a merged scene's terrain to cells the main scene doesn't cover ----------
+# ---------- unified campus: trim a merged scene's terrain where the main scene has ground ----------
+# Main's ground meshes (exact faces, not boxes) are rasterised at 1 m. North terrain faces well inside
+# main's ground are deleted; faces in a 2 m band along main's edge are kept but lowered 12 cm so they
+# tuck under main's edge: no cracks to the far-field skirt and no z-fighting.
 CLIP = W + "clip.json"
+MAIN_FILE = os.environ.get("MAIN_FILE", "")
 if os.environ.get("MERGE_WITH") and os.path.exists(CLIP):
+    import math
+
     cj = json.load(open(CLIP))
-    CELL = cj["cell"]
-    occ = {tuple(c) for c in cj["cells"]}
-    dg = bpy.context.evaluated_depsgraph_get()
-    for o in list(sc.objects):
-        if o.type != "MESH" or not re.search(r"terrain|apron", o.name, re.I):
-            continue
-        me = bpy.data.meshes.new_from_object(o.evaluated_get(dg))
-        bm = bmesh.new()
-        bm.from_mesh(me)
-        mw = o.matrix_world
-        kill = []
-        for f in bm.faces:
-            c = mw @ f.calc_center_median()
-            if (int(c.x // CELL), int(c.y // CELL)) in occ:
-                kill.append(f)
-        bmesh.ops.delete(bm, geom=kill, context="FACES")
-        bm.to_mesh(me)
-        bm.free()
-        o.modifiers.clear()
-        o.data = me
-        print("WEB clipped", o.name, "faces removed", len(kill), "left", len(me.polygons), flush=True)
+    TRIM = re.compile(r"terrain|apron", re.I)
+    targets = [o for o in sc.objects if o.type == "MESH" and TRIM.search(o.name)]
+    if targets and MAIN_FILE and os.path.exists(MAIN_FILE):
+        corners = [o.matrix_world @ Vector(c) for o in targets for c in o.bound_box]
+        lo = [min(p.x for p in corners) - 3, min(p.y for p in corners) - 3]
+        hi = [max(p.x for p in corners) + 3, max(p.y for p in corners) + 3]
+        want = [n for n, (x0, x1, y0, y1) in cj["ground"].items() if x1 > lo[0] and x0 < hi[0] and y1 > lo[1] and y0 < hi[1]]
+        with bpy.data.libraries.load(MAIN_FILE) as (a, b):
+            have = set(a.objects)
+            b.objects = [n for n in want if n in have]
+        cov = set()
+        dg = bpy.context.evaluated_depsgraph_get()
+        tmp = bpy.data.collections.new("main_ground_tmp")
+        sc.collection.children.link(tmp)
+        for g in b.objects:
+            if g is None:
+                continue
+            tmp.objects.link(g)
+        dg.update()
+        for g in list(tmp.objects):
+            me = bpy.data.meshes.new_from_object(g.evaluated_get(dg))
+            mw = g.matrix_world
+            vs = [mw @ v.co for v in me.vertices]
+            me.calc_loop_triangles()
+            for t in me.loop_triangles:
+                a0, a1, a2 = (vs[i] for i in t.vertices)
+                x0 = math.floor(min(a0.x, a1.x, a2.x))
+                x1 = math.floor(max(a0.x, a1.x, a2.x))
+                y0 = math.floor(min(a0.y, a1.y, a2.y))
+                y1 = math.floor(max(a0.y, a1.y, a2.y))
+                if x1 < lo[0] or x0 > hi[0] or y1 < lo[1] or y0 > hi[1]:
+                    continue
+                den = (a1.y - a2.y) * (a0.x - a2.x) + (a2.x - a1.x) * (a0.y - a2.y)
+                if abs(den) < 1e-9:
+                    continue
+                for i in range(x0, x1 + 1):
+                    for j in range(y0, y1 + 1):
+                        px, py = i + 0.5, j + 0.5
+                        l1 = ((a1.y - a2.y) * (px - a2.x) + (a2.x - a1.x) * (py - a2.y)) / den
+                        l2 = ((a2.y - a0.y) * (px - a2.x) + (a0.x - a2.x) * (py - a2.y)) / den
+                        if l1 >= -0.02 and l2 >= -0.02 and 1 - l1 - l2 >= -0.02:
+                            cov.add((i, j))
+            bpy.data.meshes.remove(me)
+            bpy.data.objects.remove(g)
+        bpy.data.collections.remove(tmp)
+        # interior = covered with every cell within 2 m covered too
+        inner = {c for c in cov if all((c[0] + di, c[1] + dj) in cov for di in range(-2, 3) for dj in range(-2, 3))}
+        print("WEB main ground cells", len(cov), "interior", len(inner), "from", len(want), "objects", flush=True)
+        for o in targets:
+            me = bpy.data.meshes.new_from_object(o.evaluated_get(dg))
+            bm = bmesh.new()
+            bm.from_mesh(me)
+            mw = o.matrix_world
+            imw = mw.inverted()
+            kill, band = [], set()
+            for f in bm.faces:
+                c = mw @ f.calc_center_median()
+                k = (math.floor(c.x), math.floor(c.y))
+                if k in inner:
+                    kill.append(f)
+                elif k in cov:
+                    band.update(f.verts)
+            bmesh.ops.delete(bm, geom=kill, context="FACES")
+            drop = (imw.to_3x3() @ Vector((0, 0, -0.12)))
+            for v in band:
+                if v.is_valid:
+                    v.co += drop
+            bm.to_mesh(me)
+            bm.free()
+            o.modifiers.clear()
+            o.data = me
+            print("WEB trimmed", o.name, "faces removed", len(kill), "tucked verts", len(band), "left", len(me.polygons), flush=True)
+    elif targets:
+        print("WEB WARNING: no MAIN_FILE; terrain not trimmed", flush=True)
 
 # ---------- materials ----------
 ALLOW = re.compile(

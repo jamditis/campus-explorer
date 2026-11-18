@@ -105,9 +105,29 @@ export function createTrees(scene, camera) {
     imp.count = ni; trunks.count = nt;
     imp.instanceMatrix.needsUpdate = true; if (imp.instanceColor) imp.instanceColor.needsUpdate = true; trunks.instanceMatrix.needsUpdate = true;
   }
+  // far-field trees from land cover: [x, y, z, crown radius, height] in three.js axes, always impostors
+  const farGeo = new THREE.IcosahedronGeometry(1, 0); farGeo.translate(0, 0.1, 0);
+  let far = null;
+  function addFar(a) {
+    if (far) { scene.remove(far); far.dispose(); }
+    const n = Math.floor(a.length / 5);
+    far = new THREE.InstancedMesh(farGeo, new THREE.MeshStandardMaterial({ roughness: 1, envMapIntensity: 0.2 }), n);
+    far.name = 'far_trees'; far.castShadow = true; far.receiveShadow = true;
+    const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color();
+    const tones = ['#2c3b20', '#34452a', '#3b4a26', '#2a3424', '#40502c', '#46532e'].map(h => new THREE.Color(h));
+    for (let i = 0; i < n; i++) {
+      const x = a[i * 5], y = a[i * 5 + 1], z = a[i * 5 + 2], r = a[i * 5 + 3], h = a[i * 5 + 4];
+      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (i * 2.399) % 6.283);
+      p.set(x, y + h - r * 1.1, z); s.set(r, r * 1.15, r);
+      m4.compose(p, q, s); far.setMatrixAt(i, m4);
+      c.copy(tones[i % tones.length]).multiplyScalar(0.85 + ((i * 7919) % 100) / 330); far.setColorAt(i, c);
+    }
+    far.computeBoundingSphere();
+    scene.add(far);
+  }
   function setQuality(name) { dist = DIST[name] || DIST.medium; update(true); }
   function reset() {
     groups = []; imp.count = 0; trunks.count = 0;
   }
-  return { add, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
+  return { add, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
 }

@@ -29,6 +29,8 @@ const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, roofti
 const BUMP = { asphalt: 0.35, concrete: 0.3, brick: 1.4, plaster: 0.12, rooftile: 1.5, pavers: 1.1, grass: 0.8, mulch: 1.2, gravel: 1.1, stone: 0.5, metal: 0.1, wood: 0.5, bark: 2 };
 // image-based (sky) reflection: rough ground and masonry reflect little of it
 const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.25, gravel: 0.25, stone: 0.4, plaster: 0.45, brick: 0.4, rooftile: 0.5, metal: 1, wood: 0.45, bark: 0.3 };
+// tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
+const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
 const WARM = { asphalt: [1.1, 1.0, 0.84], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
 
@@ -98,6 +100,9 @@ export function createLook(renderer, scene, camera) {
   const texFor = c => texCache[c] ??= loader.load(`./textures/${CATS[c].file}.webp`, t => {
     t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
   });
+  const nrmFor = c => texCache[c + '_n'] ??= loader.load(`./textures/${CATS[c].file}_n.webp`, t => {
+    t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
+  });
   let paint = []; // [{tex, x0,x1,z0,z1}]
   const paintUniforms = { pMap: { value: [] }, pBox: { value: [] }, pN: { value: 0 } };
   const EMPTY = new THREE.DataTexture(new Uint8Array(4), 1, 1); EMPTY.needsUpdate = true;
@@ -124,12 +129,14 @@ export function createLook(renderer, scene, camera) {
     m.envMapIntensity = ENV[cat] ?? 0.5;
     const isAsphalt = cat === 'asphalt';
     const warm = WARM[cat];
+    const hasN = NRM[cat] !== undefined;
     m.onBeforeCompile = sh => {
       sh.uniforms.tpMap = { value: texFor(cat) };
       sh.uniforms.tpScale = { value: 1 / def.size };
       sh.uniforms.tpK = { value: def.k };
       sh.uniforms.tpMacro = macroUniform;
       sh.uniforms.tpBump = { value: BUMP[cat] ?? 1 };
+      if (hasN) { sh.uniforms.tpNMap = { value: nrmFor(cat) }; sh.uniforms.tpNStr = { value: NRM[cat] }; }
       if (isAsphalt) Object.assign(sh.uniforms, paintUniforms);
       sh.vertexShader = sh.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vTpPos; varying vec3 vTpNrm;')
@@ -145,6 +152,7 @@ export function createLook(renderer, scene, camera) {
         .replace('#include <common>', `#include <common>
           varying vec3 vTpPos; varying vec3 vTpNrm;
           uniform sampler2D tpMap; uniform float tpScale; uniform float tpK; uniform float tpMacro; uniform float tpBump;
+          ${hasN ? 'uniform sampler2D tpNMap; uniform float tpNStr;' : ''}
           float tpH = 0.5;
           ${isAsphalt ? 'uniform sampler2D pMap[4]; uniform vec4 pBox[4]; uniform int pN;' : ''}
           vec4 tpSample(vec3 p, vec3 w) {
@@ -173,7 +181,22 @@ export function createLook(renderer, scene, camera) {
           }`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
           roughnessFactor = clamp(roughnessFactor * (0.9 + 0.25 * (1.0 - tpH)), 0.04, 1.0);`)
-        .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+        .replace('#include <normal_fragment_maps>', hasN ? `#include <normal_fragment_maps>
+          {
+            // triplanar normal map, whiteout blend (world space), added to the view-space normal
+            float fade = clamp(1.0 - length(vViewPosition) / 120.0, 0.0, 1.0);
+            vec3 Nw = normalize(vTpNrm);
+            vec3 w = pow(abs(Nw), vec3(4.0)); w /= (w.x + w.y + w.z);
+            vec3 p = vTpPos * tpScale;
+            vec3 tx = texture2D(tpNMap, p.zy).xyz * 2.0 - 1.0;
+            vec3 ty = texture2D(tpNMap, p.xz).xyz * 2.0 - 1.0;
+            vec3 tz = texture2D(tpNMap, p.xy).xyz * 2.0 - 1.0;
+            vec3 nx = vec3(tx.xy + Nw.zy, abs(tx.z) * Nw.x);
+            vec3 ny = vec3(ty.xy + Nw.xz, abs(ty.z) * Nw.y);
+            vec3 nz = vec3(tz.xy + Nw.xy, abs(tz.z) * Nw.z);
+            vec3 Nb = normalize(nx.zyx * w.x + ny.xzy * w.y + nz.xyz * w.z);
+            normal = normalize(normal + mat3(viewMatrix) * (Nb - Nw) * tpNStr * fade);
+          }` : `#include <normal_fragment_maps>
           {
             float fade = clamp(1.0 - length(vViewPosition) / 80.0, 0.0, 1.0);
             vec2 dH = vec2(dFdx(tpH), dFdy(tpH)) * tpBump * fade;
@@ -247,6 +270,51 @@ export function createLook(renderer, scene, camera) {
   function render() {
     if (q.ao && composer) composer.render(); else renderer.render(scene, camera);
   }
+  // Interior mapping: fake rooms behind vertical window glass. World-space cells (3.6 m bays,
+  // 3.4 m storeys, 5 m deep) aligned to each facade; per-room tint and lights from a hash of the cell.
+  function glassInterior(m) {
+    m.onBeforeCompile = sh => {
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vGiPos; varying vec3 vGiNrm;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vGiPos = (modelMatrix * vec4(transformed, 1.0)).xyz; vGiNrm = normalize(mat3(modelMatrix) * objectNormal);`);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          varying vec3 vGiPos; varying vec3 vGiNrm;
+          float giHash(vec3 c) { return fract(sin(dot(c, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          {
+            vec3 Nw = normalize(vGiNrm);
+            if (!gl_FrontFacing) Nw = -Nw;
+            vec3 V = normalize(vGiPos - cameraPosition);
+            if (abs(Nw.y) < 0.5 && dot(V, Nw) < 0.0) {
+              vec3 N = normalize(vec3(Nw.x, 0.0, Nw.z)), T = vec3(-N.z, 0.0, N.x);
+              const vec3 CELL = vec3(3.6, 3.4, 5.0);
+              vec3 p = vec3(dot(vGiPos, T), vGiPos.y, 0.0) / CELL;
+              vec3 d = vec3(dot(V, T), V.y, -dot(V, N)) / CELL;
+              vec3 cell = floor(p); vec3 f = vec3(fract(p.xy), 0.0);
+              float tx = ((d.x > 0.0 ? 1.0 : 0.0) - f.x) / d.x;
+              float ty = ((d.y > 0.0 ? 1.0 : 0.0) - f.y) / d.y;
+              float tz = 1.0 / max(d.z, 1e-4);
+              float t = min(min(tx, ty), tz);
+              vec3 h = f + d * t;
+              float rnd = giHash(cell + floor(dot(vGiPos, N) * 0.2));
+              vec3 wall = mix(vec3(0.62, 0.6, 0.56), vec3(0.55, 0.58, 0.62), rnd);
+              vec3 col;
+              if (t == tz) col = wall * (0.75 + 0.25 * h.y);                    // back wall
+              else if (t == tx) col = wall * (0.55 + 0.35 * (1.0 - h.z));       // side walls, darker deeper in
+              else col = d.y > 0.0 ? vec3(0.8, 0.8, 0.78) * (0.6 + 0.4 * h.z)   // ceiling
+                                   : vec3(0.32, 0.26, 0.2) * (0.6 + 0.4 * (1.0 - h.z)); // floor
+              float lit = step(0.45, fract(rnd * 7.13));                        // some rooms have lights on
+              col *= mix(0.16, 0.42, lit) * (1.0 - 0.5 * h.z);
+              float fres = 0.04 + 0.96 * pow(1.0 - clamp(dot(-V, Nw), 0.0, 1.0), 5.0);
+              totalEmissiveRadiance += col * (1.0 - fres);
+            }
+          }`);
+    };
+    m.customProgramCacheKey = () => 'glass_interior';
+    m.needsUpdate = true;
+  }
   function decorate(root) {
     root.traverse(o => {
       if (!o.isMesh) return;
@@ -257,9 +325,11 @@ export function createLook(renderer, scene, camera) {
         if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
           m.userData.glassDone = true; // shared materials: tint once
           if (/lamp|globe|frost|opal|led/i.test(m.name)) { m.roughness = 0.4; m.envMapIntensity = 0.6; continue; }
-          // windows: dark, smooth and partly metallic so they mirror the sky and trees like real glazing
-          m.roughness = 0.03; m.metalness = 0.55; m.envMapIntensity = 1.5; m.opacity = Math.max(m.opacity, 0.82);
-          m.color.lerp(new THREE.Color('#22303a'), 0.75);
+          // windows: dark, smooth glazing that mirrors the sky at grazing angles, with rooms behind it
+          m.roughness = 0.03; m.metalness = 0.15; m.envMapIntensity = 1.4;
+          m.color.lerp(new THREE.Color('#1c262e'), 0.8);
+          if (o.isInstancedMesh || m.side === THREE.BackSide) { m.opacity = Math.max(m.opacity, 0.82); continue; }
+          m.transparent = false; m.opacity = 1; glassInterior(m);
         } else if (cat && CATS[cat]) {
           // lawn/terrain colours averaged from aerial-draped materials come out grey: give them a lawn tone
           if (cat === 'grass') { const hsl = {}; m.color.getHSL(hsl); if (hsl.s < 0.18 || hsl.l > 0.45) m.color.setHSL(0.21, 0.32, Math.min(0.32, Math.max(0.2, hsl.l * 0.6))); }
