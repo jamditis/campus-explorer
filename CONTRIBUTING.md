@@ -52,6 +52,7 @@ The full `.blend` model for each day is attached to a [release](https://github.c
 3. Run `ruff check .` and `python3 tools/ci/repo_guard.py`.
 4. Open a PR using the template, with before/after renders or viewer screenshots for visual changes.
 5. `main` is protected: the `lint`, `viewer` and `repo-guard` checks must pass, the branch must be up to date, and every review conversation must be resolved before merge.
+6. Before merging any PR, handle every Codex connector review comment: fix it, or reply with the reason it doesn't apply; react thumbs up if the comment was useful and correct or thumbs down if it was wrong; then resolve the thread. Merge only when all of them are handled and the required checks are green.
 
 ## Getting help
 
