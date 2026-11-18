@@ -31,4 +31,5 @@ for f in os.environ.get('CHAIN','').split(): exec(open(S+f).read())
 for o in sc.objects:
     if o.name.startswith(('WS205_','WS206_')):
         for m in o.modifiers: m.show_render=False
+if os.environ.get('SKIRT')=='1' and 'HIDE' not in os.environ: os.environ['HIDE']='BD_farfield'  # keep the context ground visible through cutrend189 too (Codex P2 on PR #10)
 exec(open(S+'ws189/cutrend189.py').read())
