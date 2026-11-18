@@ -58,5 +58,7 @@ for f in $B/raw/*.glb; do
 done
 OUT=$S python3 $W/paint.py || fail "paint"
 OUT=$S python3 $W/manifest.py || fail "manifest"
+# one campus in the viewer: list every tile of every exported scene once in models/manifest.json
+python3 $W/unify.py --models $SITE/models || fail "unify"
 find $S -size +95M | grep . && fail "file over 95 MB"
 ls -la $S; du -sh $S
