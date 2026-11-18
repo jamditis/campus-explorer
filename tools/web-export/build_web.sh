@@ -54,6 +54,7 @@ for f in $B/raw/*.glb; do
   npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size 1024 \
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
+  [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
 done
 OUT=$S python3 $W/paint.py || fail "paint"
 OUT=$S python3 $W/manifest.py || fail "manifest"

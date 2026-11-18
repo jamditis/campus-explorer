@@ -2,7 +2,7 @@
  "tiles": [
   {
    "file": "skirt.glb",
-   "bytes": 8829280
+   "bytes": 8834636
   },
   {
    "file": "context.glb",
@@ -10,7 +10,7 @@
   },
   {
    "file": "t_-1_-1.glb",
-   "bytes": 11479744,
+   "bytes": 11479748,
    "center": [
     -80.0,
     80.0
@@ -50,7 +50,7 @@
   },
   {
    "file": "t_-2_-1.glb",
-   "bytes": 21879564,
+   "bytes": 21885820,
    "center": [
     -240.0,
     80.0
@@ -98,7 +98,7 @@
   },
   {
    "file": "t_0_-1.glb",
-   "bytes": 3828680,
+   "bytes": 3828684,
    "center": [
     80.0,
     80.0
@@ -146,7 +146,7 @@
   },
   {
    "file": "t_1_-2.glb",
-   "bytes": 3445116,
+   "bytes": 3445112,
    "center": [
     240.0,
     240.0
@@ -208,8 +208,8 @@
    "y1": -57.0
   }
  ],
- "source_saved": "November 18, 2026, 1:51 PM ET",
- "source_version": "ws214c",
- "exported": "November 18, 2026, 2:43 PM ET",
- "total_bytes": 161626492
+ "source_saved": "November 18, 2026, 3:02 PM ET",
+ "source_version": "ws215b",
+ "exported": "November 18, 2026, 3:28 PM ET",
+ "total_bytes": 161638108
 }
