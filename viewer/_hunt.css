@@ -1,0 +1,45 @@
+/* Landmark hunt from viewer/hunt.js. A compact card in the free top-centre area, below the
+   measuring toolbar when that is open (--msr-bar-h is set by viewer/measure.js). */
+.hunt-card{position:fixed;top:calc(12px + var(--msr-bar-h,0px));left:50%;transform:translateX(-50%);width:300px;max-width:calc(100vw - 790px);max-height:calc(100vh - 140px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius,10px);box-shadow:var(--shadow,0 2px 10px rgba(0,0,0,.08));font-size:13px;color:var(--ink);pointer-events:auto}
+.hunt-card[hidden],.hunt-body[hidden],.hunt-done[hidden],.hunt-hint[hidden],.hunt-arrow[hidden]{display:none}
+.hunt-head{display:flex;align-items:center}
+.hunt-toggle{flex:1;min-width:0;display:flex;align-items:center;gap:8px;border:0;background:none;border-radius:var(--radius,10px);padding:8px 4px 8px 12px;text-align:left;font-size:13px}
+.hunt-count{flex:none;font-weight:600;font-variant-numeric:tabular-nums}
+.hunt-arrow{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff}
+.hunt-arrow svg{display:block;width:13px;height:13px}
+.hunt-next{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+.hunt-chevron{flex:none;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-2px) rotate(45deg);margin-right:2px}
+.hunt-toggle[aria-expanded="true"] .hunt-chevron{transform:translateY(2px) rotate(-135deg)}
+.hunt-close{flex:none;border:0;background:none;font-size:18px;line-height:1;padding:6px 10px;color:var(--muted)}
+.hunt-close:hover{color:var(--ink)}
+.hunt-hint{margin:-4px 12px 8px;font-size:12px;color:var(--accent)}
+.hunt-body{border-top:1px solid var(--line);padding:6px 6px 8px}
+.hunt-intro{margin:2px 6px 6px;font-size:12px;color:var(--muted)}
+.hunt-list{list-style:none;margin:0;padding:0}
+.hunt-row{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;padding:4px 6px;border-radius:6px;text-align:left;font-size:13px}
+.hunt-row[aria-disabled="true"]{cursor:default}
+.hunt-row[aria-disabled="true"]:hover{background:none}
+.hunt-found .hunt-row:hover{background:rgba(0,0,0,.05)}
+.hunt-mark{flex:none;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center}
+.hunt-found .hunt-mark{background:var(--accent);border-color:var(--accent)}
+.hunt-found .hunt-mark::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.hunt-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hunt-found .hunt-name{font-weight:600}
+.hunt-dist{flex:none;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.hunt-done{margin:8px 6px 2px;padding:8px 10px;border-radius:8px;background:#fff4d6;border:1px solid #ecd28a}
+.hunt-done-title{margin:0;font-weight:600}
+.hunt-done-time{margin:2px 0 8px;font-size:12px;color:#6b5310}
+.hunt-again{background:var(--accent);border-color:var(--accent);color:#fff}
+.hunt-confetti{position:fixed;width:0;height:0;pointer-events:none;z-index:10}
+.hunt-bit{position:absolute;left:-3px;top:-4px;width:6px;height:8px;border-radius:1px;box-shadow:0 0 0 .5px rgba(0,0,0,.18);opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .hunt-pop{animation:hunt-pop .8s ease-out}
+  .hunt-bit{animation:hunt-bit 1.6s cubic-bezier(.15,.6,.35,1) forwards}
+}
+@media (prefers-reduced-motion:reduce){.hunt-confetti{display:none}}
+@keyframes hunt-pop{0%{background:rgba(212,165,49,0);transform:scale(1)}25%{background:rgba(212,165,49,.35);transform:scale(1.04)}100%{background:rgba(212,165,49,0);transform:scale(1)}}
+@keyframes hunt-bit{0%{opacity:1;transform:translate(0,0) rotate(0)}70%{opacity:1}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 60px)) rotate(var(--r))}}
+.hunt-pop{border-radius:6px}
+/* not enough room between the header and the panel: sit under the header instead */
+@media (max-width:1099px){.hunt-card{left:12px;top:calc(76px + var(--msr-bar-h,0px));transform:none;max-width:calc(100vw - 286px)}}
+@media (max-width:640px){.hunt-card{left:8px;right:8px;top:calc(66px + var(--msr-bar-h,0px));width:auto;max-width:none;max-height:calc(100vh - 66px - var(--msr-bar-h,0px) - 46vh)}}

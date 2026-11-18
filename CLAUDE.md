@@ -13,7 +13,25 @@ Open 3D models of NJ college campuses (Blender 4.5 LTS, free public data) and a 
 3. All changes go through a PR into `main`. The `lint`, `viewer` and `repo-guard` checks must pass and conversations must be resolved. Opening a PR does not authorize merging it.
 4. Before a visual PR, render the same view before and after and attach both.
 5. Don't refactor `blender/montclair-state/scripts/`; it's a historical record. New helpers go in `blender/` or `tools/`.
-6. Viewer: no build step, no CDN, no bundler. Regenerate `models/` with `tools/web-export/`; don't hand-edit tiles.
+6. Viewer: no build step, no CDN, no bundler. Regenerate `models/` with `tools/web-export/`; don't hand-edit tiles. One campus, one scene: no scene switch.
+
+## Viewer index
+
+Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --test` and `node tools/viewer-test/smoke.mjs` before a viewer PR.
+
+| File | What it does |
+|---|---|
+| `app.js` | Entry. Renderer, the shared `app` object, frame loop (draws on demand), modes, sun |
+| `look.js` | Sky, sun, shadows, textures, paint, culling, adaptive resolution, quality levels |
+| `viewer/world.js` | Streams tiles from `models/manifest.json`; collision (BVH on demand), ray casts |
+| `viewer/player.js` | Fly and walk movement and collision |
+| `viewer/input.js` | Keyboard, pointer lock, touch sticks, gamepad |
+| `viewer/camera.js`, `viewer/tour.js` | Eased camera moves; guided tour |
+| `viewer/hud.js`, `viewer/labels.js` | Compass, scale bar, position readout, minimap; place labels |
+| `viewer/measure.js`, `viewer/hunt.js` | Measuring tool; landmark hunt |
+| `viewer/ui.js` | Panel, search, sunlight controls, shortcuts, share link, photo |
+| `viewer/geo.js`, `sun.js`, `schedule.js`, `permalink.js`, `places.js`, `*-math.js` | Pure logic, unit tested in `tests/` |
+| `viewer/places.json` | Place names from OpenStreetMap, built by `tools/places/build_places.py` |
 
 ## Git identity
 

@@ -32,6 +32,12 @@ jobs:
           python3 -m ruff check --isolated --target-version py311
           --select E9,F63,F7 --output-format github
           blender/montclair-state/scripts
+      - name: Campus manifest is current
+        # models/manifest.json joins the exported scenes; it must match what unify.py writes.
+        run: |
+          cp models/manifest.json "$RUNNER_TEMP/manifest.json"
+          python3 tools/web-export/unify.py
+          diff -u "$RUNNER_TEMP/manifest.json" models/manifest.json
       - name: Shell syntax
         run: |
           find . -name '*.sh' -not -path './vendor/*' -print0 | xargs -0 -r -n1 bash -n
@@ -53,6 +59,8 @@ jobs:
             cp "$f" "$RUNNER_TEMP/check.mjs"
             node --check "$RUNNER_TEMP/check.mjs"
           done
+      - name: Unit tests (pure viewer modules)
+        run: node --test
       - name: HTML validation
         run: |
           files=$(git ls-files '*.html' | grep -v '^vendor/' || true)

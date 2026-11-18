@@ -1,6 +1,7 @@
-// Look and performance layer for the campus viewer: sky + image-based light, sun shadows,
-// AgX tone mapping, fog, ambient occlusion, world-space CC0 textures per material category,
-// painted lot markings, and screen-size culling (cheap LOD) with a quality toggle.
+// Look and performance layer for the campus viewer: sky + image-based light, a sun that can be
+// moved to any real position, shadows redrawn only when they change, ACES filmic tone mapping, fog,
+// ambient occlusion, world-space CC0 textures per material category, painted lot markings,
+// screen-size culling (cheap LOD), adaptive resolution and the quality levels.
 import * as THREE from 'three';
 import { Sky } from 'three/addons/objects/Sky.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -27,40 +28,98 @@ const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, roofti
 
 export const QUALITY = {
   low: { pixelRatio: 1, shadows: 0, ao: false, cull: 0.02, tex: true, macro: false },
-  medium: { pixelRatio: 1, shadows: 2048, ao: false, cull: 0.008, tex: true, macro: true },
+  medium: { pixelRatio: 1.5, shadows: 2048, ao: false, cull: 0.008, tex: true, macro: true },
   high: { pixelRatio: 2, shadows: 4096, ao: true, cull: 0.003, tex: true, macro: true },
 };
+const MIN_SCALE = 0.5; // lowest resolution scale the governor may use while the view moves
+const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
+const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 
 export function createLook(renderer, scene, camera) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.8;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  // --- sky and sun (afternoon, from the south-west) ---
+  // --- sky and sun. setSun() moves the sun; the caller supplies a real solar position ---
   const sky = new Sky(); sky.scale.setScalar(18000); sky.material.fog = false;
   const u = sky.material.uniforms;
   u.turbidity.value = 3.2; u.rayleigh.value = 1.1; u.mieCoefficient.value = 0.004; u.mieDirectionalG.value = 0.82;
-  const sunDir = new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - 38), THREE.MathUtils.degToRad(215));
-  u.sunPosition.value.copy(sunDir);
+  const sunDir = new THREE.Vector3(0, 1, 0);
   scene.add(sky);
-  const HORIZON = new THREE.Color('#c6d4e1');
+  const DAY_FOG = new THREE.Color('#c6d4e1'), DUSK_FOG = new THREE.Color('#dcb9a0'), NIGHT_FOG = new THREE.Color('#0b101c');
+  const HORIZON = DAY_FOG.clone();
   scene.fog = new THREE.FogExp2(HORIZON, 0.00016);
   scene.background = HORIZON;
 
   // image-based light from the same sky (gives glass and metal something to reflect)
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envScene = new THREE.Scene(); const envSky = new Sky(); envSky.scale.setScalar(1000);
-  Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u)); envSky.material.uniforms.sunPosition.value.copy(sunDir);
+  Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u));
   envScene.add(envSky);
   const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#5d6247' }));
   ground.position.y = -5; envScene.add(ground);
-  scene.environment = pmrem.fromScene(envScene, 0.02).texture;
+  let envTarget = null; const envDir = new THREE.Vector3();
+  function bakeEnvironment() {
+    envSky.material.uniforms.sunPosition.value.copy(sunDir);
+    const next = pmrem.fromScene(envScene, 0.02);
+    scene.environment = next.texture; envTarget?.dispose(); envTarget = next; envDir.copy(sunDir);
+  }
   scene.environmentIntensity = 0.3;
 
-  const hemi = new THREE.HemisphereLight('#dfe9f5', '#4f4a3a', 0.2); scene.add(hemi);
-  const sun = new THREE.DirectionalLight('#fff0dc', 2.7);
+  const SKY_DAY = new THREE.Color('#dfe9f5'), SKY_NIGHT = new THREE.Color('#33415f');
+  const SOIL_DAY = new THREE.Color('#4f4a3a'), SOIL_NIGHT = new THREE.Color('#12151c');
+  const SUN_HIGH = new THREE.Color('#fff0dc'), SUN_LOW = new THREE.Color('#ff9a4d');
+  const hemi = new THREE.HemisphereLight(SKY_DAY, SOIL_DAY, 0.2); scene.add(hemi);
+  const sun = new THREE.DirectionalLight(SUN_HIGH, 2.7);
   sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.04;
+  sun.shadow.autoUpdate = false; // the scene is static: redraw the shadow map only when something changed
   scene.add(sun, sun.target);
+  let shadowDirty = true, elevation = 38, night = 0;
+
+  /**
+   * Point the sun. `dir` is a unit vector toward the sun in viewer space; `elevationDeg` its height above
+   * the horizon. Below the horizon the sun light is off and a dim sky light keeps the model readable.
+   */
+  function setSun(dir, elevationDeg) {
+    sunDir.copy(dir).normalize(); elevation = elevationDeg;
+    u.sunPosition.value.copy(sunDir);
+    const day = smooth(-5, 8, elevation), low = 1 - smooth(2, 25, elevation);
+    night = 1 - smooth(-8, 0, elevation);
+    sun.intensity = 2.7 * smooth(-1.5, 10, elevation);
+    sun.color.copy(SUN_HIGH).lerp(SUN_LOW, low * 0.85);
+    hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
+    hemi.intensity = 0.2 + 0.5 * (1 - day);
+    HORIZON.copy(NIGHT_FOG).lerp(DAY_FOG, day).lerp(DUSK_FOG, low * day * 0.6);
+    if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
+    glow.visible = night > 0.02; glowMat.opacity = night;
+    applyShadows(); shadowDirty = true;
+  }
+
+  // --- lamps glow after dark: one additive sprite per lamp instance, no real lights ---
+  const glowTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, 'rgba(255,236,190,1)'); r.addColorStop(0.25, 'rgba(255,214,140,.55)'); r.addColorStop(1, 'rgba(255,190,90,0)');
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  })();
+  const glowMat = new THREE.PointsMaterial({ map: glowTex, size: 5, sizeAttenuation: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, toneMapped: false });
+  const glow = new THREE.Points(new THREE.BufferGeometry(), glowMat); glow.frustumCulled = false; glow.visible = false; glow.name = 'lamp_glow'; scene.add(glow);
+  let lampPoints = [];
+  function addLamps(root) {
+    const m = new THREE.Matrix4(), p = new THREE.Vector3(); let n = 0;
+    root.traverse(o => {
+      if (!o.isInstancedMesh || !/^Lamp_/i.test(o.name)) return;
+      const bb = o.geometry.boundingBox ?? (o.geometry.computeBoundingBox(), o.geometry.boundingBox);
+      for (let i = 0; i < o.count; i++) {
+        o.getMatrixAt(i, m); m.premultiply(o.matrixWorld);
+        p.set((bb.min.x + bb.max.x) / 2, bb.max.y - (bb.max.y - bb.min.y) * 0.08, (bb.min.z + bb.max.z) / 2).applyMatrix4(m);
+        lampPoints.push(p.x, p.y, p.z); n++;
+      }
+    });
+    if (n) glow.geometry.setAttribute('position', new THREE.Float32BufferAttribute(lampPoints, 3));
+  }
 
   // --- post: AO (high quality only) ---
   let composer = null, gtao = null;
@@ -162,6 +221,7 @@ export function createLook(renderer, scene, camera) {
       if (o.isInstancedMesh) o.computeBoundingSphere();
       const bs = (o.isInstancedMesh ? o.boundingSphere : o.geometry.boundingSphere).clone().applyMatrix4(o.matrixWorld);
       if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius });
+      else o.visible = true;
       if (bs.radius > 400) o.castShadow = false; // far-field ground: receives only
     });
   }
@@ -171,16 +231,24 @@ export function createLook(renderer, scene, camera) {
     const p = camera.position;
     for (const it of items) {
       const d = Math.max(1, p.distanceTo(it.c) - it.r);
-      it.o.visible = it.r > d * cullK;
+      const v = it.r > d * cullK;
+      if (v !== it.o.visible) { it.o.visible = v; if (it.r > 1.5) shadowDirty = true; } // tiny things do not move the shadow map
     }
   }
 
   let q = QUALITY.medium, qName = 'medium';
+  function applyShadows() {
+    const on = q.shadows > 0 && sun.intensity > 0.02;
+    if (renderer.shadowMap.enabled !== on || sun.castShadow !== on) {
+      renderer.shadowMap.enabled = on; sun.castShadow = on;
+      scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
+    }
+  }
   function applyQuality(name) {
     qName = name; q = QUALITY[name];
-    renderer.setPixelRatio(Math.min(devicePixelRatio, q.pixelRatio));
-    renderer.shadowMap.enabled = q.shadows > 0; sun.castShadow = q.shadows > 0;
+    scale = 1; applyScale(1);
     if (q.shadows) { sun.shadow.mapSize.set(q.shadows, q.shadows); sun.shadow.map?.dispose(); sun.shadow.map = null; }
+    applyShadows(); shadowDirty = true;
     cullK = q.cull; macroUniform.value = q.macro ? 1 : 0;
     if (q.ao && !composer) buildComposer();
     scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
@@ -191,24 +259,75 @@ export function createLook(renderer, scene, camera) {
     if (composer) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); }
   }
 
-  const focus = new THREE.Vector3();
-  function update(target) {
-    // shadow box follows what you look at; sized to the view distance, snapped to texels
+  // --- adaptive resolution: lower it while the view moves on a slow GPU, full resolution when still ---
+  let scale = 1, applied = 1, ema = 16, slow = 0, fast = 0, lastDraw = 0, wasMoving = false;
+  function applyScale(s) {
+    applied = s;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, q.pixelRatio) * s);
+    resize();
+  }
+  function govern(moving, now) {
+    if (moving && wasMoving) {
+      const ms = Math.min(250, now - lastDraw); ema = ema * 0.85 + ms * 0.15;
+      if (ema > 34) { slow += ms; fast = 0; } else if (ema < 20) { fast += ms; slow = 0; } else slow = fast = 0;
+      if (slow > 500 && scale > MIN_SCALE) { scale = Math.max(MIN_SCALE, scale * 0.8); slow = 0; }
+      if (fast > 2500 && scale < 1) { scale = Math.min(1, scale * 1.15); fast = 0; }
+    }
+    wasMoving = moving; lastDraw = now;
+    const want = moving ? scale : 1;
+    if (want !== applied) applyScale(want);
+  }
+
+  const focus = new THREE.Vector3(), lastFocus = new THREE.Vector3(Infinity, 0, 0); let lastHalf = 0;
+  /** Follow the view: shadow box, sky and culling. `settle` forces a cull (call it when the camera stops). */
+  function update(target, settle = false) {
+    // shadow box follows what you look at; sized to the view distance in steps, snapped to texels
     focus.copy(target ?? camera.position);
     const dist = camera.position.distanceTo(focus);
-    const half = THREE.MathUtils.clamp(dist * 0.9, 45, 700);
+    const raw = THREE.MathUtils.clamp(dist * 0.9, 45, 700);
+    const half = 45 * Math.pow(1.25, Math.round(Math.log(raw / 45) / Math.log(1.25)));
     const sc = sun.shadow.camera;
     if (sc.right !== half) { sc.left = -half; sc.right = half; sc.top = half; sc.bottom = -half; sc.near = 10; sc.far = 4000; sc.updateProjectionMatrix(); }
     const texel = (2 * half) / (q.shadows || 2048);
     focus.x = Math.round(focus.x / texel) * texel; focus.z = Math.round(focus.z / texel) * texel;
-    sun.target.position.copy(focus); sun.position.copy(focus).addScaledVector(sunDir, 1500);
+    focus.y = Math.round(focus.y / 4) * 4;
+    if (half !== lastHalf || !focus.equals(lastFocus)) { lastHalf = half; lastFocus.copy(focus); shadowDirty = true; }
+    sun.target.position.copy(focus); sun.position.copy(focus).addScaledVector(sunDir.y > 0.02 ? sunDir : _up, 1500);
     sky.position.copy(camera.position);
-    cull(false);
+    cull(settle);
+    if (shadowDirty && sun.castShadow) { sun.shadow.needsUpdate = true; shadowDirty = false; }
   }
-  function render() {
+  const _up = new THREE.Vector3(0, 1, 0);
+  /** Draw one frame. `moving` tells the governor whether this is part of continuous motion. */
+  function render(moving = false) {
+    govern(moving, performance.now());
     if (q.ao && composer) composer.render(); else renderer.render(scene, camera);
   }
+  /** Draw the scene with another camera into `target` without sky or fog (minimap, thumbnails). */
+  function renderPlain(cam, target) {
+    const fog = scene.fog, auto = sun.shadow.needsUpdate;
+    scene.fog = null; sky.visible = false; glow.visible = false;
+    renderer.setRenderTarget(target); renderer.render(scene, cam); renderer.setRenderTarget(null);
+    scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; sun.shadow.needsUpdate = auto;
+  }
+  function fixMaterials(root) {
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; return; } // float above the exported skirt
+      if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
+      for (const m of [].concat(o.material)) {
+        if (!m) continue;
+        if (m.map) m.map.anisotropy = 4;
+        // leaf cards exported without an opacity map would show their white texture background: draw them as solid foliage
+        if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.needsUpdate = true; continue; }
+        if (m.alphaTest > 0 || (m.transparent && m.map)) { m.alphaTest = 0.45; m.transparent = false; m.side = THREE.DoubleSide; m.userData.leaf = true; }
+        else if (m.transparent) { m.depthWrite = false; m.userData.glass = true; }
+      }
+    });
+  }
+  /** Prepare one loaded tile: material fixes, textures, culling registration, lamps. */
   function decorate(root) {
+    fixMaterials(root);
     root.traverse(o => {
       if (!o.isMesh) return;
       for (const m of [].concat(o.material)) {
@@ -226,7 +345,13 @@ export function createLook(renderer, scene, camera) {
       }
     });
     register(root);
+    addLamps(root);
+    shadowDirty = true;
   }
-  function reset() { items = []; }
-  return { applyQuality, update, render, decorate, setPaint, resize, reset, sun, get quality() { return qName; } };
+  function reset() { items = []; lampPoints = []; glow.geometry.deleteAttribute('position'); shadowDirty = true; }
+  return {
+    applyQuality, update, render, renderPlain, decorate, setPaint, setSun, resize, reset, sun,
+    invalidateShadows() { shadowDirty = true; },
+    get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
+  };
 }

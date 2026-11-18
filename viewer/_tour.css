@@ -1,0 +1,18 @@
+/* Guided tour caption from viewer/tour.js. Bottom centre, clear of the footer line (34 px), the HUD at
+   the bottom left and the touch buttons at the bottom right. */
+.tour-card{position:fixed;left:50%;bottom:calc(42px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:3;
+  width:min(92vw,420px);padding:12px 14px 10px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius,10px);
+  box-shadow:var(--shadow,0 2px 10px rgba(0,0,0,.08));color:var(--ink);font-size:13px;pointer-events:auto}
+.tour-card[hidden]{display:none}
+.tour-head{display:flex;align-items:baseline;gap:10px}
+.tour-name{flex:1;min-width:0;margin:0;font-size:16px;line-height:1.25;font-weight:650;overflow-wrap:anywhere}
+.tour-count{flex:none;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.tour-details{margin:4px 0 0;color:var(--muted);font-size:12px}
+.tour-details[hidden]{display:none}
+.tour-buttons{display:flex;gap:6px;margin-top:10px}
+.tour-buttons button{flex:1;min-height:34px}
+.tour-buttons .tour-stop{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.tour-source{margin:8px 0 0;color:var(--muted);font-size:11px}
+@media (max-width:640px){.tour-card{padding:10px 12px 8px}.tour-buttons button{min-height:40px}}
+@media (prefers-reduced-motion:no-preference){.tour-card{animation:tour-in .2s ease-out}}
+@keyframes tour-in{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translateX(-50%)}}
