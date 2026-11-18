@@ -117,8 +117,7 @@ export function createLook(renderer, scene, camera) {
             tpW = instanceMatrix * tpW;
           #endif
           vTpPos = (modelMatrix * tpW).xyz;
-          vTpNrm = normalize(mat3(modelMatrix) * objectNormal);`)
-        .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>');
+          vTpNrm = normalize(mat3(modelMatrix) * objectNormal);`);
       // objectNormal is declared by beginnormal_vertex, which runs before begin_vertex
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
