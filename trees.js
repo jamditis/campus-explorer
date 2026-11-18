@@ -51,8 +51,10 @@ export function createTrees(scene, camera) {
     });
     const m4 = new THREE.Matrix4(), p = new THREE.Vector3(), s = new THREE.Vector3(), q = new THREE.Quaternion();
     for (const list of byKey.values()) {
+      // whole trees only: a group needs leaf crowns AND a trunk/branch mesh; instanced shrub leaf cards
+      // (Leaf_Shrub_*, one card per instance) stay outside the tree LOD
       const crowns = list.filter(o => [].concat(o.material)[0]?.userData.leaf);
-      if (!crowns.length) continue;
+      if (!crowns.length || crowns.length === list.length || list.some(o => /shrub/i.test(o.name))) continue;
       const a = list[0], n = a.count;
       // local crown box (all leaf meshes) and full tree box, in instance space
       const cb = new THREE.Box3(), tb = new THREE.Box3();

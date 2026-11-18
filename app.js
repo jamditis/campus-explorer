@@ -202,7 +202,7 @@ const grass = (() => {
   const mesh = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.95, envMapIntensity: 0.3 }), GRASS_N);
   mesh.count = 0; mesh.frustumCulled = false; mesh.receiveShadow = true; mesh.name = 'grass_tufts'; scene.add(mesh); return mesh;
 })();
-// Scattering is spread over frames (a few ms each) and only queries ground meshes near the camera.
+// Scattering is spread over frames (up to 7 ms each) and only queries ground meshes near the camera.
 let grassAt = null, grassT = 0, grassJob = null;
 function updateGrass() {
   if (grassJob) { grassStep(); return; }
@@ -221,7 +221,7 @@ function updateGrass() {
 const _gm4 = new THREE.Matrix4(), _gq = new THREE.Quaternion(), _gs = new THREE.Vector3(), _gcol = new THREE.Color();
 function grassStep() {
   const j = grassJob, t0 = performance.now();
-  while (j.i < GRASS_N * 1.6 && j.n < GRASS_N && performance.now() - t0 < 4) {
+  while (j.i < GRASS_N * 1.6 && j.n < GRASS_N && performance.now() - t0 < 7) {
     j.i++;
     const r = GRASS_R * Math.sqrt(Math.random()), a = Math.random() * Math.PI * 2;
     const x = j.c.x + Math.cos(a) * r, z = j.c.z + Math.sin(a) * r;

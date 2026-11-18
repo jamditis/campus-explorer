@@ -10,7 +10,7 @@
   },
   {
    "file": "far_houses.glb",
-   "bytes": 1284472
+   "bytes": 1287876
   },
   {
    "file": "n_context.glb",
@@ -436,5 +436,5 @@
  },
  "far_trees": "far_trees.bin",
  "exported": "November 18, 2026, 5:51 PM ET",
- "total_bytes": 209054828
+ "total_bytes": 209058232
 }
