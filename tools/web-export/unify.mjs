@@ -18,10 +18,12 @@
 //   node tools/web-export/unify.mjs --check     fail if the committed files are out of date
 //   node tools/web-export/unify.mjs --preview out.png   also write a top-down picture of the result
 //   add --dry to leave the committed files alone (for trying a change to PATCHES)
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
+import { inflateSync } from 'node:zlib';
 import { MeshoptDecoder } from '../../vendor/addons/libs/meshopt_decoder.module.js';
+import { VALUE, shows } from '../../viewer/ownership.js';
 
 const MODELS = fileURLToPath(new URL('../../models/', import.meta.url));
 const SCENES = ['main', 'north']; // priority order
@@ -36,7 +38,6 @@ const PATCHES = [
   { name: 'University Hall', owner: 'north', x0: -208, z0: -322, x1: -110, z1: -214 },
   { name: 'Softball stadium west of Dickson Hall', owner: 'north', x0: -322, z0: -166, x1: -222, z1: -28 },
 ];
-export const VALUE = { none: 0, northEdge: 100, north: 128, mainEdge: 228, main: 255 };
 
 const TYPES = { 5120: ['getInt8', 1, 127], 5121: ['getUint8', 1, 255], 5122: ['getInt16', 2, 32767], 5123: ['getUint16', 2, 65535], 5125: ['getUint32', 4, 1], 5126: ['getFloat32', 4, 1] };
 const WIDTH = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4 };
@@ -67,13 +68,21 @@ function triangles(path, each) {
   const { json, accessor } = readGlb(path);
   for (const node of json.nodes) {
     if (node.mesh === undefined || node.extensions?.EXT_mesh_gpu_instancing || NOT_GROUND.test(node.name ?? '')) continue;
-    const t = node.translation ?? [0, 0, 0], s = node.scale ?? [1, 1, 1];
+    if (node.matrix || node.children) throw new Error(`${path}: node "${node.name}" has a matrix or children; the exporter is expected to flatten tiles`);
+    const t = node.translation ?? [0, 0, 0], s = node.scale ?? [1, 1, 1], [qx, qy, qz, qw] = node.rotation ?? [0, 0, 0, 1];
     for (const prim of json.meshes[node.mesh].primitives) {
       const pos = accessor(prim.attributes.POSITION), index = prim.indices === undefined ? null : accessor(prim.indices);
       const colour = json.materials?.[prim.material]?.pbrMetallicRoughness?.baseColorFactor ?? [0.7, 0.7, 0.7];
       const n = index ? index.length : pos.length / 3, p = new Float64Array(9);
       for (let i = 0; i < n; i += 3) {
-        for (let c = 0; c < 3; c++) { const k = (index ? index[i + c] : i + c) * 3; p[c * 3] = pos[k] * s[0] + t[0]; p[c * 3 + 1] = pos[k + 1] * s[1] + t[1]; p[c * 3 + 2] = pos[k + 2] * s[2] + t[2]; }
+        for (let c = 0; c < 3; c++) {
+          const k = (index ? index[i + c] : i + c) * 3, x = pos[k] * s[0], y = pos[k + 1] * s[1], z = pos[k + 2] * s[2];
+          // scale, then rotate by the node's quaternion, then translate
+          const ux = qy * z - qz * y, uy = qz * x - qx * z, uz = qx * y - qy * x;
+          p[c * 3] = x + 2 * (qw * ux + qy * uz - qz * uy) + t[0];
+          p[c * 3 + 1] = y + 2 * (qw * uy + qz * ux - qx * uz) + t[1];
+          p[c * 3 + 2] = z + 2 * (qw * uz + qx * uy - qy * ux) + t[2];
+        }
         each(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], colour);
       }
     }
@@ -134,13 +143,6 @@ function png(width, height, channels, pixels) {
   return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', deflateSync(raw, { level: 9 })), chunk('IEND', Buffer.alloc(0))]);
 }
 
-/** Does the viewer draw a model's surface in a cell with this ownership value? Mirrors the shader in look.js. */
-export function shows(group, value) {
-  if (group === 'main') return !(value === VALUE.north || value === VALUE.northEdge);
-  if (group === 'north') return value !== VALUE.main;
-  return value !== VALUE.north; // skirt
-}
-
 function build() {
   const manifests = Object.fromEntries(SCENES.map(s => [s, JSON.parse(readFileSync(`${MODELS}${s}/manifest.json`, 'utf8'))]));
   const centres = SCENES.flatMap(s => manifests[s].tiles.filter(t => t.center).map(t => t.center));
@@ -180,8 +182,9 @@ function build() {
     if (t.file === 'skirt.glb') { if (scene === SCENES[0]) tiles.push({ ...entry, scene: 'skirt' }); continue; }
     const m = tileMask[entry.file]; let shown = 0, total = 0;
     for (let i = 0; i < m.length; i++) if (m[i]) { total++; if (shows(scene, map[i])) shown++; }
-    // instanced trees and lamps are not in the footprint; a tile with no ground of its own is kept
-    if (t.center && total > 0 && shown < Math.min(25, total * 0.5)) { dropped.push({ file: entry.file, bytes: t.bytes, reason: 'every cell it covers belongs to the other model' }); continue; }
+    // Only a tile with nothing left to show is dropped; one visible cell keeps it, so no hole can open.
+    // Instanced trees and lamps are not in the footprint, so a tile with no ground of its own is kept too.
+    if (t.center && total > 0 && shown === 0) { dropped.push({ file: entry.file, bytes: t.bytes, reason: 'every cell it covers belongs to the other model' }); continue; }
     tiles.push(entry);
   }
   const rank = t => (t.center ? 2 : t.file.endsWith('skirt.glb') ? 0 : 1);
@@ -221,7 +224,12 @@ await MeshoptDecoder.ready;
 const args = process.argv.slice(2), result = build();
 const json = `${JSON.stringify(result.manifest, null, 1)}\n`, image = png(result.grid.w, result.grid.h, 1, result.map);
 if (args.includes('--check')) {
-  const same = readFileSync(`${MODELS}manifest.json`, 'utf8') === json && readFileSync(`${MODELS}ownership.png`).equals(image);
+  // compare pixels, not file bytes: the compressed bytes depend on the zlib version
+  const pixels = file => { const b = readFileSync(file), parts = []; for (let at = 8; at < b.length;) { const n = b.readUInt32BE(at); if (b.toString('latin1', at + 4, at + 8) === 'IDAT') parts.push(b.subarray(at + 8, at + 8 + n)); at += n + 12; } return inflateSync(Buffer.concat(parts)); };
+  const committed = `${MODELS}ownership.png`, fresh = fileURLToPath(new URL('./.ownership-check.png', import.meta.url));
+  writeFileSync(fresh, image);
+  const same = readFileSync(`${MODELS}manifest.json`, 'utf8') === json && pixels(committed).equals(pixels(fresh));
+  rmSync(fresh);
   console.log(same ? 'unify: models/manifest.json and models/ownership.png are current' : 'unify: out of date. Run node tools/web-export/unify.mjs and commit the result');
   process.exit(same ? 0 : 1);
 }

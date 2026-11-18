@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
 import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
+import { shows } from './ownership.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -35,8 +36,10 @@ export function createWorld(app, prepare, release = () => {}) {
   let own = null; // { data, w, h, x0, z0, cell, values, texture }
   async function loadOwnership(o) {
     own = null; if (!o) return null;
-    const img = new Image(); img.src = base + o.file; await img.decode();
-    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    // the grey levels are data: decode without colour management
+    const blob = await (await fetch(base + o.file, { signal: abort?.signal })).blob();
+    const img = await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
     const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0);
     const rgba = g.getImageData(0, 0, c.width, c.height).data, data = new Uint8Array(c.width * c.height);
     for (let i = 0; i < data.length; i++) data[i] = rgba[i * 4];
@@ -51,14 +54,8 @@ export function createWorld(app, prepare, release = () => {}) {
     const c = Math.floor((x - own.x0) / own.cell), r = Math.floor((z - own.z0) / own.cell);
     return c < 0 || r < 0 || c >= own.w || r >= own.h ? 0 : own.data[r * own.w + c];
   }
-  /** Is a surface of this model drawn, and so solid, at (x, z)? Mirrors the shader test in look.js. */
-  function solidAt(group, x, z) {
-    if (!own) return true;
-    const v = ownerAt(x, z), V = own.values;
-    if (group === 'main') return v !== V.north && v !== V.northEdge;
-    if (group === 'north') return v !== V.main;
-    return group !== 'skirt' || v !== V.north;
-  }
+  /** Is a surface of this model drawn, and so solid, at (x, z)? The same rule as the shaders (viewer/ownership.js). */
+  const solidAt = (group, x, z) => !own || shows(group, ownerAt(x, z));
   const urgent = new Set();
   const progress = { loaded: 0, total: 1, tiles: 0, count: 0 };
 
@@ -101,7 +98,8 @@ export function createWorld(app, prepare, release = () => {}) {
   }
   function collect(root) {
     root.traverse(o => {
-      if (!o.isMesh || o.isInstancedMesh || !o.visible) return;
+      // not `visible`: screen-size culling flips that every frame
+      if (!o.isMesh || o.isInstancedMesh || o.userData.filler) return;
       const m = Array.isArray(o.material) ? o.material[0] : o.material;
       if (m?.userData.leaf || m?.userData.glass) return; // you walk through foliage and look through glass
       const g = o.geometry; if (!g.boundingBox) g.computeBoundingBox();
@@ -152,7 +150,7 @@ export function createWorld(app, prepare, release = () => {}) {
       root.updateMatrixWorld(true);
       // compile this tile's shaders before it joins the scene, so adding it does not stall a frame
       try { await renderer.compileAsync(root, camera, scene); } catch { /* compiled on first draw instead */ }
-      if (my !== token) return;
+      if (my !== token) { free(root); release(root); return; }
       group.add(root); tile.root = root; tile.state = 'ready';
       if (tile.center) app.bounds.expandByObject(root);
       addColliders(root, tile);
@@ -204,7 +202,8 @@ export function createWorld(app, prepare, release = () => {}) {
 
   function nextTile() {
     const want = wanted();
-    const pending = tiles.filter(t => t.state === 'queued' && (!want || !t.center || want.has(t)));
+    // while paused (data saver) only tiles someone asked for by name load
+    const pending = tiles.filter(t => t.state === 'queued' && (paused ? urgent.has(t) : !want || !t.center || want.has(t)));
     if (!pending.length) return null;
     for (const t of pending) if (urgent.has(t)) { urgent.delete(t); return t; }
     app.focus(_focus); camera.getWorldDirection(_dir); _dir.y = 0;
@@ -251,6 +250,8 @@ export function createWorld(app, prepare, release = () => {}) {
       await new Promise(r => { resume = r; });
       if (my !== token) return;
       paused = false; app.emit('progress', progress);
+      while (pumping) await new Promise(r => setTimeout(r, 100)); // a tile asked for during the pause is still arriving
+      if (my !== token) return;
     }
     await pump(my);
     if (my !== token) return;
@@ -333,7 +334,7 @@ export function createWorld(app, prepare, release = () => {}) {
 
   // ---- capsule against walls (walk mode) ----
   const _seg = new THREE.Line3(), _box = new THREE.Box3(), _lbox = new THREE.Box3(), _inv = new THREE.Matrix4();
-  const _tp = new THREE.Vector3(), _cp = new THREE.Vector3(), _tn = new THREE.Vector3(), _a = new THREE.Vector3();
+  const _tp = new THREE.Vector3(), _cp = new THREE.Vector3(), _tn = new THREE.Vector3(), _wp = new THREE.Vector3();
   /**
    * Push a vertical capsule (world space, `a` bottom sphere centre, `b` top) out of steep surfaces.
    * Adds the horizontal correction to `out` and returns true if it touched a wall. Floors are left to the ground ray.
@@ -342,7 +343,7 @@ export function createWorld(app, prepare, release = () => {}) {
     _box.makeEmpty().expandByPoint(a).expandByPoint(b).expandByScalar(radius);
     let touched = false;
     for (const c of colliders) {
-      if (!c.box.intersectsBox(_box) || !solidAt(c.group, a.x, a.z)) continue;
+      if (!c.box.intersectsBox(_box)) continue;
       const bvh = ensureBVH(c), mw = c.mesh.matrixWorld;
       _inv.copy(mw).invert();
       const s = mw.getMaxScaleOnAxis(), r = radius / s;
@@ -356,6 +357,8 @@ export function createWorld(app, prepare, release = () => {}) {
           if (Math.abs(_tn.y) > 0.6) return; // floor or soffit
           const d = tri.closestPointToSegment(_seg, _tp, _cp);
           if (d >= r) return;
+          // a wall the ownership map hides is not there: test where the capsule touches it, not where the walker stands
+          if (own && (_wp.copy(_tp).applyMatrix4(mw), !solidAt(c.group, _wp.x, _wp.z))) return;
           _cp.sub(_tp); _cp.y = 0; // walls only push sideways
           if (_cp.lengthSq() < 1e-12) return;
           _cp.normalize().multiplyScalar(r - d);
@@ -416,7 +419,10 @@ export function createWorld(app, prepare, release = () => {}) {
     resume() { resume?.(); resume = null; },
     // a square can hold one tile from each model
     isLoaded(x, z) { return tilesAt(x, z).every(t => t.state === 'ready' || t.state === 'error'); },
-    prioritize(x, z) { for (const t of tilesAt(x, z)) if (t.state === 'queued') urgent.add(t); },
+    prioritize(x, z) {
+      for (const t of tilesAt(x, z)) if (t.state === 'queued') urgent.add(t);
+      if (paused && urgent.size) pump(token); // nothing else is pumping while the download is on hold
+    },
     tileAt: (x, z) => tileAt(tiles, x, z),
   };
 }

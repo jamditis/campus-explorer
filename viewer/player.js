@@ -12,6 +12,7 @@ export function createPlayer(app) {
   const { camera, scene, world } = app;
   const position = new THREE.Vector3(), vel = new THREE.Vector3(), flyVel = new THREE.Vector3();
   let yaw = 0, pitch = 0, grounded = false, eyeY = 0, busy = false, flySpeed = 40, stride = 0, seq = 0;
+  const going = new THREE.Vector3(); // where a teleport in progress is heading
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const avatar = new THREE.Group(); avatar.name = 'avatar'; avatar.visible = false;
@@ -113,18 +114,20 @@ export function createPlayer(app) {
 
   /**
    * Put the player on the ground at (x, z). Waits for the tile there and prepares collision first.
-   * `y` picks a storey: the surface at or just below that height. Resolves false if nothing to stand on.
+   * `y` picks a storey: the surface at or just below that height.
+   * Resolves true on arrival, false if there is nothing to stand on, null if something else cancelled it.
    */
   async function teleport(x, z, y = null) {
-    const my = ++seq; busy = true;
+    const my = ++seq; busy = true; going.set(x, y ?? 0, z);
+    const cancelled = () => my !== seq || app.state.mode !== 'walk';
     try {
       if (!world.isLoaded(x, z)) {
         status('Loading this part of the campus…'); world.prioritize(x, z);
-        while (!world.isLoaded(x, z)) { await sleep(150); if (my !== seq) return false; }
+        while (!world.isLoaded(x, z)) { await sleep(150); if (cancelled()) return null; }
       }
       status('Preparing the ground…');
       await world.warm(x, z, 45);
-      if (my !== seq) return false;
+      if (cancelled()) return null;
       const g = world.groundAt(x, z, y === null ? null : y + 1.2);
       if (g === null) { status('Nothing to stand on there. Try a spot on the campus.'); return false; }
       position.set(x, g + 0.02, z); vel.set(0, 0, 0); grounded = true; eyeY = position.y + EYE;
@@ -139,7 +142,8 @@ export function createPlayer(app) {
     const c = app.bounds.getCenter(new THREE.Vector3());
     const start = app.home ?? c;
     for (const [dx, dz] of [[0, 0], [12, 0], [-12, 0], [0, 12], [0, -12], [30, 30], [-30, -30]]) {
-      if (await teleport(start.x + dx, start.z + dz)) return true;
+      const ok = await teleport(start.x + dx, start.z + dz);
+      if (ok !== false) return ok; // arrived, or cancelled
     }
     return false;
   }
@@ -152,11 +156,13 @@ export function createPlayer(app) {
   return {
     position, step, teleport, respawn, lookFromCamera,
     jump() { if (grounded && !busy) { vel.y = JUMP; grounded = false; } },
-    stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; },
+    stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; status(''); },
     refresh() { basis(); if (app.state.mode === 'walk') place(0); },
     get yaw() { return yaw; }, set yaw(v) { yaw = v; },
     get pitch() { return pitch; }, set pitch(v) { pitch = v; },
     get grounded() { return grounded; }, get busy() { return busy; },
+    /** The point tiles should load around: the destination while a teleport waits for it, else the feet. */
+    get focus() { return busy ? going : position; },
     get flySpeed() { return flySpeed; }, set flySpeed(v) { flySpeed = v; },
     get moving() { return vel.lengthSq() > 1e-4 || flyVel.lengthSq() > 1e-4 || !grounded && app.state.mode === 'walk' && !busy; },
     avatar,

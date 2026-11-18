@@ -40,7 +40,7 @@ const app = {
   off(type, fn) { listeners.get(type)?.delete(fn); },
   emit(type, detail) { const set = listeners.get(type); if (set) for (const fn of set) fn(detail); },
   invalidate() { dirty = Math.max(dirty, 2); },
-  focus(out = new THREE.Vector3()) { return out.copy(app.state.mode === 'orbit' ? controls.target : app.state.mode === 'walk' ? app.player.position : camera.position); },
+  focus(out = new THREE.Vector3()) { return out.copy(app.state.mode === 'orbit' ? controls.target : app.state.mode === 'walk' ? app.player.focus : camera.position); },
   heading() { camera.getWorldDirection(_v); return gridToTrueBearing(THREE.MathUtils.radToDeg(Math.atan2(_v.x, -_v.z)), CAMPUS.lat, CAMPUS.lon); },
   isIdle: () => performance.now() - lastMove > 400,
   toast(text) { app.emit('toast', { text }); },
@@ -48,7 +48,7 @@ const app = {
 const _v = new THREE.Vector3();
 let dirty = 2, lastMove = 0;
 
-app.look = createLook(renderer, scene, camera);
+app.look = createLook(renderer, scene, camera, () => app.invalidate());
 app.world = createWorld(app, (root, tile) => app.look.decorate(root, tile.scene), root => app.look.forget(root));
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
@@ -135,7 +135,8 @@ app.setMode = async (mode, { at = null } = {}) => {
       const hit = from === 'orbit' ? app.world.pick(r.left + r.width / 2, r.top + r.height / 2) : null;
       spot = hit ? hit.point : from === 'orbit' ? controls.target : camera.position;
     }
-    if (!await app.player.teleport(spot.x, spot.z, at || from === 'orbit' ? spot.y : null)) await app.player.respawn();
+    // false: nothing to stand on there, so start from the middle. null: the user moved on; leave the camera alone.
+    if (await app.player.teleport(spot.x, spot.z, at || from === 'orbit' ? spot.y : null) === false) await app.player.respawn();
   }
 };
 app.setView = view => {
@@ -163,7 +164,7 @@ app.load = async ({ view = null } = {}) => {
 };
 app.on('scene:start', async ({ manifest, ownership }) => {
   app.manifest = manifest;
-  app.look.setOwnership(ownership?.texture ?? null, ownership?.box);
+  app.look.setOwnership(ownership?.texture ?? null, ownership?.box, app.world.solidAt);
   app.look.setPaint(manifest.paint || [], './models/');
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
   app.emit('places');

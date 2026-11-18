@@ -37,9 +37,9 @@ export function formatScale(metres) {
   return `${roundSig(metres)} m · ${ft < 10 ? ft.toFixed(1) : Math.round(ft)} ft`;
 }
 
-/** NAVD88 metres to text such as `132.4 m · 434 ft NAVD88`. */
+/** NAVD88 metres to text such as `132.4 m · 434 ft NAVD88 (model)`. The tag says it is a model value, not a survey. */
 export function formatElevation(y) {
-  return `${y.toFixed(1)} m · ${Math.round(y / FT)} ft NAVD88`;
+  return `${y.toFixed(1)} m · ${Math.round(y / FT)} ft NAVD88 (model)`;
 }
 
 /**

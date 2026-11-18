@@ -30,7 +30,7 @@ test('labels', () => {
   assert.equal(formatScale(50), '50 m · 164 ft');
   assert.equal(formatScale(2), '2 m · 6.6 ft');
   assert.equal(formatScale(2000), '2 km · 1.24 mi');
-  assert.equal(formatElevation(132.43), '132.4 m · 434 ft NAVD88');
+  assert.equal(formatElevation(132.43), '132.4 m · 434 ft NAVD88 (model)');
   assert.equal(headingLabel(225, 'SW'), 'SW 225°');
   assert.equal(headingLabel(359.7, 'N'), 'N 0°');
 });

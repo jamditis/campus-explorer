@@ -8,6 +8,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { GROUPS, glslTest } from './viewer/ownership.js';
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
 const CATS = {
@@ -37,7 +38,8 @@ const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a
 const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
 const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 
-export function createLook(renderer, scene, camera) {
+/** `onChange` is called when something drawn changed without the camera moving (a texture arrived). */
+export function createLook(renderer, scene, camera, onChange = () => {}) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.8;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -92,6 +94,7 @@ export function createLook(renderer, scene, camera) {
     hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
     hemi.intensity = 0.2 + 0.5 * (1 - day);
     HORIZON.copy(NIGHT_FOG).lerp(DAY_FOG, day).lerp(DUSK_FOG, low * day * 0.6);
+    scene.fog.color.copy(HORIZON); // FogExp2 keeps its own copy of the colour
     if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
     glow.visible = night > 0.02; glowMat.opacity = night;
     applyShadows(); shadowDirty = true;
@@ -112,7 +115,7 @@ export function createLook(renderer, scene, camera) {
     const all = [].concat(...lamps.values());
     if (all.length) glow.geometry.setAttribute('position', new THREE.Float32BufferAttribute(all, 3)); else glow.geometry.deleteAttribute('position');
   }
-  function addLamps(root) {
+  function addLamps(root, group) {
     const m = new THREE.Matrix4(), p = new THREE.Vector3(), lampPoints = []; let n = 0;
     root.traverse(o => {
       if (!o.isInstancedMesh || !/^Lamp_/i.test(o.name)) return;
@@ -120,6 +123,7 @@ export function createLook(renderer, scene, camera) {
       for (let i = 0; i < o.count; i++) {
         o.getMatrixAt(i, m); m.premultiply(o.matrixWorld);
         p.set((bb.min.x + bb.max.x) / 2, bb.max.y - (bb.max.y - bb.min.y) * 0.08, (bb.min.z + bb.max.z) / 2).applyMatrix4(m);
+        if (!solid(group, p.x, p.z)) continue; // this lamp is hidden by the ownership map
         lampPoints.push(p.x, p.y, p.z); n++;
       }
     });
@@ -149,11 +153,12 @@ export function createLook(renderer, scene, camera) {
   const texCache = {};
   const texFor = c => texCache[c] ??= loader.load(`./textures/${CATS[c].file}.webp`, t => {
     t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
+    onChange(); // the view may be still when the texture arrives
   });
   let paint = []; // [{tex, x0,x1,z0,z1}]
   const paintUniforms = { pMap: { value: [] }, pBox: { value: [] }, pN: { value: 0 } };
   const EMPTY = new THREE.DataTexture(new Uint8Array(4), 1, 1); EMPTY.needsUpdate = true;
-  const paintTex = url => { const t = loader.load(url); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+  const paintTex = url => { const t = loader.load(url, onChange); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
   function setPaint(list, base) {
     paint = list.slice(0, 4).map(p => ({ ...p, tex: paintTex(base + p.file) }));
     const maps = [], boxes = [];
@@ -169,9 +174,12 @@ export function createLook(renderer, scene, camera) {
 
   // --- one campus from two models: per pixel, draw only what the cell's owner owns (see tools/web-export/unify.mjs) ---
   const ownUniforms = { ownMap: { value: EMPTY }, ownBox: { value: new THREE.Vector4(0, 0, 1, 1) } };
-  // ownership values: 0 none, 0.39 north border, 0.50 north, 0.89 main border, 1 main. Borders are drawn by both sides.
-  const OWN_TEST = { main: 'o > 0.3 && o < 0.6', north: 'o > 0.95', skirt: 'o > 0.45 && o < 0.55' };
-  function setOwnership(texture, box) {
+  // the hide rules live in viewer/ownership.js, shared with collision and the tool that writes the map
+  const OWN_TEST = Object.fromEntries(GROUPS.map(g => [g, glslTest(g)]));
+  let solid = () => true;
+  /** `solidAt(group, x, z)` is the CPU form of the same test; it keeps hidden lamps from glowing. */
+  function setOwnership(texture, box, solidAt = () => true) {
+    solid = solidAt;
     ownUniforms.ownMap.value = texture ?? EMPTY;
     if (texture) ownUniforms.ownBox.value.set(box.x0, box.z0, box.x1 - box.x0, box.z1 - box.z0); else ownUniforms.ownBox.value.set(0, 0, 1, 1);
     shadowDirty = true;
@@ -293,6 +301,7 @@ export function createLook(renderer, scene, camera) {
     const on = q.shadows > 0 && sun.intensity > 0.02;
     if (renderer.shadowMap.enabled !== on || sun.castShadow !== on) {
       renderer.shadowMap.enabled = on; sun.castShadow = on;
+      if (!on) { sun.shadow.map?.dispose(); sun.shadow.map = null; } // up to 4096² of GPU memory
       scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
     }
   }
@@ -303,6 +312,7 @@ export function createLook(renderer, scene, camera) {
     applyShadows(); shadowDirty = true;
     cullK = q.cull; macroUniform.value = q.macro ? 1 : 0;
     if (q.ao && !composer) buildComposer();
+    else if (!q.ao && composer) { gtao.dispose?.(); composer.dispose?.(); composer = gtao = null; }
     scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
     resize(); cull(true);
   }
@@ -368,7 +378,7 @@ export function createLook(renderer, scene, camera) {
   function fixMaterials(root) {
     root.traverse(o => {
       if (!o.isMesh) return;
-      if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; return; } // float above the exported skirt
+      if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; o.userData.filler = true; return; } // float above the exported skirt
       if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
       for (const m of [].concat(o.material)) {
         if (!m) continue;
@@ -410,7 +420,7 @@ export function createLook(renderer, scene, camera) {
       if (ownDepth[group] && !first?.userData.leaf) o.customDepthMaterial = ownDepth[group];
     });
     register(root);
-    addLamps(root);
+    addLamps(root, group);
     shadowDirty = true;
   }
   /** Forget a tile that was dropped from memory. */

@@ -157,8 +157,10 @@ export function createUI(app) {
   function currentView() {
     const p = app.time.preset ? null : zonedParts(app.time.date);
     const target = app.state.mode === 'orbit' ? controls.target : camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(20).add(camera.position);
+    // in walk mode the link holds the walker's eye, not the third-person camera behind them
+    const eye = app.state.mode === 'walk' ? app.player.position.clone().setY(app.player.position.y + 1.65) : camera.position;
     return {
-      mode: app.state.mode, position: camera.position.toArray(), target: target.toArray(),
+      mode: app.state.mode, position: eye.toArray(), target: target.toArray(),
       time: p ? `${p.year}-${pad(p.month)}-${pad(p.day)}T${pad(p.hour)}:${pad(p.minute)}` : null,
       labels: !!tools.labels?.visible,
     };
@@ -174,6 +176,8 @@ export function createUI(app) {
     if (!v.position || !v.target) return false;
     const position = new THREE.Vector3(...v.position), target = new THREE.Vector3(...v.target);
     if (position.distanceTo(target) < 0.5) return false;
+    // go through orbit so the pose is not overwritten by the fly or walk controller on the next frame
+    if (app.state.mode !== 'orbit') app.setMode('orbit');
     jump({ position, target });
     if (v.mode === 'fly') app.setMode('fly');
     else if (v.mode === 'walk') app.setMode('walk', { at: position.clone().setY(position.y - 1.65) });

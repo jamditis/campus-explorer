@@ -18,8 +18,10 @@ try {
     assert.equal(await page.isHidden('#load'), true);
   });
   await step('tools start', async () => {
-    await page.waitForFunction(() => document.querySelector('.hud-compass, [class^="hud-"]') && document.querySelector('#tool-labels[aria-pressed]'));
+    await page.waitForSelector('.hud-compass');
     for (const id of ['tool-labels', 'tool-map', 'tool-measure', 'tool-tour', 'tool-hunt']) assert.equal(await page.isDisabled(`#${id}`), false, `${id} is disabled: its module failed to start`);
+    // the overlay ignores pointer events; a control inside it must still take a click
+    assert.match(await app(() => { const b = document.querySelector('.hud-compass').getBoundingClientRect(); return document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2)?.closest('button')?.className ?? 'nothing'; }), /hud-compass/);
   });
   await step('every tile loads', () => waitFor(page, 'loaded'));
   await step('sunlight follows the real sun', async () => {
@@ -67,6 +69,19 @@ try {
       await page.keyboard.press(key); await settle(300);
     }
   });
+  await step('cancelling a walk leaves the camera where it was', async () => {
+    await app(() => window.__campus.goto(-120, 260, 140, -180, 130, 60));
+    const before = await app(() => window.__campus.camera.position.toArray());
+    await app(() => { const a = window.__campus.app; a.setMode('walk'); a.setMode('orbit'); });
+    await settle(2500);
+    const after = await app(() => window.__campus.camera.position.toArray());
+    assert.ok(Math.hypot(after[0] - before[0], after[1] - before[1], after[2] - before[2]) < 0.01, `camera moved from ${before} to ${after}`);
+  });
+  await step('a share link applies from fly mode too', async () => {
+    await page.keyboard.press('Digit2');
+    await app(() => { location.hash = '#v=1&m=orbit&c=10.0,300.0,200.0&t=-50.0,130.0,0.0'; });
+    await page.waitForFunction(() => window.__campus.app.state.mode === 'orbit' && Math.abs(window.__campus.camera.position.x - 10) < 0.2);
+  });
   await step('the share link restores the view', async () => {
     await app(() => window.__campus.goto(-120, 260, 140, -180, 130, 60));
     await settle(1500);
@@ -86,6 +101,26 @@ try {
     assert.equal(await page.isVisible('#panel-toggle'), true);
   });
   assert.deepEqual(problems, [], 'the page reported problems');
+  await step('phone profile: lite mode, touch controls, full screen', async () => {
+    const phone = await open(`${base}?lite=1&quality=low`, { width: 390, height: 844, touch: true });
+    const p = phone.page;
+    try {
+      await waitFor(p, 'ready');
+      assert.equal(await p.evaluate(() => window.__campus.app.world.budget), 9);
+      assert.equal(await p.evaluate(() => document.getElementById('mode-group').parentElement.id), 'mode-slot', 'the mode switch belongs in the top bar on a phone');
+      await p.tap('#walk');
+      await p.waitForFunction(() => window.__campus.app.state.mode === 'walk' && !window.__campus.app.player.busy);
+      await p.touchscreen.tap(300, 420); // the first touch on the view brings up the touch controls
+      await p.waitForSelector('.touch-jump', { state: 'visible' });
+      assert.match(await p.evaluate(() => { const b = document.querySelector('.touch-jump').getBoundingClientRect(); return document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2)?.className ?? 'nothing'; }), /touch-jump/, 'the jump button does not receive taps');
+      await p.tap('#fullscreen');
+      await p.waitForFunction(() => document.getElementById('fullscreen').getAttribute('aria-pressed') === 'true');
+      // tiles in memory stay within the budget (plus the slack that stops flip-flopping)
+      const ready = await p.evaluate(() => window.__campus.app.world.tiles.filter(t => t.center && t.state === 'ready').length);
+      assert.ok(ready <= 11, `${ready} centred tiles in memory`);
+      assert.deepEqual(phone.problems, [], 'the phone page reported problems');
+    } finally { await phone.browser.close(); }
+  });
 } catch (e) {
   failed = true; console.error(`FAIL ${e.message}`);
   if (problems.length) console.error(problems.join('\n'));
