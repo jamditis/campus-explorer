@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { createTrees } from './trees.js';
 import { createLook } from './look.js';
 import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
@@ -18,6 +19,7 @@ renderer.setPixelRatio(1);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, 1, 0.3, 20000);
 const look = createLook(renderer, scene, camera);
+const trees = createTrees(scene, camera);
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.maxPolarAngle = Math.PI * 0.495;
@@ -59,7 +61,7 @@ function clearScene() {
   for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
   scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
   scene.getObjectByName('ground_far')?.removeFromParent();
-  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); gBoxes.length = 0; grassAt = null; grassJob = null; grass.count = 0;
+  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); trees.reset(); gBoxes.length = 0; grassAt = null; grassJob = null; grass.count = 0;
 }
 let loadToken = 0;
 // one unified campus: main, north campus and Sprague/Café Diem share one origin and one manifest
@@ -100,7 +102,7 @@ async function loadScene() {
     ground.position.set(core.getCenter(new THREE.Vector3()).x, core.min.y + 0.5, core.getCenter(new THREE.Vector3()).z); ground.name = 'ground_far'; ground.receiveShadow = true; scene.add(ground);
     }
     loaded = true; overview();
-    setTimeout(() => { if (token === loadToken) { indexGround(); snapTrees(); } }, 50);
+    setTimeout(() => { if (token === loadToken) { indexGround(); snapTrees(); trees.add(campus); } }, 50);
     window.__campusLoad = { ms: Math.round(performance.now() - t0), tiles: done, bytes };
     $('load').hidden = true;
   } catch (e) {
@@ -346,7 +348,7 @@ function step(dt) {
   }
 }
 function loop() {
-  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); updateGrass(); look.render();
+  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); trees.update(); updateGrass(); look.render();
   frames++; acc += dt; if (acc > 1) { $('performance').textContent = `${Math.round(frames / acc)} fps · ${(renderer.info.render.triangles / 1e6).toFixed(1)} M triangles`; frames = 0; acc = 0; }
   requestAnimationFrame(loop);
 }
@@ -358,13 +360,13 @@ $('view-first').onclick = () => setView('first'); $('view-third').onclick = () =
 $('speed').oninput = () => $('speed-label').textContent = $('speed').value + ' m/s';
 const savedQ = localStorage.getItem('campus-quality');
 $('quality').value = ['low', 'medium', 'high'].includes(savedQ) ? savedQ : 'medium';
-const setQuality = v => { look.applyQuality(v); localStorage.setItem('campus-quality', v); resize(); };
+const setQuality = v => { look.applyQuality(v); trees.setQuality(v); localStorage.setItem('campus-quality', v); resize(); };
 $('quality').onchange = e => setQuality(e.target.value);
 setQuality(new URLSearchParams(location.search).get('quality') || $('quality').value);
 $('retry').onclick = () => loadScene();
 // test hook for headless screenshots: window.__campus.goto(x,y,z, tx,ty,tz)
 window.__campusScene = scene;
-window.__campus = { THREE, camera, controls, setMode, topView, overview, look, setQuality, loadScene, get loaded() { return loaded; },
+window.__campus = { THREE, camera, controls, setMode, topView, overview, look, trees, setQuality, loadScene, get loaded() { return loaded; },
   goto(x, y, z, tx, ty, tz) { setMode('orbit'); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); },
   groundAt: (x, z) => { ensureBVH(); return groundAt(x, 400, z, 0, 600); } };
 loadScene();

@@ -199,7 +199,7 @@ export function createLook(renderer, scene, camera) {
       if (!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
       if (o.isInstancedMesh) o.computeBoundingSphere();
       const bs = (o.isInstancedMesh ? o.boundingSphere : o.geometry.boundingSphere).clone().applyMatrix4(o.matrixWorld);
-      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius });
+      if (bs.radius < 120 && !o.userData.treeLod) items.push({ o, c: bs.center, r: bs.radius });
       if (bs.radius > 400) o.castShadow = false; // far-field ground: receives only
     });
   }
@@ -208,6 +208,7 @@ export function createLook(renderer, scene, camera) {
     const now = performance.now(); if (!force && now - lastCull < 200) return; lastCull = now;
     const p = camera.position;
     for (const it of items) {
+      if (it.o.userData.treeLod) continue; // trees.js culls these per instance
       const d = Math.max(1, p.distanceTo(it.c) - it.r);
       it.o.visible = it.r > d * cullK;
     }
