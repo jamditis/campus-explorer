@@ -48,11 +48,34 @@ else:
             r=sc.ray_cast(dg,Vector((cx,cy,160)),Vector((0,0,-1)))
             if r[0] and r[4].name.startswith('WS68_RHD_ground_northDTM'): cells.add((i,j))
     json.dump(sorted(cells),open(CF,'w'))
+# rev 3 (self-review of the ws217b close-up: dark slivers + stair-steps where the 0.25 m cells meet WS72's ragged N edge): dilate the
+# cell set by one ring into cells whose centre lies on WS72 / the WS215 walk, and put every vertex that lies under WS72 1 cm BELOW
+# WS72's top, so the fill tucks under the landing edge with no hole between them (the landing stays the visible surface there).
+TW5=bvh(ob('WS215_RHD_SE_core_street_level_sidewalk'),top=True)
+def onpave(x,y):
+    for t in (TL,TW5):
+        h=t.ray_cast(Vector((x,y,200)),Vector((0,0,-1)),300)
+        if h[0] is not None: return True
+    return False
+ring=set()
+for i,j in cells:
+    for di in (-1,0,1):
+        for dj in (-1,0,1):
+            k=(i+di,j+dj)
+            if k in cells or k in ring: continue
+            if onpave(DX0+(k[0]+0.5)*DS,DY0+(k[1]+0.5)*DS): ring.add(k)
+cells=cells|ring
+print('F217d ring cells added',len(ring),flush=True)
 me=bpy.data.meshes.new('WS217_RHD_SE_Kasser_gap_paving'); bm=bmesh.new(); V={}
 def vert(i,j):
     if (i,j) not in V:
         x,y=DX0+i*DS,DY0+j*DS; g=zg(x,y) or 125.3; zl=zl_edge(x,y)
-        V[(i,j)]=bm.verts.new((x,y,max(g+0.02,zl if zl is not None and zl<g+0.25 else g+0.02)))
+        hl=TL.ray_cast(Vector((x,y,200)),Vector((0,0,-1)),300)
+        hw=TW5.ray_cast(Vector((x,y,200)),Vector((0,0,-1)),300)
+        if hl[0] is not None: z=hl[0].z-0.01
+        elif hw[0] is not None: z=hw[0].z-0.01
+        else: z=max(g+0.02,zl if zl is not None and zl<g+0.25 else g+0.02)
+        V[(i,j)]=bm.verts.new((x,y,z))
     return V[(i,j)]
 for i,j in cells: bm.faces.new((vert(i,j),vert(i+1,j),vert(i+1,j+1),vert(i,j+1)))
 bm.to_mesh(me); bm.free()
