@@ -38,7 +38,7 @@ const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 
 function fixMaterials(root) {
   root.traverse(o => {
     if (!o.isMesh) return;
-    if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; return; } // float above the exported skirt too
+    if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; o.userData.hidden = true; return; } // float above the exported skirt too
     if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
     const mats = Array.isArray(o.material) ? o.material : [o.material];
     for (const m of mats) {
@@ -59,48 +59,48 @@ function clearScene() {
   for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
   scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
   scene.getObjectByName('ground_far')?.removeFromParent();
-  colliders.length = 0; bvhReady = false; loaded = false; look.reset();
+  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); gBoxes.length = 0; grassAt = null; grass.count = 0;
 }
 let loadToken = 0;
-async function loadScene(tile) {
+// one unified campus: main, north campus and Sprague/Café Diem share one origin and one manifest
+async function loadScene() {
   $('load').hidden = false; $('error').hidden = true;
   const token = ++loadToken;
   clearScene();
   try {
-    const base = `./models/${tile}/`;
+    const base = './models/main/';
     const man = await (await fetch(base + 'manifest.json', { cache: 'no-cache' })).json();
-    if (token !== loadToken) return; // a newer scene request won
+    if (token !== loadToken) return; // a newer load (retry) won
     hasSkirt = man.tiles.some(t => t.file === 'skirt.glb');
     look.setPaint(man.paint || [], base);
     $('source-snapshot').textContent = `Source snapshot: model saved ${man.source_saved}${man.source_version ? ' (' + man.source_version + ')' : ''}; browser export ${man.exported}. Later modeling changes may not appear here yet.`;
     $('footnote').firstChild.textContent = `Working model · ${man.source_saved.replace(/, \d{4},.*/, '')} snapshot · Map data © `;
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     let done = 0, bytes = 0; const total = man.total_bytes || 1, t0 = performance.now();
-    const coreBox = new THREE.Box3();
     // far-field ground and context first, then tiles nearest the view target, a few in parallel
-    const tgt = tile === 'main' ? MAIN_CORE.getCenter(new THREE.Vector3()) : controls.target;
+    const tgt = MAIN_CORE.getCenter(new THREE.Vector3());
     const dist = t => t.center ? Math.hypot(t.center[0] - tgt.x, t.center[1] - tgt.z) : -1;
     const queue = [...man.tiles].sort((a, b) => dist(a) - dist(b));
     const loadOne = async t => {
       const g = await loader.loadAsync(base + t.file);
       if (token !== loadToken) return;
       g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
-      if (t.file !== 'context.glb' && t.file !== 'skirt.glb') coreBox.expandByObject(g.scene);
       done++; bytes += t.bytes;
       $('load-text').textContent = `Loading campus… ${Math.round(bytes / total * 100)}% (${done}/${man.tiles.length} tiles)`;
-      if (done === 1 && tile === 'main') overview();
+      if (done === 1) overview();
     };
     await loadOne(queue.shift());
     const workers = Array.from({ length: 4 }, async () => { while (queue.length) await loadOne(queue.shift()); });
     await Promise.all(workers);
     if (token !== loadToken) return;
-    core.copy(tile === 'main' ? MAIN_CORE : coreBox.isEmpty() ? new THREE.Box3().setFromObject(campus) : coreBox);
+    core.copy(MAIN_CORE);
     // without the real-elevation skirt tile, a simplified distant ground keeps the campus from floating
     if (!hasSkirt) {
     const ground = new THREE.Mesh(new THREE.CircleGeometry(9000, 64).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#8b9070', roughness: 1 }));
     ground.position.set(core.getCenter(new THREE.Vector3()).x, core.min.y + 0.5, core.getCenter(new THREE.Vector3()).z); ground.name = 'ground_far'; ground.receiveShadow = true; scene.add(ground);
     }
     loaded = true; overview();
+    setTimeout(() => { if (token === loadToken) { indexGround(); snapTrees(); } }, 50);
     window.__campusLoad = { ms: Math.round(performance.now() - t0), tiles: done, bytes };
     $('load').hidden = true;
   } catch (e) {
@@ -121,6 +121,84 @@ function topView() {
   const c = core.getCenter(new THREE.Vector3()), s = core.getSize(new THREE.Vector3());
   controls.target.set(c.x, core.min.y, c.z);
   camera.position.set(c.x, core.min.y + Math.max(s.x, s.z) * 1.05, c.z + 0.01); controls.update();
+}
+
+// ---------------- ground queries (lazy BVH per mesh) ----------------
+const gBoxes = []; const DOWN = new THREE.Vector3(0, -1, 0); const gRay = new THREE.Raycaster(); gRay.firstHitOnly = true;
+function indexGround() {
+  gBoxes.length = 0; const sz = new THREE.Vector3();
+  campus.traverse(o => {
+    if (!o.isMesh || o.isInstancedMesh || o.userData.hidden) return;
+    const m = [].concat(o.material)[0]; if (m?.userData.leaf || m?.userData.glass) return;
+    const b = new THREE.Box3().setFromObject(o); b.getSize(sz);
+    gBoxes.push({ o, b, big: Math.max(sz.x, sz.z) > 15 && sz.y < 150 });
+  });
+}
+function topHit(x, z, yTop, bigOnly) {
+  const c = [];
+  for (const g of gBoxes) {
+    if ((bigOnly && !g.big) || x < g.b.min.x || x > g.b.max.x || z < g.b.min.z || z > g.b.max.z || g.b.min.y > yTop) continue;
+    if (!g.o.geometry.boundsTree) g.o.geometry.computeBoundsTree();
+    c.push(g.o);
+  }
+  if (!c.length) return null;
+  gRay.set(new THREE.Vector3(x, yTop, z), DOWN); gRay.far = 800;
+  return gRay.intersectObjects(c, false)[0] || null;
+}
+// Instanced trees whose origin (trunk base) hangs over the ground, e.g. edge street trees placed for the
+// Blender far-field geometry: lower them onto the ground below. Only ever lowers, 0.8–25 m gaps.
+function snapTrees() {
+  const groups = new Map(); const m4 = new THREE.Matrix4(), p = new THREE.Vector3(); let moved = 0;
+  campus.traverse(o => { if (o.isInstancedMesh && /^(Tree_|T_)/.test(o.name)) { if (!groups.has(o.parent)) groups.set(o.parent, []); groups.get(o.parent).push(o); } });
+  for (const list of groups.values()) {
+    const a = list[0]; const sy = new THREE.Vector3().setFromMatrixScale(a.matrixWorld).y || 1;
+    for (let i = 0; i < a.count; i++) {
+      a.getMatrixAt(i, m4); p.setFromMatrixPosition(m4).applyMatrix4(a.matrixWorld);
+      const h = topHit(p.x, p.z, p.y + 40, true); if (!h) continue;
+      const gap = p.y - h.point.y;
+      if (gap > 0.8 && gap < 25) { for (const o of list) { o.getMatrixAt(i, m4); m4.elements[13] -= gap / sy; o.setMatrixAt(i, m4); o.instanceMatrix.needsUpdate = true; } moved++; }
+    }
+    for (const o of list) o.computeBoundingSphere();
+  }
+  window.__campusSnapped = moved;
+}
+// Grass tufts near the camera on lawn surfaces (Medium/High), re-scattered as you move
+const GRASS_N = 6000, GRASS_R = 18;
+const grass = (() => {
+  const pos = [], col = [], nrm = [];
+  for (let i = 0; i < 7; i++) {
+    const a = Math.random() * Math.PI * 2, r = Math.random() * 0.12, x = Math.cos(a) * r, z = Math.sin(a) * r;
+    const w = 0.012 + Math.random() * 0.01, h = 0.1 + Math.random() * 0.16, lean = (Math.random() - 0.5) * 0.1, d = Math.random() * Math.PI;
+    const dx = Math.cos(d) * w, dz = Math.sin(d) * w;
+    pos.push(x - dx, 0, z - dz, x + dx, 0, z + dz, x + lean, h, z + lean * 0.5);
+    col.push(0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 1.1, 1.1, 0.9); nrm.push(0, 1, 0, 0, 1, 0, 0, 1, 0);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
+  const mesh = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.95, envMapIntensity: 0.3 }), GRASS_N);
+  mesh.count = 0; mesh.frustumCulled = false; mesh.receiveShadow = true; mesh.name = 'grass_tufts'; scene.add(mesh); return mesh;
+})();
+let grassAt = null, grassT = 0;
+function updateGrass() {
+  const now = performance.now(); if (now - grassT < 400 || !loaded || !gBoxes.length) return; grassT = now;
+  if (look.quality === 'low') { grass.visible = false; return; }
+  const c = camera.position; const h = topHit(c.x, c.z, c.y + 2, false);
+  if (!h || c.y - h.point.y > 14) { grass.visible = false; return; }
+  grass.visible = true;
+  if (grassAt && Math.hypot(c.x - grassAt.x, c.z - grassAt.z) < 5) return;
+  grassAt = c.clone();
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), col = new THREE.Color(); let n = 0;
+  for (let i = 0; i < GRASS_N * 1.6 && n < GRASS_N; i++) {
+    const r = GRASS_R * Math.sqrt(Math.random()), a = Math.random() * Math.PI * 2;
+    const x = c.x + Math.cos(a) * r, z = c.z + Math.sin(a) * r;
+    const hit = topHit(x, z, h.point.y + 25, false);
+    const m = hit && [].concat(hit.object.material)[0];
+    if (!m || m.userData.tp !== 'grass' || !hit.face || hit.face.normal.y < 0.7) continue;
+    q.setFromAxisAngle(DOWN, Math.random() * Math.PI * 2); const k = 0.7 + Math.random() * 0.8; s.set(k, k * (0.8 + Math.random() * 0.5), k);
+    m4.compose(hit.point, q, s); grass.setMatrixAt(n, m4);
+    col.copy(m.color).multiplyScalar(1.5 + Math.random() * 0.6); grass.setColorAt(n, col); n++;
+  }
+  grass.count = n; grass.instanceMatrix.needsUpdate = true; if (grass.instanceColor) grass.instanceColor.needsUpdate = true;
 }
 
 // ---------------- fly / walk ----------------
@@ -253,7 +331,7 @@ function step(dt) {
   }
 }
 function loop() {
-  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); look.render();
+  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); updateGrass(); look.render();
   frames++; acc += dt; if (acc > 1) { $('performance').textContent = `${Math.round(frames / acc)} fps · ${(renderer.info.render.triangles / 1e6).toFixed(1)} M triangles`; frames = 0; acc = 0; }
   requestAnimationFrame(loop);
 }
@@ -268,15 +346,10 @@ $('quality').value = ['low', 'medium', 'high'].includes(savedQ) ? savedQ : 'medi
 const setQuality = v => { look.applyQuality(v); localStorage.setItem('campus-quality', v); resize(); };
 $('quality').onchange = e => setQuality(e.target.value);
 setQuality(new URLSearchParams(location.search).get('quality') || $('quality').value);
-$('retry').onclick = () => loadScene($('tile').value);
-$('tile').onchange = () => loadScene($('tile').value);
+$('retry').onclick = () => loadScene();
 // test hook for headless screenshots: window.__campus.goto(x,y,z, tx,ty,tz)
 window.__campusScene = scene;
 window.__campus = { THREE, camera, controls, setMode, topView, overview, look, setQuality, loadScene, get loaded() { return loaded; },
   goto(x, y, z, tx, ty, tz) { setMode('orbit'); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); },
   groundAt: (x, z) => { ensureBVH(); return groundAt(x, 400, z, 0, 600); } };
-const startScene = new URLSearchParams(location.search).get('scene') || 'main';
-$('tile').value = startScene;
-// offer north campus only when its tiles are published
-fetch('./models/north/manifest.json', { method: 'HEAD' }).then(r => { $('tile').querySelector('option[value=north]').disabled = !r.ok; }).catch(() => {});
-loadScene(startScene);
+loadScene();

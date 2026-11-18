@@ -51,6 +51,8 @@ for o in bpy.context.scene.objects:
         mods=[(m.type, m.name) for m in o.modifiers if m.show_render],
         mats=[s.material.name for s in getattr(o, "material_slots", []) if s.material],
         parent=o.parent.name if o.parent else None,
+        # objects linked in from another .blend (Sprague/Café Diem come from north/sprague_cafe_src.blend)
+        lib=bpy.path.abspath(o.library.filepath) if o.library else None,
     )
 json.dump(
     out, open(os.environ.get("WORK", "/workspace/nj-scenes/web/build/main") + "/objects.json", "w")

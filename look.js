@@ -22,8 +22,27 @@ const CATS = {
   stone: { file: 'stone', size: 1.8, k: 0.6 },
   metal: { file: 'metal', size: 1, k: 0.35 },
   wood: { file: 'wood', size: 1.2, k: 0.7 },
+  bark: { file: 'bark', size: 1.0, k: 0.8 },
 };
-const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, rooftile: 0.75, pavers: 0.85, grass: 1, mulch: 1, gravel: 0.95, stone: 0.7, metal: 0.45, wood: 0.8 };
+const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, rooftile: 0.75, pavers: 0.85, grass: 1, mulch: 1, gravel: 0.95, stone: 0.7, metal: 0.45, wood: 0.8, bark: 0.95 };
+// relief strength from each texture's displacement (alpha channel); fades out by 80 m
+const BUMP = { asphalt: 0.35, concrete: 0.3, brick: 1.4, plaster: 0.12, rooftile: 1.5, pavers: 1.1, grass: 0.8, mulch: 1.2, gravel: 1.1, stone: 0.5, metal: 0.1, wood: 0.5, bark: 2 };
+// image-based (sky) reflection: rough ground and masonry reflect little of it
+const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.25, gravel: 0.25, stone: 0.4, plaster: 0.45, brick: 0.4, rooftile: 0.5, metal: 1, wood: 0.45, bark: 0.3 };
+// slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
+const WARM = { asphalt: [1.1, 1.0, 0.84], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
+
+// fix-ups for materials the export categorised by name only
+export function fixCat(name, cat) {
+  if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
+  if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
+  if (cat) return cat;
+  if (/^Bark_/i.test(name)) return 'bark';
+  if (/barrel_tile|tile_course|Eave_tile/i.test(name)) return 'rooftile';
+  if (/soffit|fascia/i.test(name)) return 'plaster';
+  if (/BD_osm_light|BD_fill_massing/i.test(name)) return 'concrete';
+  return '';
+}
 
 export const QUALITY = {
   low: { pixelRatio: 1, shadows: 0, ao: false, cull: 0.02, tex: true, macro: false },
@@ -57,7 +76,7 @@ export function createLook(renderer, scene, camera) {
   scene.environment = pmrem.fromScene(envScene, 0.02).texture;
   scene.environmentIntensity = 0.3;
 
-  const hemi = new THREE.HemisphereLight('#dfe9f5', '#4f4a3a', 0.2); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight('#e2e7ee', '#4f4a3a', 0.2); scene.add(hemi);
   const sun = new THREE.DirectionalLight('#fff0dc', 2.7);
   sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.04;
   scene.add(sun, sun.target);
@@ -102,12 +121,15 @@ export function createLook(renderer, scene, camera) {
     m.userData.tp = cat;
     if (ROUGH[cat] !== undefined && !m.roughnessMap) m.roughness = ROUGH[cat];
     if (cat !== 'metal') m.metalness = 0;
+    m.envMapIntensity = ENV[cat] ?? 0.5;
     const isAsphalt = cat === 'asphalt';
+    const warm = WARM[cat];
     m.onBeforeCompile = sh => {
       sh.uniforms.tpMap = { value: texFor(cat) };
       sh.uniforms.tpScale = { value: 1 / def.size };
       sh.uniforms.tpK = { value: def.k };
       sh.uniforms.tpMacro = macroUniform;
+      sh.uniforms.tpBump = { value: BUMP[cat] ?? 1 };
       if (isAsphalt) Object.assign(sh.uniforms, paintUniforms);
       sh.vertexShader = sh.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vTpPos; varying vec3 vTpNrm;')
@@ -122,18 +144,22 @@ export function createLook(renderer, scene, camera) {
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vTpPos; varying vec3 vTpNrm;
-          uniform sampler2D tpMap; uniform float tpScale; uniform float tpK; uniform float tpMacro;
+          uniform sampler2D tpMap; uniform float tpScale; uniform float tpK; uniform float tpMacro; uniform float tpBump;
+          float tpH = 0.5;
           ${isAsphalt ? 'uniform sampler2D pMap[4]; uniform vec4 pBox[4]; uniform int pN;' : ''}
-          vec3 tpSample(vec3 p, vec3 w) {
-            return texture2D(tpMap, p.zy).rgb * w.x + texture2D(tpMap, p.xz).rgb * w.y + texture2D(tpMap, p.xy).rgb * w.z;
+          vec4 tpSample(vec3 p, vec3 w) {
+            return texture2D(tpMap, p.zy) * w.x + texture2D(tpMap, p.xz) * w.y + texture2D(tpMap, p.xy) * w.z;
           }`)
         .replace('#include <map_fragment>', `#include <map_fragment>
           {
             vec3 w = pow(abs(normalize(vTpNrm)), vec3(4.0)); w /= (w.x + w.y + w.z);
-            vec3 t = tpSample(vTpPos * tpScale, w);
-            if (tpMacro > 0.5) t = mix(t, tpSample(vTpPos * tpScale * 0.13 + 0.37, w), 0.35);
+            vec4 t4 = tpSample(vTpPos * tpScale, w);
+            tpH = t4.a;
+            vec3 t = t4.rgb;
+            if (tpMacro > 0.5) t = mix(t, tpSample(vTpPos * tpScale * 0.13 + 0.37, w).rgb, 0.35);
             t *= 2.7; // textures are normalised to a mid-grey mean (sRGB 160 ~ linear 0.37)
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
+            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), 0.55) * vec3(${warm.map(x => x.toFixed(3)).join(',')}); }` : ''}
             ${isAsphalt ? `
             for (int i = 0; i < 4; i++) {
               if (i >= pN) break;
@@ -144,6 +170,18 @@ export function createLook(renderer, scene, camera) {
               else if (i == 2) pc = texture2D(pMap[2], uv); else pc = texture2D(pMap[3], uv);
               diffuseColor.rgb = mix(diffuseColor.rgb, pc.rgb * mix(1.0, t.r, 0.25), pc.a);
             }` : ''}
+          }`)
+        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
+          roughnessFactor = clamp(roughnessFactor * (0.9 + 0.25 * (1.0 - tpH)), 0.04, 1.0);`)
+        .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+          {
+            float fade = clamp(1.0 - length(vViewPosition) / 80.0, 0.0, 1.0);
+            vec2 dH = vec2(dFdx(tpH), dFdy(tpH)) * tpBump * fade;
+            vec3 sx = dFdx(-vViewPosition), sy = dFdy(-vViewPosition);
+            vec3 r1 = cross(sy, normal), r2 = cross(normal, sx);
+            float det = dot(sx, r1);
+            vec3 g = sign(det) * (dH.x * r1 + dH.y * r2);
+            normal = normalize(abs(det) * normal - g);
           }`);
     };
     m.customProgramCacheKey = () => 'tp_' + cat;
@@ -213,11 +251,14 @@ export function createLook(renderer, scene, camera) {
       if (!o.isMesh) return;
       for (const m of [].concat(o.material)) {
         if (!m) continue;
-        const cat = m.userData?.cat;
+        const cat = fixCat(m.name || '', m.userData?.cat || '');
+        if (cat !== 'glass' && cat !== (m.userData?.cat || '')) m.userData.glass = false;
         if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
           m.userData.glassDone = true; // shared materials: tint once
-          m.roughness = 0.05; m.metalness = 0.1; m.envMapIntensity = 1.6; m.opacity = Math.max(m.opacity, 0.45);
-          m.color.multiplyScalar(0.7);
+          if (/lamp|globe|frost|opal|led/i.test(m.name)) { m.roughness = 0.4; m.envMapIntensity = 0.6; continue; }
+          // windows: dark, smooth and partly metallic so they mirror the sky and trees like real glazing
+          m.roughness = 0.03; m.metalness = 0.55; m.envMapIntensity = 1.5; m.opacity = Math.max(m.opacity, 0.82);
+          m.color.lerp(new THREE.Color('#22303a'), 0.75);
         } else if (cat && CATS[cat]) {
           // lawn/terrain colours averaged from aerial-draped materials come out grey: give them a lawn tone
           if (cat === 'grass') { const hsl = {}; m.color.getHSL(hsl); if (hsl.s < 0.18 || hsl.l > 0.45) m.color.setHSL(0.21, 0.32, Math.min(0.32, Math.max(0.2, hsl.l * 0.6))); }

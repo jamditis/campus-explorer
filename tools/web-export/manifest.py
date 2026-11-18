@@ -1,5 +1,5 @@
-# writes models/<scene>/manifest.json (tile list with centres for nearest-first loading, sizes,
-# paint layers, snapshot time ET).  env: OUT, FILE, SOURCE_VERSION, SOURCE_SAVED, TILE
+# writes models/main/manifest.json (one unified campus) (tile list with centres for nearest-first loading, sizes,
+# paint layers, snapshot time ET).  env: OUT, SCENE, FILE, SOURCE_VERSION, SOURCE_SAVED, TILE
 import datetime
 import glob
 import json
@@ -12,23 +12,32 @@ TILE = float(os.environ.get("TILE", "160"))
 tiles = []
 for f in sorted(glob.glob(S + "/*.glb")):
     t = dict(file=os.path.basename(f), bytes=os.path.getsize(f))
-    m = re.match(r"t_(-?\d+)_(-?\d+)\.glb$", t["file"])
+    m = re.match(r"(?:n_)?t_(-?\d+)_(-?\d+)\.glb$", t["file"])
     if m:
         # Blender XY tile centre -> three.js XZ (z = -y)
         t["center"] = [(int(m[1]) + 0.5) * TILE, -(int(m[2]) + 0.5) * TILE]
     tiles.append(t)
-order = {"skirt.glb": 0, "context.glb": 1}
+order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
 ver = os.environ.get("SOURCE_VERSION", "")
 saved = os.environ.get("SOURCE_SAVED") or mt.strftime("%B %-d, %Y, %-I:%M %p ET")
+scene = os.environ.get("SCENE", "main")
 paint = json.load(open(S + "/paint.json")) if os.path.exists(S + "/paint.json") else []
+old = json.load(open(S + "/manifest.json")) if os.path.exists(S + "/manifest.json") else {}
+# one unified campus built from several source .blends: keep each one's snapshot label
+sources = old.get("sources") or {}
+if not sources and old.get("source_saved"):
+    sources["main"] = dict(saved=old["source_saved"], version=old.get("source_version", ""))
+sources[scene] = dict(saved=saved, version=ver, file=os.path.basename(src))
+head = sources.get("main", sources[scene])
 json.dump(
     dict(
         tiles=tiles,
         paint=paint,
-        source_saved=saved,
-        source_version=ver,
+        source_saved=head["saved"],
+        source_version=head["version"],
+        sources=sources,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),
         total_bytes=sum(t["bytes"] for t in tiles),
     ),
