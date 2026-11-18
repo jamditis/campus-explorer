@@ -63,9 +63,15 @@ export function createLabels(app) {
       layer.appendChild(el);
       return { place, el, w: 0, h: 0, anchor: new THREE.Vector3(place.x, floorY() + ABOVE, place.z), hit: false, checks: CONFIRMS, found: false, nextTry: 0, shown: false, key: '', opacity: -1 };
     });
-    // one layout read for all labels, here and never per frame (they start hidden but laid out)
-    for (const l of labels) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
+    measure();
     dirty = true;
+  }
+
+  // One layout read for all labels, here and never per frame (they start hidden but laid out).
+  // While the layer is switched off nothing has a size, so this runs again when it is switched on.
+  function measure() {
+    if (!visible) return;
+    for (const l of labels) if (!l.w) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
   }
 
   // Top of the model at a place. builtOnly never stalls a frame; it returns null until the tile's
@@ -134,6 +140,7 @@ export function createLabels(app) {
     on = !!on;
     if (on === visible) return;
     visible = on; layer.hidden = !on;
+    measure();
     if (!on) for (const l of labels) hide(l);
     try { localStorage.setItem(STORE, on ? 'on' : 'off'); } catch { /* private mode */ }
     dirty = true;

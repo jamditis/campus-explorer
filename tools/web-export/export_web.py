@@ -247,6 +247,10 @@ def category(m, glass, leaf):
         mm = re.search(r"(ws\d+[a-z]?)_mask_tile_", i)
         if mm:
             PAINT.add(mm.group(1))
+    # Aerial-draped terrain averages to grey and its image names mention roads and lots; it is ground
+    # with no surface detail of its own, so it gets the lawn tone like the far-field skirt.
+    if re.search(r"(ground|skirt)_ortho", m.name, re.I):
+        return "grass"
     key = m.name + " " + " ".join(imgs)
     for c, rx in CATS:
         if re.search(rx, key, re.I):
