@@ -15,7 +15,8 @@ SITE=${SITE:-$(cd "$W/../.." && pwd)}; S=$SITE/models/main; WORK=$R/web/build/$S
 case $SCENE in
   main) DEF=$R/montclair-state/montclair_state.blend; PREFIX="" ;;
   north) DEF=$R/montclair-state/north/montclair_north.blend; PREFIX=n_; export MERGE_WITH=$R/web/build/main
-         [ -f $MERGE_WITH/chunks.json ] || fail "run SCENE=main first (north merges against main's plan)" ;;
+         [ -f $MERGE_WITH/chunks.json ] && [ -f $MERGE_WITH/source.txt ] || fail "run SCENE=main first (north merges against main's plan)"
+         export MAIN_FILE=$(cat $MERGE_WITH/source.txt) ;;  # north terrain is trimmed against main's ground
   *) fail "unknown SCENE $SCENE" ;;
 esac
 FILE=${1:-$DEF}; BL=/workspace/opt/blender/blender; LOCKS="$R/.lock $R/montclair-state/.lock"
@@ -33,6 +34,7 @@ if [ "${SKIP_PLAN:-0}" != 1 ]; then
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "chunk planning"
   python3 $W/make_chunks.py || fail "make_chunks"
 fi
+[ $SCENE = main ] && echo "$FILE" > $WORK/source.txt  # the north run trims its terrain against this file
 CHUNKS=$(python3 -c "import json;print(' '.join(json.load(open('$WORK/chunks.json'))))") || fail "read chunks.json"
 if [ -z "${ONLY:-}" ]; then
   # Full build: drop raw and published tiles that are no longer in the chunk plan,
@@ -40,16 +42,19 @@ if [ -z "${ONLY:-}" ]; then
   for f in $B/raw/*.glb $S/*.glb; do
     [ -e "$f" ] || continue
     c=$(basename "$f" .glb)
+    [[ $c == far_* ]] && continue  # far-field houses come from landcover.py, not the chunk plan
     if [ -n "$PREFIX" ]; then [[ $c == ${PREFIX}* ]] || continue; else [[ $c == n_* ]] && continue; fi
     [[ " $CHUNKS " == *" $c "* ]] || { echo "prune stale $f"; rm -f "$f" "$f".leaf.json "$f".paint.json; }
   done
 fi
 for C in $CHUNKS; do
   [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
+  # REUSE_RAW=1 resumes an interrupted build: tiles whose raw export already exists are not re-exported
+  [ "${REUSE_RAW:-0}" = 1 ] && [ -s $B/raw/$C.glb ] && { echo "reuse raw $C"; continue; }
   gate; echo "$(date +%T) export $C"
   rm -f $B/raw/$C.glb
   DEC=0.5; case $C in *context) DEC=0.3 ;; skirt) DEC=0.6 ;; esac
-  DECIMATE=$DEC CHUNK=$C OUT=$B/raw/$C.glb WD_MIN=1500 bash $R/montclair-state/scripts/ws33/wd.sh $BL -b --factory-startup --python-exit-code 1 --python $W/export_web.py 2>&1 | grep --line-buffered -E "WEB (appended|from libraries|missing library|clipped|materials|WROTE|MEM)|rror|Trace|WATCH"
+  DECIMATE=$DEC CHUNK=$C OUT=$B/raw/$C.glb WD_MIN=1500 bash $R/montclair-state/scripts/ws33/wd.sh $BL -b --factory-startup --python-exit-code 1 --python $W/export_web.py 2>&1 | grep --line-buffered -E "WEB (appended|from libraries|missing library|trimmed|main ground|WARNING|materials|WROTE|MEM)|rror|Trace|WATCH"
   [ "${PIPESTATUS[0]}" -eq 0 ] && [ -s $B/raw/$C.glb ] || fail "export $C (no new GLB; not publishing)"
 done
 cd $R/web/tools
@@ -64,6 +69,14 @@ for f in $B/raw/*.glb; do
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
 done
 [ $SCENE = main ] && { OUT=$S python3 $W/paint.py || fail "paint"; }
+# far-field land cover, trees and houses from OpenStreetMap (needs pyproj/shapely: GEO_PY) and the OSM
+# map tiles in $OSM (api.openstreetmap.org/api/0.6/map, ~1 km tiles over the 4 km skirt)
+GEO_PY=${GEO_PY:-/workspace/opt/geo/bin/python}; OSM=${OSM:-$R/web/build/landcover}
+if [ $SCENE = main ] && [ -x "$GEO_PY" ] && ls $OSM/*.osm >/dev/null 2>&1; then
+  OSM=$OSM OUT=$S RAW=$WORK WORK_MAIN=$WORK WORK_NORTH=$R/web/build/north $GEO_PY $W/landcover.py || fail "landcover"
+  (cd $R/web/tools && npx gltf-transform optimize $WORK/far_houses.raw.glb $S/far_houses.glb --compress meshopt --simplify false --palette false 2>&1 | grep -iE "error" | head -3)
+  [ -s $S/far_houses.glb ] || fail "far houses"; rm -f $WORK/far_houses.raw.glb
+fi
 OUT=$S python3 $W/manifest.py || fail "manifest"
 find $S -size +95M | grep . && fail "file over 95 MB"
 ls -la $S; du -sh $S
