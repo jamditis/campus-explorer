@@ -28,7 +28,7 @@ const init = slow ? () => {
   const raf = window.requestAnimationFrame.bind(window);
   window.requestAnimationFrame = fn => (window.__campus?.loaded ? raf(fn) : setTimeout(() => raf(fn), 4000));
 } : null;
-const { browser, page, problems } = await open(url, { init });
+const { browser, page, problems } = await open(url, { init, minutes: slow ? 180 : 45 });
 const t0 = Date.now(), secs = () => ((Date.now() - t0) / 1000).toFixed(0);
 await waitFor(page, 'loaded');
 console.log(`loaded in ${secs()} s`);

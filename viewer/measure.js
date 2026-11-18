@@ -190,13 +190,14 @@ export function createMeasure(app) {
     pressed.add(e.pointerId);
     // a second finger means a pinch or two-finger pan, not a click
     press = pressed.size === 1 && e.isPrimary && (e.button === 0 || e.pointerType === 'touch')
-      ? { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() } : null;
+      ? { id: e.pointerId, x: e.clientX, y: e.clientY, t: e.timeStamp } : null;
   }
   function onUp(e) {
     pressed.delete(e.pointerId);
     const p = press; press = null;
     if (!active || !p || p.id !== e.pointerId) return;
-    if (isClick(p, { x: e.clientX, y: e.clientY, t: performance.now() })) pickAt(e.clientX, e.clientY);
+    // event timestamps, not handler time: a slow frame between press and release is not a long press
+    if (isClick(p, { x: e.clientX, y: e.clientY, t: e.timeStamp })) pickAt(e.clientX, e.clientY);
   }
   function onCancel(e) { pressed.delete(e.pointerId); press = null; }
 

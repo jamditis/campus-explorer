@@ -36,11 +36,11 @@ async function playwright() {
 }
 
 /** Open the viewer in headless Chromium. Collects console errors, page errors and failed requests in `problems`. */
-export async function open(url, { width = 1280, height = 800, touch = false, init = null } = {}) {
+export async function open(url, { width = 1280, height = 800, touch = false, init = null, minutes = 30 } = {}) {
   const { chromium } = await playwright();
   const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
   const context = await browser.newContext({ viewport: { width, height }, hasTouch: touch });
-  const page = await context.newPage(); page.setDefaultTimeout(30 * 60 * 1000);
+  const page = await context.newPage(); page.setDefaultTimeout(minutes * 60 * 1000); // software WebGL is slow
   const problems = [];
   page.on('console', m => { if (m.type() === 'error') problems.push(`console: ${m.text()}`); });
   page.on('pageerror', e => problems.push(`page error: ${e.message}`));
