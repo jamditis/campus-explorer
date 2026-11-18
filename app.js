@@ -59,7 +59,7 @@ function clearScene() {
   for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
   scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
   scene.getObjectByName('ground_far')?.removeFromParent();
-  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); gBoxes.length = 0; grassAt = null; grass.count = 0;
+  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); gBoxes.length = 0; grassAt = null; grassJob = null; grass.count = 0;
 }
 let loadToken = 0;
 // one unified campus: main, north campus and Sprague/Café Diem share one origin and one manifest
@@ -134,9 +134,9 @@ function indexGround() {
     gBoxes.push({ o, b, big: Math.max(sz.x, sz.z) > 15 && sz.y < 150 });
   });
 }
-function topHit(x, z, yTop, bigOnly) {
+function topHit(x, z, yTop, bigOnly, boxes = gBoxes) {
   const c = [];
-  for (const g of gBoxes) {
+  for (const g of boxes) {
     if ((bigOnly && !g.big) || x < g.b.min.x || x > g.b.max.x || z < g.b.min.z || z > g.b.max.z || g.b.min.y > yTop) continue;
     if (!g.o.geometry.boundsTree) g.o.geometry.computeBoundsTree();
     c.push(g.o);
@@ -145,15 +145,19 @@ function topHit(x, z, yTop, bigOnly) {
   gRay.set(new THREE.Vector3(x, yTop, z), DOWN); gRay.far = 800;
   return gRay.intersectObjects(c, false)[0] || null;
 }
-// Instanced trees whose origin (trunk base) hangs over the ground, e.g. edge street trees placed for the
+// Instanced trees whose trunk base hangs over the ground, e.g. edge street trees placed for the
 // Blender far-field geometry: lower them onto the ground below. Only ever lowers, 0.8–25 m gaps.
+// The base is the lowest point of the tree's geometry (quantized GLBs don't put the origin there).
 function snapTrees() {
   const groups = new Map(); const m4 = new THREE.Matrix4(), p = new THREE.Vector3(); let moved = 0;
   campus.traverse(o => { if (o.isInstancedMesh && /^(Tree_|T_)/.test(o.name)) { if (!groups.has(o.parent)) groups.set(o.parent, []); groups.get(o.parent).push(o); } });
   for (const list of groups.values()) {
     const a = list[0]; const sy = new THREE.Vector3().setFromMatrixScale(a.matrixWorld).y || 1;
+    let minY = Infinity;
+    for (const o of list) { if (!o.geometry.boundingBox) o.geometry.computeBoundingBox(); minY = Math.min(minY, o.geometry.boundingBox.min.y); }
+    if (!isFinite(minY)) continue;
     for (let i = 0; i < a.count; i++) {
-      a.getMatrixAt(i, m4); p.setFromMatrixPosition(m4).applyMatrix4(a.matrixWorld);
+      a.getMatrixAt(i, m4); p.set(0, minY, 0).applyMatrix4(m4).applyMatrix4(a.matrixWorld);
       const h = topHit(p.x, p.z, p.y + 40, true); if (!h) continue;
       const gap = p.y - h.point.y;
       if (gap > 0.8 && gap < 25) { for (const o of list) { o.getMatrixAt(i, m4); m4.elements[13] -= gap / sy; o.setMatrixAt(i, m4); o.instanceMatrix.needsUpdate = true; } moved++; }
@@ -178,8 +182,10 @@ const grass = (() => {
   const mesh = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.95, envMapIntensity: 0.3 }), GRASS_N);
   mesh.count = 0; mesh.frustumCulled = false; mesh.receiveShadow = true; mesh.name = 'grass_tufts'; scene.add(mesh); return mesh;
 })();
-let grassAt = null, grassT = 0;
+// Scattering is spread over frames (a few ms each) and only queries ground meshes near the camera.
+let grassAt = null, grassT = 0, grassJob = null;
 function updateGrass() {
+  if (grassJob) { grassStep(); return; }
   const now = performance.now(); if (now - grassT < 400 || !loaded || !gBoxes.length) return; grassT = now;
   if (look.quality === 'low') { grass.visible = false; return; }
   const c = camera.position; const h = topHit(c.x, c.z, c.y + 2, false);
@@ -187,18 +193,27 @@ function updateGrass() {
   grass.visible = true;
   if (grassAt && Math.hypot(c.x - grassAt.x, c.z - grassAt.z) < 5) return;
   grassAt = c.clone();
-  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), col = new THREE.Color(); let n = 0;
-  for (let i = 0; i < GRASS_N * 1.6 && n < GRASS_N; i++) {
+  const yTop = h.point.y + 25, R = GRASS_R;
+  const boxes = gBoxes.filter(g => g.b.max.x > c.x - R && g.b.min.x < c.x + R && g.b.max.z > c.z - R && g.b.min.z < c.z + R && g.b.min.y < yTop);
+  grassJob = { c: c.clone(), yTop, boxes, i: 0, n: 0 };
+  grassStep();
+}
+const _gm4 = new THREE.Matrix4(), _gq = new THREE.Quaternion(), _gs = new THREE.Vector3(), _gcol = new THREE.Color();
+function grassStep() {
+  const j = grassJob, t0 = performance.now();
+  while (j.i < GRASS_N * 1.6 && j.n < GRASS_N && performance.now() - t0 < 4) {
+    j.i++;
     const r = GRASS_R * Math.sqrt(Math.random()), a = Math.random() * Math.PI * 2;
-    const x = c.x + Math.cos(a) * r, z = c.z + Math.sin(a) * r;
-    const hit = topHit(x, z, h.point.y + 25, false);
+    const x = j.c.x + Math.cos(a) * r, z = j.c.z + Math.sin(a) * r;
+    const hit = topHit(x, z, j.yTop, false, j.boxes);
     const m = hit && [].concat(hit.object.material)[0];
     if (!m || m.userData.tp !== 'grass' || !hit.face || hit.face.normal.y < 0.7) continue;
-    q.setFromAxisAngle(DOWN, Math.random() * Math.PI * 2); const k = 0.7 + Math.random() * 0.8; s.set(k, k * (0.8 + Math.random() * 0.5), k);
-    m4.compose(hit.point, q, s); grass.setMatrixAt(n, m4);
-    col.copy(m.color).multiplyScalar(1.5 + Math.random() * 0.6); grass.setColorAt(n, col); n++;
+    _gq.setFromAxisAngle(DOWN, Math.random() * Math.PI * 2); const k = 0.7 + Math.random() * 0.8; _gs.set(k, k * (0.8 + Math.random() * 0.5), k);
+    _gm4.compose(hit.point, _gq, _gs); grass.setMatrixAt(j.n, _gm4);
+    _gcol.copy(m.color).multiplyScalar(1.5 + Math.random() * 0.6); grass.setColorAt(j.n, _gcol); j.n++;
   }
-  grass.count = n; grass.instanceMatrix.needsUpdate = true; if (grass.instanceColor) grass.instanceColor.needsUpdate = true;
+  grass.count = Math.max(grass.count, j.n); grass.instanceMatrix.needsUpdate = true; if (grass.instanceColor) grass.instanceColor.needsUpdate = true;
+  if (j.i >= GRASS_N * 1.6 || j.n >= GRASS_N) { grass.count = j.n; grassJob = null; }
 }
 
 // ---------------- fly / walk ----------------
