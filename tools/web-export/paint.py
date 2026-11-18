@@ -24,8 +24,11 @@ WHITE = (0.75, 0.75, 0.72)
 BLUE = (0.02, 0.12, 0.45)
 
 prefixes = set()
-for f in glob.glob(WORK + "/raw/*.paint.json"):
-    prefixes.update(json.load(open(f)))
+# only sidecars of chunks in the current plan (pruned chunks may leave stale ones behind)
+for chunk in json.load(open(WORK + "/chunks.json")):
+    f = f"{WORK}/raw/{chunk}.glb.paint.json"
+    if os.path.exists(f):
+        prefixes.update(json.load(open(f)))
 layers = []
 for old in glob.glob(OUT + "/paint_*.webp"):
     os.remove(old)

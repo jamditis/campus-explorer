@@ -214,7 +214,8 @@ export function createLook(renderer, scene, camera) {
       for (const m of [].concat(o.material)) {
         if (!m) continue;
         const cat = m.userData?.cat;
-        if (m.userData?.glass || cat === 'glass') {
+        if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
+          m.userData.glassDone = true; // shared materials: tint once
           m.roughness = 0.05; m.metalness = 0.1; m.envMapIntensity = 1.6; m.opacity = Math.max(m.opacity, 0.45);
           m.color.multiplyScalar(0.7);
         } else if (cat && CATS[cat]) {

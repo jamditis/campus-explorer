@@ -54,7 +54,9 @@ function fixMaterials(root) {
 }
 
 function clearScene() {
-  campus.traverse(o => { if (o.isMesh) { o.geometry.disposeBoundsTree?.(); o.geometry.dispose(); } });
+  const mats = new Set();
+  campus.traverse(o => { if (o.isMesh) { o.geometry.disposeBoundsTree?.(); o.geometry.dispose(); for (const m of [].concat(o.material)) if (m) mats.add(m); } });
+  for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
   scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
   scene.getObjectByName('ground_far')?.removeFromParent();
   colliders.length = 0; bvhReady = false; loaded = false; look.reset();
@@ -67,6 +69,7 @@ async function loadScene(tile) {
   try {
     const base = `./models/${tile}/`;
     const man = await (await fetch(base + 'manifest.json', { cache: 'no-cache' })).json();
+    if (token !== loadToken) return; // a newer scene request won
     hasSkirt = man.tiles.some(t => t.file === 'skirt.glb');
     look.setPaint(man.paint || [], base);
     $('source-snapshot').textContent = `Source snapshot: model saved ${man.source_saved}${man.source_version ? ' (' + man.source_version + ')' : ''}; browser export ${man.exported}. Later modeling changes may not appear here yet.`;

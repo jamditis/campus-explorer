@@ -34,7 +34,7 @@ if [ -z "${ONLY:-}" ]; then
   # so removed or moved geometry doesn't linger in the manifest.
   for f in $B/raw/*.glb $S/*.glb; do
     [ -e "$f" ] || continue
-    [[ " $CHUNKS " == *" $(basename "$f" .glb) "* ]] || { echo "prune stale $f"; rm -f "$f"; }
+    [[ " $CHUNKS " == *" $(basename "$f" .glb) "* ]] || { echo "prune stale $f"; rm -f "$f" "$f".leaf.json "$f".paint.json; }
   done
 fi
 for C in $CHUNKS; do
