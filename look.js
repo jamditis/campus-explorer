@@ -8,7 +8,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { fixTone } from './viewer/tone.js';
+import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid } from './viewer/cat.js';
 export { fixTone, fixCat };
 
@@ -531,6 +531,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           // lawn/terrain colours averaged from aerial-draped materials come out grey: give them a lawn tone
           if (cat === 'grass') { const hsl = {}; m.color.getHSL(hsl); if (hsl.s < 0.18 || hsl.l > 0.45) m.color.setHSL(0.21, 0.32, Math.min(0.32, Math.max(0.2, hsl.l * 0.6))); }
           texturize(m, cat);
+          finishMetal(m.name || '', m);
         }
       }
     });
