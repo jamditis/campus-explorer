@@ -1,5 +1,5 @@
 # ws233 runbook (Nov 19, 2026 8:33-~9:25 AM ET): W53o Stone Hall lower-storey windows at the lawn (north campus seam, item after W53b)
-Main before: ws232b (045ddbd5...). Main after: ws233b (c5a918b2..., promoted 8:45:37 AM ET). Backup montclair_state_pre_20261119ws233.blend = ws232b.
+Main before: ws232b (045ddbd5...). Main after: ws233d (156282f5..., promoted 8:56:45 AM ET); ws233b (c5a918b2..., main 8:45:37-8:56:45 AM ET) = interim. Backup montclair_state_pre_20261119ws233.blend = ws232b.
 FINDING (probe233a/b, EVALUATED ground): around TI_Stone_Hall_313028565_lower the ground is 135.97..136.97 (136.66 along the ESE
 walk wall; USGS 3DEP agrees within 0.1-0.3 m). The procedural window shader (TR_Stone_brick_detail, rows at ti_z0+0.95+k*ti_floor,
 1.47 m tall) used ti_z0 = 135.888, so the only ground-floor row ran 136.84..138.31 with the geometry sills (TR_Stone_window_sills) at
@@ -17,5 +17,9 @@ DECISION: ground-floor datum 136.9 (just above the highest adjacent grade 136.97
 - fix233c (tested, discarded): Granite_Curb (W-R7b). The base colour is MULTIPLY(granite image, 0.8): image mean 0.69 sRGB ~ 0.44
   linear, x 0.8 ~ 0.35 linear = already inside the grey-granite range (0.25-0.35). The near-white curb was the viewer reading the 0.8
   factor without the texture. .blend left unchanged.
-Build: INF=<ws232b> OUTN=montclair_state_ws233b.blend CHAIN="ws233/fix233b.py" bash scripts/ws233/run233.sh
+- fix233d (ws233b -> ws233d): upper0 (walls 139.9..143.17) still used the old datum 135.888, so its row ran 140.04..141.51 with the
+  bottom 0.5 m BEHIND the lower fascia ledge (140.11..140.55) = half-height windows in the SE eye. upper0 ti_z0 -> 139.7: row 140.65..142.12
+  (clear of the ledge, under the 142.27 top gate). Upper sill height above its slab UNVERIFIED.
+Build: INF=<ws232b> OUTN=montclair_state_ws233b.blend CHAIN="ws233/fix233b.py" bash scripts/ws233/run233.sh,
+  then INF=<ws233b> OUTN=montclair_state_ws233d.blend CHAIN="ws233/fix233d.py" bash scripts/ws233/run233.sh
 jobwip233.sh: four views (subrend226, terrain GN on, KEEPMOD paving drapes on). jobtest233.sh = the NE eye before/after test.
