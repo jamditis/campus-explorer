@@ -1,6 +1,6 @@
 {
  "zone": "ne_roads",
- "notes": "Zone ne_roads: carriageways, service drives, sidewalks, plazas, curbs and road paint of the north-east district, read from ortho2020 with LiDAR (2017) for walls and curbs in shadow and OpenStreetMap for names and walk lines.\nMethod: road centre lines were fitted to the painted centre line, found in colour profiles across the road every 2 m (Yogi Berra Drive and Webster Road keep within 0.2 m of one straight run per section, joined by true arcs: Yogi Berra r 65 m at the Energy Plant bend, Webster Road r 46 m north of Blanton Hall, r 80 m and r 36 m past Machuga Heights). Edges are parallel offsets of the centre line, the offset per section read from the same profiles (curb or grass edge to about 0.2-0.3 m). Sections change at junction mouths.\nYogi Berra Drive: north/west curb 4.9 m left of the centre line by the plant and the substation, grass edge 4.4 m north of the deck, 5.1 m north of Lot 23N; east curb 6.4, 6.6 and 5.9 m. Parking bay with angled stalls on the east side below Dinallo Heights (stalls not painted here).\nWebster Road: west curb 5.1-5.6 m (a 5.6 m southbound lane), east curb 3.55 m with a 3.4 m walk; drop-off bay (east curb 6.75 m) in front of the Student Recreation Center; west curb in the shadow of Dinallo Heights carried on (UNVERIFIED); north of the Machuga drive the west side is 8.9 m wide with a painted edge line at 5.7 m, tapering to 5.5 m.\nFootprint: its south edge (0,455)-(-56,438) runs along the middle of Yogi Berra Drive and close to the south edge of the Webster Road bend; both roads are cut at it 0.5 m outside.\nLots, their stalls and the deck are another zone: road surfaces end at the lot mouths with a small overlap. The Lot 24 median and the Stone Street apron in front of Blanton Hall are drawn here.\nWalks: road-side walks are offsets of the road centre lines; other walks follow OpenStreetMap lines shifted onto the walk and given the median width read across the ortho; corners are true arcs. Plazas in front of the Student Recreation Center read from ortho profiles; the Dinallo lobby patio is mostly hidden by roofs (UNVERIFIED).\nPaint: double yellow centre lines on Yogi Berra Drive and Webster Road, Webster west edge line, Stone Street stop bar, 18 continental crosswalks (0.5 m bars, 0.6 m gaps, bar count from the crossing length). Not drawn: lane arrows, the dashed line on the east side of Yogi Berra Drive at about 3.7 m, lot and bay stalls.",
+ "notes": "Zone ne_roads: carriageways, service drives, sidewalks, plazas, curbs and road paint of the north-east district, read from ortho2020 with LiDAR (2017) for walls and curbs in shadow and OpenStreetMap for names and walk lines.\nMethod: road centre lines were fitted to the painted centre line, found in colour profiles across the road every 2 m (Yogi Berra Drive and Webster Road keep within 0.2 m of one straight run per section, joined by true arcs: Yogi Berra r 65 m at the Energy Plant bend, Webster Road r 46 m north of Blanton Hall, r 80 m and r 36 m past Machuga Heights). Edges are parallel offsets of the centre line, the offset per section read from the same profiles (curb or grass edge to about 0.2-0.3 m). Sections change at junction mouths.\nYogi Berra Drive: north/west curb 4.9 m left of the centre line by the plant and the substation, grass edge 4.4 m north of the deck, 5.1 m north of Lot 23N; east curb 6.4, 6.6 and 5.9 m. Parking bay with angled stalls on the east side below Dinallo Heights (stalls not painted here).\nWebster Road: west curb 5.1-5.6 m (a 5.6 m southbound lane), east curb 3.55 m with a 3.4 m walk; drop-off bay (east curb 6.75 m) in front of the Student Recreation Center; west curb in the shadow of Dinallo Heights carried on (UNVERIFIED); north of the Machuga drive the west side is 8.9 m wide with a painted edge line at 5.7 m, tapering to 5.5 m.\nFootprint: Yogi Berra Drive is drawn full width to the south-west footprint edge (cut 0.5 m outside); the Webster Road bend is cut at the unchanged edge (60,468)-(90,455). No south walk or curb on Yogi Berra by the plant: asphalt meets the grass bank.\nLots, their stalls and the deck are another zone: road surfaces end at the lot mouths with a small overlap. The Lot 24 median and the Stone Street apron in front of Blanton Hall are drawn here.\nWalks: road-side walks are offsets of the road centre lines; other walks follow OpenStreetMap lines shifted onto the walk and given the median width read across the ortho; corners are true arcs. Plazas in front of the Student Recreation Center read from ortho profiles; the Dinallo lobby patio is mostly hidden by roofs (UNVERIFIED).\nPaint: double yellow centre lines on Yogi Berra Drive and Webster Road, Webster west edge line, Stone Street stop bar, 19 continental crosswalks (0.5 m bars, 0.6 m gaps, bar count from the crossing length). Stalls: 6 angled stalls in the Yogi Berra parking bay and 3 square stalls in the Webster pull-off (both UNVERIFIED). A solid lane line 3.9 m east of the Yogi Berra centre line by the plant (y 463-496). Not drawn: lane arrows; the line about 3.7 m east of the centre line further north (only broken pieces visible).",
  "surfaces": [
   {
    "name": "NE_road_Yogi_Berra_Dr_S",
@@ -217,10 +217,18 @@
   {
    "name": "NE_road_Yogi_Berra_Dr_layby",
    "kind": "asphalt",
-   "ring": [[33.55, 534.32], [37.74, 539.03], [47.5, 565.53], [47.92, 573.32]],
+   "ring": [[33.55, 534.32], [38.11, 538.89], [45.48, 558.89], [47.92, 573.32]],
    "evidence": "ortho2020",
    "unverified": "taper ends read to about 1 m",
    "notes": "Parking bay with angled stalls on the east side of Yogi Berra Drive below Dinallo Heights; stall paint not drawn (parking zone)"
+  },
+  {
+   "name": "NE_road_Webster_pulloff",
+   "kind": "asphalt",
+   "ring": [[189.4, 763.6], [193.6, 759.6], [202.5, 769.2], [200.4, 773.4]],
+   "evidence": "ortho2020",
+   "unverified": "ends and stall lines read off the ortho to about 0.7 m",
+   "notes": "Parking pull-off on the east side of Webster Road between the road and the walk to Machuga Heights"
   }
  ],
  "strips": [
@@ -477,6 +485,12 @@
  ],
  "curbs": [
   {
+   "name": "NE_road_Webster_pulloff_curb",
+   "path": [[189.4, 763.6], [193.6, 759.6], [202.5, 769.2], [200.4, 773.4]],
+   "evidence": "ortho2020",
+   "unverified": "ends of the pull-off"
+  },
+  {
    "name": "NE_road_YB_N_curb_plant",
    "path": [[-44.0, 442.9], [-9.6, 462.97]],
    "evidence": "ortho2020"
@@ -508,7 +522,7 @@
   },
   {
    "name": "NE_road_YB_layby_curb",
-   "path": [[33.83, 534.22], [37.74, 539.03], [47.5, 565.53], [48.2, 573.22]],
+   "path": [[33.83, 534.22], [38.11, 538.89], [45.48, 558.89], [48.2, 573.22]],
    "evidence": "ortho2020",
    "unverified": "taper ends"
   },
@@ -562,6 +576,32 @@
  ],
  "markings": [
   {
+   "name": "NE_road_YB_layby_stalls",
+   "type": "stalls",
+   "line": [[39.39, 542.5], [47.86, 565.5]],
+   "count": 6,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 135,
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stall count and angle read off faint paint to about 10 degrees"
+  },
+  {
+   "name": "NE_road_Webster_pulloff_stalls",
+   "type": "stalls",
+   "line": [[192.5, 760.6], [201.3, 770.0]],
+   "count": 3,
+   "depth": 4.4,
+   "side": "left",
+   "angle": 90,
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "three square stalls assumed from the car and the faint lines"
+  },
+  {
    "name": "NE_road_YB_CL_a",
    "type": "line",
    "path": [[-53.35, 431.89], [2.4, 464.41, 64.9], [16.94, 503.03, 197.4], [22.2, 522.03, 214.8], [65.09, 638.45, 400.1], [80.01, 672.5, 400.1], [107.4, 726.89, 319.4], [113.99, 741.6, 190.8], [132.02, 791.72, 225.1], [151.28, 826.05]],
@@ -602,6 +642,15 @@
    "width": 0.1,
    "colour": "white",
    "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_road_YB_lane_line_S",
+   "type": "line",
+   "path": [[6.33, 463.5], [18.57, 496.0]],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "solid line read from paint profiles; the dashed line further north is too broken in the ortho to draw"
   },
   {
    "name": "NE_road_Stone_St_stop_bar",
@@ -1744,6 +1793,118 @@
    "ring": [[184.46, 506.31], [182.69, 504.54], [183.04, 504.19], [184.81, 505.96]],
    "colour": "white",
    "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_01",
+   "type": "area",
+   "ring": [[82.12, 471.9], [79.43, 470.57], [79.65, 470.13], [82.35, 471.45]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_02",
+   "type": "area",
+   "ring": [[82.61, 470.91], [79.92, 469.59], [80.14, 469.14], [82.83, 470.47]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_03",
+   "type": "area",
+   "ring": [[83.1, 469.93], [80.41, 468.6], [80.63, 468.15], [83.32, 469.48]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_04",
+   "type": "area",
+   "ring": [[83.58, 468.94], [80.89, 467.61], [81.11, 467.17], [83.8, 468.49]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_05",
+   "type": "area",
+   "ring": [[84.07, 467.95], [81.38, 466.63], [81.6, 466.18], [84.29, 467.51]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_06",
+   "type": "area",
+   "ring": [[84.56, 466.97], [81.86, 465.64], [82.09, 465.19], [84.78, 466.52]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_07",
+   "type": "area",
+   "ring": [[85.04, 465.98], [82.35, 464.65], [82.57, 464.21], [85.26, 465.53]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_08",
+   "type": "area",
+   "ring": [[85.53, 464.99], [82.84, 463.67], [83.06, 463.22], [85.75, 464.55]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_09",
+   "type": "area",
+   "ring": [[86.01, 464.01], [83.32, 462.68], [83.54, 462.23], [86.24, 463.56]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_10",
+   "type": "area",
+   "ring": [[86.5, 463.02], [83.81, 461.69], [84.03, 461.25], [86.72, 462.57]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_11",
+   "type": "area",
+   "ring": [[86.99, 462.03], [84.3, 460.71], [84.52, 460.26], [87.21, 461.59]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_12",
+   "type": "area",
+   "ring": [[87.47, 461.05], [84.78, 459.72], [85.0, 459.27], [87.69, 460.6]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_13",
+   "type": "area",
+   "ring": [[87.96, 460.06], [85.27, 458.73], [85.49, 458.29], [88.18, 459.61]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
+  },
+  {
+   "name": "NE_road_XW_Webster_bend_W_14",
+   "type": "area",
+   "ring": [[88.45, 459.07], [85.75, 457.75], [85.98, 457.3], [88.67, 458.63]],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the part inside the footprint is drawn; continues south over Webster Road"
   },
   {
    "name": "NE_road_XW_Webster_483_01",

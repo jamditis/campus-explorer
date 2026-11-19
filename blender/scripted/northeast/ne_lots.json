@@ -1,6 +1,6 @@
 {
  "zone": "ne_lots",
- "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines. Lot 19 (south of the Student Recreation Center): four double rows of square stalls on painted centre lines at 22.6 to 24.1 deg, with painted hatched end caps; single rows along the west curb, the north walk (accessible stalls with 1.5 m blue access aisles) and the east curb. The south part runs past the footprint edge (y 497) and is clipped there. Divider lines found as the long bright lines on transects; stall pitch 2.59 to 2.61 m. Lot 24 (north of CarParc Diem): two aisles either side of a wooded strip (a hole in the paving), joined at the north (mouth on the drive to Carlisle Road) and at the south along the deck. The deck's roof leans about 18 m north in the ortho and hides the lot south of y 667; the paving is run to the deck wall read from the LiDAR, and the hidden stalls are not drawn. Rows follow the curving west curb as straight runs of 5 to 9 stalls. The east terrace has a double row on a painted centre line (lines at 88.5 deg to it). No lamp poles were found in the LiDAR or as shadows in this lot. Lot 23 (east of Yogi Berra Drive, north of Dinallo Heights): rows along the west curb (three straight runs on a slightly convex curb), a double row on a painted centre line in the south that turns into a planted island in the north (west-side stalls only along it), the east row along the east curb, and a short south row facing north. Mouths: south-east to the road past the deck and north-west to the Carlisle Road drive. One lamp at the island's north end from a single LiDAR return and its shadow. Lot 23N (between Yogi Berra Drive and the wood, north of Lot 23): south part only, the lot runs on north past the footprint edge (y 826). West row on the walk curb, east row on the wood curb, a grass island with a row on its east side that becomes a double row on a centre line north of it. South edge: the mouth on the drive from Lot 23, taken on the OSM line.",
+ "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines. Lot 19 (south of the Student Recreation Center): four double rows of square stalls on painted centre lines at 22.6 to 24.1 deg, with painted hatched end caps; single rows along the west curb, the north walk (accessible stalls with 1.5 m blue access aisles) and the east curb. The south part runs past the footprint edge (y 497) and is clipped there. Divider lines found as the long bright lines on transects; stall pitch 2.59 to 2.61 m. Lot 24 (north of CarParc Diem): two aisles either side of a wooded strip (a hole in the paving), joined at the north (mouth on the drive to Carlisle Road) and at the south along the deck. The deck's roof leans about 18 m north in the ortho and hides the lot south of y 667; the paving is run to the deck wall read from the LiDAR, and the hidden stalls are not drawn. Rows follow the curving west curb as straight runs of 5 to 9 stalls. The east terrace has a double row on a painted centre line (lines at 88.5 deg to it). No lamp poles were found in the LiDAR or as shadows in this lot. Lot 23 (east of Yogi Berra Drive, north of Dinallo Heights): rows along the west curb (three straight runs on a slightly convex curb), a double row on a painted centre line in the south that turns into a planted island in the north (west-side stalls only along it), the east row along the east curb, and a short south row facing north. Mouths: south-east to the road past the deck and north-west to the Carlisle Road drive. One lamp at the island's north end from a single LiDAR return and its shadow. Lot 23N (between Yogi Berra Drive and the wood, north of Lot 23): south part only, the lot runs on north past the footprint edge (y 826). West row on the walk curb, east row on the wood curb, a grass island with a row on its east side that becomes a double row on a centre line north of it. South edge: the mouth on the drive from Lot 23, taken on the OSM line. Lot 21 (north-east corner, by Machuga Heights): only its south end is inside the footprint (x up to 300, y up to 826). Two double rows on centre lines tilted 5.7 deg west of north, with their south end islands, and a third island at the west. The south edge is the OSM line against the Machuga Heights drive; the dorm roof leans over the south-west corner in the ortho.",
  "surfaces": [
   {
    "name": "NE_lot_25_asphalt",
@@ -714,6 +714,141 @@
    "evidence": "ortho2020",
    "layer": 3.5,
    "unverified": "north tip shape"
+  },
+  {
+   "name": "NE_lot_21_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     235.0,
+     826.8
+    ],
+    [
+     235.3,
+     816.9
+    ],
+    [
+     241.6,
+     817.2
+    ],
+    [
+     242.7,
+     813.2
+    ],
+    [
+     245.0,
+     810.5
+    ],
+    [
+     260.6,
+     804.7
+    ],
+    [
+     288.9,
+     793.1
+    ],
+    [
+     296.6,
+     788.4
+    ],
+    [
+     300.8,
+     788.4
+    ],
+    [
+     300.8,
+     826.8
+    ]
+   ],
+   "evidence": "ortho2020; osm 233913205",
+   "unverified": "south edge against the drive is the OSM line (no curb visible); west corner under the dorm roof lean"
+  },
+  {
+   "name": "NE_lot_21_island_DB",
+   "kind": "mulch",
+   "ring": [
+    [
+     264.5,
+     812.0,
+     1.5
+    ],
+    [
+     277.0,
+     811.2,
+     1.5
+    ],
+    [
+     278.0,
+     805.0,
+     2.0
+    ],
+    [
+     268.0,
+     804.6,
+     2.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "curbed end island read from its rim; outline and fill guessed"
+  },
+  {
+   "name": "NE_lot_21_island_DC",
+   "kind": "mulch",
+   "ring": [
+    [
+     284.5,
+     805.8,
+     1.5
+    ],
+    [
+     297.0,
+     805.0,
+     1.5
+    ],
+    [
+     296.8,
+     799.0,
+     2.0
+    ],
+    [
+     285.5,
+     798.5,
+     2.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "curbed end island read from its rim; outline and fill guessed"
+  },
+  {
+   "name": "NE_lot_21_island_W",
+   "kind": "mulch",
+   "ring": [
+    [
+     247.0,
+     822.0,
+     1.0
+    ],
+    [
+     258.0,
+     822.0,
+     1.0
+    ],
+    [
+     257.5,
+     813.0,
+     1.0
+    ],
+    [
+     247.5,
+     813.5,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "curbed end island read from its rim; outline and fill guessed"
   }
  ],
  "curbs": [
@@ -1448,6 +1583,115 @@
      166.2,
      811.0,
      0.8
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_21_curb_W",
+   "path": [
+    [
+     235.0,
+     826.8
+    ],
+    [
+     235.3,
+     816.9
+    ],
+    [
+     241.6,
+     817.2
+    ],
+    [
+     242.7,
+     813.2
+    ],
+    [
+     245.0,
+     810.5
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "under the dorm roof lean, from OSM"
+  },
+  {
+   "name": "NE_lot_21_island_DB_curb",
+   "path": [
+    [
+     264.5,
+     812.0,
+     1.5
+    ],
+    [
+     277.0,
+     811.2,
+     1.5
+    ],
+    [
+     278.0,
+     805.0,
+     2.0
+    ],
+    [
+     268.0,
+     804.6,
+     2.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_21_island_DC_curb",
+   "path": [
+    [
+     284.5,
+     805.8,
+     1.5
+    ],
+    [
+     297.0,
+     805.0,
+     1.5
+    ],
+    [
+     296.8,
+     799.0,
+     2.0
+    ],
+    [
+     285.5,
+     798.5,
+     2.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_21_island_W_curb",
+   "path": [
+    [
+     247.0,
+     822.0,
+     1.0
+    ],
+    [
+     258.0,
+     822.0,
+     1.0
+    ],
+    [
+     257.5,
+     813.0,
+     1.0
+    ],
+    [
+     247.5,
+     813.5,
+     1.0
     ]
    ],
    "closed": true,
@@ -5178,15 +5422,15 @@
    "type": "stalls",
    "line": [
     [
-     17.95,
-     669.58
+     16.52,
+     664.62
     ],
     [
      26.52,
      699.33
     ]
    ],
-   "count": 12,
+   "count": 14,
    "depth": 5.5,
    "side": "left",
    "angle": 88.4,
@@ -6266,6 +6510,124 @@
     [
      186.97,
      829.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_21_DB_E",
+   "type": "stalls",
+   "line": [
+    [
+     270.78,
+     813.22
+    ],
+    [
+     269.48,
+     826.21
+    ]
+   ],
+   "count": 5,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines partly under cars; one line inferred from the pitch"
+  },
+  {
+   "name": "NE_lot_21_DB_W",
+   "type": "stalls",
+   "line": [
+    [
+     270.78,
+     813.22
+    ],
+    [
+     269.48,
+     826.21
+    ]
+   ],
+   "count": 5,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "west half mostly under cars: positions from the east half"
+  },
+  {
+   "name": "NE_lot_21_DB_centre",
+   "type": "line",
+   "path": [
+    [
+     270.78,
+     813.22
+    ],
+    [
+     269.48,
+     826.21
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_21_DC_E",
+   "type": "stalls",
+   "line": [
+    [
+     289.22,
+     807.78
+    ],
+    [
+     287.43,
+     825.68
+    ]
+   ],
+   "count": 7,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines partly under cars; one line inferred from the pitch"
+  },
+  {
+   "name": "NE_lot_21_DC_W",
+   "type": "stalls",
+   "line": [
+    [
+     289.22,
+     807.78
+    ],
+    [
+     287.43,
+     825.68
+    ]
+   ],
+   "count": 7,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "west half mostly under cars: positions from the east half"
+  },
+  {
+   "name": "NE_lot_21_DC_centre",
+   "type": "line",
+   "path": [
+    [
+     289.22,
+     807.78
+    ],
+    [
+     287.43,
+     825.68
     ]
    ],
    "width": 0.1,
