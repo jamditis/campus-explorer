@@ -72,7 +72,7 @@ The models are built from free public data. The source data is credited here but
 | NJ / [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR and DEMs | Terrain, grades and building heights | Public domain (USGS); NJ data credited |
 | [OpenStreetMap](https://www.openstreetmap.org/copyright) | Building footprints, roads, paths, names | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/) |
 | [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints) | Far-field building footprints beyond campus where OSM has none | © Microsoft, [ODbL](https://opendatacommons.org/licenses/odbl/) |
-| [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR point clouds (NJ NW 6-County 2017, NJ Sandy 2014), via the [public Entwine bucket](https://registry.opendata.aws/usgs-lidar/) | Far-field building heights (surface minus ground) | Public domain (USGS) |
+| [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR point clouds (NJ NW 6-County 2017, NJ Sandy 2014), via the [public Entwine bucket](https://registry.opendata.aws/usgs-lidar/) | Far-field building heights (last-return surface minus ground, capped to plausible heights) | Public domain (USGS) |
 | [ambientCG](https://ambientcg.com/) | PBR textures | CC0 |
 | Blender add-ons listed in [notes/ADDONS.md](notes/ADDONS.md) | Modelling helpers | GPL (not redistributed) |
 
