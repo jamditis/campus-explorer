@@ -3,7 +3,8 @@
 usage: python3 tools/evidence/trees.py NAME AREA_DIR ZONE [--min-height 5]
 NAME is the evidence folder under DATA (default /workspace/data) with lidar.npz and ortho2020.png
 (tools/evidence/fetch.py). AREA_DIR is the area's plan folder (blender/scripted/<area>): trees are
-kept inside its footprint and outside its buildings, stands and paving. Writes AREA_DIR/ZONE.json.
+kept inside its footprint, outside its buildings, stands and paving, and away from its towers.
+Writes AREA_DIR/ZONE.json.
 
 What is measured: the position of each canopy peak (0.5 m cells) and its height above the ground.
 What is not: the species. A peak that is green in the leaf-off 2020 ortho is called a conifer; the
@@ -117,12 +118,16 @@ def main():
     keep_out = [geom.offset(_ccw(geom.expand(b["ring"], True)), -2.5, True)
                 for b in lay["buildings"] + lay["stands"]]  # fmt: skip
     keep_out += [s["ring"] for s in lay["surfaces"] if s["kind"] in PAVED]
+    # a lattice tower returns like a tall crown: no trees within 9 m of one
+    towers = [q["at"] for q in lay["points"] if q["kind"] == "pylon"]
     meta = json.loads((data / "ortho2020.json").read_text())
     ortho = np.asarray(Image.open(data / "ortho2020.png").convert("RGB")).astype(float)
     points = []
     for j, i, z in peaks(height, cell, min_height):
         x, y = x0 + (i + 0.5) * cell, y1 - (j + 0.5) * cell
         if not geom.inside(lay["footprint"], x, y) or any(geom.inside(r, x, y) for r in keep_out):
+            continue
+        if any((x - t[0]) ** 2 + (y - t[1]) ** 2 < 81 for t in towers):
             continue
         # leaf-off image: a green crown is a conifer
         pi, pj = int((x - meta["x0"]) / meta["mpp"]), int((meta["y1"] - y) / meta["mpp"])
