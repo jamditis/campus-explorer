@@ -83,3 +83,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: I started the screenshots with `( ... &)` inside a shell call and told Joe "about 8 minutes". The session restarted, the job died after one picture, and nothing told me. Joe had to ask.
 - Rule: start every long job with the harness's background option (it reports completion and failure). Never detach with `&`. Do not give a time estimate for a job that cannot report back.
+
+## Read the shader before changing a colour rule (2026-11-19)
+
+- What happened: brick dorm walls looked near black in one eye-level picture. I assumed the viewer multiplies the wall colour into a red brick texture and added a correcting tint. The walls then came out white. The viewer's textures are normalised to a mid-grey mean (`look.js`, `t *= 2.7`), so a material's colour passes through; the dark wall was the shaded side of a dark brick.
+- Rule: before changing how a colour is written, read the code that shows it, and look at a sunlit and a shaded view. One picture of one side is not evidence of a wrong colour.
