@@ -8,6 +8,7 @@ import { createTrees } from '../trees.js';
 const REFRESH_MS = 250;            // tree and far-version updates while the camera moves
 const GRASS_N = 6000, GRASS_R = 18; // tufts, and the radius they cover around the camera (m)
 const GRASS_MAX_HEIGHT = 14;       // no tufts when the camera is higher than this above the ground
+const GRASS_RETRIES = 30, GRASS_RETRY_MS = 1000; // asking again while the ground under the camera has no collision yet
 const DOWN = new THREE.Vector3(0, -1, 0);
 
 /**
@@ -86,7 +87,7 @@ export function createScenery(app) {
     const mesh = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.95, envMapIntensity: 0.3 }), GRASS_N);
     mesh.count = 0; mesh.frustumCulled = false; mesh.receiveShadow = true; mesh.name = 'grass_tufts'; scene.add(mesh); return mesh;
   })();
-  let grassAt = null, grassJob = null;
+  let grassAt = null, grassJob = null, grassRetry = 0, grassTries = 0;
   const _m4 = new THREE.Matrix4(), _q = new THREE.Quaternion(), _s = new THREE.Vector3(), _col = new THREE.Color(), _from = new THREE.Vector3();
   const hideGrass = () => { if (grass.visible) { grass.visible = false; app.invalidate(); } };
   // Decide whether to scatter again. Only ground whose collision is already built is asked, so this never stalls.
@@ -94,7 +95,16 @@ export function createScenery(app) {
     if (app.lite || app.look.quality === 'low' || !app.state.ready) { hideGrass(); return; }
     const c = camera.position;
     const under = app.world.raycast(_from.set(c.x, c.y + 2, c.z), DOWN, 800, { builtOnly: true });
-    if (!under || c.y - under.point.y > GRASS_MAX_HEIGHT) { hideGrass(); return; }
+    if (!under) {
+      // The collision under a still camera is built in idle time. Look again shortly, a few times, when the
+      // camera is low enough for tufts to matter.
+      hideGrass();
+      const low = isFinite(app.bounds.max.y) && c.y < app.bounds.max.y + GRASS_MAX_HEIGHT;
+      grassRetry = low && grassTries++ < GRASS_RETRIES ? performance.now() + GRASS_RETRY_MS : 0;
+      return;
+    }
+    grassRetry = 0; grassTries = 0;
+    if (c.y - under.point.y > GRASS_MAX_HEIGHT) { hideGrass(); return; }
     if (!grass.visible) { grass.visible = true; app.invalidate(); }
     if (grassAt && Math.hypot(c.x - grassAt.x, c.z - grassAt.z) < 5) return;
     grassAt = c.clone();
@@ -121,11 +131,15 @@ export function createScenery(app) {
   // ---- wiring ----
   app.on('scene:start', e => {
     manifest = e.manifest; base = e.base; run++;
-    trees.reset(); grass.count = 0; grassAt = null; grassJob = null; moved = true;
+    trees.reset(); grass.count = 0; grassAt = null; grassJob = null; grassRetry = 0; grassTries = 0; moved = true;
   });
   // trees.add refreshes the tree instances itself. No redraw is asked for here: the world asks for a lazy one,
   // and an immediate redraw (with a fresh shadow map) for every arriving tile holds up loading on a slow GPU.
-  app.on('tile', ({ tile }) => { trees.add(tile.root); });
+  app.on('tile', ({ tile }) => {
+    trees.add(tile.root);
+    // the new tile may be the ground under the camera: let the grass check ask again (one cheap ray, no redraw)
+    grassTries = 0; grassRetry = performance.now() + GRASS_RETRY_MS;
+  });
   app.on('scene:complete', () => {
     const my = run;
     if (app.world.budget !== Infinity) return; // lite profile: the ground under far trees is not in memory
@@ -143,6 +157,7 @@ export function createScenery(app) {
     moved = false; last = time;
     trees.update(true);
     app.world.updateLods(true);
+    grassTries = 0;
     if (!grassJob) checkGrass();
     // trees entering the view need their shadows; the shadow map is only redrawn on request
     app.look.invalidateShadows(); app.invalidate();
@@ -150,6 +165,7 @@ export function createScenery(app) {
   app.on('camera', () => { const now = performance.now(); if (now - last >= REFRESH_MS) refresh(now); else moved = true; });
   app.on('frame', ({ time }) => {
     if (grassJob) grassStep();
+    else if (grassRetry && time >= grassRetry) { grassRetry = 0; checkGrass(); }
     if (moved && time - last >= REFRESH_MS) refresh(time);
   });
 
