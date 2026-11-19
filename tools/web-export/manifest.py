@@ -24,9 +24,14 @@ for f in sorted(glob.glob(S + "/*.glb")):
 order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
-ver = os.environ.get("SOURCE_VERSION", "")
-saved = os.environ.get("SOURCE_SAVED") or mt.strftime("%B %-d, %Y, %-I:%M %p ET")
 scene = os.environ.get("SCENE", "main")
+# SOURCE_VERSION_<SCENE> / SOURCE_SAVED_<SCENE> label one source; plain SOURCE_VERSION / SOURCE_SAVED label
+# main only, so a value exported for the main run cannot relabel the north model
+def label(key):
+    v = os.environ.get(f"{key}_{scene.upper()}")
+    return v if v is not None else (os.environ.get(key, "") if scene == "main" else "")
+ver = label("SOURCE_VERSION")
+saved = label("SOURCE_SAVED") or mt.strftime("%B %-d, %Y, %-I:%M %p ET")
 paint = json.load(open(S + "/paint.json")) if os.path.exists(S + "/paint.json") else []
 old = json.load(open(S + "/manifest.json")) if os.path.exists(S + "/manifest.json") else {}
 # one unified campus built from several source .blends: keep each one's snapshot label
