@@ -40,7 +40,15 @@ const app = {
   on(type, fn) { (listeners.get(type) ?? listeners.set(type, new Set()).get(type)).add(fn); return () => app.off(type, fn); },
   off(type, fn) { listeners.get(type)?.delete(fn); },
   emit(type, detail) { const set = listeners.get(type); if (set) for (const fn of set) fn(detail); },
-  invalidate() { dirty = Math.max(dirty, 2); },
+  /**
+   * Ask for a redraw. `lazy` is for changes that can wait a moment (a tile arrived while the view is still):
+   * on a GPU that needs more than SLOW_FRAME_MS per frame the redraw is put off for a few frame times, so
+   * that drawing each arriving tile does not hold up the tiles behind it.
+   */
+  invalidate(lazy = false) {
+    if (lazy && frameMs > SLOW_FRAME_MS) lazyAt ||= performance.now() + Math.min(LAZY_MAX_MS, frameMs * 6);
+    else dirty = Math.max(dirty, 2);
+  },
   focus(out = new THREE.Vector3()) { return out.copy(app.state.mode === 'orbit' ? controls.target : app.state.mode === 'walk' ? app.player.focus : camera.position); },
   heading() { camera.getWorldDirection(_v); return gridToTrueBearing(THREE.MathUtils.radToDeg(Math.atan2(_v.x, -_v.z)), CAMPUS.lat, CAMPUS.lon); },
   isIdle: () => performance.now() - lastMove > 400,
@@ -48,6 +56,8 @@ const app = {
 };
 const _v = new THREE.Vector3();
 let dirty = 2, lastMove = 0;
+const SLOW_FRAME_MS = 80, LAZY_MAX_MS = 20000;
+let frameMs = 16, lazyAt = 0, drew = false; // smoothed time of a drawn frame; when a lazy redraw is due
 
 app.look = createLook(renderer, scene, camera, () => app.invalidate());
 const scenery = createScenery(app);
@@ -191,7 +201,10 @@ function cameraChanged() {
 }
 function loop(now) {
   requestAnimationFrame(loop);
+  if (drew) frameMs += (Math.min(now - last, 5000) - frameMs) * 0.3; // the frame after a draw arrives late on a slow GPU
+  drew = false;
   const dt = Math.min((now - last) / 1000, 0.1); last = now;
+  if (lazyAt && now >= lazyAt) { dirty = Math.max(dirty, 2); lazyAt = 0; }
   const mode = app.state.mode;
   app.emit('frame', { dt, time: now });
   if (mode === 'orbit') controls.update(); else app.player.step(dt, app.input.update(dt));
@@ -205,6 +218,7 @@ function loop(now) {
     app.look.update(mode === 'orbit' ? controls.target : null, settle || dirty > 0);
     app.look.render(changed);
     if (dirty > 0) dirty--;
+    drew = true; lazyAt = 0; // this draw shows whatever a lazy request was waiting for
     frames++; app.emit('drawn');
   }
   acc += dt;

@@ -145,6 +145,7 @@ export function createHud(app) {
 
   // ---- minimap picture ----
   let ext = null, target = null, buffer = null, stale = true, timer = 0, lastMap = -Infinity, rush = false;
+  let mapCost = 0; // milliseconds the last map picture took: it draws the whole campus and reads the pixels back
   const canFloat = renderer.extensions.has('EXT_color_buffer_float');
   const ctx = pic.getContext('2d');
 
@@ -154,6 +155,7 @@ export function createHud(app) {
     if (b.isEmpty() || !isFinite(b.min.x) || !isFinite(b.max.y)) return false;
     const e = mapExtent(b.min.x, b.min.z, b.max.x, b.max.z), half = e.size / 2;
     const cx = e.x0 + half, cz = e.z0 + half, top = b.max.y + 100;
+    const began = performance.now();
     const cam = new THREE.OrthographicCamera(-half, half, half, -half, 1, top - b.min.y + 200);
     cam.up.set(0, 0, -1); // north (-Z) at the top of the picture, east to the right
     cam.position.set(cx, top, cz); cam.lookAt(cx, b.min.y, cz);
@@ -174,7 +176,7 @@ export function createHud(app) {
       app.scene.background = prevBg; renderer.setClearColor(prevColor, prevAlpha); renderer.setRenderTarget(prevTarget);
     }
     paint(buffer, canFloat ? 1 : 1 / 255);
-    ext = e; lastMap = performance.now(); stale = false;
+    ext = e; lastMap = performance.now(); stale = false; mapCost = lastMap - began;
     shown.u = NaN; updateMarks(); // the extent may have changed
     return true;
   }
@@ -202,7 +204,8 @@ export function createHud(app) {
     timer = 0;
     if (!mapOn || !stale) return;
     if (!app.isIdle()) return schedule(500); // never stall a moving camera
-    const wait = rush ? 0 : MAP_GAP_MS - (performance.now() - lastMap);
+    // a slow GPU spends at most about 5% of the loading time on map pictures
+    const wait = rush ? 0 : Math.max(MAP_GAP_MS, mapCost * 20) - (performance.now() - lastMap);
     if (wait > 0) return schedule(wait);
     rush = false;
     if (!renderMap()) schedule(1000);
