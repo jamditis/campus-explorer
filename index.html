@@ -2,11 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
+<meta name="theme-color" content="#b3282d">
 <title>Montclair State campus · working model</title>
-<meta name="description" content="Interactive browser preview of a work-in-progress 3D model of the Montclair State University campus.">
+<meta name="description" content="Orbit, fly and walk through an open 3D model of the Montclair State University campus, built from free public data. A work in progress, not a survey.">
+<link rel="canonical" href="https://jamditis.github.io/campus-explorer/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Campus explorer">
+<meta property="og:title" content="Montclair State campus · working model">
+<meta property="og:description" content="Orbit, fly and walk through an open 3D model of the Montclair State University campus, built from free public data.">
+<meta property="og:url" content="https://jamditis.github.io/campus-explorer/">
+<meta property="og:image" content="https://jamditis.github.io/campus-explorer/social-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Campus explorer: an open 3D model of the Montclair State University campus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Montclair State campus · working model">
+<meta name="twitter:description" content="Orbit, fly and walk through an open 3D model of the Montclair State University campus, built from free public data.">
+<meta name="twitter:image" content="https://jamditis.github.io/campus-explorer/social-card.png">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Campus explorer">
 <link rel="stylesheet" href="./style.css">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/","three-mesh-bvh":"./vendor/three-mesh-bvh.module.js"}}</script>
 </head>
@@ -14,46 +35,98 @@
 <main id="viewer" aria-label="Interactive campus model">
   <canvas id="canvas" tabindex="0" aria-label="3D campus view. Use the controls to orbit, fly, or walk in first or third person."></canvas>
 </main>
-<header>
-  <div class="brand-mark" aria-hidden="true">M</div>
-  <div><h1>Montclair State campus</h1><p>Explore the working model</p></div>
-  <span class="draft">Working preview</span>
+<div id="overlay"></div>
+<header id="top" class="card">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">M</div>
+    <div class="brand-text"><h1>Montclair State campus</h1><p>Working model · not a survey</p></div>
+    <button type="button" id="fullscreen" class="icon" aria-pressed="false" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" id="panel-toggle" class="icon" aria-expanded="true" aria-controls="panel" aria-label="Controls" title="Show or hide the controls"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="search" role="search">
+    <input id="search" type="search" placeholder="Find a building or lot" autocomplete="off" spellcheck="false" role="combobox" aria-label="Find a place on campus" aria-controls="search-results" aria-expanded="false" aria-autocomplete="list">
+    <!-- [html-validate-disable-next prefer-native-element -- the pop-up of an ARIA combobox is a listbox; a select cannot be filtered by typing] -->
+    <ul id="search-results" role="listbox" aria-label="Places" hidden></ul>
+  </div>
+  <div id="mode-slot"></div>
 </header>
-<section class="panel" aria-label="Viewer controls">
-  <div class="mode" role="group" aria-label="Navigation mode">
-    <button type="button" id="orbit" class="active" aria-pressed="true">Orbit</button>
-    <button type="button" id="fly" aria-pressed="false">Fly</button>
-    <button type="button" id="walk" aria-pressed="false">Walk</button>
-  </div>
-  <div class="actions"><button type="button" id="reset" title="Return to the campus overview">↺ Overview</button><button type="button" id="top">Top view</button></div>
-  <div id="flight-controls" hidden>
-    <label for="speed">Flight speed</label> <output id="speed-label" for="speed">40 m/s</output>
-    <input type="range" id="speed" min="5" max="200" step="5" value="40">
-  </div>
-  <div id="walk-controls" hidden>
-    <div class="mode walk-view" role="group" aria-label="Walking perspective">
-      <button type="button" id="view-first" class="active" aria-pressed="true">First person</button>
-      <button type="button" id="view-third" aria-pressed="false">Third person</button>
+<section id="panel" class="panel card" aria-label="Viewer controls">
+  <div id="panel-body">
+    <div class="mode" id="mode-group" role="group" aria-label="Navigation mode">
+      <button type="button" id="orbit" class="active" aria-pressed="true">Orbit</button>
+      <button type="button" id="fly" aria-pressed="false">Fly</button>
+      <button type="button" id="walk" aria-pressed="false">Walk</button>
     </div>
-    <div class="walk-actions"><button type="button" id="jump">Jump · Space</button><button type="button" id="respawn">↺ Respawn</button></div>
-    <p id="walk-status" role="status" aria-live="polite">Click the view to look around. WASD to move, Shift to run.</p>
+    <div id="flight-controls" hidden>
+      <label for="speed">Flight speed</label> <output id="speed-label" for="speed">40 m/s</output>
+      <input type="range" id="speed" min="5" max="200" step="5" value="40">
+    </div>
+    <div id="walk-controls" hidden>
+      <div class="mode walk-view" role="group" aria-label="Walking perspective">
+        <button type="button" id="view-first" class="active" aria-pressed="true">First person</button>
+        <button type="button" id="view-third" aria-pressed="false">Third person</button>
+      </div>
+      <div class="row"><button type="button" id="jump">Jump</button><button type="button" id="respawn">Back to start</button></div>
+      <p id="walk-status" role="status" aria-live="polite"></p>
+    </div>
+    <p id="help">Drag to orbit · Scroll to zoom · Right-drag to pan</p>
+    <div class="row"><button type="button" id="reset">Overview</button><button type="button" id="topview">Top view</button></div>
+    <div class="tools" role="group" aria-label="Tools">
+      <button type="button" id="tool-labels" aria-pressed="false" title="Place names (L)">Labels</button>
+      <button type="button" id="tool-map" aria-pressed="false" title="Map (M)">Map</button>
+      <button type="button" id="tool-measure" aria-pressed="false" title="Measure distances and heights (R)">Measure</button>
+      <button type="button" id="tool-tour" aria-pressed="false" title="Guided tour (G)">Tour</button>
+      <button type="button" id="tool-hunt" aria-pressed="false" title="Landmark hunt (H)">Hunt</button>
+      <button type="button" id="tool-photo" title="Save a picture of this view (P)">Photo</button>
+      <button type="button" id="tool-share" title="Copy a link to this view (K)">Share</button>
+      <button type="button" id="tool-help" title="Keyboard and controls (?)">Keys</button>
+    </div>
+    <fieldset class="sun">
+      <legend>Sunlight</legend>
+      <input type="range" id="sun-time" min="0" max="1435" step="5" value="885" aria-label="Time of day">
+      <div class="row">
+        <input type="date" id="sun-date" aria-label="Date" min="2000-01-01" max="2099-12-31">
+        <button type="button" id="sun-now" title="Use the current date and time in Montclair">Now</button>
+        <button type="button" id="sun-reset" title="Back to the default afternoon light">Reset</button>
+      </div>
+      <p id="sun-readout" role="status" aria-live="off"></p>
+    </fieldset>
+    <label class="label" for="quality">Quality</label>
+    <select id="quality"><option value="low">Low · fastest</option><option value="medium">Medium · shadows</option><option value="high">High · shadows, ambient occlusion, sharp</option></select>
+    <details>
+      <summary>About this model</summary>
+      <p id="source-snapshot">Source snapshot: loading…</p>
+      <p>This is a work in progress, not a survey or an as-built record. Building detail, ground grading and geographic alignment remain provisional, and many parts are marked unverified in the source model.</p>
+      <p>North campus and Sprague Library with Café Diem come from their own source files and are placed at their real coordinates, so the whole campus is one scene. Beyond the campus, land cover and woods come from OpenStreetMap, and buildings are real footprints from OpenStreetMap and Microsoft’s Global ML Building Footprints, raised to heights measured by USGS LiDAR where it covers them; no buildings are invented.</p>
+      <p>The browser edition simplifies the Blender model: materials become the model’s own colours over tileable CC0 textures mapped in world space, lot markings are painted from the model’s own line work, trees are thinned and become simple crowns with distance, far tiles are swapped for lighter versions, small details fade out with distance, lawn grass is reduced to short tufts near the camera, and some interiors are left out. It does not change the original model.</p>
+      <p>Sunlight uses the real position of the sun over the campus for the chosen date and time. Latitude, longitude and elevation come from the model’s New Jersey State Plane frame and NJ LiDAR as modelled. Measurements are taken on the model and are not survey values.</p>
+      <p>Place names and their positions are from OpenStreetMap. Walk mode follows the modelled ground and stops at solid walls. Trees and small details do not block you.</p>
+      <p>Selected surface and leaf textures are from <a href="https://ambientcg.com/" target="_blank" rel="noopener">ambientCG</a>, licensed CC0; other leaf atlases are authored for this project. Reference photographs and aerial imagery are not redistributed. Elevation comes from public NJ/USGS LiDAR; some layout follows OpenStreetMap.</p>
+    </details>
   </div>
-  <p id="help">Drag to orbit · Scroll to zoom<br>Right-drag to pan</p>
-  <label class="quality" for="quality">Quality</label>
-  <select id="quality"><option value="low">Low · fastest</option><option value="medium">Medium · shadows</option><option value="high">High · shadows, ambient occlusion, sharp</option></select>
-  <details>
-    <summary>About this model</summary>
-    <p id="source-snapshot">Source snapshot: loading…</p>
-    <p>This is a work in progress, not a survey or an as-built record. Building detail, ground grading and geographic alignment remain provisional, and many parts are marked unverified in the source model.</p>
-    <p>The browser edition simplifies the original Blender model: materials become the model’s own colours over tileable CC0 textures mapped in world space, lot markings are painted from the model’s own line work, trees are thinned, distant scenery is lighter, small details fade out with distance, lawn grass is reduced to short tufts near the camera, and some interiors are left out. North campus and Sprague Library with Café Diem come from their own source files and are placed at their real coordinates, so the whole campus is one scene. Beyond the campus, land cover and woods come from OpenStreetMap, and buildings are real footprints from OpenStreetMap and Microsoft’s Global ML Building Footprints, raised to heights measured by USGS LiDAR where it covers them; no buildings are invented. It does not change the original model.</p>
-    <p>Walk mode follows the modeled ground and stops at solid walls. Trees and small details do not block you.</p>
-    <p>Selected surface and leaf textures are from <a href="https://ambientcg.com/" target="_blank" rel="noopener">ambientCG</a>, licensed CC0; other leaf atlases are authored for this project. Reference photographs and aerial imagery are not redistributed. Elevation comes from public NJ/USGS LiDAR; some layout follows OpenStreetMap.</p>
-  </details>
 </section>
-<div id="load" role="status" aria-live="polite"><span class="spinner"></span><span id="load-text">Preparing campus…</span></div>
-<section id="error" role="alert" hidden><h2 id="error-title">Couldn’t open the campus</h2><p id="error-text"></p><button type="button" id="retry">Try again</button></section>
+<div id="load" class="card" role="status" aria-live="polite">
+  <span class="spinner"></span><span id="load-text">Preparing campus…</span>
+  <progress id="load-bar" max="1" value="0" aria-label="Loading progress"></progress>
+</div>
+<section id="error" class="card" role="alert" hidden><h2 id="error-title">Couldn’t open the campus</h2><p id="error-text"></p><button type="button" id="retry">Try again</button></section>
+<dialog id="help-dialog" aria-labelledby="help-title">
+  <h2 id="help-title">Controls</h2>
+  <div class="keys">
+    <section><h3>Orbit</h3><dl>
+      <dt>Drag</dt><dd>Turn the view</dd><dt>Scroll or pinch</dt><dd>Zoom</dd><dt>Right-drag or two fingers</dt><dd>Pan</dd><dt>Double-click</dt><dd>Centre on that spot</dd></dl></section>
+    <section><h3>Fly and walk</h3><dl>
+      <dt>W A S D or arrows</dt><dd>Move</dd><dt>Mouse or right thumb</dt><dd>Look</dd><dt>Shift</dt><dd>Faster</dd><dt>Space</dt><dd>Jump, or rise when flying</dd><dt>Q or C, and E</dt><dd>Down and up when flying</dd><dt>Scroll</dt><dd>Flight speed</dd><dt>V</dt><dd>First or third person</dd><dt>Gamepad</dt><dd>Sticks move and look, A jumps</dd></dl></section>
+    <section><h3>Anywhere</h3><dl>
+      <dt>1 2 3</dt><dd>Orbit, fly, walk</dd><dt>/</dt><dd>Find a place</dd><dt>O, T</dt><dd>Overview, top view</dd><dt>L, M</dt><dd>Labels, map</dd><dt>R, G, H</dt><dd>Measure, tour, hunt</dd><dt>[ and ]</dt><dd>Earlier and later sunlight</dd><dt>P, K</dt><dd>Photo, copy link</dd><dt>F</dt><dd>Full screen</dd><dt>Esc</dt><dd>Release the mouse or close a tool</dd></dl></section>
+  </div>
+  <form method="dialog"><button type="submit" id="help-close">Close</button></form>
+</dialog>
+<div id="toast" class="card" role="status" aria-live="polite" hidden></div>
+<button type="button" id="immersive-exit" class="card" hidden>Show controls</button>
 <footer>
-  <span id="scene-label">Montclair State University</span>
+  <span id="stream" hidden></span>
+  <button type="button" id="load-rest" hidden>Load the full campus</button>
   <span class="footnote" id="footnote">Working model · Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · buildings © <a href="https://github.com/microsoft/GlobalMLBuildingFootprints" target="_blank" rel="noopener">Microsoft</a> · ODbL</span>
   <span id="performance" aria-live="off"></span>
 </footer>

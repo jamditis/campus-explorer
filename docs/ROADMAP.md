@@ -2,13 +2,14 @@
 
 **Goal: one unified campus.** The viewer shows a single scene: main campus, north campus and Sprague Library/Café Diem at their real coordinates, on shared terrain, with no scene picker. Today the browser export merges tiles from several source `.blend` files that share one Blender origin; the long-term goal is a single `.blend` (see "One scene" below).
 
-What the browser viewer at <https://jamditis.github.io/campus-explorer/> still needs. Pick an unchecked item, open a PR that references it, and tick it in the same PR. Every visual change needs before/after screenshots of the same views (`tools/web-export/shoot.mjs` takes the standard five).
+What the browser viewer at <https://jamditis.github.io/campus-explorer/> still needs. Pick an unchecked item, open a PR that references it, and tick it in the same PR. Every visual change needs before/after screenshots of the same views (`node tools/viewer-test/shoot.mjs <outdir>` takes the standard set). The viewer's architecture is in [VIEWER.md](VIEWER.md).
 
 ## Realism
 
 - [x] Procedural sky with matching image-based light, so glass and metal reflect something
 - [x] Sun shadows that follow the view (shadow box sized to view distance, texel-snapped)
-- [x] AgX tone mapping and light exponential fog
+- [x] ACES filmic tone mapping and light exponential fog
+- [x] Sunlight from the real solar position for any date and time; lamps glow after dark
 - [x] Ambient occlusion (GTAO) on the High quality setting
 - [x] World-space CC0 textures per material category (asphalt, concrete, brick, stucco, roof tile, pavers, lawn, mulch, gravel, stone, metal, wood), tinted by the model's own colours, with a second large-scale layer to hide tiling
 - [x] Lot markings painted into the asphalt from the model's own world-XY line work (ws211c, ws213, ws213z layers)
@@ -34,6 +35,9 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 - [x] One unified scene: north campus merged into `models/main/` at its real coordinates (`n_` tiles), scene selector removed
 - [x] Export refresh: `SCENE=main bash tools/web-export/build_web.sh` then `SCENE=north ...` (north merges against main's plan); prunes stale tiles, fails without publishing on any export error
 - [x] Sprague Library and Café Diem: every object in `north/sprague_cafe_src.blend` is already in the main file at the same coordinates, so it ships with the main tiles
+- [x] Place names, search, labels, minimap, guided tour and landmark hunt (names and positions from OpenStreetMap)
+- [x] Georeferenced readout (latitude, longitude, NAVD88 elevation), compass, scale bar and measuring tool
+- [ ] Per-object names and evidence notes in the viewer: the exporter joins meshes by material, so a clicked surface cannot be traced to its Blender object. Export a `places`-style index of objects (name, bounds, UNVERIFIED flag) from Blender before joining
 - [ ] Lawn grass particle systems (excluded from the export today; needs the instanced-grass item above)
 - [ ] Interiors that matter (CCOM first floor, lounges): currently exported with their tiles but culled early by the small-object cull; give them their own tile and only load them in walk mode nearby
 - [ ] People placeholders and task chairs (excluded)
@@ -51,9 +55,15 @@ The browser merge rules live in `tools/web-export/make_chunks.py` (merge mode). 
 ## Performance
 
 - [x] Meshopt geometry compression, WebP textures, GPU instancing of repeated meshes
-- [x] Nearest tiles load first; far-field ground and context load before everything else
+- [x] Streaming: the view opens after the far-field ground and the four nearest tiles; the rest load nearest-first around the view, with geometry decoded in workers
+- [x] Draw on demand (nothing is drawn while the view is still); shadows redrawn only when the sun, the focus or the scene changes
+- [x] Adaptive resolution while the view moves; full resolution when it stops
+- [x] Collision BVHs built on demand per mesh, big terrain meshes split into 96 m cells
 - [x] Screen-size culling of small meshes (a cheap LOD) and a Low / Medium / High quality toggle
 - [ ] KTX2 (Basis) textures: KTX-Software 4.4 is on the export box, but `gltf-transform etc1s` skips the existing WebP textures and the UASTC output is larger than WebP; needs a PNG intermediate step
 - [x] Per-instance culling for instanced trees (frustum and distance), with low-poly crown impostors past 220 / 420 / 700 m (Low / Medium / High) out to 2.6 km
 - [ ] Decimated copies of buildings for far tiles
+- [x] Phones (lite profile): only the nine tiles nearest the view stay in memory; far tiles are unloaded as the view moves
+- [ ] Phones: show the far versions (`lod/`, 41 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
+- [ ] Lighter far field: `skirt.glb` is 4.2 M triangles and `context.glb` 2.2 M plus 3.1 M in instances, drawn in every view. A coarser skirt away from the campus would cut the fixed cost of each frame most
 - [ ] Measure on a mid-range laptop GPU and record fps per quality level here

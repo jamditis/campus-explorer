@@ -21,7 +21,7 @@ export function createTrees(scene, camera) {
 
   const avgCanvas = document.createElement('canvas'); avgCanvas.width = avgCanvas.height = 16;
   const avgCtx = avgCanvas.getContext('2d', { willReadFrequently: true });
-  const avgCache = new Map();
+  const avgCache = new WeakMap(); // by image, so a tile dropped from memory does not keep its leaf textures alive
   // mean colour of a leaf texture's opaque pixels, times the material colour
   function leafColour(m) {
     const c = m.color.clone();
@@ -127,9 +127,40 @@ export function createTrees(scene, camera) {
     far.computeBoundingSphere();
     scene.add(far);
   }
+  /** Draw every tree in full, whatever the camera sees (for a picture from another camera). `update(true)` undoes it. */
+  function showAll() {
+    for (const g of groups) {
+      g.list.forEach((o, j) => { o.instanceMatrix.array.set(g.mats[j]); o.count = g.n; o.instanceMatrix.needsUpdate = true; o.visible = true; });
+    }
+    imp.count = 0; trunks.count = 0;
+  }
+  /** Forget the trees of a tile that was dropped from memory. */
+  function remove(root) {
+    const under = o => { for (let p = o; p; p = p.parent) if (p === root) return true; return false; };
+    const n = groups.length; groups = groups.filter(g => !under(g.list[0]));
+    if (groups.length !== n) update(true);
+  }
+  /**
+   * Lower trees whose trunk base hangs over the ground. `gapAt(base, group)` returns how far the base is above
+   * the ground under it, or 0 to leave the tree alone. Returns how many trees moved.
+   */
+  function settle(gapAt) {
+    const sc = new THREE.Vector3(); let moved = 0;
+    for (const g of groups) {
+      const sy = sc.setFromMatrixScale(g.list[0].matrixWorld).y || 1;
+      for (let i = 0; i < g.n; i++) {
+        const t = g.imps[i], gap = gapAt(t.base, g);
+        if (!(gap > 0)) continue;
+        for (const m of g.mats) m[i * 16 + 13] -= gap / sy; // the instance's own translation, in the mesh's space
+        g.pos[i * 3 + 1] -= gap; t.c.y -= gap; t.base.y -= gap; moved++;
+      }
+    }
+    if (moved) update(true);
+    return moved;
+  }
   function setQuality(name) { dist = DIST[name] || DIST.medium; update(true); }
   function reset() {
     groups = []; imp.count = 0; trunks.count = 0;
   }
-  return { add, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
+  return { add, remove, settle, showAll, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
 }

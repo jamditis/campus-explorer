@@ -1,6 +1,7 @@
-// Look and performance layer for the campus viewer: sky + image-based light, sun shadows,
-// AgX tone mapping, fog, ambient occlusion, world-space CC0 textures per material category,
-// painted lot markings, and screen-size culling (cheap LOD) with a quality toggle.
+// Look and performance layer for the campus viewer: sky + image-based light, a sun that can be
+// moved to any real position, shadows redrawn only when they change, ACES filmic tone mapping, fog,
+// ambient occlusion, world-space CC0 textures per material category, painted lot markings,
+// screen-size culling (cheap LOD), adaptive resolution and the quality levels.
 import * as THREE from 'three';
 import { Sky } from 'three/addons/objects/Sky.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -53,23 +54,29 @@ export function fixCat(name, cat) {
 
 export const QUALITY = {
   low: { pixelRatio: 1, shadows: 0, ao: false, cull: 0.02, tex: true, macro: false },
-  medium: { pixelRatio: 1, shadows: 2048, ao: false, cull: 0.008, tex: true, macro: true },
+  medium: { pixelRatio: 1.5, shadows: 2048, ao: false, cull: 0.008, tex: true, macro: true },
   high: { pixelRatio: 2, shadows: 4096, ao: true, cull: 0.003, tex: true, macro: true },
 };
+const COARSE = matchMedia('(pointer: coarse)').matches;
+const MIN_SCALE = 0.5; // lowest resolution scale the governor may use while the view moves
+const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
+const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 
-export function createLook(renderer, scene, camera) {
+/** `onChange` is called when something drawn changed without the camera moving (a texture arrived). */
+export function createLook(renderer, scene, camera, onChange = () => {}) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.8;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  // --- sky and sun (afternoon, from the south-west) ---
+  // --- sky and sun. setSun() moves the sun; the caller supplies a real solar position ---
   const sky = new Sky(); sky.scale.setScalar(18000); sky.material.fog = false;
   const u = sky.material.uniforms;
   u.turbidity.value = 3.2; u.rayleigh.value = 1.1; u.mieCoefficient.value = 0.004; u.mieDirectionalG.value = 0.82;
-  const sunDir = new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - 38), THREE.MathUtils.degToRad(215));
-  u.sunPosition.value.copy(sunDir);
+  const sunDir = new THREE.Vector3(0, 1, 0);
   scene.add(sky);
-  const HORIZON = new THREE.Color('#c6d4e1');
+  const DAY_FOG = new THREE.Color('#c6d4e1'), DUSK_FOG = new THREE.Color('#dcb9a0'), NIGHT_FOG = new THREE.Color('#0b101c');
+  const HORIZON = DAY_FOG.clone();
   // aerial perspective: about 15% haze at 1.5 km and 25% at 2 km on a clear afternoon (was ~6% and 10%)
   scene.fog = new THREE.FogExp2(HORIZON, 0.00027);
   scene.background = HORIZON;
@@ -77,21 +84,87 @@ export function createLook(renderer, scene, camera) {
   // image-based light from the same sky (gives glass and metal something to reflect)
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envScene = new THREE.Scene(); const envSky = new Sky(); envSky.scale.setScalar(1000);
-  Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u)); envSky.material.uniforms.sunPosition.value.copy(sunDir);
+  Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u));
   envScene.add(envSky);
   const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#6b6456' }));
   // bounce from the ground: lawn, asphalt and stucco average out to a warm grey, not olive (olive plus blue sky
   // left every shaded wall cyan)
   ground.position.y = -5; envScene.add(ground);
-  scene.environment = pmrem.fromScene(envScene, 0.02).texture;
+  let envTarget = null; const envDir = new THREE.Vector3();
+  function bakeEnvironment() {
+    envSky.material.uniforms.sunPosition.value.copy(sunDir);
+    const next = pmrem.fromScene(envScene, 0.02);
+    scene.environment = next.texture; envTarget?.dispose(); envTarget = next; envDir.copy(sunDir);
+  }
   // the sky light is a saturated cyan; with it at 0.3 shaded white stucco read teal (rgb ~102,112,117 on screen).
   // Less of it and a neutral hemisphere fill keep shade cool but closer to grey
   scene.environmentIntensity = 0.22;
 
-  const hemi = new THREE.HemisphereLight('#e9e9e7', '#4f4a3a', 0.3); scene.add(hemi);
-  const sun = new THREE.DirectionalLight('#fff0dc', 2.7);
+  const SKY_DAY = new THREE.Color('#e9e9e7'), SKY_NIGHT = new THREE.Color('#33415f');
+  const SOIL_DAY = new THREE.Color('#4f4a3a'), SOIL_NIGHT = new THREE.Color('#12151c');
+  const SUN_HIGH = new THREE.Color('#fff0dc'), SUN_LOW = new THREE.Color('#ff9a4d');
+  const hemi = new THREE.HemisphereLight(SKY_DAY, SOIL_DAY, 0.3); scene.add(hemi);
+  const sun = new THREE.DirectionalLight(SUN_HIGH, 2.7);
   sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.04;
+  sun.shadow.autoUpdate = false; // the scene is static: redraw the shadow map only when something changed
   scene.add(sun, sun.target);
+  let shadowDirty = true, elevation = 38, night = 0;
+
+  /**
+   * Point the sun. `dir` is a unit vector toward the sun in viewer space; `elevationDeg` its height above
+   * the horizon. Below the horizon the sun light is off and a dim sky light keeps the model readable.
+   */
+  function setSun(dir, elevationDeg) {
+    sunDir.copy(dir).normalize(); elevation = elevationDeg;
+    u.sunPosition.value.copy(sunDir);
+    const day = smooth(-5, 8, elevation), low = 1 - smooth(2, 25, elevation);
+    night = 1 - smooth(-8, 0, elevation);
+    sun.intensity = 2.7 * smooth(-1.5, 10, elevation);
+    sun.color.copy(SUN_HIGH).lerp(SUN_LOW, low * 0.85);
+    hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
+    hemi.intensity = 0.3 + 0.4 * (1 - day);
+    HORIZON.copy(NIGHT_FOG).lerp(DAY_FOG, day).lerp(DUSK_FOG, low * day * 0.6);
+    scene.fog.color.copy(HORIZON); // FogExp2 keeps its own copy of the colour
+    if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
+    glow.visible = night > 0.02; glowMat.opacity = night;
+    applyShadows(); shadowDirty = true;
+  }
+
+  // --- lamps glow after dark: one additive sprite per lamp instance, no real lights ---
+  const glowTex = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, 'rgba(255,236,190,1)'); r.addColorStop(0.25, 'rgba(255,214,140,.55)'); r.addColorStop(1, 'rgba(255,190,90,0)');
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  })();
+  const glowMat = new THREE.PointsMaterial({ map: glowTex, size: 5, sizeAttenuation: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, toneMapped: false });
+  const glow = new THREE.Points(new THREE.BufferGeometry(), glowMat); glow.frustumCulled = false; glow.visible = false; glow.name = 'lamp_glow'; scene.add(glow);
+  const lamps = new Map(); // tile root -> [x, y, z, ...]
+  function showLamps() {
+    const all = [].concat(...lamps.values());
+    if (all.length) glow.geometry.setAttribute('position', new THREE.Float32BufferAttribute(all, 3)); else glow.geometry.deleteAttribute('position');
+  }
+  function addLamps(root) {
+    const m = new THREE.Matrix4(), p = new THREE.Vector3(), lampPoints = []; let n = 0;
+    root.traverse(o => {
+      if (!o.isInstancedMesh || !/^Lamp_/i.test(o.name)) return;
+      const bb = o.geometry.boundingBox ?? (o.geometry.computeBoundingBox(), o.geometry.boundingBox);
+      for (let i = 0; i < o.count; i++) {
+        o.getMatrixAt(i, m); m.premultiply(o.matrixWorld);
+        p.set((bb.min.x + bb.max.x) / 2, bb.max.y - (bb.max.y - bb.min.y) * 0.08, (bb.min.z + bb.max.z) / 2).applyMatrix4(m);
+        lampPoints.push(p.x, p.y, p.z); n++;
+      }
+    });
+    if (n) { lamps.set(root, lampPoints); showLamps(); }
+  }
+
+  // --- flat far ground for the lite profile, which leaves out the 4 km terrain skirt ---
+  const farGround = new THREE.Mesh(new THREE.CircleGeometry(9000, 48).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#8b9070', roughness: 1 }));
+  farGround.name = 'ground_far'; farGround.receiveShadow = true; farGround.visible = false; scene.add(farGround);
+  /** Show a flat ground disc at height `y` under (x, z), or hide it with `on` false. */
+  function setFarGround(on, x = 0, y = 0, z = 0) { farGround.visible = on; farGround.position.set(x, y, z); }
+
 
   // --- post: AO (high quality only) ---
   let composer = null, gtao = null;
@@ -109,9 +182,11 @@ export function createLook(renderer, scene, camera) {
   const texCache = {};
   const texFor = c => texCache[c] ??= loader.load(`./textures/${CATS[c].file}.webp`, t => {
     t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
+    onChange(); // the view may be still when the texture arrives
   });
   const nrmFor = c => texCache[c + '_n'] ??= loader.load(`./textures/${CATS[c].file}_n.webp`, t => {
     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
+    onChange();
   });
   let paint = []; // [{tex, x0,x1,z0,z1}]
   // paint layers (one webp mask per modelling session that painted markings); every layer is a sampler on
@@ -119,7 +194,7 @@ export function createLook(renderer, scene, camera) {
   const PAINT_MAX = 8;
   const paintUniforms = { pMap: { value: [] }, pBox: { value: [] }, pN: { value: 0 } };
   const EMPTY = new THREE.DataTexture(new Uint8Array(4), 1, 1); EMPTY.needsUpdate = true;
-  const paintTex = url => { const t = loader.load(url); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+  const paintTex = url => { const t = loader.load(url, onChange); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
   function setPaint(list, base) {
     if (list.length > PAINT_MAX) console.warn('paint layers beyond', PAINT_MAX, 'ignored:', list.slice(PAINT_MAX).map(p => p.file));
     paint = list.slice(0, PAINT_MAX).map(p => ({ ...p, tex: paintTex(base + p.file) }));
@@ -132,7 +207,6 @@ export function createLook(renderer, scene, camera) {
     }
     paintUniforms.pMap.value = maps; paintUniforms.pBox.value = boxes; paintUniforms.pN.value = paint.length;
   }
-  let macroOn = true;
   const macroUniform = { value: 1 };
 
   function texturize(m, cat) {
@@ -246,7 +320,9 @@ export function createLook(renderer, scene, camera) {
       if (!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
       if (o.isInstancedMesh) o.computeBoundingSphere();
       const bs = (o.isInstancedMesh ? o.boundingSphere : o.geometry.boundingSphere).clone().applyMatrix4(o.matrixWorld);
-      if (bs.radius < 120 && !o.userData.treeLod) items.push({ o, c: bs.center, r: bs.radius });
+      if (o.userData.treeLod) return; // trees.js culls these per instance
+      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius, root });
+      else o.visible = true;
       if (bs.radius > 400) o.castShadow = false; // far-field ground: receives only
     });
   }
@@ -257,18 +333,28 @@ export function createLook(renderer, scene, camera) {
     for (const it of items) {
       if (it.o.userData.treeLod) continue; // trees.js culls these per instance
       const d = Math.max(1, p.distanceTo(it.c) - it.r);
-      it.o.visible = it.r > d * cullK;
+      const v = it.r > d * cullK;
+      if (v !== it.o.visible) { it.o.visible = v; if (it.r > 1.5) shadowDirty = true; } // tiny things do not move the shadow map
     }
   }
 
   let q = QUALITY.medium, qName = 'medium';
+  function applyShadows() {
+    const on = q.shadows > 0 && sun.intensity > 0.02;
+    if (renderer.shadowMap.enabled !== on || sun.castShadow !== on) {
+      renderer.shadowMap.enabled = on; sun.castShadow = on;
+      if (!on) { sun.shadow.map?.dispose(); sun.shadow.map = null; } // up to 4096² of GPU memory
+      scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
+    }
+  }
   function applyQuality(name) {
     qName = name; q = QUALITY[name];
-    renderer.setPixelRatio(Math.min(devicePixelRatio, q.pixelRatio));
-    renderer.shadowMap.enabled = q.shadows > 0; sun.castShadow = q.shadows > 0;
+    scale = 1; applyScale(1);
     if (q.shadows) { sun.shadow.mapSize.set(q.shadows, q.shadows); sun.shadow.map?.dispose(); sun.shadow.map = null; }
+    applyShadows(); shadowDirty = true;
     cullK = q.cull; macroUniform.value = q.macro ? 1 : 0;
     if (q.ao && !composer) buildComposer();
+    else if (!q.ao && composer) { gtao.dispose?.(); composer.dispose?.(); composer = gtao = null; }
     scene.traverse(o => { if (o.material) for (const m of [].concat(o.material)) m.needsUpdate = true; });
     resize(); cull(true);
   }
@@ -277,22 +363,77 @@ export function createLook(renderer, scene, camera) {
     if (composer) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); }
   }
 
-  const focus = new THREE.Vector3();
-  function update(target) {
-    // shadow box follows what you look at; sized to the view distance, snapped to texels
+  // --- adaptive resolution: lower it while the view moves on a slow GPU, full resolution when still ---
+  let scale = 1, applied = 1, ema = 16, slow = 0, fast = 0, lastDraw = 0, wasMoving = false;
+  function applyScale(s) {
+    applied = s;
+    // phone screens are dense: one device pixel per CSS pixel looks soft, so Low still gets 1.5 there
+    const cap = COARSE && qName === 'low' ? 1.5 : q.pixelRatio;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, cap) * s);
+    resize();
+  }
+  function govern(moving, now) {
+    if (moving && wasMoving) {
+      const ms = Math.min(250, now - lastDraw); ema = ema * 0.85 + ms * 0.15;
+      if (ema > 34) { slow += ms; fast = 0; } else if (ema < 20) { fast += ms; slow = 0; } else slow = fast = 0;
+      if (slow > 500 && scale > MIN_SCALE) { scale = Math.max(MIN_SCALE, scale * 0.8); slow = 0; }
+      if (fast > 2500 && scale < 1) { scale = Math.min(1, scale * 1.15); fast = 0; }
+    }
+    wasMoving = moving; lastDraw = now;
+    const want = moving ? scale : 1;
+    if (want !== applied) applyScale(want);
+  }
+
+  const focus = new THREE.Vector3(), lastFocus = new THREE.Vector3(Infinity, 0, 0); let lastHalf = 0;
+  /** Follow the view: shadow box, sky and culling. `settle` forces a cull (call it when the camera stops). */
+  function update(target, settle = false) {
+    // shadow box follows what you look at; sized to the view distance in steps, snapped to texels
     focus.copy(target ?? camera.position);
     const dist = camera.position.distanceTo(focus);
-    const half = THREE.MathUtils.clamp(dist * 0.9, 45, 700);
+    const raw = THREE.MathUtils.clamp(dist * 0.9, 45, 700);
+    const half = 45 * Math.pow(1.25, Math.round(Math.log(raw / 45) / Math.log(1.25)));
     const sc = sun.shadow.camera;
     if (sc.right !== half) { sc.left = -half; sc.right = half; sc.top = half; sc.bottom = -half; sc.near = 10; sc.far = 4000; sc.updateProjectionMatrix(); }
     const texel = (2 * half) / (q.shadows || 2048);
     focus.x = Math.round(focus.x / texel) * texel; focus.z = Math.round(focus.z / texel) * texel;
-    sun.target.position.copy(focus); sun.position.copy(focus).addScaledVector(sunDir, 1500);
+    focus.y = Math.round(focus.y / 4) * 4;
+    if (half !== lastHalf || !focus.equals(lastFocus)) { lastHalf = half; lastFocus.copy(focus); shadowDirty = true; }
+    sun.target.position.copy(focus); sun.position.copy(focus).addScaledVector(sunDir.y > 0.02 ? sunDir : _up, 1500);
     sky.position.copy(camera.position);
-    cull(false);
+    cull(settle);
+    if (shadowDirty && sun.castShadow) { sun.shadow.needsUpdate = true; shadowDirty = false; }
   }
-  function render() {
+  const _up = new THREE.Vector3(0, 1, 0);
+  /** Draw one frame. `moving` tells the governor whether this is part of continuous motion. */
+  function render(moving = false) {
+    govern(moving, performance.now());
     if (q.ao && composer) composer.render(); else renderer.render(scene, camera);
+  }
+  /** Draw the scene with another camera into `target` without sky or fog (minimap, thumbnails). */
+  function renderPlain(cam, target) {
+    const fog = scene.fog, auto = sun.shadow.needsUpdate;
+    const far = farGround.visible;
+    scene.fog = null; sky.visible = false; glow.visible = false; farGround.visible = false;
+    // screen-size culling was decided for the main camera: show everything for this one, then cull again
+    for (const it of items) if (!it.o.userData.treeLod) it.o.visible = true;
+    renderer.setRenderTarget(target); renderer.render(scene, cam); renderer.setRenderTarget(null);
+    scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; farGround.visible = far; sun.shadow.needsUpdate = auto;
+    cull(true);
+  }
+  function fixMaterials(root) {
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      if (root.name === 'context' && FILLER.test(o.name)) { o.visible = false; o.userData.filler = o.userData.hidden = true; return; } // float above the exported skirt
+      if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
+      for (const m of [].concat(o.material)) {
+        if (!m) continue;
+        if (m.map) m.map.anisotropy = 4;
+        // leaf cards exported without an opacity map would show their white texture background: draw them as solid foliage
+        if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.needsUpdate = true; continue; }
+        if (m.alphaTest > 0 || (m.transparent && m.map)) { m.alphaTest = 0.45; m.transparent = false; m.side = THREE.DoubleSide; m.userData.leaf = true; }
+        else if (m.transparent) { m.depthWrite = false; m.userData.glass = true; }
+      }
+    });
   }
   // Interior mapping: fake rooms behind vertical window glass. World-space cells (3.6 m bays,
   // 3.4 m storeys, 5 m deep) aligned to each facade; per-room tint and lights from a hash of the cell.
@@ -351,14 +492,34 @@ export function createLook(renderer, scene, camera) {
     return opals.get(m);
   }
   function swapMat(o, m, g) { o.material = Array.isArray(o.material) ? o.material.map(x => (x === m ? g : x)) : g; }
+  // Sports surfaces (turf, courts) are modelled at the same level as the terrain under them, which z-fights
+  // into a blotchy half-field from a distance. Pull them (and their line markings) forward in depth.
+  const SPORT_RE = /turf|court|track_surface|pitch_surface/i, LINES_RE = /lines|markings/i;
+  function liftSportSurfaces(root) {
+    const surf = [], lines = [];
+    root.traverse(o => { if (!o.isMesh) return; if (SPORT_RE.test(o.name)) surf.push(o); else if (LINES_RE.test(o.name)) lines.push(o); });
+    if (!surf.length) return;
+    const lift = (o, k) => {
+      const mats = [].concat(o.material).map(m => { const c = m.clone(); c.polygonOffset = true; c.polygonOffsetFactor = -k; c.polygonOffsetUnits = -k; return c; });
+      o.material = mats.length === 1 ? mats[0] : mats;
+    };
+    for (const o of surf) lift(o, 1);
+    for (const o of lines) lift(o, 2);
+  }
+  /** Prepare one loaded tile (or its far version): material fixes, textures, culling registration, lamps. */
   function decorate(root) {
+    fixMaterials(root);
+    liftSportSurfaces(root); // before texturing: a cloned material does not keep its shader hook
     root.traverse(o => {
       if (!o.isMesh) return;
       const lamp = LAMP_RE.test(o.name) || LAMP_RE.test(o.parent?.name || '');
       for (const m of [].concat(o.material)) {
         if (!m) continue;
         if (lamp && (m.userData?.glass || m.userData?.cat === 'glass')) { swapMat(o, m, opalFor(m)); continue; }
-        const cat = fixCat(m.name || '', m.userData?.cat || '');
+        // Aerial-draped terrain can come out as asphalt (its image names mention roads); it is plain ground.
+        // The exporter does not know this yet, so the viewer corrects it by material name.
+        const raw = /(ground|skirt)_ortho/i.test(m.name) ? 'grass' : m.userData?.cat || '';
+        const cat = fixCat(m.name || '', raw);
         if (cat !== 'glass' && cat !== (m.userData?.cat || '')) m.userData.glass = false;
         if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
           m.userData.glassDone = true; // shared materials: tint once
@@ -376,7 +537,15 @@ export function createLook(renderer, scene, camera) {
       }
     });
     register(root);
+    addLamps(root);
+    shadowDirty = true;
   }
-  function reset() { items = []; }
-  return { applyQuality, update, render, decorate, setPaint, resize, reset, sun, get quality() { return qName; } };
+  /** Forget a tile that was dropped from memory. */
+  function forget(root) { items = items.filter(it => it.root !== root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
+  function reset() { items = []; lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
+  return {
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun,
+    invalidateShadows() { shadowDirty = true; },
+    get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
+  };
 }

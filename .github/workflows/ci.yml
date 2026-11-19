@@ -53,6 +53,8 @@ jobs:
             cp "$f" "$RUNNER_TEMP/check.mjs"
             node --check "$RUNNER_TEMP/check.mjs"
           done
+      - name: Unit tests (pure viewer modules)
+        run: node --test
       - name: HTML validation
         run: |
           files=$(git ls-files '*.html' | grep -v '^vendor/' || true)
