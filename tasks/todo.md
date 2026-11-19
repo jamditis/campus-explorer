@@ -27,7 +27,7 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 
 - [x] Engine serves several areas: one plan folder per area under `blender/scripted/`, one `.blend`, one supersede mark per area
 - [x] Buildings from measured parts (`massing.py`, `building.py`); trees from the LiDAR canopy (`tools/evidence/trees.py`)
-- [ ] North-east district (`northeast/`): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
+- [x] North-east district (`northeast/`, PR #53): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
 - [ ] Stadium district (north of y 826): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [ ] Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
