@@ -30,7 +30,8 @@ for o in trees:
         if (w.xy-ax).length<1.0: continue
         g=hit(G,w.x,w.y); p=hit(P,w.x,w.y)
         if g is not None and w.z<g-0.02: under+=1
-        if p is not None and p>=(g or -1e9)-0.3 and w.z-p<2.4: lowpave+=1; minc=min(minc,w.z-p)
+        # paving clearance is independent of the raw terrain (unreliable in the east, W53)
+        if p is not None and w.z-p<2.4: lowpave+=1; minc=min(minc,w.z-p)
     if under or lowpave: res.append((o.name,o.data.name,round(ax.x,1),round(ax.y,1),round(zb-(gt or 0),2),under*3,lowpave*3,round(minc,2)))
 res.sort(key=lambda r:-(r[5]+r[6]))
 print('P225 flagged',len(res),'time',round(time.time()-t0),flush=True)
