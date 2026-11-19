@@ -31,6 +31,7 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [ ] Stadium district (north of y 826): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [ ] Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+- [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
 
 Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
 
