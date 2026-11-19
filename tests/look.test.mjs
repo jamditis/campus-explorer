@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { fixTone } from '../viewer/tone.js';
+import { fixTone, finishMetal } from '../viewer/tone.js';
 
 const color = (r, g, b) => ({
   r, g, b,
@@ -74,4 +74,29 @@ test('fixCat refiles fieldstone and concrete bed curbs, and labels amphitheater 
   // do not steal real lawn or mulch
   assert.equal(fixCat('CCOM_lawn_grass', 'grass'), 'grass');
   assert.equal(fixCat('WS159_mulch_dark_shredded', 'mulch'), 'mulch');
+});
+
+
+test('fixCat files stainless and aluminium as metal, and a grass plinth as concrete', () => {
+  assert.equal(fixCat('OD_stair_rail_satin_stainless_UNVERIFIED', 'concrete'), 'metal');
+  assert.equal(fixCat('OD_stair_nosing_aluminium_UNVERIFIED', 'concrete'), 'metal');
+  assert.equal(fixCat('fo_cogen_plinth', 'grass'), 'concrete');
+  assert.equal(fixCat('CCOM_lawn_grass', 'grass'), 'grass');
+});
+
+test('finishMetal restores satin metalness and roughness after a concrete overwrite', () => {
+  const rail = { metalness: 0, roughness: 0.85 };
+  finishMetal('OD_stair_rail_satin_stainless_UNVERIFIED', rail);
+  assert.equal(rail.metalness, 1);
+  assert.equal(rail.roughness, 0.22);
+
+  const nose = { metalness: 0, roughness: 0.85 };
+  finishMetal('OD_stair_nosing_aluminium_UNVERIFIED', nose);
+  assert.equal(nose.metalness, 0.8);
+  assert.equal(nose.roughness, 0.38);
+
+  const other = { metalness: 0, roughness: 0.85 };
+  finishMetal('Wall_stucco_mission', other);
+  assert.equal(other.metalness, 0);
+  assert.equal(other.roughness, 0.85);
 });

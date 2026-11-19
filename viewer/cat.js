@@ -9,6 +9,10 @@ export function fixCat(name, cat) {
   // "field" in fieldstone matched the exporter's grass regex; "bed_" on a concrete curb matched mulch
   if (cat === 'grass' && /stone|granite|marble|limestone/i.test(name) && !/lawn|grass|turf|skirt|terrain/i.test(name)) return 'stone';
   if (cat === 'mulch' && /concrete|curb|kerb/i.test(name) && !/mulch|chip|shredded|soil/i.test(name)) return 'concrete';
+  // stainless/aluminium filed as concrete (name matched curb/stair/deck) lose their metalness
+  if (/stainless|alumin/i.test(name) && cat !== 'glass') return 'metal';
+  // a painted building plinth is not lawn; "cogen" plus grass was retinted green
+  if (cat === 'grass' && /plinth/i.test(name) && !/lawn|grass|turf|skirt|terrain/i.test(name)) return 'concrete';
   if (cat) return cat;
   if (/amphi/i.test(name) && /stone|nosing|fieldstone/i.test(name)) return 'stone';
   if (/^Bark_/i.test(name)) return 'bark';

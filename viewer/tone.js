@@ -37,3 +37,19 @@ export function fixTone(name, color, hasMap) {
   }
   return color;
 }
+
+// Stainless and aluminium are exported with the right roughness (and often metalness),
+// but look.js zeroes metalness and overwrites roughness once the category is not metal.
+// Call after texturize so those values stick. Authored: rail metal 1 / rough 0.22,
+// nosing metal 0.8 / rough 0.38 (scripts/od/od_build.py).
+export function finishMetal(name, mat) {
+  if (!mat) return mat;
+  if (/stainless/i.test(name)) {
+    mat.metalness = 1;
+    if (mat.roughness > 0.22) mat.roughness = 0.22;
+  } else if (/alumin/i.test(name)) {
+    if (mat.metalness < 0.8) mat.metalness = 0.8;
+    if (mat.roughness > 0.38) mat.roughness = 0.38;
+  }
+  return mat;
+}
