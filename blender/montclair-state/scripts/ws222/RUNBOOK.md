@@ -1,4 +1,4 @@
-# ws222 runbook (main ws221c -> ws222a -> ws222b -> ws222c -> ws222d -> ws222e -> ws222g)
+# ws222 runbook (main ws221c -> ws222a -> ws222b -> ws222c -> ws222d -> ws222e -> ws222f -> ws222g -> ws222h)
 Merges use scripts/ws208/merge208.py via run222.sh (CHAIN env, OUTN output; INF = input file, default = current main).
 - ws222a: CHAIN="ws222/fix222a.py"  (W41b: WS70 verge-grass verts under the WS72 Kasser landing footprint dropped to slab top - 4 cm;
   they sat at/above the slab top and showed through as a sawtooth triangle and a grass strip along the WS69 curb back)
@@ -12,7 +12,9 @@ Merges use scripts/ws208/merge208.py via run222.sh (CHAIN env, OUTN output; INF 
 - ws222f: INF=montclair_state_ws222e.blend CHAIN="ws222/fix222f.py"  (W43: WS72 landing S chord v150->v160 subdivided and moved
   onto the curb back of the return arc + curb_left start)
 - ws222g: INF=montclair_state_ws222f.blend CHAIN="ws222/fix222g.py"  (triangulate the non-planar n-gons left by ws222f)
-For a from-scratch rebuild, fix222a..g in that order reproduce ws222g (ws222e was built from main = ws222d).
+- ws222h: CHAIN="ws222/fix222h.py" from main ws222g  (W42b: asphalt verts hidden under the WS215 sidewalk / WS72 landing raised to
+  slab top - 1.5 cm so the faces leaving the flush crossing edge are near-flat; raise-only)
+For a from-scratch rebuild, fix222a..h in that order reproduce ws222h (ws222e was built from main = ws222d).
 Probes: runp.sh opens a file with every modifier off; probe222a-f/h/i print P222 lines. probe222g.py is run as a CHAIN inside
 scripts/ws212/subrend212.py (terrain GN on, evaluated surface map, exits before rendering):
   FILE=$PWD/montclair_state.blend CULL="-300,-220,-90,-20" CHAIN="ws222/probe222g.py" GRID="x0,x1,y0,y1,step" blender -b --python scripts/ws212/subrend212.py
