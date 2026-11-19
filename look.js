@@ -104,13 +104,17 @@ export function createLook(renderer, scene, camera) {
     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.needsUpdate = true;
   });
   let paint = []; // [{tex, x0,x1,z0,z1}]
+  // paint layers (one webp mask per modelling session that painted markings); every layer is a sampler on
+  // asphalt materials, and WebGL2 guarantees 16 per shader, so 8 leaves room for the textures and shadows
+  const PAINT_MAX = 8;
   const paintUniforms = { pMap: { value: [] }, pBox: { value: [] }, pN: { value: 0 } };
   const EMPTY = new THREE.DataTexture(new Uint8Array(4), 1, 1); EMPTY.needsUpdate = true;
   const paintTex = url => { const t = loader.load(url); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
   function setPaint(list, base) {
-    paint = list.slice(0, 4).map(p => ({ ...p, tex: paintTex(base + p.file) }));
+    if (list.length > PAINT_MAX) console.warn('paint layers beyond', PAINT_MAX, 'ignored:', list.slice(PAINT_MAX).map(p => p.file));
+    paint = list.slice(0, PAINT_MAX).map(p => ({ ...p, tex: paintTex(base + p.file) }));
     const maps = [], boxes = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < PAINT_MAX; i++) {
       const p = paint[i];
       maps.push(p ? p.tex : EMPTY);
       // Blender (x, y) -> three (x, -z)
@@ -154,7 +158,7 @@ export function createLook(renderer, scene, camera) {
           uniform sampler2D tpMap; uniform float tpScale; uniform float tpK; uniform float tpMacro; uniform float tpBump;
           ${hasN ? 'uniform sampler2D tpNMap; uniform float tpNStr;' : ''}
           float tpH = 0.5;
-          ${isAsphalt ? 'uniform sampler2D pMap[4]; uniform vec4 pBox[4]; uniform int pN;' : ''}
+          ${isAsphalt ? `uniform sampler2D pMap[${PAINT_MAX}]; uniform vec4 pBox[${PAINT_MAX}]; uniform int pN;` : ''}
           vec4 tpSample(vec3 p, vec3 w) {
             return texture2D(tpMap, p.zy) * w.x + texture2D(tpMap, p.xz) * w.y + texture2D(tpMap, p.xy) * w.z;
           }`)
@@ -169,13 +173,13 @@ export function createLook(renderer, scene, camera) {
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
             ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), 0.55) * vec3(${warm.map(x => x.toFixed(3)).join(',')}); }` : ''}
             ${isAsphalt ? `
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < ${PAINT_MAX}; i++) {
               if (i >= pN) break;
               vec2 uv = (vTpPos.xz - pBox[i].xy) / pBox[i].zw;
               if (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) continue;
               vec4 pc;
-              if (i == 0) pc = texture2D(pMap[0], uv); else if (i == 1) pc = texture2D(pMap[1], uv);
-              else if (i == 2) pc = texture2D(pMap[2], uv); else pc = texture2D(pMap[3], uv);
+              // sampler arrays need constant indices in GLSL
+              ${Array.from({ length: PAINT_MAX }, (_, k) => `${k ? 'else ' : ''}if (i == ${k}) pc = texture2D(pMap[${k}], uv);`).join(' ')}
               diffuseColor.rgb = mix(diffuseColor.rgb, pc.rgb * mix(1.0, t.r, 0.25), pc.a);
             }` : ''}
           }`)
