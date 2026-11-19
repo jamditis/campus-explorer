@@ -9,7 +9,8 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone } from './viewer/tone.js';
-export { fixTone };
+import { fixCat } from './viewer/cat.js';
+export { fixTone, fixCat };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
 const CATS = {
@@ -37,22 +38,6 @@ const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, 
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
 // [r, g, b, desaturation]; plaster keeps its own colour (cream and white stucco) and only loses the sky-blue cast
 const WARM = { asphalt: [1.04, 1.0, 0.92, 0.55], concrete: [1.05, 1.0, 0.92, 0.55], pavers: [1.04, 1.0, 0.94, 0.55], plaster: [1.05, 1.0, 0.92, 0] };
-
-// fix-ups for materials the export categorised by name only
-export function fixCat(name, cat) {
-  if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
-  // white line paint filed as grass (Lot 9 stalls, Sprague field lines) was retinted lawn green: keep it paint
-  if (cat === 'grass' && /paint|stripe|marking/i.test(name) && !/lawn|nostripe/i.test(name)) return '';
-  if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
-  if (cat === 'asphalt' && /concrete/i.test(name)) return 'concrete'; // e.g. KX_drive_concrete
-  if (cat === 'asphalt' && /atlas|_tv_|screen/i.test(name)) return ''; // signage textures filed as asphalt
-  if (cat) return cat;
-  if (/^Bark_/i.test(name)) return 'bark';
-  if (/barrel_tile|tile_course|Eave_tile/i.test(name)) return 'rooftile';
-  if (/soffit|fascia/i.test(name)) return 'plaster';
-  if (/BD_osm_light|BD_fill_massing/i.test(name)) return 'concrete';
-  return '';
-}
 
 export const QUALITY = {
   low: { pixelRatio: 1, shadows: 0, ao: false, cull: 0.02, tex: true, macro: false },

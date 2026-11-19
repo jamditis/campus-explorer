@@ -37,3 +37,41 @@ test('fixTone is a no-op for already mid-grey granite and for other stone', () =
   fixTone('Granite_Curb', mid, false);
   assert.equal(lum(mid), 0.35);
 });
+
+test('fixTone restores authored amphitheater colours when the export collapsed to white or a pale factor', () => {
+  const seat = color(1, 1, 1);
+  fixTone('hn_amphi_seat_stone_blocks', seat, false);
+  assert.equal(seat.r, 0.215);
+  assert.equal(seat.g, 0.176);
+  assert.equal(seat.b, 0.141);
+
+  const stage = color(0.797, 0.787, 0.77);
+  fixTone('io_amphi_stage_concrete', stage, false);
+  assert.equal(stage.r, 0.25);
+
+  const field = color(0.45, 0.45, 0.45);
+  fixTone('hn_amphi_base_fieldstone', field, false);
+  assert.equal(field.r, 0.22);
+
+  // leave alone when the shipped colour already matches
+  const ok = color(0.215, 0.176, 0.141);
+  fixTone('hn_amphi_seat_stone_blocks', ok, false);
+  assert.equal(ok.r, 0.215);
+});
+
+test('fixTone does not invent amphitheater colours when a map is present', () => {
+  const c = color(1, 1, 1);
+  fixTone('hn_amphi_seat_stone_blocks', c, true);
+  assert.equal(lum(c), 1);
+});
+
+import { fixCat } from '../viewer/cat.js';
+
+test('fixCat refiles fieldstone and concrete bed curbs, and labels amphitheater nosings as stone', () => {
+  assert.equal(fixCat('hn_amphi_base_fieldstone', 'grass'), 'stone');
+  assert.equal(fixCat('WS159_bed_edge_concrete_curb', 'mulch'), 'concrete');
+  assert.equal(fixCat('ip_amphi_aisle_nosing_worn', ''), 'stone');
+  // do not steal real lawn or mulch
+  assert.equal(fixCat('CCOM_lawn_grass', 'grass'), 'grass');
+  assert.equal(fixCat('WS159_mulch_dark_shredded', 'mulch'), 'mulch');
+});
