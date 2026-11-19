@@ -161,7 +161,7 @@ function liftSportSurfaces(root) {
 }
 // ---------------- far tile versions (LOD) ----------------
 // Each campus tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances or
-// small parts, ~0.8 m error). Past a quality-set distance from the tile's box, the full tile's plain meshes
+// small parts or interiors, ~0.5 m error, no tears). Past a quality-set distance from the tile's box, the full tile's plain meshes
 // move to layer 2 (not rendered, no shadows) and the far version takes layer 0. Instances (trees) stay
 // with the full tile: trees.js already culls and swaps those per instance.
 const LOD_DIST = { low: 260, medium: 420, high: 650 };

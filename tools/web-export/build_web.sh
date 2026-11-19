@@ -68,10 +68,10 @@ for f in $B/raw/*.glb; do
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
   # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
-  # simplified to ~0.8 m error; the viewer swaps to it past a quality-set distance
+  # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
   if [[ $C == t_* || $C == n_t_* ]]; then
     mkdir -p $S/lod; cp $W/lod.mjs ./lod.mjs  # run from here so it resolves this folder's node_modules
-    RATIO=0.1 ERR_M=0.8 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
+    RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
   fi
 done
 # drop far versions whose tile is gone
