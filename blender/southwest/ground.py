@@ -18,9 +18,9 @@ import kit
 import numpy as np
 from mathutils import Vector
 from mathutils.geometry import delaunay_2d_cdt
+from terrain import Terrain, _edge_distance, _inside  # noqa: F401
 
 GRID = 2.0  # spacing of the points that make the ground follow the terrain, metres
-BLEND = 4.0  # width of the band along the footprint edge that blends into the neighbours' ground
 # the web export files an object under the tile that holds its centre: one object per tile
 TILE = 160.0
 LIP = 0.6  # depth of the skirt that closes any crack along the footprint edge
@@ -50,124 +50,6 @@ ROUGH = {
     "brick": 0.88,
 }
 PAVED = {"asphalt", "turf", "concrete", "brick"}
-
-
-def _blur(a, sigma):
-    """Separable Gaussian blur with edge padding."""
-    r = max(1, int(3 * sigma))
-    k = np.exp(-0.5 * (np.arange(-r, r + 1) / sigma) ** 2)
-    k /= k.sum()
-    p = np.pad(a, r, mode="edge")
-    p = np.apply_along_axis(lambda v: np.convolve(v, k, mode="valid"), 0, p)
-    return np.apply_along_axis(lambda v: np.convolve(v, k, mode="valid"), 1, p)
-
-
-def _fill(a):
-    """Fill empty cells with the mean of their filled neighbours, pass after pass."""
-    a = a.copy()
-    while np.isnan(a).any() and np.isfinite(a).any():
-        p = np.pad(a, 1, constant_values=np.nan)
-        stack = np.stack([p[:-2, 1:-1], p[2:, 1:-1], p[1:-1, :-2], p[1:-1, 2:]])
-        n = np.isfinite(stack).sum(0)
-        mean = np.nansum(stack, 0) / np.maximum(n, 1)
-        m = np.isnan(a) & (n > 0)
-        a[m] = mean[m]
-    return a
-
-
-class Terrain:
-    """Ground height from LiDAR ground returns on a 1 m grid: `rough` for soft ground, `smooth` for
-    paving.
-
-    `edge` is a list of [x, y, z]: the height of the neighbours' ground at points along the
-    footprint
-    (plan/edge_heights.json, written by edge.py from the published tiles).
-    """
-
-    def __init__(self, lidar_npz, edge=None, lifts=(), cell=1.0):
-        self.lifts = list(lifts)
-        z = np.load(lidar_npz)
-        self.x0, self.y0, self.x1, self.y1 = (float(v) for v in z["box"][:4])
-        self.cell = cell
-        pts = z["pts"]
-        g = pts[pts[:, 3] == 2]
-        nx, ny = round((self.x1 - self.x0) / cell), round((self.y1 - self.y0) / cell)
-        col = np.clip(((g[:, 0] - self.x0) / cell).astype(int), 0, nx - 1)
-        row = np.clip(((self.y1 - g[:, 1]) / cell).astype(int), 0, ny - 1)
-        s, n = np.zeros((ny, nx)), np.zeros((ny, nx))
-        np.add.at(s, (row, col), g[:, 2])
-        np.add.at(n, (row, col), 1)
-        base = _fill(np.where(n > 0, s / np.maximum(n, 1), np.nan))
-        self.rough, self.smooth = _blur(base, 1.0), _blur(base, 2.5)
-        self.edge = np.array(edge, float) if edge else None
-
-    def z(self, x, y, smooth=False):
-        a = self.smooth if smooth else self.rough
-        x, y = np.asarray(x, float), np.asarray(y, float)
-        fx = np.clip((x - self.x0) / self.cell - 0.5, 0, a.shape[1] - 1.001)
-        fy = np.clip((self.y1 - y) / self.cell - 0.5, 0, a.shape[0] - 1.001)
-        i, j = fx.astype(int), fy.astype(int)
-        tx, ty = fx - i, fy - j
-        top = a[j, i] * (1 - tx) + a[j, i + 1] * tx
-        bottom = a[j + 1, i] * (1 - tx) + a[j + 1, i + 1] * tx
-        return top * (1 - ty) + bottom * ty + self.lift(x, y)
-
-    def lift(self, x, y):
-        """Height added by the plan's `lifts`: `dz` inside a lift's ring, eased to nothing over
-        `feather`.
-        """
-        out = np.zeros(np.shape(x))
-        for lf in self.lifts:
-            d = np.where(_inside(lf["ring"], x, y), 0.0, _edge_distance(lf["ring"], x, y))
-            t = np.clip(1 - d / lf.get("feather", 10.0), 0, 1)
-            out += lf["dz"] * t * t * (3 - 2 * t)
-        return out
-
-    def neighbour_z(self, x, y):
-        """
-        Height of the neighbours' ground at the nearest edge sample, NaN when there are no samples.
-        """
-        if self.edge is None or not len(self.edge):
-            return np.full(np.shape(x), np.nan)
-        out = np.empty(len(x))
-        for k in range(0, len(x), 4096):  # in blocks, to bound the distance matrix
-            d = (np.asarray(x)[k : k + 4096, None] - self.edge[None, :, 0]) ** 2 + (
-                np.asarray(y)[k : k + 4096, None] - self.edge[None, :, 1]
-            ) ** 2
-            out[k : k + 4096] = self.edge[d.argmin(1), 2]
-        return out
-
-    def at(self, x, y):
-        """Height for one point on paving (used to seat objects)."""
-        return float(self.z(np.array([x]), np.array([y]), True)[0])
-
-
-def _inside(ring, px, py):
-    """Vectorised even-odd test of points against one closed outline."""
-    r = np.asarray(ring)
-    hit = np.zeros(len(px), bool)
-    ax, ay = r[:, 0], r[:, 1]
-    bx, by = np.roll(ax, -1), np.roll(ay, -1)
-    for i in range(len(r)):
-        if ay[i] == by[i]:
-            continue
-        cross = ((ay[i] > py) != (by[i] > py)) & (
-            px < ax[i] + (py - ay[i]) * (bx[i] - ax[i]) / (by[i] - ay[i])
-        )
-        hit ^= cross
-    return hit
-
-
-def _edge_distance(ring, px, py):
-    """Distance from each point to the nearest edge of a closed outline."""
-    r = np.asarray(ring)
-    best = np.full(len(px), np.inf)
-    for a, b in zip(r, np.roll(r, -1, 0), strict=True):
-        d = b - a
-        ln = float(d @ d) or 1e-12
-        t = np.clip(((px - a[0]) * d[0] + (py - a[1]) * d[1]) / ln, 0, 1)
-        best = np.minimum(best, np.hypot(px - (a[0] + t * d[0]), py - (a[1] + t * d[1])))
-    return best
 
 
 def _densify(ring, step):
@@ -240,15 +122,11 @@ def heights(lay, terrain, xy, tris, owner):
     """
     kinds = np.array([lay["surfaces"][o]["kind"] if o >= 0 else "lawn" for o in owner])
     paved = np.zeros(len(xy), bool)
-    paved[np.unique(tris[np.isin(kinds, list(PAVED))])] = True
-    z = np.where(paved, terrain.z(xy[:, 0], xy[:, 1], True), terrain.z(xy[:, 0], xy[:, 1], False))
-    d = _edge_distance(lay["footprint"], xy[:, 0], xy[:, 1])
-    band = d < BLEND
-    nb = np.full(len(xy), np.nan)
-    nb[band] = terrain.neighbour_z(xy[band, 0], xy[band, 1])
-    t = np.clip(d / BLEND, 0, 1)
-    w = t * t * (3 - 2 * t)
-    return np.where(np.isfinite(nb), nb * (1 - w) + z * w, z)
+    graded = np.array(
+        [o >= 0 and lay["surfaces"][o].get("grade", True) for o in owner]
+    )  # a pad on a bank follows the bank
+    paved[np.unique(tris[np.isin(kinds, list(PAVED)) & graded])] = True
+    return terrain.surface(xy[:, 0], xy[:, 1], paved)
 
 
 def build(lay, terrain, image_dir=None):
@@ -310,6 +188,19 @@ def build(lay, terrain, image_dir=None):
                     lo = [bm.verts.new((xy[i, 0], xy[i, 1], z[i] - LIP)) for i in (a, b)]
                     lip = bm.faces.new([vert(b), vert(a), lo[0], lo[1]])
                     lip.material_index = slot(plain)
+                    # where the neighbour's ground stands higher (a bank beside a road), a face up
+                    # to
+                    # it, seen from this side: without it you would look under the neighbour's edge
+                    up = terrain.neighbour_z(xy[[a, b], 0], xy[[a, b], 1])
+                    if np.isfinite(up).all() and (up - z[[a, b]]).max() > 0.05:
+                        hi = [
+                            bm.verts.new((xy[i, 0], xy[i, 1], max(z[i], h) + 0.02))
+                            for i, h in zip((a, b), up, strict=True)
+                        ]
+                        bank = bm.faces.new([vert(a), vert(b), hi[1], hi[0]])
+                        bank.material_index = slot(
+                            kit.mat("lawn", "bank_edge", COLOUR["lawn"], 1.0)
+                        )
         # no recalc_face_normals here: on an open sheet it flips whole patches face down
         me = bpy.data.meshes.new(name)
         bm.to_mesh(me)
@@ -378,7 +269,7 @@ def curbs(lay, terrain):
             (0.40, 0.39, 0.37) if kind == "concrete" else (0.45, 0.44, 0.43),
             0.8,
         )
-        zf = terrain.z(np.array([p[0] for p in dense]), np.array([p[1] for p in dense]), True)
+        zf = terrain.surface(np.array([p[0] for p in dense]), np.array([p[1] for p in dense]), True)
         verts, faces = [], []
         for i, (f, bk) in enumerate(zip(dense, back, strict=True)):
             verts += [

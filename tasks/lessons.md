@@ -48,3 +48,11 @@ Rules learned from corrections. Read at the start of a session.
 - Overpass servers reset or timed out for a small box; the OpenStreetMap API `map` call returned the same elements. `fetch.py osm` falls back to it.
 - The 2017 NW 6-County point cloud ends near y -262 (just south of the station shelter). The 2014 Sandy cloud covers the rest. `fetch.py lidar` takes each 10 m block from the newest cloud that has ground there.
 - The 2017 cloud has no west grandstand at Sprague Field. Do not take stand heights from it.
+
+## 2026-11-19: paving is a graded surface, not terrain
+
+- **Correction (Joe, on the first southwest build):** "I'm seeing a lot of lumpy and bumpy roads and sidewalks".
+- **What went wrong:** road and walk heights were the LiDAR ground smoothed over 2.5 m, and every vertex within 4 m of the footprint edge was bent to the neighbouring model's ground. Measured against a local plane, Normal Avenue left it by up to 23.5 cm, the ring walk by 41 cm and the north plaza by 65 cm. The edge blend alone moved road edges by up to 86 cm, up a bank that stands beside the road.
+- **Rule:** grade paving as paving. Smooth it over 5 m from paved cells only; never bend it to a neighbour unless the two are already nearly level; close a real step with a face. Soft ground may bend. This is AGENTS rule 4 (no wobbles) for heights, not only for plan edges.
+- **Rule:** measure smoothness before showing a result. `tests/py/test_terrain.py` holds the cases (noisy ground, a bank beside a road, a level neighbour). After the fix: Normal Avenue 4.0 cm away from the crossing, the plaza 2.4 cm, the cross walk 0.4 cm.
+- **Still lumpy:** the ring walk (10 cm) and Lot 42 (14 cm) by the west stand, where the 2017 LiDAR has a 3 m bank that the plan does not model as a wall.

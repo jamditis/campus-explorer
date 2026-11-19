@@ -42,7 +42,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 |---|---|
 | `blender/southwest/plan/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
 | `geom.py`, `layout.py` | Pure plan geometry (true-arc corners) and the layout shared by paint and ground |
-| `ground.py`, `paint.py` | One seamless ground mesh; paint sheets for road lines, stalls and the football field |
+| `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
 | `stand.py`, `fixtures.py`, `place.py` | Grandstands and fixtures, and where the plan puts them |
 | `build.py` | Entry point, run inside Blender |
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles) |

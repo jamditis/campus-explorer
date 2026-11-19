@@ -40,7 +40,10 @@ def main():
         if (plan_dir / "edge_heights.json").exists()
         else None
     )
-    terrain = ground.Terrain(data / "lidar.npz", edge, lay["lifts"])
+    paved = [
+        s["ring"] for s in lay["surfaces"] if s["kind"] in ground.PAVED and s.get("grade", True)
+    ]
+    terrain = ground.Terrain(data / "lidar.npz", edge, lay["lifts"], lay["footprint"], paved)
     authored = data / "authored"
     objects = ground.build(lay, terrain, str(authored) if authored.exists() else None)
     try:

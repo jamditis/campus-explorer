@@ -35,6 +35,7 @@ python3 blender/southwest/edge.py /workspace/data/sw/tiles
 - **One ground.** Inside the footprint (`plan/footprint.json`) this build owns the ground. `tools/web-export/supersede.mjs` takes the other sources' ground out of their tiles there and lowers the corners of the triangles that reach in, so the old ground dips under the new edge. The rules (which meshes are ground, which things are replaced) are in `plan/footprint.json` under `supersede`.
 - **What stays.** The north model's station (tracks, ballast, platforms, shelter, catenary, fences, signs) and its retaining wall at the field's north-east corner stay as they are. The main model's paved corner south-east of the field (drive mouth, dumpster enclosure, shrubs) stays too: the footprint runs round it.
 - **What is replaced.** The main model's partial Sprague Field (ws167 to ws189: south-east quarter of the turf, lines, end zone blocks, a goalpost, the south part of the east bleachers, one light pole). Its lines lie about 14 degrees off the field in the 2020 ortho; this build fits the whole field to the ortho (0.15 m corner misfit) and draws the 2025 markings.
+- **Paving is graded, soft ground is not.** A road is a built surface: its height is the LiDAR ground smoothed over 5 m using paved cells only, so a bank beside it does not pull it up. Soft ground bends to meet the neighbour's ground along the footprint; paving meets it only where the two are already within 0.15 m (a road that runs on into the next model). Where the neighbour stands higher, a bank face closes the step. A surface with `"grade": false` (a pad on a bank) follows the raw ground.
 - **Trees.** Trees of the other models are not touched. Far-field scatter trees and far-field houses inside the footprint are removed.
 - **Track level.** The north model's track and platforms stand about 0.65 m above the LiDAR ground. `plan/station.json` carries a `lifts` entry that raises this build's ground to them along the corridor, eased out over 10 m, so the road meets the rails at the crossing. Remove it when the north track is lowered. Things that stand on a platform carry `base`, the platform top read from the published tiles.
 
@@ -49,6 +50,7 @@ Model metres, the same frame as every other source: +X east, +Y grid north, Z NA
 | `geom.py` | Pure plan geometry: paths with true-arc corners, offsets, ribbons, stalls. No bpy |
 | `kit.py` | bpy helpers: materials by kind, a mesh `Builder`, placement, a check render |
 | `plan/*.json` | The digitised plan, one file per zone (format below) |
+| `terrain.py` | Ground heights from the LiDAR (numpy only): soft ground follows it, paving is graded, lifts, the edge blend |
 | `ground.py` | One seamless ground mesh from the plan: terrain, paving, turf, curbs |
 | `paint.py` | Draws the marking textures (lines, stalls, field markings) from the plan. System Python with Pillow |
 | `layout.py` | Loads the plan files: dense outlines, layers, which surface gets which paint sheet. No bpy |

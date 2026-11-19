@@ -490,7 +490,8 @@
     ]
    ],
    "evidence": "ortho2020 (stand roof outline); osm 232846650",
-   "unverified": "ground under the raised stand assumed paved concrete"
+   "unverified": "ground under the raised stand assumed paved concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
+   "grade": false
   },
   {
    "name": "East_bleacher_pad",
@@ -514,7 +515,8 @@
     ]
    ],
    "evidence": "ortho2020; osm 232846674",
-   "unverified": "ground under the bleachers assumed concrete"
+   "unverified": "ground under the bleachers assumed concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
+   "grade": false
   },
   {
    "name": "Press_box_equipment_pad",
