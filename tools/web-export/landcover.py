@@ -295,8 +295,10 @@ with open(OUT + "/far_trees.bin", "wb") as f:
 print("far trees", len(trees))
 
 # ---------- far houses: extruded OSM footprints with a low hip/flat roof ----------
-# two meshes by footprint source: OpenStreetMap and Microsoft Global ML Building Footprints
-GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_microsoft": ([], [], [], [])}
+# meshes by footprint source (OpenStreetMap, Microsoft Global ML Building Footprints) with LiDAR or tagged heights;
+# footprints whose height is only an estimate (scaled footprint-layer height or a typical default) go into
+# far_houses_height_UNVERIFIED
+GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_microsoft": ([], [], [], []), "far_houses_height_UNVERIFIED": ([], [], [], [])}
 hsrc = {"lidar": 0, "osm tag": 0, "footprint estimate": 0, "default": 0}
 P, NRM, COL, IDX = GEOM["far_houses_osm"]
 WALL = [(0.62, 0.55, 0.46), (0.55, 0.50, 0.44), (0.66, 0.62, 0.55), (0.50, 0.38, 0.30), (0.58, 0.54, 0.47), (0.45, 0.47, 0.46)]
@@ -323,7 +325,7 @@ pairs = [(lh, float(t["ms_height"])) for lh, (_p, t) in zip(LHT, buildings, stri
 MS_SCALE = float(np.median([a / b for a, b in pairs])) if len(pairs) > 50 else 1.0
 print("lidar-covered footprints", sum(h is not None for h in LHT), "footprint-estimate scale", round(MS_SCALE, 3), "from", len(pairs))
 for (pts, t), lh in zip(buildings, LHT, strict=True):
-    P, NRM, COL, IDX = GEOM["far_houses_microsoft" if t.get("source") == "microsoft" else "far_houses_osm"]
+    mesh = "far_houses_microsoft" if t.get("source") == "microsoft" else "far_houses_osm"
     poly = Polygon(pts)
     if not poly.is_valid or poly.area < 12:
         continue
@@ -344,9 +346,12 @@ for (pts, t), lh in zip(buildings, LHT, strict=True):
         elif t.get("ms_height"):
             h = max(2.5, float(t["ms_height"]) * MS_SCALE)
             hsrc["footprint estimate"] += 1
+            mesh = "far_houses_height_UNVERIFIED"  # real footprint, inferred height (AGENTS rule)
         else:
             h = 7.5 if poly.area < 300 else 10  # footprint with no height anywhere: typical house / block
             hsrc["default"] += 1
+            mesh = "far_houses_height_UNVERIFIED"
+    P, NRM, COL, IDX = GEOM[mesh]
     z0 = min(zat(x, y) for x, y in pts) - 0.3
     ring = list(poly.exterior.coords)[:-1]
     if Polygon(ring).exterior.is_ccw is False:
