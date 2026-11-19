@@ -48,7 +48,28 @@ if MERGE:
                 mground[n] = v["bb"][:4]  # exact footprint for terrain trimming (export_web rasterises these)
         elif v["t"] == "MESH" and v["tri"] > 50 and w < 150 and not TREE.search(n):
             bld.update(cells(x0, x1, y0, y1))  # main buildings and site features
-    json.dump(dict(cell=CELL, cells=sorted(occ), ground=mground), open(WORK + "/clip.json", "w"))
+    # main ground lying almost wholly inside a north sports surface (turf, court, track) and crossing its
+    # level is an older DTM patch or feather that predates the field: the viewer drops it so it can't poke
+    # through the turf. Ground that stays below or above the surface (curbs, banks, kerbs) is left alone.
+    SPORT = re.compile(r"turf|court|track_surface|pitch_surface", re.I)
+    sport = [v["bb"] for n, v in d.items() if v["v"] and v["t"] == "MESH" and SPORT.search(n) and n not in mainnames
+             and (v["bb"][1] - v["bb"][0]) * (v["bb"][3] - v["bb"][2]) > 500]
+
+    def inside(b, s):
+        ix = max(0.0, min(b[1], s[1]) - max(b[0], s[0]))
+        iy = max(0.0, min(b[3], s[3]) - max(b[2], s[2]))
+        return ix * iy / max(1e-6, (b[1] - b[0]) * (b[3] - b[2]))
+
+    def crosses(n, s):
+        z0, z1 = md[n]["bb"][4:6]
+        zs = (s[4] + s[5]) / 2
+        return z0 < zs - 0.3 and z1 > zs + 0.3
+
+    hide_main = sorted(n for n, b in mground.items() if any(inside(b, s) > 0.9 and crosses(n, s) for s in sport))
+    print("merge: main ground superseded by north sports surfaces", hide_main)
+    for n in hide_main:
+        mground.pop(n)  # dropped in the viewer, so it must not trim the north terrain either
+    json.dump(dict(cell=CELL, cells=sorted(occ), ground=mground, hide_main=hide_main), open(WORK + "/clip.json", "w"))
     print("merge: main ground covers", len(occ), "cells, main buildings", len(bld), "cells of", CELL, "m")
 CLIPPED = re.compile(r"terrain|apron", re.I)
 DROP = re.compile(r"skirt|Context_", re.I)

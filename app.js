@@ -77,6 +77,8 @@ async function loadScene() {
     look.setPaint(man.paint || [], base);
     $('source-snapshot').textContent = `Source snapshot: model saved ${man.source_saved}${man.source_version ? ' (' + man.source_version + ')' : ''}; browser export ${man.exported}. Later modeling changes may not appear here yet.`;
     $('footnote').firstChild.textContent = `Working model · ${man.source_saved.replace(/, \d{4},.*/, '')} snapshot · Map data © `;
+    // main ground the north merge superseded (e.g. a DTM feather lying across a north sports field), from make_chunks
+    const hide = new Set(man.hide || []);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     let done = 0, bytes = 0; const total = man.total_bytes || 1, t0 = performance.now();
     // far-field ground and context first, then tiles nearest the view target, a few in parallel
@@ -86,7 +88,9 @@ async function loadScene() {
     const loadOne = async t => {
       const g = await loader.loadAsync(base + t.file);
       if (token !== loadToken) return;
-      g.scene.name = t.file.replace('.glb', ''); fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
+      g.scene.name = t.file.replace('.glb', '');
+      if (hide.size) { const drop = []; g.scene.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); }); for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); } }
+      fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
       if (t.file === 'far_houses.glb') g.scene.traverse(o => { if (o.material) { o.material.envMapIntensity = 0.25; o.material.roughness = 0.95; } });
       if (t.file === 'skirt.glb' && man.landcover) applyLandcover(g.scene, base + man.landcover.file, man.landcover.half);
       done++; bytes += t.bytes;
