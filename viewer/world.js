@@ -124,7 +124,7 @@ export function createWorld(app, prepare, release = () => {}) {
       const gltf = await loader.parseAsync(buf, base);
       if (my !== token) return;
       const root = gltf.scene; root.name = tile.file.replace('.glb', '').split('/').pop();
-      strip(root);
+      strip(root); dropUnmaterialled(gltf);
       prepare(root, tile, { far: false });
       root.updateMatrixWorld(true);
       // compile this tile's shaders before it joins the scene, so adding it does not stall a frame
@@ -155,6 +155,16 @@ export function createWorld(app, prepare, release = () => {}) {
     for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
   }
 
+  // Geometry exported with no material at all gets three's plain white default. In practice that is a
+  // geometry-nodes source left behind next to its own output (Curbs_granite_OSM: the curb curve's mesh lies
+  // exactly on the CurbSweep granite curbs and z-fights into a white speckle) or a stray leaf card, so drop it.
+  // A cloned default material carries an empty association, hence the `materials` index check.
+  function dropUnmaterialled(gltf) {
+    const drop = [];
+    gltf.scene.traverse(o => { if (o.isMesh && ![].concat(o.material).some(m => gltf.parser.associations.get(m)?.materials !== undefined)) drop.push(o); });
+    for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
+  }
+
   // ---- far versions of tiles (LOD) ----
   // A tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances, small parts or
   // interiors, about 0.5 m error). Past a distance set by the quality level, the full tile's plain meshes move
@@ -171,7 +181,7 @@ export function createWorld(app, prepare, release = () => {}) {
       try {
         const res = await fetch(base + tile.lod, { signal: abort.signal });
         if (!res.ok) throw new Error(`${tile.lod}: HTTP ${res.status}`);
-        root = (await loader.parseAsync(await res.arrayBuffer(), base)).scene;
+        const g = await loader.parseAsync(await res.arrayBuffer(), base); dropUnmaterialled(g); root = g.scene;
       } catch (e) { if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; }
       if (my !== token || tile.state !== 'ready') { free(root); return; }
       root.name = `lod_${tile.root.name}`;

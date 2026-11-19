@@ -33,7 +33,8 @@ const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.
 // tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
 const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
-const WARM = { asphalt: [1.04, 1.0, 0.92], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
+// [r, g, b, desaturation]; plaster keeps its own colour (cream and white stucco) and only loses the sky-blue cast
+const WARM = { asphalt: [1.04, 1.0, 0.92, 0.55], concrete: [1.05, 1.0, 0.92, 0.55], pavers: [1.04, 1.0, 0.94, 0.55], plaster: [1.05, 1.0, 0.92, 0] };
 
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
@@ -76,7 +77,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   scene.add(sky);
   const DAY_FOG = new THREE.Color('#c6d4e1'), DUSK_FOG = new THREE.Color('#dcb9a0'), NIGHT_FOG = new THREE.Color('#0b101c');
   const HORIZON = DAY_FOG.clone();
-  scene.fog = new THREE.FogExp2(HORIZON, 0.00016);
+  // aerial perspective: about 15% haze at 1.5 km and 25% at 2 km on a clear afternoon (was ~6% and 10%)
+  scene.fog = new THREE.FogExp2(HORIZON, 0.00027);
   scene.background = HORIZON;
 
   // image-based light from the same sky (gives glass and metal something to reflect)
@@ -84,7 +86,9 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   const envScene = new THREE.Scene(); const envSky = new Sky(); envSky.scale.setScalar(1000);
   Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u));
   envScene.add(envSky);
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#5d6247' }));
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#6b6456' }));
+  // bounce from the ground: lawn, asphalt and stucco average out to a warm grey, not olive (olive plus blue sky
+  // left every shaded wall cyan)
   ground.position.y = -5; envScene.add(ground);
   let envTarget = null; const envDir = new THREE.Vector3();
   function bakeEnvironment() {
@@ -92,12 +96,14 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     const next = pmrem.fromScene(envScene, 0.02);
     scene.environment = next.texture; envTarget?.dispose(); envTarget = next; envDir.copy(sunDir);
   }
-  scene.environmentIntensity = 0.3;
+  // the sky light is a saturated cyan; with it at 0.3 shaded white stucco read teal (rgb ~102,112,117 on screen).
+  // Less of it and a neutral hemisphere fill keep shade cool but closer to grey
+  scene.environmentIntensity = 0.22;
 
-  const SKY_DAY = new THREE.Color('#e2e7ee'), SKY_NIGHT = new THREE.Color('#33415f');
+  const SKY_DAY = new THREE.Color('#e9e9e7'), SKY_NIGHT = new THREE.Color('#33415f');
   const SOIL_DAY = new THREE.Color('#4f4a3a'), SOIL_NIGHT = new THREE.Color('#12151c');
   const SUN_HIGH = new THREE.Color('#fff0dc'), SUN_LOW = new THREE.Color('#ff9a4d');
-  const hemi = new THREE.HemisphereLight(SKY_DAY, SOIL_DAY, 0.2); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight(SKY_DAY, SOIL_DAY, 0.3); scene.add(hemi);
   const sun = new THREE.DirectionalLight(SUN_HIGH, 2.7);
   sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.04;
   sun.shadow.autoUpdate = false; // the scene is static: redraw the shadow map only when something changed
@@ -116,7 +122,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     sun.intensity = 2.7 * smooth(-1.5, 10, elevation);
     sun.color.copy(SUN_HIGH).lerp(SUN_LOW, low * 0.85);
     hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
-    hemi.intensity = 0.2 + 0.5 * (1 - day);
+    hemi.intensity = 0.3 + 0.4 * (1 - day);
     HORIZON.copy(NIGHT_FOG).lerp(DAY_FOG, day).lerp(DUSK_FOG, low * day * 0.6);
     scene.fog.color.copy(HORIZON); // FogExp2 keeps its own copy of the colour
     if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
@@ -255,7 +261,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
             if (tpMacro > 0.5) t = mix(t, tpSample(vTpPos * tpScale * 0.13 + 0.37, w).rgb, 0.35);
             t *= 2.7; // textures are normalised to a mid-grey mean (sRGB 160 ~ linear 0.37)
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
-            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), 0.55) * vec3(${warm.map(x => x.toFixed(3)).join(',')}); }` : ''}
+            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), ${warm[3].toFixed(2)}) * vec3(${warm.slice(0, 3).map(x => x.toFixed(3)).join(',')}); }` : ''}
             ${isAsphalt ? `
             for (int i = 0; i < ${PAINT_MAX}; i++) {
               if (i >= pN) break;
@@ -287,6 +293,10 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           }` : `#include <normal_fragment_maps>
           {
             float fade = clamp(1.0 - length(vViewPosition) / 80.0, 0.0, 1.0);
+            // once a pixel spans a texel or more (grazing angles, thin strips such as granite curbs) the height
+            // derivative is noise and the bump turns into black and white speckle: fade it out there
+            float fp = length(fwidth(vTpPos)) * tpScale;
+            fade *= clamp(1.0 - (fp - 0.0008) / 0.0012, 0.0, 1.0); // gone by ~1 texel per pixel (1/512 of a repeat)
             vec2 dH = vec2(dFdx(tpH), dFdy(tpH)) * tpBump * fade;
             vec3 sx = dFdx(-vViewPosition), sy = dFdy(-vViewPosition);
             vec3 r1 = cross(sy, normal), r2 = cross(normal, sx);
