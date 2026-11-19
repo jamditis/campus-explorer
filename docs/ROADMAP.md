@@ -29,7 +29,7 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 
 - [x] Far-field land cover over the 4 km skirt from OpenStreetMap (woods, parks, water, roads, mapped buildings), about 36,000 far-field trees on wooded and residential land, and extruded houses (`tools/web-export/landcover.py`)
 - [x] Far-field buildings are real footprints only: OpenStreetMap where mapped, otherwise Microsoft Global ML Building Footprints (ODbL). Heights from USGS 3DEP LiDAR (75th-percentile surface minus surrounding ground) where it covers the footprint; elsewhere the footprint layer's own height estimate, scaled to match the LiDAR-measured buildings. The generated placeholder houses are gone; where no footprint exists the ground stays bare
-- [ ] Far-field LiDAR gaps: the 2023 NJ NE 6-County point cloud (newest, covers Essex) is only on rockyweb, which rate-limits to one slow connection; add it when it reaches the public Entwine bucket
+- [ ] Far-field LiDAR vintage: heights come from the 2017 NW 6-County cloud (public Entwine bucket) and the 2014 Sandy tiles; 99% of far buildings are covered. The 2023 NE 6-County cloud is newer but only on rockyweb (rate-limited to one slow connection); swap it in when it reaches the Entwine bucket
 
 - [x] One unified scene: north campus merged into `models/main/` at its real coordinates (`n_` tiles), scene selector removed
 - [x] Export refresh: `SCENE=main bash tools/web-export/build_web.sh` then `SCENE=north ...` (north merges against main's plan); prunes stale tiles, fails without publishing on any export error

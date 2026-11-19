@@ -230,7 +230,7 @@ def zat(x, y):
 
 
 # ---------- LiDAR surface/ground grids (2 m, model metres; see ndsm_ept.py) ----------
-NDSM = [g for g in os.environ.get("NDSM", "/workspace/nj-scenes/web/build/footprints/ndsm_b17.npz").split(",") if os.path.exists(g)]
+NDSM = [g for g in os.environ.get("NDSM", "/workspace/nj-scenes/web/build/footprints/ndsm_b17.npz,/workspace/nj-scenes/web/build/footprints/ndsm_sandy.npz").split(",") if os.path.exists(g)]
 LID = []
 for g in NDSM:
     z = np.load(g)

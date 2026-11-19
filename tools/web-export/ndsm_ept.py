@@ -7,11 +7,12 @@ Sources: an Entwine (EPT) dataset URL, streamed node by node (e.g. the public us
 or local .laz tiles. Nothing is kept but the grid.
 
 usage: python ndsm_ept.py OUT.npz https://s3-us-west-2.amazonaws.com/usgs-lidar-public/NJ_NW6Co_2017
-       python ndsm_ept.py OUT.npz tile1.laz tile2.laz ...
+       CRS=EPSG:6347 python ndsm_ept.py OUT.npz tile1.laz ...   (CRS only needed when a tile has no WKT)
 Run with a Python that has laspy[lazrs] and pyproj.
 """
 import io
 import json
+import os
 import sys
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -90,7 +91,7 @@ for src in srcs:
                 add(las, to_sp, 1.0)
     else:
         with laspy.open(src) as f:
-            crs = f.header.parse_crs()
+            crs = f.header.parse_crs() or CRS.from_user_input(os.environ["CRS"])  # older LAS 1.2 tiles: GeoTIFF keys only
             to_sp = Transformer.from_crs(crs, 6527, always_xy=True).transform
             zf = zfactor(crs)
             for chunk in f.chunk_iterator(3_000_000):
