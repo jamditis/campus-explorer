@@ -213,10 +213,10 @@ export function createLook(renderer, scene, camera) {
           }` : `#include <normal_fragment_maps>
           {
             float fade = clamp(1.0 - length(vViewPosition) / 80.0, 0.0, 1.0);
-            // once a pixel spans several texels (grazing angles, thin strips such as granite curbs) the height
+            // once a pixel spans a texel or more (grazing angles, thin strips such as granite curbs) the height
             // derivative is noise and the bump turns into black and white speckle: fade it out there
             float fp = length(fwidth(vTpPos)) * tpScale;
-            fade *= clamp(1.0 - (fp - 0.004) / 0.012, 0.0, 1.0);
+            fade *= clamp(1.0 - (fp - 0.0008) / 0.0012, 0.0, 1.0); // gone by ~1 texel per pixel (1/512 of a repeat)
             vec2 dH = vec2(dFdx(tpH), dFdy(tpH)) * tpBump * fade;
             vec3 sx = dFdx(-vViewPosition), sy = dFdy(-vViewPosition);
             vec3 r1 = cross(sy, normal), r2 = cross(normal, sx);
