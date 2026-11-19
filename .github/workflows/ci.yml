@@ -38,7 +38,7 @@ jobs:
       - name: Unit tests (plan geometry, terrain, tree finding and plan files of the scripted builds)
         # numpy and Pillow: without them the terrain and tree tests are skipped
         run: |
-          python3 -m pip install --disable-pip-version-check numpy==2.2.6 pillow==11.3.0
+          python3 -m pip install --disable-pip-version-check --only-binary=:all: numpy==2.3.5 pillow==11.3.0
           python3 -m unittest discover -s tests/py
 
   viewer:
