@@ -85,8 +85,11 @@ export function createPlayer(app) {
       if (grounded) stride += d;
     }
     if (!grounded) {
+      const y0 = position.y;
       vel.y -= GRAVITY * dt; position.y += vel.y * dt;
-      const hit = vel.y <= 0 && world.raycast(_o.set(position.x, position.y + STEP, position.z), DOWN, STEP + 0.05);
+      // sweep the whole fall since the last frame, so a slow frame cannot carry the feet through a landing
+      const top = Math.max(y0, position.y);
+      const hit = vel.y <= 0 && world.raycast(_o.set(position.x, top + STEP, position.z), DOWN, top - position.y + STEP + 0.05);
       if (hit) { position.y = hit.point.y; vel.y = 0; grounded = true; }
       if (position.y < app.bounds.min.y - 60) respawn();
     }
