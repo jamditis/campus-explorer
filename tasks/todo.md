@@ -56,4 +56,20 @@ Plan for the viewer work on branch `joe/wizardly-pasteur-n7mq4j`. Architecture a
 
 ## Review
 
-(filled in at the end)
+What was checked, and how:
+
+- Unit tests: 117 pass (`node --test`). They cover the georeference, solar position, tile order, share links, place search, ownership rules and the arithmetic of the compass, labels, measuring tool and hunt.
+- Georeference: `viewer/geo.js` agrees with pyproj to 5.5e-9 m. Building positions in both source models agree with OpenStreetMap to 4 m or better, with no systematic shift.
+- Headless browser (software WebGL): smoke test of every mode and tool, plus screenshots at 1280x800, 390x844 (portrait, touch) and 844x390 (landscape, touch). No overlapping controls, no console errors.
+- An independent review of the viewer core found 15 defects; all are fixed (commit 77d2500).
+- Before/after screenshots of the seven standard views (`tools/viewer-test/shoot.mjs`).
+
+Not verified (UNVERIFIED):
+
+- The border between the two source models. The 2 m ownership grid and its two patches (University Hall, softball stadium) are a viewer-side rule, not a merge. Sprague Field is drawn half from each file. The real merge belongs in Blender.
+- Phone memory and frame rate. The nine-tile lite budget is an estimate; it was tested only in an emulated phone viewport, not on a device.
+- `tools/web-export/export_web.py`: the "aerial-draped ground is grass" rule was not run, because Blender is not installed here. The viewer applies the same rule by material name until the next export.
+- Frame rates. This machine draws with software WebGL, so no real GPU timing exists.
+- Reduced-motion behaviour of the tour and labels (coded, not exercised in a browser).
+
+Lessons are in [lessons.md](lessons.md).
