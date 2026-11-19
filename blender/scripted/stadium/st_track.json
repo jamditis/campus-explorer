@@ -1,0 +1,2021 @@
+{
+ "zone": "st_track",
+ "notes": "Zone st_track: Dioguardi Field (osm 233324742, track osm 233324748) and the north part of the MSU Softball Stadium. Track fit (tracks.py-style generator in /tmp/claude-0/st/st_track/py): the eight lane lines were found as brightness peaks on profiles every 1 m round the oval (3049 peaks) and fitted as offsets of one stadium shape: centre (17.649, 933.706), long axis 80.179 deg, straights 99.741 m (half 49.871), inner edge of lane 1 radius 31.623 m, lane width 1.0637 m (42 in lanes, 8 lanes), rms 0.05 m, no bias by side or by line. Lap at 0.30 m from the inner edge = 400.06 m. Red surface to 8.88 m outside the inner edge; white kerb band 0.3 m inside it; turf to 0.33 m inside. Chute: the eight straight lanes run on to u -80.9 m south of the east straight. Finish line at u 49.93 (north end of the east straight), 100 m start at u -49.97, 110 m hurdles start at u -59.97 (line peaks). Track frame: u along the axis from the centre, v to its left (west). Soccer: frame fitted on line peaks (touch lines v -30.31/+30.38, goal lines u -49.95/+50.27, halfway 0.15, penalty lines -33.57/+33.88; all parallel to the track axis within 0.4 deg): centre u 0.1595, v 0.035 in the track frame, field 100.34 x 60.81 m to the outer line edges, lines 0.12 m; penalty areas 40.32 x 16.5, goal areas 18.32 x 5.5, marks 11 m, arcs and centre circle R 9.15, corner arcs 1 m, measured to outer edges (the measured goal-to-penalty line spacing, 16.38 m between centres, confirms this). Not drawn: the fainter men's lacrosse lines (sidelines v +-27.5, restraining lines u +-18.3, end lines with the soccer goal lines), the women's lacrosse/field hockey arcs and fans at both ends (yellowish, faint), the portable goals, the red hawk logo south of centre, lane numbers at u 39.4, staggered starts and relay marks. Red D (north): arcs R 15.04 m centred u 68.91 and R 27.88 m centred u 39.98 on the axis, tab 4.4 m wide to u 72.05. South strips: two long/triple jump runways (1.55 m, -11.7 deg) with a sand pit at the east end of the north runway and at the west end of the south one. Fence, apron, benches and the small north bleacher are read from shadows and white shapes in the 2020 ortho (no fence returns in the sparse 2017 LiDAR). Light poles: four isolated 20-21 m LiDAR columns (west at u -34.4, east at u -34.6, 0.8, 36.3); no columns where the other west poles would be. Softball (north of y 826): frame from ne_fields (home plate apex (-39.505, 817.623)); the building and the home seats are square to the centre-field axis (20.95 deg). Building walls from LiDAR returns (the ortho roof leans 2-3 m north-west). NE_field_stand_3B already reaches the backstop corner (-44.812, 826.343) as a rectangle, and NE_field_dugout_1B is drawn whole, so neither is continued here.",
+ "surfaces": [
+  {
+   "name": "ST_track_oval",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -6.845,
+     1029.663,
+     40.5
+    ],
+    [
+     -37.675,
+     851.565,
+     40.5
+    ],
+    [
+     42.143,
+     837.748,
+     40.5
+    ],
+    [
+     72.973,
+     1015.846,
+     40.5
+    ]
+   ],
+   "evidence": "ortho2020 (outer edge of the red surface 0.37 m outside lane line 8 on median profiles of all four sides)",
+   "unverified": "base under the polyurethane assumed asphalt; the infield part lies under the turf"
+  },
+  {
+   "name": "ST_track_chute",
+   "kind": "asphalt",
+   "ring": [
+    [
+     49.222,
+     878.642
+    ],
+    [
+     44.594,
+     851.911
+    ],
+    [
+     42.793,
+     847.25
+    ],
+    [
+     35.009,
+     848.597
+    ],
+    [
+     36.89,
+     859.465
+    ],
+    [
+     39.487,
+     880.328
+    ]
+   ],
+   "evidence": "ortho2020 (red surface of the eight straight lanes continued south to u -80.9 m; SE corner cut from u -76 m)",
+   "unverified": "end corners read to about 0.3 m"
+  },
+  {
+   "name": "ST_track_apron",
+   "kind": "concrete",
+   "layer": 2.5,
+   "ring": [
+    [
+     -7.676,
+     1030.842,
+     41.52
+    ],
+    [
+     -38.854,
+     850.734,
+     41.52
+    ],
+    [
+     42.974,
+     836.569,
+     41.52
+    ],
+    [
+     74.152,
+     1016.677,
+     41.52
+    ]
+   ],
+   "evidence": "ortho2020 (grey 0.9 m band between the red surface and the fence line, east and north sides)",
+   "unverified": "material (concrete or rubber edging) not told apart; under tree shade on the west"
+  },
+  {
+   "name": "ST_track_chute_apron",
+   "kind": "concrete",
+   "layer": 2.5,
+   "ring": [
+    [
+     50.056,
+     877.483
+    ],
+    [
+     44.61,
+     846.022
+    ],
+    [
+     34.363,
+     847.796
+    ],
+    [
+     35.545,
+     854.623
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "apron round the chute assumed like the rest"
+  },
+  {
+   "name": "ST_track_infield_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     0.659,
+     1019.017,
+     31.29
+    ],
+    [
+     -27.029,
+     859.069,
+     31.29
+    ],
+    [
+     34.639,
+     848.394,
+     31.29
+    ],
+    [
+     62.327,
+     1008.342,
+     31.29
+    ]
+   ],
+   "evidence": "ortho2020 (turf edge inside the white kerb band)"
+  },
+  {
+   "name": "ST_track_sand_pit_E",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     25.497,
+     876.663
+    ],
+    [
+     24.758,
+     873.088
+    ],
+    [
+     34.159,
+     871.143
+    ],
+    [
+     34.898,
+     874.718
+    ]
+   ],
+   "evidence": "ortho2020 (edges on cross profiles every 2 m, centreline rms 0.02 m; both runways at -11.7 deg, parallel); pit at the east end of the north runway",
+   "unverified": "sand assumed under a pale cover; size includes the pit frame"
+  },
+  {
+   "name": "ST_track_sand_pit_W",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     -17.823,
+     879.985
+    ],
+    [
+     -18.552,
+     876.46
+    ],
+    [
+     -9.396,
+     874.566
+    ],
+    [
+     -8.667,
+     878.091
+    ]
+   ],
+   "evidence": "ortho2020 (edges on cross profiles every 2 m, centreline rms 0.02 m; both runways at -11.7 deg, parallel); pit at the west end of the south runway",
+   "unverified": "sand assumed under a pale cover; size includes the pit frame"
+  },
+  {
+   "name": "ST_softball_skin_north",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     -44.9,
+     825.6
+    ],
+    [
+     -44.822,
+     826.566
+    ],
+    [
+     -43.924,
+     826.8
+    ],
+    [
+     -30.624,
+     826.8
+    ],
+    [
+     -29.135,
+     826.136
+    ],
+    [
+     -29.2,
+     825.6
+    ]
+   ],
+   "evidence": "ortho2020 (tan clay up to the backstop); continues NE_field_infield_skin",
+   "unverified": "as in ne_fields: clay assumed"
+  },
+  {
+   "name": "ST_softball_plaza",
+   "kind": "concrete",
+   "ring": [
+    [
+     -59.6,
+     825.7
+    ],
+    [
+     -44.95,
+     825.7
+    ],
+    [
+     -44.85,
+     826.6
+    ],
+    [
+     -43.95,
+     826.95
+    ],
+    [
+     -30.6,
+     826.95
+    ],
+    [
+     -29.0,
+     826.3
+    ],
+    [
+     -26.6,
+     829.7
+    ],
+    [
+     -27.4,
+     833.0
+    ],
+    [
+     -23.4,
+     834.6
+    ],
+    [
+     -23.4,
+     840.6
+    ],
+    [
+     -30.0,
+     843.6
+    ],
+    [
+     -36.0,
+     846.6
+    ],
+    [
+     -47.0,
+     852.2
+    ],
+    [
+     -51.0,
+     852.2,
+     2.0
+    ],
+    [
+     -54.2,
+     850.0,
+     3.0
+    ],
+    [
+     -56.2,
+     845.0
+    ],
+    [
+     -58.6,
+     838.0
+    ],
+    [
+     -59.6,
+     832.0
+    ]
+   ],
+   "evidence": "ortho2020 (pale paving round the stadium building, the seats and the planter terrace; lawn edge on the north-east from colour runs every 1 m)",
+   "unverified": "edges +-0.5 m; the paving under the building and seats is assumed; west edge meets NE_field_walk_west"
+  },
+  {
+   "name": "ST_softball_planter_1",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     -31.66,
+     841.25,
+     1.197
+    ],
+    [
+     -34.06,
+     841.25,
+     1.197
+    ],
+    [
+     -34.06,
+     838.8499999999999,
+     1.197
+    ],
+    [
+     -31.66,
+     838.8499999999999,
+     1.197
+    ]
+   ],
+   "evidence": "ortho2020 (round brown beds in the terrace, 2.4 m across)",
+   "unverified": "planting beds assumed"
+  },
+  {
+   "name": "ST_softball_planter_2",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     -28.580000000000002,
+     839.9000000000001,
+     1.197
+    ],
+    [
+     -30.98,
+     839.9000000000001,
+     1.197
+    ],
+    [
+     -30.98,
+     837.5,
+     1.197
+    ],
+    [
+     -28.580000000000002,
+     837.5,
+     1.197
+    ]
+   ],
+   "evidence": "ortho2020 (round brown beds in the terrace, 2.4 m across)",
+   "unverified": "planting beds assumed"
+  },
+  {
+   "name": "ST_softball_planter_3",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     -25.84,
+     838.5200000000001,
+     1.197
+    ],
+    [
+     -28.24,
+     838.5200000000001,
+     1.197
+    ],
+    [
+     -28.24,
+     836.12,
+     1.197
+    ],
+    [
+     -25.84,
+     836.12,
+     1.197
+    ]
+   ],
+   "evidence": "ortho2020 (round brown beds in the terrace, 2.4 m across)",
+   "unverified": "planting beds assumed"
+  }
+ ],
+ "strips": [
+  {
+   "name": "ST_track_walk_W",
+   "kind": "concrete",
+   "width": 1.6,
+   "centre": [
+    [
+     -35.053,
+     879.907
+    ],
+    [
+     -13.56,
+     1004.06
+    ]
+   ],
+   "evidence": "ortho2020 (pale walk 10.3-11.9 m outside the west straight; edges from brightness runs every 6 m)",
+   "unverified": "under tree shade at u -12..0 m; ends where it meets the turning-circle walk (south) and leaves the area (north)"
+  },
+  {
+   "name": "ST_softball_walk_W",
+   "kind": "concrete",
+   "width": 2.4,
+   "centre": [
+    [
+     -59.8,
+     825.6
+    ],
+    [
+     -59.6,
+     838.0,
+     6.0
+    ],
+    [
+     -56.4,
+     849.6
+    ]
+   ],
+   "evidence": "ortho2020 (grey walk between the hedge and the plaza, continuing NE_field_walk_west from (-59.8, 826.8))",
+   "unverified": "north end where it meets the turning-circle drive read to about 1 m"
+  }
+ ],
+ "curbs": [],
+ "markings": [
+  {
+   "type": "area",
+   "name": "ST_track_red",
+   "ring": [
+    [
+     57.558,
+     926.797
+    ],
+    [
+     72.973,
+     1015.846,
+     40.5
+    ],
+    [
+     -6.845,
+     1029.663,
+     40.5
+    ],
+    [
+     -37.675,
+     851.565,
+     40.5
+    ],
+    [
+     42.143,
+     837.748,
+     40.5
+    ],
+    [
+     57.558,
+     926.797
+    ],
+    [
+     48.779,
+     928.317
+    ],
+    [
+     34.883,
+     848.047,
+     31.59
+    ],
+    [
+     -27.376,
+     858.825,
+     31.59
+    ],
+    [
+     0.415,
+     1019.364,
+     31.59
+    ],
+    [
+     62.674,
+     1008.586,
+     31.59
+    ],
+    [
+     48.779,
+     928.317
+    ]
+   ],
+   "colour": "#a24f43",
+   "evidence": "ortho2020",
+   "unverified": "colour from the ortho tone brightened; no public photo of the surface found; ring drawn as one path with a zero-width slit at the east straight"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_chute_red",
+   "ring": [
+    [
+     49.051,
+     877.657
+    ],
+    [
+     44.594,
+     851.911
+    ],
+    [
+     42.793,
+     847.25
+    ],
+    [
+     35.009,
+     848.597
+    ],
+    [
+     35.986,
+     854.243
+    ]
+   ],
+   "colour": "#a24f43",
+   "evidence": "ortho2020",
+   "unverified": "colour as the track"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_kerb",
+   "path": [
+    [
+     0.537,
+     1019.191,
+     31.44
+    ],
+    [
+     -27.203,
+     858.947,
+     31.44
+    ],
+    [
+     34.761,
+     848.221,
+     31.44
+    ],
+    [
+     62.501,
+     1008.464,
+     31.44
+    ]
+   ],
+   "closed": true,
+   "width": 0.3,
+   "colour": "white",
+   "evidence": "ortho2020 (bright 0.3 m band peaking 0.1-0.25 m inside the inner edge)",
+   "unverified": "a raised kerb or a painted band: not told apart from above"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_1",
+   "path": [
+    [
+     -0.476,
+     1020.628,
+     32.683
+    ],
+    [
+     -28.64,
+     857.934,
+     32.683
+    ],
+    [
+     35.774,
+     846.783,
+     32.683
+    ],
+    [
+     63.938,
+     1009.477,
+     32.683
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_2",
+   "path": [
+    [
+     -1.343,
+     1021.858,
+     33.747
+    ],
+    [
+     -29.87,
+     857.067,
+     33.747
+    ],
+    [
+     36.641,
+     845.554,
+     33.747
+    ],
+    [
+     65.168,
+     1010.344,
+     33.747
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_3",
+   "path": [
+    [
+     -2.209,
+     1023.087,
+     34.811
+    ],
+    [
+     -31.099,
+     856.201,
+     34.811
+    ],
+    [
+     37.507,
+     844.324,
+     34.811
+    ],
+    [
+     66.397,
+     1011.21,
+     34.811
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_4",
+   "path": [
+    [
+     -3.076,
+     1024.317,
+     35.874
+    ],
+    [
+     -32.329,
+     855.334,
+     35.874
+    ],
+    [
+     38.374,
+     843.095,
+     35.874
+    ],
+    [
+     67.627,
+     1012.077,
+     35.874
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_5",
+   "path": [
+    [
+     -3.943,
+     1025.546,
+     36.938
+    ],
+    [
+     -33.558,
+     854.467,
+     36.938
+    ],
+    [
+     39.241,
+     841.865,
+     36.938
+    ],
+    [
+     68.856,
+     1012.944,
+     36.938
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_6",
+   "path": [
+    [
+     -4.809,
+     1026.776,
+     38.002
+    ],
+    [
+     -34.788,
+     853.601,
+     38.002
+    ],
+    [
+     40.107,
+     840.636,
+     38.002
+    ],
+    [
+     70.086,
+     1013.81,
+     38.002
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_7",
+   "path": [
+    [
+     -5.676,
+     1028.005,
+     39.065
+    ],
+    [
+     -36.017,
+     852.734,
+     39.065
+    ],
+    [
+     40.974,
+     839.406,
+     39.065
+    ],
+    [
+     71.315,
+     1014.677,
+     39.065
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lane_line_8",
+   "path": [
+    [
+     -6.543,
+     1029.235,
+     40.129
+    ],
+    [
+     -37.247,
+     851.868,
+     40.129
+    ],
+    [
+     41.841,
+     838.177,
+     40.129
+    ],
+    [
+     72.545,
+     1015.544,
+     40.129
+    ]
+   ],
+   "closed": true,
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (track fit: 3049 lane-line peaks, rms 0.05 m; see notes)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_0",
+   "path": [
+    [
+     40.302,
+     879.172
+    ],
+    [
+     35.009,
+     848.597
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_1",
+   "path": [
+    [
+     41.35,
+     878.99
+    ],
+    [
+     36.057,
+     848.416
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_2",
+   "path": [
+    [
+     42.398,
+     878.809
+    ],
+    [
+     37.105,
+     848.234
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_3",
+   "path": [
+    [
+     43.446,
+     878.627
+    ],
+    [
+     38.153,
+     848.053
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_4",
+   "path": [
+    [
+     44.494,
+     878.446
+    ],
+    [
+     39.201,
+     847.871
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_5",
+   "path": [
+    [
+     45.542,
+     878.265
+    ],
+    [
+     40.249,
+     847.69
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_6",
+   "path": [
+    [
+     46.59,
+     878.083
+    ],
+    [
+     41.297,
+     847.509
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_7",
+   "path": [
+    [
+     47.638,
+     877.902
+    ],
+    [
+     42.345,
+     847.327
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_line_8",
+   "path": [
+    [
+     48.686,
+     877.72
+    ],
+    [
+     44.229,
+     851.974
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (lines continue straight through the chute)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_chute_end",
+   "path": [
+    [
+     35.026,
+     848.696
+    ],
+    [
+     42.81,
+     847.348
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "end line assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_finish",
+   "path": [
+    [
+     57.345,
+     977.506
+    ],
+    [
+     65.69,
+     976.062
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (line across all lanes at the north end of the east straight (faint peak, u 49.93))",
+   "unverified": "which race each line serves is inferred from the distances"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_start_100m",
+   "path": [
+    [
+     40.304,
+     879.07
+    ],
+    [
+     48.649,
+     877.626
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (strong line across all lanes at u -49.97, 99.9 m before the finish)",
+   "unverified": "which race each line serves is inferred from the distances"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_start_110mH",
+   "path": [
+    [
+     38.599,
+     869.217
+    ],
+    [
+     46.944,
+     867.772
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "ortho2020 (line across the chute at u -59.97, 109.9 m before the finish)",
+   "unverified": "which race each line serves is inferred from the distances"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_boundary",
+   "path": [
+    [
+     -3.711,
+     988.42
+    ],
+    [
+     -20.806,
+     889.669
+    ],
+    [
+     38.995,
+     879.317
+    ],
+    [
+     56.09,
+     978.068
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "closed": true,
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_halfway",
+   "path": [
+    [
+     -12.259,
+     939.045
+    ],
+    [
+     47.542,
+     928.693
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_centre_circle",
+   "path": [
+    [
+     10.235,
+     944.376,
+     9.087
+    ],
+    [
+     7.134,
+     926.462,
+     9.087
+    ],
+    [
+     25.048,
+     923.361,
+     9.087
+    ],
+    [
+     28.149,
+     941.275,
+     9.087
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "closed": true,
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_soccer_centre_mark",
+   "ring": [
+    [
+     17.552,
+     933.996,
+     0.107
+    ],
+    [
+     17.515,
+     933.779,
+     0.107
+    ],
+    [
+     17.731,
+     933.742,
+     0.107
+    ],
+    [
+     17.769,
+     933.958,
+     0.107
+    ]
+   ],
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_penalty_area_N",
+   "path": [
+    [
+     6.384,
+     986.673
+    ],
+    [
+     3.59,
+     970.533
+    ],
+    [
+     43.201,
+     963.676
+    ],
+    [
+     45.995,
+     979.816
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_goal_area_N",
+   "path": [
+    [
+     17.223,
+     984.797
+    ],
+    [
+     16.305,
+     979.495
+    ],
+    [
+     34.238,
+     976.391
+    ],
+    [
+     35.156,
+     981.692
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_soccer_penalty_mark_N",
+   "ring": [
+    [
+     24.234,
+     972.592,
+     0.107
+    ],
+    [
+     24.196,
+     972.375,
+     0.107
+    ],
+    [
+     24.413,
+     972.338,
+     0.107
+    ],
+    [
+     24.45,
+     972.554,
+     0.107
+    ]
+   ],
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_penalty_arc_N",
+   "path": [
+    [
+     16.219,
+     968.347
+    ],
+    [
+     21.732,
+     957.498,
+     9.087
+    ],
+    [
+     30.571,
+     965.862
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_corner_NW",
+   "path": [
+    [
+     -2.726,
+     988.25
+    ],
+    [
+     -3.711,
+     988.42,
+     0.937
+    ],
+    [
+     -3.882,
+     987.435
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_corner_NE",
+   "path": [
+    [
+     55.104,
+     978.239
+    ],
+    [
+     56.09,
+     978.068,
+     0.937
+    ],
+    [
+     55.919,
+     977.083
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_penalty_area_S",
+   "path": [
+    [
+     -10.711,
+     887.922
+    ],
+    [
+     -7.917,
+     904.062
+    ],
+    [
+     31.694,
+     897.204
+    ],
+    [
+     28.9,
+     881.065
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_goal_area_S",
+   "path": [
+    [
+     0.128,
+     886.045
+    ],
+    [
+     1.045,
+     891.346
+    ],
+    [
+     18.979,
+     888.242
+    ],
+    [
+     18.061,
+     882.941
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_soccer_penalty_mark_S",
+   "ring": [
+    [
+     10.871,
+     895.4,
+     0.107
+    ],
+    [
+     10.833,
+     895.183,
+     0.107
+    ],
+    [
+     11.05,
+     895.146,
+     0.107
+    ],
+    [
+     11.087,
+     895.362,
+     0.107
+    ]
+   ],
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_penalty_arc_S",
+   "path": [
+    [
+     19.064,
+     899.391
+    ],
+    [
+     13.551,
+     910.239,
+     9.087
+    ],
+    [
+     4.713,
+     901.875
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_corner_SW",
+   "path": [
+    [
+     -19.821,
+     889.499
+    ],
+    [
+     -20.806,
+     889.669,
+     0.937
+    ],
+    [
+     -20.635,
+     890.655
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_soccer_corner_SE",
+   "path": [
+    [
+     38.009,
+     879.488
+    ],
+    [
+     38.995,
+     879.317,
+     0.937
+    ],
+    [
+     39.165,
+     880.302
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "NCAA/IFAB rule book dimensions; field frame fitted to the ortho (touch, goal, halfway and penalty lines, rms 0.06-0.075 m)"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_jump_apron_N",
+   "ring": [
+    [
+     14.563,
+     999.161
+    ],
+    [
+     21.593,
+     956.487,
+     15.037
+    ],
+    [
+     42.558,
+     994.315
+    ],
+    [
+     37.631,
+     998.515,
+     27.877
+    ],
+    [
+     31.358,
+     1000.115
+    ],
+    [
+     32.087,
+     1004.328
+    ],
+    [
+     27.791,
+     1005.072
+    ],
+    [
+     27.062,
+     1000.859
+    ],
+    [
+     20.615,
+     1001.461,
+     27.877
+    ]
+   ],
+   "colour": "#a24f43",
+   "evidence": "ortho2020 (red area: south edge an arc R 15.04 m, north edge an arc R 27.88 m, both on the track axis, edge fits rms 0.06/0.17 m; 4.4 m tab towards the track)",
+   "unverified": "use (high jump apron) inferred from the shape"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_runway_N",
+   "ring": [
+    [
+     -17.068,
+     884.398
+    ],
+    [
+     -17.383,
+     882.88
+    ],
+    [
+     24.97,
+     874.117
+    ],
+    [
+     25.284,
+     875.634
+    ]
+   ],
+   "colour": "#93685d",
+   "evidence": "ortho2020 (edges on cross profiles every 2 m, centreline rms 0.02 m; both runways at -11.7 deg, parallel)",
+   "unverified": "long/triple jump runway inferred; colour from the ortho tone (lighter than the track)"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_runway_S",
+   "ring": [
+    [
+     -8.874,
+     877.087
+    ],
+    [
+     -9.188,
+     875.569
+    ],
+    [
+     32.577,
+     866.928
+    ],
+    [
+     32.891,
+     868.446
+    ]
+   ],
+   "colour": "#93685d",
+   "evidence": "ortho2020 (edges on cross profiles every 2 m, centreline rms 0.02 m; both runways at -11.7 deg, parallel)",
+   "unverified": "long/triple jump runway inferred; colour from the ortho tone"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_sand_pit_E_cover",
+   "ring": [
+    [
+     25.614,
+     876.485
+    ],
+    [
+     24.935,
+     873.205
+    ],
+    [
+     34.042,
+     871.321
+    ],
+    [
+     34.721,
+     874.601
+    ]
+   ],
+   "colour": "#cfd0c3",
+   "evidence": "ortho2020 (pale pit surface)",
+   "unverified": "pale tone read as sand or a cover"
+  },
+  {
+   "type": "area",
+   "name": "ST_track_sand_pit_W_cover",
+   "ring": [
+    [
+     -17.706,
+     879.808
+    ],
+    [
+     -18.375,
+     876.577
+    ],
+    [
+     -9.513,
+     874.743
+    ],
+    [
+     -8.844,
+     877.974
+    ]
+   ],
+   "colour": "#cfd0c3",
+   "evidence": "ortho2020 (pale pit surface)",
+   "unverified": "pale tone read as sand or a cover"
+  }
+ ],
+ "points": [
+  {
+   "name": "ST_track_light_W1",
+   "kind": "light_pole",
+   "at": [
+    -29.76,
+    906.96
+   ],
+   "height": 20.5,
+   "angle": 29.4,
+   "evidence": "lidar2017 (isolated top return 20.5 m above ground)",
+   "unverified": "base taken under the top return (+-1 m); heads and aim assumed"
+  },
+  {
+   "name": "ST_track_light_E1",
+   "kind": "light_pole",
+   "at": [
+    52.81,
+    892.5
+   ],
+   "height": 21.0,
+   "angle": 130.5,
+   "evidence": "lidar2017 (isolated top return 21.0 m above ground)",
+   "unverified": "base taken under the top return (+-1 m); heads and aim assumed"
+  },
+  {
+   "name": "ST_track_light_E2",
+   "kind": "light_pole",
+   "at": [
+    58.64,
+    927.41
+   ],
+   "height": 20.2,
+   "angle": 171.3,
+   "evidence": "lidar2017 (isolated top return 20.2 m above ground)",
+   "unverified": "base taken under the top return (+-1 m); heads and aim assumed"
+  },
+  {
+   "name": "ST_track_light_E3",
+   "kind": "light_pole",
+   "at": [
+    66.04,
+    962.21
+   ],
+   "height": 20.6,
+   "angle": -149.5,
+   "evidence": "lidar2017 (isolated top return 20.6 m above ground)",
+   "unverified": "base taken under the top return (+-1 m); heads and aim assumed"
+  },
+  {
+   "name": "ST_track_bench_E1",
+   "kind": "bench",
+   "at": [
+    59.4,
+    935.0
+   ],
+   "angle": 80.2,
+   "length": 6.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  },
+  {
+   "name": "ST_track_bench_E2",
+   "kind": "bench",
+   "at": [
+    57.0,
+    923.0
+   ],
+   "angle": 80.2,
+   "length": 5.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  },
+  {
+   "name": "ST_track_bench_E3",
+   "kind": "bench",
+   "at": [
+    53.7,
+    908.5
+   ],
+   "angle": 80.2,
+   "length": 6.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  },
+  {
+   "name": "ST_track_bench_W1",
+   "kind": "bench",
+   "at": [
+    -25.1,
+    928.0
+   ],
+   "angle": 260.2,
+   "length": 5.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  },
+  {
+   "name": "ST_track_bench_W2",
+   "kind": "bench",
+   "at": [
+    -18.1,
+    960.0
+   ],
+   "angle": 260.2,
+   "length": 4.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  },
+  {
+   "name": "ST_track_bench_W3",
+   "kind": "bench",
+   "at": [
+    -34.0,
+    889.0
+   ],
+   "angle": 260.2,
+   "length": 5.0,
+   "evidence": "ortho2020 (white bar beside the track)",
+   "unverified": "read as aluminium team benches; type and length"
+  }
+ ],
+ "stands": [
+  {
+   "name": "ST_track_bleacher_N",
+   "ring": [
+    [
+     52.898,
+     1013.889
+    ],
+    [
+     48.612,
+     1017.335
+    ],
+    [
+     49.702,
+     1018.691
+    ],
+    [
+     53.988,
+     1015.245
+    ]
+   ],
+   "front": [
+    [
+     52.898,
+     1013.889
+    ],
+    [
+     48.612,
+     1017.335
+    ]
+   ],
+   "rows": 3,
+   "sections": 1,
+   "aisles": 0,
+   "evidence": "ortho2020 (bright 5.5 x 1.75 m object outside the north bend with a raised shadow to the north-east)",
+   "unverified": "read as a small 3-row bleacher facing the track; not in the 2017 LiDAR, so height and type are a guess"
+  },
+  {
+   "name": "ST_softball_stand_home",
+   "ring": [
+    [
+     -44.813,
+     826.341
+    ],
+    [
+     -39.826,
+     828.251
+    ],
+    [
+     -40.885,
+     831.015
+    ],
+    [
+     -45.872,
+     829.106
+    ]
+   ],
+   "front": [
+    [
+     -44.813,
+     826.341
+    ],
+    [
+     -39.826,
+     828.251
+    ]
+   ],
+   "rows": 5,
+   "sections": 1,
+   "aisles": 0,
+   "first_row_height": 1.3,
+   "rise": 0.32,
+   "evidence": "ortho2020 (seat rows square to the centre-field axis behind home plate); lidar2017 (deck 1.3 m at the front to 2.9 m at the back)",
+   "unverified": "front cut where NE_field_stand_3B ends; rows from the LiDAR slope"
+  },
+  {
+   "name": "ST_softball_stand_1B",
+   "ring": [
+    [
+     -39.3,
+     826.95
+    ],
+    [
+     -31.2,
+     826.95
+    ],
+    [
+     -31.2,
+     831.4
+    ],
+    [
+     -39.3,
+     831.4
+    ]
+   ],
+   "front": [
+    [
+     -39.3,
+     826.95
+    ],
+    [
+     -31.2,
+     826.95
+    ]
+   ],
+   "rows": 6,
+   "sections": 1,
+   "aisles": 0,
+   "first_row_height": 0.4,
+   "rise": 0.33,
+   "evidence": "ortho2020 (pale seating block east of the home seats); lidar2017 (1.3 m at the backstop rising to 2.2-3.5 m)",
+   "unverified": "drawn as a rectangle square to the backstop; the real block is skewed (its east side follows the 5.2 m net posts)"
+  }
+ ],
+ "fences": [
+  {
+   "name": "ST_track_fence",
+   "closed": true,
+   "height": 2.4,
+   "kind": "chain_link_black",
+   "path": [
+    [
+     74.037,
+     1016.595,
+     41.42
+    ],
+    [
+     -7.594,
+     1030.727,
+     41.42
+    ],
+    [
+     -38.739,
+     850.816,
+     41.42
+    ],
+    [
+     19.5,
+     839.2,
+     6.0
+    ],
+    [
+     36.3,
+     836.1,
+     4.0
+    ],
+    [
+     44.478,
+     845.842,
+     4.0
+    ]
+   ],
+   "evidence": "ortho2020 (fence shadow line about 9.7-10.0 m outside the inner edge: dark on the track side in the west, outside it in the east and north; the dark line round the south-east corner); lidar2017 (1-2.6 m returns at 8.5-10 m, east side)",
+   "unverified": "line and height (8 ft assumed) inferred from shadows; gates not placed; the south run between the track and the walk is assumed"
+  },
+  {
+   "name": "ST_softball_backstop",
+   "path": [
+    [
+     -44.812,
+     826.343
+    ],
+    [
+     -43.924,
+     826.8
+    ],
+    [
+     -30.624,
+     826.8
+    ],
+    [
+     -29.135,
+     826.136
+    ]
+   ],
+   "closed": false,
+   "height": 5.2,
+   "kind": "netting_black",
+   "evidence": "ortho2020 (north edge of the clay, as in ne_fields); lidar2017 (5.2 m post returns at both ends of the seats)",
+   "unverified": "netting assumed over the backstop wall; height from the end posts"
+  },
+  {
+   "name": "ST_softball_net_1B_seats",
+   "path": [
+    [
+     -28.9,
+     828.6
+    ],
+    [
+     -35.8,
+     833.0
+    ]
+   ],
+   "closed": false,
+   "height": 5.2,
+   "kind": "netting_black",
+   "evidence": "lidar2017 (row of 5.2 m returns along the east end of the seats)",
+   "unverified": "side netting assumed"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "ST_track_shed_S1",
+   "ring": [
+    [
+     20.8,
+     838.7
+    ],
+    [
+     24.7,
+     838.7
+    ],
+    [
+     24.7,
+     842.1
+    ],
+    [
+     20.8,
+     842.1
+    ]
+   ],
+   "roof": "gable",
+   "ridge_angle": 90,
+   "top": 112.55,
+   "eave": 112.1,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#b9b6ad",
+   "roof_colour": "#a9aaa4",
+   "evidence": "lidar2017 (roof 2.8-3.5 m over ground 109.3, ridge north-south); ortho2020 (light grey roof, shifted about 1.5 m north by relief)",
+   "unverified": "walls placed on the LiDAR returns (+-0.4 m); wall colour"
+  },
+  {
+   "name": "ST_track_shed_S2",
+   "ring": [
+    [
+     28.0,
+     840.5
+    ],
+    [
+     31.6,
+     840.5
+    ],
+    [
+     31.6,
+     843.6
+    ],
+    [
+     28.0,
+     843.6
+    ]
+   ],
+   "roof": "gable",
+   "top": 112.85,
+   "eave": 112.55,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#b9b6ad",
+   "roof_colour": "#4c4f52",
+   "evidence": "lidar2017 (roof 3.3-3.8 m over ground 109.3, ridge east-west); ortho2020 (dark grey gable roof)",
+   "unverified": "walls placed on the LiDAR returns (+-0.4 m); wall colour"
+  },
+  {
+   "name": "ST_softball_clubhouse",
+   "ring": [
+    [
+     -51.157,
+     827.082
+    ],
+    [
+     -37.803,
+     832.195
+    ],
+    [
+     -39.877,
+     837.612
+    ],
+    [
+     -53.231,
+     832.499
+    ]
+   ],
+   "roof": "hip",
+   "top": 116.8,
+   "eave": 114.0,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#d6cbb4",
+   "roof_colour": "#8f5446",
+   "windows": {
+    "width": 1.2,
+    "height": 1.4,
+    "spacing": 3.5
+   },
+   "evidence": "lidar2017 (roof 4.4 m over ground at the hips, 7.3 m at the ridge, ground 109.5); ortho2020 (red-brown hip roof, shifted 2-3 m north-west by relief); https://montclairathletics.com/facilities/msu-softball-stadium/6 (press box, locker rooms, concessions)",
+   "unverified": "walls placed on the LiDAR returns (+-0.5 m); wall colour, windows; the press box is taken to be inside this building"
+  },
+  {
+   "name": "ST_softball_clubhouse_N",
+   "ring": [
+    [
+     -53.231,
+     832.499
+    ],
+    [
+     -39.69,
+     837.683
+    ],
+    [
+     -41.048,
+     841.232
+    ],
+    [
+     -54.59,
+     836.047
+    ]
+   ],
+   "roof": "shed",
+   "ridge_angle": 200.95,
+   "top": 113.4,
+   "eave": 112.7,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d6cbb4",
+   "roof_colour": "#8f5446",
+   "evidence": "lidar2017 (lower roof 3.9 m over ground next to the main roof falling to 3.2 m at the back)",
+   "unverified": "walls +-0.5 m; wall colour"
+  }
+ ]
+}

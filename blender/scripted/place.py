@@ -227,6 +227,22 @@ def points(lay, terrain):
                     bx, by, _ = run((i - (n - 1) / 2) * 7.5, 0)
                     seat = (bx, by, terrain.at(bx, by))
                     out.append(fixtures.team_bench(f"{name}_{i + 1}", seat, facing, 6.0))
+            elif p.get("length", 1.8) >= 4.0:
+                # a long bench beside a pitch is a team bench: `angle` is its long direction, and
+                # it faces the nearest turf unless the plan gives `facing`
+                facing = p.get("facing")
+                if facing is None:
+                    turf = [t["ring"] for t in lay["surfaces"] if t["kind"] == "turf"]
+                    mids = [
+                        (sum(q[0] for q in r) / len(r), sum(q[1] for q in r) / len(r)) for r in turf
+                    ]
+                    facing = angle + 90
+                    if mids:
+                        mx, my = min(mids, key=lambda m: (m[0] - x) ** 2 + (m[1] - y) ** 2)
+                        a = math.radians(facing)
+                        if (mx - x) * math.cos(a) + (my - y) * math.sin(a) < 0:
+                            facing += 180
+                out.append(fixtures.team_bench(name, at, facing, p["length"]))
             else:
                 out.append(fixtures.platform_bench(name, at, angle, p.get("length", 1.8)))
         elif kind in ("gate", "flasher"):
