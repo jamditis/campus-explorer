@@ -106,7 +106,7 @@ app = {
 
 ### Drawing on demand
 
-The loop does not draw when nothing changed. If a module changes something visible that is not the camera (adds a mesh, moves a marker), it calls `app.invalidate()`. DOM overlays do not need it.
+The loop does not draw when nothing changed. If a module changes something visible that is not the camera (adds a mesh, moves a marker), it calls `app.invalidate()`. `app.invalidate(true)` is the lazy form for changes that can wait a moment, such as a tile that arrived: on a slow GPU the redraw is put off for a few frame times so that loading is not held up by drawing. DOM overlays do not need it.
 
 ## `world`
 

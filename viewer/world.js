@@ -135,7 +135,7 @@ export function createWorld(app, prepare, release = () => {}) {
       addColliders(root, tile);
       warmIdle(); // collision near the view gets ready in idle time, so picks and the elevation readout do not wait
       progress.tiles++;
-      app.emit('tile', { tile }); app.emit('progress', progress); app.invalidate();
+      app.emit('tile', { tile }); app.emit('progress', progress); app.invalidate(true); // lazy: see app.invalidate
     } catch (e) {
       if (my !== token || e.name === 'AbortError') return;
       progress.loaded += tile.bytes - tile.got; // keep the bar honest when a tile fails
