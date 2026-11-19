@@ -73,3 +73,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: while subagents were writing plan files in the working tree, I checked out another branch there to fix a PR. Their files vanished and came back as an older copy; one subagent had to regenerate its file.
 - Rule: when a subagent works in the checkout, do other-branch work in a separate `git worktree`, never with `git checkout` or `git stash` in the shared tree.
+
+## Do not stage everything while an export is writing tiles (2026-11-19)
+
+- What happened: a docs commit made with `git add -A` during a tile export took half-written tiles with it and was pushed. The next commit replaced them, and the branch had no PR yet, so nothing reached a reviewer.
+- Rule: while an export, a subagent or any other job writes in the tree, stage by path (`git add docs/ ...`), never `git add -A`.
