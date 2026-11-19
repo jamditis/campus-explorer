@@ -5,6 +5,7 @@ Parts of the campus built whole by script from plan files: one folder per area, 
 | Area folder | What it holds |
 |---|---|
 | `southwest/` | Montclair Heights station surroundings, Normal Avenue, Carlisle Road, Sprague Field |
+| `stadium/` | Yogi Berra Stadium and the museum, the running track and soccer field, the north part of the softball stadium, the lots and roads north of the north-east area |
 | `northeast/` | CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts, and the lots and roads between them |
 
 The engine (`*.py` in this folder) is shared. An area is a folder with a `footprint.json`; object names carry the area or a zone name, and zone names are unique across areas.
@@ -39,6 +40,8 @@ python3 blender/scripted/edge.py southwest /workspace/data/southwest/tiles
 ```
 
 ## How it joins the other models
+
+- **Two scripted areas side by side.** Along an edge that two areas share there is no other model to meet: edge samples there are dropped, both areas take the ground from the same LiDAR, and paving is graded across the edge as one surface. Fetch each area's LiDAR at least 40 m beyond its footprint, so the ground near a shared edge is not cut off. Measured between the north-east and stadium areas: median difference 3 cm; where paving on one side meets soft ground on the other, up to a few decimetres (the edge skirt closes the gap).
 
 - **One ground.** Inside the footprint (`<area>/footprint.json`) an area owns the ground. `tools/web-export/supersede.mjs` takes the other sources' ground out of their tiles there and lowers the corners of the triangles that reach in, so the old ground dips under the new edge. The rules (which meshes are ground, which things are replaced) are in `<area>/footprint.json` under `supersede`.
 - **Changing the footprint.** Removed triangles cannot be put back. If `<area>/footprint.json` changes, export the main and north tiles again (or restore them from before the scripted build) before `SCENE=sw`; `supersede.mjs` stops with a message if a tile was done with other rules.
