@@ -1,6 +1,6 @@
 # ws236 runbook (Nov 19, 2026, 11:31 AM–12:2x PM ET) — UNIFY W53q (M3b corridor ↔ main-native ground seams)
 
-Main before: ws235b (sha abb9a7d1…). Main after: ws236d, promoted 12:03:19 PM ET (sha 60a317de…). Interim ws236c was main 11:54:05–12:03:19 PM (sha cd1febbb…). Backup montclair_state_pre_20261119ws236.blend = ws235b. Interim ws236b was main 11:40:26–11:54:05 AM (sha 78a6834b…).
+Main before: ws235b (sha abb9a7d1…). Main after: ws236e, promoted 12:09:12 PM ET (sha 241c26b3…). Interim ws236d was main 12:03:19–12:09:12 PM (sha 60a317de…); ws236c was main 11:54:05–12:03:19 PM (sha cd1febbb…). Backup montclair_state_pre_20261119ws236.blend = ws235b. Interim ws236b was main 11:40:26–11:54:05 AM (sha 78a6834b…).
 
 Evidence call per edge: M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam is the north 1 m LiDAR DTM. PK_Feliciano_west_DTM_fill_UNVERIFIED is a synthetic fill (no modifiers), WS60_terrain_edge_apron_LiDAR_to_skirt is a LiDAR-to-skirt feather, and WS68_RHD_ground_northDTM's W/S/N edges were feathered over 8 m into the skirt/apron (ws68). So the synthetic side moves toward the LiDAR; M3b and all fine-tuned interiors stay.
 
@@ -13,3 +13,4 @@ Evidence call per edge: M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_sea
 7. `probe236e.py` (evaluated, skirt GN on): top surface along the close-up line = M3b then PK fill (no skirt).
 8. WIPs: `bash scripts/ws236/jobwip236.sh` (subrend234 + extra235.json; skirt, M3b, WS60 in KEEPMOD).
 9. `CHAIN="ws236/f236d.py" INF=…ws236c.blend OUTN=montclair_state_ws236d.blend` (Codex #49): f236c copied the source UV onto each extruded vertex, collapsing the strips in UV space (smeared band). The grounds' `ortho` UVs are planar in world XY, so an affine u,v = a·x + b·y + c is fitted per object on the original loops (max error 0.0 on all three) and evaluated at every strip loop.
+10. `CHAIN="ws236/f236e.py" INF=…ws236d.blend OUTN=montclair_state_ws236e.blend` (self-review): the close-up still showed a thin dark line along the PK/M3b seam = M3b's free edge 4 cm above the tucked strip. The strips' outer verts go to M3b z − 5 mm (PK 289, WS60 27, WS68 135); the line is much thinner. A true weld of M3b's boundary to the strip is still open. WIP close-up: `ONLY=4 D=test bash scripts/ws236/jobwip236e.sh`.
