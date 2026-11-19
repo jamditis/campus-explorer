@@ -47,7 +47,13 @@ Rules learned from corrections. Read at the start of a session.
 
 - Overpass servers reset or timed out for a small box; the OpenStreetMap API `map` call returned the same elements. `fetch.py osm` falls back to it.
 - The 2017 NW 6-County point cloud ends near y -262 (just south of the station shelter). The 2014 Sandy cloud covers the rest. `fetch.py lidar` takes each 10 m block from the newest cloud that has ground there.
-- The 2017 cloud has no west grandstand at Sprague Field. Do not take stand heights from it.
+- ~~The 2017 cloud has no west grandstand at Sprague Field.~~ Wrong: see the next entry.
+
+## 2026-11-19: a tool bug became a "fact" about the data
+
+- **What went wrong:** `fetch.py lidar` kept a 10 m block only if it had ground returns. Under a wide roof or a solid stand a block has none, so those blocks were dropped. I then read the hole as "the 2017 LiDAR has no west grandstand", wrote that into the plan notes and the PR, and set the stand height by a guess. The stand is in the cloud, classed as ground, 5.7 m high at the back. Its deck also went into the terrain as a 3 m bank, which made the lot and walk beside it lumpy.
+- **Rule:** when data is missing where something large should be, suspect the tool first. Plot the raw returns of every class before writing "the data does not show it".
+- **Rule:** a solid stand, deck or ramp can be classed as ground. Leave ground returns inside such outlines out of the terrain (`Terrain(voids=...)`).
 
 ## 2026-11-19: paving is a graded surface, not terrain
 
@@ -56,3 +62,9 @@ Rules learned from corrections. Read at the start of a session.
 - **Rule:** grade paving as paving. Smooth it over 5 m from paved cells only; never bend it to a neighbour unless the two are already nearly level; close a real step with a face. Soft ground may bend. This is AGENTS rule 4 (no wobbles) for heights, not only for plan edges.
 - **Rule:** measure smoothness before showing a result. `tests/py/test_terrain.py` holds the cases (noisy ground, a bank beside a road, a level neighbour). After the fix: Normal Avenue 4.0 cm away from the crossing, the plaza 2.4 cm, the cross walk 0.4 cm.
 - **Still lumpy:** the ring walk (10 cm) and Lot 42 (14 cm) by the west stand, where the 2017 LiDAR has a 3 m bank that the plan does not model as a wall.
+
+## 2026-11-19: Joe answers questions only through the question dialog
+
+- **Instruction (Joe):** "i only answer questions via AUQ".
+- **What went wrong:** I ended three reports with open questions in plain text (logo artwork, reference sources, how to work in main-model areas). None was answered.
+- **Rule:** when a decision is Joe's, ask it with the AskUserQuestion dialog, with a recommended option first. Do not leave questions in the text of a report. Decide everything else myself and record the reasoning.

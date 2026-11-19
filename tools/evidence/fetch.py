@@ -189,7 +189,7 @@ def lidar(name, x0, y0, x1, y1, cell=0.5):
         bi = np.clip(((p[:, 0] - x0) / 10).astype(int), 0, bx - 1)
         bj = np.clip(((y1 - p[:, 1]) / 10).astype(int), 0, by - 1)
         has = np.zeros((by, bx), bool)
-        has[bj[p[:, 3] == 2], bi[p[:, 3] == 2]] = True
+        has[bj, bi] = True  # any return: under a wide roof a block has no ground returns at all
         use = ~taken[bj, bi] & has[bj, bi]
         keep.append(np.column_stack([p[use], np.full(int(use.sum()), si, "f4")]))
         print(

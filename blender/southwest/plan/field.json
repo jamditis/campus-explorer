@@ -1,6 +1,6 @@
 {
  "zone": "field",
- "notes": "Field frame: u along the long axis (76.18 deg, towards the north goal), v to its left (west). Most field-related outlines were read in that frame on brightness/colour profiles of the 2020 ortho and converted to model x, y, then checked on --plan overlays at 16-20 px/m. Turf (2020 ortho): straight sides on the white edge strip at |v| = 32.1; north apron a true arc R 34 centred on the axis 35.5 m north of centre (apex 69.5 m), meeting the sides at u = 46.7 at a slight angle; south apron R 42.4 (apex 66.9 m) meeting the sides at u = -52.2. Apron readings scatter about 1 m (NW and SW edges run ~1 m outside the arcs). In 2025 photos (0151, 0163) an asphalt walk and the black netting cross the north apron 3-6 m beyond the end line; the ortho shows a lighter band there, kept as North_cross_walk. Ring walk: west edge on the grandstand front (v 37.4), east edge on the bleacher front (v -36.2), north curb arc concentric with the turf arc, R 37.9; there is no walk round the south apron (lawn and trees, 0163). Stands: outlines from the ortho roofs, which agree with OSM 232846650/232846674 to ~0.5 m; rows and sections counted on the drone photos (see stands[].count_note). Press box: OSM 232846675 and a 13.3 m LiDAR 2017 return; not distinct in the ortho. Lot 42: hedge-side curb and both stall rows from the ortho (stall lines located as brightness peaks along offset rows); building wall on the north-east from OSM; drive connections from OSM aisle 232846631 (north, beyond y -70, and south to Carlisle Rd at y -158 to -168). Light poles: five, as in photos 0147/0151/0163 (NW and SW of the west stand, the antenna mast behind the press box, N and S ends of the east bleachers); only the SW pole is in the 2017 LiDAR (24.5 m); the mast is from OSM; the other three are placed from photos and ortho shadows and are UNVERIFIED to 2-3 m. Trees: crown tops and radii from the 2017 LiDAR nDSM (hedge, stand and building returns excluded). Hedge height 6.5 m from the LiDAR. Scoreboard projected from two oblique drone photos (UNVERIFIED +-3 m). Football markings are not traced: they are to be generated from field_frame. The 2017 LiDAR predates the present west grandstand, so no stand heights were taken from it. Not digitised: gates, the flagpole south-east of the south apron, the practice-area goal boxes, the north buildings (other zone), the Carlisle Rd and Normal Ave carriageways and sidewalks (other zones).",
+ "notes": "Field frame: u along the long axis (76.18 deg, towards the north goal), v to its left (west). Most field-related outlines were read in that frame on brightness/colour profiles of the 2020 ortho and converted to model x, y, then checked on --plan overlays at 16-20 px/m. Turf (2020 ortho): straight sides on the white edge strip at |v| = 32.1; north apron a true arc R 34 centred on the axis 35.5 m north of centre (apex 69.5 m), meeting the sides at u = 46.7 at a slight angle; south apron R 42.4 (apex 66.9 m) meeting the sides at u = -52.2. Apron readings scatter about 1 m (NW and SW edges run ~1 m outside the arcs). In 2025 photos (0151, 0163) an asphalt walk and the black netting cross the north apron 3-6 m beyond the end line; the ortho shows a lighter band there, kept as North_cross_walk. Ring walk: west edge on the grandstand front (v 37.4), east edge on the bleacher front (v -36.2), north curb arc concentric with the turf arc, R 37.9; there is no walk round the south apron (lawn and trees, 0163). Stands: outlines from the ortho roofs, which agree with OSM 232846650/232846674 to ~0.5 m; rows and sections counted on the drone photos (see stands[].count_note). Press box: OSM 232846675 and a 13.3 m LiDAR 2017 return; not distinct in the ortho. Lot 42: hedge-side curb and both stall rows from the ortho (stall lines located as brightness peaks along offset rows); building wall on the north-east from OSM; drive connections from OSM aisle 232846631 (north, beyond y -70, and south to Carlisle Rd at y -158 to -168). Light poles: five, as in photos 0147/0151/0163 (NW and SW of the west stand, the antenna mast behind the press box, N and S ends of the east bleachers); only the SW pole is in the 2017 LiDAR (24.5 m); the mast is from OSM; the other three are placed from photos and ortho shadows and are UNVERIFIED to 2-3 m. Trees: crown tops and radii from the 2017 LiDAR nDSM (hedge, stand and building returns excluded). Hedge height 6.5 m from the LiDAR. Scoreboard projected from two oblique drone photos (UNVERIFIED +-3 m). Football markings are not traced: they are to be generated from field_frame. The 2017 LiDAR predates the present west grandstand, so no stand heights were taken from it. Not digitised: gates, the flagpole south-east of the south apron, the practice-area goal boxes, the north buildings (other zone), the Carlisle Rd and Normal Ave carriageways and sidewalks (other zones). Correction: an earlier note said the 2017 LiDAR does not show the west grandstand. That was an error in the fetch tool, which dropped every 10 m block without ground returns. The stand is in the cloud, classed as ground: its seating deck rises 5.7 m over 20 m. The build leaves those returns out of the ground and takes the stand height from them.",
  "field_frame": {
   "centre": [
    -336.48,
@@ -490,8 +490,7 @@
     ]
    ],
    "evidence": "ortho2020 (stand roof outline); osm 232846650",
-   "unverified": "ground under the raised stand assumed paved concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
-   "grade": false
+   "unverified": "ground under the raised stand assumed paved concrete"
   },
   {
    "name": "East_bleacher_pad",
@@ -515,8 +514,7 @@
     ]
    ],
    "evidence": "ortho2020; osm 232846674",
-   "unverified": "ground under the bleachers assumed concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
-   "grade": false
+   "unverified": "ground under the bleachers assumed concrete"
   },
   {
    "name": "Press_box_equipment_pad",
@@ -953,9 +951,9 @@
    "sections": 5,
    "aisles": 4,
    "count_note": "rows: brightness profile across the seat deck in msu_sprague_..._0151_D.jpg gives 22 riser/plank periods (+-1) between the front concourse and the back rail; sections: 4 aisles with handrails cross the deck, each opposite one of the 4 stair towers from the front concourse (0151, 0147), so 5 sections",
-   "evidence": "ortho2020 (outline, front edge v=37.4 on the field frame); osm 232846650; photos 0151, 0147, 0163",
-   "unverified": "footprint read from the roof in the ortho, which may be shifted ~1-2 m west by relief; rows +-1; aisle count from oblique views; the south-west notch (8 m by 6 m) from ortho and OSM; row rise 0.33 m is set so that the top row (8.5 m) sits under the press box, whose roof is 13.3 m above the ground in the 2017 LiDAR",
-   "rise": 0.33,
+   "evidence": "ortho2020 (outline, front edge v=37.4 on the field frame); osm 232846650; photos 0151, 0147, 0163; lidar2017 (back edge height)",
+   "unverified": "footprint read from the roof in the ortho, which may be shifted ~1-2 m west by relief; rows +-1; aisle count from oblique views; the south-west notch (8 m by 6 m) from ortho and OSM; row rise 0.205 m puts the top row 5.7 m up, the height of the back edge of the stand in the 2017 LiDAR (where the stand is classed as ground: a profile at y -150 rises from 115.6 m at the front to 121.3 m at the back); whether the stand of the 2025 photographs is that same stand is not known",
+   "rise": 0.205,
    "first_row_height": 1.2
   },
   {
