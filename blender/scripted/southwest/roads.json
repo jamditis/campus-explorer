@@ -625,14 +625,14 @@
      40.0
     ],
     [
-     -400.2,
-     -72.01,
-     40.1
+     -400.47,
+     -84.66,
+     100.0
     ],
     [
-     -403.7,
-     -95.01,
-     79.9
+     -406.75,
+     -123.28,
+     150.0
     ],
     [
      -410.5,
@@ -647,7 +647,7 @@
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); the double line there is faint"
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); y -66..-117 refitted to the paint (profiles every 2 m; the ortho shows the line in 1 m steps every 10 m, the fit runs through their middles, rms 0.3 m); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_CL",
@@ -663,14 +663,14 @@
      40.0
     ],
     [
-     -400.4,
-     -71.99,
-     39.9
+     -400.67,
+     -84.65,
+     100.0
     ],
     [
-     -403.9,
-     -94.99,
-     80.1
+     -406.95,
+     -123.25,
+     150.0
     ],
     [
      -410.7,
@@ -685,7 +685,7 @@
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); the double line there is faint"
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); y -66..-117 refitted to the paint (profiles every 2 m; the ortho shows the line in 1 m steps every 10 m, the fit runs through their middles, rms 0.3 m); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_lane_dash",
