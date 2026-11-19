@@ -18,7 +18,7 @@ const CATS = {
   pavers: { file: 'pavers', size: 2, k: 0.85 },
   grass: { file: 'grass', size: 2.4, k: 0.9 },
   mulch: { file: 'mulch', size: 1.6, k: 0.9 },
-  gravel: { file: 'gravel', size: 1.5, k: 0.45 }, // high-contrast pebbles: at 0.8 strips sparkled like noise from walking height
+  gravel: { file: 'gravel', size: 1.5, k: 0.8 },
   stone: { file: 'stone', size: 1.8, k: 0.6 },
   metal: { file: 'metal', size: 1, k: 0.35 },
   wood: { file: 'wood', size: 1.2, k: 0.7 },
