@@ -140,11 +140,11 @@ for n, v in d.items():
     elif n.startswith("Context_skirt"):
         key = "skirt"  # real-elevation 4 km far-field terrain, exported with its skirt_under GN
     elif w > 350 or n.startswith(("BD_", "MID_")):
-        key = "context"
+        key = PREFIX + "context"
     else:
         cx = (x0 + x1) / 2
         cy = (y0 + y1) / 2
-        key = "t_%d_%d" % (math.floor(cx / TILE), math.floor(cy / TILE))
+        key = PREFIX + "t_%d_%d" % (math.floor(cx / TILE), math.floor(cy / TILE))  # PREFIX: "" for main, "sw_" for the southwest build
     ch[key].append(n)
 tri = lambda k: sum(d[n]["tri"] for n in ch[k])
 out = {k: dict(objects=sorted(ch[k]), tri=tri(k)) for k in sorted(ch)}

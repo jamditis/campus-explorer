@@ -1,4 +1,38 @@
-# Viewer upgrade: fun, fast, accurate
+# Model fidelity and completeness, southwest corner first
+
+Joe's ask (2026-11-19): better fidelity, realism and completeness of the models, with optimized geometry and level of detail kept. Start at the southwest corner (Sprague Field, Montclair Heights station) and work toward the College of Communication and Media. Use any free public source.
+
+What the survey found (viewer at `74a6a95`): the campus is 36.1 million triangles (16.7 million plain, 19.3 million instanced; tree trunks and branches are 38% of it). In the southwest corner the station exists, but Normal Avenue, the grade crossing, the station lot, Carlisle Road, the west half of Sprague Field and its west grandstand are missing, and three grounds (4 km skirt, north terrain, main terrain) overlap there.
+
+Method: a scripted build, `blender/southwest/`, makes its own `.blend` from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap). It is a third export source (`sw_` tiles). Inside its footprint it owns the ground: the export takes the other sources' ground out of their tiles there (`tools/web-export/supersede.mjs`).
+
+## Phase 1: station to Sprague Field
+
+- [x] Evidence tools: `tools/evidence/` (fetch ortho, LiDAR, OSM; plan of the published tiles; gridded overlay)
+- [x] Plan format with true-arc corners (`blender/southwest/geom.py`, `README.md`)
+- [x] Seamless ground builder: one triangulation for terrain, paving, turf; curbs (`ground.py`)
+- [x] Paint sheets: lane lines, stalls, football markings drawn into textures (`paint.py`)
+- [ ] Digitised plan: roads, station, field (`plan/*.json`), checked against the ortho
+- [ ] Objects: west grandstand, press box, east bleachers, light poles, goalposts, scoreboard, fences, crossing gates, lot lamps (`stand.py`, `fixtures.py`, `place.py`)
+- [ ] Trees and the hedge row from the LiDAR canopy
+- [ ] Export: `sw` scene in `build_web.sh`, supersede step, manifest, far versions
+- [ ] Viewer: turf category, see-through fences, paint colour kept on painted sheets
+- [ ] Before/after screenshots of the same views; triangle and size budget recorded
+- [ ] Tests, lint, docs (VIEWER.md, ROADMAP.md, README.md, AGENTS.md index, CLAUDE.md index)
+- [ ] Independent review pass before the PR
+
+## Phase 2: toward the communication school (not started)
+
+- [ ] Carlisle Road north of the field, Lot 42, the maintenance building
+- [ ] Red Hawk Deck, College Avenue, Cole Hall, CCOM: these are in the main model; changes there are scripts for the modelling box, tested on the released copy
+
+## Review
+
+(filled in when phase 1 is done)
+
+---
+
+# Earlier: viewer upgrade (done)
 
 Plan for the viewer work on branch `joe/wizardly-pasteur-n7mq4j`. Architecture and module contract: [docs/VIEWER.md](../docs/VIEWER.md).
 

@@ -28,6 +28,10 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 
 ## Completeness
 
+- [x] Southwest corner, phase 1 (`blender/southwest/`, `sw_` tiles): Normal Avenue with the grade crossing, the station lot, Carlisle Road, the whole of Sprague Field with its 2025 markings, the west grandstand and press box, the east bleachers, light poles, fences and the hedge. Scripted from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap); inferred parts are UNVERIFIED in the object names and plan files
+- [ ] Southwest corner: the midfield logo (not drawn: it is the university's artwork), lacrosse and field hockey lines, turn arrows, the brick band on the east platform, single trees from the LiDAR canopy
+- [ ] Toward the communication school: Carlisle Road north of the field, Lot 42 north part, the maintenance building, then the Red Hawk Deck, College Avenue, Cole Hall and CCOM in the main model
+
 - [x] Far-field land cover over the 4 km skirt from OpenStreetMap (woods, parks, water, roads, mapped buildings), about 36,000 far-field trees on wooded and residential land, and extruded houses (`tools/web-export/landcover.py`)
 - [x] Far-field buildings are real footprints only: OpenStreetMap where mapped, otherwise Microsoft Global ML Building Footprints (ODbL). Heights from USGS 3DEP LiDAR where it covers the footprint: the 40th percentile of the highest last return (class-6 building points where a dataset has them; neither NJ cloud here does) inside the footprint shrunk by 1 m, minus the surrounding ground. Last returns and the shrunk footprint keep overhanging tree canopy out, which had turned some houses into towers. A height above what the footprint plausibly allows (11 m under 250 m², 15 m under 600 m², 24 m under 2,500 m², unless OSM building:levels or height says more) is capped and the building goes in the UNVERIFIED mesh; elsewhere the footprint layer's own height estimate, scaled to match the LiDAR-measured buildings (those, the capped ones and the few OSM buildings with no height anywhere, are in the separate `far_houses_height_UNVERIFIED` mesh). The generated placeholder houses are gone; where no footprint exists the ground stays bare
 - [ ] Far-field LiDAR vintage: heights come from the 2017 NW 6-County cloud (public Entwine bucket) and the 2014 Sandy cloud (both streamed from the public Entwine bucket); 98% of far buildings are covered. The 2023 NE 6-County cloud is newer but only on rockyweb (rate-limited to one slow connection); swap it in when it reaches the Entwine bucket
@@ -62,8 +66,10 @@ The browser merge rules live in `tools/web-export/make_chunks.py` (merge mode). 
 - [x] Screen-size culling of small meshes (a cheap LOD) and a Low / Medium / High quality toggle
 - [ ] KTX2 (Basis) textures: KTX-Software 4.4 is on the export box, but `gltf-transform etc1s` skips the existing WebP textures and the UASTC output is larger than WebP; needs a PNG intermediate step
 - [x] Per-instance culling for instanced trees (frustum and distance), with low-poly crown impostors past 220 / 420 / 700 m (Low / Medium / High) out to 2.6 km
+- [x] Unused vertex data dropped from tiles (`tools/web-export/compact.mjs`): `gltf-transform optimize --instance` left a second, unreferenced copy of every instance transform in the files
 - [ ] Decimated copies of buildings for far tiles
 - [x] Phones (lite profile): only the nine tiles nearest the view stay in memory; far tiles are unloaded as the view moves
 - [ ] Phones: show the far versions (`lod/`, 41 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
+- [ ] Tree trunks and branches are 13.8 M of the campus's 36 M triangles (measured 2026-11-19): a middle level of detail for trees between the full mesh and the crown impostor
 - [ ] Lighter far field: `skirt.glb` is 4.2 M triangles and `context.glb` 2.2 M plus 3.1 M in instances, drawn in every view. A coarser skirt away from the campus would cut the fixed cost of each frame most
 - [ ] Measure on a mid-range laptop GPU and record fps per quality level here

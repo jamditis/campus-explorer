@@ -1,8 +1,10 @@
 #!/bin/bash
 # Repeatable web export: a campus .blend -> per-tile GLBs -> optimized (meshopt + webp) -> models/<scene>/
-# usage: SCENE=main|north bash tools/web-export/build_web.sh [FILE]
+# usage: SCENE=main|north|sw bash tools/web-export/build_web.sh [FILE]
 #   One unified campus: north is merged into models/main at its real coordinates (same Blender origin).
 #   Run main first; the north run reads main's plan and skips anything main already has.
+#   sw is the scripted southwest build (blender/southwest/): its tiles carry the sw_ prefix, and every run
+#   ends by taking the other sources' ground out of their tiles inside the southwest footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
@@ -18,6 +20,7 @@ case $SCENE in
   north) DEF=$R/montclair-state/north/montclair_north.blend; PREFIX=n_; export MERGE_WITH=$R/web/build/main
          [ -f $MERGE_WITH/chunks.json ] && [ -f $MERGE_WITH/source.txt ] || fail "run SCENE=main first (north merges against main's plan)"
          export MAIN_FILE=$(cat $MERGE_WITH/source.txt) ;;  # north terrain is trimmed against main's ground
+  sw) DEF=$R/montclair-state/southwest/montclair_southwest.blend; PREFIX=sw_; TEX=4096 ;;  # paint sheets need their full size
   *) fail "unknown SCENE $SCENE" ;;
 esac
 FILE=${1:-$DEF}; BL=/workspace/opt/blender/blender; LOCKS="$R/.lock $R/montclair-state/.lock"
@@ -44,7 +47,7 @@ if [ -z "${ONLY:-}" ]; then
     [ -e "$f" ] || continue
     c=$(basename "$f" .glb)
     [[ $c == far_* ]] && continue  # far-field houses come from landcover.py, not the chunk plan
-    if [ -n "$PREFIX" ]; then [[ $c == ${PREFIX}* ]] || continue; else [[ $c == n_* ]] && continue; fi
+    if [ -n "$PREFIX" ]; then [[ $c == ${PREFIX}* ]] || continue; else [[ $c == n_* || $c == sw_* ]] && continue; fi
     [[ " $CHUNKS " == *" $c "* ]] || { echo "prune stale $f"; rm -f "$f" "$f".leaf.json "$f".paint.json; }
   done
 fi
@@ -64,13 +67,15 @@ for f in $B/raw/*.glb; do
   echo "$(date +%T) optimize $C"
   node $W/tint_leaves.mjs $f || fail "tint $C"
   # no palette: materials keep their names and the 'cat' extras the viewer textures by
-  npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size 1024 \
+  npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size ${TEX:-1024} \
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
+  # optimize leaves an unused second copy of every instance transform in the file: drop it
+  cp $W/compact.mjs ./compact.mjs; node compact.mjs $S/$C.glb || fail "compact $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
   # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
   # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
-  if [[ $C == t_* || $C == n_t_* ]]; then
+  if [[ $C == t_* || $C == n_t_* || $C == sw_t_* ]]; then
     mkdir -p $S/lod; cp $W/lod.mjs ./lod.mjs  # run from here so it resolves this folder's node_modules
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
   fi
@@ -87,6 +92,17 @@ if [ $SCENE = main ] && [ -x "$GEO_PY" ] && ls $OSM/*.osm >/dev/null 2>&1; then
   (cd $R/web/tools && npx gltf-transform optimize $WORK/far_houses.raw.glb $S/far_houses.glb --compress meshopt --simplify false --palette false --join false) \
     || fail "far houses optimize (not publishing)"
   [ -s $S/far_houses.glb ] || fail "far houses"; rm -f $WORK/far_houses.raw.glb
+fi
+# The southwest build owns the ground inside its footprint: take the other sources' ground out of their tiles
+# there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
+if ls $S/sw_*.glb >/dev/null 2>&1; then
+  python3 $W/../../blender/southwest/supersede.py $WORK/supersede.json ${SW_PLAN:+--plan $SW_PLAN} || fail "supersede rules"
+  cp $W/supersede.mjs $W/lod.mjs ./
+  CHANGED=$(node supersede.mjs $WORK/supersede.json $S | tee /dev/stderr | sed -n 's/^CHANGED //p'); [ "${PIPESTATUS[0]}" -eq 0 ] || fail "supersede"
+  for f in $CHANGED; do
+    C=${f%.glb}; [[ $C == t_* || $C == n_t_* ]] || continue
+    RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
+  done
 fi
 OUT=$S python3 $W/manifest.py || fail "manifest"
 find $S -size +95M | grep . && fail "file over 95 MB"

@@ -20,6 +20,10 @@ const VIEWS = [
   { name: 'lot_oblique', ground: [-235, 75], pose: [-232, 28, 112, -236, 0, 74] },          // painted markings in the accessible lot
   { name: 'north_oblique', pose: [60, 420, -330, -150, 115, -760] },                         // north campus toward the station
   { name: 'seam_oblique', pose: [-420, 330, -40, -150, 130, -260] },                         // where the two source models meet
+  { name: 'sw_top', ground: [-400, 215], pose: [-400, 330, 215.01, -400, 0, 215] },          // southwest corner: station, Normal Avenue, Sprague Field
+  { name: 'sw_station', ground: [-454, 266], pose: [-395, 45, 300, -456, 0, 262] },          // Montclair Heights station and its lot, from the east
+  { name: 'sw_field', ground: [-336, 157], pose: [-430, 80, 250, -336, 0, 157] },            // Sprague Field from the south-west
+  { name: 'eye_crossing', ground: [-415, 232], pose: [-415, 1.7, 232.5, -447, 2.2, 224.5] }, // Normal Avenue grade crossing at eye level
 ];
 
 const server = given ? null : await serve();
