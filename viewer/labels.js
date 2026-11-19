@@ -120,7 +120,8 @@ export function createLabels(app) {
       const sx = (v.x + 1) / 2 * width, sy = (1 - v.y) / 2 * height;
       // anchor is the bottom centre of the label (the dot at the foot of the stem)
       const x = sx - l.w / 2, y = sy - l.h;
-      if (sx < 0 || sx > width || sy < 0 || sy > height || x + l.w < 0 || x > width || y + l.h < 0) { hide(l); continue; }
+      // only whole labels: one cut by the screen edge reads as a different name
+      if (x < 0 || x + l.w > width || y < 0 || sy > height) { hide(l); continue; }
       items.push({ x, y, w: l.w, h: l.h, priority: labelPriority(l.place.kind, l.place.r, dist), forced: isOn, dist });
       owners.push(l);
     }
