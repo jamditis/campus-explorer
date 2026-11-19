@@ -68,3 +68,8 @@ Rules learned from corrections. Read at the start of a session.
 - **Instruction (Joe):** "i only answer questions via AUQ".
 - **What went wrong:** I ended three reports with open questions in plain text (logo artwork, reference sources, how to work in main-model areas). None was answered.
 - **Rule:** when a decision is Joe's, ask it with the AskUserQuestion dialog, with a recommended option first. Do not leave questions in the text of a report. Decide everything else myself and record the reasoning.
+
+## Do not switch branches in a checkout that subagents are writing to (2026-11-19)
+
+- What happened: while subagents were writing plan files in the working tree, I checked out another branch there to fix a PR. Their files vanished and came back as an older copy; one subagent had to regenerate its file.
+- Rule: when a subagent works in the checkout, do other-branch work in a separate `git worktree`, never with `git checkout` or `git stash` in the shared tree.

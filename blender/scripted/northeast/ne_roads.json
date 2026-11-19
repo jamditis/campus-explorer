@@ -1,13 +1,13 @@
 {
  "zone": "ne_roads",
- "notes": "",
+ "notes": "Zone ne_roads: carriageways, service drives, sidewalks, plazas, curbs and road paint of the north-east district, read from ortho2020 with LiDAR (2017) for walls and curbs in shadow and OpenStreetMap for names and walk lines.\nMethod: road centre lines were fitted to the painted centre line, found in colour profiles across the road every 2 m (Yogi Berra Drive and Webster Road keep within 0.2 m of one straight run per section, joined by true arcs: Yogi Berra r 65 m at the Energy Plant bend, Webster Road r 46 m north of Blanton Hall, r 80 m and r 36 m past Machuga Heights). Edges are parallel offsets of the centre line, the offset per section read from the same profiles (curb or grass edge to about 0.2-0.3 m). Sections change at junction mouths.\nYogi Berra Drive: north/west curb 4.9 m left of the centre line by the plant and the substation, grass edge 4.4 m north of the deck, 5.1 m north of Lot 23N; east curb 6.4, 6.6 and 5.9 m. Parking bay with angled stalls on the east side below Dinallo Heights (stalls not painted here).\nWebster Road: west curb 5.1-5.6 m (a 5.6 m southbound lane), east curb 3.55 m with a 3.4 m walk; drop-off bay (east curb 6.75 m) in front of the Student Recreation Center; west curb in the shadow of Dinallo Heights carried on (UNVERIFIED); north of the Machuga drive the west side is 8.9 m wide with a painted edge line at 5.7 m, tapering to 5.5 m.\nFootprint: its south edge (0,455)-(-56,438) runs along the middle of Yogi Berra Drive and close to the south edge of the Webster Road bend; both roads are cut at it 0.5 m outside.\nLots, their stalls and the deck are another zone: road surfaces end at the lot mouths with a small overlap. The Lot 24 median and the Stone Street apron in front of Blanton Hall are drawn here.\nWalks: road-side walks are offsets of the road centre lines; other walks follow OpenStreetMap lines shifted onto the walk and given the median width read across the ortho; corners are true arcs. Plazas in front of the Student Recreation Center read from ortho profiles; the Dinallo lobby patio is mostly hidden by roofs (UNVERIFIED).\nPaint: double yellow centre lines on Yogi Berra Drive and Webster Road, Webster west edge line, Stone Street stop bar, 18 continental crosswalks (0.5 m bars, 0.6 m gaps, bar count from the crossing length). Not drawn: lane arrows, the dashed line on the east side of Yogi Berra Drive at about 3.7 m, lot and bay stalls.",
  "surfaces": [
   {
    "name": "NE_road_Yogi_Berra_Dr_S",
    "kind": "asphalt",
-   "ring": [[-50.25, 439.25], [-1.49, 467.7, 60.1], [12.38, 504.52, 192.6], [15.14, 514.51], [26.03, 511.49], [23.13, 501.01, 203.9], [9.54, 464.91, 71.35], [-6.3, 452.56]],
+   "ring": [[-56.5, 435.6], [-1.49, 467.7, 60.1], [12.38, 504.52, 192.6], [15.14, 514.51], [26.03, 511.49], [23.13, 501.01, 203.9], [7.67, 459.96, 71.4], [-31.95, 436.85], [-56.5, 430.35]],
    "evidence": "ortho2020, osm",
-   "unverified": "south edge west of x -17 lies outside the footprint and is cut at it; road continues south-west",
+   "unverified": "west end cut at the footprint edge (x -56.5 and the south-west edge, 0.5 m over); the south edge west of x -40 is in tree shadow",
    "notes": "Yogi Berra Drive (OSM) past the District Energy Plant. Centre line fitted to the double yellow in ortho2020; north curb 4.9 m left of it, south edge 6.4 m right"
   },
   {
@@ -95,6 +95,14 @@
    "notes": "Service yard between the District Energy Plant and the brick substation, and the CarParc Diem south drive (OSM service) from Yogi Berra Drive to the deck"
   },
   {
+   "name": "NE_road_Plant_W_drive",
+   "kind": "asphalt",
+   "ring": [[-56.5, 435.4], [-43.8, 442.9], [-45.5, 446.0], [-50.5, 456.5], [-51.8, 466.0], [-56.5, 466.0]],
+   "evidence": "ortho2020",
+   "unverified": "north end and the plant wall read off the ortho to about 1 m; continues west of the footprint",
+   "notes": "Service drive along the west side of the District Energy Plant from Yogi Berra Drive"
+  },
+  {
    "name": "NE_road_Deck_N_drive",
    "kind": "asphalt",
    "ring": [[56.2, 634.3], [45.8, 633.6], [44.2, 641.0], [45.6, 652.3], [51.0, 652.3], [58.8, 647.2]],
@@ -145,10 +153,10 @@
   {
    "name": "NE_road_Carlisle_Rd_service",
    "kind": "asphalt",
-   "ring": [[-87.3, 770.0], [-82.5, 770.0], [-60.0, 826.5], [-64.85, 826.5]],
+   "ring": [[-87.9, 770.0], [-82.6, 770.0], [-67.6, 805.0, 8.0], [-62.0, 817.0, 6.0], [-61.7, 826.5], [-66.6, 826.5], [-68.5, 818.0, 8.0], [-73.8, 805.0, 12.0]],
    "evidence": "ortho2020, osm",
-   "unverified": "west edge where it meets the footprint; south end cut at the footprint corner",
-   "notes": "Carlisle Road (OSM service) between the rail and the tennis courts and softball stadium, 4.5 m wide"
+   "unverified": "west edge in tree shadow north of y 805; south end cut at the footprint corner",
+   "notes": "Carlisle Road (OSM service) between the rail and the tennis courts and softball stadium, 4.5 to 5.5 m wide; east edge on the west edge of the walk to the stadium, following its bends at y 805 and 817"
   },
   {
    "name": "NE_road_Rec_plaza_upper",
@@ -556,7 +564,7 @@
   {
    "name": "NE_road_YB_CL_a",
    "type": "line",
-   "path": [[-45.05, 436.73], [2.4, 464.41, 64.9], [16.94, 503.03, 197.4], [22.2, 522.03, 214.8], [65.09, 638.45, 400.1], [80.01, 672.5, 400.1], [107.4, 726.89, 319.4], [113.99, 741.6, 190.8], [132.02, 791.72, 225.1], [151.28, 826.05]],
+   "path": [[-53.35, 431.89], [2.4, 464.41, 64.9], [16.94, 503.03, 197.4], [22.2, 522.03, 214.8], [65.09, 638.45, 400.1], [80.01, 672.5, 400.1], [107.4, 726.89, 319.4], [113.99, 741.6, 190.8], [132.02, 791.72, 225.1], [151.28, 826.05]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
@@ -564,7 +572,7 @@
   {
    "name": "NE_road_YB_CL_b",
    "type": "line",
-   "path": [[-44.95, 436.55], [2.56, 464.27, 65.1], [17.14, 502.97, 197.6], [22.4, 521.97, 214.6], [65.27, 638.37, 399.9], [80.19, 672.42, 399.9], [107.58, 726.81, 319.6], [114.17, 741.52, 191.0], [132.2, 791.64, 224.9], [151.46, 825.95]],
+   "path": [[-53.25, 431.71], [2.56, 464.27, 65.1], [17.14, 502.97, 197.6], [22.4, 521.97, 214.6], [65.27, 638.37, 399.9], [80.19, 672.42, 399.9], [107.58, 726.81, 319.6], [114.17, 741.52, 191.0], [132.2, 791.64, 224.9], [151.46, 825.95]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
