@@ -15,3 +15,7 @@ verts/faces), probe223e (stacked top faces by ray). probe223g = evaluated top-su
 Tests: t1.sh (F=..., TAG=...); WIPs: jobwip223.sh. No objects added (bbox205.json unchanged).
 Residual: two thin wedge triangles (v150,v132,v140)/(v140,v132,v130) along the straight return segment slope 3 cm over ~3 cm
 (landing edge ring is 2-4 cm above the landing interior f72); NE view: WS69 curb end / landing corner notch still open.
+- REJECTED: fix223g (W45: subdivide the WS70 verge grass by the landing S edge so the WS72_KasserSW_walk_cut GN drops only
+  verts under the slab). The evaluated map (probe223g, GRID -250,-248.3,-55.4,-54.3,0.1) got WORSE: a wider 125.67 band just
+  outside the slab edge, so the trench is the cut GN reaching verts OUTSIDE the slab footprint, not long-triangle ramping.
+  Next: read the cut GN ray direction/offset (Raycast + 'Math SUBTRACT 0.06' + 'MINIMUM') before touching the grass.
