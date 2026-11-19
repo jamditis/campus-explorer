@@ -21,7 +21,7 @@ export function createTrees(scene, camera) {
 
   const avgCanvas = document.createElement('canvas'); avgCanvas.width = avgCanvas.height = 16;
   const avgCtx = avgCanvas.getContext('2d', { willReadFrequently: true });
-  const avgCache = new Map();
+  const avgCache = new WeakMap(); // by image, so a tile dropped from memory does not keep its leaf textures alive
   // mean colour of a leaf texture's opaque pixels, times the material colour
   function leafColour(m) {
     const c = m.color.clone();
@@ -127,6 +127,13 @@ export function createTrees(scene, camera) {
     far.computeBoundingSphere();
     scene.add(far);
   }
+  /** Draw every tree in full, whatever the camera sees (for a picture from another camera). `update(true)` undoes it. */
+  function showAll() {
+    for (const g of groups) {
+      g.list.forEach((o, j) => { o.instanceMatrix.array.set(g.mats[j]); o.count = g.n; o.instanceMatrix.needsUpdate = true; o.visible = true; });
+    }
+    imp.count = 0; trunks.count = 0;
+  }
   /** Forget the trees of a tile that was dropped from memory. */
   function remove(root) {
     const under = o => { for (let p = o; p; p = p.parent) if (p === root) return true; return false; };
@@ -155,5 +162,5 @@ export function createTrees(scene, camera) {
   function reset() {
     groups = []; imp.count = 0; trunks.count = 0;
   }
-  return { add, remove, settle, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
+  return { add, remove, settle, showAll, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
 }

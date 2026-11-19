@@ -56,6 +56,8 @@ app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
 app.flyTo = cam.flyTo;
+/** Draw the whole campus with another camera into `target` (the minimap). The main view's tree and size culling is undone for the picture. */
+app.renderPlain = (camera2, target) => { scenery.trees.showAll(); app.look.renderPlain(camera2, target); scenery.trees.update(true); };
 
 // ---- sun ----
 /** Move the sun to its real position for an instant (a Date). `preset` marks the default light. */

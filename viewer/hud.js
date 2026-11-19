@@ -168,7 +168,7 @@ export function createHud(app) {
     const prevAlpha = renderer.getClearAlpha(), prevBg = app.scene.background;
     app.scene.background = null; renderer.setClearColor(0x000000, 0);
     try {
-      app.look.renderPlain(cam, target);
+      app.renderPlain(cam, target);
       renderer.readRenderTargetPixels(target, 0, 0, MAP_PX, MAP_PX, buffer);
     } finally {
       app.scene.background = prevBg; renderer.setClearColor(prevColor, prevAlpha); renderer.setRenderTarget(prevTarget);

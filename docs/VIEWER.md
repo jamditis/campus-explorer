@@ -72,6 +72,7 @@ app = {
   invalidate(),      // ask for a redraw; the loop draws only when something changed
   setMode(mode), setView(view),
   flyTo(pose, opts), // pose = { position: Vector3, target: Vector3 }; resolves true, or false if interrupted
+  renderPlain(camera, target), // draw the whole campus with another camera into a render target (minimap); undoes view culling for it
   goToPlace(place),  // fly to a place from places.json; emits `place`
   overview(), topView(),
   isIdle(),          // true when the camera has been still for a moment

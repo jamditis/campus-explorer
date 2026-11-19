@@ -404,8 +404,11 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     const fog = scene.fog, auto = sun.shadow.needsUpdate;
     const far = farGround.visible;
     scene.fog = null; sky.visible = false; glow.visible = false; farGround.visible = false;
+    // screen-size culling was decided for the main camera: show everything for this one, then cull again
+    for (const it of items) if (!it.o.userData.treeLod) it.o.visible = true;
     renderer.setRenderTarget(target); renderer.render(scene, cam); renderer.setRenderTarget(null);
     scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; farGround.visible = far; sun.shadow.needsUpdate = auto;
+    cull(true);
   }
   function fixMaterials(root) {
     root.traverse(o => {

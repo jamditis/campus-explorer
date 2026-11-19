@@ -65,4 +65,5 @@ The browser merge rules live in `tools/web-export/make_chunks.py` (merge mode). 
 - [ ] Decimated copies of buildings for far tiles
 - [x] Phones (lite profile): only the nine tiles nearest the view stay in memory; far tiles are unloaded as the view moves
 - [ ] Phones: show the far versions (`lod/`, 41 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
+- [ ] Lighter far field: `skirt.glb` is 4.2 M triangles and `context.glb` 2.2 M plus 3.1 M in instances, drawn in every view. A coarser skirt away from the campus would cut the fixed cost of each frame most
 - [ ] Measure on a mid-range laptop GPU and record fps per quality level here

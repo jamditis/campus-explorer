@@ -159,7 +159,7 @@ export function createTour(app) {
     // typing in a field, or Space on a button (including the tour's own), is not a camera move
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t?.isContentEditable) return;
     if (tag === 'BUTTON' && (e.code === 'Space' || e.code.startsWith('Arrow'))) return;
-    stop({ halt: false });
+    stop(); // halts the flight too: unlike a pointer or wheel event, a key does not cancel a camera move by itself
   }
   const onMode = ({ mode }) => { if (mode !== 'orbit') stop({ halt: false }); };
 
