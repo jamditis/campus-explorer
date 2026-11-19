@@ -5,6 +5,7 @@ Parts of the campus built whole by script from plan files: one folder per area, 
 | Area folder | What it holds |
 |---|---|
 | `southwest/` | Montclair Heights station surroundings, Normal Avenue, Carlisle Road, Sprague Field |
+| `west/` | Carlisle Road north of the south-west area, its roadside parking (Lots 30 and 30S), Lot 33 and the College Avenue junction beside the Red Hawk Deck: a strip between the railway and the buildings of the main and north models |
 | `stadium/` | Yogi Berra Stadium and the museum, the running track and soccer field, the north part of the softball stadium, the lots and roads north of the north-east area |
 | `northeast/` | CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts, and the lots and roads between them |
 

@@ -32,7 +32,8 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [ ] The Village west of the railway (Hawk Crossings, Sinatra, Williams, Fenwick, Paul and Count Basie halls, Lots 27 to 48): evidence is fetched (`village`), not started
 - [ ] Floyd Hall Arena block and the quarry ground north of the stadium district
-- [ ] (in work, Joe's choice 2026-11-19) Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+- [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the communication school are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
+- [ ] Red Hawk Deck to Cole Hall, and the communication school (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
 - [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
 
 Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
