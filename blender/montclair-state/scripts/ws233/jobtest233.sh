@@ -1,0 +1,9 @@
+# ws233 views (W53o Stone Hall below-grade window rows gated), subset, terrain GN on, KEEPMOD paving drapes on
+source scripts/ws226/srun226.sh
+export KEEPMOD="${KEEPMOD:-Roads_OSM Footpaths_OSM}" SUBR=scripts/ws226/subrend226.py EXTRA="WS226_east_patch_seam_backing_UNVERIFIED WS229_SE_south_edge_apron_UNVERIFIED WS230_NE_east_gap_fill_3DEP_UNVERIFIED"
+F=${F:-montclair_state_ws233b.blend}; TAGM=${TAGM:-ws232b}; D=${D:-wip}; ONLY=${ONLY:-1234}
+[[ $ONLY == *1* ]] && srun "100,180,140,262" "152.0,150.0,182.0,137.0,212.0,137.0,28" ws233_oblique_CELS_NE_walks_W53o_from_SSE_${TAGM}_main_sub $F $D
+[[ $ONLY == *2* ]] && srun "105,165,170,250" "128.0,178.0,138.9,142.0,214.0,137.5,30" ws233_eye_CELS_NE_walk_W53o_from_S_${TAGM}_main_sub $F $D
+[[ $ONLY == *3* ]] && srun "110,170,180,245" "151.0,228.0,138.6,134.0,198.0,137.4,30" ws233_eye_CELS_NE_walk_W53o_from_NE_${TAGM}_main_sub $F $D
+[[ $ONLY == *4* ]] && srun "120,150,180,215" "131.0,189.0,138.9,137.0,203.0,137.3,30" ws233_closeup_CELS_walk_joints_W53o_${TAGM}_main_sub $F $D
+true
