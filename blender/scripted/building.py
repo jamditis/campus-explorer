@@ -16,6 +16,26 @@ PARAPET = {"deck": 1.1}  # height of the parapet above the roof deck; 0.4 for ev
 PROUD = 0.06  # how far windows and bands stand off the wall: enough not to flicker far away
 
 
+BRICK_TONE = "#96543f"  # the viewer's brick texture, on average (sRGB)
+
+
+def _wall_material(kind, colour):
+    """Wall material for a facade colour. The viewer multiplies a material's colour into the
+    texture of its kind, so a brick-red colour on the red brick texture comes out near black.
+    A brick-coloured wall therefore gets the tint that turns the texture into that colour, and a
+    wall of any other colour (buff, grey) is not brick in the viewer: it gets the plaster kind.
+    """
+    rgb = kit.srgb(colour)
+    if kind == "brick":
+        if rgb[0] < 3.0 * rgb[2]:  # not a red or brown: the brick texture cannot show it
+            kind = "plaster"
+        else:
+            tone = kit.srgb(BRICK_TONE)
+            tint = [c / t for c, t in zip(rgb, tone, strict=True)]
+            rgb = tuple(min(1.0, v / max(1.0, max(tint))) for v in tint)
+    return kit.mat(kind, "wall_" + colour[1:], rgb, 0.9)
+
+
 def _edges(ring):
     n = len(ring)
     for i in range(n):
@@ -107,9 +127,7 @@ def part(lay_part, name, ground):
     style = p.get("style", "shed")
     hexes = dict(wall=p.get("wall", "#b9b6ad"), trim=p.get("trim", "#d9d6cc"))
     hexes["roof"] = p.get("roof_colour", "#8f9194")
-    wall = kit.mat(
-        WALL_KIND.get(style, "plaster"), "wall_" + hexes["wall"][1:], kit.srgb(hexes["wall"]), 0.9
-    )
+    wall = _wall_material(WALL_KIND.get(style, "plaster"), hexes["wall"])
     trim = kit.mat("concrete", "trim_" + hexes["trim"][1:], kit.srgb(hexes["trim"]), 0.8)
     kind = p.get("roof", "flat")
     tops, slopes, gables = massing.roof(ring, kind, p["top"], p.get("eave"), p.get("ridge_angle"))
