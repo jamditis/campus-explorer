@@ -14,7 +14,7 @@
   },
   {
    "file": "n_context.glb",
-   "bytes": 3271136
+   "bytes": 3273772
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -38,7 +38,7 @@
   },
   {
    "file": "n_t_-1_2.glb",
-   "bytes": 2895808,
+   "bytes": 2895812,
    "center": [
     -80.0,
     -400.0
@@ -54,17 +54,17 @@
     -560.0
    ],
    "lod": "lod/n_t_-1_3.glb",
-   "lod_bytes": 706024
+   "lod_bytes": 706076
   },
   {
    "file": "n_t_-1_4.glb",
-   "bytes": 1021068,
+   "bytes": 1021064,
    "center": [
     -80.0,
     -720.0
    ],
    "lod": "lod/n_t_-1_4.glb",
-   "lod_bytes": 462720
+   "lod_bytes": 462976
   },
   {
    "file": "n_t_-1_5.glb",
@@ -84,7 +84,7 @@
     -1040.0
    ],
    "lod": "lod/n_t_-1_6.glb",
-   "lod_bytes": 698932
+   "lod_bytes": 698892
   },
   {
    "file": "n_t_-1_7.glb",
@@ -114,7 +114,7 @@
     -80.0
    ],
    "lod": "lod/n_t_-2_0.glb",
-   "lod_bytes": 697692
+   "lod_bytes": 697696
   },
   {
    "file": "n_t_-2_1.glb",
@@ -124,7 +124,7 @@
     -240.0
    ],
    "lod": "lod/n_t_-2_1.glb",
-   "lod_bytes": 892592
+   "lod_bytes": 893076
   },
   {
    "file": "n_t_-2_2.glb",
@@ -238,13 +238,13 @@
   },
   {
    "file": "n_t_0_0.glb",
-   "bytes": 1166052,
+   "bytes": 1161440,
    "center": [
     80.0,
     -80.0
    ],
    "lod": "lod/n_t_0_0.glb",
-   "lod_bytes": 1190608
+   "lod_bytes": 1186004
   },
   {
    "file": "n_t_0_7.glb",
@@ -578,7 +578,7 @@
   },
   "north": {
    "saved": "November 18, 2026, 1:05 PM ET",
-   "version": "",
+   "version": "ws226f",
    "file": "montclair_north.blend"
   }
  },
@@ -590,6 +590,6 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 19, 2026, 2:28 AM ET",
- "total_bytes": 208995960
+ "exported": "November 19, 2026, 2:53 AM ET",
+ "total_bytes": 208993984
 }
