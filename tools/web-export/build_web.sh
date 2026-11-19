@@ -5,7 +5,8 @@
 #   Run main first; the north run reads main's plan and skips anything main already has.
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
-#   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer (default: file mtime)
+#   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
+#   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
 # Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
 # the memory gate, before every Blender process (the hourly modelling sessions use the same rules).
 set -u
