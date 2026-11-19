@@ -9,6 +9,7 @@ Sources: an Entwine (EPT) dataset URL, streamed node by node (e.g. the public us
 or local .laz tiles. Nothing is kept but the grid.
 
 usage: python ndsm_ept.py OUT.npz https://s3-us-west-2.amazonaws.com/usgs-lidar-public/NJ_NW6Co_2017
+       python ndsm_ept.py OUT.npz https://s3-us-west-2.amazonaws.com/usgs-lidar-public/USGS_Lidar_Point_Cloud_NJ_SdL5_2014_LAS_2015
        CRS=EPSG:6347 python ndsm_ept.py OUT.npz tile1.laz ...   (CRS only needed when a tile has no WKT)
 Run with a Python that has laspy[lazrs] and pyproj.
 """

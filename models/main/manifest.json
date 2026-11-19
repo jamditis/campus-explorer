@@ -10,7 +10,7 @@
   },
   {
    "file": "far_houses.glb",
-   "bytes": 1730072
+   "bytes": 1728420
   },
   {
    "file": "n_context.glb",
@@ -460,7 +460,7 @@
  },
  "far_trees": "far_trees.bin",
  "exported": "November 18, 2026, 6:33 PM ET",
- "total_bytes": 208944660,
+ "total_bytes": 208943008,
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ]
