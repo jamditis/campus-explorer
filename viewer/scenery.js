@@ -123,7 +123,9 @@ export function createScenery(app) {
     manifest = e.manifest; base = e.base; run++;
     trees.reset(); grass.count = 0; grassAt = null; grassJob = null; moved = true;
   });
-  app.on('tile', ({ tile }) => { trees.add(tile.root); moved = true; });
+  // trees.add refreshes the tree instances itself. No redraw is asked for here: the world asks for a lazy one,
+  // and an immediate redraw (with a fresh shadow map) for every arriving tile holds up loading on a slow GPU.
+  app.on('tile', ({ tile }) => { trees.add(tile.root); });
   app.on('scene:complete', () => {
     const my = run;
     if (app.world.budget !== Infinity) return; // lite profile: the ground under far trees is not in memory
