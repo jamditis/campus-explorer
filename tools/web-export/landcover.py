@@ -281,14 +281,15 @@ def lidar_height(poly):
 
 def height_cap(area, t):
     """Tallest plausible mean roof height for a footprint without a tall-building tag: houses stay house-sized."""
-    lv = t.get("building:levels")
-    try:
-        if lv:
-            return float(lv) * 3.5 + 4
-        if t.get("height"):
-            return float(t["height"].split()[0]) + 2
-    except ValueError:
-        pass
+    caps = []  # each OSM tag that states a size allows that much; with several, the most generous wins
+    for key, f in (("building:levels", lambda v: v * 3.5 + 4), ("height", lambda v: v + 2)):
+        try:
+            if t.get(key):
+                caps.append(f(float(t[key].split()[0])))
+        except ValueError:
+            pass
+    if caps:
+        return max(caps)
     return 11 if area < 250 else 15 if area < 600 else 24 if area < 2500 else 45
 
 
