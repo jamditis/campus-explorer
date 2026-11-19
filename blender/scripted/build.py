@@ -35,7 +35,7 @@ def _near(ring, x, y, d):
     return False
 
 
-def build_area(plan_dir, data, assets):
+def build_area(plan_dir, data, assets, built):
     """Ground and objects of one area. `data` holds <area>/lidar.npz and authored/*.png."""
     lay = layout.load(plan_dir)
     if not lay["footprint"]:
@@ -45,7 +45,8 @@ def build_area(plan_dir, data, assets):
         if (plan_dir / "edge_heights.json").exists()
         else None
     )
-    others = [layout.load(d) for d in layout.areas() if d.name != plan_dir.name]
+    # the other areas of this build (an area left out with --areas is not a neighbour here)
+    others = [layout.load(d) for d in built if d.name != plan_dir.name]
     if edge:
         # along an edge shared with another scripted area there is no other model to meet: both
         # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
@@ -88,8 +89,9 @@ def main():
         sys.exit("refusing to write a .blend inside the repository")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     objects = []
-    for plan_dir in layout.areas(args):
-        lay, terrain, obs = build_area(plan_dir, data, assets)
+    built = layout.areas(args)
+    for plan_dir in built:
+        lay, terrain, obs = build_area(plan_dir, data, assets, built)
         objects += obs
     tris = 0
     for ob in objects:

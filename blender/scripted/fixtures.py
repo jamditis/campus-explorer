@@ -374,12 +374,13 @@ def soccer_goal(name, at, angle, *, unverified=True):
         b.tube(P(0, v, 0.03), P(-d, v, 0.03), 0.03, white, sides=6)
     b.tube(P(0, -hw, h), P(0, hw, h), 0.06, white, sides=8)
     b.tube(P(-d, -hw, 0.03), P(-d, hw, 0.03), 0.03, white, sides=6)
-    # net: the sloping back and the two sides, each seen from both sides
+    # net: the sloping back and the two sides, each wound to face out of the goal (the net
+    # material is see-through and shown from both sides)
     back = [P(0, -hw, h), P(0, hw, h), P(-d, hw, 0.05), P(-d, -hw, 0.05)]
-    b.faces(back, [(0, 1, 2, 3), (3, 2, 1, 0)], net)
+    b.faces(back, [(0, 1, 2, 3)], net)
     for v in (-hw, hw):
         tri = [P(0, v, 0.05), P(0, v, h), P(-d, v, 0.05)]
-        b.faces(tri, [(0, 1, 2), (2, 1, 0)], net)
+        b.faces(tri, [(0, 1, 2) if v < 0 else (2, 1, 0)], net)
     return b.finish(recalc=False)
 
 
@@ -393,7 +394,7 @@ WALLS = {  # plan fence kinds that are solid walls: material kind, default colou
 def wall(name, path, height=2.4, *, ground=None, kind="wall_concrete", colour=None, thickness=0.25,
          unverified=True):  # fmt: skip
     """Solid wall along a dense polyline [(x, y), ...]: `thickness` wide, its top `height` above
-    the ground under it (it steps with the ground every 3 m at most), its foot 0.3 m in the
+    the ground under it (it follows the ground, sampled every 3 m at most), its foot 0.3 m in the
     ground. `kind` is one of WALLS; `colour` ("#rrggbb") overrides that kind's colour.
     """
     g = ground or (lambda x, y: 0.0)
