@@ -1,0 +1,1061 @@
+{
+ "zone": "ne_lots",
+ "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines.",
+ "surfaces": [
+  {
+   "name": "NE_lot_25_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     19.63,
+     475.7,
+     0.8
+    ],
+    [
+     31.5,
+     471.13,
+     21.8
+    ],
+    [
+     52.33,
+     486.07,
+     3.2
+    ],
+    [
+     64.2,
+     521.0,
+     3.0
+    ],
+    [
+     70.9,
+     535.0,
+     0.5
+    ],
+    [
+     57.4,
+     535.1
+    ],
+    [
+     46.3,
+     536.4
+    ],
+    [
+     44.5,
+     533.3,
+     0.8
+    ],
+    [
+     43.2,
+     532.0,
+     0.8
+    ],
+    [
+     37.25,
+     533.6,
+     0.5
+    ],
+    [
+     32.05,
+     514.9,
+     1.2
+    ],
+    [
+     27.3,
+     514.6
+    ],
+    [
+     24.0,
+     503.6
+    ],
+    [
+     26.6,
+     501.6,
+     1.2
+    ]
+   ],
+   "evidence": "ortho2020; osm 313030389",
+   "unverified": "north edge east of the drive (y 535) ends at the service yard of the building north of it, line guessed; mouth on Yogi Berra Drive ends 0.2 m past the sidewalk line"
+  },
+  {
+   "name": "NE_lot_25_island_1",
+   "kind": "lawn",
+   "ring": [
+    [
+     46.83,
+     525.66,
+     0.65
+    ],
+    [
+     52.23,
+     523.81,
+     0.65
+    ],
+    [
+     51.77,
+     522.49,
+     0.65
+    ],
+    [
+     46.37,
+     524.34,
+     0.65
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "kind (lawn or mulch; small curbed capsule, the fill is not readable)"
+  },
+  {
+   "name": "NE_lot_25_island_2",
+   "kind": "lawn",
+   "ring": [
+    [
+     41.08,
+     509.51,
+     0.65
+    ],
+    [
+     46.58,
+     507.61,
+     0.65
+    ],
+    [
+     46.12,
+     506.29,
+     0.65
+    ],
+    [
+     40.62,
+     508.19,
+     0.65
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "kind (lawn or mulch; small curbed capsule, the fill is not readable)"
+  },
+  {
+   "name": "NE_lot_25_island_3",
+   "kind": "lawn",
+   "ring": [
+    [
+     39.42,
+     501.06,
+     0.65
+    ],
+    [
+     44.52,
+     499.36,
+     0.65
+    ],
+    [
+     44.08,
+     498.04,
+     0.65
+    ],
+    [
+     38.98,
+     499.74,
+     0.65
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "kind (lawn or mulch; small curbed capsule, the fill is not readable)"
+  },
+  {
+   "name": "NE_lot_25_divider",
+   "kind": "concrete",
+   "ring": [
+    [
+     50.75,
+     532.0,
+     0.45
+    ],
+    [
+     52.05,
+     532.0,
+     0.45
+    ],
+    [
+     53.73,
+     535.7
+    ],
+    [
+     52.43,
+     535.7
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "narrow curbed divider at the north mouth: kind guessed; north of y 535.7 it belongs to the drive"
+  },
+  {
+   "name": "NE_lot_25_dumpster_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     59.6,
+     527.0
+    ],
+    [
+     64.8,
+     527.6
+    ],
+    [
+     64.4,
+     534.2
+    ],
+    [
+     59.0,
+     534.4
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "enclosure pad with bins (white objects in the ortho); outline and kind guessed"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "NE_lot_25_curb_S_E",
+   "path": [
+    [
+     26.6,
+     501.6,
+     1.2
+    ],
+    [
+     19.63,
+     475.7,
+     0.8
+    ],
+    [
+     31.5,
+     471.13,
+     21.8
+    ],
+    [
+     52.33,
+     486.07,
+     3.2
+    ],
+    [
+     64.2,
+     521.0,
+     3.0
+    ],
+    [
+     70.9,
+     535.0,
+     0.5
+    ],
+    [
+     57.4,
+     535.1
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb along the north edge east of the drive guessed"
+  },
+  {
+   "name": "NE_lot_25_curb_NW",
+   "path": [
+    [
+     44.5,
+     533.3,
+     0.8
+    ],
+    [
+     43.2,
+     532.0,
+     0.8
+    ],
+    [
+     37.25,
+     533.6,
+     0.5
+    ],
+    [
+     32.05,
+     514.9,
+     1.2
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_curb_mouth_N",
+   "path": [
+    [
+     32.05,
+     514.9,
+     1.2
+    ],
+    [
+     27.3,
+     514.6
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_curb_mouth_S",
+   "path": [
+    [
+     24.0,
+     503.6
+    ],
+    [
+     26.6,
+     501.6,
+     1.2
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_island_1_curb",
+   "path": [
+    [
+     46.83,
+     525.66,
+     0.65
+    ],
+    [
+     52.23,
+     523.81,
+     0.65
+    ],
+    [
+     51.77,
+     522.49,
+     0.65
+    ],
+    [
+     46.37,
+     524.34,
+     0.65
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_island_2_curb",
+   "path": [
+    [
+     41.08,
+     509.51,
+     0.65
+    ],
+    [
+     46.58,
+     507.61,
+     0.65
+    ],
+    [
+     46.12,
+     506.29,
+     0.65
+    ],
+    [
+     40.62,
+     508.19,
+     0.65
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_island_3_curb",
+   "path": [
+    [
+     39.42,
+     501.06,
+     0.65
+    ],
+    [
+     44.52,
+     499.36,
+     0.65
+    ],
+    [
+     44.08,
+     498.04,
+     0.65
+    ],
+    [
+     38.98,
+     499.74,
+     0.65
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_divider_curb",
+   "path": [
+    [
+     52.43,
+     535.7
+    ],
+    [
+     50.75,
+     532.0,
+     0.45
+    ],
+    [
+     52.05,
+     532.0,
+     0.45
+    ],
+    [
+     53.73,
+     535.7
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  }
+ ],
+ "markings": [
+  {
+   "name": "NE_lot_25_stalls_W_S",
+   "type": "stalls",
+   "line": [
+    [
+     21.84,
+     483.35
+    ],
+    [
+     26.55,
+     500.85
+    ]
+   ],
+   "count": 7,
+   "depth": 4.6,
+   "side": "right",
+   "angle": 94.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines fade toward their aisle ends; depth is the visible length"
+  },
+  {
+   "name": "NE_lot_25_stalls_W_N",
+   "type": "stalls",
+   "line": [
+    [
+     32.34,
+     515.4
+    ],
+    [
+     37.21,
+     532.93
+    ]
+   ],
+   "count": 7,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 93.9,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_stalls_centre",
+   "type": "stalls",
+   "line": [
+    [
+     42.67,
+     511.79
+    ],
+    [
+     46.05,
+     521.59
+    ]
+   ],
+   "count": 4,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_line_centre_S",
+   "type": "line",
+   "path": [
+    [
+     37.6,
+     497.6
+    ],
+    [
+     42.9,
+     495.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_stalls_E",
+   "type": "stalls",
+   "line": [
+    [
+     53.15,
+     488.9
+    ],
+    [
+     63.16,
+     518.34
+    ]
+   ],
+   "count": 12,
+   "depth": 5.1,
+   "side": "left",
+   "angle": 89.9,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     33.94,
+     475.36
+    ],
+    [
+     47.5,
+     482.95
+    ]
+   ],
+   "count": 6,
+   "depth": 4.6,
+   "side": "left",
+   "angle": 90.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_line_S_1",
+   "type": "line",
+   "path": [
+    [
+     25.2,
+     475.0
+    ],
+    [
+     26.9,
+     479.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_line_S_2",
+   "type": "line",
+   "path": [
+    [
+     29.8,
+     473.9
+    ],
+    [
+     29.4,
+     478.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_line_SE",
+   "type": "line",
+   "path": [
+    [
+     51.0,
+     485.1
+    ],
+    [
+     47.6,
+     488.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_25_access_SW_outline",
+   "type": "line",
+   "path": [
+    [
+     20.6,
+     475.6
+    ],
+    [
+     24.7,
+     475.4
+    ],
+    [
+     24.75,
+     480.8
+    ],
+    [
+     20.9,
+     481.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_1",
+   "type": "line",
+   "path": [
+    [
+     24.42,
+     475.53
+    ],
+    [
+     24.61,
+     475.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_2",
+   "type": "line",
+   "path": [
+    [
+     23.66,
+     475.57
+    ],
+    [
+     24.62,
+     476.71
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_3",
+   "type": "line",
+   "path": [
+    [
+     22.91,
+     475.61
+    ],
+    [
+     24.63,
+     477.65
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_4",
+   "type": "line",
+   "path": [
+    [
+     22.16,
+     475.64
+    ],
+    [
+     24.63,
+     478.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_5",
+   "type": "line",
+   "path": [
+    [
+     21.41,
+     475.68
+    ],
+    [
+     24.64,
+     479.54
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_6",
+   "type": "line",
+   "path": [
+    [
+     20.7,
+     475.77
+    ],
+    [
+     24.65,
+     480.48
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_7",
+   "type": "line",
+   "path": [
+    [
+     20.76,
+     476.77
+    ],
+    [
+     24.07,
+     480.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_8",
+   "type": "line",
+   "path": [
+    [
+     20.81,
+     477.77
+    ],
+    [
+     23.31,
+     480.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_9",
+   "type": "line",
+   "path": [
+    [
+     20.87,
+     478.77
+    ],
+    [
+     22.56,
+     480.79
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_access_SW_10",
+   "type": "line",
+   "path": [
+    [
+     20.92,
+     479.77
+    ],
+    [
+     21.81,
+     480.83
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible aisle hatching: stripe count and angle approximate"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_outline",
+   "type": "line",
+   "path": [
+    [
+     36.5,
+     494.9
+    ],
+    [
+     37.0,
+     493.4
+    ],
+    [
+     41.8,
+     492.6
+    ],
+    [
+     42.4,
+     493.6
+    ],
+    [
+     37.6,
+     495.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_1",
+   "type": "line",
+   "path": [
+    [
+     41.81,
+     492.75
+    ],
+    [
+     42.1,
+     493.55
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_2",
+   "type": "line",
+   "path": [
+    [
+     41.21,
+     492.85
+    ],
+    [
+     41.54,
+     493.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_3",
+   "type": "line",
+   "path": [
+    [
+     40.61,
+     492.95
+    ],
+    [
+     40.97,
+     493.95
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_4",
+   "type": "line",
+   "path": [
+    [
+     40.01,
+     493.05
+    ],
+    [
+     40.41,
+     494.15
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_5",
+   "type": "line",
+   "path": [
+    [
+     39.4,
+     493.15
+    ],
+    [
+     39.84,
+     494.35
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_6",
+   "type": "line",
+   "path": [
+    [
+     38.8,
+     493.25
+    ],
+    [
+     39.27,
+     494.55
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_7",
+   "type": "line",
+   "path": [
+    [
+     38.2,
+     493.35
+    ],
+    [
+     38.71,
+     494.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_8",
+   "type": "line",
+   "path": [
+    [
+     37.6,
+     493.45
+    ],
+    [
+     38.14,
+     494.95
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_9",
+   "type": "line",
+   "path": [
+    [
+     37.02,
+     493.63
+    ],
+    [
+     37.58,
+     495.15
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_endcap_S_10",
+   "type": "line",
+   "path": [
+    [
+     36.72,
+     494.54
+    ],
+    [
+     36.85,
+     494.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap with stripes; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_25_crosswalk_mouth",
+   "type": "stalls",
+   "line": [
+    [
+     23.66,
+     505.37
+    ],
+    [
+     26.83,
+     513.3
+    ]
+   ],
+   "count": 7,
+   "depth": 2.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "width": 0.6,
+   "unverified": "bar width and length approximate; may duplicate a crossing drawn with the road"
+  }
+ ],
+ "points": [
+  {
+   "name": "NE_lot_25_lamp_N",
+   "kind": "lamp",
+   "at": [
+    50.2,
+    524.3
+   ],
+   "evidence": "lidar2017; ortho2020 (pole shadow)",
+   "height": 3.3,
+   "unverified": "height is the highest pole return, a lower bound; head type"
+  },
+  {
+   "name": "NE_lot_25_lamp_S",
+   "kind": "lamp",
+   "at": [
+    41.8,
+    499.4
+   ],
+   "evidence": "lidar2017; ortho2020 (pole shadow)",
+   "height": 3.0,
+   "unverified": "height is the highest pole return, a lower bound; head type"
+  }
+ ]
+}

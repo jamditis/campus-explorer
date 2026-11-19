@@ -1,0 +1,73 @@
+{
+ "zone": "ne_roads",
+ "notes": "",
+ "surfaces": [
+  {
+   "name": "NE_road_Yogi_Berra_Dr_S",
+   "kind": "asphalt",
+   "ring": [[-50.25, 439.25], [-1.49, 467.7, 60.1], [12.38, 504.52, 192.6], [15.14, 514.51], [26.03, 511.49], [23.13, 501.01, 203.9], [9.54, 464.91, 71.35], [-6.3, 452.56]],
+   "evidence": "ortho2020, osm",
+   "unverified": "south edge west of x -17 lies outside the footprint and is cut at it; road continues south-west",
+   "notes": "Yogi Berra Drive (OSM) past the District Energy Plant. Centre line fitted to the double yellow in ortho2020; north curb 4.9 m left of it, south edge 6.4 m right"
+  },
+  {
+   "name": "NE_road_Yogi_Berra_Dr_M",
+   "kind": "asphalt",
+   "ring": [[15.18, 512.77], [18.11, 523.35, 219.1], [61.1, 640.05, 404.4], [76.12, 674.33, 404.4], [103.52, 728.74, 315.1], [110.0, 743.21, 186.5], [121.61, 775.49], [131.96, 771.77], [120.21, 739.09, 197.5], [113.45, 724.02, 326.1], [86.07, 669.65, 393.4], [71.3, 635.94, 393.4], [28.59, 519.98, 208.1], [25.78, 509.84]],
+   "evidence": "ortho2020, osm",
+   "notes": "Yogi Berra Drive (OSM) from the deck south drive to Lot 23N: west edge (grass) 4.4 m left of the centre line, east curb 6.6 m right"
+  },
+  {
+   "name": "NE_road_Yogi_Berra_Dr_N",
+   "kind": "asphalt",
+   "ring": [[118.79, 769.73], [127.45, 793.81, 230.1], [145.85, 826.6], [158.47, 826.6], [137.5, 789.22, 219.1], [129.14, 766.0]],
+   "evidence": "ortho2020, osm",
+   "notes": "Yogi Berra Drive (OSM) north of Lot 23N to the north edge: west edge 5.1 m, east curb 5.9 m"
+  },
+  {
+   "name": "NE_road_Webster_Rd_S",
+   "kind": "asphalt",
+   "ring": [[74.59, 461.14], [126.05, 482.19, 40.9], [129.42, 505.72], [139.71, 504.25], [136.37, 480.89, 51.25], [116.88, 468.19], [107.2, 463.24], [87.93, 455.36], [90.02, 454.45]],
+   "evidence": "ortho2020, osm",
+   "unverified": "south-east edge under the lean of Blanton Hall; the road south of the footprint edge is left to the neighbouring model",
+   "notes": "Webster Road (OSM) from the footprint edge round the bend north of Blanton Hall: north curb 5.1 m left of the centre line, south edge 5.3 m right"
+  },
+  {
+   "name": "NE_road_Webster_Rd_M1",
+   "kind": "asphalt",
+   "ring": [[128.64, 503.79], [142.98, 603.79], [152.04, 602.5], [137.7, 502.5]],
+   "evidence": "ortho2020, osm",
+   "notes": "Webster Road (OSM) between Dinallo Heights and the Student Recreation Center: west curb 5.6 m, east curb 3.55 m from the centre line (east side has a 3.5 m walk)"
+  },
+  {
+   "name": "NE_road_Webster_Rd_M2",
+   "kind": "asphalt",
+   "ring": [[142.59, 601.81], [153.49, 677.81], [165.81, 676.04], [154.92, 600.04]],
+   "evidence": "ortho2020, osm, lidar2017",
+   "unverified": "west curb in the shadow of Dinallo Heights: carried on from the run to the south",
+   "notes": "Webster Road with the drop-off bay on the east side in front of the Student Recreation Center (east curb 6.75 m)"
+  },
+  {
+   "name": "NE_road_Webster_Rd_M3",
+   "kind": "asphalt",
+   "ring": [[150.04, 676.26], [156.49, 721.26], [170.25, 719.29], [163.8, 674.29]],
+   "evidence": "ortho2020, osm",
+   "notes": "Webster Road north of the Machuga service drive: wide west side with a painted edge line at 5.7 m (west curb 8.9 m, east curb 5.0 m)"
+  },
+  {
+   "name": "NE_road_Webster_Rd_taper",
+   "kind": "asphalt",
+   "ring": [[155.92, 717.26], [159.38, 716.77], [162.96, 741.77]],
+   "evidence": "ortho2020",
+   "unverified": "taper of the west curb read off the ortho to about 1 m"
+  },
+  {
+   "name": "NE_road_Webster_Rd_N",
+   "kind": "asphalt",
+   "ring": [[158.99, 714.78], [164.22, 751.23, 85.5], [223.49, 809.16, 30.5], [222.87, 826.6], [232.48, 826.6], [233.23, 805.26, 40.1], [173.26, 746.64, 75.9], [168.5, 713.42]],
+   "evidence": "ortho2020, osm",
+   "unverified": "edges under tree cover north of y 800 fitted as one arc",
+   "notes": "Webster Road (OSM) past Machuga Heights to the north edge: west curb 5.5 m, east edge 4.1 m"
+  }
+ ]
+}
