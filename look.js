@@ -37,6 +37,8 @@ const WARM = { asphalt: [1.04, 1.0, 0.92], concrete: [1.05, 1.0, 0.92], pavers: 
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
   if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
+  // white line paint filed as grass (Lot 9 stalls, Sprague field lines) was retinted lawn green: keep it paint
+  if (cat === 'grass' && /paint|stripe|marking/i.test(name) && !/lawn|nostripe/i.test(name)) return '';
   if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
   if (cat === 'asphalt' && /concrete/i.test(name)) return 'concrete'; // e.g. KX_drive_concrete
   if (cat === 'asphalt' && /atlas|_tv_|screen/i.test(name)) return ''; // signage textures filed as asphalt
