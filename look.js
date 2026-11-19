@@ -84,9 +84,11 @@ export function createLook(renderer, scene, camera) {
   // left every shaded wall cyan)
   ground.position.y = -5; envScene.add(ground);
   scene.environment = pmrem.fromScene(envScene, 0.02).texture;
-  scene.environmentIntensity = 0.3;
+  // the sky light is a saturated cyan; with it at 0.3 shaded white stucco read teal (rgb ~102,112,117 on screen).
+  // Less of it and a neutral hemisphere fill keep shade cool but closer to grey
+  scene.environmentIntensity = 0.22;
 
-  const hemi = new THREE.HemisphereLight('#e2e7ee', '#4f4a3a', 0.2); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight('#e9e9e7', '#4f4a3a', 0.3); scene.add(hemi);
   const sun = new THREE.DirectionalLight('#fff0dc', 2.7);
   sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.04;
   scene.add(sun, sun.target);
