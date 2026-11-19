@@ -99,13 +99,22 @@ class Terrain:
     together
     """
 
-    def __init__(self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), cell=1.0):
+    def __init__(
+        self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), voids=(), cell=1.0
+    ):
         self.lifts, self.footprint = list(lifts), footprint
         z = np.load(lidar_npz)
         self.x0, self.y0, self.x1, self.y1 = (float(v) for v in z["box"][:4])
         self.cell = cell
         pts = z["pts"]
         g = pts[pts[:, 3] == 2]
+        # A solid grandstand is classed as ground in the point cloud: its seating deck would become
+        # a
+        # bank. Ground returns inside `voids` (the stands' outlines) are left out and the gap is
+        # filled
+        # from the ground around it.
+        for ring in voids:
+            g = g[~_inside(ring, g[:, 0], g[:, 1])]
         nx, ny = round((self.x1 - self.x0) / cell), round((self.y1 - self.y0) / cell)
         col = np.clip(((g[:, 0] - self.x0) / cell).astype(int), 0, nx - 1)
         row = np.clip(((self.y1 - g[:, 1]) / cell).astype(int), 0, ny - 1)

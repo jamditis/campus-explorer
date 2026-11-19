@@ -17,6 +17,7 @@ import bpy
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
+import geom  # noqa: E402
 import ground  # noqa: E402
 import kit  # noqa: E402
 import layout  # noqa: E402
@@ -43,7 +44,13 @@ def main():
     paved = [
         s["ring"] for s in lay["surfaces"] if s["kind"] in ground.PAVED and s.get("grade", True)
     ]
-    terrain = ground.Terrain(data / "lidar.npz", edge, lay["lifts"], lay["footprint"], paved)
+    # a solid stand reads as ground in the LiDAR: its outline, grown by 1.5 m, is left out of the
+    # ground
+    voids = []
+    for st in lay["stands"]:
+        ring = geom.expand(st["ring"], True)
+        voids.append(geom.offset(ring, -1.5 if geom.area(ring) > 0 else 1.5, True))
+    terrain = ground.Terrain(data / "lidar.npz", edge, lay["lifts"], lay["footprint"], paved, voids)
     authored = data / "authored"
     objects = ground.build(lay, terrain, str(authored) if authored.exists() else None)
     try:
