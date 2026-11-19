@@ -23,6 +23,18 @@ import kit  # noqa: E402
 import layout  # noqa: E402
 
 
+def _near(ring, x, y, d):
+    """Is (x, y) inside the closed outline `ring` or within `d` metres of it?"""
+    if geom.inside(ring, x, y):
+        return True
+    for (ax, ay), (bx, by) in zip(ring, ring[1:] + ring[:1], strict=True):
+        vx, vy = bx - ax, by - ay
+        t = max(0.0, min(1.0, ((x - ax) * vx + (y - ay) * vy) / ((vx * vx + vy * vy) or 1.0)))
+        if (x - ax - t * vx) ** 2 + (y - ay - t * vy) ** 2 < d * d:
+            return True
+    return False
+
+
 def build_area(plan_dir, data, assets):
     """Ground and objects of one area. `data` holds <area>/lidar.npz and authored/*.png."""
     lay = layout.load(plan_dir)
@@ -33,8 +45,19 @@ def build_area(plan_dir, data, assets):
         if (plan_dir / "edge_heights.json").exists()
         else None
     )
+    others = [layout.load(d) for d in layout.areas() if d.name != plan_dir.name]
+    if edge:
+        # along an edge shared with another scripted area there is no other model to meet: both
+        # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
+        edge = [e for e in edge if not any(_near(o["footprint"], e[0], e[1], 2.0) for o in others)]
+    # Paving is graded from paved cells only. A road or lot that runs on into another scripted
+    # area is one paved surface on the ground: the other areas' paving is part of that set, or the
+    # grade would be cut off at the shared edge and the two areas would meet with a step.
     paved = [
-        s["ring"] for s in lay["surfaces"] if s["kind"] in ground.PAVED and s.get("grade", True)
+        s["ring"]
+        for area in [lay, *others]
+        for s in area["surfaces"]
+        if s["kind"] in ground.PAVED and s.get("grade", True)
     ]
     # a solid stand reads as ground in the LiDAR: its outline, grown by 1.5 m, is left out of the
     # ground
