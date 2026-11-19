@@ -154,7 +154,7 @@ function applyLandcover(root, url, half) {
 // exactly on the CurbSweep granite curbs and z-fights into a white speckle) or a stray leaf card, so drop it.
 function dropUnmaterialled(g) {
   const drop = [];
-  g.scene.traverse(o => { if (o.isMesh && ![].concat(o.material).some(m => g.parser.associations.has(m))) drop.push(o); });
+  g.scene.traverse(o => { if (o.isMesh && ![].concat(o.material).some(m => g.parser.associations.get(m)?.materials !== undefined)) drop.push(o); });
   for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
 }
 // Sports surfaces (turf, courts) are modelled at the same level as the terrain under them, which z-fights
