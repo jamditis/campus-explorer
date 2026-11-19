@@ -124,6 +124,18 @@ def fences(lay, terrain):
         name, kind = _name(f["zone"], f, "fence"), f.get("kind", "chain_link_black")
         if kind == "hedge":
             out.append(hedge(name, line, terrain, f.get("height", 4.5), f.get("width", 1.6)))
+        elif kind.startswith("wall"):
+            out.append(
+                fixtures.wall(
+                    name,
+                    line,
+                    f.get("height", 2.4),
+                    ground=terrain.at,
+                    kind=kind,
+                    colour=f.get("colour"),
+                    thickness=f.get("thickness", 0.25),
+                )
+            )
         elif "net" in kind:
             out.append(fixtures.net_poles(name, line, f.get("height", 9.0), ground=terrain.at))
         else:

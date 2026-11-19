@@ -20,6 +20,7 @@ import sys
 from mathutils import Matrix, Vector
 
 try:
+    import geom
     import kit
 except ImportError:  # executed as a script: demo() puts this folder on sys.path first
     kit = None
@@ -341,6 +342,51 @@ def fence(
                 fab,
             )
     return b.finish()
+
+
+WALLS = {  # plan fence kinds that are solid walls: material kind, default colour
+    "wall_padded": ("paint", "#1f4a33"),  # a ballpark's padded outfield wall
+    "wall_brick": ("brick", "#8e4f3c"),
+    "wall_concrete": ("concrete", "#b5b2a9"),
+}
+
+
+def wall(name, path, height=2.4, *, ground=None, kind="wall_concrete", colour=None, thickness=0.25,
+         unverified=True):  # fmt: skip
+    """Solid wall along a dense polyline [(x, y), ...]: `thickness` wide, its top `height` above
+    the ground under it (it steps with the ground every 3 m at most), its foot 0.3 m in the
+    ground. `kind` is one of WALLS; `colour` ("#rrggbb") overrides that kind's colour.
+    """
+    g = ground or (lambda x, y: 0.0)
+    mk, default = WALLS.get(kind, WALLS["wall_concrete"])
+    hexc = colour or default
+    m = kit.mat(mk, f"wall_{hexc[1:]}", kit.srgb(hexc), rough=0.85)
+    pts = [(q.x, q.y) for q in _resample(path, 3.0)]
+    closed = len(pts) > 2 and math.hypot(pts[0][0] - pts[-1][0], pts[0][1] - pts[-1][1]) < 1e-6
+    if closed:
+        pts = pts[:-1]
+    left = geom.offset(pts, thickness / 2, closed)
+    right = geom.offset(pts, -thickness / 2, closed)
+    n = len(pts)
+    zs = [g(x, y) for x, y in pts]
+    v = []
+    for side in (left, right):
+        v += [(q[0], q[1], z - 0.3) for q, z in zip(side, zs, strict=True)]
+        v += [(q[0], q[1], z + height) for q, z in zip(side, zs, strict=True)]
+    lb, lt, rb, rt = 0, n, 2 * n, 3 * n  # left bottom/top, right bottom/top
+    f = []
+    for i in range(n if closed else n - 1):
+        j = (i + 1) % n
+        f += [
+            (lb + j, lb + i, lt + i, lt + j),  # left face, seen from the left
+            (rb + i, rb + j, rt + j, rt + i),  # right face
+            (lt + i, rt + i, rt + j, lt + j),  # top
+        ]
+    if not closed:
+        f += [(lb, rb, rt, lt), (rb + n - 1, lb + n - 1, lt + n - 1, rt + n - 1)]
+    b = kit.Builder(_name(name, unverified))
+    b.faces(v, f, m)
+    return b.finish(recalc=False)
 
 
 def net_poles(name, path, height=9.0, *, ground=None, spacing=9.0, unverified=True):
