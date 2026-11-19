@@ -1,14 +1,14 @@
 {
  "zone": "st_roads",
- "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 10.1 m between the grass edge (axis +4.1) and the south-east curb (axis -6.0); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.3 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -3.7 with a 1.8 m walk to the Lot 22 curb, west curb +5.8 with a 1.7 m concrete band; an edge line at +3.7. Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): items that continue a ne_* item start on its edges at y 826.5 and run to the measured positions within 8 to 10 m (Yogi Berra Drive edges, centre line, curb and walk; Webster Road edges; the Carlisle Road drive; the softball path; the Lot 23N corner). In the ortho the ne_roads Yogi Berra Drive edges, walk and centre line are 1.2 to 2.3 m west of the paint and curb at y 826, Webster Road 0.7 to 0.8 m east, the Lot 23N east corner about 3.5 m east, and ne_lots Lot 21 rows about 1 to 1.4 m west; Lot 21 row B is a planted median in the ortho where ne_lots paints a centre line.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nNot drawn: stencilled letters and arrows; the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive; stop bars that could not be seen (only the south-west-bound bar north of the junction is drawn).",
+ "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 11.2 m between the worn north-west edge (axis +4.9, white edge line at +3.7) and the south-east curb (axis -6.3); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.4 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -5.19 with a 1.5 m walk (centre -6.35) to the Lot 22 curb, west curb +5.55 with a 2.0 m concrete band (centre +6.6); white edge lines at +3.7 and -3.7 (only the west one drawn). Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): every item that continues a ne_* item is the measured line carried straight to y 826.2 to 826.4, overlapping the ne_* surface by about 0.4 m, on the positions ne_roads and ne_lots now give at the seam (no tapers). Stall rows that cross the seam start at the first divider after the last one ne_lots draws, on the same pitch phase. Yogi Berra Drive north-west edge: the asphalt fades into a worn shoulder between axis +4.2 and +5.0, taken at +4.9 to meet ne_roads. Webster Road curb lines at axis +5.55 / -5.19 as ne_roads has them (the curb faces read here at about +5.3 / -4.9); the bright line at -3.7 and +3.7 are painted edge lines.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nNot drawn: stencilled letters and arrows; the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive; stop bars that could not be seen (only the south-west-bound bar north of the junction is drawn).",
  "surfaces": [
   {
    "name": "ST_lot_22_asphalt",
    "kind": "asphalt",
    "ring": [
     [
-     300.6,
-     825.7
+     300.51,
+     826.4
     ],
     [
      291.75,
@@ -39,8 +39,8 @@
      1.0
     ],
     [
-     230.33,
-     858.67,
+     230.83,
+     858.73,
      1.5
     ],
     [
@@ -52,13 +52,13 @@
      850.48
     ],
     [
-     231.32,
-     850.73,
+     231.82,
+     850.79,
      1.5
     ],
     [
-     234.44,
-     825.7
+     234.86,
+     826.4
     ]
    ],
    "evidence": "ortho2020, lidar2017",
@@ -70,8 +70,8 @@
    "layer": 3.5,
    "ring": [
     [
-     269.36,
-     825.7
+     269.27,
+     826.4
     ],
     [
      265.78,
@@ -82,8 +82,8 @@
      854.65
     ],
     [
-     271.27,
-     825.7
+     271.19,
+     826.4
     ]
    ],
    "evidence": "ortho2020",
@@ -389,23 +389,23 @@
    "layer": 3.5,
    "ring": [
     [
-     235.44,
-     858.9,
+     235.84,
+     858.95,
      1.0
     ],
     [
-     231.77,
-     888.38,
+     232.17,
+     888.43,
      1.0
     ],
     [
-     226.61,
-     887.73,
+     227.01,
+     887.78,
      1.0
     ],
     [
-     230.28,
-     858.26,
+     230.68,
+     858.31,
      1.0
     ]
    ],
@@ -417,16 +417,12 @@
    "kind": "asphalt",
    "ring": [
     [
-     158.47,
-     826.6
+     160.77,
+     826.2
     ],
     [
-     161.89,
-     828.21
-    ],
-    [
-     177.03,
-     848.73
+     177.27,
+     848.55
     ],
     [
      180.5,
@@ -445,36 +441,28 @@
      916.24
     ],
     [
-     219.08,
-     922.72
+     218.44,
+     923.19
     ],
     [
-     153.76,
-     834.21
-    ],
-    [
-     145.85,
-     826.6
+     146.85,
+     826.2
     ]
    ],
    "evidence": "ortho2020, lidar2017",
-   "unverified": "first 8 m north of y 826 taper from the edges ne_roads ends on (1.2 to 2 m west of the curb and grass edge in the ortho) to the measured ones; bus bay outline read off the ortho"
+   "unverified": "north-west edge: asphalt fades into a worn shoulder between axis +4.2 and +5.0 (colour profiles and LiDAR); +4.9 taken, which meets the ne_roads edge (146.86) at the seam within 0.2 m; bus bay outline read off the ortho"
   },
   {
    "name": "ST_road_Webster_Rd",
    "kind": "asphalt",
    "ring": [
     [
-     232.48,
-     826.6
+     233.23,
+     826.2
     ],
     [
-     230.65,
-     835.37
-    ],
-    [
-     225.47,
-     879.02,
+     227.11,
+     877.8,
      23.0
     ],
     [
@@ -499,21 +487,17 @@
      874.4
     ],
     [
-     213.76,
-     897.14,
+     213.98,
+     897.44,
      10.0
     ],
     [
-     221.21,
-     834.25
-    ],
-    [
-     222.87,
-     826.6
+     222.42,
+     826.2
     ]
    ],
    "evidence": "ortho2020, lidar2017",
-   "unverified": "first 10 m north of y 826 taper from the ne_roads edges (0.7 to 0.8 m east of the curbs in the ortho)"
+   "unverified": "curb lines at axis +5.55 and -5.19 as ne_roads measures them at the seam (profiles here give the curb faces at about +5.3 and -4.9, within 0.3 m)"
   },
   {
    "name": "ST_road_junction_island_walk",
@@ -533,20 +517,20 @@
      904.98
     ],
     [
-     223.81,
-     909.45
+     224.3,
+     909.51
     ],
     [
-     229.15,
-     866.58
+     229.64,
+     866.65
     ],
     [
-     227.35,
-     863.17
+     228.83,
+     863.35
     ],
     [
-     225.47,
-     879.02,
+     227.11,
+     877.8,
      23.0
     ]
    ],
@@ -636,12 +620,12 @@
    "kind": "asphalt",
    "ring": [
     [
-     164.3,
+     163.68,
      826.6
     ],
     [
-     178.59,
-     845.96
+     178.19,
+     846.26
     ],
     [
      183.0,
@@ -664,17 +648,21 @@
      0.5
     ],
     [
-     208.4,
-     836.5,
-     8.0
+     208.0,
+     843.0
     ],
     [
-     205.4,
+     206.4,
+     835.2,
+     3.0
+    ],
+    [
+     200.17,
      826.6
     ]
    ],
    "evidence": "ortho2020, osm",
-   "unverified": "south-east corner starts on the ne_lots edge (205.4, 826.6), about 3.5 m east of the lot edge in the ortho; east edge under tree shade"
+   "unverified": "east curb in tree shade north of y 836"
   },
   {
    "name": "ST_lot_23N_island_N",
@@ -711,12 +699,12 @@
    "layer": 3.5,
    "ring": [
     [
-     178.55,
-     845.74
+     178.15,
+     846.04
     ],
     [
-     182.51,
-     848.41
+     182.35,
+     848.53
     ],
     [
      183.11,
@@ -775,37 +763,41 @@
    "kind": "asphalt",
    "ring": [
     [
-     -67.3,
-     825.8
+     -66.11,
+     826.1
     ],
     [
-     -61.72,
-     825.8
+     -60.85,
+     826.1
     ],
     [
-     -53.86,
-     855.51,
-     6.7
-    ],
-    [
-     -40.0,
-     851.98
+     -51.55,
+     854.72,
+     6.5
     ],
     [
      -40.0,
-     856.72
+     851.77
     ],
     [
-     -56.45,
-     860.92
+     -40.0,
+     856.93
     ],
     [
-     -56.45,
+     -56.4,
+     861.11
+    ],
+    [
+     -56.4,
      850.0
+    ],
+    [
+     -63.08,
+     835.44
     ]
    ],
    "evidence": "ortho2020, osm",
-   "unverified": "starts on the ne_roads end (centre -64.15), about 1.5 m west of the drive in the ortho; the west side is cut along the footprint edge (the drive runs on just outside it); edges by eye"
+   "unverified": "continues NE_road_Carlisle_Rd_service (5.0 m, heading 72 deg) from y 826.5; north of y 833 its west side is cut along the footprint edge (the drive runs on just outside it); the bend by eye"
   },
   {
    "name": "ST_road_Carlisle_Rd_drive_SE_end",
@@ -836,24 +828,32 @@
    "kind": "asphalt",
    "ring": [
     [
-     11.5,
-     826.3
+     14.64,
+     826.1
     ],
     [
-     20.8,
-     826.3
+     26.92,
+     826.1
+    ],
+    [
+     16.16,
+     830.45
     ],
     [
      -12.0,
-     847.1
+     846.71
     ],
     [
      -16.0,
-     844.8
+     843.7
+    ],
+    [
+     14.14,
+     826.3
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "continues NE_road_Softball_path_W (its edges at y 826.5) north-west to the drive; brighter than the drive, so asphalt or worn concrete as ne_roads has it"
+   "unverified": "edges from the ne_roads cut (x 13.55 to 26.03 at y 826.5); the bend to 150 deg and the north-west end where it meets the drive read by eye; asphalt or worn concrete as ne_roads has it"
   },
   {
    "name": "ST_road_turning_circle",
@@ -919,24 +919,20 @@
    "kind": "concrete",
    "centre": [
     [
-     159.35,
-     826.45
+     163.18,
+     827.6
     ],
     [
-     162.89,
-     827.47
+     177.86,
+     847.5
     ],
     [
-     177.74,
-     847.59
+     181.72,
+     849.62
     ],
     [
-     181.76,
-     849.59
-    ],
-    [
-     197.5,
-     870.91
+     197.46,
+     870.94
     ],
     [
      198.83,
@@ -947,46 +943,46 @@
      879.73
     ]
    ],
-   "width": 2.3,
+   "width": 2.4,
    "evidence": "ortho2020",
-   "unverified": "first 8 m: taper from the end of the ne_roads walk (centre 159.17, 826.0; the walk in the ortho is 2 m further east)"
+   "unverified": "the square end at the seam overlaps NE_road_YB_E_walk_N2 by up to 1.2 m"
   },
   {
    "name": "ST_road_Webster_W_walk",
    "kind": "concrete",
    "centre": [
     [
-     221.43,
-     825.21
+     221.24,
+     827.2
     ],
     [
-     213.17,
-     894.91,
-     9.15
+     213.24,
+     894.75,
+     8.95
     ],
     [
-     197.66,
-     873.9
+     197.78,
+     873.81
     ]
    ],
-   "width": 1.7,
+   "width": 2.0,
    "evidence": "ortho2020",
-   "unverified": "south end continues the ne_roads walk line under trees"
+   "unverified": "square end at the seam overlaps NE_road_Webster_W_walk_N2 by up to 1 m"
   },
   {
    "name": "ST_road_Webster_E_walk",
    "kind": "concrete",
    "centre": [
     [
-     232.65,
-     826.14
+     234.31,
+     827.0
     ],
     [
-     227.07,
-     873.21
+     228.81,
+     873.41
     ]
    ],
-   "width": 1.8,
+   "width": 1.5,
    "evidence": "ortho2020"
   },
   {
@@ -1144,8 +1140,8 @@
    "name": "ST_lot_22_curb_E_N",
    "path": [
     [
-     300.6,
-     825.7
+     300.51,
+     826.4
     ],
     [
      291.75,
@@ -1189,8 +1185,8 @@
      1.0
     ],
     [
-     230.33,
-     858.67,
+     230.83,
+     858.73,
      1.5
     ]
    ],
@@ -1201,25 +1197,51 @@
    "name": "ST_lot_22_curb_W_S",
    "path": [
     [
-     231.32,
-     850.73,
+     231.82,
+     850.79,
      1.5
     ],
     [
-     234.44,
-     825.7
+     234.86,
+     826.4
     ]
    ],
    "closed": false,
    "evidence": "ortho2020"
   },
   {
-   "name": "ST_lot_21_B_median_curb",
+   "name": "ST_lot_21_B_median_curb_W",
    "path": [
     [
-     269.36,
-     825.7
+     269.27,
+     826.4
     ],
+    [
+     265.78,
+     854.42
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_median_curb_E",
+   "path": [
+    [
+     267.67,
+     854.65
+    ],
+    [
+     271.19,
+     826.4
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_median_curb_N",
+   "path": [
     [
      265.78,
      854.42
@@ -1227,13 +1249,9 @@
     [
      267.67,
      854.65
-    ],
-    [
-     271.27,
-     825.7
     ]
    ],
-   "closed": true,
+   "closed": false,
    "evidence": "ortho2020"
   },
   {
@@ -1514,23 +1532,23 @@
    "name": "ST_lot_22_W_island_curb",
    "path": [
     [
-     235.44,
-     858.9,
+     235.84,
+     858.95,
      1.0
     ],
     [
-     231.77,
-     888.38,
+     232.17,
+     888.43,
      1.0
     ],
     [
-     226.61,
-     887.73,
+     227.01,
+     887.78,
      1.0
     ],
     [
-     230.28,
-     858.26,
+     230.68,
+     858.31,
      1.0
     ]
    ],
@@ -1541,16 +1559,12 @@
    "name": "ST_road_YB_SE_curb",
    "path": [
     [
-     158.47,
-     826.6
+     160.77,
+     826.2
     ],
     [
-     161.89,
-     828.21
-    ],
-    [
-     177.03,
-     848.73
+     177.27,
+     848.55
     ],
     [
      180.5,
@@ -1570,23 +1584,18 @@
     ]
    ],
    "closed": false,
-   "evidence": "ortho2020",
-   "unverified": "taper at the seam"
+   "evidence": "ortho2020"
   },
   {
    "name": "ST_road_Webster_W_curb",
    "path": [
     [
-     222.87,
-     826.6
+     222.42,
+     826.2
     ],
     [
-     221.21,
-     834.25
-    ],
-    [
-     213.76,
-     897.14,
+     213.98,
+     897.44,
      10.0
     ],
     [
@@ -1601,16 +1610,12 @@
    "name": "ST_road_Webster_E_curb",
    "path": [
     [
-     232.48,
-     826.6
+     233.23,
+     826.2
     ],
     [
-     230.65,
-     835.37
-    ],
-    [
-     225.47,
-     879.02,
+     227.11,
+     877.8,
      23.0
     ],
     [
@@ -1645,12 +1650,16 @@
      0.5
     ],
     [
-     208.4,
-     836.5,
-     8.0
+     208.0,
+     843.0
     ],
     [
-     205.4,
+     206.4,
+     835.2,
+     3.0
+    ],
+    [
+     200.17,
      826.6
     ]
    ],
@@ -1662,12 +1671,12 @@
    "name": "ST_lot_23N_curb_W",
    "path": [
     [
-     164.3,
+     163.68,
      826.6
     ],
     [
-     178.59,
-     845.96
+     178.19,
+     846.26
     ],
     [
      183.0,
@@ -1737,15 +1746,15 @@
    "type": "stalls",
    "line": [
     [
-     288.47,
-     825.82
+     288.15,
+     828.38
     ],
     [
      285.27,
      851.48
     ]
    ],
-   "count": 10,
+   "count": 9,
    "depth": 5.33,
    "side": "right",
    "angle": 90,
@@ -1757,8 +1766,8 @@
    "type": "line",
    "path": [
     [
-     288.42,
-     826.25
+     288.4,
+     826.4
     ],
     [
      284.66,
@@ -1794,15 +1803,15 @@
    "type": "stalls",
    "line": [
     [
-     252.1,
-     826.5
+     251.78,
+     829.06
     ],
     [
      249.22,
      849.59
     ]
    ],
-   "count": 9,
+   "count": 8,
    "depth": 5.3,
    "side": "right",
    "angle": 90,
@@ -1814,8 +1823,8 @@
    "type": "line",
    "path": [
     [
-     252.13,
-     826.25
+     252.11,
+     826.4
     ],
     [
      248.93,
@@ -1851,15 +1860,15 @@
    "type": "stalls",
    "line": [
     [
-     271.2,
-     826.27
+     270.88,
+     828.84
     ],
     [
      268.0,
      851.93
     ]
    ],
-   "count": 10,
+   "count": 9,
    "depth": 4.9,
    "side": "right",
    "angle": 90,
@@ -2115,15 +2124,15 @@
    "type": "stalls",
    "line": [
     [
-     234.05,
-     828.86
+     234.87,
+     826.31
     ],
     [
-     231.77,
-     847.14
+     232.27,
+     847.21
     ]
    ],
-   "count": 7,
+   "count": 8,
    "depth": 5.3,
    "side": "right",
    "angle": 90,
@@ -2136,12 +2145,12 @@
    "type": "stalls",
    "line": [
     [
-     226.42,
-     890.88
+     226.82,
+     890.93
     ],
     [
-     225.15,
-     901.06
+     225.55,
+     901.1
     ]
    ],
    "count": 4,
@@ -2157,12 +2166,12 @@
    "type": "stalls",
    "line": [
     [
-     224.57,
-     905.72
+     224.97,
+     905.77
     ],
     [
-     223.98,
-     910.48
+     224.38,
+     910.53
     ]
    ],
    "count": 2,
@@ -2178,12 +2187,12 @@
    "type": "line",
    "path": [
     [
-     224.86,
-     903.44
+     225.26,
+     903.49
     ],
     [
-     230.12,
-     904.09
+     230.51,
+     904.14
     ]
    ],
    "width": 0.1,
@@ -2195,12 +2204,12 @@
    "type": "line",
    "path": [
     [
-     224.57,
-     905.72
+     224.97,
+     905.77
     ],
     [
-     229.83,
-     906.37
+     230.23,
+     906.42
     ]
    ],
    "width": 0.1,
@@ -2212,12 +2221,12 @@
    "type": "line",
    "path": [
     [
-     225.75,
-     903.55
+     226.15,
+     903.6
     ],
     [
-     226.66,
-     905.98
+     227.05,
+     906.03
     ]
    ],
    "width": 0.1,
@@ -2230,12 +2239,12 @@
    "type": "line",
    "path": [
     [
-     227.44,
-     903.76
+     227.84,
+     903.81
     ],
     [
-     228.34,
-     906.19
+     228.74,
+     906.24
     ]
    ],
    "width": 0.1,
@@ -2248,12 +2257,12 @@
    "type": "line",
    "path": [
     [
-     229.13,
-     903.97
+     229.52,
+     904.02
     ],
     [
-     230.03,
-     906.4
+     230.43,
+     906.45
     ]
    ],
    "width": 0.1,
@@ -2303,16 +2312,29 @@
    "evidence": "ortho2020"
   },
   {
+   "name": "ST_road_YB_NW_edge_line",
+   "type": "line",
+   "path": [
+    [
+     148.35,
+     826.2
+    ],
+    [
+     180.21,
+     869.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
    "name": "ST_road_YB_CL_a",
    "type": "line",
    "path": [
     [
-     151.29,
-     826.06
-    ],
-    [
-     156.98,
-     831.84
+     152.67,
+     826.0
     ],
     [
      193.5,
@@ -2321,20 +2343,15 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020",
-   "unverified": "first 8 m: taper from the end of the ne_roads centre line"
+   "evidence": "ortho2020"
   },
   {
    "name": "ST_road_YB_CL_b",
    "type": "line",
    "path": [
     [
-     151.45,
-     825.94
-    ],
-    [
-     157.14,
-     831.72
+     152.92,
+     826.0
     ],
     [
      193.66,
@@ -2343,16 +2360,15 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020",
-   "unverified": "first 8 m: taper from the end of the ne_roads centre line"
+   "evidence": "ortho2020"
   },
   {
    "name": "ST_road_YB_lane_line",
    "type": "line",
    "path": [
     [
-     155.88,
-     823.95
+     157.4,
+     826.0
     ],
     [
      195.97,
@@ -2565,8 +2581,8 @@
    "type": "line",
    "path": [
     [
-     227.82,
-     826.97
+     227.93,
+     826.0
     ],
     [
      222.25,
@@ -2588,8 +2604,8 @@
    "type": "line",
    "path": [
     [
-     228.01,
-     827.0
+     228.13,
+     826.0
     ],
     [
      222.51,
@@ -2611,8 +2627,8 @@
    "type": "line",
    "path": [
     [
-     224.0,
-     828.54
+     224.31,
+     826.0
     ],
     [
      219.77,
@@ -2802,15 +2818,15 @@
    "type": "stalls",
    "line": [
     [
-     186.83,
-     829.42
+     188.38,
+     831.49
     ],
     [
      194.59,
      839.76
     ]
    ],
-   "count": 5,
+   "count": 4,
    "depth": 5.5,
    "side": "right",
    "angle": 88.6,
@@ -2822,15 +2838,15 @@
    "type": "stalls",
    "line": [
     [
-     186.84,
-     829.42
+     188.4,
+     831.51
     ],
     [
      194.66,
      839.85
     ]
    ],
-   "count": 5,
+   "count": 4,
    "depth": 5.0,
    "side": "left",
    "angle": 91.5,
@@ -2880,12 +2896,12 @@
    "type": "line",
    "path": [
     [
-     163.63,
-     825.69
+     164.53,
+     827.75
     ],
     [
-     167.09,
-     823.13
+     168.15,
+     825.08
     ]
    ],
    "width": 0.1,
@@ -2898,12 +2914,12 @@
    "type": "line",
    "path": [
     [
-     164.93,
-     827.46
+     165.84,
+     829.52
     ],
     [
-     168.39,
-     824.9
+     169.46,
+     826.85
     ]
    ],
    "width": 0.1,
@@ -2916,12 +2932,12 @@
    "type": "line",
    "path": [
     [
-     166.24,
-     829.23
+     168.33,
+     832.9
     ],
     [
-     169.7,
-     826.67
+     171.95,
+     830.23
     ]
    ],
    "width": 0.1,
@@ -2934,12 +2950,12 @@
    "type": "line",
    "path": [
     [
-     168.73,
-     832.61
+     169.88,
+     835.0
     ],
     [
-     172.19,
-     830.05
+     173.5,
+     832.32
     ]
    ],
    "width": 0.1,
@@ -2952,12 +2968,12 @@
    "type": "line",
    "path": [
     [
-     170.28,
-     834.7
+     172.61,
+     838.7
     ],
     [
-     173.74,
-     832.14
+     176.23,
+     836.02
     ]
    ],
    "width": 0.1,
@@ -2970,12 +2986,12 @@
    "type": "line",
    "path": [
     [
-     173.01,
-     838.4
+     173.91,
+     840.47
     ],
     [
-     176.47,
-     835.85
+     177.54,
+     837.79
     ]
    ],
    "width": 0.1,
@@ -2988,12 +3004,12 @@
    "type": "line",
    "path": [
     [
-     174.32,
-     840.17
+     176.29,
+     843.68
     ],
     [
-     177.78,
-     837.62
+     179.91,
+     841.01
     ]
    ],
    "width": 0.1,
@@ -3006,30 +3022,12 @@
    "type": "line",
    "path": [
     [
-     176.69,
-     843.39
+     177.6,
+     845.45
     ],
     [
-     180.15,
-     840.83
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "lines faint; stall and aisle widths read by eye"
-  },
-  {
-   "name": "ST_lot_23N_W_line_8",
-   "type": "line",
-   "path": [
-    [
-     178.0,
-     845.16
-    ],
-    [
-     181.46,
-     842.6
+     181.22,
+     842.78
     ]
    ],
    "width": 0.1,
@@ -3042,12 +3040,12 @@
    "type": "line",
    "path": [
     [
-     165.32,
-     827.3
+     164.99,
+     827.54
     ],
     [
-     167.47,
-     828.2
+     167.15,
+     828.43
     ]
    ],
    "width": 0.1,
@@ -3060,12 +3058,12 @@
    "type": "line",
    "path": [
     [
-     166.36,
-     826.53
+     166.04,
+     826.77
     ],
     [
-     168.51,
-     827.42
+     168.19,
+     827.66
     ]
    ],
    "width": 0.1,
@@ -3078,12 +3076,12 @@
    "type": "line",
    "path": [
     [
-     167.41,
-     825.76
+     167.09,
+     825.99
     ],
     [
-     169.56,
-     826.65
+     169.24,
+     826.89
     ]
    ],
    "width": 0.1,
@@ -3096,12 +3094,12 @@
    "type": "line",
    "path": [
     [
-     169.12,
-     832.45
+     168.79,
+     832.69
     ],
     [
-     171.51,
-     833.67
+     171.18,
+     833.91
     ]
    ],
    "width": 0.1,
@@ -3114,12 +3112,12 @@
    "type": "line",
    "path": [
     [
-     170.16,
-     831.68
+     169.84,
+     831.91
     ],
     [
-     172.55,
-     832.9
+     172.23,
+     833.13
     ]
    ],
    "width": 0.1,
@@ -3132,12 +3130,12 @@
    "type": "line",
    "path": [
     [
-     171.21,
-     830.91
+     170.89,
+     831.14
     ],
     [
-     173.6,
-     832.12
+     173.28,
+     832.36
     ]
    ],
    "width": 0.1,
@@ -3150,12 +3148,12 @@
    "type": "line",
    "path": [
     [
-     173.39,
-     838.24
+     173.07,
+     838.48
     ],
     [
-     175.54,
-     839.14
+     175.22,
+     839.38
     ]
    ],
    "width": 0.1,
@@ -3168,12 +3166,12 @@
    "type": "line",
    "path": [
     [
-     174.44,
-     837.47
+     174.12,
+     837.71
     ],
     [
-     176.59,
-     838.37
+     176.27,
+     838.6
     ]
    ],
    "width": 0.1,
@@ -3186,12 +3184,12 @@
    "type": "line",
    "path": [
     [
-     175.48,
-     836.7
+     175.16,
+     836.94
     ],
     [
-     177.64,
-     837.59
+     177.31,
+     837.83
     ]
    ],
    "width": 0.1,
@@ -3204,12 +3202,12 @@
    "type": "line",
    "path": [
     [
-     177.07,
-     843.23
+     176.75,
+     843.47
     ],
     [
-     179.23,
-     844.13
+     178.9,
+     844.36
     ]
    ],
    "width": 0.1,
@@ -3222,12 +3220,12 @@
    "type": "line",
    "path": [
     [
-     178.12,
-     842.46
+     177.8,
+     842.7
     ],
     [
-     180.27,
-     843.36
+     179.95,
+     843.59
     ]
    ],
    "width": 0.1,
@@ -3240,12 +3238,12 @@
    "type": "line",
    "path": [
     [
-     179.17,
-     841.69
+     178.84,
+     841.92
     ],
     [
-     181.32,
-     842.58
+     181.0,
+     842.82
     ]
    ],
    "width": 0.1,
