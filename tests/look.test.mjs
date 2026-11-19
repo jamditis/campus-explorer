@@ -99,4 +99,14 @@ test('finishMetal restores satin metalness and roughness after a concrete overwr
   finishMetal('Wall_stucco_mission', other);
   assert.equal(other.metalness, 0);
   assert.equal(other.roughness, 0.85);
+
+  const screen = { metalness: 0.2, roughness: 0.3 };
+  finishMetal('NZ_screen_case_white_aluminium_UNVERIFIED', screen);
+  assert.equal(screen.metalness, 0.2);
+  assert.equal(screen.roughness, 0.3);
+
+  const bin = { metalness: 1, roughness: 0.32 };
+  finishMetal('OC_bin_brushed_stainless_UNVERIFIED', bin);
+  assert.equal(bin.metalness, 1);
+  assert.equal(bin.roughness, 0.32);
 });
