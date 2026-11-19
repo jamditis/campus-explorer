@@ -213,7 +213,7 @@ export function createUI(app) {
     labels: () => tools.labels?.setVisible(!tools.labels.visible),
     map: () => tools.hud?.setMap(!tools.hud.map),
     measure: () => { if (!tools.measure) return; if (!tools.measure.active) { tools.tour?.stop(); if (app.state.mode !== 'orbit') app.setMode('orbit'); } tools.measure.setActive(!tools.measure.active); },
-    tour: () => { if (!tools.tour) return; if (tools.tour.running) tools.tour.stop(); else { tools.measure?.setActive(false); tools.tour.start(); } },
+    tour: () => { if (!tools.tour) return; if (tools.tour.running) tools.tour.stop(); else { tools.measure?.setActive(false); if (app.state.mode !== 'orbit') app.setMode('orbit'); tools.tour.start(); } },
     hunt: () => { if (!tools.hunt) return; if (tools.hunt.active) tools.hunt.stop(); else tools.hunt.start(); },
     photo, share,
     help: () => { const d = $('help-dialog'); if (d.open) d.close(); else d.showModal(); },

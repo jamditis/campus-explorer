@@ -49,6 +49,15 @@ test('declutter shows forced labels and respects max', () => {
   assert.deepEqual(declutter(items, { max: 2 }), [1, 2]);
 });
 
+test('declutter skips labels under the interface unless forced', () => {
+  const items = [
+    { x: 0, y: 0, w: 50, h: 20, priority: 5 },
+    { x: 100, y: 0, w: 50, h: 20, priority: 1 },
+    { x: 10, y: 0, w: 20, h: 20, priority: 0, forced: true },
+  ];
+  assert.deepEqual(declutter(items, { blocked: [{ x: 0, y: 0, w: 60, h: 60 }] }), [2, 1]);
+});
+
 test('declutter result never overlaps', () => {
   const items = Array.from({ length: 200 }, (_, i) => ({
     x: (i * 37) % 900, y: (i * 53) % 600, w: 60 + (i % 5) * 20, h: 22, priority: (i * 7919) % 101,

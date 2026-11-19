@@ -47,16 +47,17 @@ function overlaps(a, b, pad) {
 /**
  * Greedy declutter. `items` are { x, y, w, h, priority, forced } boxes in screen pixels (x, y top left).
  * Forced items go first and always show; the rest are taken by priority, skipping any that would
- * overlap one already placed, until `max` are shown. Returns the indices shown, in placing order.
+ * overlap one already placed, until `max` are shown. Non-forced items that overlap a `blocked` box
+ * (screen areas covered by the interface) are skipped too. Returns the indices shown, in placing order.
  */
-export function declutter(items, { max = Infinity, pad = 2 } = {}) {
+export function declutter(items, { max = Infinity, pad = 2, blocked = [] } = {}) {
   const order = items.map((_, i) => i).sort((a, b) => (items[b].forced ? 1 : 0) - (items[a].forced ? 1 : 0)
     || items[b].priority - items[a].priority);
   const placed = [];
   for (const i of order) {
     const it = items[i];
     if (!it.forced && placed.length >= max) break;
-    if (!it.forced && placed.some(j => overlaps(items[j], it, pad))) continue;
+    if (!it.forced && (placed.some(j => overlaps(items[j], it, pad)) || blocked.some(b => overlaps(b, it, 0)))) continue;
     placed.push(i);
   }
   return placed;

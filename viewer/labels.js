@@ -15,6 +15,7 @@ const RETRY_MS = 1500;      // wait before asking again for a place that missed
 const CONFIRM_MS = 4000;    // wait between confirming lookups for a place that hit
 const CONFIRMS = 3;         // hits needed before a place stops being asked
 const HIGHLIGHT_MS = 6000;
+const BLOCKERS = '#top, #panel'; // fixed interface cards that cover the view
 
 /**
  * Create the place labels.
@@ -33,6 +34,7 @@ export function createLabels(app) {
   let highlighted = null;   // place object
   let highlightTimer = 0;
   let dirty = true;         // relayout on the next frame even if the camera did not move
+  let blocked = [];         // interface boxes labels must not sit under
   let width = innerWidth, height = innerHeight;
   const v = new THREE.Vector3();
   layer.hidden = !visible;
@@ -69,6 +71,17 @@ export function createLabels(app) {
 
   // One layout read for all labels, here and never per frame (they start hidden but laid out).
   // While the layer is switched off nothing has a size, so this runs again when it is switched on.
+  // Screen boxes of the header and panel, so labels do not hide half under them. Read on resize,
+  // clicks (the panel opens and closes) and mode changes, never per frame.
+  function readBlocked() {
+    blocked = [];
+    for (const el of document.querySelectorAll(BLOCKERS)) {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height) blocked.push({ x: r.left, y: r.top, w: r.width, h: r.height });
+    }
+    dirty = true;
+  }
+
   function measure(all = false) {
     if (!visible) return;
     for (const l of labels) if (all || !l.w) { l.w = l.el.offsetWidth; l.h = l.el.offsetHeight; }
@@ -125,7 +138,7 @@ export function createLabels(app) {
       items.push({ x, y, w: l.w, h: l.h, priority: labelPriority(l.place.kind, l.place.r, dist), forced: isOn, dist });
       owners.push(l);
     }
-    const keep = new Set(declutter(items, { max, pad: 3 }));
+    const keep = new Set(declutter(items, { max, pad: 3, blocked }));
     for (let i = 0; i < items.length; i++) {
       const l = owners[i], it = items[i];
       if (!keep.has(i)) { hide(l); continue; }
@@ -165,8 +178,8 @@ export function createLabels(app) {
     // the camera event comes after the controls update and before drawing, so labels match this frame
     app.on('camera', () => layout()),
     // the label font size changes at the phone breakpoint, so sizes are read again on resize
-    app.on('resize', ({ width: w, height: h }) => { width = w; height = h; measure(true); dirty = true; }),
-    app.on('mode', () => { dirty = true; }),
+    app.on('resize', ({ width: w, height: h }) => { width = w; height = h; measure(true); readBlocked(); }),
+    app.on('mode', () => setTimeout(readBlocked)),
     app.on('place', ({ place }) => {
       highlight(place);
       highlightTimer = setTimeout(() => { if (highlighted === place || highlighted?.osm === place?.osm) highlight(null); }, HIGHLIGHT_MS);
@@ -177,6 +190,10 @@ export function createLabels(app) {
     }),
   ];
   if (app.places?.length) build();
+  // after the click's handlers have opened or closed the panel
+  const onClick = () => setTimeout(readBlocked, 50);
+  addEventListener('click', onClick, true);
+  readBlocked();
   document.fonts?.ready.then(() => { measure(true); dirty = true; });
 
   return {
@@ -186,6 +203,7 @@ export function createLabels(app) {
     dispose() {
       clearTimeout(highlightTimer);
       for (const off of offs) off();
+      removeEventListener('click', onClick, true);
       layer.remove(); labels = [];
     },
   };
