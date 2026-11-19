@@ -18,9 +18,15 @@ for (const node of root.listNodes()) {
   const b = getBounds(node); const d = Math.hypot(b.max[0] - b.min[0], b.max[1] - b.min[1], b.max[2] - b.min[2]);
   if (d < MIN) { node.setMesh(null); dropped++; }
 }
+// interiors (floors, ceilings, rooms) only show through gaps from far away, and glazing is see-through:
+// drop those primitives, keeping the opaque rest of a mesh (a roof mesh can carry a few glass triangles)
 const INTERIOR = /(^|_)int_|interior|ceiling|carpet|_floor|floor_|_room|lounge|newsroom/i;
-for (const n of root.listNodes()) { const m = n.getMesh(); if (m && (INTERIOR.test(m.getName()) || m.listPrimitives().every(p => INTERIOR.test(p.getMaterial()?.getName() || '')))) { n.setMesh(null); dropped++; } }
-for (const m of root.listMaterials()) if (m.getAlphaMode() === 'BLEND') for (const n of root.listNodes()) if (n.getMesh()?.listPrimitives().some(p => p.getMaterial() === m)) n.setMesh(null);
+for (const n of root.listNodes()) { const m = n.getMesh(); if (m && INTERIOR.test(m.getName())) { n.setMesh(null); dropped++; } }
+for (const mesh of root.listMeshes()) for (const p of mesh.listPrimitives()) {
+  const mat = p.getMaterial();
+  if (mat && (mat.getAlphaMode() === 'BLEND' || INTERIOR.test(mat.getName()))) { mesh.removePrimitive(p); p.dispose(); }
+}
+for (const n of root.listNodes()) if (n.getMesh() && !n.getMesh().listPrimitives().length) n.setMesh(null);
 await doc.transform(prune(), dedup(), dequantize(), weld());
 // topology-preserving simplification (seams, hard edges and borders stay, so walls don't tear), with an error
 // bound in metres sized for viewing from a few hundred metres away; 'Prune' also removes small disconnected

@@ -167,6 +167,7 @@ function liftSportSurfaces(root) {
 const LOD_DIST = { low: 260, medium: 420, high: 650 };
 const lods = []; let lodLast = 0;
 async function loadLods(man, base, loader, token) {
+  const hide = new Set(man.hide || []);
   for (const t of man.tiles) {
     if (!t.lod) continue;
     const full = campus.getObjectByName(t.file.replace('.glb', ''));
@@ -174,9 +175,11 @@ async function loadLods(man, base, loader, token) {
     let g;
     try { g = await loader.loadAsync(base + t.lod); } catch (e) { console.warn('lod', t.lod, e); continue; }
     if (token !== loadToken) return;
+    // the far version carries the same objects as the full tile, so drop the ones the merge hides (manifest hide list)
+    if (hide.size) { const drop = []; g.scene.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); }); for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); } }
     g.scene.name = 'lod_' + full.name; fixMaterials(g.scene); liftSportSurfaces(g.scene); look.decorate(g.scene);
     const hi = []; full.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) hi.push(o); });
-    g.scene.traverse(o => { if (o.isMesh) { o.userData.hidden = true; o.layers.set(2); } });
+    g.scene.traverse(o => { if (o.isMesh) { o.userData.hidden = true; o.userData.lod = true; o.layers.set(2); } });
     campus.add(g.scene);
     lods.push({ hi, lo: g.scene, box: new THREE.Box3().setFromObject(full), far: false });
   }
@@ -316,7 +319,7 @@ function lookFromCamera() { const d = new THREE.Vector3(); camera.getWorldDirect
 function ensureBVH() {
   if (bvhReady) return;
   campus.traverse(o => {
-    if (!o.isMesh || o.isInstancedMesh) return;
+    if (!o.isMesh || o.isInstancedMesh || o.userData.lod) return; // walking always collides with the full tiles
     const m = Array.isArray(o.material) ? o.material[0] : o.material;
     if (m?.userData.leaf || m?.userData.glass) return;
     if (!o.geometry.boundsTree) o.geometry.computeBoundsTree();
@@ -324,7 +327,7 @@ function ensureBVH() {
   });
   bvhReady = true;
 }
-const ray = new THREE.Raycaster(); ray.firstHitOnly = true;
+const ray = new THREE.Raycaster(); ray.firstHitOnly = true; ray.layers.enableAll(); // full tiles swapped out for far versions sit on layer 2
 function groundAt(x, y, z, up = 1.2, down = 60) {
   ray.set(new THREE.Vector3(x, y + up, z), new THREE.Vector3(0, -1, 0)); ray.far = up + down;
   const h = ray.intersectObjects(colliders, false)[0]; return h ? h.point.y : null;
