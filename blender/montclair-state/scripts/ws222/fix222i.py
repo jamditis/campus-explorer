@@ -9,6 +9,9 @@ SRC=os.environ.get('SRC221','/workspace/nj-scenes/montclair-state/montclair_stat
 PFX=('WS214_N_berm_tip_gap_asphalt_underfill','WS67_CollegeAve_gap_asphalt','KY_college_ave_carriageway_asphalt')
 A=[o for o in bpy.data.objects if o.type=='MESH' and o.name.startswith(PFX)]
 names=[o.name for o in A]
+import shutil, tempfile
+if os.path.abspath(bpy.data.filepath)==os.path.abspath(SRC):   # rebuilding from ws221c itself: load from a temp copy
+    _tmp=os.path.join(tempfile.gettempdir(),'ws221c_src_copy_222i.blend'); shutil.copyfile(SRC,_tmp); SRC=_tmp
 with bpy.data.libraries.load(SRC) as (src,dst): dst.meshes=[A_.data.name for A_ in A]
 orig={}
 for o,m in zip(A,dst.meshes):
@@ -23,7 +26,8 @@ for o in A:
             print('F222I restore %s v%d z %.3f -> %.3f'%(o.name[:6],i,w.z,w0.z),flush=True); v.co=oc[i].copy(); n+=1
     o.data.update(); print('F222I',o.name[:30],'restored',n,flush=True)
 for m in dst.meshes: bpy.data.meshes.remove(m)
-S=[bpy.data.objects['WS72_Kasser_SW_RHD_core_sidewalk_landing_UNVERIFIED_width']]+[o for o in bpy.data.objects if o.name.startswith('WS215_RHD_SE_core_street_level_sidewalk')]
+if SRC.endswith('ws221c_src_copy_222i.blend'): os.remove(SRC)
+WALKS=[bpy.data.objects['WS72_Kasser_SW_RHD_core_sidewalk_landing_UNVERIFIED_width']]+[o for o in bpy.data.objects if o.name.startswith('WS215_RHD_SE_core_street_level_sidewalk')]
 def slab_top(s,x,y,z):
     SM=s.matrix_world; SI=SM.inverted()
     ok,loc,n,fi=s.ray_cast(SI@Vector((x,y,z+2.0)),(SI.to_3x3()@Vector((0,0,-1))).normalized(),distance=6.0)
@@ -37,11 +41,11 @@ for o in A:
     for v in o.data.vertices:
         w=M@v.co
         if not inb(w): continue
-        for s in S:
+        for s in WALKS:
             t=slab_top(s,w.x,w.y,w.z)
             if t is not None and w.z>t-0.01: need.append((s.name,w.copy(),t))
 print('F222I asphalt points too close to a walk top:',len(need),flush=True)
-for s in S:
+for s in WALKS:
     SM=s.matrix_world; SI=SM.inverted(); pts=[(w,t) for nm,w,t in need if nm==s.name]
     if not pts: continue
     # top verts = verts with a linked up-facing face

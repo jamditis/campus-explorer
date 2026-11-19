@@ -5,10 +5,10 @@
 # under WS72 or WS215 and sits above (slab top - 2 cm) is set to slab top - 3 cm. Walks are not moved.
 import bpy
 from mathutils import Vector
-S=[bpy.data.objects[n] for n in ('WS72_Kasser_SW_RHD_core_sidewalk_landing_UNVERIFIED_width',)]+[o for o in bpy.data.objects if o.name.startswith('WS215_RHD_SE_core_street_level_sidewalk')]
+WALKS=[bpy.data.objects[n] for n in ('WS72_Kasser_SW_RHD_core_sidewalk_landing_UNVERIFIED_width',)]+[o for o in bpy.data.objects if o.name.startswith('WS215_RHD_SE_core_street_level_sidewalk')]
 def slab_top(x,y,z):
     best=None
-    for s in S:
+    for s in WALKS:
         SM=s.matrix_world; SI=SM.inverted()
         ok,loc,n,fi=s.ray_cast(SI@Vector((x,y,z+2.0)),(SI.to_3x3()@Vector((0,0,-1))).normalized(),distance=6.0)
         if ok:
