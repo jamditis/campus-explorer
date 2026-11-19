@@ -85,6 +85,8 @@ class Builder:
     def __init__(self, name):
         if not name.startswith("SW_"):
             raise ValueError("object names start with SW_")
+        if len(name) > 63:  # Blender cuts longer names, and the cut takes `_UNVERIFIED` first
+            raise ValueError(f"object name longer than 63 characters: {name}")
         self.name, self.bm, self.mats = name, bmesh.new(), []
 
     def slot(self, material):
@@ -184,11 +186,16 @@ class Builder:
             f.append(tuple(range(n - 1, -1, -1)))
         self.faces(v, f, material)
 
-    def finish(self, coll=None, weld=0.0005):
-        """Write the mesh and link the object. Returns the object."""
+    def finish(self, coll=None, weld=0.0005, recalc=True):
+        """Write the mesh and link the object. Returns the object.
+
+        `recalc` lets Blender choose each shell's outside. It guesses for loose flat panels, so a
+        builder that winds every face itself (anticlockwise seen from outside) passes False.
+        """
         if weld:
             bmesh.ops.remove_doubles(self.bm, verts=self.bm.verts, dist=weld)
-        bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
+        if recalc:
+            bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
         me = bpy.data.meshes.new(self.name)
         self.bm.to_mesh(me)
         self.bm.free()

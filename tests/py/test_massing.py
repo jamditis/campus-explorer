@@ -71,7 +71,8 @@ class Roofs(unittest.TestCase):
     def test_mansard_gives_up_gently_on_a_narrow_part(self):
         thin = [(0, 0), (30, 0), (30, 2), (0, 2)]
         inner = massing.mansard(thin, 6.0)
-        self.assertTrue(all(0 <= p[1] <= 2 for p in inner))
+        self.assertTrue(all(0 < p[1] < 2 for p in inner), "moved in, by less than the rise")
+        self.assertLess(max(p[1] for p in inner) - min(p[1] for p in inner), 2)
 
     def test_pitched_roof_without_an_eave_is_an_error(self):
         with self.assertRaises(ValueError):

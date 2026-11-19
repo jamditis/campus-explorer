@@ -20,7 +20,14 @@ def _slug(text):
 
 
 def _name(zone, item, kind=""):
-    return f"SW_{_slug(zone).capitalize()}_{_slug(item.get('name') or kind)}"
+    """Object name: SW_<Zone>_<item>. An item whose name already starts with the zone's first word
+    (zone `ne_buildings`, item `NE_bldg_...`) is not given the zone again: Blender cuts names at
+    63 characters, and the cut would take the `_UNVERIFIED` ending.
+    """
+    z, n = _slug(zone), _slug(item.get("name") or kind)
+    if n.lower().startswith(z.split("_")[0].lower() + "_"):
+        return f"SW_{n}"
+    return f"SW_{z.capitalize()}_{n}"
 
 
 def _front_frame(ring, front):
@@ -280,7 +287,8 @@ TREES = {
 
 def _tree_meshes(assets, wanted):
     """Load the tree meshes for the wanted species from a main-model .blend (once per run).
-    Returns {species: (mesh, its height)}; a species whose mesh is missing is left out.
+    Returns {species: (mesh, lowest z, highest z)}; a species whose mesh is missing is left out.
+    The meshes do not all start at z 0, so both ends are needed to seat a scaled tree.
     """
     import bpy
 
@@ -295,7 +303,8 @@ def _tree_meshes(assets, wanted):
         if mesh is None:
             print("SW", n, "not found in", assets)
             continue
-        out[sp] = (mesh, max(v.co.z for v in mesh.vertices))
+        zs = [v.co.z for v in mesh.vertices]
+        out[sp] = (mesh, min(zs), max(zs))
     return out
 
 
@@ -322,11 +331,11 @@ def trees(lay, terrain, assets):
         sp = p.get("species", "red_maple")
         if sp not in meshes:
             continue
-        mesh, tall = meshes[sp]
+        mesh, low, high = meshes[sp]
         x, y = p["at"]
         ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", mesh)
-        k = p.get("height", 12.0) / tall
-        ob.location = (x, y, terrain.at(x, y) - 0.1)
+        k = p.get("height", 12.0) / (high - low)
+        ob.location = (x, y, terrain.at(x, y) - 0.1 - low * k)
         ob.scale = (k, k, k)
         ob.rotation_euler = (0, 0, math.radians((i * 137.5) % 360))
         kit.collection().objects.link(ob)

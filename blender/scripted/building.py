@@ -54,7 +54,8 @@ def _flat_roof(b, ring, top, drop, cap, deck):
         + [(p[0], p[1], top - drop) for p in inner]
     )
     f = [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
-    f += [(n + (i + 1) % n, n + i, 2 * n + i, 2 * n + (i + 1) % n) for i in range(n)]
+    # the parapet's inner face looks in over the roof deck
+    f += [(2 * n + (i + 1) % n, 2 * n + i, n + i, n + (i + 1) % n) for i in range(n)]
     b.faces(v, f, cap)
     b.faces(v[2 * n :], [tuple(range(n))], deck)
 
@@ -135,13 +136,13 @@ def part(lay_part, name, ground):
     def local(x, y):  # a part on a roof has that roof as its ground
         return p["base"] if "base" in p else ground(x, y)
 
-    if style == "deck":
+    if style == "deck" and kind == "flat":
         void = kit.mat("paint", "deck_opening", kit.srgb("#1b1c1e"), 0.95)
         _deck_levels(b, p, ring, p["top"], local, wall, void)
     elif p.get("windows"):
         glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
         _windows(b, p, ring, wall_top, local, glass)
-    return b.finish()
+    return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
 
 
 def build(lay, terrain, name_of):

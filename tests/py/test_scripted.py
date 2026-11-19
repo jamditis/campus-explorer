@@ -116,9 +116,7 @@ class PlanFiles(unittest.TestCase):
         cls.areas = {d.name: layout.load(d) for d in layout.areas()}
 
     def each(self):
-        for name, lay in self.areas.items():
-            with self.subTest(area=name):
-                yield SCRIPTED / name, lay
+        return [(SCRIPTED / name, lay) for name, lay in self.areas.items()]
 
     def test_every_plan_file_is_json_with_a_zone_of_its_own(self):
         zones = {}

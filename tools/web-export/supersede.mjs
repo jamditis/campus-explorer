@@ -38,6 +38,7 @@ const stale = new Set(), changedTiles = new Set(), KNOWN = new Set();
 const hashOf = rules => { let h = 2166136261; for (const c of JSON.stringify([rules.footprint, rules.clip, rules.drop ?? [], rules.tuck ?? 0.5, rules.cut ?? 0.6])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); };
 for (const rules of AREAS) KNOWN.add(hashOf(rules));
 for (const rules of AREAS) {
+if (rules.skip) continue; // its marks stay known, its ground is not taken out in this run
 const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6;
 const CLIP = rules.clip.map(r => new RegExp(r)), DROP = (rules.drop ?? []).map(r => new RegExp(r));
 // What a done primitive is marked with: a short hash of each area's rules it was done with. Removed triangles

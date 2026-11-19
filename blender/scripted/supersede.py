@@ -2,6 +2,7 @@
 which meshes of the other source models are ground inside it (<area>/footprint.json, "supersede").
 
 usage: python3 blender/scripted/supersede.py OUT.json [--areas NAME,NAME]
+Every area's rules are written, so marks of other areas stay known; `--areas` marks the rest `skip`.
 """
 
 import json
@@ -17,12 +18,14 @@ import layout  # noqa: E402
 def main():
     args = sys.argv[1:]
     out = []
-    for plan_dir in layout.areas(args):
+    chosen = {d.name for d in layout.areas(args)}
+    for plan_dir in layout.areas():
         rules = json.loads(Path(plan_dir / "footprint.json").read_text())["supersede"]
         ring = [[round(x, 3), round(y, 3)] for x, y in layout.load(plan_dir)["footprint"]]
         out.append(
             dict(
                 name=plan_dir.name,
+                skip=plan_dir.name not in chosen,
                 footprint=ring,
                 clip=rules["clip"],
                 drop=rules.get("drop", []),

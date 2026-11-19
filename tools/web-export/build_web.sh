@@ -4,7 +4,7 @@
 #   One unified campus: north is merged into models/main at its real coordinates (same Blender origin).
 #   Run main first; the north run reads main's plan and skips anything main already has.
 #   sw is the scripted build (blender/scripted/, every area in one .blend): its tiles carry the sw_ prefix, and every run
-#   ends by taking the other sources' ground out of their tiles inside the southwest footprint (supersede.mjs).
+#   ends by taking the other sources' ground out of their tiles inside every area's footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
