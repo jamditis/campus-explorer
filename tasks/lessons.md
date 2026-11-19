@@ -19,3 +19,9 @@ Rules learned from corrections. Read at the start of a session.
 
 - The old default sun used a spherical angle that put it in the north-west sky, which cannot happen at 40.86° N. Viewer space has grid north on **-Z**.
 - **Rule:** derive directions from `viewer/geo.js` and `viewer/sun.js`, and test them, instead of typing angles by hand.
+
+## 2026-11-19: short probes beat a long browser test on a machine without a GPU
+
+- **Question (Joe, while a smoke run was in progress):** "do we really need a smoke test"
+- **What went wrong:** three full smoke runs of 20 minutes each failed on the test's own fixed waits, not on the viewer. A second browser in parallel also ran the container out of memory.
+- **Rule (my reading of the question, not Joe's words):** where WebGL runs in software, check one behaviour with one short probe script (one or two tiles, a few minutes) and run one browser at a time. Keep the full smoke test for a machine with a GPU. Browser tests wait for a condition, never for a fixed time.
