@@ -32,12 +32,16 @@ const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.
 // tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
 const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
-const WARM = { asphalt: [1.1, 1.0, 0.84], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
+const WARM = { asphalt: [1.04, 1.0, 0.92], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
 
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
   if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
+  // white line paint filed as grass (Lot 9 stalls, Sprague field lines) was retinted lawn green: keep it paint
+  if (cat === 'grass' && /paint|stripe|marking/i.test(name) && !/lawn|nostripe/i.test(name)) return '';
   if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
+  if (cat === 'asphalt' && /concrete/i.test(name)) return 'concrete'; // e.g. KX_drive_concrete
+  if (cat === 'asphalt' && /atlas|_tv_|screen/i.test(name)) return ''; // signage textures filed as asphalt
   if (cat) return cat;
   if (/^Bark_/i.test(name)) return 'bark';
   if (/barrel_tile|tile_course|Eave_tile/i.test(name)) return 'rooftile';
@@ -132,6 +136,12 @@ export function createLook(renderer, scene, camera) {
     if (cat !== 'metal') m.metalness = 0;
     m.envMapIntensity = ENV[cat] ?? 0.5;
     const isAsphalt = cat === 'asphalt';
+    if (isAsphalt && !m.map) {
+      // asphalt colours sampled from the ortho come out far too pale (up to linear 0.58, like fresh concrete);
+      // real pavement reflects about 0.05 (new) to 0.2 (old, grey). Keep each surface's relative tone, in that range.
+      const l = m.color.r * 0.2126 + m.color.g * 0.7152 + m.color.b * 0.0722;
+      if (l > 0) m.color.multiplyScalar(THREE.MathUtils.clamp(l * 0.42, 0.06, 0.19) / l);
+    }
     const warm = WARM[cat];
     const hasN = NRM[cat] !== undefined;
     m.onBeforeCompile = sh => {
@@ -319,11 +329,25 @@ export function createLook(renderer, scene, camera) {
     m.customProgramCacheKey = () => 'glass_interior';
     m.needsUpdate = true;
   }
+  // lamp heads often reuse a building's clear window glass, which the window treatment turns near-black:
+  // give lamp meshes their own frosted (opal) globe with a faint warm glow instead
+  const LAMP_RE = /lamp|acorn|lantern|bollard_light|light_pole|streetlight/i;
+  const opals = new Map();
+  function opalFor(m) {
+    if (!opals.has(m)) {
+      const g = new THREE.MeshStandardMaterial({ name: m.name + '_opal', color: '#f1ece2', roughness: 0.45, metalness: 0, emissive: '#ffd9a0', emissiveIntensity: 0.18 });
+      g.userData = { cat: 'glass', glass: true, glassDone: true }; opals.set(m, g);
+    }
+    return opals.get(m);
+  }
+  function swapMat(o, m, g) { o.material = Array.isArray(o.material) ? o.material.map(x => (x === m ? g : x)) : g; }
   function decorate(root) {
     root.traverse(o => {
       if (!o.isMesh) return;
+      const lamp = LAMP_RE.test(o.name) || LAMP_RE.test(o.parent?.name || '');
       for (const m of [].concat(o.material)) {
         if (!m) continue;
+        if (lamp && (m.userData?.glass || m.userData?.cat === 'glass')) { swapMat(o, m, opalFor(m)); continue; }
         const cat = fixCat(m.name || '', m.userData?.cat || '');
         if (cat !== 'glass' && cat !== (m.userData?.cat || '')) m.userData.glass = false;
         if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
