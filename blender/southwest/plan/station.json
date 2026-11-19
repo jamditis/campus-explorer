@@ -1,0 +1,1018 @@
+{
+ "zone": "station",
+ "notes": "Frame: model metres, +X east, +Y north. Plan from the NJ 2020 ortho (0.15 m/px, leaf-off), read on gridded sheets and brightness profiles; LiDAR (lidar2017, sparse) for the canopy, tree heights and a few pole returns; hillshade confirms the two platform track faces (x -448 and -440.5 at y -245). OSM is 2-3 m east of the ortho on the rails and is used only for names and the sidewalk/path layout. Platforms: east track face x = -439.6 + 0.115 (y + 236), width 3.3 m, y -234 to -362; west track face x = -448.8 + 0.11 (y + 252), width 3.0 m, y -231 to -308.5. Lot: the north part is bounded by the Normal Ave south curb band (y -235.7 at x -436 to -240.6 at x -416), a lawn island with the station sign and a tree, the entrance drive at x -412 to -402 (crosswalk lines at y -239.5 and -242.6), the east walk and the south walk at y -279/-281; the south part is a single aisle with a stall row along the platform (27 stalls at 2.56 m, lines counted on the ortho) and an inferred east row. The drop-off plaza (concrete, mulch bed, canopy over the platform) is at y -255 to -266. Islands inside the lot carry layer 3.5 and the mulch bed 5.5 so they sit above the asphalt and concrete around them. Not digitised: the east-platform brick paver band (no reliable red tone in the ortho), accessible stall hatching (not visible), stop bars and arrows. The railway corridor is a single straight-ish ballast band 11 m wide with one 300 m bend at y -190; its edges north of Normal Ave are under trees. Points that stand on a platform carry \"base\": the height of the north model platform top under them, read from the published tiles; mini-high decks are 1.0 m above it (train floor height above a low platform, UNVERIFIED).",
+ "surfaces": [
+  {
+   "name": "Rail_corridor_ballast",
+   "kind": "gravel",
+   "ring": [
+    [
+     -416.26,
+     -60.0
+    ],
+    [
+     -432.96,
+     -190.0,
+     300
+    ],
+    [
+     -454.96,
+     -380.0
+    ],
+    [
+     -466.04,
+     -380.0
+    ],
+    [
+     -444.04,
+     -190.0,
+     300
+    ],
+    [
+     -427.34,
+     -60.0
+    ]
+   ],
+   "evidence": "ortho2020; osm 313715850/373812547 (offset 2-3 m east of the ortho rails)",
+   "unverified": "ballast width (11 m, two tracks about 4.1 m apart); north of Normal Ave the edges are under trees"
+  },
+  {
+   "name": "Station_lot",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -437.08,
+     -240.8
+    ],
+    [
+     -428.7,
+     -243.0
+    ],
+    [
+     -424.8,
+     -243.3,
+     0.5
+    ],
+    [
+     -424.7,
+     -250.3,
+     0.8
+    ],
+    [
+     -421.8,
+     -250.4,
+     3.0
+    ],
+    [
+     -411.5,
+     -242.3,
+     1.0
+    ],
+    [
+     -412.3,
+     -239.3
+    ],
+    [
+     -402.4,
+     -239.0
+    ],
+    [
+     -402.4,
+     -243.5
+    ],
+    [
+     -407.4,
+     -267.0,
+     3.0
+    ],
+    [
+     -407.4,
+     -280.4,
+     1.5
+    ],
+    [
+     -413.0,
+     -280.3
+    ],
+    [
+     -428.4,
+     -278.9
+    ],
+    [
+     -428.6,
+     -280.6
+    ],
+    [
+     -423.3,
+     -281.0
+    ],
+    [
+     -431.9,
+     -357.0,
+     1.0
+    ],
+    [
+     -450.44,
+     -357.0
+    ]
+   ],
+   "evidence": "ortho2020; hill; osm 313715857",
+   "unverified": "east edge of the south part (x -423 to -432) and the south end at y -357 are under tree shadow; mouth on Normal Ave set 0.5 m past the crosswalk"
+  },
+  {
+   "name": "Lot_island_N_lawn",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -436.6,
+     -235.5
+    ],
+    [
+     -416.0,
+     -240.4
+    ],
+    [
+     -411.3,
+     -242.3,
+     1.2
+    ],
+    [
+     -421.8,
+     -250.6,
+     3.0
+    ],
+    [
+     -424.9,
+     -250.5,
+     0.8
+    ],
+    [
+     -425.0,
+     -243.2,
+     0.5
+    ],
+    [
+     -428.7,
+     -241.1
+    ],
+    [
+     -436.6,
+     -239.0
+    ]
+   ],
+   "evidence": "ortho2020; commons_Moncl_Hts_lil_A_racks_jeh.JPG (lawn with the station sign between the racks and Normal Ave)",
+   "unverified": "kind: lawn in the 2010 photo, dark (bare soil or mulch) in the 2020 ortho; strip west of x -425 read from the photo and the OSM lot edge"
+  },
+  {
+   "name": "Lot_median_central",
+   "kind": "mulch",
+   "layer": 3.5,
+   "ring": [
+    [
+     -418.8,
+     -253.0,
+     1.0
+    ],
+    [
+     -414.0,
+     -253.0,
+     1.0
+    ],
+    [
+     -414.4,
+     -256.0
+    ],
+    [
+     -415.0,
+     -275.6,
+     0.5
+    ],
+    [
+     -416.7,
+     -275.6,
+     0.5
+    ],
+    [
+     -416.1,
+     -256.0
+    ],
+    [
+     -418.8,
+     -256.0,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "two parallel light edges 1.3 m apart read as a curbed strip; could be a painted double line; head shape and fill guessed"
+  },
+  {
+   "name": "Bike_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -436.8,
+     -238.8
+    ],
+    [
+     -428.5,
+     -241.0
+    ],
+    [
+     -428.6,
+     -243.2
+    ],
+    [
+     -437.2,
+     -241.0
+    ]
+   ],
+   "evidence": "ortho2020; commons_Moncl_Hts_lil_A_racks_jeh.JPG",
+   "unverified": "width"
+  },
+  {
+   "name": "Dropoff_plaza",
+   "kind": "concrete",
+   "ring": [
+    [
+     -438.79,
+     -254.8
+    ],
+    [
+     -432.5,
+     -254.8,
+     0.5
+    ],
+    [
+     -432.5,
+     -266.2,
+     0.5
+    ],
+    [
+     -440.1,
+     -266.2
+    ]
+   ],
+   "evidence": "ortho2020; subwaynut_montclair_heights16.jpg"
+  },
+  {
+   "name": "Dropoff_bed",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     -437.2,
+     -257.6,
+     0.3
+    ],
+    [
+     -432.7,
+     -257.6,
+     0.3
+    ],
+    [
+     -432.7,
+     -264.4,
+     0.3
+    ],
+    [
+     -437.2,
+     -264.4,
+     0.3
+    ]
+   ],
+   "evidence": "ortho2020; subwaynut_montclair_heights16.jpg (mulch bed behind the lot curb, walks with red tactile pads either side)"
+  },
+  {
+   "name": "Lawn_lot_E",
+   "kind": "lawn",
+   "ring": [
+    [
+     -423.5,
+     -280.6
+    ],
+    [
+     -413.2,
+     -281.4
+    ],
+    [
+     -416.9,
+     -317.8
+    ],
+    [
+     -424.6,
+     -357.0
+    ],
+    [
+     -432.1,
+     -357.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "station land boundary; east edge follows the footpath and an assumed Carlisle Rd west edge"
+  },
+  {
+   "name": "Platform_east_reference",
+   "kind": "concrete",
+   "reference": true,
+   "ring": [
+    [
+     -439.37,
+     -234
+    ],
+    [
+     -436.1,
+     -234
+    ],
+    [
+     -450.82,
+     -362
+    ],
+    [
+     -454.09,
+     -362
+    ]
+   ],
+   "evidence": "ortho2020 (track face), hill"
+  },
+  {
+   "name": "Platform_west_reference",
+   "kind": "concrete",
+   "reference": true,
+   "ring": [
+    [
+     -449.49,
+     -231
+    ],
+    [
+     -446.49,
+     -231
+    ],
+    [
+     -455.01,
+     -308.5
+    ],
+    [
+     -458.01,
+     -308.5
+    ]
+   ],
+   "evidence": "ortho2020 (track face), hill; osm 313715860",
+   "unverified": "west edge where the shelter stands; south end"
+  }
+ ],
+ "strips": [
+  {
+   "name": "Walk_lot_E",
+   "kind": "concrete",
+   "width": 2.2,
+   "centre": [
+    [
+     -401.3,
+     -239.2
+    ],
+    [
+     -401.3,
+     -243.5
+    ],
+    [
+     -406.3,
+     -267.0,
+     3.0
+    ],
+    [
+     -406.3,
+     -280.6
+    ]
+   ],
+   "evidence": "ortho2020; osm 1525336713",
+   "unverified": "y -248 to -266 under tree shadow"
+  },
+  {
+   "name": "Walk_lot_S",
+   "kind": "concrete",
+   "width": 1.6,
+   "centre": [
+    [
+     -407.2,
+     -281.3
+    ],
+    [
+     -413.0,
+     -281.3
+    ],
+    [
+     -428.6,
+     -279.8
+    ]
+   ],
+   "evidence": "ortho2020; osm 1525336713",
+   "unverified": "x -422 to -414 under a tree"
+  },
+  {
+   "name": "Walk_path_to_Carlisle",
+   "kind": "concrete",
+   "width": 1.6,
+   "centre": [
+    [
+     -412.8,
+     -281.0
+    ],
+    [
+     -416.6,
+     -317.5
+    ]
+   ],
+   "evidence": "ortho2020; osm 1313528851"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "Lot_W_curb_N",
+   "path": [
+    [
+     -436.88,
+     -240.8
+    ],
+    [
+     -438.49,
+     -254.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb or flush edge at the platform railing"
+  },
+  {
+   "name": "Lot_W_curb_S",
+   "path": [
+    [
+     -439.8,
+     -266.2
+    ],
+    [
+     -450.25,
+     -357.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb or flush edge at the platform railing"
+  },
+  {
+   "name": "Lot_N_curb",
+   "path": [
+    [
+     -436.89,
+     -240.9
+    ],
+    [
+     -428.6,
+     -243.2
+    ],
+    [
+     -425.0,
+     -243.3,
+     0.5
+    ],
+    [
+     -424.9,
+     -250.5,
+     0.8
+    ],
+    [
+     -421.8,
+     -250.6,
+     3.0
+    ],
+    [
+     -411.3,
+     -242.3,
+     1.0
+    ],
+    [
+     -412.1,
+     -239.5
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "Lot_E_curb",
+   "path": [
+    [
+     -402.6,
+     -239.4
+    ],
+    [
+     -402.6,
+     -243.5
+    ],
+    [
+     -407.6,
+     -267.0,
+     3.0
+    ],
+    [
+     -407.6,
+     -280.6,
+     1.5
+    ],
+    [
+     -413.0,
+     -280.5
+    ],
+    [
+     -428.4,
+     -279.0
+    ],
+    [
+     -428.6,
+     -280.6
+    ],
+    [
+     -423.3,
+     -280.9
+    ],
+    [
+     -431.9,
+     -357.0,
+     1.0
+    ],
+    [
+     -450.25,
+     -357.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "from y -281 south (east row back and south end) under tree shadow"
+  },
+  {
+   "name": "Dropoff_plaza_curb",
+   "path": [
+    [
+     -438.49,
+     -254.8
+    ],
+    [
+     -432.5,
+     -254.8,
+     0.5
+    ],
+    [
+     -432.5,
+     -266.2,
+     0.5
+    ],
+    [
+     -439.8,
+     -266.2
+    ]
+   ],
+   "evidence": "ortho2020; subwaynut_montclair_heights16.jpg"
+  },
+  {
+   "name": "Lot_median_curb",
+   "closed": true,
+   "path": [
+    [
+     -418.8,
+     -253.0,
+     1.0
+    ],
+    [
+     -414.0,
+     -253.0,
+     1.0
+    ],
+    [
+     -414.4,
+     -256.0
+    ],
+    [
+     -415.0,
+     -275.6,
+     0.5
+    ],
+    [
+     -416.7,
+     -275.6,
+     0.5
+    ],
+    [
+     -416.1,
+     -256.0
+    ],
+    [
+     -418.8,
+     -256.0,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "see Lot_median_central"
+  }
+ ],
+ "markings": [
+  {
+   "name": "Stalls_W_north",
+   "type": "stalls",
+   "line": [
+    [
+     -437.46,
+     -245.8
+    ],
+    [
+     -438.35,
+     -253.6
+    ]
+   ],
+   "count": 3,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "Stalls_W_south",
+   "type": "stalls",
+   "line": [
+    [
+     -441.3,
+     -279.2
+    ],
+    [
+     -449.23,
+     -348.2
+    ]
+   ],
+   "count": 27,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faded at y -305 to -318; last line (y -348) hidden by a car"
+  },
+  {
+   "name": "Stalls_central",
+   "type": "stalls",
+   "line": [
+    [
+     -416.2,
+     -255.3
+    ],
+    [
+     -416.7,
+     -272.8
+    ]
+   ],
+   "count": 6,
+   "depth": 6.0,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "Stalls_E_south",
+   "type": "stalls",
+   "line": [
+    [
+     -423.46,
+     -282.4
+    ],
+    [
+     -431.45,
+     -353.0
+    ]
+   ],
+   "count": 27,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "only the first line (y -282.5) is visible; row inferred from the lot width and cars parked east-west at the south end"
+  }
+ ],
+ "points": [
+  {
+   "name": "Lot_lamp_NW",
+   "kind": "lamp",
+   "at": [
+    -437.8,
+    -235.9
+   ],
+   "height": 5.7,
+   "evidence": "lidar2017",
+   "unverified": "height from sparse returns (a lower bound); head type"
+  },
+  {
+   "name": "Lot_lamp_island",
+   "kind": "lamp",
+   "at": [
+    -420.5,
+    -246.4
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "height not separable from the tree in the LiDAR; head type"
+  },
+  {
+   "name": "Lot_lamp_plaza",
+   "kind": "lamp",
+   "at": [
+    -437.3,
+    -264.9
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg",
+   "unverified": "position from the photo; height"
+  },
+  {
+   "name": "Lot_lamp_S1",
+   "kind": "lamp",
+   "at": [
+    -429.8,
+    -305.8
+   ],
+   "height": 9.8,
+   "evidence": "lidar2017",
+   "unverified": "two isolated returns at 8.4 and 9.8 m; could be a branch"
+  },
+  {
+   "name": "Lot_lamp_S2",
+   "kind": "lamp",
+   "at": [
+    -441.2,
+    -360.8
+   ],
+   "height": 7.7,
+   "evidence": "lidar2017",
+   "unverified": "two isolated returns at 7.3 and 7.7 m; head type"
+  },
+  {
+   "name": "Station_name_sign",
+   "kind": "sign",
+   "at": [
+    -418.0,
+    -241.4
+   ],
+   "height": 2.0,
+   "evidence": "lidar2017; commons_Moncl_Hts_lil_A_racks_jeh.JPG",
+   "text": "Montclair Heights Station",
+   "unverified": "facing (towards Normal Ave assumed)"
+  },
+  {
+   "name": "Sign_island_tip",
+   "kind": "sign",
+   "at": [
+    -413.6,
+    -243.2
+   ],
+   "height": 2.7,
+   "evidence": "lidar2017",
+   "unverified": "which sign"
+  },
+  {
+   "name": "Sign_pickup_dropoff",
+   "kind": "sign",
+   "at": [
+    -432.9,
+    -256.0
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg",
+   "text": "Pickup & drop-off area",
+   "unverified": "position from the photo"
+  },
+  {
+   "name": "Sign_inbound_platform",
+   "kind": "sign",
+   "at": [
+    -432.9,
+    -265.6
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg; lidar2017",
+   "text": "Inbound Platform",
+   "unverified": "position from the photo"
+  },
+  {
+   "name": "Bike_rack",
+   "kind": "bike_rack",
+   "at": [
+    -429.6,
+    -242.2
+   ],
+   "count": 4,
+   "evidence": "commons_Moncl_Hts_lil_A_racks_jeh.JPG; osm 10835756611",
+   "unverified": "position (OSM node at -432.3,-238.9 sits in the lawn); 4 inverted-U racks in the photo"
+  },
+  {
+   "name": "TVM_west",
+   "kind": "ticket_machine",
+   "at": [
+    -451.6,
+    -259.8
+   ],
+   "evidence": "commons_Montclair_Heights_Station_-_February_2015.jpg; subwaynut_montclair_heights19.jpg",
+   "unverified": "position along the shelter",
+   "base": 115.26,
+   "base_evidence": "top of the north model platform in the published tiles"
+  },
+  {
+   "name": "Canopy_east",
+   "kind": "canopy",
+   "at": [
+    -440.0,
+    -258.7
+   ],
+   "ring": [
+    [
+     -441.43,
+     -254.51
+    ],
+    [
+     -437.66,
+     -254.94
+    ],
+    [
+     -438.57,
+     -262.89
+    ],
+    [
+     -442.34,
+     -262.46
+    ]
+   ],
+   "height": 3.4,
+   "evidence": "ortho2020 (dark roof); lidar2017 (3.1-3.5 m returns); subwaynut_montclair_heights16.jpg",
+   "unverified": "post positions"
+  },
+  {
+   "name": "Bench_canopy_1",
+   "kind": "bench",
+   "at": [
+    -439.36,
+    -256.3
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg",
+   "unverified": "position",
+   "base": 115.34,
+   "base_evidence": "top of the north model platform in the published tiles"
+  },
+  {
+   "name": "Bench_canopy_2",
+   "kind": "bench",
+   "at": [
+    -439.65,
+    -258.8
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg",
+   "unverified": "position",
+   "base": 115.33,
+   "base_evidence": "top of the north model platform in the published tiles"
+  },
+  {
+   "name": "Bench_canopy_3",
+   "kind": "bench",
+   "at": [
+    -439.94,
+    -261.3
+   ],
+   "evidence": "subwaynut_montclair_heights16.jpg",
+   "unverified": "position",
+   "base": 115.33,
+   "base_evidence": "top of the north model platform in the published tiles"
+  },
+  {
+   "name": "Mini_high_east",
+   "kind": "mini_high",
+   "at": [
+    -451.93,
+    -357.55
+   ],
+   "ring": [
+    [
+     -453.09,
+     -353.3
+    ],
+    [
+     -449.79,
+     -353.3
+    ],
+    [
+     -450.77,
+     -361.8
+    ],
+    [
+     -454.07,
+     -361.8
+    ]
+   ],
+   "evidence": "ortho2020; subwaynut_montclair_heights7.jpg",
+   "unverified": "length",
+   "base": 114.68,
+   "base_evidence": "top of the north model platform in the published tiles",
+   "deck": 1.0
+  },
+  {
+   "name": "Mini_high_west",
+   "kind": "mini_high",
+   "at": [
+    -456.04,
+    -304.15
+   ],
+   "ring": [
+    [
+     -457.17,
+     -300.8
+    ],
+    [
+     -454.17,
+     -300.8
+    ],
+    [
+     -454.91,
+     -307.5
+    ],
+    [
+     -457.91,
+     -307.5
+    ]
+   ],
+   "evidence": "ortho2020; subwaynut_montclair_heights7.jpg",
+   "unverified": "length and width",
+   "base": 114.93,
+   "base_evidence": "top of the north model platform in the published tiles",
+   "deck": 1.0
+  },
+  {
+   "name": "Tree_island_N",
+   "kind": "tree",
+   "at": [
+    -422.5,
+    -246.2
+   ],
+   "height": 6.3,
+   "radius": 2.2,
+   "evidence": "lidar2017; ortho2020"
+  },
+  {
+   "name": "Tree_lawn_E1",
+   "kind": "tree",
+   "at": [
+    -421.6,
+    -291.5
+   ],
+   "height": 16.0,
+   "radius": 5.0,
+   "evidence": "lidar2017; ortho2020",
+   "unverified": "crown merges with the trees to the east"
+  },
+  {
+   "name": "Tree_lawn_E2",
+   "kind": "tree",
+   "at": [
+    -424.2,
+    -322.5
+   ],
+   "height": 21.8,
+   "radius": 5.5,
+   "evidence": "lidar2017",
+   "unverified": "crown radius"
+  }
+ ],
+ "lifts": [
+  {
+   "name": "Track_level",
+   "ring": [
+    [
+     -414.1,
+     -60
+    ],
+    [
+     -430.8,
+     -190
+    ],
+    [
+     -452.8,
+     -380
+    ],
+    [
+     -468.2,
+     -380
+    ],
+    [
+     -446.2,
+     -190
+    ],
+    [
+     -429.5,
+     -60
+    ]
+   ],
+   "dz": 0.65,
+   "feather": 10.0,
+   "evidence": "published tiles (north model): ballast top 115.15 m and rail top 115.45 m at the Normal Avenue crossing, platform top 115.33 m; lidar2017 ground there 114.73 m",
+   "unverified": "The north model's track and platforms stand about 0.65 m above the LiDAR ground (its ballast and rail were stacked on a ground that already included them). This build raises its own ground by 0.65 m along the track, eased out over 10 m, so the road meets the rails at the crossing and the lot meets the platform. The right fix is to lower the track in the north model; remove this lift when that is done."
+  }
+ ]
+}

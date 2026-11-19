@@ -35,6 +35,8 @@ jobs:
       - name: Shell syntax
         run: |
           find . -name '*.sh' -not -path './vendor/*' -print0 | xargs -0 -r -n1 bash -n
+      - name: Unit tests (plan geometry and plan files of the scripted builds)
+        run: python3 -m unittest discover -s tests/py
 
   viewer:
     name: viewer
