@@ -134,7 +134,10 @@ export function createUI(app) {
       const li = document.createElement('li'); li.id = `search-option-${i}`; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', i === cursor);
       const name = document.createElement('span'); name.textContent = place.name;
       const kind = document.createElement('small'); kind.textContent = KIND[place.kind] ?? '';
-      li.append(name, kind); li.onpointerdown = e => { e.preventDefault(); choose(i); };
+      li.append(name, kind);
+      // select on a finished tap or click, so a swipe that starts on a result scrolls the list instead;
+      // holding mousedown keeps focus in the box so the list is not closed before the click lands
+      li.onmousedown = e => e.preventDefault(); li.onclick = () => choose(i);
       list.append(li);
     });
     const open = results.length > 0;
@@ -153,7 +156,8 @@ export function createUI(app) {
     else if (e.key === 'Enter') { choose(Math.max(0, cursor)); e.preventDefault(); }
     else if (e.key === 'Escape') { box.value = ''; results = []; renderResults(); box.blur(); }
   };
-  box.onblur = () => { results = []; renderResults(); };
+  // close a moment after focus leaves, so a tap that moved focus still reaches its result
+  box.onblur = () => setTimeout(() => { if (document.activeElement !== box && results.length) { results = []; renderResults(); } }, 200);
   box.onfocus = () => { if (box.value) box.oninput(); };
 
   // ---- share link and permalink ----
@@ -168,7 +172,7 @@ export function createUI(app) {
       labels: !!tools.labels?.visible,
     };
   }
-  let hashTimer = 0, wantLabels = start0?.labels;
+  let hashTimer = 0, wantLabels; // label setting from a link, held until the labels tool has loaded
   const writeHash = () => { if (app.state.ready) history.replaceState(null, '', `#${encodeView(currentView())}`); };
   const scheduleHash = () => { clearTimeout(hashTimer); hashTimer = setTimeout(writeHash, 700); };
   app.on('camera', scheduleHash); app.on('sun', scheduleHash); app.on('mode', scheduleHash); app.on('labels', scheduleHash);
@@ -183,9 +187,16 @@ export function createUI(app) {
     if (!v.time && !app.time.preset) app.resetTime();
     // go through orbit so the pose is not overwritten by the fly or walk controller on the next frame
     if (app.state.mode !== 'orbit') app.setMode('orbit');
-    jump({ position, target });
-    if (v.mode === 'fly') app.setMode('fly');
-    else if (v.mode === 'walk') app.setMode('walk', { at: position.clone().setY(position.y - 1.65) });
+    if (v.mode === 'fly' || v.mode === 'walk') {
+      // set the pose directly: the orbit controls would clamp an upward look and move the camera
+      app.cancelFly(); camera.position.copy(position); controls.target.copy(target); camera.lookAt(target); app.invalidate();
+      if (v.mode === 'fly') app.setMode('fly');
+      else app.setMode('walk', { at: position.clone().setY(position.y - 1.65) });
+    } else jump({ position, target });
+    if (typeof v.labels === 'boolean') {
+      if (tools.labels) { if (tools.labels.visible !== v.labels) tools.labels.setVisible(v.labels); wantLabels = undefined; }
+      else wantLabels = v.labels;
+    }
     return true;
   }
   addEventListener('hashchange', () => applyView(decodeView(location.hash)));
@@ -241,7 +252,8 @@ export function createUI(app) {
       load('measure', import('./measure.js'), 'createMeasure'), load('hunt', import('./hunt.js'), 'createHunt'),
     ]);
     press('tool-labels', tools.labels?.visible); press('tool-map', tools.hud?.map);
-    if (wantLabels !== undefined && tools.labels && tools.labels.visible !== wantLabels && start0?.position) tools.labels.setVisible(wantLabels);
+    if (wantLabels !== undefined && tools.labels && tools.labels.visible !== wantLabels) tools.labels.setVisible(wantLabels);
+    wantLabels = undefined;
     press('tool-hunt', tools.hunt?.active);
   }
 
