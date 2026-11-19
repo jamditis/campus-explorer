@@ -189,6 +189,8 @@ def points(lay, terrain):
                 gx, gy = to_model(side * (60 * 0.9144 + 1.83), 0.0)
                 at, angle = (gx, gy, terrain.at(gx, gy)), ff["angle"] + (180 if side > 0 else 0)
             out.append(fixtures.goalpost(name, at, angle, unverified=bool(p.get("unverified"))))
+        elif kind == "pylon":
+            out.append(fixtures.pylon(name, at, angle, **opt))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(
