@@ -55,7 +55,8 @@ app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); a
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
-app.flyTo = cam.flyTo;
+/** Ease the camera to a pose. `by` names the module that asked, so others can tell their own moves from a new one. */
+app.flyTo = (pose, opts = {}) => { app.emit('fly', { by: opts.by ?? null }); return cam.flyTo(pose, opts); };
 /** Draw the whole campus with another camera into `target` (the minimap). The main view's tree and size culling is undone for the picture. */
 app.renderPlain = (camera2, target) => { scenery.trees.showAll(); app.look.renderPlain(camera2, target); scenery.trees.update(true); };
 

@@ -1,5 +1,6 @@
 // Guided tour: the camera visits a fixed list of places, circles each one slowly while a caption
-// card names it, then returns to the overview. Built on app.flyTo; any direct input on the view stops it.
+// card names it, then returns to the overview. Built on app.flyTo; any direct input on the view, and any
+// camera move that another module asks for, stops it.
 import * as THREE from 'three';
 import { selectStops, tourCaption, southWestOffset, TOUR_NAMES } from './labels-math.js';
 
@@ -94,7 +95,7 @@ export function createTour(app) {
       announce();
       app.emit('place', { place });
       app.world.prioritize(place.x, place.z);
-      const arrived = await app.flyTo(poseFor(place), { duration: FLY_SECONDS });
+      const arrived = await app.flyTo(poseFor(place), { duration: FLY_SECONDS, by: 'tour' });
       if (my !== token) return;
       if (!arrived) { stop({ halt: false }); return; }
       await hold();
@@ -121,7 +122,7 @@ export function createTour(app) {
     running = false; token++;
     endHold();
     // a flight in progress would otherwise carry on to the stop; a zero-length move to here ends it
-    if (halt && app.state.mode === 'orbit') app.flyTo({ position: camera.position.clone(), target: controls.target.clone() }, { duration: 0 });
+    if (halt && app.state.mode === 'orbit') app.flyTo({ position: camera.position.clone(), target: controls.target.clone() }, { duration: 0, by: 'tour' });
     announce();
   }
 
@@ -165,7 +166,9 @@ export function createTour(app) {
 
   for (const type of ['pointerdown', 'wheel', 'touchstart']) canvas.addEventListener(type, userInput, { passive: true });
   addEventListener('keydown', onKey);
-  const offs = [app.on('frame', onFrame), app.on('mode', onMode)];
+  // a camera move that something else asked for (search, a label, the map, a share link) takes the view over
+  const onFly = ({ by }) => { if (by !== 'tour') stop({ halt: false }); };
+  const offs = [app.on('frame', onFrame), app.on('mode', onMode), app.on('fly', onFly)];
 
   return {
     start, stop: () => stop(), next, previous,

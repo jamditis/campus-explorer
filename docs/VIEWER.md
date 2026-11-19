@@ -88,6 +88,7 @@ app = {
 |---|---|---|
 | `frame` | `{ dt, time }` | Every animation frame, before drawing. Keep handlers cheap. |
 | `camera` | none | The camera pose changed since the last frame. |
+| `fly` | `{ by }` | A module asked for a camera move (`app.flyTo`, or a jump to a share link). `by` is the asking module's name or null. The tour stops on a move that is not its own. |
 | `drawn` | none | A frame was drawn. |
 | `scene:start` | `{ manifest, focus, base }` | The campus began loading. |
 | `places` | none | `app.places` is ready. |

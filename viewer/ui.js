@@ -71,7 +71,7 @@ export function createUI(app) {
     else { $('load-rest').dataset.armed = '1'; $('load-rest').textContent = `Tap again to load ${mb(app.world.progress.total)}`; setTimeout(() => { delete $('load-rest').dataset.armed; app.emit('progress', app.world.progress); }, 4000); }
   };
 
-  function jump(pose) { camera.position.copy(pose.position); controls.target.copy(pose.target); controls.update(); app.invalidate(); }
+  function jump(pose) { app.emit('fly', { by: null }); camera.position.copy(pose.position); controls.target.copy(pose.target); controls.update(); app.invalidate(); }
 
   // ---- modes ----
   const setHelp = () => { $('help').textContent = HELP[app.state.mode][app.input.kind] ?? HELP[app.state.mode].keyboard; };
