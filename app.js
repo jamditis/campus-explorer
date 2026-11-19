@@ -90,6 +90,7 @@ async function loadScene() {
       if (token !== loadToken) return;
       g.scene.name = t.file.replace('.glb', '');
       if (hide.size) { const drop = []; g.scene.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); }); for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); } }
+      dropUnmaterialled(g);
       fixMaterials(g.scene); liftSportSurfaces(g.scene); look.decorate(g.scene); campus.add(g.scene);
       if (t.file === 'far_houses.glb') g.scene.traverse(o => { if (o.material) { o.material.envMapIntensity = 0.25; o.material.roughness = 0.95; } });
       if (t.file === 'skirt.glb' && man.landcover) applyLandcover(g.scene, base + man.landcover.file, man.landcover.half);
@@ -148,6 +149,14 @@ function applyLandcover(root, url, half) {
   });
 }
 
+// Geometry exported with no material at all gets three's plain white default. In practice that is a
+// geometry-nodes source left behind next to its own output (Curbs_granite_OSM: the curb curve's mesh lies
+// exactly on the CurbSweep granite curbs and z-fights into a white speckle) or a stray leaf card, so drop it.
+function dropUnmaterialled(g) {
+  const drop = [];
+  g.scene.traverse(o => { if (o.isMesh && ![].concat(o.material).some(m => g.parser.associations.has(m))) drop.push(o); });
+  for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
+}
 // Sports surfaces (turf, courts) are modelled at the same level as the terrain under them, which z-fights
 // into a blotchy half-field from a distance. Pull them (and their line markings) forward in depth.
 const SPORT_RE = /turf|court|track_surface|pitch_surface/i, LINES_RE = /lines|markings/i;
@@ -177,6 +186,7 @@ async function loadLods(man, base, loader, token) {
     if (token !== loadToken) return;
     // the far version carries the same objects as the full tile, so drop the ones the merge hides (manifest hide list)
     if (hide.size) { const drop = []; g.scene.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); }); for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); } }
+    dropUnmaterialled(g);
     g.scene.name = 'lod_' + full.name; fixMaterials(g.scene); liftSportSurfaces(g.scene); look.decorate(g.scene);
     const hi = []; full.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) hi.push(o); });
     g.scene.traverse(o => { if (o.isMesh) { o.userData.hidden = true; o.userData.lod = true; o.layers.set(2); } });
