@@ -16,6 +16,10 @@ for f in sorted(glob.glob(S + "/*.glb")):
     if m:
         # Blender XY tile centre -> three.js XZ (z = -y)
         t["center"] = [(int(m[1]) + 0.5) * TILE, -(int(m[2]) + 0.5) * TILE]
+        lod = S + "/lod/" + t["file"]
+        if os.path.exists(lod):
+            t["lod"] = "lod/" + t["file"]  # far-distance version (lod.mjs)
+            t["lod_bytes"] = os.path.getsize(lod)
     tiles.append(t)
 order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))

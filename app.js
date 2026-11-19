@@ -61,7 +61,7 @@ function clearScene() {
   for (const m of mats) { for (const k of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap']) m[k]?.dispose(); m.dispose(); }
   scene.remove(campus); campus = new THREE.Group(); scene.add(campus);
   scene.getObjectByName('ground_far')?.removeFromParent();
-  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); trees.reset(); gBoxes.length = 0; grassAt = null; grassJob = null; grass.count = 0;
+  colliders.length = 0; bvhReady = false; loaded = false; look.reset(); trees.reset(); lods.length = 0; gBoxes.length = 0; grassAt = null; grassJob = null; grass.count = 0;
 }
 let loadToken = 0;
 // one unified campus: main, north campus and Sprague/Café Diem share one origin and one manifest
@@ -108,6 +108,7 @@ async function loadScene() {
     ground.position.set(core.getCenter(new THREE.Vector3()).x, core.min.y + 0.5, core.getCenter(new THREE.Vector3()).z); ground.name = 'ground_far'; ground.receiveShadow = true; scene.add(ground);
     }
     loaded = true; overview();
+    loadLods(man, base, loader, token);
     setTimeout(() => { if (token === loadToken) { indexGround(); snapTrees(); trees.add(campus); } }, 50);
     if (man.far_trees) fetch(base + man.far_trees).then(r => r.arrayBuffer()).then(b => { if (token === loadToken) trees.addFar(new Float32Array(b)); }).catch(e => console.warn('far trees', e));
     window.__campusLoad = { ms: Math.round(performance.now() - t0), tiles: done, bytes };
@@ -158,8 +159,42 @@ function liftSportSurfaces(root) {
   for (const o of surf) lift(o, 1);
   for (const o of lines) lift(o, 2);
 }
+// ---------------- far tile versions (LOD) ----------------
+// Each campus tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances or
+// small parts, ~0.8 m error). Past a quality-set distance from the tile's box, the full tile's plain meshes
+// move to layer 2 (not rendered, no shadows) and the far version takes layer 0. Instances (trees) stay
+// with the full tile: trees.js already culls and swaps those per instance.
+const LOD_DIST = { low: 260, medium: 420, high: 650 };
+const lods = []; let lodLast = 0;
+async function loadLods(man, base, loader, token) {
+  for (const t of man.tiles) {
+    if (!t.lod) continue;
+    const full = campus.getObjectByName(t.file.replace('.glb', ''));
+    if (!full) continue;
+    let g;
+    try { g = await loader.loadAsync(base + t.lod); } catch (e) { console.warn('lod', t.lod, e); continue; }
+    if (token !== loadToken) return;
+    g.scene.name = 'lod_' + full.name; fixMaterials(g.scene); liftSportSurfaces(g.scene); look.decorate(g.scene);
+    const hi = []; full.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) hi.push(o); });
+    g.scene.traverse(o => { if (o.isMesh) { o.userData.hidden = true; o.layers.set(2); } });
+    campus.add(g.scene);
+    lods.push({ hi, lo: g.scene, box: new THREE.Box3().setFromObject(full), far: false });
+  }
+  updateLods(true);
+}
+function updateLods(force) {
+  const now = performance.now(); if (!force && now - lodLast < 250) return; lodLast = now;
+  const D = LOD_DIST[look.quality] || LOD_DIST.medium, p = camera.position;
+  for (const l of lods) {
+    const far = l.box.distanceToPoint(p) > D;
+    if (far === l.far) continue;
+    l.far = far;
+    for (const o of l.hi) o.layers.set(far ? 2 : 0);
+    l.lo.traverse(o => { if (o.isMesh) o.layers.set(far ? 0 : 2); });
+  }
+}
 // ---------------- ground queries (lazy BVH per mesh) ----------------
-const gBoxes = []; const DOWN = new THREE.Vector3(0, -1, 0); const gRay = new THREE.Raycaster(); gRay.firstHitOnly = true;
+const gBoxes = []; const DOWN = new THREE.Vector3(0, -1, 0); const gRay = new THREE.Raycaster(); gRay.firstHitOnly = true; gRay.layers.enableAll(); // full tiles' far-swapped meshes sit on layer 2
 function indexGround() {
   gBoxes.length = 0; const sz = new THREE.Vector3();
   campus.traverse(o => {
@@ -381,7 +416,7 @@ function step(dt) {
   }
 }
 function loop() {
-  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); trees.update(); updateGrass(); look.render();
+  const dt = Math.min(clock.getDelta(), 0.1); step(dt); look.update(mode === 'orbit' ? controls.target : null); trees.update(); updateLods(); updateGrass(); look.render();
   frames++; acc += dt; if (acc > 1) { $('performance').textContent = `${Math.round(frames / acc)} fps · ${(renderer.info.render.triangles / 1e6).toFixed(1)} M triangles`; frames = 0; acc = 0; }
   requestAnimationFrame(loop);
 }
@@ -393,13 +428,13 @@ $('view-first').onclick = () => setView('first'); $('view-third').onclick = () =
 $('speed').oninput = () => $('speed-label').textContent = $('speed').value + ' m/s';
 const savedQ = localStorage.getItem('campus-quality');
 $('quality').value = ['low', 'medium', 'high'].includes(savedQ) ? savedQ : 'medium';
-const setQuality = v => { look.applyQuality(v); trees.setQuality(v); localStorage.setItem('campus-quality', v); resize(); };
+const setQuality = v => { look.applyQuality(v); trees.setQuality(v); lodLast = 0; localStorage.setItem('campus-quality', v); resize(); };
 $('quality').onchange = e => setQuality(e.target.value);
 setQuality(new URLSearchParams(location.search).get('quality') || $('quality').value);
 $('retry').onclick = () => loadScene();
 // test hook for headless screenshots: window.__campus.goto(x,y,z, tx,ty,tz)
 window.__campusScene = scene;
-window.__campus = { THREE, camera, controls, setMode, topView, overview, look, trees, setQuality, loadScene, get loaded() { return loaded; },
+window.__campus = { THREE, camera, controls, setMode, topView, overview, look, trees, setQuality, loadScene, get loaded() { return loaded; }, get lods() { return lods.length; },
   goto(x, y, z, tx, ty, tz) { setMode('orbit'); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); },
   groundAt: (x, z) => { ensureBVH(); return groundAt(x, 400, z, 0, 600); } };
 loadScene();
