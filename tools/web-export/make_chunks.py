@@ -36,6 +36,7 @@ if MERGE:
 
     bld = set()
     mground = {}
+    gsrc = {}
     for n in exported:
         v = md[n]
         x0, x1, y0, y1 = v["bb"][:4]
@@ -43,12 +44,12 @@ if MERGE:
         if n.startswith(("BD_", "MID_")) or w > 700:
             continue
         if GROUND.search(n):
+            gsrc[n] = (x0, x1, y0, y1)
             occ.update(cells(x0, x1, y0, y1))  # main ground: its whole footprint (object-level rules)
             if v["t"] == "MESH":
                 mground[n] = v["bb"][:4]  # exact footprint for terrain trimming (export_web rasterises these)
         elif v["t"] == "MESH" and v["tri"] > 50 and w < 150 and not TREE.search(n):
             bld.update(cells(x0, x1, y0, y1))  # main buildings and site features
-    json.dump(dict(cell=CELL, cells=sorted(occ), ground=mground), open(WORK + "/clip.json", "w"))
     print("merge: main ground covers", len(occ), "cells, main buildings", len(bld), "cells of", CELL, "m")
 CLIPPED = re.compile(r"terrain|apron", re.I)
 DROP = re.compile(r"skirt|Context_", re.I)
@@ -65,6 +66,57 @@ if MERGE:
         c = (math.floor((x0 + x1) / 2 / CELL), math.floor((y0 + y1) / 2 / CELL))
         gall[grp(n)] += 1
         gover[grp(n)] += c in bld
+
+
+def merge_reason(n, v):
+    """Why the merge drops this secondary object (None: it is kept)."""
+    x0, x1, y0, y1 = v["bb"][:4]
+    c = (math.floor((x0 + x1) / 2 / CELL), math.floor((y0 + y1) / 2 / CELL))
+    if n in mainnames:
+        return "same name in main"
+    if DROP.search(n):
+        return "far-field (main has its own)"
+    if CLIPPED.search(n):
+        return None  # terrain: exported, faces in main ground cells removed by export_web
+    if (GROUND.search(n) or TREE.search(n)) and c in occ:
+        return "ground/tree on main ground"
+    if gover[grp(n)] > 0.5 * gall[grp(n)]:
+        return "overlaps a main building"
+    return None
+
+
+hide_main = []
+if MERGE:
+    # main ground lying almost wholly inside a north sports surface (turf, court, track) and crossing its
+    # level is an older DTM patch or feather that predates the field: the viewer drops it so it can't poke
+    # through the turf. Ground that stays below or above the surface (curbs, banks, kerbs) is left alone.
+    # Only surfaces the merge keeps count (judged against the full main occupancy, so dropping main ground
+    # below can only keep more of them).
+    SPORT = re.compile(r"turf|court|track_surface|pitch_surface", re.I)
+    sport = [v["bb"] for n, v in d.items() if v["v"] and v["t"] == "MESH" and SPORT.search(n) and not EXCL.search(n)
+             and merge_reason(n, v) is None and (v["bb"][1] - v["bb"][0]) * (v["bb"][3] - v["bb"][2]) > 500]
+
+    def inside(b, s):
+        ix = max(0.0, min(b[1], s[1]) - max(b[0], s[0]))
+        iy = max(0.0, min(b[3], s[3]) - max(b[2], s[2]))
+        return ix * iy / max(1e-6, (b[1] - b[0]) * (b[3] - b[2]))
+
+    def crosses(n, s):
+        z0, z1 = md[n]["bb"][4:6]
+        zs = (s[4] + s[5]) / 2
+        return z0 < zs - 0.3 and z1 > zs + 0.3
+
+    hide_main = sorted(n for n, b in mground.items() if any(inside(b, s) > 0.9 and crosses(n, s) for s in sport))
+    print("merge: main ground superseded by north sports surfaces", hide_main)
+    if hide_main:
+        # dropped in the viewer, so it neither trims the north terrain nor blocks north ground under it
+        for n in hide_main:
+            mground.pop(n)
+            gsrc.pop(n, None)
+        occ = set()
+        for x0, x1, y0, y1 in gsrc.values():
+            occ.update(cells(x0, x1, y0, y1))
+    json.dump(dict(cell=CELL, cells=sorted(occ), ground=mground, hide_main=hide_main), open(WORK + "/clip.json", "w"))
 for n, v in d.items():
     if not v["v"]:
         continue
@@ -72,21 +124,9 @@ for n, v in d.items():
         skipped.append(n)
         continue
     if MERGE:
-        x0, x1, y0, y1 = v["bb"][:4]
-        c = (math.floor((x0 + x1) / 2 / CELL), math.floor((y0 + y1) / 2 / CELL))
-        if n in mainnames:
-            merged_out["same name in main"] += 1
-            continue
-        if DROP.search(n):
-            merged_out["far-field (main has its own)"] += 1
-            continue
-        if CLIPPED.search(n):
-            pass  # terrain: exported, faces in main ground cells removed by export_web
-        elif (GROUND.search(n) or TREE.search(n)) and c in occ:
-            merged_out["ground/tree on main ground"] += 1
-            continue
-        elif gover[grp(n)] > 0.5 * gall[grp(n)]:
-            merged_out["overlaps a main building"] += 1
+        why = merge_reason(n, v)
+        if why:
+            merged_out[why] += 1
             continue
     if v["t"] == "EMPTY" and not v["inst"]:
         continue

@@ -460,5 +460,8 @@
  },
  "far_trees": "far_trees.bin",
  "exported": "November 18, 2026, 6:33 PM ET",
- "total_bytes": 208944660
+ "total_bytes": 208944660,
+ "hide": [
+  "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
+ ]
 }

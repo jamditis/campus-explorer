@@ -31,6 +31,10 @@ if not sources and old.get("source_saved"):
     sources["main"] = dict(saved=old["source_saved"], version=old.get("source_version", ""))
 sources[scene] = dict(saved=saved, version=ver, file=os.path.basename(src))
 head = sources.get("main", sources[scene])
+# main ground meshes the north merge superseded (make_chunks writes them into the north work dir's clip.json)
+WN = os.environ.get("WORK_NORTH", "/workspace/nj-scenes/web/build/north")
+clip = json.load(open(WN + "/clip.json")) if os.path.exists(WN + "/clip.json") else {}
+hide = clip.get("hide_main", old.get("hide", []))
 json.dump(
     dict(
         tiles=tiles,
@@ -41,6 +45,7 @@ json.dump(
         # far-field land cover and trees from tools/web-export/landcover.py (OpenStreetMap + 3DEP DEM)
         landcover=dict(file="landcover.webp", half=2000) if os.path.exists(S + "/landcover.webp") else None,
         far_trees="far_trees.bin" if os.path.exists(S + "/far_trees.bin") else None,
+        hide=hide,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),
         total_bytes=sum(t["bytes"] for t in tiles),
     ),
