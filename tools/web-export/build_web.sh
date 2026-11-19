@@ -67,7 +67,15 @@ for f in $B/raw/*.glb; do
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
+  # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
+  # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
+  if [[ $C == t_* || $C == n_t_* ]]; then
+    mkdir -p $S/lod; cp $W/lod.mjs ./lod.mjs  # run from here so it resolves this folder's node_modules
+    RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
+  fi
 done
+# drop far versions whose tile is gone
+for f in $S/lod/*.glb; do [ -e "$f" ] && [ ! -e $S/$(basename $f) ] && { echo "prune stale $f"; rm -f "$f"; }; done
 [ $SCENE = main ] && { OUT=$S python3 $W/paint.py || fail "paint"; }
 # far-field land cover, trees and houses from OpenStreetMap (needs pyproj/shapely: GEO_PY) and the OSM
 # map tiles in $OSM (api.openstreetmap.org/api/0.6/map, ~1 km tiles over the 4 km skirt)
