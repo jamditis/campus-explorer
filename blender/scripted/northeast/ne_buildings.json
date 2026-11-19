@@ -1,0 +1,1390 @@
+{
+ "zone": "ne_buildings",
+ "notes": "Buildings of the north-east district, one entry per roof part. Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (outermost roof return and the nearest ground return beyond it, midway), each building at its own axis angle, corners by intersection; OSM footprints used only as a start. Heights NAVD88 from the LiDAR: flat tops are the roof parapet, pitched parts give ridge (99.5th percentile) and eave (returns just inside the edge). Roof-top parts carry base = the roof they stand on. Facade colours, window sizes and floor counts are guesses unless a source is cited. The base of every part comes from the terrain; ground ranges round each building (2nd-98th percentile of ground returns 1-3 m outside) are listed here. CarParc Diem: ground round the deck 115.8..125.5 m (south-west corner high, north-east low); stair towers SW 122.9..125.8, SE 121.8..122.8, NE 115.4..116.3. Dinallo Heights: ground round the west wing 125.7..129.8 m, east wing 126.4..136.2 m, link 125.9..129.9 m. Student Recreation Center: ground round the west hall 131.0..139.0 m, east hall 130.2..139.0 m, low wing 132.1..139.0 m (north side about 130-131 m, south side about 139 m). Machuga Heights: ground round the west wing 127.2..131.4 m, east wing 127.4..131.7 m, link 127.3..131.5 m, dining hall 127.2..131.2 m (low to the west and north). District Energy Plant: ground round the plant 125.4..126.6 m; cooling towers 124.1..126.3 m and 125.4..126.3 m. Field House: ground round it 115.1..118.5 m. Not modelled: the brick enclosure east of the Energy Plant (about (-9..5, 486..512)) and the walled enclosure near (-6, 682) are open-topped screen walls 2-4 m high in the 2017 LiDAR, not roofed buildings; the lattice structures near (96, 510), (101, 487) and (270, 582) are transmission towers (up to 54 m), not sheds; the teal object near (122, 540) is too small to tell (container or dumpster).",
+ "buildings": [
+  {
+   "name": "NE_bldg_CarParc_Diem_deck",
+   "ring": [
+    [
+     13.61,
+     537.43
+    ],
+    [
+     46.21,
+     619.76
+    ],
+    [
+     36.23,
+     623.72
+    ],
+    [
+     40.12,
+     633.54
+    ],
+    [
+     5.8,
+     647.13
+    ],
+    [
+     3.5,
+     641.34
+    ],
+    [
+     -5.64,
+     644.96
+    ],
+    [
+     -43.33,
+     549.78
+    ],
+    [
+     3.94,
+     531.07
+    ],
+    [
+     7.43,
+     539.88
+    ]
+   ],
+   "roof": "flat",
+   "top": 143.6,
+   "style": "deck",
+   "floors": 7,
+   "levels": 8,
+   "wall": "#cbbfa8",
+   "trim": "#e4ddcd",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (CarParc Diem); https://clarkecatonhintz.com/project/montclair-state-university-carparc-diem/ (precast, Spanish mission style); https://www.pci.org/ProjectProfile?ID=276848 (7.5 levels, precast arches, tile accents)",
+   "unverified": "top is the roof-level parapet (slab 142.31 m, parapet 143.6 m); a 20 x 47 m middle bay of the roof level is 1.5-3 m lower (ramp, not modelled); levels 8 read from university notices of levels 7 and 8 and the 26 m drop to the north-east ground; colours guessed"
+  },
+  {
+   "name": "NE_bldg_CarParc_Diem_stair_tower_SW",
+   "ring": [
+    [
+     11.89,
+     523.35
+    ],
+    [
+     16.94,
+     536.11
+    ],
+    [
+     7.43,
+     539.88
+    ],
+    [
+     2.38,
+     527.11
+    ]
+   ],
+   "roof": "hip",
+   "top": 149.74,
+   "eave": 146.95,
+   "style": "deck",
+   "floors": 8,
+   "wall": "#cbbfa8",
+   "trim": "#e4ddcd",
+   "roof_colour": "#9a4b35",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+  },
+  {
+   "name": "NE_bldg_CarParc_Diem_stair_tower_SE",
+   "ring": [
+    [
+     47.52,
+     619.24
+    ],
+    [
+     51.62,
+     629.58
+    ],
+    [
+     40.32,
+     634.06
+    ],
+    [
+     36.23,
+     623.72
+    ]
+   ],
+   "roof": "hip",
+   "top": 149.03,
+   "eave": 146.08,
+   "style": "deck",
+   "floors": 8,
+   "wall": "#cbbfa8",
+   "trim": "#e4ddcd",
+   "roof_colour": "#9a4b35",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+  },
+  {
+   "name": "NE_bldg_CarParc_Diem_stair_tower_NE",
+   "ring": [
+    [
+     3.5,
+     641.34
+    ],
+    [
+     5.8,
+     647.13
+    ],
+    [
+     -3.76,
+     650.92
+    ],
+    [
+     -6.05,
+     645.12
+    ]
+   ],
+   "roof": "hip",
+   "top": 147.21,
+   "eave": 145.8,
+   "style": "deck",
+   "floors": 8,
+   "wall": "#cbbfa8",
+   "trim": "#e4ddcd",
+   "roof_colour": "#9a4b35",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_west_wing",
+   "ring": [
+    [
+     59.39,
+     541.93
+    ],
+    [
+     75.76,
+     534.19
+    ],
+    [
+     102.79,
+     591.36
+    ],
+    [
+     103.18,
+     604.55
+    ],
+    [
+     106.27,
+     604.46
+    ],
+    [
+     107.61,
+     649.62
+    ],
+    [
+     96.06,
+     649.96
+    ],
+    [
+     95.98,
+     647.37
+    ],
+    [
+     87.91,
+     647.61
+    ],
+    [
+     86.47,
+     599.22
+    ]
+   ],
+   "roof": "flat",
+   "top": 146.23,
+   "style": "dorm",
+   "floors": 7,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#e4e6e0",
+   "windows": {
+    "width": 1.2,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Dinallo Heights); https://www.montclair.edu/residence-life/?p=49 (6-8 floors); https://www.pci.org/PCI_Docs/Publications/Ascent%20Magazine/2012/Spring/The%20Aesthetic%20Versatility%20of%20Precast.pdf (thin brick of several colours cast into precast panels)",
+   "unverified": "roof 146.02 m, parapet small; floors from the drop to the lowest ground; brick and band colours and window rhythm guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_east_wing",
+   "ring": [
+    [
+     106.75,
+     547.24
+    ],
+    [
+     126.21,
+     544.26
+    ],
+    [
+     133.01,
+     588.7
+    ],
+    [
+     130.33,
+     589.11
+    ],
+    [
+     131.36,
+     595.85
+    ],
+    [
+     138.42,
+     594.77
+    ],
+    [
+     148.48,
+     660.5
+    ],
+    [
+     130.64,
+     663.23
+    ],
+    [
+     121.89,
+     606.04
+    ],
+    [
+     120.01,
+     606.33
+    ],
+    [
+     117.6,
+     590.56
+    ],
+    [
+     113.47,
+     591.19
+    ]
+   ],
+   "roof": "flat",
+   "top": 151.9,
+   "style": "dorm",
+   "floors": 8,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#e4e6e0",
+   "windows": {
+    "width": 1.2,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Dinallo Heights); https://www.montclair.edu/residence-life/?p=49 (6-8 floors); https://www.pci.org/PCI_Docs/Publications/Ascent%20Magazine/2012/Spring/The%20Aesthetic%20Versatility%20of%20Precast.pdf (thin brick of several colours cast into precast panels)",
+   "unverified": "roof 151.72 m, parapet small; floors from the drop to the lowest ground; brick and band colours and window rhythm guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_link",
+   "ring": [
+    [
+     98.76,
+     586.35
+    ],
+    [
+     117.24,
+     576.94
+    ],
+    [
+     121.83,
+     606.94
+    ],
+    [
+     101.18,
+     610.1
+    ],
+    [
+     100.59,
+     590.22
+    ]
+   ],
+   "roof": "flat",
+   "top": 133.95,
+   "style": "dorm",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#8f948c",
+   "windows": {
+    "width": 2.4,
+    "height": 2.2,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020; https://www.designcollective.com/portfolio/project/montclair-state-university-hillside-village (glass links join the wings)",
+   "unverified": "north edge is a curve in the LiDAR, drawn as straight runs; the parts under the wings are hidden; glazing and floors guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_west_roof_box_1",
+   "ring": [
+    [
+     98.84,
+     588.32
+    ],
+    [
+     100.57,
+     591.97
+    ],
+    [
+     87.73,
+     598.04
+    ],
+    [
+     86.0,
+     594.39
+    ]
+   ],
+   "roof": "flat",
+   "top": 149.08,
+   "base": 146.02,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_west_roof_box_2",
+   "ring": [
+    [
+     87.35,
+     575.56
+    ],
+    [
+     92.21,
+     585.86
+    ],
+    [
+     88.08,
+     587.82
+    ],
+    [
+     83.21,
+     577.52
+    ]
+   ],
+   "roof": "flat",
+   "top": 149.51,
+   "base": 146.02,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_east_roof_box_1",
+   "ring": [
+    [
+     138.65,
+     594.25
+    ],
+    [
+     139.72,
+     601.27
+    ],
+    [
+     132.66,
+     602.35
+    ],
+    [
+     131.58,
+     595.34
+    ]
+   ],
+   "roof": "flat",
+   "top": 156.62,
+   "base": 151.72,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_east_roof_box_2",
+   "ring": [
+    [
+     130.11,
+     587.42
+    ],
+    [
+     131.57,
+     597.0
+    ],
+    [
+     125.25,
+     597.97
+    ],
+    [
+     123.78,
+     588.39
+    ]
+   ],
+   "roof": "flat",
+   "top": 154.96,
+   "base": 151.72,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Dinallo_east_roof_box_3",
+   "ring": [
+    [
+     122.27,
+     570.67
+    ],
+    [
+     123.94,
+     581.59
+    ],
+    [
+     119.81,
+     582.22
+    ],
+    [
+     118.14,
+     571.3
+    ]
+   ],
+   "roof": "flat",
+   "top": 155.19,
+   "base": 151.72,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_west_hall",
+   "ring": [
+    [
+     172.51,
+     602.34
+    ],
+    [
+     205.34,
+     598.31
+    ],
+    [
+     211.6,
+     649.33
+    ],
+    [
+     178.78,
+     653.36
+    ]
+   ],
+   "roof": "hip",
+   "top": 155.33,
+   "eave": 148.71,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "windows": {
+    "width": 2.0,
+    "height": 3.0,
+    "spacing": 6.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall)",
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_east_hall",
+   "ring": [
+    [
+     209.34,
+     615.29
+    ],
+    [
+     241.79,
+     602.64
+    ],
+    [
+     259.55,
+     648.19
+    ],
+    [
+     227.1,
+     660.85
+    ]
+   ],
+   "roof": "hip",
+   "top": 155.66,
+   "eave": 148.72,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "windows": {
+    "width": 2.0,
+    "height": 3.0,
+    "spacing": 6.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall)",
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_low_wing",
+   "ring": [
+    [
+     195.9,
+     578.29
+    ],
+    [
+     233.65,
+     594.49
+    ],
+    [
+     238.57,
+     607.11
+    ],
+    [
+     212.29,
+     617.36
+    ],
+    [
+     221.05,
+     639.81
+    ],
+    [
+     208.61,
+     641.34
+    ],
+    [
+     203.6,
+     600.53
+    ],
+    [
+     198.7,
+     601.14
+    ]
+   ],
+   "roof": "flat",
+   "top": 147.86,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#e9ece4",
+   "windows": {
+    "width": 2.0,
+    "height": 2.4,
+    "spacing": 4.5
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (white flat roof); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/",
+   "unverified": "edges under the two hip halls are hidden and approximate; no parapet seen; windows guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_south_canopy",
+   "ring": [
+    [
+     195.45,
+     574.61
+    ],
+    [
+     232.02,
+     590.31
+    ],
+    [
+     233.65,
+     594.49
+    ],
+    [
+     195.9,
+     578.29
+    ]
+   ],
+   "roof": "shed",
+   "top": 146.1,
+   "eave": 144.6,
+   "ridge_angle": 23.2,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (a 3 m band at 144-146 m along the south wall)",
+   "unverified": "read as a lean-to arcade or canopy along the south front; depth 3.2 m and roof colour guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_south_west_pavilion",
+   "ring": [
+    [
+     191.45,
+     586.13
+    ],
+    [
+     200.33,
+     589.94
+    ],
+    [
+     196.62,
+     598.59
+    ],
+    [
+     187.74,
+     594.78
+    ]
+   ],
+   "roof": "hip",
+   "top": 151.74,
+   "eave": 150.14,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red hip roof)",
+   "unverified": "entrance or stair pavilion; plan angle from the LiDAR, colours guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_east_lean_to",
+   "ring": [
+    [
+     253.54,
+     616.74
+    ],
+    [
+     258.99,
+     630.7
+    ],
+    [
+     252.78,
+     633.12
+    ],
+    [
+     247.33,
+     619.16
+    ]
+   ],
+   "roof": "shed",
+   "top": 143.35,
+   "eave": 141.6,
+   "ridge_angle": 68.7,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (roof falls from 143.4 m at the hall wall to about 141.6 m); ortho2020",
+   "unverified": "single-pitch roof assumed from the LiDAR slope; colours guessed"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_east_porch",
+   "ring": [
+    [
+     253.1,
+     609.49
+    ],
+    [
+     255.55,
+     615.76
+    ],
+    [
+     247.5,
+     618.9
+    ],
+    [
+     245.06,
+     612.62
+    ]
+   ],
+   "roof": "hip",
+   "top": 146.66,
+   "eave": 145.2,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#86604f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red roof at the east entrance)",
+   "unverified": "roof shape and eave guessed from a few LiDAR returns"
+  },
+  {
+   "name": "NE_bldg_Rec_Center_north_annex",
+   "ring": [
+    [
+     205.84,
+     649.83
+    ],
+    [
+     206.22,
+     652.9
+    ],
+    [
+     193.18,
+     654.5
+    ],
+    [
+     192.8,
+     651.43
+    ]
+   ],
+   "roof": "flat",
+   "top": 148.16,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6c6a6",
+   "trim": "#efe8d8",
+   "roof_colour": "#e9ece4",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "flat-roofed bay on the north wall; use and look guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_west_wing",
+   "ring": [
+    [
+     188.19,
+     681.08
+    ],
+    [
+     206.82,
+     673.74
+    ],
+    [
+     228.11,
+     727.8
+    ],
+    [
+     221.0,
+     730.6
+    ],
+    [
+     221.3,
+     749.5
+    ],
+    [
+     223.77,
+     751.0
+    ],
+    [
+     252.08,
+     791.42
+    ],
+    [
+     236.37,
+     802.43
+    ],
+    [
+     201.06,
+     752.0
+    ],
+    [
+     200.8,
+     750.0
+    ],
+    [
+     200.8,
+     739.0
+    ],
+    [
+     211.0,
+     739.0
+    ]
+   ],
+   "roof": "flat",
+   "top": 148.5,
+   "style": "dorm",
+   "floors": 7,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#e4e6e0",
+   "windows": {
+    "width": 1.2,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Machuga Heights); https://www.montclair.edu/residence-life/?p=49 (6-8 floors); https://www.pci.org/PCI_Docs/Publications/Ascent%20Magazine/2012/Spring/The%20Aesthetic%20Versatility%20of%20Precast.pdf",
+   "unverified": "roof 147.3 m with a 1.2 m parapet; the bend at y 728-752 is drawn from sparse returns (scan shadow of the tower); floors and look guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_east_wing",
+   "ring": [
+    [
+     238.63,
+     674.54
+    ],
+    [
+     255.54,
+     667.94
+    ],
+    [
+     277.08,
+     723.19
+    ],
+    [
+     275.04,
+     723.99
+    ],
+    [
+     295.62,
+     776.76
+    ],
+    [
+     277.41,
+     783.86
+    ],
+    [
+     256.83,
+     731.09
+    ],
+    [
+     260.17,
+     729.78
+    ]
+   ],
+   "roof": "flat",
+   "top": 154.2,
+   "style": "dorm",
+   "floors": 8,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#e4e6e0",
+   "windows": {
+    "width": 1.2,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Machuga Heights); https://www.montclair.edu/residence-life/?p=49; https://www.pci.org/PCI_Docs/Publications/Ascent%20Magazine/2012/Spring/The%20Aesthetic%20Versatility%20of%20Precast.pdf",
+   "unverified": "roof 153.0 m with a 1.2 m parapet; two blocks offset about 2-3 m at y 727; floors and look guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_link",
+   "ring": [
+    [
+     220.41,
+     730.8
+    ],
+    [
+     260.87,
+     724.68
+    ],
+    [
+     264.0,
+     746.0
+    ],
+    [
+     251.0,
+     750.5
+    ],
+    [
+     244.5,
+     754.3
+    ],
+    [
+     236.0,
+     753.6
+    ],
+    [
+     232.8,
+     748.6
+    ],
+    [
+     219.8,
+     748.4
+    ]
+   ],
+   "roof": "flat",
+   "top": 135.9,
+   "style": "dorm",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#7f8679",
+   "windows": {
+    "width": 2.4,
+    "height": 2.2,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (dark roof, round north side); https://www.designcollective.com/portfolio/project/montclair-state-university-hillside-village (glass links)",
+   "unverified": "the round north front is drawn with straight runs; edges under the wings hidden; floors and glazing guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_dining",
+   "ring": [
+    [
+     172.8,
+     675.05
+    ],
+    [
+     188.24,
+     675.76
+    ],
+    [
+     209.36,
+     729.38
+    ],
+    [
+     195.0,
+     731.14
+    ],
+    [
+     195.62,
+     736.15
+    ],
+    [
+     180.53,
+     738.0
+    ]
+   ],
+   "roof": "flat",
+   "top": 135.6,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#8f948c",
+   "windows": {
+    "width": 2.4,
+    "height": 3.0,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (grey flat roof inside red sloped bands); https://www.langan.com/portfolio/montclair-state-university-heights (24,000 sq ft of dining)",
+   "unverified": "read as the dining hall from its plan and the dining area the project lists; east edge runs under the west wing; floors and look guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_dining_west_roof",
+   "ring": [
+    [
+     172.8,
+     675.05
+    ],
+    [
+     180.9,
+     675.42
+    ],
+    [
+     188.47,
+     737.03
+    ],
+    [
+     180.53,
+     738.0
+    ]
+   ],
+   "roof": "shed",
+   "top": 138.6,
+   "eave": 134.6,
+   "ridge_angle": 83.0,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#876957",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (rises from about 134.6 m at the west wall to 138.6 m 8 m in); ortho2020 (red roof band)",
+   "unverified": "a mansard-like band read as one pitch; its inner face to the flat roof is guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_dining_north_roof",
+   "ring": [
+    [
+     179.07,
+     726.09
+    ],
+    [
+     194.16,
+     724.24
+    ],
+    [
+     195.62,
+     736.15
+    ],
+    [
+     180.53,
+     738.0
+    ]
+   ],
+   "roof": "shed",
+   "top": 138.5,
+   "eave": 135.4,
+   "ridge_angle": 173.0,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#876957",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (rises from 135.4 m at the north wall to 138.5 m 12 m in); ortho2020",
+   "unverified": "read as one pitch; colours guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_dining_south_bay",
+   "ring": [
+    [
+     179.3,
+     668.92
+    ],
+    [
+     188.25,
+     667.82
+    ],
+    [
+     189.36,
+     676.81
+    ],
+    [
+     180.22,
+     676.39
+    ]
+   ],
+   "roof": "flat",
+   "top": 136.6,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#8f948c",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (roof 135.5 m with a rim to about 138 m)",
+   "unverified": "bay or porch on the south front; the rim is read as a parapet; look guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_west_wing_east_lean_to",
+   "ring": [
+    [
+     208.98,
+     679.22
+    ],
+    [
+     213.52,
+     677.43
+    ],
+    [
+     230.76,
+     721.2
+    ],
+    [
+     226.22,
+     722.98
+    ]
+   ],
+   "roof": "shed",
+   "top": 137.4,
+   "eave": 135.4,
+   "ridge_angle": 68.5,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#8e4f3c",
+   "trim": "#d8ccb3",
+   "roof_colour": "#7a5a4c",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red sloped strip along the courtyard side)",
+   "unverified": "single-storey lean-to along the courtyard; pitch direction and colour guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_west_stair_tower",
+   "ring": [
+    [
+     208.46,
+     736.66
+    ],
+    [
+     212.08,
+     745.86
+    ],
+    [
+     202.52,
+     749.63
+    ],
+    [
+     198.89,
+     740.42
+    ]
+   ],
+   "roof": "flat",
+   "top": 153.18,
+   "base": 147.3,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Machuga_west_roof_box",
+   "ring": [
+    [
+     216.05,
+     754.51
+    ],
+    [
+     225.15,
+     767.5
+    ],
+    [
+     221.57,
+     770.0
+    ],
+    [
+     212.48,
+     757.02
+    ]
+   ],
+   "roof": "flat",
+   "top": 150.76,
+   "base": 147.3,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed; a few returns reach 1.5-2 m higher (units on top)"
+  },
+  {
+   "name": "NE_bldg_Machuga_east_roof_box_1",
+   "ring": [
+    [
+     273.93,
+     743.41
+    ],
+    [
+     279.97,
+     758.91
+    ],
+    [
+     275.75,
+     760.56
+    ],
+    [
+     269.71,
+     745.06
+    ]
+   ],
+   "roof": "flat",
+   "top": 156.47,
+   "base": 153.0,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed; a few returns reach 1.5-2 m higher (units on top)"
+  },
+  {
+   "name": "NE_bldg_Machuga_east_roof_box_2",
+   "ring": [
+    [
+     275.7,
+     733.34
+    ],
+    [
+     277.13,
+     737.0
+    ],
+    [
+     264.1,
+     742.08
+    ],
+    [
+     262.67,
+     738.42
+    ]
+   ],
+   "roof": "flat",
+   "top": 156.01,
+   "base": 153.0,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "trim": "#d8ccb3",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "stair, lift or plant penthouse: use and cladding guessed; a few returns reach 1.5-2 m higher (units on top)"
+  },
+  {
+   "name": "NE_bldg_Energy_Plant",
+   "ring": [
+    [
+     -49.3,
+     456.8
+    ],
+    [
+     -8.75,
+     474.44
+    ],
+    [
+     -18.14,
+     496.04
+    ],
+    [
+     -58.7,
+     478.41
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.7,
+   "style": "plant",
+   "floors": 2,
+   "wall": "#8a4b3b",
+   "trim": "#cfc6b4",
+   "roof_colour": "#e8ece2",
+   "windows": {
+    "width": 1.5,
+    "height": 2.0,
+    "spacing": 8.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Montclair District Energy Plant); ortho2020 (white roof, red-brown walls)",
+   "unverified": "roof 134.65 m inside a 4 m parapet or screen wall to 138.7 m; west corner lies 2.7 m outside the footprint edge x = -56; floors, brick colour and windows guessed"
+  },
+  {
+   "name": "NE_bldg_Energy_Plant_west_bay",
+   "ring": [
+    [
+     -49.08,
+     457.12
+    ],
+    [
+     -43.86,
+     459.39
+    ],
+    [
+     -53.14,
+     480.72
+    ],
+    [
+     -58.36,
+     478.45
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.76,
+   "base": 134.65,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#8a4b3b",
+   "trim": "#cfc6b4",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (strip along the west side)",
+   "unverified": "raised roof strip or screened plant area along the west wall; use guessed"
+  },
+  {
+   "name": "NE_bldg_Energy_Plant_roof_box",
+   "ring": [
+    [
+     -32.98,
+     465.74
+    ],
+    [
+     -24.22,
+     469.54
+    ],
+    [
+     -27.18,
+     476.34
+    ],
+    [
+     -35.94,
+     472.54
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.4,
+   "base": 134.65,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9b4a8",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
+   "unverified": "rooftop plant unit; cladding guessed"
+  },
+  {
+   "name": "NE_bldg_Energy_Plant_cooling_towers_west",
+   "ring": [
+    [
+     -58.06,
+     484.16
+    ],
+    [
+     -42.44,
+     490.95
+    ],
+    [
+     -45.41,
+     497.78
+    ],
+    [
+     -61.03,
+     490.99
+    ]
+   ],
+   "roof": "flat",
+   "top": 134.78,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#7d8580",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (fan decks of cooling-tower cells)",
+   "unverified": "modelled as a closed box to the fan deck; the cells are open louvred units and the top is the fan deck, not a roof; ct1 lies up to 5 m outside the footprint edge x = -56"
+  },
+  {
+   "name": "NE_bldg_Energy_Plant_cooling_towers_east",
+   "ring": [
+    [
+     -38.99,
+     492.63
+    ],
+    [
+     -31.02,
+     496.1
+    ],
+    [
+     -34.03,
+     503.03
+    ],
+    [
+     -42.01,
+     499.57
+    ]
+   ],
+   "roof": "flat",
+   "top": 134.78,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#7d8580",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (fan decks of cooling-tower cells)",
+   "unverified": "modelled as a closed box to the fan deck; the cells are open louvred units and the top is the fan deck, not a roof; ct1 lies up to 5 m outside the footprint edge x = -56"
+  },
+  {
+   "name": "NE_bldg_Field_House",
+   "ring": [
+    [
+     76.83,
+     767.84
+    ],
+    [
+     93.76,
+     758.84
+    ],
+    [
+     104.88,
+     779.76
+    ],
+    [
+     87.96,
+     788.76
+    ]
+   ],
+   "roof": "flat",
+   "top": 122.26,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#b9a58c",
+   "trim": "#e4ddcd",
+   "roof_colour": "#6f766a",
+   "windows": {
+    "width": 1.5,
+    "height": 1.5,
+    "spacing": 6.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (Field House); ortho2020 (grey flat roof)",
+   "unverified": "the low strip on the east side (120-122 m, equipment or lean-to) is left out; floors, colours and windows guessed"
+  }
+ ]
+}

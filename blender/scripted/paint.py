@@ -29,6 +29,7 @@ BASE = {
     "turf": (38, 94, 50),
     "concrete": (177, 175, 169),
     "brick": (150, 84, 66),
+    "gravel": (176, 138, 104),  # painted gravel is an infield skin: clay
 }
 PAINT = {
     "white": (238, 238, 232),

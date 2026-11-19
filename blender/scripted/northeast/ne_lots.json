@@ -1,6 +1,6 @@
 {
  "zone": "ne_lots",
- "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines.",
+ "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines. Lot 19 (south of the Student Recreation Center): four double rows of square stalls on painted centre lines at 22.6 to 24.1 deg, with painted hatched end caps; single rows along the west curb, the north walk (accessible stalls with 1.5 m blue access aisles) and the east curb. The south part runs past the footprint edge (y 497) and is clipped there. Divider lines found as the long bright lines on transects; stall pitch 2.59 to 2.61 m.",
  "surfaces": [
   {
    "name": "NE_lot_25_asphalt",
@@ -212,6 +212,100 @@
    ],
    "evidence": "ortho2020",
    "unverified": "enclosure pad with bins (white objects in the ortho); outline and kind guessed"
+  },
+  {
+   "name": "NE_lot_19_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     161.2,
+     556.0,
+     1.0
+    ],
+    [
+     193.0,
+     568.0,
+     10.0
+    ],
+    [
+     220.0,
+     576.2,
+     0.3
+    ],
+    [
+     222.8,
+     575.3,
+     0.8
+    ],
+    [
+     232.0,
+     578.6,
+     0.3
+    ],
+    [
+     232.3,
+     580.3,
+     0.3
+    ],
+    [
+     238.62,
+     580.3,
+     0.5
+    ],
+    [
+     248.86,
+     519.3,
+     15.0
+    ],
+    [
+     248.45,
+     496.0
+    ],
+    [
+     208.0,
+     496.0
+    ],
+    [
+     200.84,
+     504.88,
+     24.7
+    ],
+    [
+     182.0,
+     505.4
+    ],
+    [
+     176.4,
+     511.0
+    ],
+    [
+     178.4,
+     512.2,
+     0.8
+    ],
+    [
+     180.4,
+     513.4,
+     1.0
+    ],
+    [
+     180.4,
+     521.0,
+     1.5
+    ],
+    [
+     173.0,
+     522.4,
+     1.0
+    ],
+    [
+     160.0,
+     548.7,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020; osm 313029928",
+   "unverified": "south of y 497 (outside the footprint) the ring is a straight cut; NE corner step by the grass bed read from a shadowed curb"
   }
  ],
  "curbs": [
@@ -417,6 +511,102 @@
     [
      53.73,
      535.7
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_curb",
+   "path": [
+    [
+     178.4,
+     512.2,
+     0.8
+    ],
+    [
+     180.4,
+     513.4,
+     1.0
+    ],
+    [
+     180.4,
+     521.0,
+     1.5
+    ],
+    [
+     173.0,
+     522.4,
+     1.0
+    ],
+    [
+     160.0,
+     548.7,
+     1.0
+    ],
+    [
+     161.2,
+     556.0,
+     1.0
+    ],
+    [
+     193.0,
+     568.0,
+     10.0
+    ],
+    [
+     220.0,
+     576.2,
+     0.3
+    ],
+    [
+     222.8,
+     575.3,
+     0.8
+    ],
+    [
+     232.0,
+     578.6,
+     0.3
+    ],
+    [
+     232.3,
+     580.3,
+     0.3
+    ],
+    [
+     238.62,
+     580.3,
+     0.5
+    ],
+    [
+     248.86,
+     519.3,
+     15.0
+    ],
+    [
+     248.6,
+     506.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_curb_S_island",
+   "path": [
+    [
+     208.0,
+     496.0
+    ],
+    [
+     200.84,
+     504.88,
+     24.7
+    ],
+    [
+     182.0,
+     505.4
     ]
    ],
    "closed": false,
@@ -1032,6 +1222,2735 @@
    "evidence": "ortho2020",
    "width": 0.6,
    "unverified": "bar width and length approximate; may duplicate a crossing drawn with the road"
+  },
+  {
+   "name": "NE_lot_19_DR1_N",
+   "type": "stalls",
+   "line": [
+    [
+     181.77,
+     543.59
+    ],
+    [
+     227.34,
+     562.59
+    ]
+   ],
+   "count": 19,
+   "depth": 5.1,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR1_S",
+   "type": "stalls",
+   "line": [
+    [
+     181.77,
+     543.59
+    ],
+    [
+     227.34,
+     562.59
+    ]
+   ],
+   "count": 19,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two lines hidden by cars, inferred from the pitch"
+  },
+  {
+   "name": "NE_lot_19_DR1_centre",
+   "type": "line",
+   "path": [
+    [
+     179.37,
+     542.59
+    ],
+    [
+     227.34,
+     562.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR2_N",
+   "type": "stalls",
+   "line": [
+    [
+     188.4,
+     527.95
+    ],
+    [
+     231.64,
+     545.86
+    ]
+   ],
+   "count": 18,
+   "depth": 5.35,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR2_S",
+   "type": "stalls",
+   "line": [
+    [
+     188.4,
+     527.95
+    ],
+    [
+     231.64,
+     545.86
+    ]
+   ],
+   "count": 18,
+   "depth": 5.35,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR2_centre",
+   "type": "line",
+   "path": [
+    [
+     185.97,
+     526.94
+    ],
+    [
+     231.64,
+     545.86
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR3_N_W",
+   "type": "stalls",
+   "line": [
+    [
+     200.28,
+     513.24
+    ],
+    [
+     207.4,
+     516.41
+    ]
+   ],
+   "count": 3,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR3_N_E",
+   "type": "stalls",
+   "line": [
+    [
+     212.14,
+     518.53
+    ],
+    [
+     233.4,
+     528.03
+    ]
+   ],
+   "count": 9,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR3_S",
+   "type": "stalls",
+   "line": [
+    [
+     200.14,
+     513.17
+    ],
+    [
+     233.4,
+     528.03
+    ]
+   ],
+   "count": 14,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR3_centre",
+   "type": "line",
+   "path": [
+    [
+     197.93,
+     512.18
+    ],
+    [
+     235.04,
+     528.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR4_N",
+   "type": "stalls",
+   "line": [
+    [
+     213.92,
+     500.66
+    ],
+    [
+     235.27,
+     510.14
+    ]
+   ],
+   "count": 9,
+   "depth": 5.35,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "one line hidden by a car"
+  },
+  {
+   "name": "NE_lot_19_DR4_S",
+   "type": "stalls",
+   "line": [
+    [
+     213.82,
+     500.62
+    ],
+    [
+     232.86,
+     509.07
+    ]
+   ],
+   "count": 8,
+   "depth": 5.2,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR4_centre",
+   "type": "line",
+   "path": [
+    [
+     212.21,
+     499.9
+    ],
+    [
+     235.7,
+     510.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_outline",
+   "type": "line",
+   "path": [
+    [
+     176.34,
+     546.85
+    ],
+    [
+     177.45,
+     547.32
+    ],
+    [
+     181.34,
+     537.99
+    ],
+    [
+     180.23,
+     537.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_1",
+   "type": "line",
+   "path": [
+    [
+     180.75,
+     537.86
+    ],
+    [
+     181.01,
+     538.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_2",
+   "type": "line",
+   "path": [
+    [
+     180.1,
+     538.12
+    ],
+    [
+     180.63,
+     539.41
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_3",
+   "type": "line",
+   "path": [
+    [
+     179.72,
+     539.04
+    ],
+    [
+     180.25,
+     540.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_4",
+   "type": "line",
+   "path": [
+    [
+     179.34,
+     539.95
+    ],
+    [
+     179.87,
+     541.24
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_5",
+   "type": "line",
+   "path": [
+    [
+     178.96,
+     540.86
+    ],
+    [
+     179.49,
+     542.16
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_6",
+   "type": "line",
+   "path": [
+    [
+     178.58,
+     541.78
+    ],
+    [
+     179.11,
+     543.07
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_7",
+   "type": "line",
+   "path": [
+    [
+     178.19,
+     542.69
+    ],
+    [
+     178.73,
+     543.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_8",
+   "type": "line",
+   "path": [
+    [
+     177.81,
+     543.6
+    ],
+    [
+     178.34,
+     544.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_9",
+   "type": "line",
+   "path": [
+    [
+     177.43,
+     544.52
+    ],
+    [
+     177.96,
+     545.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_10",
+   "type": "line",
+   "path": [
+    [
+     177.05,
+     545.43
+    ],
+    [
+     177.58,
+     546.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_W_11",
+   "type": "line",
+   "path": [
+    [
+     176.67,
+     546.35
+    ],
+    [
+     176.93,
+     546.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_outline",
+   "type": "line",
+   "path": [
+    [
+     182.82,
+     531.43
+    ],
+    [
+     183.93,
+     531.89
+    ],
+    [
+     188.03,
+     522.0
+    ],
+    [
+     186.92,
+     521.54
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_1",
+   "type": "line",
+   "path": [
+    [
+     187.16,
+     521.76
+    ],
+    [
+     187.59,
+     522.79
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_2",
+   "type": "line",
+   "path": [
+    [
+     186.68,
+     522.41
+    ],
+    [
+     187.21,
+     523.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_3",
+   "type": "line",
+   "path": [
+    [
+     186.3,
+     523.32
+    ],
+    [
+     186.83,
+     524.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_4",
+   "type": "line",
+   "path": [
+    [
+     185.92,
+     524.24
+    ],
+    [
+     186.45,
+     525.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_5",
+   "type": "line",
+   "path": [
+    [
+     185.54,
+     525.15
+    ],
+    [
+     186.07,
+     526.44
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_6",
+   "type": "line",
+   "path": [
+    [
+     185.16,
+     526.07
+    ],
+    [
+     185.69,
+     527.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_7",
+   "type": "line",
+   "path": [
+    [
+     184.78,
+     526.98
+    ],
+    [
+     185.32,
+     528.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_8",
+   "type": "line",
+   "path": [
+    [
+     184.4,
+     527.9
+    ],
+    [
+     184.94,
+     529.19
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_9",
+   "type": "line",
+   "path": [
+    [
+     184.02,
+     528.81
+    ],
+    [
+     184.56,
+     530.1
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_10",
+   "type": "line",
+   "path": [
+    [
+     183.64,
+     529.73
+    ],
+    [
+     184.18,
+     531.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_W_11",
+   "type": "line",
+   "path": [
+    [
+     183.26,
+     530.64
+    ],
+    [
+     183.69,
+     531.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_outline",
+   "type": "line",
+   "path": [
+    [
+     194.68,
+     516.76
+    ],
+    [
+     197.78,
+     518.14
+    ],
+    [
+     202.19,
+     508.28
+    ],
+    [
+     199.08,
+     506.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_1",
+   "type": "line",
+   "path": [
+    [
+     201.18,
+     507.95
+    ],
+    [
+     201.66,
+     509.2
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_2",
+   "type": "line",
+   "path": [
+    [
+     200.28,
+     507.55
+    ],
+    [
+     201.26,
+     510.11
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_3",
+   "type": "line",
+   "path": [
+    [
+     199.38,
+     507.14
+    ],
+    [
+     200.85,
+     511.01
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_4",
+   "type": "line",
+   "path": [
+    [
+     198.84,
+     507.7
+    ],
+    [
+     200.45,
+     511.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_5",
+   "type": "line",
+   "path": [
+    [
+     198.44,
+     508.61
+    ],
+    [
+     200.05,
+     512.82
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_6",
+   "type": "line",
+   "path": [
+    [
+     198.03,
+     509.51
+    ],
+    [
+     199.64,
+     513.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_7",
+   "type": "line",
+   "path": [
+    [
+     197.63,
+     510.41
+    ],
+    [
+     199.24,
+     514.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_8",
+   "type": "line",
+   "path": [
+    [
+     197.23,
+     511.32
+    ],
+    [
+     198.84,
+     515.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_9",
+   "type": "line",
+   "path": [
+    [
+     196.82,
+     512.22
+    ],
+    [
+     198.43,
+     516.43
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_10",
+   "type": "line",
+   "path": [
+    [
+     196.42,
+     513.13
+    ],
+    [
+     198.03,
+     517.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_11",
+   "type": "line",
+   "path": [
+    [
+     196.01,
+     514.03
+    ],
+    [
+     197.49,
+     517.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_12",
+   "type": "line",
+   "path": [
+    [
+     195.61,
+     514.93
+    ],
+    [
+     196.59,
+     517.49
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_W_13",
+   "type": "line",
+   "path": [
+    [
+     195.21,
+     515.84
+    ],
+    [
+     195.69,
+     517.09
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_outline",
+   "type": "line",
+   "path": [
+    [
+     209.35,
+     504.49
+    ],
+    [
+     211.64,
+     505.5
+    ],
+    [
+     215.92,
+     495.86
+    ],
+    [
+     213.63,
+     494.84
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_1",
+   "type": "line",
+   "path": [
+    [
+     215.43,
+     495.76
+    ],
+    [
+     215.62,
+     496.25
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_2",
+   "type": "line",
+   "path": [
+    [
+     214.53,
+     495.36
+    ],
+    [
+     215.22,
+     497.16
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_3",
+   "type": "line",
+   "path": [
+    [
+     213.66,
+     495.04
+    ],
+    [
+     214.82,
+     498.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_4",
+   "type": "line",
+   "path": [
+    [
+     213.26,
+     495.95
+    ],
+    [
+     214.42,
+     498.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_5",
+   "type": "line",
+   "path": [
+    [
+     212.86,
+     496.85
+    ],
+    [
+     214.02,
+     499.87
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_6",
+   "type": "line",
+   "path": [
+    [
+     212.45,
+     497.76
+    ],
+    [
+     213.62,
+     500.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_7",
+   "type": "line",
+   "path": [
+    [
+     212.05,
+     498.66
+    ],
+    [
+     213.21,
+     501.68
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_8",
+   "type": "line",
+   "path": [
+    [
+     211.65,
+     499.57
+    ],
+    [
+     212.81,
+     502.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_9",
+   "type": "line",
+   "path": [
+    [
+     211.25,
+     500.47
+    ],
+    [
+     212.41,
+     503.49
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_10",
+   "type": "line",
+   "path": [
+    [
+     210.85,
+     501.38
+    ],
+    [
+     212.01,
+     504.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_11",
+   "type": "line",
+   "path": [
+    [
+     210.45,
+     502.28
+    ],
+    [
+     211.61,
+     505.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_12",
+   "type": "line",
+   "path": [
+    [
+     210.04,
+     503.19
+    ],
+    [
+     210.74,
+     504.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_W_13",
+   "type": "line",
+   "path": [
+    [
+     209.64,
+     504.09
+    ],
+    [
+     209.83,
+     504.58
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_outline",
+   "type": "line",
+   "path": [
+    [
+     233.53,
+     515.22
+    ],
+    [
+     235.35,
+     516.03
+    ],
+    [
+     239.63,
+     506.39
+    ],
+    [
+     237.81,
+     505.57
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_1",
+   "type": "line",
+   "path": [
+    [
+     238.48,
+     505.99
+    ],
+    [
+     239.04,
+     507.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_2",
+   "type": "line",
+   "path": [
+    [
+     237.73,
+     506.0
+    ],
+    [
+     238.64,
+     508.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_3",
+   "type": "line",
+   "path": [
+    [
+     237.33,
+     506.91
+    ],
+    [
+     238.24,
+     509.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_4",
+   "type": "line",
+   "path": [
+    [
+     236.93,
+     507.81
+    ],
+    [
+     237.84,
+     510.17
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_5",
+   "type": "line",
+   "path": [
+    [
+     236.53,
+     508.72
+    ],
+    [
+     237.44,
+     511.08
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_6",
+   "type": "line",
+   "path": [
+    [
+     236.13,
+     509.62
+    ],
+    [
+     237.03,
+     511.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_7",
+   "type": "line",
+   "path": [
+    [
+     235.72,
+     510.53
+    ],
+    [
+     236.63,
+     512.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_8",
+   "type": "line",
+   "path": [
+    [
+     235.32,
+     511.43
+    ],
+    [
+     236.23,
+     513.79
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_9",
+   "type": "line",
+   "path": [
+    [
+     234.92,
+     512.34
+    ],
+    [
+     235.83,
+     514.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_10",
+   "type": "line",
+   "path": [
+    [
+     234.52,
+     513.24
+    ],
+    [
+     235.43,
+     515.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR4_cap_E_11",
+   "type": "line",
+   "path": [
+    [
+     234.12,
+     514.15
+    ],
+    [
+     234.68,
+     515.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_outline",
+   "type": "line",
+   "path": [
+    [
+     225.35,
+     567.29
+    ],
+    [
+     226.46,
+     567.75
+    ],
+    [
+     230.35,
+     558.43
+    ],
+    [
+     229.24,
+     557.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_1",
+   "type": "line",
+   "path": [
+    [
+     229.76,
+     558.3
+    ],
+    [
+     230.02,
+     558.94
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_2",
+   "type": "line",
+   "path": [
+    [
+     229.11,
+     558.56
+    ],
+    [
+     229.64,
+     559.85
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_3",
+   "type": "line",
+   "path": [
+    [
+     228.73,
+     559.47
+    ],
+    [
+     229.26,
+     560.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_4",
+   "type": "line",
+   "path": [
+    [
+     228.35,
+     560.38
+    ],
+    [
+     228.88,
+     561.68
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_5",
+   "type": "line",
+   "path": [
+    [
+     227.97,
+     561.3
+    ],
+    [
+     228.5,
+     562.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_6",
+   "type": "line",
+   "path": [
+    [
+     227.59,
+     562.21
+    ],
+    [
+     228.12,
+     563.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_7",
+   "type": "line",
+   "path": [
+    [
+     227.2,
+     563.13
+    ],
+    [
+     227.74,
+     564.42
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_8",
+   "type": "line",
+   "path": [
+    [
+     226.82,
+     564.04
+    ],
+    [
+     227.36,
+     565.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_9",
+   "type": "line",
+   "path": [
+    [
+     226.44,
+     564.95
+    ],
+    [
+     226.97,
+     566.24
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_10",
+   "type": "line",
+   "path": [
+    [
+     226.06,
+     565.87
+    ],
+    [
+     226.59,
+     567.16
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR1_cap_E_11",
+   "type": "line",
+   "path": [
+    [
+     225.68,
+     566.78
+    ],
+    [
+     225.94,
+     567.42
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_outline",
+   "type": "line",
+   "path": [
+    [
+     229.54,
+     550.78
+    ],
+    [
+     230.65,
+     551.24
+    ],
+    [
+     234.75,
+     541.36
+    ],
+    [
+     233.64,
+     540.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_1",
+   "type": "line",
+   "path": [
+    [
+     233.88,
+     541.11
+    ],
+    [
+     234.31,
+     542.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_2",
+   "type": "line",
+   "path": [
+    [
+     233.39,
+     541.77
+    ],
+    [
+     233.93,
+     543.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_3",
+   "type": "line",
+   "path": [
+    [
+     233.02,
+     542.68
+    ],
+    [
+     233.55,
+     543.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_4",
+   "type": "line",
+   "path": [
+    [
+     232.64,
+     543.59
+    ],
+    [
+     233.17,
+     544.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_5",
+   "type": "line",
+   "path": [
+    [
+     232.26,
+     544.51
+    ],
+    [
+     232.79,
+     545.8
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_6",
+   "type": "line",
+   "path": [
+    [
+     231.88,
+     545.42
+    ],
+    [
+     232.41,
+     546.71
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_7",
+   "type": "line",
+   "path": [
+    [
+     231.5,
+     546.34
+    ],
+    [
+     232.03,
+     547.63
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_8",
+   "type": "line",
+   "path": [
+    [
+     231.12,
+     547.25
+    ],
+    [
+     231.66,
+     548.54
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_9",
+   "type": "line",
+   "path": [
+    [
+     230.74,
+     548.17
+    ],
+    [
+     231.28,
+     549.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_10",
+   "type": "line",
+   "path": [
+    [
+     230.36,
+     549.08
+    ],
+    [
+     230.9,
+     550.37
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_DR2_cap_E_11",
+   "type": "line",
+   "path": [
+    [
+     229.98,
+     550.0
+    ],
+    [
+     230.41,
+     551.03
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "painted hatched end cap; could be a low raised island"
+  },
+  {
+   "name": "NE_lot_19_W",
+   "type": "stalls",
+   "line": [
+    [
+     160.69,
+     548.43
+    ],
+    [
+     173.83,
+     521.84
+    ]
+   ],
+   "count": 11,
+   "depth": 5.2,
+   "side": "left",
+   "angle": 85.8,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_lot_19_E",
+   "type": "stalls",
+   "line": [
+    [
+     239.71,
+     572.95
+    ],
+    [
+     248.71,
+     519.33
+    ]
+   ],
+   "count": 21,
+   "depth": 5.2,
+   "side": "right",
+   "angle": 88.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines south of y 542 fade; depth taken from the north part"
+  },
+  {
+   "name": "NE_lot_19_E_S",
+   "type": "stalls",
+   "line": [
+    [
+     248.55,
+     515.61
+    ],
+    [
+     248.38,
+     502.4
+    ]
+   ],
+   "count": 5,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 94.5,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "depth: lines faded; south of y 502 the row runs on past the footprint"
+  },
+  {
+   "name": "NE_lot_19_N1_line_1",
+   "type": "line",
+   "path": [
+    [
+     163.84,
+     557.11
+    ],
+    [
+     165.47,
+     552.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N1_line_2",
+   "type": "line",
+   "path": [
+    [
+     166.33,
+     558.03
+    ],
+    [
+     167.95,
+     553.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N1_line_3",
+   "type": "line",
+   "path": [
+    [
+     167.59,
+     558.5
+    ],
+    [
+     169.22,
+     554.09
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N1_line_4",
+   "type": "line",
+   "path": [
+    [
+     169.94,
+     559.36
+    ],
+    [
+     171.57,
+     554.96
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N1_line_5",
+   "type": "line",
+   "path": [
+    [
+     172.33,
+     560.25
+    ],
+    [
+     173.96,
+     555.84
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N1_access_aisle_1",
+   "type": "area",
+   "ring": [
+    [
+     166.33,
+     558.03
+    ],
+    [
+     167.59,
+     558.5
+    ],
+    [
+     169.22,
+     554.09
+    ],
+    [
+     167.95,
+     553.62
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_N2_line_1",
+   "type": "line",
+   "path": [
+    [
+     193.04,
+     567.9
+    ],
+    [
+     194.39,
+     563.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_2",
+   "type": "line",
+   "path": [
+    [
+     194.48,
+     568.33
+    ],
+    [
+     195.83,
+     563.83
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_3",
+   "type": "line",
+   "path": [
+    [
+     196.87,
+     569.05
+    ],
+    [
+     198.22,
+     564.55
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_4",
+   "type": "line",
+   "path": [
+    [
+     199.26,
+     569.77
+    ],
+    [
+     200.61,
+     565.26
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_5",
+   "type": "line",
+   "path": [
+    [
+     200.65,
+     570.18
+    ],
+    [
+     202.0,
+     565.68
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_6",
+   "type": "line",
+   "path": [
+    [
+     203.05,
+     570.9
+    ],
+    [
+     204.4,
+     566.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_7",
+   "type": "line",
+   "path": [
+    [
+     205.44,
+     571.62
+    ],
+    [
+     206.79,
+     567.12
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_8",
+   "type": "line",
+   "path": [
+    [
+     206.88,
+     572.05
+    ],
+    [
+     208.23,
+     567.55
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_9",
+   "type": "line",
+   "path": [
+    [
+     209.27,
+     572.77
+    ],
+    [
+     210.62,
+     568.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_10",
+   "type": "line",
+   "path": [
+    [
+     211.62,
+     573.47
+    ],
+    [
+     212.97,
+     568.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_11",
+   "type": "line",
+   "path": [
+    [
+     213.25,
+     573.96
+    ],
+    [
+     214.6,
+     569.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_12",
+   "type": "line",
+   "path": [
+    [
+     215.69,
+     574.69
+    ],
+    [
+     217.04,
+     570.19
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_13",
+   "type": "line",
+   "path": [
+    [
+     218.18,
+     575.44
+    ],
+    [
+     219.53,
+     570.94
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_line_14",
+   "type": "line",
+   "path": [
+    [
+     219.71,
+     575.9
+    ],
+    [
+     221.06,
+     571.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line ends: the north row lines start under the walk shadow"
+  },
+  {
+   "name": "NE_lot_19_N2_access_aisle_1",
+   "type": "area",
+   "ring": [
+    [
+     193.04,
+     567.9
+    ],
+    [
+     194.48,
+     568.33
+    ],
+    [
+     195.83,
+     563.83
+    ],
+    [
+     194.39,
+     563.4
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_N2_access_aisle_2",
+   "type": "area",
+   "ring": [
+    [
+     199.26,
+     569.77
+    ],
+    [
+     200.65,
+     570.18
+    ],
+    [
+     202.0,
+     565.68
+    ],
+    [
+     200.61,
+     565.26
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_N2_access_aisle_3",
+   "type": "area",
+   "ring": [
+    [
+     205.44,
+     571.62
+    ],
+    [
+     206.88,
+     572.05
+    ],
+    [
+     208.23,
+     567.55
+    ],
+    [
+     206.79,
+     567.12
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_N2_access_aisle_4",
+   "type": "area",
+   "ring": [
+    [
+     211.62,
+     573.47
+    ],
+    [
+     213.25,
+     573.96
+    ],
+    [
+     214.6,
+     569.46
+    ],
+    [
+     212.97,
+     568.97
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_N2_access_aisle_5",
+   "type": "area",
+   "ring": [
+    [
+     218.18,
+     575.44
+    ],
+    [
+     219.71,
+     575.9
+    ],
+    [
+     221.06,
+     571.4
+    ],
+    [
+     219.53,
+     570.94
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue fill with white hatching in the ortho; drawn as a plain blue area, hatching not drawn"
+  },
+  {
+   "name": "NE_lot_19_crosswalk_SW",
+   "type": "stalls",
+   "line": [
+    [
+     177.05,
+     509.67
+    ],
+    [
+     181.25,
+     505.11
+    ]
+   ],
+   "count": 4,
+   "depth": 2.8,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "width": 0.5,
+   "unverified": "bar length; may duplicate a crossing drawn with the road"
+  },
+  {
+   "name": "NE_lot_19_DR3_cap_E",
+   "type": "line",
+   "path": [
+    [
+     234.47,
+     533.98,
+     0.75
+    ],
+    [
+     238.54,
+     524.85,
+     0.75
+    ],
+    [
+     237.08,
+     524.2,
+     0.75
+    ],
+    [
+     233.0,
+     533.33,
+     0.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "outlined capsule at the row end, fill not hatched in the ortho; could be a raised island"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_outline",
+   "type": "line",
+   "path": [
+    [
+     205.15,
+     521.43
+    ],
+    [
+     209.9,
+     523.56
+    ],
+    [
+     212.14,
+     518.53
+    ],
+    [
+     207.4,
+     516.41
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_1",
+   "type": "line",
+   "path": [
+    [
+     211.83,
+     518.51
+    ],
+    [
+     211.93,
+     518.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_2",
+   "type": "line",
+   "path": [
+    [
+     210.93,
+     518.11
+    ],
+    [
+     211.52,
+     519.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_3",
+   "type": "line",
+   "path": [
+    [
+     210.02,
+     517.7
+    ],
+    [
+     211.12,
+     520.57
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_4",
+   "type": "line",
+   "path": [
+    [
+     209.12,
+     517.3
+    ],
+    [
+     210.72,
+     521.47
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_5",
+   "type": "line",
+   "path": [
+    [
+     208.22,
+     516.9
+    ],
+    [
+     210.31,
+     522.37
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_6",
+   "type": "line",
+   "path": [
+    [
+     207.39,
+     516.69
+    ],
+    [
+     209.91,
+     523.28
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_7",
+   "type": "line",
+   "path": [
+    [
+     206.98,
+     517.59
+    ],
+    [
+     209.08,
+     523.07
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_8",
+   "type": "line",
+   "path": [
+    [
+     206.58,
+     518.5
+    ],
+    [
+     208.18,
+     522.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_9",
+   "type": "line",
+   "path": [
+    [
+     206.18,
+     519.4
+    ],
+    [
+     207.27,
+     522.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_10",
+   "type": "line",
+   "path": [
+    [
+     205.77,
+     520.31
+    ],
+    [
+     206.37,
+     521.86
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
+  },
+  {
+   "name": "NE_lot_19_DR3_lamp_zone_11",
+   "type": "line",
+   "path": [
+    [
+     205.37,
+     521.21
+    ],
+    [
+     205.46,
+     521.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched no-parking area round the lamp base; outline approximate"
   }
  ],
  "points": [
@@ -1042,9 +3961,9 @@
     50.2,
     524.3
    ],
-   "evidence": "lidar2017; ortho2020 (pole shadow)",
-   "height": 3.3,
-   "unverified": "height is the highest pole return, a lower bound; head type"
+   "evidence": "lidar2017 (pole return at 3.3 m); ortho2020 (pole shadow)",
+   "height": 8.6,
+   "unverified": "height from the shadow length (4.9 m) scaled by the Lot 19 lamp (12.9 m top, 7.35 m shadow); head type"
   },
   {
    "name": "NE_lot_25_lamp_S",
@@ -1053,9 +3972,20 @@
     41.8,
     499.4
    ],
-   "evidence": "lidar2017; ortho2020 (pole shadow)",
-   "height": 3.0,
-   "unverified": "height is the highest pole return, a lower bound; head type"
+   "evidence": "lidar2017 (pole return at 3.0 m); ortho2020 (pole shadow)",
+   "height": 8.2,
+   "unverified": "height from the shadow length (4.65 m) scaled by the Lot 19 lamp; head type"
+  },
+  {
+   "name": "NE_lot_19_lamp_DR3",
+   "kind": "lamp",
+   "at": [
+    209.7,
+    522.6
+   ],
+   "evidence": "lidar2017; ortho2020 (four-way shadow of the heads)",
+   "height": 11.3,
+   "unverified": "height: dsm - ground at the pole cell 11.3 m (highest point return 12.9 m); four-head fixture read from the shadow"
   }
  ]
 }

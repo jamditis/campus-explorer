@@ -68,6 +68,106 @@
    "evidence": "ortho2020, osm",
    "unverified": "edges under tree cover north of y 800 fitted as one arc",
    "notes": "Webster Road (OSM) past Machuga Heights to the north edge: west curb 5.5 m, east edge 4.1 m"
+  },
+  {
+   "name": "NE_road_Stone_St",
+   "kind": "asphalt",
+   "ring": [[139.3, 501.0], [139.9, 509.7], [184.5, 511.45], [184.5, 505.3], [177.6, 503.9, 6.0], [172.0, 496.9], [150.6, 486.0]],
+   "evidence": "ortho2020, osm",
+   "unverified": "south part under the lean of Blanton Hall: paved to the footprint edge; east end at the Lot 19 crosswalk",
+   "notes": "Stone Street (OSM) from Webster Road to the Lot 19 mouth, with the service apron in front of Blanton Hall"
+  },
+  {
+   "name": "NE_road_Stone_St_planter",
+   "kind": "mulch",
+   "ring": [[140.91, 492.31, 4.29], [149.49, 492.31, 4.29], [149.49, 500.89, 4.29], [140.91, 500.89, 4.29]],
+   "evidence": "ortho2020",
+   "unverified": "planting kind",
+   "notes": "round planter with a light pole at the Stone Street mouth",
+   "layer": 4
+  },
+  {
+   "name": "NE_road_Plant_yard_deck_S_drive",
+   "kind": "asphalt",
+   "ring": [[-11.0, 466.0], [-12.5, 474.0], [-21.0, 498.5], [-22.5, 505.0], [-16.0, 512.0], [-17.8, 522.0, 12.0], [-25.3, 537.0], [-26.0, 546.5], [-17.0, 546.5], [-17.0, 536.5, 4.0], [-12.5, 531.0], [11.5, 524.6], [15.9, 523.5], [14.3, 510.5], [8.0, 512.6], [1.0, 512.8], [-7.5, 493.0], [-1.5, 484.0], [-5.0, 478.0], [0.8, 476.0]],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "plant and kiosk walls in shadow: yard edge along their LiDAR outline to about 1 m; west curb of the deck drive under trees",
+   "notes": "Service yard between the District Energy Plant and the brick substation, and the CarParc Diem south drive (OSM service) from Yogi Berra Drive to the deck"
+  },
+  {
+   "name": "NE_road_Deck_N_drive",
+   "kind": "asphalt",
+   "ring": [[56.2, 634.3], [45.8, 633.6], [44.2, 641.0], [45.6, 652.3], [51.0, 652.3], [58.8, 647.2]],
+   "evidence": "ortho2020",
+   "unverified": "in the shadow of the deck: edges to about 1 m; west end at the deck face",
+   "notes": "CarParc Diem north entrance drive (OSM service) from Yogi Berra Drive, and the Lot 24 aisle mouth"
+  },
+  {
+   "name": "NE_road_Machuga_S_drive",
+   "kind": "asphalt",
+   "ring": [[162.6, 641.5], [175.2, 641.5], [175.2, 652.3], [186.7, 652.3], [186.7, 669.0], [175.5, 669.0], [175.5, 677.2], [162.9, 677.2]],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "south and east sides under the lean of the Student Recreation Center: walls from the LiDAR",
+   "notes": "Service drive (OSM driveway) from Webster Road behind the Student Recreation Center to the Machuga Heights service court"
+  },
+  {
+   "name": "NE_road_Machuga_court",
+   "kind": "concrete",
+   "ring": [[186.5, 652.3], [222.0, 652.3], [222.0, 659.0], [240.5, 659.0], [240.5, 682.0], [215.0, 682.0], [215.0, 669.0], [186.5, 669.0]],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "concrete read from the colour in the ortho; edges at the LiDAR walls",
+   "notes": "Machuga Heights service court between the Student Recreation Center and the Machuga wings"
+  },
+  {
+   "name": "NE_road_Machuga_E_drive",
+   "kind": "asphalt",
+   "ring": [[238.0, 666.1], [262.65, 666.1, 7.9], [297.66, 789.0], [300.5, 789.0], [300.5, 772.68], [268.09, 658.9, 15.1], [238.0, 658.9]],
+   "evidence": "ortho2020, osm",
+   "unverified": "north of y 750 the drive lies under the lean of the east Machuga wing: carried straight on; south edge in shadow",
+   "notes": "One-way drive (OSM driveway) round the east side of Machuga Heights to Lot 21; 7.2 m wide, cut at the footprint edge x 300"
+  },
+  {
+   "name": "NE_road_Softball_path_W",
+   "kind": "asphalt",
+   "ring": [[66.5, 808.31], [49.41, 812.43], [7.2, 826.5], [20.8, 826.5], [50.59, 816.57], [67.5, 812.49]],
+   "evidence": "ortho2020",
+   "unverified": "surface kind (asphalt or worn concrete) and the north edge under trees",
+   "notes": "Paved path from the junction west towards the softball stadium, 4.3 m wide, cut at the north edge"
+  },
+  {
+   "name": "NE_road_Softball_path_N",
+   "kind": "asphalt",
+   "ring": [[63.1, 810.56], [70.46, 814.79, 2.2], [73.6, 826.5], [77.33, 826.5], [73.54, 812.41, 5.8], [64.9, 807.44]],
+   "evidence": "ortho2020, osm",
+   "unverified": "width read off the ortho under trees",
+   "notes": "Paved path (OSM service) from the junction north, 3.6 m wide"
+  },
+  {
+   "name": "NE_road_Carlisle_Rd_service",
+   "kind": "asphalt",
+   "ring": [[-87.3, 770.0], [-82.5, 770.0], [-60.0, 826.5], [-64.85, 826.5]],
+   "evidence": "ortho2020, osm",
+   "unverified": "west edge where it meets the footprint; south end cut at the footprint corner",
+   "notes": "Carlisle Road (OSM service) between the rail and the tennis courts and softball stadium, 4.5 m wide"
+  }
+ ],
+ "strips": [
+  {
+   "name": "NE_road_Dinallo_drive",
+   "kind": "asphalt",
+   "centre": [[55.05, 540.95], [59.69, 571.34, 29.65], [78.29, 598.81, 20.35], [78.49, 654.33, 13.65], [117.49, 666.94, 25.35], [126.39, 680.81]],
+   "width": 6.5,
+   "evidence": "ortho2020, osm",
+   "notes": "One-way service drive (OSM driveway) along the west side of Dinallo Heights from the Lot 25 mouth to the Lot 23 mouth; 6.5 m wide"
+  },
+  {
+   "name": "NE_road_Softball_drive",
+   "kind": "asphalt",
+   "centre": [[51.6, 772.0], [60.9, 794.0, 15.0], [64.6, 806.5], [66.4, 810.6]],
+   "width": 4.8,
+   "evidence": "ortho2020, osm",
+   "unverified": "east edge under trees",
+   "notes": "Service drive (OSM Carlisle Road driveway) from Lot 24 north to the path junction"
   }
  ]
 }

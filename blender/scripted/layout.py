@@ -11,9 +11,9 @@ import geom
 
 LAYER = {"lawn": 0, "mulch": 1, "gravel": 2, "asphalt": 3, "turf": 4, "concrete": 5, "brick": 6}
 YD = 0.9144
-PAINTABLE = {"asphalt", "turf"}
+PAINTABLE = {"asphalt", "turf", "gravel"}  # gravel: chalk lines on a clay infield
 # texture sheet resolution, pixels per metre: 4 in lines are 2 to 3 pixels wide
-PPM = {"asphalt": 20.0, "turf": 24.0}
+PPM = {"asphalt": 20.0, "turf": 24.0, "gravel": 24.0}
 
 
 def areas(args=()):
