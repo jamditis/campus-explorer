@@ -36,7 +36,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 
 ## Scripted builds index
 
-`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `northeast/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|
@@ -47,7 +47,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels |
 | `build.py` | Entry point, run inside Blender |
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
-| `tools/web-export/supersede.mjs`, `compact.mjs` | Take other sources' ground out of the southwest footprint; drop unused vertex data from tiles |
+| `tools/web-export/supersede.mjs`, `compact.mjs` | Take other sources' ground out of each area's footprint; drop unused vertex data from tiles |
 
 ## Git identity
 
