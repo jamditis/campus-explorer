@@ -235,14 +235,18 @@ LID = []
 for g in NDSM:
     z = np.load(g)
     gn = z["gn"]
-    LID.append((z["b"], np.where(gn > 0, z["gs"] / np.maximum(gn, 1), np.nan)))
+    # surfaces in order of trust: building-class returns, then last returns (canopy over a roof mostly passes
+    # through to it), then the plain highest return for older grids that have neither
+    surfs = [(k, z[k]) for k in ("b6", "bl") if k in z.files] or [("b", z["b"])]
+    LID.append((surfs, np.where(gn > 0, z["gs"] / np.maximum(gn, 1), np.nan)))
 LR, LH = 2.0, 2000.0
 LN = int(2 * LH / LR)
 
 
 def lidar_height(poly):
-    """Building height from LiDAR: 75th percentile surface inside the footprint (shrunk 1 m off the eaves)
-    minus the median ground in a 2-8 m ring around it. None when no grid covers it well."""
+    """Mean roof height from LiDAR: 40th percentile surface inside the footprint eroded 1 m (off the eaves and
+    off overhanging canopy) minus the median ground in a 2-8 m ring around it. Building-class points are used
+    where they cover 40% of the footprint, else last returns. Returns (height, source) or (None, None)."""
     inner = poly.buffer(-1.0)
     if inner.is_empty or inner.area < 8:
         inner = poly
@@ -251,24 +255,41 @@ def lidar_height(poly):
     c0, c1 = max(0, int((x0 + LH) / LR)), min(LN - 1, int((x1 + LH) / LR))
     r0, r1 = max(0, int((LH - y1) / LR)), min(LN - 1, int((LH - y0) / LR))
     if c1 < c0 or r1 < r0:
-        return None
+        return None, None
     cc, rr = np.meshgrid(np.arange(c0, c1 + 1), np.arange(r0, r1 + 1))
     xs, ys = -LH + (cc + 0.5) * LR, LH - (rr + 0.5) * LR
     from shapely import contains_xy
     m_in = contains_xy(inner, xs, ys)
     m_ring = contains_xy(ring, xs, ys)
-    if m_in.sum() < 2:
-        return None
-    for surf, grd in LID:
-        s_in = surf[r0:r1 + 1, c0:c1 + 1][m_in]
+    n_in = int(m_in.sum())
+    if n_in < 2:
+        return None, None
+    for surfs, grd in LID:
         g_r = grd[r0:r1 + 1, c0:c1 + 1][m_ring]
-        s_in = s_in[s_in > -1e8]
         g_r = g_r[~np.isnan(g_r)]
-        if len(s_in) >= max(2, 0.6 * m_in.sum()) and len(g_r) >= 4:
-            h = float(np.percentile(s_in, 75) - np.median(g_r))
-            if 2.0 <= h <= 60:
-                return h
-    return None
+        if len(g_r) < 4:
+            continue
+        for key, surf in surfs:
+            s_in = surf[r0:r1 + 1, c0:c1 + 1][m_in]
+            s_in = s_in[s_in > -1e8]
+            if len(s_in) >= max(2, (0.4 if key == "b6" else 0.6) * n_in):
+                h = float(np.percentile(s_in, 40) - np.median(g_r))
+                if 2.0 <= h <= 80:
+                    return h, key
+    return None, None
+
+
+def height_cap(area, t):
+    """Tallest plausible mean roof height for a footprint without a tall-building tag: houses stay house-sized."""
+    lv = t.get("building:levels")
+    try:
+        if lv:
+            return float(lv) * 3.5 + 4
+        if t.get("height"):
+            return float(t["height"].split()[0]) + 2
+    except ValueError:
+        pass
+    return 11 if area < 250 else 15 if area < 600 else 24 if area < 2500 else 45
 
 
 # ---------- far trees: woods dense, yards and parks sparse ----------
@@ -299,7 +320,7 @@ print("far trees", len(trees))
 # footprints whose height is only an estimate (scaled footprint-layer height or a typical default) go into
 # far_houses_height_UNVERIFIED
 GEOM = {"far_houses_osm": ([], [], [], []), "far_houses_microsoft": ([], [], [], []), "far_houses_height_UNVERIFIED": ([], [], [], [])}
-hsrc = {"lidar": 0, "osm tag": 0, "footprint estimate": 0, "default": 0}
+hsrc = {"lidar": 0, "capped": 0, "osm tag": 0, "footprint estimate": 0, "default": 0}
 P, NRM, COL, IDX = GEOM["far_houses_osm"]
 WALL = [(0.62, 0.55, 0.46), (0.55, 0.50, 0.44), (0.66, 0.62, 0.55), (0.50, 0.38, 0.30), (0.58, 0.54, 0.47), (0.45, 0.47, 0.46)]
 ROOF = [(0.20, 0.18, 0.17), (0.27, 0.22, 0.19), (0.17, 0.17, 0.18), (0.32, 0.24, 0.19), (0.24, 0.24, 0.23)]
@@ -320,7 +341,7 @@ def add_tri(a, b, c, col):
 
 # LiDAR height per building, and a scale for the footprint layer's own estimates (which run low here),
 # fitted on the buildings that have both, so footprints outside LiDAR cover match those inside it
-LHT = [lidar_height(Polygon(pts)) if Polygon(pts).is_valid else None for pts, _t in buildings]
+LHT = [lidar_height(Polygon(pts))[0] if Polygon(pts).is_valid else None for pts, _t in buildings]
 pairs = [(lh, float(t["ms_height"])) for lh, (_p, t) in zip(LHT, buildings, strict=True) if lh and t.get("ms_height")]
 MS_SCALE = float(np.median([a / b for a, b in pairs])) if len(pairs) > 50 else 1.0
 print("lidar-covered footprints", sum(h is not None for h in LHT), "footprint-estimate scale", round(MS_SCALE, 3), "from", len(pairs))
@@ -335,6 +356,11 @@ for (pts, t), lh in zip(buildings, LHT, strict=True):
     h = lh
     if h is not None:
         hsrc["lidar"] += 1
+        cap = height_cap(poly.area, t)
+        if h > cap:  # implausible for this footprint (canopy or a mismatched return): cap it and flag it
+            h = cap
+            hsrc["capped"] += 1
+            mesh = "far_houses_height_UNVERIFIED"
     else:
         lv = t.get("building:levels")
         try:
@@ -358,10 +384,10 @@ for (pts, t), lh in zip(buildings, LHT, strict=True):
         ring = ring[::-1]
     wc = random.choice(WALL)
     rc = random.choice(ROOF)
-    # h is roof-top height (LiDAR 90th percentile is near the ridge): small houses get a hip, so the eave sits below it
+    # h is the mean roof height: small houses get a hip with its mid-height at h
     small = poly.area < 350 and len(ring) <= 8
-    rise = min(3.5, math.sqrt(poly.area) * 0.28, h * 0.35) if small else 0
-    ztop = z0 + h - rise
+    rise = min(3.5, math.sqrt(poly.area) * 0.28, h * 0.5) if small else 0
+    ztop = z0 + h - rise / 2
     for i in range(len(ring)):
         (x1, y1), (x2, y2) = ring[i], ring[(i + 1) % len(ring)]
         a, b, c, d = (x1, z0, -y1), (x2, z0, -y2), (x2, ztop, -y2), (x1, ztop, -y1)

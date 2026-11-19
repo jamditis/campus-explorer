@@ -2,6 +2,8 @@
 
 Reads USGS 3DEP point clouds over the +-2 km box and writes a 2 m grid in model metres:
   b   highest non-noise return per cell (surface)
+  bl  highest last return per cell (canopy over a roof mostly passes through, so this sees the roof)
+  b6  highest building (class 6) return per cell, where the dataset classifies buildings
   gs, gn  sum and count of ground (class 2) returns per cell
 Sources: an Entwine (EPT) dataset URL, streamed node by node (e.g. the public usgs-lidar-public bucket),
 or local .laz tiles. Nothing is kept but the grid.
@@ -26,6 +28,8 @@ H, R = 2000, 2.0
 NC = int(2 * H / R)
 out, srcs = sys.argv[1], sys.argv[2:]
 bmax = np.full((NC, NC), -1e9, "f4")
+blast = np.full((NC, NC), -1e9, "f4")
+b6 = np.full((NC, NC), -1e9, "f4")
 gs = np.zeros((NC, NC), "f4")
 gn = np.zeros((NC, NC), "f4")
 tot = 0
@@ -45,10 +49,14 @@ def add(las, to_sp, zf):
     e, n = to_sp(np.asarray(las.x)[m], np.asarray(las.y)[m])
     x, y = (e - E0) * F, (n - N0) * F
     z, c = np.asarray(las.z)[m] * zf, cl[m]
+    last = (np.asarray(las.return_number) == np.asarray(las.number_of_returns))[m]
     col, row = ((x + H) / R).astype(int), ((H - y) / R).astype(int)
     ok = (col >= 0) & (col < NC) & (row >= 0) & (row < NC)
-    col, row, z, c = col[ok], row[ok], z[ok].astype("f4"), c[ok]
+    col, row, z, c, last = col[ok], row[ok], z[ok].astype("f4"), c[ok], last[ok]
     np.maximum.at(bmax, (row, col), z)
+    np.maximum.at(blast, (row[last], col[last]), z[last])
+    k = c == 6
+    np.maximum.at(b6, (row[k], col[k]), z[k])
     g = c == 2
     np.add.at(gs, (row[g], col[g]), z[g])
     np.add.at(gn, (row[g], col[g]), 1)
@@ -97,5 +105,6 @@ for src in srcs:
             for chunk in f.chunk_iterator(3_000_000):
                 add(chunk, to_sp, zf)
         print(src, "points so far", tot, flush=True)
-np.savez_compressed(out, b=bmax, gs=gs, gn=gn)
-print("saved", out, tot, "surface cells", int((bmax > -1e8).sum()), "ground cells", int((gn > 0).sum()))
+np.savez_compressed(out, b=bmax, bl=blast, b6=b6, gs=gs, gn=gn)
+print("saved", out, tot, "surface cells", int((bmax > -1e8).sum()), "last-return cells", int((blast > -1e8).sum()),
+      "building cells", int((b6 > -1e8).sum()), "ground cells", int((gn > 0).sum()))
