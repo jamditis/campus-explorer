@@ -258,43 +258,43 @@
   },
   {
    "file": "sw_t_-2_-1.glb",
-   "bytes": 106952,
+   "bytes": 106924,
    "center": [
     -240.0,
     80.0
    ],
    "lod": "lod/sw_t_-2_-1.glb",
-   "lod_bytes": 81112
+   "lod_bytes": 81160
   },
   {
    "file": "sw_t_-2_-2.glb",
-   "bytes": 160776,
+   "bytes": 160796,
    "center": [
     -240.0,
     240.0
    ],
    "lod": "lod/sw_t_-2_-2.glb",
-   "lod_bytes": 128904
+   "lod_bytes": 128880
   },
   {
    "file": "sw_t_-3_-1.glb",
-   "bytes": 726364,
+   "bytes": 725280,
    "center": [
     -400.0,
     80.0
    ],
    "lod": "lod/sw_t_-3_-1.glb",
-   "lod_bytes": 598092
+   "lod_bytes": 597216
   },
   {
    "file": "sw_t_-3_-2.glb",
-   "bytes": 499516,
+   "bytes": 499056,
    "center": [
     -400.0,
     240.0
    ],
    "lod": "lod/sw_t_-3_-2.glb",
-   "lod_bytes": 183564
+   "lod_bytes": 183312
   },
   {
    "file": "sw_t_-3_-3.glb",
@@ -642,8 +642,8 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 19, 2026, 11:19 AM ET",
-   "version": "sw3",
+   "saved": "November 19, 2026, 11:57 AM ET",
+   "version": "sw4",
    "file": "montclair_southwest.blend"
   }
  },
@@ -655,6 +655,6 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 19, 2026, 11:19 AM ET",
- "total_bytes": 174559908
+ "exported": "November 19, 2026, 11:57 AM ET",
+ "total_bytes": 174558356
 }
