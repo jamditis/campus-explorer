@@ -79,7 +79,9 @@ export function createLook(renderer, scene, camera) {
   const envScene = new THREE.Scene(); const envSky = new Sky(); envSky.scale.setScalar(1000);
   Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u)); envSky.material.uniforms.sunPosition.value.copy(sunDir);
   envScene.add(envSky);
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#5d6247' }));
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#6b6456' }));
+  // bounce from the ground: lawn, asphalt and stucco average out to a warm grey, not olive (olive plus blue sky
+  // left every shaded wall cyan)
   ground.position.y = -5; envScene.add(ground);
   scene.environment = pmrem.fromScene(envScene, 0.02).texture;
   scene.environmentIntensity = 0.3;
