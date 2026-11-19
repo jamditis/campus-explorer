@@ -72,8 +72,8 @@ def peaks(height, cell, min_height=5.0, coarse=2.0):
     The survey was flown leaf-off, so a crown is a scatter of returns, not a surface: the grid is
     first reduced to `coarse` metre cells holding their highest return. A peak is the highest
     coarse cell among its neighbours, with a crown round it: at least three of its eight
-    neighbours stand above 0.4 of its height (a lamp or a pole has none). Peaks closer than 0.22 of the taller one's
-    height (3.5 m at least) are one tree. Row and column are of the highest fine cell in the peak.
+    neighbours stand above 0.4 of its height (a lamp or a pole has none). Peaks closer
+    than 0.22 of the taller one's height (3.5 m at least) are one tree. Row and column are of the highest fine cell in the peak.
     """
     f = max(1, round(coarse / cell))
     h = np.where(np.isfinite(height) & (height < 45), height, 0.0)
