@@ -1,4 +1,4 @@
-# ws225 runbook (Nov 19, 2026 12:26-~1:10 AM ET): W47 down-facing ground sheets, W52 tree limb clearance probe, W53 east terrain diagnosis
+# ws225 runbook (Nov 19, 2026 12:26-~12:55 AM ET): W47 down-facing ground sheets, W52 tree limb clearance probe, W53 east terrain diagnosis
 Main before: ws224k. Main after: ws225a (promoted 12:42:54 AM ET).
 - ws225a = ws224k + fix225b (W47 cont.: 19 ground-surface sheets whose faces ALL pointed down flipped up; only objects with no
   modifiers, single-user meshes, unmirrored transforms, names matching paving/landscape words; planters, riser fillers, curbs,
