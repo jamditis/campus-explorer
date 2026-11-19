@@ -1,14 +1,11 @@
-"""Sample the ground the published tiles have along the southwest footprint, so the new ground meets
-it flush.
+"""Sample the ground the published tiles have along an area's footprint, so the new ground meets it
+flush.
 
-usage: python3 blender/southwest/edge.py DUMP_DIR [--plan DIR]     (system Python with numpy)
+usage: python3 blender/scripted/edge.py AREA DUMP_DIR     (system Python with numpy)
 DUMP_DIR holds ground_height.npy and ground.json from tools/evidence/plan.py --name ground, made
-from the
-tiles BEFORE the southwest build superseded their ground. Writes plan/edge_heights.json: [x, y, z]
-every
-metre along the footprint (z is null where the tiles have no ground). Run it again only when the
-footprint
-or the neighbouring models change.
+from the tiles BEFORE the scripted build superseded their ground there. Writes
+<area>/edge_heights.json: [x, y, z] every metre along the footprint (no sample where the tiles have
+no ground). Run it again only when the footprint or the neighbouring models change.
 """
 
 import json
@@ -27,8 +24,7 @@ import layout  # noqa: E402
 
 def main():
     args = sys.argv[1:]
-    dump = Path(args[0])
-    plan_dir = Path(args[args.index("--plan") + 1]) if "--plan" in args else HERE / "plan"
+    plan_dir, dump = HERE / args[0], Path(args[1])
     lay = layout.load(plan_dir)
     meta = json.loads(Path(dump / "ground.json").read_text())
     h = np.load(dump / "ground_height.npy")

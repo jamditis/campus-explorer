@@ -11,7 +11,7 @@ NAME is the evidence folder under DATA (default /workspace/data) written by tool
   hill   hillshade of the LiDAR ground with 0.25 m contours tinted (curbs, banks, cuttings)
   tiles  plan of what the published tiles hold there (tools/evidence/plan.py); ground = their ground
   only
-Plan files use the format in blender/southwest/README.md. OUT.png must be outside the repository.
+Plan files use the format in blender/scripted/README.md. OUT.png must be outside the repository.
 """
 
 import json
@@ -24,7 +24,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 REPO = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO / "blender" / "southwest"))
+sys.path.insert(0, str(REPO / "blender" / "scripted"))
 import geom  # noqa: E402
 
 KIND = {

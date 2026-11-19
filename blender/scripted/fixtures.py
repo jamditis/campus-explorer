@@ -10,7 +10,7 @@ Sizes from standards are named in each docstring. Everything else is estimated f
 photographs in refs/sw (see meta.txt there), so those objects default to `unverified=True`.
 
 Demo row and previews:
-    blender -b --factory-startup --python blender/southwest/fixtures.py
+    blender -b --factory-startup --python blender/scripted/fixtures.py
 """
 
 import math

@@ -16,8 +16,22 @@ PAINTABLE = {"asphalt", "turf"}
 PPM = {"asphalt": 20.0, "turf": 24.0}
 
 
+def areas(args=()):
+    """The plan folders to work on: every folder beside this file that holds a footprint.json, or
+    only those named after `--areas` (comma separated) in `args`."""
+    here = Path(__file__).resolve().parent
+    found = sorted(d for d in here.iterdir() if (d / "footprint.json").exists())
+    if "--areas" in args:
+        want = args[args.index("--areas") + 1].split(",")
+        missing = set(want) - {d.name for d in found}
+        if missing:
+            raise SystemExit(f"no such area: {sorted(missing)}")
+        found = [d for d in found if d.name in want]
+    return found
+
+
 def load(plan_dir):
-    """Merge every plan/*.json (sorted by name) into one layout dict."""
+    """Merge every *.json of one area folder (sorted by name) into one layout dict."""
     out = dict(
         footprint=None,
         surfaces=[],
@@ -30,6 +44,7 @@ def load(plan_dir):
         lifts=[],
         field_frame=None,
     )
+    out["area"] = Path(plan_dir).name
     for f in sorted(Path(plan_dir).glob("*.json")):
         if f.name == "edge_heights.json":
             continue  # derived data, read by build.py
@@ -78,7 +93,9 @@ def load(plan_dir):
         # names contain words such as "mask" or "photo", and a surface name must not be able to trip
         # that
         s["sheets"] = (
-            geom.sheets(f"p{i:03d}", s["ring"], ppm=PPM[s["kind"]]) if i in painted else None
+            geom.sheets(f"{out['area']}_p{i:03d}", s["ring"], ppm=PPM[s["kind"]])
+            if i in painted
+            else None
         )
     return out
 

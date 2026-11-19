@@ -10,12 +10,12 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "blender" / "southwest"))
+sys.path.insert(0, str(ROOT / "blender" / "scripted"))
 
 import geom  # noqa: E402
 import layout  # noqa: E402
 
-PLAN = ROOT / "blender" / "southwest" / "plan"
+PLAN = ROOT / "blender" / "scripted" / "southwest"
 
 
 class Geometry(unittest.TestCase):

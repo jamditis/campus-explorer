@@ -36,11 +36,11 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 
 ## Scripted builds index
 
-`blender/southwest/` builds the southwest corner from plan files; its [README](blender/southwest/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|
-| `blender/southwest/plan/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
+| `blender/scripted/<area>/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
 | `geom.py`, `layout.py` | Pure plan geometry (true-arc corners) and the layout shared by paint and ground |
 | `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
 | `stand.py`, `fixtures.py`, `place.py` | Grandstands and fixtures, and where the plan puts them |

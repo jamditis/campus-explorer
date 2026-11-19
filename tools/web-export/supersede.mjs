@@ -1,15 +1,15 @@
-// One campus, several sources: where the southwest build owns the ground, take the other sources' ground
-// out of their tiles, so two grounds never lie on top of each other. Rules come from
-// blender/southwest/supersede.py (footprint outline, and which meshes are ground there).
+// One campus, several sources: where an area of the scripted build owns the ground, take the other sources'
+// ground out of their tiles, so two grounds never lie on top of each other. Rules come from
+// blender/scripted/supersede.py (per area: footprint outline, and which meshes are ground there).
 //   node supersede.mjs RULES.json MODELS_DIR
-// For every tile that is not a southwest tile:
+// For every area and every tile that is not a scripted-build tile:
 //   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge is cut
 //         into small pieces first (`cut` metres), and the last straddlers have their inside corners lowered by
 //         `tuck` metres, so the old ground ends at the new ground's edge and dips under it
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
 // Far-field trees (far_trees.bin) inside the footprint are removed too: they are a scatter, not real trees.
-// A primitive is marked in its extras once done (with a hash of the rules), so a second run leaves it alone,
-// and a run with a changed footprint stops instead of leaving old holes or old ground. Geometry stays in its
+// A primitive is marked in its extras once done (with a hash of each area's rules), so a second run leaves it
+// alone, and a run with a changed footprint stops instead of leaving old holes or old ground. Geometry stays in its
 // quantized form and is written back with the same meshopt filters, so a tile does not grow or lose precision.
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
@@ -19,14 +19,8 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 
 const [rulesFile, dir] = process.argv.slice(2);
 if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MODELS_DIR'); process.exit(2); }
-const rules = JSON.parse(readFileSync(rulesFile, 'utf8'));
-const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6, TILE = 160;
-const CLIP = rules.clip.map(r => new RegExp(r)), DROP = rules.drop.map(r => new RegExp(r));
-// What a done primitive is marked with: a short hash of the rules. Removed triangles cannot be put back, so a
-// tile that was done with other rules (another footprint) must be exported again before it is done with these.
-const RULES = (() => { let h = 2166136261; for (const c of JSON.stringify([ring, rules.clip, rules.drop, TUCK, CUT])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); })();
-const stale = new Set();
-const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
+const file = JSON.parse(readFileSync(rulesFile, 'utf8')), TILE = 160;
+const AREAS = file.areas ?? [file]; // one set of rules per area (a file with a single footprint is one area)
 /** Even-odd test in the model frame (x east, y north). */
 function inside(ring, x, y) {
   let hit = false;
@@ -36,6 +30,20 @@ function inside(ring, x, y) {
   }
   return hit;
 }
+
+await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
+const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
+const stale = new Set(), changedTiles = new Set(), KNOWN = new Set();
+// Every area's hash first: a mark that is none of them is from rules that no longer exist.
+const hashOf = rules => { let h = 2166136261; for (const c of JSON.stringify([rules.footprint, rules.clip, rules.drop ?? [], rules.tuck ?? 0.5, rules.cut ?? 0.6])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); };
+for (const rules of AREAS) KNOWN.add(hashOf(rules));
+for (const rules of AREAS) {
+const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6;
+const CLIP = rules.clip.map(r => new RegExp(r)), DROP = (rules.drop ?? []).map(r => new RegExp(r));
+// What a done primitive is marked with: a short hash of each area's rules it was done with. Removed triangles
+// cannot be put back, so a tile that was done with other rules (another footprint) must be exported again.
+const RULES = hashOf(rules);
+const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
 const within = (x, y) => x >= bx[0] && x <= bx[2] && y >= bx[1] && y <= bx[3] && inside(ring, x, y);
 const touches = f => {
   const m = /^(?:n_)?t_(-?\d+)_(-?\d+)\.glb$/.exec(f);
@@ -44,9 +52,6 @@ const touches = f => {
   return tx - pad < bx[2] && tx + TILE + pad > bx[0] && ty - pad < bx[3] && ty + TILE + pad > bx[1];
 };
 
-await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
-const changedTiles = [];
 for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith('sw_') && touches(f)).sort()) {
   const doc = await io.read(`${dir}/${f}`);
   let removed = 0, tucked = 0, removedAll = 0;
@@ -61,8 +66,9 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const label = `${mesh.getName()} ${prim.getMaterial()?.getName() ?? ''}`;
       const mode = DROP.some(r => r.test(label)) ? 'drop' : CLIP.some(r => r.test(label)) ? 'clip' : null;
       if (!mode || prim.getMode() !== 4) continue;
-      const done = prim.getExtras().superseded;
-      if (done) { if (done !== RULES) stale.add(f); continue; }
+      const done = (prim.getExtras().superseded ?? '').split(' ').filter(Boolean);
+      if (done.some(m => !KNOWN.has(m))) { stale.add(f); continue; }
+      if (done.includes(RULES)) continue;
       const src = prim.getAttribute('POSITION'), idx = prim.getIndices();
       if (!src || !idx) continue;
       const n = src.getCount(), p = [0, 0, 0];
@@ -129,7 +135,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       prim.setIndices(idx.clone().setArray(total > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
       for (const old of olds) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
       compactPrimitive(prim); // drops the corners no triangle uses any more; the index buffer compresses badly with gaps
-      prim.setExtras({ ...prim.getExtras(), superseded: RULES });
+      prim.setExtras({ ...prim.getExtras(), superseded: [...done, RULES].join(' ') });
     }
     if (!mesh.listPrimitives().length) node.setMesh(null);
   }
@@ -139,8 +145,8 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
   // same encoding as `gltf-transform optimize --compress meshopt` wrote
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
   await io.write(`${dir}/${f}`, doc);
-  changedTiles.push(f);
-  console.log(`supersede ${f}: removed ${removed} triangles (${removedAll} whole primitives), tucked ${tucked} corners`);
+  changedTiles.add(f);
+  console.log(`supersede ${rules.name ?? ''} ${f}: removed ${removed} triangles (${removedAll} whole primitives), tucked ${tucked} corners`);
 }
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
@@ -150,10 +156,11 @@ if (existsSync(ft)) {
   for (let i = 0; i + 4 < a.length; i += 5) if (!within(a[i], -a[i + 2])) keep.push(a[i], a[i + 1], a[i + 2], a[i + 3], a[i + 4]);
   if (keep.length !== a.length) { writeFileSync(ft, Buffer.from(new Float32Array(keep).buffer)); console.log(`supersede far_trees.bin: removed ${(a.length - keep.length) / 5} trees`); }
 }
+}
 if (stale.size) {
   console.error(`supersede: ${[...stale].join(' ')} were done with other rules (the footprint or the patterns changed). ` +
-    'Export those tiles again (or restore them from before the southwest build), then run this again.');
+    'Export those tiles again (or restore them from before the scripted build), then run this again.');
   process.exit(1);
 }
 // the caller rebuilds the far versions (lod/) of these tiles
-console.log('CHANGED', changedTiles.join(' '));
+console.log('CHANGED', [...changedTiles].join(' '));

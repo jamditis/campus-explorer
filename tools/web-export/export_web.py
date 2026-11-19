@@ -144,7 +144,7 @@ if os.environ.get("MERGE_WITH") and os.path.exists(CLIP):
         print("WEB WARNING: no MAIN_FILE; terrain not trimmed", flush=True)
 
 # ---------- materials ----------
-# CC0 ambientCG sets, the two authored leaf sets, and the paint sheets drawn by blender/southwest/paint.py
+# CC0 ambientCG sets, the two authored leaf sets, and the paint sheets drawn by blender/scripted/paint.py
 ALLOW = re.compile(
     r"(^|/)([A-Z][A-Za-z]+\d{3}[A-Z]?_\dK-(JPG|PNG)_(Color|Opacity)\.(jpg|png))$|SweetgumStar_(Color|Opacity)|TulipPoplar_(Color|Opacity)"
     r"|(^|/)authored_[A-Za-z0-9_]+\.png$"
@@ -336,7 +336,7 @@ CATS = [
     ("wood", r"wood|timber|bench|Wood049"),
 ]
 PAINT = set()
-# Materials of the scripted southwest build are named SW_<kind word>_<name> (blender/southwest/kit.py): the
+# Materials of the scripted southwest build are named SW_<kind word>_<name> (blender/scripted/kit.py): the
 # kind word decides the category, whatever else the name contains.
 SW_CAT = {
     "asphalt": "asphalt", "concrete": "concrete", "brick": "brick", "turf": "turf", "lawn": "grass", "mulch": "mulch",

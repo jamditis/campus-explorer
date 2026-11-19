@@ -4,12 +4,12 @@ Joe's ask (2026-11-19): better fidelity, realism and completeness of the models,
 
 What the survey found (viewer at `74a6a95`): the campus is 36.1 million triangles (16.7 million plain, 19.3 million instanced; tree trunks and branches are 38% of it). In the southwest corner the station exists, but Normal Avenue, the grade crossing, the station lot, Carlisle Road, the west half of Sprague Field and its west grandstand are missing, and three grounds (4 km skirt, north terrain, main terrain) overlap there.
 
-Method: a scripted build, `blender/southwest/`, makes its own `.blend` from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap). It is a third export source (`sw_` tiles). Inside its footprint it owns the ground: the export takes the other sources' ground out of their tiles there (`tools/web-export/supersede.mjs`).
+Method: a scripted build, `blender/scripted/`, makes its own `.blend` from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap). It is a third export source (`sw_` tiles). Inside its footprint it owns the ground: the export takes the other sources' ground out of their tiles there (`tools/web-export/supersede.mjs`).
 
 ## Phase 1: station to Sprague Field
 
 - [x] Evidence tools: `tools/evidence/` (fetch ortho, LiDAR, OSM; plan of the published tiles; gridded overlay)
-- [x] Plan format with true-arc corners (`blender/southwest/geom.py`, `README.md`)
+- [x] Plan format with true-arc corners (`blender/scripted/geom.py`, `README.md`)
 - [x] Seamless ground builder: one triangulation for terrain, paving, turf; curbs (`ground.py`)
 - [x] Paint sheets: lane lines, stalls, football markings drawn into textures (`paint.py`)
 - [x] Digitised plan: roads, station, field (`plan/*.json`), checked against the ortho

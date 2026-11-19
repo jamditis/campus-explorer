@@ -1,4 +1,4 @@
-"""Draw the paint textures for the southwest build: lane lines, stalls, crosswalks and the football
+"""Draw the paint textures for the scripted build: lane lines, stalls, crosswalks and the football
 field.
 
 Markings are paint, never geometry: every painted surface gets one or more texture sheets (layout.py
@@ -6,8 +6,9 @@ decides
 which and where), drawn here from the plan's markings and nothing else. No aerial or photo pixels
 are used.
 
-usage: python3 blender/southwest/paint.py DATA_DIR [--plan DIR]     (system Python with Pillow)
-Writes DATA_DIR/authored/authored_<surface>_<n>.png. DATA_DIR must be outside the repository.
+usage: python3 blender/scripted/paint.py DATA_DIR [--areas NAME,NAME]     (system Python, Pillow)
+Writes DATA_DIR/authored/authored_<area>_<surface>_<n>.png for every area. DATA_DIR must be outside
+the repository.
 """
 
 import sys
@@ -168,33 +169,33 @@ def football_extras(sheet, ff):
 def main():
     args = sys.argv[1:]
     data = Path(args[0]).resolve()
-    plan_dir = Path(args[args.index("--plan") + 1]) if "--plan" in args else HERE / "plan"
     if HERE.parents[1] in data.parents or data == HERE.parents[1]:
         sys.exit("refusing to write textures inside the repository")
     out = data / "authored"
     out.mkdir(parents=True, exist_ok=True)
-    for old in out.glob("authored_*.png"):
-        old.unlink()
-    lay = layout.load(plan_dir)
     n = 0
-    for s in lay["surfaces"]:
-        for sh in s["sheets"] or []:
-            sheet = Sheet(sh, s["kind"])
-            on_field = s["kind"] == "turf"
-            for m in lay["markings"]:
-                if m.get("field") and not on_field:
-                    continue
-                if "ring" in m:
-                    sheet.area(m["ring"], m["colour"])
-            for m in lay["markings"]:
-                if m.get("field") and not on_field:
-                    continue
-                if "line" in m:
-                    sheet.line(m["line"], m["width"], m["colour"])
-            if on_field and lay["field_frame"]:
-                football_extras(sheet, lay["field_frame"])
-            print(sh["name"], sheet.save(out), f"{sheet.k / SS:.1f} px/m")
-            n += 1
+    for plan_dir in layout.areas(args):
+        for old in out.glob(f"authored_{plan_dir.name}_*.png"):
+            old.unlink()
+        lay = layout.load(plan_dir)
+        for s in lay["surfaces"]:
+            for sh in s["sheets"] or []:
+                sheet = Sheet(sh, s["kind"])
+                on_field = s["kind"] == "turf"
+                for m in lay["markings"]:
+                    if m.get("field") and not on_field:
+                        continue
+                    if "ring" in m:
+                        sheet.area(m["ring"], m["colour"])
+                for m in lay["markings"]:
+                    if m.get("field") and not on_field:
+                        continue
+                    if "line" in m:
+                        sheet.line(m["line"], m["width"], m["colour"])
+                if on_field and lay["field_frame"]:
+                    football_extras(sheet, lay["field_frame"])
+                print(sh["name"], sheet.save(out), f"{sheet.k / SS:.1f} px/m")
+                n += 1
     print("sheets", n, "in", out)
 
 
