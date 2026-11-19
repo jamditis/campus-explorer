@@ -71,7 +71,8 @@ export function createUI(app) {
     else { $('load-rest').dataset.armed = '1'; $('load-rest').textContent = `Tap again to load ${mb(app.world.progress.total)}`; setTimeout(() => { delete $('load-rest').dataset.armed; app.emit('progress', app.world.progress); }, 4000); }
   };
 
-  function jump(pose) { app.emit('fly', { by: null }); camera.position.copy(pose.position); controls.target.copy(pose.target); controls.update(); app.invalidate(); }
+  // through flyTo, so a camera move in progress is cancelled and cannot overwrite the pose on the next frame
+  function jump(pose) { app.flyTo(pose, { duration: 0 }); }
 
   // ---- modes ----
   const setHelp = () => { $('help').textContent = HELP[app.state.mode][app.input.kind] ?? HELP[app.state.mode].keyboard; };
@@ -160,7 +161,7 @@ export function createUI(app) {
     const p = app.time.preset ? null : zonedParts(app.time.date);
     const target = app.state.mode === 'orbit' ? controls.target : camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(20).add(camera.position);
     // in walk mode the link holds the walker's eye, not the third-person camera behind them
-    const eye = app.state.mode === 'walk' ? app.player.position.clone().setY(app.player.position.y + 1.65) : camera.position;
+    const eye = app.state.mode === 'walk' && app.player.placed ? app.player.position.clone().setY(app.player.position.y + 1.65) : camera.position;
     return {
       mode: app.state.mode, position: eye.toArray(), target: target.toArray(),
       time: p ? `${p.year}-${pad(p.month)}-${pad(p.day)}T${pad(p.hour)}:${pad(p.minute)}` : null,

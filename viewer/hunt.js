@@ -100,7 +100,8 @@ export function createHunt(app) {
   /** Where the player is: walk and fly count, orbit only points (from the orbit centre). */
   function whereAmI() {
     const mode = app.state.mode;
-    if (mode === 'walk') return { pos: app.player.position, counts: true };
+    // entering walk mode: the mode event comes before the walker is placed, and the old position must not tag anything
+    if (mode === 'walk') return app.player.placed ? { pos: app.player.position, counts: true } : { pos: app.camera.position, counts: false };
     if (mode === 'fly') return { pos: app.camera.position, counts: true };
     return { pos: app.controls.target, counts: false };
   }

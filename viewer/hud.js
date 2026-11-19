@@ -134,7 +134,7 @@ export function createHud(app) {
       _f.copy(controls.target);
       y = app.world.groundAt(_f.x, _f.z, null, { builtOnly: true }); // builtOnly: never stall a frame
     } else {
-      _f.copy(mode === 'walk' ? app.player.position : camera.position);
+      _f.copy(mode === 'walk' && app.player.placed ? app.player.position : camera.position);
       y = _f.y;
     }
     const { lat, lon } = localToLatLon(_f.x, _f.z);

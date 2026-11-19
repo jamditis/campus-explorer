@@ -12,6 +12,7 @@ export function createPlayer(app) {
   const { camera, scene, world } = app;
   const position = new THREE.Vector3(), vel = new THREE.Vector3(), flyVel = new THREE.Vector3();
   let yaw = 0, pitch = 0, grounded = false, eyeY = 0, busy = false, flySpeed = 40, stride = 0, seq = 0;
+  let placed = false; // true once a teleport has put the walker on the ground; until then `position` is stale
   const going = new THREE.Vector3(); // where a teleport in progress is heading
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -130,7 +131,7 @@ export function createPlayer(app) {
       if (cancelled()) return null;
       const g = world.groundAt(x, z, y === null ? null : y + 1.2);
       if (g === null) { status('Nothing to stand on there. Try a spot on the campus.'); return false; }
-      position.set(x, g + 0.02, z); vel.set(0, 0, 0); grounded = true; eyeY = position.y + EYE;
+      position.set(x, g + 0.02, z); vel.set(0, 0, 0); grounded = true; eyeY = position.y + EYE; placed = true;
       basis(); place(0); app.invalidate();
       status('');
       return true;
@@ -156,11 +157,13 @@ export function createPlayer(app) {
   return {
     position, step, teleport, respawn, lookFromCamera,
     jump() { if (grounded && !busy) { vel.y = JUMP; grounded = false; } },
-    stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; status(''); },
+    stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; placed = false; status(''); },
     refresh() { basis(); if (app.state.mode === 'walk') place(0); },
     get yaw() { return yaw; }, set yaw(v) { yaw = v; },
     get pitch() { return pitch; }, set pitch(v) { pitch = v; },
     get grounded() { return grounded; }, get busy() { return busy; },
+    /** False from a mode change until the walker stands on the ground: `position` is not valid yet. */
+    get placed() { return placed; },
     /** The point tiles should load around: the destination while a teleport waits for it, else the feet. */
     get focus() { return busy ? going : position; },
     get flySpeed() { return flySpeed; }, set flySpeed(v) { flySpeed = v; },
