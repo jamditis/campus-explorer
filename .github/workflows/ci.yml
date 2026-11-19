@@ -35,8 +35,11 @@ jobs:
       - name: Shell syntax
         run: |
           find . -name '*.sh' -not -path './vendor/*' -print0 | xargs -0 -r -n1 bash -n
-      - name: Unit tests (plan geometry and plan files of the scripted builds)
-        run: python3 -m unittest discover -s tests/py
+      - name: Unit tests (plan geometry, terrain, tree finding and plan files of the scripted builds)
+        # numpy and Pillow: without them the terrain and tree tests are skipped
+        run: |
+          python3 -m pip install --disable-pip-version-check numpy==2.2.6 pillow==11.3.0
+          python3 -m unittest discover -s tests/py
 
   viewer:
     name: viewer
