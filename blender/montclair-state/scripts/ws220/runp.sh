@@ -12,4 +12,4 @@ bpy.app.handlers.load_post.append(_off)
 bpy.ops.wm.open_mainfile(filepath=os.environ.get('INF','/workspace/nj-scenes/montclair-state/montclair_state.blend'))
 exec(open(os.environ['PY']).read())
 P
-PY=$PWD/scripts/ws220/$1 WD_MIN=1200 bash scripts/ws33/wd.sh /workspace/opt/blender/blender -b --factory-startup --python /tmp/ws220_off.py 2>&1 | grep -E "${2:-P220}|rror|Trace|WATCH"
+PY=${PYF:-$PWD/scripts/ws220/$1} WD_MIN=1200 bash scripts/ws33/wd.sh /workspace/opt/blender/blender -b --factory-startup --python /tmp/ws220_off.py 2>&1 | grep -E "${2:-P220}|rror|Trace|WATCH"
