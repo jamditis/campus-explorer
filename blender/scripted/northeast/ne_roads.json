@@ -80,7 +80,7 @@
   {
    "name": "NE_road_Stone_St_planter",
    "kind": "mulch",
-   "ring": [[140.91, 492.31, 4.29], [149.49, 492.31, 4.29], [149.49, 500.89, 4.29], [140.91, 500.89, 4.29]],
+   "ring": [[141.3, 494.2, 4.09], [149.5, 494.2, 4.09], [149.5, 502.4, 4.09], [141.3, 502.4, 4.09]],
    "evidence": "ortho2020",
    "unverified": "planting kind",
    "notes": "round planter with a light pole at the Stone Street mouth",
@@ -397,7 +397,7 @@
   {
    "name": "NE_road_Webster_W_steps",
    "kind": "concrete",
-   "centre": [[163.94, 740.9], [155.08, 741.98]],
+   "centre": [[158.9, 741.51], [155.08, 741.98]],
    "width": 3.4,
    "evidence": "ortho2020, osm",
    "unverified": "line from OpenStreetMap shifted onto the walk; width is the median read across the ortho",
