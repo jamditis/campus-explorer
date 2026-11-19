@@ -2,7 +2,7 @@
  "tiles": [
   {
    "file": "skirt.glb",
-   "bytes": 8830736
+   "bytes": 8829280
   },
   {
    "file": "context.glb",
@@ -210,7 +210,7 @@
   },
   {
    "file": "t_-1_-1.glb",
-   "bytes": 11535760,
+   "bytes": 11535756,
    "center": [
     -80.0,
     80.0
@@ -218,7 +218,7 @@
   },
   {
    "file": "t_-1_-2.glb",
-   "bytes": 11330620,
+   "bytes": 11322292,
    "center": [
     -80.0,
     240.0
@@ -266,7 +266,7 @@
   },
   {
    "file": "t_-2_-1.glb",
-   "bytes": 21896584,
+   "bytes": 21896964,
    "center": [
     -240.0,
     80.0
@@ -274,7 +274,7 @@
   },
   {
    "file": "t_-2_-2.glb",
-   "bytes": 37395120,
+   "bytes": 37388892,
    "center": [
     -240.0,
     240.0
@@ -282,7 +282,7 @@
   },
   {
    "file": "t_-2_0.glb",
-   "bytes": 4115092,
+   "bytes": 4115088,
    "center": [
     -240.0,
     -80.0
@@ -322,7 +322,7 @@
   },
   {
    "file": "t_-3_-2.glb",
-   "bytes": 812860,
+   "bytes": 812856,
    "center": [
     -400.0,
     240.0
@@ -330,7 +330,7 @@
   },
   {
    "file": "t_0_-1.glb",
-   "bytes": 3828716,
+   "bytes": 3828708,
    "center": [
     80.0,
     80.0
@@ -362,7 +362,7 @@
   },
   {
    "file": "t_0_2.glb",
-   "bytes": 3039980,
+   "bytes": 3037064,
    "center": [
     80.0,
     -400.0
@@ -438,15 +438,22 @@
    "x1": -251.0,
    "y0": -94.0,
    "y1": -57.0
+  },
+  {
+   "file": "paint_ws220c.webp",
+   "x0": 16.65072708129883,
+   "x1": 33.290727081298826,
+   "y0": 347.9880224609375,
+   "y1": 354.5480224609375
   }
  ],
- "source_saved": "November 18, 2026, 5:38 PM ET",
- "source_version": "ws218b",
+ "source_saved": "November 18, 2026, 7:48 PM ET",
+ "source_version": "ws220c",
  "sources": {
   "main": {
-   "saved": "November 18, 2026, 5:38 PM ET",
-   "version": "ws218b",
-   "file": "montclair_state_ws218b.blend"
+   "saved": "November 18, 2026, 7:48 PM ET",
+   "version": "ws220c",
+   "file": "montclair_state_ws220c.blend"
   },
   "north": {
    "saved": "November 18, 2026, 1:05 PM ET",
@@ -459,9 +466,9 @@
   "half": 2000
  },
  "far_trees": "far_trees.bin",
- "exported": "November 18, 2026, 6:33 PM ET",
- "total_bytes": 208943008,
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
- ]
+ ],
+ "exported": "November 18, 2026, 8:20 PM ET",
+ "total_bytes": 208924440
 }
