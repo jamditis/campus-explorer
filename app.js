@@ -90,7 +90,7 @@ async function loadScene() {
       if (token !== loadToken) return;
       g.scene.name = t.file.replace('.glb', '');
       if (hide.size) { const drop = []; g.scene.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); }); for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); } }
-      fixMaterials(g.scene); look.decorate(g.scene); campus.add(g.scene);
+      fixMaterials(g.scene); liftSportSurfaces(g.scene); look.decorate(g.scene); campus.add(g.scene);
       if (t.file === 'far_houses.glb') g.scene.traverse(o => { if (o.material) { o.material.envMapIntensity = 0.25; o.material.roughness = 0.95; } });
       if (t.file === 'skirt.glb' && man.landcover) applyLandcover(g.scene, base + man.landcover.file, man.landcover.half);
       done++; bytes += t.bytes;
@@ -147,6 +147,17 @@ function applyLandcover(root, url, half) {
   });
 }
 
+// Sports surfaces (turf, courts) are modelled at the same level as the terrain under them, which z-fights
+// into a blotchy half-field from a distance. Pull them (and their line markings) forward in depth.
+const SPORT_RE = /turf|court|track_surface|pitch_surface/i, LINES_RE = /lines|markings/i;
+function liftSportSurfaces(root) {
+  const surf = [], lines = [];
+  root.traverse(o => { if (!o.isMesh) return; if (SPORT_RE.test(o.name)) surf.push(o); else if (LINES_RE.test(o.name)) lines.push(o); });
+  if (!surf.length) return;
+  const lift = (o, k) => { o.material = [].concat(o.material).map(m => { const c = m.clone(); c.polygonOffset = true; c.polygonOffsetFactor = -k; c.polygonOffsetUnits = -k; return c; }); if (o.material.length === 1) o.material = o.material[0]; };
+  for (const o of surf) lift(o, 1);
+  for (const o of lines) lift(o, 2);
+}
 // ---------------- ground queries (lazy BVH per mesh) ----------------
 const gBoxes = []; const DOWN = new THREE.Vector3(0, -1, 0); const gRay = new THREE.Raycaster(); gRay.firstHitOnly = true;
 function indexGround() {
