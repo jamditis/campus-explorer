@@ -17,14 +17,19 @@ models/main/                    The campus as meshopt-compressed GLB tiles (160 
 vendor/                         three.js r170, GLTF loader, meshopt decoder, three-mesh-bvh (MIT)
 blender/
   smoke_test.py                 Headless Blender check that CI runs on a tiny generated scene
+  southwest/                    Scripted build of the southwest corner (station surroundings, Normal Avenue,
+                                Carlisle Road, Sprague Field) from plan files; see its README.md
   montclair-state/scripts/      Archive of the bpy scripts used to build the Montclair State scene,
                                 one folder per working session (historical, run inside Blender 4.5)
 tools/
   web-export/                   Blender → GLB tile export, leaf tinting, far versions, land cover, manifest
+  evidence/                     Fetch free public evidence for an area (ortho, LiDAR, OpenStreetMap) and draw it
+                                with a metre grid, with plan files and the published tiles over it
   places/                       Builds viewer/places.json (names and positions) from OpenStreetMap
   viewer-test/                  Headless smoke test and the standard before/after screenshots
   ci/                           Repo guard and viewer reference checks used by CI
-tests/                          Unit tests for the viewer's pure modules (node --test)
+tests/                          Unit tests for the viewer's pure modules (node --test); tests/py for the
+                                scripted builds' plan geometry (python3 -m unittest discover -s tests/py)
 notes/
   UNIFY_SWEEP.md                Ranked breakage and wobble list, worst first, with status
   BOUNDARY.md                   How the modelled area was chosen and extended
@@ -88,6 +93,8 @@ The models are built from free public data. The source data is credited here but
 | [OpenStreetMap](https://www.openstreetmap.org/copyright) | Building footprints, roads, paths, names | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/) |
 | [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints) | Far-field building footprints beyond campus where OSM has none | © Microsoft, [ODbL](https://opendatacommons.org/licenses/odbl/) |
 | [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR point clouds (NJ NW 6-County 2017, NJ Sandy 2014), via the [public Entwine bucket](https://registry.opendata.aws/usgs-lidar/) | Far-field building heights (last-return surface minus ground, capped to plausible heights) | Public domain (USGS) |
+| The same two point clouds and the 2020 orthoimagery, fetched per area by `tools/evidence/fetch.py` | Southwest build (`blender/southwest/`): ground heights, the plan of roads, lots and Sprague Field | Public domain (USGS); NJ public data |
+| Public photographs of Montclair Heights station (Wikimedia Commons, CC BY-SA and CC0; subwaynut.com) and of Sprague Field (Montclair State athletics, May 2025 drone views) | Southwest build: what things look like (stand and press box form, field lettering, crossing gates, station fixtures). Looked at as reference only: no pixel of them is in the model or the repository | Their owners' rights are unchanged; not redistributed |
 | [ambientCG](https://ambientcg.com/) | PBR textures | CC0 |
 | Blender add-ons listed in [notes/ADDONS.md](notes/ADDONS.md) | Modelling helpers | GPL (not redistributed) |
 

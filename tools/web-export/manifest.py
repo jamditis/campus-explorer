@@ -12,7 +12,7 @@ TILE = float(os.environ.get("TILE", "160"))
 tiles = []
 for f in sorted(glob.glob(S + "/*.glb")):
     t = dict(file=os.path.basename(f), bytes=os.path.getsize(f))
-    m = re.match(r"(?:n_)?t_(-?\d+)_(-?\d+)\.glb$", t["file"])
+    m = re.match(r"(?:n_|sw_)?t_(-?\d+)_(-?\d+)\.glb$", t["file"])
     if m:
         # Blender XY tile centre -> three.js XZ (z = -y)
         t["center"] = [(int(m[1]) + 0.5) * TILE, -(int(m[2]) + 0.5) * TILE]
@@ -21,7 +21,7 @@ for f in sorted(glob.glob(S + "/*.glb")):
             t["lod"] = "lod/" + t["file"]  # far-distance version (lod.mjs)
             t["lod_bytes"] = os.path.getsize(lod)
     tiles.append(t)
-order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "far_houses.glb": 1}
+order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "sw_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
 scene = os.environ.get("SCENE", "main")
