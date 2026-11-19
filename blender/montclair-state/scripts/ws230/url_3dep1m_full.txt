@@ -1,0 +1,1 @@
+https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=574961.3666377297,737421.3666377297,576798.6333622703,739258.6333622703&bboxSR=3424&imageSR=3424&size=560,560&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&f=image

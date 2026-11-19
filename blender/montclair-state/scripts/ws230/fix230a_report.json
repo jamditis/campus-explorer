@@ -1,0 +1,1 @@
+{"gap_cells": 3464, "gap_x": [219, 245], "gap_y": [-6, 261], "strip_verts_reheighted": 263, "strip_dz_max": 8.51, "strip_dz_min": -0.99, "qj_verts_tucked": 0, "qi_raised": 73, "qi_raise_max": 1.69, "fill_faces": 3464, "fill_vert_src": {"qi": 260, "apron": 254, "3dep": 3246}, "fill_minus_3dep": [-0.26, 0.0, 1.55], "down_faces": 0, "material": "Ground_ortho_grass"}
