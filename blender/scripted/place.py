@@ -264,18 +264,46 @@ def buildings(lay, terrain):
     return out
 
 
-TREE_MESH, TREE_HEIGHT = (
-    "Tree_RedMaple_LOD1_v2Oct",
-    16.56,
-)  # a tree mesh of the main model, its height
+# tree meshes of the main model, by the plan's `species` (none given: red maple)
+TREES = {
+    "red_maple": "Tree_RedMaple_LOD1_v2Oct",
+    "sugar_maple": "Tree_SugarMaple_LOD1_v2Oct",
+    "pin_oak": "Tree_PinOak_LOD1_v2Oct",
+    "tulip_poplar": "Tree_TulipPoplar_LOD1",
+    "american_beech": "Tree_AmericanBeech_LOD1",
+    "sweetgum": "Tree_Sweetgum_LOD1",
+    "white_pine": "Tree_WhitePine_LOD1",
+}
+
+
+def _tree_meshes(assets, wanted):
+    """Load the tree meshes for the wanted species from a main-model .blend (once per run).
+    Returns {species: (mesh, its height)}; a species whose mesh is missing is left out.
+    """
+    import bpy
+
+    names = {sp: TREES.get(sp, TREES["red_maple"]) for sp in wanted}
+    missing = sorted({n for n in names.values() if n not in bpy.data.meshes})
+    if missing:
+        with bpy.data.libraries.load(str(assets)) as (src, dst):
+            dst.meshes = [n for n in missing if n in src.meshes]
+    out = {}
+    for sp, n in names.items():
+        mesh = bpy.data.meshes.get(n)
+        if mesh is None:
+            print("SW", n, "not found in", assets)
+            continue
+        out[sp] = (mesh, max(v.co.z for v in mesh.vertices))
+    return out
 
 
 def trees(lay, terrain, assets):
-    """Single trees from the LiDAR canopy, as copies of one tree mesh of the main model.
+    """Single trees, as copies of tree meshes of the main model.
 
-    `assets` is a main-model .blend (a release file will do). Position and height are from the plan;
-    the species is not known, so every tree is the red maple asset, UNVERIFIED. Trees that another
-    source model already has (plan field `skip`) and trees outside the footprint are left out.
+    `assets` is a main-model .blend (a release file will do). Position and height are from the plan.
+    The species is a guess at best (the plan's `species`, red maple when it gives none), so every
+    tree is UNVERIFIED for it. Trees that another source model already has (plan field `skip`) and
+    trees outside the footprint are left out.
     """
     import bpy
 
@@ -286,19 +314,16 @@ def trees(lay, terrain, assets):
     if not assets:
         print("SW no --assets file: skipping", len(todo), "trees")
         return []
-    mesh = bpy.data.meshes.get(TREE_MESH)  # an earlier area of this run has loaded it
-    if mesh is None:
-        with bpy.data.libraries.load(str(assets)) as (src, dst):
-            dst.meshes = [TREE_MESH] if TREE_MESH in src.meshes else []
-        if not dst.meshes:
-            print("SW", TREE_MESH, "not found in", assets, ": skipping trees")
-            return []
-        mesh = dst.meshes[0]
+    meshes = _tree_meshes(assets, {p.get("species", "red_maple") for p in todo})
     out = []
     for i, p in enumerate(todo):
+        sp = p.get("species", "red_maple")
+        if sp not in meshes:
+            continue
+        mesh, tall = meshes[sp]
         x, y = p["at"]
         ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", mesh)
-        k = p.get("height", 12.0) / TREE_HEIGHT
+        k = p.get("height", 12.0) / tall
         ob.location = (x, y, terrain.at(x, y) - 0.1)
         ob.scale = (k, k, k)
         ob.rotation_euler = (0, 0, math.radians((i * 137.5) % 360))
