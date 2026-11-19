@@ -1,0 +1,1 @@
+{"blend_type": "MULTIPLY", "data_type": "RGBA", "fac": [1.0], "rgba_inputs": [["A_Color", true, [0.5, 0.5, 0.5, 1.0]], ["B_Color", false, [0.8, 0.8, 0.8, 1.0]]], "image": "Granite002A_1K-JPG_Color.jpg", "image_mean": 0.693, "image_colorspace": "sRGB", "B_old": [0.8, 0.8, 0.8, 1.0], "action": "multiply tint -> 0.433", "B_new": [0.433, 0.424, 0.407, 1.0]}
