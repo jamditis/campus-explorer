@@ -12,3 +12,5 @@ Main before: ws233d (sha 156282f5…). Main after: ws234e, promoted 9:45:06 AM E
 8. WIPs: `bash scripts/ws234/jobwip234.sh` (subrend234 = subrend226 + `EXTRAJ` JSON name list for names with spaces + dedupe; skirt in KEEPMOD so its GN runs).
 
 Rejected: `M3A_RULE=v2` (ws234d) — west rail corridor slice; its edge ran along the rail so the straddling skirt faces still covered the cut. Left for M3b.
+9. Codex review on #44: `cutrend189.py` hides every `Context_skirt` object unless `HIDE` is set, so the first WIP set never showed the skirt. `jobwip234.sh` now exports `HIDE=BD_farfield`; all four WIPs were re-rendered with the skirt visible.
+10. `CHAIN="ws234/m3a234h.py" INF=…ws234e.blend OUTN=montclair_state_ws234h.blend` — self-review fix: the skirt GN now also feathers the skirt within 20 m outside the extension (smoothstep from the extension's nearest edge height − 0.35 m to its own height), so the ragged DTM edge can't stand up as a ledge. Skirt over extension on the 5 m grid: 113 → 66 of 3442 points, max 2.29 → 1.52 m. MAIN = ws234h, promoted 9:56:44 AM ET (sha 38507b0a…).
