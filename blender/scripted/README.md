@@ -103,6 +103,7 @@ Evidence is fetched with `tools/evidence/fetch.py` into a data folder outside th
 
 - A **path** is a list of `[x, y]` or `[x, y, r]`. `r` rounds that corner with a true arc of radius `r` metres, tangent to both neighbouring runs. Curves are never given as many short segments: use few vertices with radii, so every edge is a straight run or a true arc.
 - **surfaces** are closed paths. `kind` is one of `asphalt`, `concrete`, `brick`, `turf`, `lawn`, `mulch`, `gravel`. Where surfaces overlap, the higher layer wins: lawn 0, mulch 1, gravel 2, asphalt 3, turf 4, concrete 5, brick 6. An optional `"layer"` number overrides the kind's layer. Neighbouring surfaces should overlap by a little (0.2 m) instead of leaving a gap; the layer rule then makes one shared edge.
+- Paint goes on `asphalt`, `turf` and `gravel` (a clay infield or warning track: painted gravel is drawn in a clay tone). A `lawn` surface takes paint only with `"paint": true` (a mown ball field with chalk lines); it is then shown as even, untinted grass.
 - **strips** are open centre paths with a `width` (walks, bands). They become surfaces.
 - **curbs** run along the edge between a carriageway and what is behind it, on the carriageway side's edge line. Give them in any direction.
 - **markings** are paint. They are drawn into the texture of the surface under them and never become geometry. `stalls`: `count` stalls along `line` give `count + 1` divider lines, each `depth` long, to the `side` ("left" or "right") of the direction from the first point to the second.

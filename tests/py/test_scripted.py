@@ -108,6 +108,18 @@ class Paint(unittest.TestCase):
         self.assertEqual(layout.painted_surfaces([walk, turf, lawn], [overrun]), {1})
 
 
+class Paintable(unittest.TestCase):
+    def test_natural_grass_takes_paint_only_when_the_plan_says_so(self):
+        ring = [(0, 0), (20, 0), (20, 20), (0, 20)]
+        line = dict(line=[(2, 10), (18, 10)], width=0.1, colour="white")
+        plain = dict(kind="lawn", ring=ring, holes=[], name="Lawn")
+        field = dict(plain, paint=True, name="Ball_field")
+        self.assertEqual(layout.painted_surfaces([plain], [line]), set())
+        self.assertEqual(layout.painted_surfaces([field], [line]), {0})
+        self.assertTrue(layout.paintable(dict(kind="gravel")))
+        self.assertFalse(layout.paintable(dict(kind="concrete")))
+
+
 class PlanFiles(unittest.TestCase):
     """Checks that hold for the plan files of every area."""
 
@@ -158,7 +170,7 @@ class PlanFiles(unittest.TestCase):
         for _plan, lay in self.each():
             for s in lay["surfaces"]:
                 if s["sheets"]:
-                    self.assertIn(s["kind"], layout.PAINTABLE, s["name"])
+                    self.assertTrue(layout.paintable(s), s["name"])
                     for sh in s["sheets"]:
                         # the web exporter refuses image names with these words in them
                         self.assertNotRegex(

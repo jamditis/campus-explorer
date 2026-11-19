@@ -216,7 +216,9 @@ def build(lay, terrain, image_dir=None):
 
 def sheet_material(kind, sheet, image_dir):
     """Material that shows one authored paint sheet through the UV map."""
-    m = kit.mat(kind, sheet["name"].replace("authored_", "painted_"), COLOUR[kind], ROUGH[kind])
+    # painted natural grass goes to the viewer as turf: no lawn tint over the chalk, no grass tufts
+    shown = "turf" if kind == "lawn" else kind
+    m = kit.mat(shown, sheet["name"].replace("authored_", "painted_"), COLOUR[kind], ROUGH[kind])
     nt = m.node_tree
     if image_dir and not any(n.type == "TEX_IMAGE" for n in nt.nodes):
         tex = nt.nodes.new("ShaderNodeTexImage")
