@@ -12,7 +12,7 @@ const base = flag('--url') ?? server.url;
 const START = '#v=1&m=orbit&c=-120.0,260.0,140.0&t=-200.0,130.0,80.0';
 const { browser, page, problems } = await open(`${base}?tiles=${flag('--tiles', 3)}&quality=low${START}`);
 const step = async (name, fn) => { const t = Date.now(); await fn(); console.log(`ok   ${name} (${((Date.now() - t) / 1000).toFixed(1)} s)`); };
-const app = fn => page.evaluate(fn);
+const app = (fn, arg) => page.evaluate(fn, arg);
 const settle = (ms = 600) => page.waitForTimeout(ms);
 const MOVE_MS = 180000; // longest wait for a held key to move the view
 let failed = false;
