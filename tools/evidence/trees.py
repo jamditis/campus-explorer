@@ -1,10 +1,11 @@
 """Find single trees in the LiDAR canopy and write them as a plan zone file of tree points.
 
-usage: python3 tools/evidence/trees.py NAME AREA_DIR ZONE [--min-height 5]
+usage: python3 tools/evidence/trees.py NAME AREA_DIR ZONE [--min-height 5] [--existing DUMP_DIR]
 NAME is the evidence folder under DATA (default /workspace/data) with lidar.npz and ortho2020.png
 (tools/evidence/fetch.py). AREA_DIR is the area's plan folder (blender/scripted/<area>): trees are
 kept inside its footprint, outside its buildings, stands and paving, and away from its towers.
-Writes AREA_DIR/ZONE.json.
+Writes AREA_DIR/ZONE.json. With --existing (a dump of the published tiles made by dump_tiles.mjs
+with instances) a tree is left out where another source model already has one.
 
 What is measured: the position of each canopy peak (0.5 m cells) and its height above the ground.
 What is not: the species. A peak that is green in the leaf-off 2020 ortho and returns as a
@@ -14,6 +15,7 @@ one repeated tree. Every tree is UNVERIFIED for species and crown shape.
 
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -106,6 +108,26 @@ def peaks(height, cell, min_height=5.0, coarse=2.0):
     return out
 
 
+GRID = 3.0  # cell of the map of trees the published model already has, metres
+
+
+def existing(dump):
+    """Cells (GRID metres) that hold a tree of the published tiles, from a dump made by
+    tools/evidence/dump_tiles.mjs WITH instances (tiles.json, tiles.bin).
+    """
+    meta = json.loads((dump / "tiles.json").read_text())
+    tri = np.fromfile(dump / "tiles.bin", dtype=np.float32).reshape(-1, 9)
+    cells = set()
+    for e in meta["entries"]:
+        if not re.search(r"(?i)tree|crown|shrub", e["mesh"] + " " + e.get("node", "")):
+            continue
+        t = tri[e["offset"] : e["offset"] + e["tris"]]
+        cx = (t[:, [0, 3, 6]].mean(1) // GRID).astype(int)
+        cy = (t[:, [1, 4, 7]].mean(1) // GRID).astype(int)
+        cells.update(zip(cx.tolist(), cy.tolist(), strict=True))
+    return cells
+
+
 def main():
     args = sys.argv[1:]
     name, area, zone = args[0], Path(args[1]), args[2]
@@ -120,6 +142,7 @@ def main():
     keep_out += [s["ring"] for s in lay["surfaces"] if s["kind"] in PAVED]
     # a lattice tower returns like a tall crown: no trees within 9 m of one
     towers = [q["at"] for q in lay["points"] if q["kind"] == "pylon"]
+    taken = existing(Path(args[args.index("--existing") + 1])) if "--existing" in args else set()
     meta = json.loads((data / "ortho2020.json").read_text())
     ortho = np.asarray(Image.open(data / "ortho2020.png").convert("RGB")).astype(float)
     points = []
@@ -129,6 +152,9 @@ def main():
             continue
         if any((x - t[0]) ** 2 + (y - t[1]) ** 2 < 81 for t in towers):
             continue
+        cx, cy = int(x // GRID), int(y // GRID)
+        if any((cx + dx, cy + dy) in taken for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+            continue  # another source model already has a tree here
         # leaf-off image: a green crown is a conifer
         pi, pj = int((x - meta["x0"]) / meta["mpp"]), int((meta["y1"] - y) / meta["mpp"])
         k = max(1, round(1.2 / meta["mpp"]))
