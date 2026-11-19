@@ -32,7 +32,8 @@ const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.
 // tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
 const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
-const WARM = { asphalt: [1.04, 1.0, 0.92], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
+// [r, g, b, desaturation]; plaster keeps its own colour (cream and white stucco) and only loses the sky-blue cast
+const WARM = { asphalt: [1.04, 1.0, 0.92, 0.55], concrete: [1.05, 1.0, 0.92, 0.55], pavers: [1.04, 1.0, 0.94, 0.55], plaster: [1.05, 1.0, 0.92, 0] };
 
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
@@ -69,7 +70,8 @@ export function createLook(renderer, scene, camera) {
   u.sunPosition.value.copy(sunDir);
   scene.add(sky);
   const HORIZON = new THREE.Color('#c6d4e1');
-  scene.fog = new THREE.FogExp2(HORIZON, 0.00016);
+  // aerial perspective: about 15% haze at 1.5 km and 25% at 2 km on a clear afternoon (was ~6% and 10%)
+  scene.fog = new THREE.FogExp2(HORIZON, 0.00027);
   scene.background = HORIZON;
 
   // image-based light from the same sky (gives glass and metal something to reflect)
@@ -181,7 +183,7 @@ export function createLook(renderer, scene, camera) {
             if (tpMacro > 0.5) t = mix(t, tpSample(vTpPos * tpScale * 0.13 + 0.37, w).rgb, 0.35);
             t *= 2.7; // textures are normalised to a mid-grey mean (sRGB 160 ~ linear 0.37)
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
-            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), 0.55) * vec3(${warm.map(x => x.toFixed(3)).join(',')}); }` : ''}
+            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), ${warm[3].toFixed(2)}) * vec3(${warm.slice(0, 3).map(x => x.toFixed(3)).join(',')}); }` : ''}
             ${isAsphalt ? `
             for (int i = 0; i < ${PAINT_MAX}; i++) {
               if (i >= pN) break;
