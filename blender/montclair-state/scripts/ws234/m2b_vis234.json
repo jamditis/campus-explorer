@@ -1,0 +1,2251 @@
+{
+"Ballast 0 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 1 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 2 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 3 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 4 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 5 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 6 (758461315)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 7 (758461316)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Ballast 8 (Montclair Line)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Canopy columns (9 m, UNVERIFIED)": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Canopy fascia (UNVERIFIED)": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 0": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 3": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 4": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 5": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Contact wire 8": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy columns (dark steel; spacing ~8.9 m UNVERIFI": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy curved knee brackets (mref_02; radius UNVERI": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy pendant dome lamps (mref_00/02 photos; spaci": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy pendant lamp lenses": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy purlins (photo; count UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy rafters (photo)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy shed roof (pref_station_train_01/mref_00/mre": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM Platform canopy track-side fascia (photo; depth UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM2 Platform tactile strip WEST track-4 edge only (photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM2 Station name sign panel (mref_02; size+position UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM2 Station sign text main (mref_02)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JM2 Station sign text sub (mref_02)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy columns (dark steel; spacing ~8": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy curved knee brackets (mref_02; ": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy pendant dome lamps (mref_00/02 ": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy pendant lamp lenses": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy purlins (photo; count UNVERIFIE": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy rafters (photo)": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy shed roof (pref_station_train_0": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN backup JM Platform canopy track-side fascia (photo; depth": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN East stair bridge to grade frame + steps (DSM 2017 + mref_01": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN East stair bridge to grade glazed enclosure (DSM 2017 + mref": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN East stair bridge to grade red gable roof (DSM 2017 + mref_0": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair to bridge level frame + steps (DSM 2017 + pre": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair to bridge level glazed enclosure (DSM 2017 + ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair to bridge level red gable roof (DSM 2017 + pr": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair/elevator tower frame + bands (mref_01; band h": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair/elevator tower glass (DSM 2017 ~16.5 m; mref_": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JN Platform stair/elevator tower red hip roof (mref_01/pref_sta": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JO3 East stair foot door frame (no photo; 1.8 x 2.2 m UNVERIFIE": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JO3 East stair foot door glass leaves (UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JO3 East stair foot landing pad (1.6 m UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP East stair box corner posts + mullions + slim landing bands ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP East stair box glazed enclosure (jp2: 4 panes between corner": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP East stair box red gable roof (ortho 2020 red roof; pitch UN": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP East stair switchback flights + landings (OSM 1433339919 swi": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP East stair switchback handrails + guard (1.07 m guard, 0.90 ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP Tower elevator door bridge level N face (no photo; 1.1 x 2.1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP Tower elevator door platform level S face (no photo; 1.0 x 2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP Tower stair door bridge level N face (no photo; 0.95 x 2.2 m": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JP Tower stair door platform level N face (no photo; 0.95 x 2.2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 bridge door N face (no photo; 1.6 x 2.2 m ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 handrails + guards (0.90 / 1.07 m; UNVERIF": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 roof posts (UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 shed roof over the bridge-level walk (DSM ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 support columns (UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JQ2 Steps 1433339917 switchback flights + landings (OSM steps +": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JR Steps 1433339917 column base plates (UNVERIFIED typical)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JR Steps 1433339917 drip lips under open slab edges (UNVERIFIED": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JR Steps 1433339917 tread nosings (dark metal, 55 x 45 mm; UNVE": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JS2 Steps 1433339917 downpipe 80x80 east side to grade (UNVERIF": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JS2 Steps 1433339917 downpipe straps (UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JS2 Steps 1433339917 roof box gutter 150x120 (north low edge; U": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JU Steps 1433339917 slab-edge stain streaks (weathering decals ": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JU Steps 1433339917 soffit grime band outboard of the drip lips": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"JV Steps 1433339917 column-foot splash staining (decals 3 mm pr": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 0": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 3": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 4": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 5": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Messenger wire 8": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Ballast rail_1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Ballast rail_2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Black picket fence behind west platform (photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Catenary portals (photos; spacing UNVERIFIED)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Chain-link fence behind east platform (photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Chain-link fence between tracks (photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Contact wire rail_1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Contact wire rail_2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH East platform canopy shelter (UNVERIFIED position)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Messenger wire rail_1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Messenger wire rail_2": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Name sign (photo)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Name sign (photo).001": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Name sign (photo).002": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Name sign (photo).003": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Platform east (low-level, OSM 313715859)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Platform east (low-level, OSM 313715859) yellow line": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Platform light poles (photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Platform west (low-level, OSM 313715860)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Platform west (low-level, OSM 313715860) yellow line": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail rail_1 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail rail_1 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail rail_2 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail rail_2 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail ties rail_1 (0.61 m)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Rail ties rail_2 (0.61 m)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.001": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.002": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.003": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.004": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.005": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.006": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.007": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.008": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.009": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.010": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.011": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.012": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.013": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.014": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH Sign text.015": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH West shelter hipped roof (standing seam)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"MH West shelter walls+canopy (OSM 313715858; photos)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_MontclairHeights_20261014"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_consist_A_stopped_00_NJT_ALP46_loco": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_ALP46_loco",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_01_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_02_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_03_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_04_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_05_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_A_stopped_06_NJT_Comet_cab": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_A_stopped"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_cab",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_00_NJT_Comet_cab": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_cab",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_01_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_02_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_03_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_04_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_05_NJT_Comet_trailer": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_Comet_trailer",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_consist_B_moving_06_NJT_ALP46_loco": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": "NJT_ALP46_loco",
+"instlib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"mods": []
+},
+"NJT_path_trackB": {
+"vis": false,
+"hr": true,
+"hv": false,
+"cols": [
+"NJT_consist_B_moving"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Platform canopy gull-wing (photo hint; UNVERIFIED profile)": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Platform glass windscreen (mref_00/02; UNVERIFIED panel count)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Platform tactile edge strip": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 0 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 0 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 1 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 1 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 2 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 2 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 3 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 3 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 4 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 4 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 5 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 5 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 6 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 6 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 7 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 7 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 8 +0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail 8 -0.72": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Rail ties (concrete, 0.61 m)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_railway_MontclairLine"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Station platform (high-level, 1.22 m above rail; NJT standard)": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"Station signage band placeholder (UNVERIFIED)": {
+"vis": false,
+"hr": true,
+"hv": true,
+"cols": [
+"North_station_platform"
+],
+"lib": null,
+"parent": null,
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_ALP46_4600_logo_+1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_ALP46_loco"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_ALP46_4600",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_ALP46_4600_logo_-1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_ALP46_loco"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_ALP46_4600",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_ALP46_4600_pantograph_raised": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_ALP46_loco"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_ALP46_4600",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_cab_interior": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_cab"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_cab",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_cab_logo_+1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_cab"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_cab",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_cab_logo_-1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_cab"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_cab",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_trailer_interior": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_trailer"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_trailer",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_trailer_logo_+1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_trailer"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_trailer",
+"inst": null,
+"instlib": null,
+"mods": []
+},
+"NJT_CometV_trailer_logo_-1": {
+"vis": true,
+"hr": false,
+"hv": false,
+"cols": [
+"NJT_Comet_trailer"
+],
+"lib": "/workspace/nj-scenes/assets/njt_trains.blend",
+"parent": "NJT_CometV_trailer",
+"inst": null,
+"instlib": null,
+"mods": []
+}
+}
