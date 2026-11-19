@@ -179,6 +179,8 @@ export function createUI(app) {
     if (!v.position || !v.target) return false;
     const position = new THREE.Vector3(...v.position), target = new THREE.Vector3(...v.target);
     if (position.distanceTo(target) < 0.5) return false;
+    // a link with no time was saved under the default light: go back to it if the sun has been moved since
+    if (!v.time && !app.time.preset) app.resetTime();
     // go through orbit so the pose is not overwritten by the fly or walk controller on the next frame
     if (app.state.mode !== 'orbit') app.setMode('orbit');
     jump({ position, target });
