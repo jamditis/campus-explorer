@@ -27,10 +27,12 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 
 - [x] Engine serves several areas: one plan folder per area under `blender/scripted/`, one `.blend`, one supersede mark per area
 - [x] Buildings from measured parts (`massing.py`, `building.py`); trees from the LiDAR canopy (`tools/evidence/trees.py`)
-- [x] North-east district (`northeast/`, PR #53): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
-- [x] Stadium district (`stadium/`, y 826 to 1105): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
+- [x] North-east district (`northeast/`, PR #53, merged 2026-11-19): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
+- [x] Stadium district (`stadium/`, y 826 to 1105; PR #54, merged 2026-11-19): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
-- [ ] Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+- [ ] The Village west of the railway (Hawk Crossings, Sinatra, Williams, Fenwick, Paul and Count Basie halls, Lots 27 to 48): evidence is fetched (`village`), not started
+- [ ] Floyd Hall Arena block and the quarry ground north of the stadium district
+- [ ] (in work, Joe's choice 2026-11-19) Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
 - [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
 
 Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
