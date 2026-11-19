@@ -1,6 +1,6 @@
 {
  "zone": "st_roads",
- "notes": "",
+ "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 10.1 m between the grass edge (axis +4.1) and the south-east curb (axis -6.0); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.3 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -3.7 with a 1.8 m walk to the Lot 22 curb, west curb +5.8 with a 1.7 m concrete band; an edge line at +3.7. Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): items that continue a ne_* item start on its edges at y 826.5 and run to the measured positions within 8 to 10 m (Yogi Berra Drive edges, centre line, curb and walk; Webster Road edges; the Carlisle Road drive; the softball path; the Lot 23N corner). In the ortho the ne_roads Yogi Berra Drive edges, walk and centre line are 1.2 to 2.3 m west of the paint and curb at y 826, Webster Road 0.7 to 0.8 m east, the Lot 23N east corner about 3.5 m east, and ne_lots Lot 21 rows about 1 to 1.4 m west; Lot 21 row B is a planted median in the ortho where ne_lots paints a centre line.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nNot drawn: stencilled letters and arrows; the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive; stop bars that could not be seen (only the south-west-bound bar north of the junction is drawn).",
  "surfaces": [
   {
    "name": "ST_lot_22_asphalt",
@@ -808,6 +808,54 @@
    "unverified": "starts on the ne_roads end (centre -64.15), about 1.5 m west of the drive in the ortho; the west side is cut along the footprint edge (the drive runs on just outside it); edges by eye"
   },
   {
+   "name": "ST_road_Carlisle_Rd_drive_SE_end",
+   "kind": "asphalt",
+   "ring": [
+    [
+     29.15,
+     825.83
+    ],
+    [
+     29.74,
+     825.6
+    ],
+    [
+     42.2,
+     825.6
+    ],
+    [
+     30.85,
+     830.11
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "cut at the footprint edge; the drive goes on south-east in the north-east area, where no plan draws it yet"
+  },
+  {
+   "name": "ST_road_softball_path_W_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     11.5,
+     826.3
+    ],
+    [
+     20.8,
+     826.3
+    ],
+    [
+     -12.0,
+     847.1
+    ],
+    [
+     -16.0,
+     844.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "continues NE_road_Softball_path_W (its edges at y 826.5) north-west to the drive; brighter than the drive, so asphalt or worn concrete as ne_roads has it"
+  },
+  {
    "name": "ST_road_turning_circle",
    "kind": "asphalt",
    "ring": [
@@ -863,54 +911,6 @@
    ],
    "evidence": "ortho2020",
    "unverified": "fill (mulch or soil) from the dark tone; a curb is assumed"
-  },
-  {
-   "name": "ST_road_softball_path_W_N",
-   "kind": "asphalt",
-   "ring": [
-    [
-     11.5,
-     826.3
-    ],
-    [
-     20.8,
-     826.3
-    ],
-    [
-     6.5,
-     831.3
-    ],
-    [
-     3.0,
-     827.9
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "continues the edges of NE_road_Softball_path_W to the softball plaza; north-west end by eye"
-  },
-  {
-   "name": "ST_road_Carlisle_Rd_drive_SE_end",
-   "kind": "asphalt",
-   "ring": [
-    [
-     29.15,
-     825.83
-    ],
-    [
-     29.74,
-     825.6
-    ],
-    [
-     42.2,
-     825.6
-    ],
-    [
-     30.85,
-     830.11
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "cut at the footprint edge"
   }
  ],
  "strips": [
@@ -1136,7 +1136,7 @@
    ],
    "width": 4.6,
    "evidence": "ortho2020, osm",
-   "unverified": "edges partly in tree shadow (about 0.5 m); the south-east end is cut at the footprint edge, where the drive goes on toward the Carlisle Road driveway in the north-east area (not drawn there)"
+   "unverified": "edges partly in tree shadow (about 0.5 m)"
   }
  ],
  "curbs": [
