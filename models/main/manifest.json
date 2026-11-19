@@ -14,7 +14,7 @@
   },
   {
    "file": "n_context.glb",
-   "bytes": 3307400
+   "bytes": 3271136
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -34,7 +34,7 @@
   },
   {
    "file": "n_t_-1_2.glb",
-   "bytes": 2895808,
+   "bytes": 2895812,
    "center": [
     -80.0,
     -400.0
@@ -50,7 +50,7 @@
   },
   {
    "file": "n_t_-1_4.glb",
-   "bytes": 1829196,
+   "bytes": 1021068,
    "center": [
     -80.0,
     -720.0
@@ -58,7 +58,7 @@
   },
   {
    "file": "n_t_-1_5.glb",
-   "bytes": 2231148,
+   "bytes": 1497008,
    "center": [
     -80.0,
     -880.0
@@ -98,7 +98,7 @@
   },
   {
    "file": "n_t_-2_1.glb",
-   "bytes": 2697360,
+   "bytes": 2697364,
    "center": [
     -240.0,
     -240.0
@@ -122,23 +122,15 @@
   },
   {
    "file": "n_t_-2_4.glb",
-   "bytes": 738628,
+   "bytes": 726472,
    "center": [
     -240.0,
     -720.0
    ]
   },
   {
-   "file": "n_t_-2_5.glb",
-   "bytes": 119320,
-   "center": [
-    -240.0,
-    -880.0
-   ]
-  },
-  {
    "file": "n_t_-3_-1.glb",
-   "bytes": 2713288,
+   "bytes": 2713284,
    "center": [
     -400.0,
     80.0
@@ -218,7 +210,7 @@
   },
   {
    "file": "t_-1_-1.glb",
-   "bytes": 11535756,
+   "bytes": 11535760,
    "center": [
     -80.0,
     80.0
@@ -234,7 +226,7 @@
   },
   {
    "file": "t_-1_0.glb",
-   "bytes": 14521656,
+   "bytes": 14548972,
    "center": [
     -80.0,
     -80.0
@@ -254,6 +246,22 @@
    "center": [
     -80.0,
     -400.0
+   ]
+  },
+  {
+   "file": "t_-1_4.glb",
+   "bytes": 599160,
+   "center": [
+    -80.0,
+    -720.0
+   ]
+  },
+  {
+   "file": "t_-1_5.glb",
+   "bytes": 395648,
+   "center": [
+    -80.0,
+    -880.0
    ]
   },
   {
@@ -289,6 +297,22 @@
    ]
   },
   {
+   "file": "t_-2_4.glb",
+   "bytes": 12772,
+   "center": [
+    -240.0,
+    -720.0
+   ]
+  },
+  {
+   "file": "t_-2_5.glb",
+   "bytes": 119328,
+   "center": [
+    -240.0,
+    -880.0
+   ]
+  },
+  {
    "file": "t_-3_-1.glb",
    "bytes": 4464,
    "center": [
@@ -306,7 +330,7 @@
   },
   {
    "file": "t_0_-1.glb",
-   "bytes": 3828712,
+   "bytes": 3828716,
    "center": [
     80.0,
     80.0
@@ -354,7 +378,7 @@
   },
   {
    "file": "t_1_-2.glb",
-   "bytes": 3445140,
+   "bytes": 3445144,
    "center": [
     240.0,
     240.0
@@ -416,13 +440,13 @@
    "y1": -57.0
   }
  ],
- "source_saved": "November 18, 2026, 5:00 PM ET",
- "source_version": "ws217c",
+ "source_saved": "November 18, 2026, 5:38 PM ET",
+ "source_version": "",
  "sources": {
   "main": {
-   "saved": "November 18, 2026, 5:00 PM ET",
-   "version": "ws217c",
-   "file": "montclair_state_ws217c.blend"
+   "saved": "November 18, 2026, 5:38 PM ET",
+   "version": "",
+   "file": "montclair_state.blend"
   },
   "north": {
    "saved": "November 18, 2026, 1:05 PM ET",
@@ -435,6 +459,6 @@
   "half": 2000
  },
  "far_trees": "far_trees.bin",
- "exported": "November 18, 2026, 5:51 PM ET",
- "total_bytes": 209058232
+ "exported": "November 18, 2026, 6:33 PM ET",
+ "total_bytes": 208502464
 }
