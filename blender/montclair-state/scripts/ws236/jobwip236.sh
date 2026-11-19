@@ -2,7 +2,7 @@
 source scripts/ws226/srun226.sh
 export HIDE="${HIDE:-BD_farfield}"
 export KEEPMOD="${KEEPMOD:-Roads_OSM Footpaths_OSM Context_skirt_3DEP_ortho_4km} M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam WS60_terrain_edge_apron_LiDAR_to_skirt" SUBR=scripts/ws234/subrend234.py EXTRAJ=$PWD/scripts/ws235/extra235.json
-F=${F:-montclair_state_ws236c.blend}; TAGM=${TAGM:-ws236c}; D=${D:-wip}; ONLY=${ONLY:-1234}
+F=${F:-montclair_state_ws236d.blend}; TAGM=${TAGM:-ws236d}; D=${D:-wip}; ONLY=${ONLY:-1234}
 C="-480,-150,-130,540"
 [[ $ONLY == *1* ]] && srun "$C" "-235.0,420.0,215.0,-360.0,200.0,117.0,26" ws236_oblique_W53q_corridor_seams_from_SE_${TAGM}_main_sub $F $D
 [[ $ONLY == *2* ]] && srun "$C" "-338.0,140.0,122.6,-300.0,165.0,127.0,30" ws236_eye_PK_fill_seam_from_W_rail_${TAGM}_main_sub $F $D
