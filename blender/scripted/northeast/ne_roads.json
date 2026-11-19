@@ -64,15 +64,15 @@
   {
    "name": "NE_road_Webster_Rd_N2",
    "kind": "asphalt",
-   "ring": [[212.49, 797.43], [225.23, 809.88, 31.2], [223.17, 826.6], [232.85, 826.6], [235.33, 806.34, 40.8], [219.2, 790.57]],
+   "ring": [[207.91, 793.93], [224.49, 810.14, 30.5], [222.47, 826.6], [233.13, 826.6], [235.23, 805.85, 40.89], [217.62, 790.0]],
    "evidence": "ortho2020, osm",
-   "unverified": "west edge north of y 810 under trees",
-   "notes": "Webster Road round the bend to the north edge: centre on the paint, 36 m arc to a 97 degree run read across the y 826 seam; west edge 4.8 m, east curb 4.8 m"
+   "unverified": "edges north of y 810 under trees",
+   "notes": "Webster Road round the bend to the north edge: centre on the paint, 36 m arc to a 97 degree run read across the y 826 seam; west curb 5.5 m throughout; east edge 4.1 m (grass) widening on a straight taper from y 790 to the curb at 5.1 m, which starts at the bend (y 797)"
   },
   {
    "name": "NE_road_Webster_Rd_N",
    "kind": "asphalt",
-   "ring": [[158.99, 714.78], [164.22, 751.23, 85.5], [214.05, 799.93], [220.76, 793.07], [173.26, 746.64, 75.9], [168.5, 713.42]],
+   "ring": [[158.99, 714.78], [164.22, 751.23, 85.5], [209.95, 795.93], [216.67, 789.07], [173.26, 746.64, 75.9], [168.5, 713.42]],
    "evidence": "ortho2020, osm",
    "unverified": "edges under tree cover north of y 800 fitted as one arc",
    "notes": "Webster Road (OSM) past Machuga Heights to the north edge: west curb 5.5 m, east edge 4.1 m"
@@ -340,25 +340,16 @@
   {
    "name": "NE_road_Webster_W_walk_N",
    "kind": "concrete",
-   "centre": [[161.97, 744.0], [163.09, 751.8, 22.98], [208.31, 796.0]],
+   "centre": [[164.94, 744.0], [171.73, 760.11, 86.17], [223.33, 810.55, 29.4], [221.38, 826.4]],
    "width": 2.0,
    "evidence": "ortho2020",
-   "unverified": "north of y 800 under trees",
-   "notes": "Walk along the west curb of Webster Road past Lot 23N"
-  },
-  {
-   "name": "NE_road_Webster_W_walk_N2",
-   "kind": "concrete",
-   "centre": [[206.69, 794.0], [223.54, 810.47, 29.6], [221.58, 826.4]],
-   "width": 1.5,
-   "evidence": "ortho2020",
-   "unverified": "under trees north of y 805",
-   "notes": "Walk on the west side of Webster Road round the bend to the north edge"
+   "unverified": "north of y 810 under trees",
+   "notes": "Walk along the west curb of Webster Road past Lot 23N to the north edge"
   },
   {
    "name": "NE_road_Webster_E_walk_N",
    "kind": "concrete",
-   "centre": [[228.74, 800.0], [235.98, 812.3, 41.78], [234.28, 826.4]],
+   "centre": [[227.67, 798.0], [236.29, 810.99, 41.93], [234.43, 826.4]],
    "width": 1.5,
    "evidence": "ortho2020",
    "unverified": "under trees",
@@ -575,18 +566,13 @@
   },
   {
    "name": "NE_road_Webster_W_curb_4",
-   "path": [[162.9, 742.0], [164.22, 751.23, 27.2], [207.98, 794.0]],
-   "evidence": "ortho2020"
-  },
-  {
-   "name": "NE_road_Webster_W_curb_5",
-   "path": [[208.98, 794.0], [225.23, 809.88, 31.2], [223.2, 826.4]],
+   "path": [[165.3, 742.0], [172.01, 758.84, 85.07], [224.49, 810.14, 30.5], [222.49, 826.4]],
    "evidence": "ortho2020",
    "unverified": "north of y 810 under trees"
   },
   {
    "name": "NE_road_Webster_E_curb_N",
-   "path": [[227.1, 800.0], [234.61, 812.19, 40.6], [232.86, 826.4]],
+   "path": [[225.28, 798.0], [234.73, 810.73, 40.69], [233.13, 826.6]],
    "evidence": "ortho2020",
    "unverified": "under trees"
   },
