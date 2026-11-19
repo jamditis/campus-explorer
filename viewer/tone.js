@@ -37,3 +37,21 @@ export function fixTone(name, color, hasMap) {
   }
   return color;
 }
+
+// Stair stainless and aluminium nosings are exported with the right roughness
+// (and often metalness), but look.js zeroes metalness and overwrites roughness
+// once the category is not metal. Call after texturize so those values stick.
+// Limit the restore to the stair parts that were mis-filed; other aluminium
+// and stainless finishes keep their authored metalness. Authored: rail metal 1 /
+// rough 0.22, nosing metal 0.8 / rough 0.38 (scripts/od/od_build.py).
+export function finishMetal(name, mat) {
+  if (!mat) return mat;
+  if (/stair/i.test(name) && /stainless/i.test(name)) {
+    mat.metalness = 1;
+    if (mat.roughness > 0.22) mat.roughness = 0.22;
+  } else if (/nosing/i.test(name) && /alumin/i.test(name)) {
+    if (mat.metalness < 0.8) mat.metalness = 0.8;
+    if (mat.roughness > 0.38) mat.roughness = 0.38;
+  }
+  return mat;
+}
