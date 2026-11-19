@@ -32,7 +32,7 @@ const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.
 // tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
 const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
-const WARM = { asphalt: [1.1, 1.0, 0.84], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
+const WARM = { asphalt: [1.04, 1.0, 0.92], concrete: [1.05, 1.0, 0.92], pavers: [1.04, 1.0, 0.94] };
 
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
