@@ -20,9 +20,9 @@
   {
    "name": "NE_road_Yogi_Berra_Dr_N",
    "kind": "asphalt",
-   "ring": [[118.79, 769.73], [127.45, 793.81, 230.1], [145.85, 826.6], [158.47, 826.6], [137.5, 789.22, 219.1], [129.14, 766.0]],
+   "ring": [[118.79, 769.73], [131.18, 804.17, 204.07], [146.86, 826.6], [160.94, 826.6], [142.26, 801.28, 193.7], [129.52, 765.87]],
    "evidence": "ortho2020, osm",
-   "notes": "Yogi Berra Drive (OSM) north of Lot 23N to the north edge: west edge 5.1 m, east curb 5.9 m"
+   "notes": "Yogi Berra Drive (OSM) north of Lot 23N to the north edge: west edge 5.1 m, east curb 6.3 m; the last run turns to 53.6 degrees through a 200 m arc from y 777 (centre paint read across the y 826 seam)"
   },
   {
    "name": "NE_road_Webster_Rd_S",
@@ -62,9 +62,17 @@
    "unverified": "taper of the west curb read off the ortho to about 1 m"
   },
   {
+   "name": "NE_road_Webster_Rd_N2",
+   "kind": "asphalt",
+   "ring": [[212.49, 797.43], [225.23, 809.88, 31.2], [223.17, 826.6], [232.85, 826.6], [235.33, 806.34, 40.8], [219.2, 790.57]],
+   "evidence": "ortho2020, osm",
+   "unverified": "west edge north of y 810 under trees",
+   "notes": "Webster Road round the bend to the north edge: centre on the paint, 36 m arc to a 97 degree run read across the y 826 seam; west edge 4.8 m, east curb 4.8 m"
+  },
+  {
    "name": "NE_road_Webster_Rd_N",
    "kind": "asphalt",
-   "ring": [[158.99, 714.78], [164.22, 751.23, 85.5], [223.49, 809.16, 30.5], [222.87, 826.6], [232.48, 826.6], [233.23, 805.26, 40.1], [173.26, 746.64, 75.9], [168.5, 713.42]],
+   "ring": [[158.99, 714.78], [164.22, 751.23, 85.5], [214.05, 799.93], [220.76, 793.07], [173.26, 746.64, 75.9], [168.5, 713.42]],
    "evidence": "ortho2020, osm",
    "unverified": "edges under tree cover north of y 800 fitted as one arc",
    "notes": "Webster Road (OSM) past Machuga Heights to the north edge: west curb 5.5 m, east edge 4.1 m"
@@ -137,10 +145,10 @@
   {
    "name": "NE_road_Softball_path_W",
    "kind": "asphalt",
-   "ring": [[49.41, 812.43], [11.5, 825.07], [11.5, 826.5], [20.8, 826.5], [50.59, 816.57], [67.5, 812.49], [66.5, 808.31]],
+   "ring": [[49.3, 812.3], [13.55, 826.5], [26.03, 826.5], [50.7, 816.7], [67.54, 812.64], [66.46, 808.16]],
    "evidence": "ortho2020",
    "unverified": "surface kind (asphalt or worn concrete) and the north edge under trees",
-   "notes": "Paved path from the junction west towards the softball stadium, 4.3 m wide, cut at the north edge and short of the 1B cage of the softball stadium"
+   "notes": "Paved path from the junction west towards the softball stadium, 4.6 m wide, last run at 158 degrees to the seam (ortho north of the seam); the bend to 150 degrees is just north of it, cut at the north edge and short of the 1B cage of the softball stadium"
   },
   {
    "name": "NE_road_Softball_path_N",
@@ -153,10 +161,10 @@
   {
    "name": "NE_road_Carlisle_Rd_service",
    "kind": "asphalt",
-   "ring": [[-87.9, 770.0], [-82.6, 770.0], [-67.6, 805.0, 8.0], [-62.0, 817.0, 6.0], [-61.7, 826.5], [-66.6, 826.5], [-68.5, 818.0, 8.0], [-73.8, 805.0, 12.0]],
+   "ring": [[-87.9, 770.0], [-82.6, 770.0], [-67.6, 805.0, 8.0], [-60.85, 826.5], [-65.85, 826.5], [-73.6, 805.0, 10.0]],
    "evidence": "ortho2020, osm",
    "unverified": "west edge in tree shadow north of y 805; south end cut at the footprint corner",
-   "notes": "Carlisle Road (OSM service) between the rail and the tennis courts and softball stadium, 4.5 to 5.5 m wide; east edge on the west edge of the walk to the stadium, following its bends at y 805 and 817"
+   "notes": "Carlisle Road (OSM service) between the rail and the tennis courts and softball stadium, 4.5 to 5.5 m wide; east edge on the west edge of the walk to the stadium, with a bend at y 805; north of it a straight run at 72 degrees, continued by the stadium zone"
   },
   {
    "name": "NE_road_Rec_plaza_upper",
@@ -284,8 +292,8 @@
   {
    "name": "NE_road_YB_E_walk_N2",
    "kind": "concrete",
-   "centre": [[139.81, 791.5], [159.17, 826.0]],
-   "width": 1.8,
+   "centre": [[140.81, 791.5], [148.81, 808.4, 191.69], [162.09, 826.4]],
+   "width": 1.7,
    "evidence": "ortho2020",
    "notes": "Walk along the east curb of Yogi Berra Drive north of Lot 23N"
   },
@@ -332,11 +340,29 @@
   {
    "name": "NE_road_Webster_W_walk_N",
    "kind": "concrete",
-   "centre": [[161.97, 744.0], [163.09, 751.8, 22.99], [222.27, 809.65, 5.27], [222.19, 812.0]],
+   "centre": [[161.97, 744.0], [163.09, 751.8, 22.98], [208.31, 796.0]],
    "width": 2.0,
    "evidence": "ortho2020",
    "unverified": "north of y 800 under trees",
    "notes": "Walk along the west curb of Webster Road past Lot 23N"
+  },
+  {
+   "name": "NE_road_Webster_W_walk_N2",
+   "kind": "concrete",
+   "centre": [[206.69, 794.0], [223.54, 810.47, 29.6], [221.58, 826.4]],
+   "width": 1.5,
+   "evidence": "ortho2020",
+   "unverified": "under trees north of y 805",
+   "notes": "Walk on the west side of Webster Road round the bend to the north edge"
+  },
+  {
+   "name": "NE_road_Webster_E_walk_N",
+   "kind": "concrete",
+   "centre": [[228.74, 800.0], [235.98, 812.3, 41.78], [234.28, 826.4]],
+   "width": 1.5,
+   "evidence": "ortho2020",
+   "unverified": "under trees",
+   "notes": "Walk behind the east curb of Webster Road at the north edge"
   },
   {
    "name": "NE_road_Dinallo_drive_E_walk",
@@ -517,7 +543,7 @@
   },
   {
    "name": "NE_road_YB_E_curb_3",
-   "path": [[138.78, 791.5], [158.14, 826.0]],
+   "path": [[139.66, 791.5], [147.78, 808.76, 192.73], [160.8, 826.4]],
    "evidence": "ortho2020"
   },
   {
@@ -549,9 +575,20 @@
   },
   {
    "name": "NE_road_Webster_W_curb_4",
-   "path": [[162.9, 742.0], [164.22, 751.23, 27.2], [223.49, 809.16, 6.37], [223.39, 812.0]],
+   "path": [[162.9, 742.0], [164.22, 751.23, 27.2], [207.98, 794.0]],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NE_road_Webster_W_curb_5",
+   "path": [[208.98, 794.0], [225.23, 809.88, 31.2], [223.2, 826.4]],
    "evidence": "ortho2020",
-   "unverified": "north of y 800 under trees"
+   "unverified": "north of y 810 under trees"
+  },
+  {
+   "name": "NE_road_Webster_E_curb_N",
+   "path": [[227.1, 800.0], [234.61, 812.19, 40.6], [232.86, 826.4]],
+   "evidence": "ortho2020",
+   "unverified": "under trees"
   },
   {
    "name": "NE_road_Webster_E_curb_1",
@@ -604,7 +641,7 @@
   {
    "name": "NE_road_YB_CL_a",
    "type": "line",
-   "path": [[-53.35, 431.89], [2.4, 464.41, 64.9], [16.94, 503.03, 197.4], [22.2, 522.03, 214.8], [65.09, 638.45, 400.1], [80.01, 672.5, 400.1], [107.4, 726.89, 319.4], [113.99, 741.6, 190.8], [132.02, 791.72, 225.1], [151.28, 826.05]],
+   "path": [[-53.35, 431.89], [2.4, 464.41, 64.9], [16.94, 503.03, 197.4], [22.2, 522.03, 214.8], [65.09, 638.45, 400.1], [80.01, 672.5, 400.1], [107.4, 726.89, 319.4], [113.99, 741.6, 190.8], [136.24, 803.45, 199.1], [152.91, 826.46]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
@@ -612,7 +649,7 @@
   {
    "name": "NE_road_YB_CL_b",
    "type": "line",
-   "path": [[-53.25, 431.71], [2.56, 464.27, 65.1], [17.14, 502.97, 197.6], [22.4, 521.97, 214.6], [65.27, 638.37, 399.9], [80.19, 672.42, 399.9], [107.58, 726.81, 319.6], [114.17, 741.52, 191.0], [132.2, 791.64, 224.9], [151.46, 825.95]],
+   "path": [[-53.25, 431.71], [2.56, 464.27, 65.1], [17.14, 502.97, 197.6], [22.4, 521.97, 214.6], [65.27, 638.37, 399.9], [80.19, 672.42, 399.9], [107.58, 726.81, 319.6], [114.17, 741.52, 191.0], [136.42, 803.36, 198.9], [153.07, 826.34]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
@@ -620,7 +657,7 @@
   {
    "name": "NE_road_Webster_CL_a",
    "type": "line",
-   "path": [[124.34, 476.09], [130.59, 478.65, 11.68], [169.31, 748.65, 80.1], [228.97, 806.97, 11.27], [228.79, 812.0]],
+   "path": [[124.34, 476.09], [130.59, 478.65, 11.68], [169.31, 748.65, 80.1], [230.17, 808.15, 35.9], [227.93, 826.39]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020",
@@ -629,7 +666,7 @@
   {
    "name": "NE_road_Webster_CL_b",
    "type": "line",
-   "path": [[124.41, 475.91], [130.77, 478.51, 11.88], [169.49, 748.55, 79.9], [229.17, 806.89, 11.47], [228.99, 812.0]],
+   "path": [[124.41, 475.91], [130.77, 478.51, 11.88], [169.49, 748.55, 79.9], [230.39, 808.07, 36.1], [228.13, 826.41]],
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020",
