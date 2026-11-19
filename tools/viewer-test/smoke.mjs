@@ -7,10 +7,14 @@ import { open, serve, waitFor } from './lib.mjs';
 const args = process.argv.slice(2), flag = (n, d) => { const i = args.indexOf(n); return i < 0 ? d : args[i + 1]; };
 const server = flag('--url') ? null : await serve();
 const base = flag('--url') ?? server.url;
-const { browser, page, problems } = await open(`${base}?tiles=${flag('--tiles', 3)}&quality=low`);
+// --tiles keeps the N tiles nearest the view. The link aims the view at the heart of the campus
+// (Kasser Theater, Cole Hall), where the steps below search, walk and measure.
+const START = '#v=1&m=orbit&c=-120.0,260.0,140.0&t=-200.0,130.0,80.0';
+const { browser, page, problems } = await open(`${base}?tiles=${flag('--tiles', 3)}&quality=low${START}`);
 const step = async (name, fn) => { const t = Date.now(); await fn(); console.log(`ok   ${name} (${((Date.now() - t) / 1000).toFixed(1)} s)`); };
 const app = fn => page.evaluate(fn);
 const settle = (ms = 600) => page.waitForTimeout(ms);
+const MOVE_MS = 180000; // longest wait for a held key to move the view
 let failed = false;
 try {
   await step('first tiles arrive and the view is usable', async () => {
@@ -45,9 +49,11 @@ try {
     await app(() => window.__campus.app.setMode('walk', { at: new window.__campus.THREE.Vector3(-203, 200, 92) }));
     const a = await app(() => window.__campus.app.player.position.toArray());
     assert.ok(a[1] > 100 && a[1] < 170, `feet at ${a[1]}`);
-    await page.keyboard.down('KeyW'); await settle(2500); await page.keyboard.up('KeyW');
+    // hold the key until the player has moved: software rendering can take seconds per frame
+    await page.keyboard.down('KeyW');
+    await page.waitForFunction(([x, z]) => { const p = window.__campus.app.player.position; return Math.hypot(p.x - x, p.z - z) > 0.5; }, [a[0], a[2]], { timeout: MOVE_MS })
+      .catch(() => assert.fail('the player did not move')).finally(() => page.keyboard.up('KeyW'));
     const b = await app(() => window.__campus.app.player.position.toArray());
-    assert.ok(Math.hypot(b[0] - a[0], b[2] - a[2]) > 0.5, 'the player did not move');
     assert.ok(Math.abs(b[1] - a[1]) < 6, 'the player left the ground');
     await page.keyboard.press('KeyV');
     assert.equal(await app(() => window.__campus.app.state.view), 'third');
@@ -55,9 +61,9 @@ try {
   await step('fly mode moves the camera', async () => {
     await page.keyboard.press('Digit2');
     const a = await app(() => window.__campus.camera.position.toArray());
-    await page.keyboard.down('KeyW'); await settle(1500); await page.keyboard.up('KeyW');
-    const b = await app(() => window.__campus.camera.position.toArray());
-    assert.ok(Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) > 2, 'the camera did not move');
+    await page.keyboard.down('KeyW');
+    await page.waitForFunction(([x, y, z]) => { const p = window.__campus.camera.position; return Math.hypot(p.x - x, p.y - y, p.z - z) > 2; }, a, { timeout: MOVE_MS })
+      .catch(() => assert.fail('the camera did not move')).finally(() => page.keyboard.up('KeyW'));
     await page.keyboard.press('Digit1');
     assert.equal(await app(() => window.__campus.app.state.mode), 'orbit');
   });
@@ -84,17 +90,18 @@ try {
   });
   await step('the share link restores the view', async () => {
     await app(() => window.__campus.goto(-120, 260, 140, -180, 130, 60));
-    await settle(1500);
+    // the link is written a moment after the view stops changing
+    await page.waitForFunction(() => /c=-120\.0,260\.0,140\.0/.test(location.hash), null, { timeout: MOVE_MS }).catch(() => assert.fail('the address bar did not get the view'));
     const hash = await app(() => location.hash);
-    assert.match(hash, /c=-120\.0,260\.0,140\.0/);
     await app(() => window.__campus.goto(0, 500, 0, 0, 120, -1));
     await app(h => { location.hash = '#x'; location.hash = h; }, hash);
     await page.waitForFunction(() => Math.abs(window.__campus.camera.position.x + 120) < 0.2);
   });
   await step('nothing is drawn while the view is still', async () => {
-    await settle(2500);
-    const n = await app(() => new Promise(done => { let c = 0; const off = window.__campus.app.on('drawn', () => c++); setTimeout(() => { off(); done(c); }, 1500); }));
-    assert.ok(n <= 2, `${n} frames drawn while idle`);
+    // the last frames after a move (sharpening, late textures) can take a while in software; then it must go quiet
+    let n = Infinity;
+    for (let i = 0; i < 20 && n > 0; i++) n = await app(() => new Promise(done => { let c = 0; const off = window.__campus.app.on('drawn', () => c++); setTimeout(() => { off(); done(c); }, 3000); }));
+    assert.equal(n, 0, `${n} frames drawn in 3 s while idle`);
   });
   await step('phone size', async () => {
     await page.setViewportSize({ width: 390, height: 844 }); await settle(800);

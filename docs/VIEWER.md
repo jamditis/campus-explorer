@@ -144,7 +144,7 @@ One stylesheet. Colours and sizes come from the custom properties at the top of 
 ## Testing
 
 - `node --test` runs the unit tests in `tests/` for the pure modules. CI runs it in the `viewer` job.
-- `node tools/viewer-test/smoke.mjs` serves the checkout, opens the viewer in headless Chromium, loads a few tiles, exercises each mode and tool, and fails on any console error.
+- `node tools/viewer-test/smoke.mjs` serves the checkout, opens the viewer in headless Chromium, loads a few tiles, exercises each mode and tool, and fails on any console error. It is optional and not part of CI. Each step waits for its condition, not for a fixed time, because software WebGL can take seconds per frame; a full run then takes 20 minutes or more.
 - `node tools/viewer-test/shoot.mjs <outdir>` takes the standard views for before/after comparison.
 - URL switches for testing: `?quality=low|medium|high`, `?lite=1|0` (force the phone profile on or off), `?tiles=N` (load only the N nearest tiles), `?capture` (keep the drawing buffer for screenshots).
 
@@ -153,7 +153,7 @@ One stylesheet. Colours and sizes come from the custom properties at the top of 
 Before you open a viewer PR:
 
 - [ ] `node --test` passes and new pure logic has a test
-- [ ] `node tools/viewer-test/smoke.mjs` passes with no console errors
+- [ ] The viewer opens locally with no console errors (`node tools/viewer-test/smoke.mjs` checks this and every mode and tool, where a GPU makes it practical)
 - [ ] Before/after screenshots of the same views for any visual change
 - [ ] No new network host, no build step, nothing hand-edited in `models/` or `vendor/`
 - [ ] Inferred values are labelled UNVERIFIED in the interface and in this PR

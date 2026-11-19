@@ -17,7 +17,7 @@ Open 3D models of NJ college campuses (Blender 4.5 LTS, free public data) and a 
 
 ## Viewer index
 
-Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --test` and `node tools/viewer-test/smoke.mjs` before a viewer PR.
+Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --test` before a viewer PR. `node tools/viewer-test/smoke.mjs` is an optional browser check; it takes 20 minutes or more where WebGL runs in software.
 
 | File | What it does |
 |---|---|
