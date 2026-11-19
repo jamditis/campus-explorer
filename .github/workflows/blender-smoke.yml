@@ -32,10 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Cache Blender
         id: cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/blender
           key: blender-${{ env.BLENDER_VERSION }}-linux-x64
@@ -51,7 +51,7 @@ jobs:
         run: ~/blender/blender --background --factory-startup --python-exit-code 1 --python blender/smoke_test.py -- "$RUNNER_TEMP/smoke"
       - name: Upload smoke render
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: blender-smoke
           path: ${{ runner.temp }}/smoke
