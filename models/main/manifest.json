@@ -122,7 +122,7 @@
   },
   {
    "file": "n_t_-2_4.glb",
-   "bytes": 726472,
+   "bytes": 726468,
    "center": [
     -240.0,
     -720.0
@@ -130,7 +130,7 @@
   },
   {
    "file": "n_t_-3_-1.glb",
-   "bytes": 2713284,
+   "bytes": 2713288,
    "center": [
     -400.0,
     80.0
@@ -469,6 +469,6 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 18, 2026, 8:20 PM ET",
+ "exported": "November 18, 2026, 8:25 PM ET",
  "total_bytes": 208924440
 }
