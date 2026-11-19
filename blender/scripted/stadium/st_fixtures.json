@@ -1,0 +1,54 @@
+{
+ "zone": "st_fixtures",
+ "notes": "Things placed from the fitted frames of the other zones of this area. Foul poles: where the foul lines of st_stadium (home plate apex 166.379, 954.587; lines at 135.217 and 45.217 degrees) meet the outfield wall, 93.75 m (left) and 93.05 m (right) from home. The left pole shows in the LiDAR (returns to 121.2 m over ground at 108.9 m: 12.3 m tall); the right pole has no returns and is given the same height. Soccer goals: the middle of each goal line of st_track's fitted soccer frame (track centre 17.649, 933.706, axis 80.18 degrees; goal lines at u -49.95 and +50.27, centre line v 0.035). The 2020 ortho shows portable goals standing off the lines; they are placed on the lines, where a match needs them.",
+ "points": [
+  {
+   "name": "ST_yogi_foul_pole_left",
+   "kind": "foul_pole",
+   "at": [
+    99.84,
+    1020.63
+   ],
+   "angle": 135.217,
+   "side": "right",
+   "height": 12.3,
+   "evidence": "lidar2017 points; foul line frame of st_stadium",
+   "unverified": "wing size; the 2024 renovation may have replaced it"
+  },
+  {
+   "name": "ST_yogi_foul_pole_right",
+   "kind": "foul_pole",
+   "at": [
+    231.93,
+    1020.63
+   ],
+   "angle": 45.217,
+   "side": "left",
+   "height": 12.3,
+   "evidence": "foul line frame of st_stadium",
+   "unverified": "height (no LiDAR returns: taken from the left pole), wing size"
+  },
+  {
+   "name": "ST_track_soccer_goal_S",
+   "kind": "soccer_goal",
+   "at": [
+    9.1,
+    884.49
+   ],
+   "angle": 80.18,
+   "evidence": "soccer frame of st_track (ortho2020)",
+   "unverified": "portable goals: placed on the goal line, frame shape typical"
+  },
+  {
+   "name": "ST_track_soccer_goal_N",
+   "kind": "soccer_goal",
+   "at": [
+    26.19,
+    983.25
+   ],
+   "angle": 260.18,
+   "evidence": "soccer frame of st_track (ortho2020)",
+   "unverified": "portable goals: placed on the goal line, frame shape typical"
+  }
+ ]
+}

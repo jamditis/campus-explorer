@@ -13,7 +13,7 @@ LAYER = {"lawn": 0, "mulch": 1, "gravel": 2, "asphalt": 3, "turf": 4, "concrete"
 YD = 0.9144
 PAINTABLE = {"asphalt", "turf", "gravel"}  # gravel: chalk lines on a clay infield
 # texture sheet resolution, pixels per metre: 4 in lines are 2 to 3 pixels wide
-PPM = {"asphalt": 20.0, "turf": 24.0, "gravel": 24.0}
+PPM = {"asphalt": 20.0, "turf": 24.0, "gravel": 24.0, "lawn": 20.0}
 
 
 def areas(args=()):
@@ -117,6 +117,16 @@ def primitives(m):
     return [dict(line=p, width=m.get("width", 0.1), colour=colour) for p in parts]
 
 
+def paintable(surface):
+    """Can this surface carry paint? Asphalt, turf and gravel always; natural grass only when the
+    plan says so (`"paint": true`: a mown ball field with chalk lines), because painted grass is
+    shown as an even, untinted turf and an ordinary lawn must not turn into that by accident.
+    """
+    return surface["kind"] in PAINTABLE or (
+        surface["kind"] == "lawn" and bool(surface.get("paint"))
+    )
+
+
 def painted_surfaces(surfaces, markings):
     """Indices of the surfaces that carry paint: the top surface under a point of some marking.
 
@@ -136,7 +146,7 @@ def painted_surfaces(surfaces, markings):
                 b, s = boxes[i], surfaces[i]
                 if b[0] <= x <= b[2] and b[1] <= y <= b[3] and geom.inside(s["ring"], x, y):
                     if not any(geom.inside(h, x, y) for h in s["holes"]):
-                        if s["kind"] in PAINTABLE and (s["kind"] == "turf" or not m.get("field")):
+                        if paintable(s) and (s["kind"] == "turf" or not m.get("field")):
                             out.add(i)
                         break
     return out

@@ -7,9 +7,9 @@ kept inside its footprint, outside its buildings, stands and paving, and away fr
 Writes AREA_DIR/ZONE.json.
 
 What is measured: the position of each canopy peak (0.5 m cells) and its height above the ground.
-What is not: the species. A peak that is green in the leaf-off 2020 ortho is called a conifer; the
-others get a deciduous species by turn, so a wood is not one repeated tree. Every tree is
-UNVERIFIED for species and crown shape.
+What is not: the species. A peak that is green in the leaf-off 2020 ortho and returns as a
+solid crown is called a conifer; the others get a deciduous species by turn, so a wood is not
+one repeated tree. Every tree is UNVERIFIED for species and crown shape.
 """
 
 import json
@@ -133,7 +133,12 @@ def main():
         pi, pj = int((x - meta["x0"]) / meta["mpp"]), int((meta["y1"] - y) / meta["mpp"])
         k = max(1, round(1.2 / meta["mpp"]))
         r, g, b = ortho[max(0, pj - k) : pj + k + 1, max(0, pi - k) : pi + k + 1].mean((0, 1))
-        conifer = g > 1.06 * r and g > 1.12 * b
+        # ... and a solid one: a bare crown over a green lawn is green in the image too, but its
+        # returns are a scatter, while an evergreen crown returns from most cells
+        w = max(1, round(2.0 / cell))
+        win = height[max(0, j - w) : j + w + 1, max(0, i - w) : i + w + 1]
+        solid = float((np.nan_to_num(win) > 0.4 * z).mean())
+        conifer = g > 1.06 * r and g > 1.12 * b and solid >= 0.45
         n = len(points)
         points.append(
             dict(

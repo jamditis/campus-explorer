@@ -1,0 +1,3529 @@
+{
+ "zone": "st_roads",
+ "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 11.2 m between the worn north-west edge (axis +4.9, white edge line at +3.7) and the south-east curb (axis -6.3); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.4 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -5.19 with a 1.5 m walk (centre -6.35) to the Lot 22 curb, west curb +5.55 with a 2.0 m concrete band (centre +6.6); white edge lines at +3.7 and -3.7 (only the west one drawn). Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): every item that continues a ne_* item is the measured line carried straight to y 826.2 to 826.4, overlapping the ne_* surface by about 0.4 m, on the positions ne_roads and ne_lots now give at the seam (no tapers). Stall rows that cross the seam start at the first divider after the last one ne_lots draws, on the same pitch phase. Yogi Berra Drive north-west edge: the asphalt fades into a worn shoulder between axis +4.2 and +5.0, taken at +4.9 to meet ne_roads. Webster Road curb lines at axis +5.55 / -5.19 as ne_roads has them (the curb faces read here at about +5.3 / -4.9); the bright line at -3.7 and +3.7 are painted edge lines.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nNot drawn: stencilled letters and arrows; the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive; stop bars that could not be seen (only the south-west-bound bar north of the junction is drawn).",
+ "surfaces": [
+  {
+   "name": "ST_lot_22_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     300.51,
+     826.4
+    ],
+    [
+     291.75,
+     896.75,
+     45.0
+    ],
+    [
+     288.0,
+     904.6
+    ],
+    [
+     289.64,
+     908.16
+    ],
+    [
+     281.59,
+     916.3,
+     27.3
+    ],
+    [
+     231.2,
+     916.2,
+     1.0
+    ],
+    [
+     224.75,
+     910.2,
+     1.0
+    ],
+    [
+     230.83,
+     858.73,
+     1.5
+    ],
+    [
+     228.35,
+     858.42
+    ],
+    [
+     229.34,
+     850.48
+    ],
+    [
+     231.82,
+     850.79,
+     1.5
+    ],
+    [
+     234.86,
+     826.4
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "south edge is the footprint seam (Lot 21 continues south in ne_lots); NE corner radius fitted by eye to the curb"
+  },
+  {
+   "name": "ST_lot_21_B_median",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     269.27,
+     826.4
+    ],
+    [
+     265.78,
+     854.42
+    ],
+    [
+     267.67,
+     854.65
+    ],
+    [
+     271.19,
+     826.4
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted strip (lawn assumed); a curb is assumed round it"
+  },
+  {
+   "name": "ST_lot_21_A_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     289.99,
+     857.03,
+     1.1
+    ],
+    [
+     289.72,
+     859.26,
+     1.1
+    ],
+    [
+     279.1,
+     857.94,
+     1.1
+    ],
+    [
+     279.38,
+     855.71,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_22_A_S_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     288.94,
+     865.47,
+     1.1
+    ],
+    [
+     288.66,
+     867.7,
+     1.1
+    ],
+    [
+     278.05,
+     866.38,
+     1.1
+    ],
+    [
+     278.32,
+     864.14,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_21_B_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     272.33,
+     854.83,
+     1.1
+    ],
+    [
+     272.05,
+     857.06,
+     1.1
+    ],
+    [
+     260.54,
+     855.63,
+     1.1
+    ],
+    [
+     260.82,
+     853.4,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_22_B_S_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     271.28,
+     863.27,
+     1.1
+    ],
+    [
+     271.0,
+     865.5,
+     1.1
+    ],
+    [
+     259.49,
+     864.07,
+     1.1
+    ],
+    [
+     259.77,
+     861.83,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_21_C_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     254.27,
+     852.58,
+     1.1
+    ],
+    [
+     253.99,
+     854.81,
+     1.1
+    ],
+    [
+     243.27,
+     853.48,
+     1.1
+    ],
+    [
+     243.55,
+     851.25,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_22_C_S_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     253.22,
+     861.02,
+     1.1
+    ],
+    [
+     252.94,
+     863.25,
+     1.1
+    ],
+    [
+     242.22,
+     861.91,
+     1.1
+    ],
+    [
+     242.5,
+     859.68,
+     1.1
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_22_B_median",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     264.66,
+     863.45
+    ],
+    [
+     259.98,
+     900.96
+    ],
+    [
+     261.87,
+     901.19
+    ],
+    [
+     266.54,
+     863.68
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted strip (lawn assumed)"
+  },
+  {
+   "name": "ST_lot_22_C_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     248.36,
+     901.63,
+     1.8
+    ],
+    [
+     247.89,
+     905.4,
+     1.8
+    ],
+    [
+     236.98,
+     904.04,
+     1.8
+    ],
+    [
+     237.45,
+     900.27,
+     1.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_lot_22_B_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     267.31,
+     901.57,
+     1.2
+    ],
+    [
+     266.82,
+     905.54,
+     1.2
+    ],
+    [
+     254.91,
+     904.06,
+     1.2
+    ],
+    [
+     255.41,
+     900.09,
+     1.2
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "irregular planted island drawn as a rounded rectangle"
+  },
+  {
+   "name": "ST_lot_22_A_N_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     273.6,
+     900.0,
+     0.3
+    ],
+    [
+     273.6,
+     903.4,
+     0.3
+    ],
+    [
+     285.2,
+     903.4,
+     11.3
+    ],
+    [
+     285.2,
+     890.4,
+     0.5
+    ],
+    [
+     280.4,
+     890.4
+    ],
+    [
+     280.4,
+     900.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curved edge fitted by eye; the north-west part is bare ground or mulch in the ortho"
+  },
+  {
+   "name": "ST_lot_22_W_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     235.84,
+     858.95,
+     1.0
+    ],
+    [
+     232.17,
+     888.43,
+     1.0
+    ],
+    [
+     227.01,
+     887.78,
+     1.0
+    ],
+    [
+     230.68,
+     858.31,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island fill (lawn or mulch) from the ortho tone; outline read off the ortho"
+  },
+  {
+   "name": "ST_road_Yogi_Berra_Dr",
+   "kind": "asphalt",
+   "ring": [
+    [
+     160.77,
+     826.2
+    ],
+    [
+     177.27,
+     848.55
+    ],
+    [
+     180.5,
+     849.9
+    ],
+    [
+     196.83,
+     872.02
+    ],
+    [
+     197.87,
+     875.61
+    ],
+    [
+     227.85,
+     916.24
+    ],
+    [
+     218.44,
+     923.19
+    ],
+    [
+     146.85,
+     826.2
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "north-west edge: asphalt fades into a worn shoulder between axis +4.2 and +5.0 (colour profiles and LiDAR); +4.9 taken, which meets the ne_roads edge (146.86) at the seam within 0.2 m; bus bay outline read off the ortho"
+  },
+  {
+   "name": "ST_road_Webster_Rd",
+   "kind": "asphalt",
+   "ring": [
+    [
+     233.23,
+     826.2
+    ],
+    [
+     227.11,
+     877.8,
+     23.0
+    ],
+    [
+     211.4,
+     889.4,
+     0.8
+    ],
+    [
+     213.01,
+     896.13
+    ],
+    [
+     211.14,
+     899.99
+    ],
+    [
+     193.92,
+     876.66
+    ],
+    [
+     196.97,
+     874.4
+    ],
+    [
+     213.98,
+     897.44,
+     10.0
+    ],
+    [
+     222.42,
+     826.2
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "curb lines at axis +5.55 and -5.19 as ne_roads measures them at the seam (profiles here give the curb faces at about +5.3 and -4.9, within 0.3 m)"
+  },
+  {
+   "name": "ST_road_junction_island_walk",
+   "kind": "concrete",
+   "ring": [
+    [
+     211.4,
+     889.4,
+     0.8
+    ],
+    [
+     213.01,
+     896.13
+    ],
+    [
+     219.54,
+     904.98
+    ],
+    [
+     224.3,
+     909.51
+    ],
+    [
+     229.64,
+     866.65
+    ],
+    [
+     228.83,
+     863.35
+    ],
+    [
+     227.11,
+     877.8,
+     23.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "walk widths round the island read by eye"
+  },
+  {
+   "name": "ST_road_junction_island",
+   "kind": "lawn",
+   "layer": 5.5,
+   "ring": [
+    [
+     214.2,
+     893.8,
+     1.5
+    ],
+    [
+     215.2,
+     903.0,
+     1.5
+    ],
+    [
+     224.3,
+     903.0,
+     0.5
+    ],
+    [
+     224.3,
+     882.5,
+     0.5
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "outline of the planted part read by eye"
+  },
+  {
+   "name": "ST_road_YB_one_way_E_end",
+   "kind": "asphalt",
+   "ring": [
+    [
+     336.85,
+     901.94
+    ],
+    [
+     345.6,
+     886.79
+    ],
+    [
+     345.6,
+     900.79
+    ],
+    [
+     342.92,
+     905.44
+    ]
+   ],
+   "evidence": "lidar2017, osm",
+   "unverified": "under tree cover: line and width carried on from the open part and the OpenStreetMap line"
+  },
+  {
+   "name": "ST_road_YB_gore",
+   "kind": "asphalt",
+   "ring": [
+    [
+     225.78,
+     913.43
+    ],
+    [
+     237.06,
+     928.71,
+     6.0
+    ],
+    [
+     237.54,
+     936.44
+    ],
+    [
+     222.4,
+     915.92
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "where the gore curb turns east is read by eye"
+  },
+  {
+   "name": "ST_lot_23N_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     163.68,
+     826.6
+    ],
+    [
+     178.19,
+     846.26
+    ],
+    [
+     183.0,
+     845.2,
+     1.0
+    ],
+    [
+     198.4,
+     860.3,
+     1.0
+    ],
+    [
+     210.4,
+     850.6,
+     1.0
+    ],
+    [
+     208.2,
+     846.2,
+     0.5
+    ],
+    [
+     208.0,
+     843.0
+    ],
+    [
+     206.4,
+     835.2,
+     3.0
+    ],
+    [
+     200.17,
+     826.6
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "east curb in tree shade north of y 836"
+  },
+  {
+   "name": "ST_lot_23N_island_N",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     194.9,
+     840.03,
+     0.5
+    ],
+    [
+     198.19,
+     844.43,
+     0.5
+    ],
+    [
+     202.6,
+     841.14,
+     0.5
+    ],
+    [
+     199.3,
+     836.74,
+     0.5
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted island read off the ortho in tree shadow; outline about 0.5 m"
+  },
+  {
+   "name": "ST_lot_23N_bed",
+   "kind": "mulch",
+   "layer": 3.5,
+   "ring": [
+    [
+     178.15,
+     846.04
+    ],
+    [
+     182.35,
+     848.53
+    ],
+    [
+     183.11,
+     849.22
+    ],
+    [
+     183.0,
+     845.2
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted bed between the bus-bay walk and the lot; fill guessed"
+  },
+  {
+   "name": "ST_lot_W_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     120.7,
+     825.6
+    ],
+    [
+     155.38,
+     878.41,
+     2.0
+    ],
+    [
+     122.54,
+     899.99,
+     2.0
+    ],
+    [
+     86.41,
+     844.99,
+     2.0
+    ],
+    [
+     86.33,
+     832.48,
+     3.0
+    ],
+    [
+     91.63,
+     827.8
+    ],
+    [
+     94.98,
+     825.6
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "south-west end irregular under trees, drawn straight; the lot runs on south of the footprint edge (y 826), where no plan draws it yet"
+  },
+  {
+   "name": "ST_road_Carlisle_Rd_drive_W",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -66.11,
+     826.1
+    ],
+    [
+     -60.85,
+     826.1
+    ],
+    [
+     -51.55,
+     854.72,
+     6.5
+    ],
+    [
+     -40.0,
+     851.77
+    ],
+    [
+     -40.0,
+     856.93
+    ],
+    [
+     -56.4,
+     861.11
+    ],
+    [
+     -56.4,
+     850.0
+    ],
+    [
+     -63.08,
+     835.44
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "continues NE_road_Carlisle_Rd_service (5.0 m, heading 72 deg) from y 826.5; north of y 833 its west side is cut along the footprint edge (the drive runs on just outside it); the bend by eye"
+  },
+  {
+   "name": "ST_road_Carlisle_Rd_drive_SE_end",
+   "kind": "asphalt",
+   "ring": [
+    [
+     29.15,
+     825.83
+    ],
+    [
+     29.74,
+     825.6
+    ],
+    [
+     42.2,
+     825.6
+    ],
+    [
+     30.85,
+     830.11
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "cut at the footprint edge; the drive goes on south-east in the north-east area, where no plan draws it yet"
+  },
+  {
+   "name": "ST_road_softball_path_W_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     14.64,
+     826.1
+    ],
+    [
+     26.92,
+     826.1
+    ],
+    [
+     16.16,
+     830.45
+    ],
+    [
+     -12.0,
+     846.71
+    ],
+    [
+     -16.0,
+     843.7
+    ],
+    [
+     14.14,
+     826.3
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "edges from the ne_roads cut (x 13.55 to 26.03 at y 826.5); the bend to 150 deg and the north-west end where it meets the drive read by eye; asphalt or worn concrete as ne_roads has it"
+  },
+  {
+   "name": "ST_road_turning_circle",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -51.7,
+     854.2,
+     11.78
+    ],
+    [
+     -28.1,
+     854.2,
+     11.78
+    ],
+    [
+     -28.1,
+     877.8,
+     11.78
+    ],
+    [
+     -51.7,
+     877.8,
+     11.78
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "outline fitted as one circle by eye (about 0.4 m)"
+  },
+  {
+   "name": "ST_road_turning_circle_island",
+   "kind": "mulch",
+   "layer": 3.5,
+   "ring": [
+    [
+     -44.5,
+     861.85,
+     3.83
+    ],
+    [
+     -36.8,
+     861.85,
+     3.83
+    ],
+    [
+     -36.8,
+     869.55,
+     3.83
+    ],
+    [
+     -44.5,
+     869.55,
+     3.83
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "fill (mulch or soil) from the dark tone; a curb is assumed"
+  }
+ ],
+ "strips": [
+  {
+   "name": "ST_road_YB_SE_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     163.18,
+     827.6
+    ],
+    [
+     177.86,
+     847.5
+    ],
+    [
+     181.72,
+     849.62
+    ],
+    [
+     197.46,
+     870.94
+    ],
+    [
+     198.83,
+     874.9
+    ],
+    [
+     202.39,
+     879.73
+    ]
+   ],
+   "width": 2.4,
+   "evidence": "ortho2020",
+   "unverified": "the square end at the seam overlaps NE_road_YB_E_walk_N2 by up to 1.2 m"
+  },
+  {
+   "name": "ST_road_Webster_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     221.24,
+     827.2
+    ],
+    [
+     213.24,
+     894.75,
+     8.95
+    ],
+    [
+     197.78,
+     873.81
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020",
+   "unverified": "square end at the seam overlaps NE_road_Webster_W_walk_N2 by up to 1 m"
+  },
+  {
+   "name": "ST_road_Webster_E_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     234.31,
+     827.0
+    ],
+    [
+     228.81,
+     873.41
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_one_way",
+   "kind": "asphalt",
+   "centre": [
+    [
+     220.71,
+     919.03
+    ],
+    [
+     241.74,
+     947.52,
+     26.0
+    ],
+    [
+     269.67,
+     946.17,
+     70.0
+    ],
+    [
+     327.51,
+     925.12,
+     68.0
+    ],
+    [
+     340.13,
+     903.25
+    ]
+   ],
+   "width": 7.0,
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "east of x 292 the road is under tree cover: the centre follows the OpenStreetMap line and the flat bed in the LiDAR ground (within about 1 m), width carried on from the open part"
+  },
+  {
+   "name": "ST_road_track_E_path",
+   "kind": "asphalt",
+   "centre": [
+    [
+     75.47,
+     826.4
+    ],
+    [
+     81.8,
+     842.5,
+     18.0
+    ],
+    [
+     73.6,
+     885.0,
+     35.0
+    ],
+    [
+     77.6,
+     912.0,
+     25.0
+    ],
+    [
+     88.5,
+     935.5,
+     8.0
+    ],
+    [
+     93.5,
+     939.5
+    ]
+   ],
+   "width": 3.7,
+   "evidence": "ortho2020, osm",
+   "unverified": "surface (asphalt or worn gravel) as ne_roads has it; edges in tree shadow read to about 0.5 m"
+  },
+  {
+   "name": "ST_road_stadium_W_drive",
+   "kind": "asphalt",
+   "centre": [
+    [
+     141.5,
+     897.0
+    ],
+    [
+     119.0,
+     918.0,
+     15.0
+    ],
+    [
+     100.5,
+     936.0,
+     10.0
+    ],
+    [
+     93.0,
+     939.5
+    ]
+   ],
+   "width": 9.0,
+   "evidence": "ortho2020, osm",
+   "unverified": "worn grey surface (asphalt assumed); edges read off the ortho to about 0.5 m; the north-east end against the stadium building is left to the stadium zone"
+  },
+  {
+   "name": "ST_road_stadium_W_service",
+   "kind": "asphalt",
+   "centre": [
+    [
+     95.0,
+     936.0
+    ],
+    [
+     97.5,
+     953.0,
+     12.0
+    ],
+    [
+     94.5,
+     966.0,
+     12.0
+    ],
+    [
+     87.5,
+     985.0
+    ],
+    [
+     86.5,
+     989.0
+    ]
+   ],
+   "width": 4.8,
+   "evidence": "ortho2020, osm",
+   "unverified": "fades into bare ground north of y 985; surface (asphalt or gravel) not certain"
+  },
+  {
+   "name": "ST_road_Carlisle_Rd_drive",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -42.0,
+     854.86
+    ],
+    [
+     -30.0,
+     851.8,
+     25.0
+    ],
+    [
+     30.0,
+     827.97
+    ]
+   ],
+   "width": 4.6,
+   "evidence": "ortho2020, osm",
+   "unverified": "edges partly in tree shadow (about 0.5 m)"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "ST_lot_22_curb_E_N",
+   "path": [
+    [
+     300.51,
+     826.4
+    ],
+    [
+     291.75,
+     896.75,
+     45.0
+    ],
+    [
+     288.0,
+     904.6
+    ],
+    [
+     289.64,
+     908.16
+    ],
+    [
+     281.59,
+     916.3,
+     27.3
+    ],
+    [
+     231.2,
+     916.2,
+     1.0
+    ],
+    [
+     224.75,
+     910.2,
+     1.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "curb assumed along the whole outer edge (seen as a bright line in the ortho)"
+  },
+  {
+   "name": "ST_lot_22_curb_W",
+   "path": [
+    [
+     224.75,
+     910.2,
+     1.0
+    ],
+    [
+     230.83,
+     858.73,
+     1.5
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_curb_W_S",
+   "path": [
+    [
+     231.82,
+     850.79,
+     1.5
+    ],
+    [
+     234.86,
+     826.4
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_median_curb_W",
+   "path": [
+    [
+     269.27,
+     826.4
+    ],
+    [
+     265.78,
+     854.42
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_median_curb_E",
+   "path": [
+    [
+     267.67,
+     854.65
+    ],
+    [
+     271.19,
+     826.4
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_median_curb_N",
+   "path": [
+    [
+     265.78,
+     854.42
+    ],
+    [
+     267.67,
+     854.65
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_A_N_island_curb",
+   "path": [
+    [
+     289.99,
+     857.03,
+     1.1
+    ],
+    [
+     289.72,
+     859.26,
+     1.1
+    ],
+    [
+     279.1,
+     857.94,
+     1.1
+    ],
+    [
+     279.38,
+     855.71,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_A_S_island_curb",
+   "path": [
+    [
+     288.94,
+     865.47,
+     1.1
+    ],
+    [
+     288.66,
+     867.7,
+     1.1
+    ],
+    [
+     278.05,
+     866.38,
+     1.1
+    ],
+    [
+     278.32,
+     864.14,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_N_island_curb",
+   "path": [
+    [
+     272.33,
+     854.83,
+     1.1
+    ],
+    [
+     272.05,
+     857.06,
+     1.1
+    ],
+    [
+     260.54,
+     855.63,
+     1.1
+    ],
+    [
+     260.82,
+     853.4,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_B_S_island_curb",
+   "path": [
+    [
+     271.28,
+     863.27,
+     1.1
+    ],
+    [
+     271.0,
+     865.5,
+     1.1
+    ],
+    [
+     259.49,
+     864.07,
+     1.1
+    ],
+    [
+     259.77,
+     861.83,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_C_N_island_curb",
+   "path": [
+    [
+     254.27,
+     852.58,
+     1.1
+    ],
+    [
+     253.99,
+     854.81,
+     1.1
+    ],
+    [
+     243.27,
+     853.48,
+     1.1
+    ],
+    [
+     243.55,
+     851.25,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_C_S_island_curb",
+   "path": [
+    [
+     253.22,
+     861.02,
+     1.1
+    ],
+    [
+     252.94,
+     863.25,
+     1.1
+    ],
+    [
+     242.22,
+     861.91,
+     1.1
+    ],
+    [
+     242.5,
+     859.68,
+     1.1
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_B_median_curb",
+   "path": [
+    [
+     264.66,
+     863.45
+    ],
+    [
+     259.98,
+     900.96
+    ],
+    [
+     261.87,
+     901.19
+    ],
+    [
+     266.54,
+     863.68
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_C_N_island_curb",
+   "path": [
+    [
+     248.36,
+     901.63,
+     1.8
+    ],
+    [
+     247.89,
+     905.4,
+     1.8
+    ],
+    [
+     236.98,
+     904.04,
+     1.8
+    ],
+    [
+     237.45,
+     900.27,
+     1.8
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_B_N_island_curb",
+   "path": [
+    [
+     267.31,
+     901.57,
+     1.2
+    ],
+    [
+     266.82,
+     905.54,
+     1.2
+    ],
+    [
+     254.91,
+     904.06,
+     1.2
+    ],
+    [
+     255.41,
+     900.09,
+     1.2
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_A_N_island_curb",
+   "path": [
+    [
+     273.6,
+     900.0,
+     0.3
+    ],
+    [
+     273.6,
+     903.4,
+     0.3
+    ],
+    [
+     285.2,
+     903.4,
+     11.3
+    ],
+    [
+     285.2,
+     890.4,
+     0.5
+    ],
+    [
+     280.4,
+     890.4
+    ],
+    [
+     280.4,
+     900.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_W_island_curb",
+   "path": [
+    [
+     235.84,
+     858.95,
+     1.0
+    ],
+    [
+     232.17,
+     888.43,
+     1.0
+    ],
+    [
+     227.01,
+     887.78,
+     1.0
+    ],
+    [
+     230.68,
+     858.31,
+     1.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_SE_curb",
+   "path": [
+    [
+     160.77,
+     826.2
+    ],
+    [
+     177.27,
+     848.55
+    ],
+    [
+     180.5,
+     849.9
+    ],
+    [
+     196.83,
+     872.02
+    ],
+    [
+     197.87,
+     875.61
+    ],
+    [
+     199.35,
+     877.62
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_Webster_W_curb",
+   "path": [
+    [
+     222.42,
+     826.2
+    ],
+    [
+     213.98,
+     897.44,
+     10.0
+    ],
+    [
+     197.27,
+     874.81
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_Webster_E_curb",
+   "path": [
+    [
+     233.23,
+     826.2
+    ],
+    [
+     227.11,
+     877.8,
+     23.0
+    ],
+    [
+     211.4,
+     889.4,
+     0.8
+    ],
+    [
+     213.01,
+     896.13
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_23N_curb_E",
+   "path": [
+    [
+     198.4,
+     860.3,
+     1.0
+    ],
+    [
+     210.4,
+     850.6,
+     1.0
+    ],
+    [
+     208.2,
+     846.2,
+     0.5
+    ],
+    [
+     208.0,
+     843.0
+    ],
+    [
+     206.4,
+     835.2,
+     3.0
+    ],
+    [
+     200.17,
+     826.6
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "east curb under tree shade"
+  },
+  {
+   "name": "ST_lot_23N_curb_W",
+   "path": [
+    [
+     163.68,
+     826.6
+    ],
+    [
+     178.19,
+     846.26
+    ],
+    [
+     183.0,
+     845.2,
+     1.0
+    ],
+    [
+     198.4,
+     860.3,
+     1.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_23N_island_N_curb",
+   "path": [
+    [
+     194.9,
+     840.03,
+     0.5
+    ],
+    [
+     198.19,
+     844.43,
+     0.5
+    ],
+    [
+     202.6,
+     841.14,
+     0.5
+    ],
+    [
+     199.3,
+     836.74,
+     0.5
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  }
+ ],
+ "markings": [
+  {
+   "name": "ST_lot_21_A_W",
+   "type": "stalls",
+   "line": [
+    [
+     288.15,
+     828.38
+    ],
+    [
+     285.27,
+     851.48
+    ]
+   ],
+   "count": 9,
+   "depth": 5.45,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_A_E",
+   "type": "stalls",
+   "line": [
+    [
+     288.15,
+     828.38
+    ],
+    [
+     285.27,
+     851.48
+    ]
+   ],
+   "count": 9,
+   "depth": 5.33,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_A_centre",
+   "type": "line",
+   "path": [
+    [
+     288.4,
+     826.4
+    ],
+    [
+     284.66,
+     856.37
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_C_W",
+   "type": "stalls",
+   "line": [
+    [
+     251.78,
+     829.06
+    ],
+    [
+     249.22,
+     849.59
+    ]
+   ],
+   "count": 8,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_C_E",
+   "type": "stalls",
+   "line": [
+    [
+     251.78,
+     829.06
+    ],
+    [
+     249.22,
+     849.59
+    ]
+   ],
+   "count": 8,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_C_centre",
+   "type": "line",
+   "path": [
+    [
+     252.11,
+     826.4
+    ],
+    [
+     248.93,
+     851.92
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_W",
+   "type": "stalls",
+   "line": [
+    [
+     269.0,
+     828.6
+    ],
+    [
+     266.44,
+     849.13
+    ]
+   ],
+   "count": 8,
+   "depth": 4.9,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_21_B_E",
+   "type": "stalls",
+   "line": [
+    [
+     270.88,
+     828.84
+    ],
+    [
+     268.0,
+     851.93
+    ]
+   ],
+   "count": 9,
+   "depth": 4.9,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_A_W",
+   "type": "stalls",
+   "line": [
+    [
+     283.36,
+     866.88
+    ],
+    [
+     279.52,
+     897.67
+    ]
+   ],
+   "count": 12,
+   "depth": 5.33,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_A_E",
+   "type": "stalls",
+   "line": [
+    [
+     283.36,
+     866.88
+    ],
+    [
+     280.48,
+     889.97
+    ]
+   ],
+   "count": 9,
+   "depth": 5.45,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_A_centre",
+   "type": "line",
+   "path": [
+    [
+     283.49,
+     865.8
+    ],
+    [
+     279.16,
+     900.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_B_W",
+   "type": "stalls",
+   "line": [
+    [
+     264.52,
+     864.53
+    ],
+    [
+     260.05,
+     900.45
+    ]
+   ],
+   "count": 14,
+   "depth": 4.9,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_B_E",
+   "type": "stalls",
+   "line": [
+    [
+     266.09,
+     867.34
+    ],
+    [
+     261.93,
+     900.69
+    ]
+   ],
+   "count": 13,
+   "depth": 4.9,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_C_W",
+   "type": "stalls",
+   "line": [
+    [
+     247.62,
+     862.43
+    ],
+    [
+     243.15,
+     898.35
+    ]
+   ],
+   "count": 14,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_C_E",
+   "type": "stalls",
+   "line": [
+    [
+     247.62,
+     862.43
+    ],
+    [
+     243.15,
+     898.35
+    ]
+   ],
+   "count": 14,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_C_centre",
+   "type": "line",
+   "path": [
+    [
+     247.76,
+     861.34
+    ],
+    [
+     242.8,
+     901.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_NE_stall_line_0",
+   "type": "line",
+   "path": [
+    [
+     276.0,
+     915.8
+    ],
+    [
+     275.4,
+     911.2
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "fanned stall lines on the corner read by eye (about 0.3 m)"
+  },
+  {
+   "name": "ST_lot_22_NE_stall_line_1",
+   "type": "line",
+   "path": [
+    [
+     279.0,
+     915.1
+    ],
+    [
+     277.8,
+     910.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "fanned stall lines on the corner read by eye (about 0.3 m)"
+  },
+  {
+   "name": "ST_lot_22_NE_stall_line_2",
+   "type": "line",
+   "path": [
+    [
+     282.4,
+     913.6
+    ],
+    [
+     280.4,
+     909.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "fanned stall lines on the corner read by eye (about 0.3 m)"
+  },
+  {
+   "name": "ST_lot_22_NE_stall_line_3",
+   "type": "line",
+   "path": [
+    [
+     284.7,
+     912.1
+    ],
+    [
+     282.6,
+     908.8
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "fanned stall lines on the corner read by eye (about 0.3 m)"
+  },
+  {
+   "name": "ST_lot_22_NE_stall_line_4",
+   "type": "line",
+   "path": [
+    [
+     287.2,
+     910.2
+    ],
+    [
+     285.0,
+     907.2
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "fanned stall lines on the corner read by eye (about 0.3 m)"
+  },
+  {
+   "name": "ST_lot_21_W",
+   "type": "stalls",
+   "line": [
+    [
+     234.87,
+     826.31
+    ],
+    [
+     232.27,
+     847.21
+    ]
+   ],
+   "count": 8,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines mostly under parked cars: pitch from the visible line ends"
+  },
+  {
+   "name": "ST_lot_22_W_N",
+   "type": "stalls",
+   "line": [
+    [
+     226.82,
+     890.93
+    ],
+    [
+     225.55,
+     901.1
+    ]
+   ],
+   "count": 4,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line positions read off the ortho by eye"
+  },
+  {
+   "name": "ST_lot_22_W_N2",
+   "type": "stalls",
+   "line": [
+    [
+     224.97,
+     905.77
+    ],
+    [
+     224.38,
+     910.53
+    ]
+   ],
+   "count": 2,
+   "depth": 5.3,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "line positions read off the ortho by eye"
+  },
+  {
+   "name": "ST_lot_22_access_aisle_0",
+   "type": "line",
+   "path": [
+    [
+     225.26,
+     903.49
+    ],
+    [
+     230.51,
+     904.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_access_aisle_1",
+   "type": "line",
+   "path": [
+    [
+     224.97,
+     905.77
+    ],
+    [
+     230.23,
+     906.42
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_access_hatch_0",
+   "type": "line",
+   "path": [
+    [
+     226.15,
+     903.6
+    ],
+    [
+     227.05,
+     906.03
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch count and direction"
+  },
+  {
+   "name": "ST_lot_22_access_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     227.84,
+     903.81
+    ],
+    [
+     228.74,
+     906.24
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch count and direction"
+  },
+  {
+   "name": "ST_lot_22_access_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     229.52,
+     904.02
+    ],
+    [
+     230.43,
+     906.45
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch count and direction"
+  },
+  {
+   "name": "ST_lot_22_mouth_crosswalk",
+   "type": "stalls",
+   "line": [
+    [
+     232.12,
+     852.39
+    ],
+    [
+     231.36,
+     858.5
+    ]
+   ],
+   "count": 5,
+   "depth": 2.6,
+   "side": "left",
+   "angle": 90,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_N",
+   "type": "stalls",
+   "line": [
+    [
+     231.39,
+     915.9
+    ],
+    [
+     272.76,
+     915.9
+    ]
+   ],
+   "count": 16,
+   "depth": 4.9,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_NW_edge_line",
+   "type": "line",
+   "path": [
+    [
+     148.35,
+     826.2
+    ],
+    [
+     180.21,
+     869.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_CL_a",
+   "type": "line",
+   "path": [
+    [
+     152.67,
+     826.0
+    ],
+    [
+     193.5,
+     881.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_CL_b",
+   "type": "line",
+   "path": [
+    [
+     152.92,
+     826.0
+    ],
+    [
+     193.66,
+     881.2
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_lane_line",
+   "type": "line",
+   "path": [
+    [
+     157.4,
+     826.0
+    ],
+    [
+     195.97,
+     878.26
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_bay_line",
+   "type": "line",
+   "path": [
+    [
+     177.88,
+     849.97
+    ],
+    [
+     196.29,
+     874.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_bay_hatch_0",
+   "type": "line",
+   "path": [
+    [
+     180.67,
+     853.5
+    ],
+    [
+     181.17,
+     851.14
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
+  },
+  {
+   "name": "ST_road_YB_bay_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     183.05,
+     856.72
+    ],
+    [
+     183.55,
+     854.36
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
+  },
+  {
+   "name": "ST_road_YB_bay_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     185.43,
+     859.94
+    ],
+    [
+     185.92,
+     857.58
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
+  },
+  {
+   "name": "ST_road_YB_bay_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     190.18,
+     866.37
+    ],
+    [
+     190.67,
+     864.02
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
+  },
+  {
+   "name": "ST_road_YB_bay_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     192.55,
+     869.59
+    ],
+    [
+     193.05,
+     867.23
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
+  },
+  {
+   "name": "ST_road_YB_N_CL_a",
+   "type": "line",
+   "path": [
+    [
+     209.83,
+     903.44
+    ],
+    [
+     220.52,
+     917.93
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_N_CL_b",
+   "type": "line",
+   "path": [
+    [
+     209.99,
+     903.33
+    ],
+    [
+     220.68,
+     917.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_N_lane_line",
+   "type": "line",
+   "path": [
+    [
+     212.81,
+     901.25
+    ],
+    [
+     222.9,
+     914.92
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_crosswalk",
+   "type": "stalls",
+   "line": [
+    [
+     211.19,
+     895.85
+    ],
+    [
+     203.67,
+     901.41
+    ]
+   ],
+   "count": 8,
+   "depth": 2.4,
+   "side": "right",
+   "angle": 90,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bars under the shadow at the south-east end inferred from the pitch"
+  },
+  {
+   "name": "ST_road_YB_stop_bar_SW",
+   "type": "line",
+   "path": [
+    [
+     209.36,
+     903.05
+    ],
+    [
+     206.42,
+     905.22
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_Webster_CL_a",
+   "type": "line",
+   "path": [
+    [
+     227.93,
+     826.0
+    ],
+    [
+     222.25,
+     873.89,
+     20.0
+    ],
+    [
+     206.13,
+     885.79
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "curve into the junction read by eye"
+  },
+  {
+   "name": "ST_road_Webster_CL_b",
+   "type": "line",
+   "path": [
+    [
+     228.13,
+     826.0
+    ],
+    [
+     222.51,
+     873.46,
+     20.0
+    ],
+    [
+     206.01,
+     885.63
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "curve into the junction read by eye"
+  },
+  {
+   "name": "ST_road_Webster_edge_line",
+   "type": "line",
+   "path": [
+    [
+     224.31,
+     826.0
+    ],
+    [
+     219.77,
+     864.29
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "the line is faint; its north end is a guess"
+  },
+  {
+   "name": "ST_road_Webster_mouth_crosswalk",
+   "type": "stalls",
+   "line": [
+    [
+     201.88,
+     881.22
+    ],
+    [
+     205.45,
+     886.05
+    ]
+   ],
+   "count": 5,
+   "depth": 2.4,
+   "side": "right",
+   "angle": 90,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020, osm",
+   "unverified": "bar count"
+  },
+  {
+   "name": "ST_road_YB_island_crosswalk",
+   "type": "stalls",
+   "line": [
+    [
+     210.3,
+     889.8
+    ],
+    [
+     212.0,
+     895.8
+    ]
+   ],
+   "count": 5,
+   "depth": 2.6,
+   "side": "left",
+   "angle": 90,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020, osm",
+   "unverified": "bar count and direction read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_line",
+   "type": "line",
+   "path": [
+    [
+     223.2,
+     915.33
+    ],
+    [
+     233.66,
+     931.35
+    ],
+    [
+     236.59,
+     934.65
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_0",
+   "type": "line",
+   "path": [
+    [
+     224.42,
+     917.53
+    ],
+    [
+     225.79,
+     913.79
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     226.09,
+     920.03
+    ],
+    [
+     227.57,
+     916.2
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     227.75,
+     922.54
+    ],
+    [
+     229.36,
+     918.61
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     229.41,
+     925.04
+    ],
+    [
+     231.14,
+     921.03
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     231.07,
+     927.54
+    ],
+    [
+     232.92,
+     923.44
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_road_YB_gore_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     232.73,
+     930.05
+    ],
+    [
+     234.7,
+     925.86
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing read by eye"
+  },
+  {
+   "name": "ST_lot_23N_C_SE_N",
+   "type": "stalls",
+   "line": [
+    [
+     188.38,
+     831.49
+    ],
+    [
+     194.59,
+     839.76
+    ]
+   ],
+   "count": 4,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 88.6,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_23N_C_NW_N",
+   "type": "stalls",
+   "line": [
+    [
+     188.4,
+     831.51
+    ],
+    [
+     194.66,
+     839.85
+    ]
+   ],
+   "count": 4,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 91.5,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_23N_C_centre_N",
+   "type": "line",
+   "path": [
+    [
+     186.97,
+     829.6
+    ],
+    [
+     194.88,
+     840.17
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_23N_NE_row",
+   "type": "stalls",
+   "line": [
+    [
+     197.96,
+     860.18
+    ],
+    [
+     209.84,
+     850.43
+    ]
+   ],
+   "count": 6,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 84.9,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "three of the seven lines are faint; their positions follow the pitch"
+  },
+  {
+   "name": "ST_lot_23N_W_line_0",
+   "type": "line",
+   "path": [
+    [
+     164.53,
+     827.75
+    ],
+    [
+     168.15,
+     825.08
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_1",
+   "type": "line",
+   "path": [
+    [
+     165.84,
+     829.52
+    ],
+    [
+     169.46,
+     826.85
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_2",
+   "type": "line",
+   "path": [
+    [
+     168.33,
+     832.9
+    ],
+    [
+     171.95,
+     830.23
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_3",
+   "type": "line",
+   "path": [
+    [
+     169.88,
+     835.0
+    ],
+    [
+     173.5,
+     832.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_4",
+   "type": "line",
+   "path": [
+    [
+     172.61,
+     838.7
+    ],
+    [
+     176.23,
+     836.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_5",
+   "type": "line",
+   "path": [
+    [
+     173.91,
+     840.47
+    ],
+    [
+     177.54,
+     837.79
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_6",
+   "type": "line",
+   "path": [
+    [
+     176.29,
+     843.68
+    ],
+    [
+     179.91,
+     841.01
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_line_7",
+   "type": "line",
+   "path": [
+    [
+     177.6,
+     845.45
+    ],
+    [
+     181.22,
+     842.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint; stall and aisle widths read by eye"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_0_0",
+   "type": "line",
+   "path": [
+    [
+     164.99,
+     827.54
+    ],
+    [
+     167.15,
+     828.43
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_0_1",
+   "type": "line",
+   "path": [
+    [
+     166.04,
+     826.77
+    ],
+    [
+     168.19,
+     827.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_0_2",
+   "type": "line",
+   "path": [
+    [
+     167.09,
+     825.99
+    ],
+    [
+     169.24,
+     826.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_1_0",
+   "type": "line",
+   "path": [
+    [
+     168.79,
+     832.69
+    ],
+    [
+     171.18,
+     833.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_1_1",
+   "type": "line",
+   "path": [
+    [
+     169.84,
+     831.91
+    ],
+    [
+     172.23,
+     833.13
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_1_2",
+   "type": "line",
+   "path": [
+    [
+     170.89,
+     831.14
+    ],
+    [
+     173.28,
+     832.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_2_0",
+   "type": "line",
+   "path": [
+    [
+     173.07,
+     838.48
+    ],
+    [
+     175.22,
+     839.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_2_1",
+   "type": "line",
+   "path": [
+    [
+     174.12,
+     837.71
+    ],
+    [
+     176.27,
+     838.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_2_2",
+   "type": "line",
+   "path": [
+    [
+     175.16,
+     836.94
+    ],
+    [
+     177.31,
+     837.83
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_3_0",
+   "type": "line",
+   "path": [
+    [
+     176.75,
+     843.47
+    ],
+    [
+     178.9,
+     844.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_3_1",
+   "type": "line",
+   "path": [
+    [
+     177.8,
+     842.7
+    ],
+    [
+     179.95,
+     843.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_23N_W_aisle_3_2",
+   "type": "line",
+   "path": [
+    [
+     178.84,
+     841.92
+    ],
+    [
+     181.0,
+     842.82
+    ]
+   ],
+   "width": 0.1,
+   "colour": "#3a62b4",
+   "evidence": "ortho2020",
+   "unverified": "blue access-aisle hatching: line count and direction"
+  },
+  {
+   "name": "ST_lot_W_NW_row",
+   "type": "stalls",
+   "line": [
+    [
+     89.64,
+     849.54
+    ],
+    [
+     118.09,
+     892.85
+    ]
+   ],
+   "count": 20,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_W_C_NW",
+   "type": "stalls",
+   "line": [
+    [
+     104.5,
+     837.18
+    ],
+    [
+     131.51,
+     878.3
+    ]
+   ],
+   "count": 19,
+   "depth": 5.2,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_W_C_SE",
+   "type": "stalls",
+   "line": [
+    [
+     104.5,
+     837.18
+    ],
+    [
+     131.51,
+     878.3
+    ]
+   ],
+   "count": 19,
+   "depth": 5.1,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_W_C_centre",
+   "type": "line",
+   "path": [
+    [
+     103.73,
+     836.0
+    ],
+    [
+     131.51,
+     878.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_W_C_end_bar",
+   "type": "line",
+   "path": [
+    [
+     135.85,
+     875.63
+    ],
+    [
+     127.24,
+     881.28
+    ]
+   ],
+   "width": 0.25,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "the end line looks doubled: drawn as one line"
+  },
+  {
+   "name": "ST_lot_W_C_hatch_edge",
+   "type": "line",
+   "path": [
+    [
+     100.15,
+     840.04
+    ],
+    [
+     107.52,
+     833.04
+    ],
+    [
+     108.76,
+     834.38
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted end cap outline read by eye"
+  },
+  {
+   "name": "ST_lot_W_C_hatch_0",
+   "type": "line",
+   "path": [
+    [
+     107.23,
+     834.24
+    ],
+    [
+     105.55,
+     836.43
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch lines read by eye"
+  },
+  {
+   "name": "ST_lot_W_C_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     105.38,
+     835.99
+    ],
+    [
+     103.46,
+     837.8
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch lines read by eye"
+  },
+  {
+   "name": "ST_lot_W_C_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     103.54,
+     837.74
+    ],
+    [
+     101.37,
+     839.17
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch lines read by eye"
+  },
+  {
+   "name": "ST_lot_W_SE_row",
+   "type": "stalls",
+   "line": [
+    [
+     117.83,
+     821.97
+    ],
+    [
+     150.49,
+     871.68
+    ]
+   ],
+   "count": 23,
+   "depth": 5.8,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "the first stall lines are cut by the footprint edge"
+  },
+  {
+   "name": "ST_lot_W_NE_row",
+   "type": "stalls",
+   "line": [
+    [
+     147.45,
+     883.26
+    ],
+    [
+     130.05,
+     894.69
+    ]
+   ],
+   "count": 8,
+   "depth": 5.2,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  }
+ ],
+ "points": [
+  {
+   "name": "ST_lot_22_lamp_0",
+   "kind": "lamp",
+   "at": [
+    245.6,
+    860.7
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "island at the south end of row C, Lot 22: a single low pole return and the pole shadow; height and head type not measured"
+  },
+  {
+   "name": "ST_lot_22_lamp_1",
+   "kind": "lamp",
+   "at": [
+    244.9,
+    853.1
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "island at the north end of row C, Lot 21: a single low pole return and the pole shadow; height and head type not measured"
+  },
+  {
+   "name": "ST_lot_22_lamp_2",
+   "kind": "lamp",
+   "at": [
+    267.7,
+    853.3
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "island at the north end of row B, Lot 21: a single low pole return and the pole shadow; height and head type not measured"
+  },
+  {
+   "name": "ST_lot_22_lamp_3",
+   "kind": "lamp",
+   "at": [
+    288.2,
+    856.2
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "island at the north end of row A, Lot 21: a single low pole return and the pole shadow; height and head type not measured"
+  },
+  {
+   "name": "ST_lot_22_lamp_4",
+   "kind": "lamp",
+   "at": [
+    243.2,
+    902.2
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "island at the north end of row C, Lot 22: a single low pole return and the pole shadow; height and head type not measured"
+  },
+  {
+   "name": "ST_lot_W_lamp",
+   "kind": "lamp",
+   "at": [
+    93.3,
+    848.3
+   ],
+   "evidence": "ortho2020",
+   "unverified": "placed at the foot of a pole shadow (no LiDAR return); height and head type not measured"
+  }
+ ]
+}

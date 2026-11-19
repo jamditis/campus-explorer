@@ -20,6 +20,7 @@ import sys
 from mathutils import Matrix, Vector
 
 try:
+    import geom
     import kit
 except ImportError:  # executed as a script: demo() puts this folder on sys.path first
     kit = None
@@ -341,6 +342,91 @@ def fence(
                 fab,
             )
     return b.finish()
+
+
+def foul_pole(name, at, angle, height=12.0, *, side="left", unverified=True):
+    """Ballpark foul pole: a yellow 0.3 m pole with a 0.75 m screen wing on its fair side over
+    the upper two thirds. `angle` points along the foul line away from home plate; `side` says
+    whether fair ground is to the "left" or the "right" of that direction."""
+    side = 1 if side == "left" else -1
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    yellow = kit.mat("paint", "foul_pole_yellow", kit.srgb("#e3c21c"), rough=0.5)
+    b.tube(P(0, 0, -0.1), P(0, 0, height), 0.15, yellow, sides=8)
+    z0, w = height / 3, 0.75 * side
+    for z in (z0, height - 0.05):
+        b.beam(P(0, 0, z), P(0, w, z), 0.05, 0.05, yellow)
+    b.beam(P(0, w, z0), P(0, w, height - 0.05), 0.05, 0.05, yellow)
+    for k in range(1, 6):
+        z = z0 + (height - z0) * k / 6
+        b.beam(P(0, 0, z), P(0, w, z), 0.03, 0.03, yellow)
+    return b.finish()
+
+
+def soccer_goal(name, at, angle, *, unverified=True):
+    """Full-size soccer goal (7.32 m x 2.44 m inside, 0.12 m white posts) with a 2 m deep net
+    frame. `at` is the middle of the goal line; the mouth faces `angle` (toward the pitch)."""
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    white, net = _m("white_alu"), _m("net")
+    hw, h, d = 3.72, 2.5, 2.0
+    for v in (-hw, hw):
+        b.tube(P(0, v, -0.05), P(0, v, h), 0.06, white, sides=8)
+        b.tube(P(0, v, h), P(-d, v, 0.05), 0.03, white, sides=6)
+        b.tube(P(0, v, 0.03), P(-d, v, 0.03), 0.03, white, sides=6)
+    b.tube(P(0, -hw, h), P(0, hw, h), 0.06, white, sides=8)
+    b.tube(P(-d, -hw, 0.03), P(-d, hw, 0.03), 0.03, white, sides=6)
+    # net: the sloping back and the two sides, each wound to face out of the goal (the net
+    # material is see-through and shown from both sides)
+    back = [P(0, -hw, h), P(0, hw, h), P(-d, hw, 0.05), P(-d, -hw, 0.05)]
+    b.faces(back, [(0, 1, 2, 3)], net)
+    for v in (-hw, hw):
+        tri = [P(0, v, 0.05), P(0, v, h), P(-d, v, 0.05)]
+        b.faces(tri, [(0, 1, 2) if v < 0 else (2, 1, 0)], net)
+    return b.finish(recalc=False)
+
+
+WALLS = {  # plan fence kinds that are solid walls: material kind, default colour
+    "wall_padded": ("paint", "#1f4a33"),  # a ballpark's padded outfield wall
+    "wall_brick": ("brick", "#8e4f3c"),
+    "wall_concrete": ("concrete", "#b5b2a9"),
+}
+
+
+def wall(name, path, height=2.4, *, ground=None, kind="wall_concrete", colour=None, thickness=0.25,
+         unverified=True):  # fmt: skip
+    """Solid wall along a dense polyline [(x, y), ...]: `thickness` wide, its top `height` above
+    the ground under it (it follows the ground, sampled every 3 m at most), its foot 0.3 m in the
+    ground. `kind` is one of WALLS; `colour` ("#rrggbb") overrides that kind's colour.
+    """
+    g = ground or (lambda x, y: 0.0)
+    mk, default = WALLS.get(kind, WALLS["wall_concrete"])
+    hexc = colour or default
+    m = kit.mat(mk, f"wall_{hexc[1:]}", kit.srgb(hexc), rough=0.85)
+    pts = [(q.x, q.y) for q in _resample(path, 3.0)]
+    closed = len(pts) > 2 and math.hypot(pts[0][0] - pts[-1][0], pts[0][1] - pts[-1][1]) < 1e-6
+    if closed:
+        pts = pts[:-1]
+    left = geom.offset(pts, thickness / 2, closed)
+    right = geom.offset(pts, -thickness / 2, closed)
+    n = len(pts)
+    zs = [g(x, y) for x, y in pts]
+    v = []
+    for side in (left, right):
+        v += [(q[0], q[1], z - 0.3) for q, z in zip(side, zs, strict=True)]
+        v += [(q[0], q[1], z + height) for q, z in zip(side, zs, strict=True)]
+    lb, lt, rb, rt = 0, n, 2 * n, 3 * n  # left bottom/top, right bottom/top
+    f = []
+    for i in range(n if closed else n - 1):
+        j = (i + 1) % n
+        f += [
+            (lb + j, lb + i, lt + i, lt + j),  # left face, seen from the left
+            (rb + i, rb + j, rt + j, rt + i),  # right face
+            (lt + i, rt + i, rt + j, lt + j),  # top
+        ]
+    if not closed:
+        f += [(lb, rb, rt, lt), (rb + n - 1, lb + n - 1, lt + n - 1, rt + n - 1)]
+    b = kit.Builder(_name(name, unverified))
+    b.faces(v, f, m)
+    return b.finish(recalc=False)
 
 
 def net_poles(name, path, height=9.0, *, ground=None, spacing=9.0, unverified=True):

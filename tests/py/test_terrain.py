@@ -65,6 +65,26 @@ class Grading(unittest.TestCase):
         soft = t.surface(x, y, np.zeros(2, bool))
         self.assertAlmostEqual(soft[1], 99.0, delta=0.1)  # soft ground rises to meet it
 
+    def test_an_edge_with_no_samples_keeps_its_own_ground(self):
+        # samples only along the south edge, 5 m above the ground: the north edge (shared with
+        # another scripted area, so it has none) must not take a height from 100 m away
+        samples = [[x, 0.0, 105.0] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT, paved=[ROAD])
+        x, y = np.array([50.0, 150.0]), np.array([99.8, 99.8])
+        soft = t.surface(x, y, np.zeros(2, bool))
+        np.testing.assert_allclose(soft, 100 - 0.02 * x, atol=0.1)
+        south = t.surface(x, np.array([0.2, 0.2]), np.zeros(2, bool))
+        np.testing.assert_allclose(south, 105.0, atol=0.3)  # the sampled edge still blends
+
+    def test_edge_samples_are_not_averaged_across_a_gap(self):
+        # two runs of samples at different levels with a gap between them (x 60 to 140)
+        samples = [[x, 0.0, 99.0] for x in range(0, 60)] + [[x, 0.0, 96.0] for x in range(140, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT, paved=[ROAD])
+        z = t.neighbour_z(np.array([58.0, 142.0]), np.array([0.0, 0.0]))
+        np.testing.assert_allclose(z, [99.0, 96.0], atol=0.01)
+
     def test_a_lift_is_full_inside_its_ring_and_gone_past_its_feather(self):
         lift = dict(ring=[(90, 0), (110, 0), (110, 100), (90, 100)], dz=0.65, feather=10.0)
         with tempfile.TemporaryDirectory() as d:

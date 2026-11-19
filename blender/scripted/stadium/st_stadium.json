@@ -1,0 +1,2035 @@
+{
+ "zone": "st_stadium",
+ "notes": "Yogi Berra Stadium and the Yogi Berra Museum. Field frame (fitted): apex of home plate at (166.379, 954.587), the intersection of the 3B and 1B base-path centre lines, each fitted as a tan stripe on 25 profiles of the 2020 ortho (rms 0.06 and 0.03 m; 135.01 and 45.42 deg, 89.6 deg apart); axis to second base at 90.217 deg (bisector), foul lines at 135.217 (3B) and 45.217 deg (1B). Checks: the home-circle tarp centroid is 0.19 m from the apex, the mound tarp centroid 0.43 m beyond the rule-book mound centre; the skin edge reads R 29.25 m about the front of the pitcher's plate (rule 28.96); the LiDAR outfield wall meets the foul lines at 93.75 m (LF, 307.6 ft) and 93.05 m (RF), against 308 ft published. Everything of the diamond is generated from the rule book in that frame (90 ft bases, 60 ft 6 in to the pitcher's plate, 18 ft mound centred 59 ft out, 26 ft home circle, 95 ft infield arc, 3 ft base-path half width, 4 x 6 ft batter's boxes, 43 in catcher's box, coach's boxes 15 ft out, 3 in chalk) by /tmp/claude-0/st/st_stadium/gen.py; the grass edge (27.0 m) and its notches at the bases are measured. Surface: the 2017 LiDAR and the 2020 ortho show natural grass and a clay infield, but the field was converted to synthetic turf for the 2024 season (sources in the turf surface), with a brown turf infield arc, home circle and mound and green base paths (aerial photo of Feb 2024), so the playing field is turf with the brown parts and the warning track as paint. Stands: the bowl is read in the foul-line frames; the front runs straight from home to the left-field deck at 9.7 deg to the 3B line and at 8 deg to the 1B line; sections split at the dugouts and where seat types change. Bullpens in the foul corners (2020) were removed in 2024 and the new bullpens, batting cages and storage building are not seen in any source used, so not drawn. Heights NAVD88 from the 2017 LiDAR.",
+ "surfaces": [
+  {
+   "name": "ST_yogi_field_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     100.0,
+     1020.8
+    ],
+    [
+     103.48,
+     1040.7
+    ],
+    [
+     141.55,
+     1076.86
+    ],
+    [
+     165.916,
+     1076.941
+    ],
+    [
+     189.74,
+     1077.02
+    ],
+    [
+     229.097,
+     1041.018
+    ],
+    [
+     231.414,
+     1030.606
+    ],
+    [
+     231.928,
+     1020.635
+    ],
+    [
+     232.657,
+     1006.5
+    ],
+    [
+     206.5,
+     979.0
+    ],
+    [
+     202.222,
+     975.37
+    ],
+    [
+     174.714,
+     938.618
+    ],
+    [
+     166.44,
+     938.587
+    ],
+    [
+     157.843,
+     938.555
+    ],
+    [
+     116.722,
+     996.117
+    ],
+    [
+     110.566,
+     997.722
+    ],
+    [
+     105.37,
+     1006.682
+    ],
+    [
+     99.908,
+     1016.102
+    ]
+   ],
+   "evidence": "lidar2017 (outfield wall line: wall-top returns, 5 runs fitted, rms 0.15-0.3 m); ortho2020 and lidar2017 (front of the stands); https://montclairathletics.com/news/2023/9/27/baseball-yogi-berra-stadium-to-get-upgraded-renovated.aspx (full synthetic turf in the infield and outfield, 2024); https://www.landtekgroup.com/portfolio/yogi-berra-stadium/ (grass field converted to synthetic turf); https://www.montclair.edu/news-media/news-stories/yogi-berra-stadium-its-brand-new-ball-game (aerial photo of the new turf field, Feb 2024)",
+   "unverified": "the field was natural grass in the 2020 ortho and 2017 LiDAR; since 2024 it is synthetic turf (sources), drawn as turf with the 2020 layout; the edge is the foot of the walls (outfield wall centre line, stand front, lawn wall)"
+  },
+  {
+   "name": "ST_yogi_bowl_concourse",
+   "kind": "concrete",
+   "ring": [
+    [
+     202.827,
+     976.179
+    ],
+    [
+     215.134,
+     963.964
+    ],
+    [
+     225.071,
+     954.102
+    ],
+    [
+     200.131,
+     948.521
+    ],
+    [
+     197.498,
+     945.013
+    ],
+    [
+     205.3,
+     938.0
+    ],
+    [
+     197.6,
+     926.3
+    ],
+    [
+     201.4,
+     922.6
+    ],
+    [
+     198.4,
+     918.3
+    ],
+    [
+     195.3,
+     917.2
+    ],
+    [
+     188.2,
+     913.7
+    ],
+    [
+     179.4,
+     909.5
+    ],
+    [
+     174.1,
+     912.6
+    ],
+    [
+     174.1,
+     913.5
+    ],
+    [
+     159.4,
+     913.5
+    ],
+    [
+     159.3,
+     911.87
+    ],
+    [
+     137.8,
+     923.02
+    ],
+    [
+     131.31,
+     932.17
+    ],
+    [
+     131.094,
+     936.068
+    ],
+    [
+     125.063,
+     941.349
+    ],
+    [
+     121.628,
+     952.084
+    ],
+    [
+     116.855,
+     961.471
+    ],
+    [
+     112.011,
+     970.786
+    ],
+    [
+     105.618,
+     978.54
+    ],
+    [
+     102.3,
+     983.8
+    ],
+    [
+     116.722,
+     996.117
+    ],
+    [
+     157.843,
+     938.555
+    ],
+    [
+     166.44,
+     938.587
+    ],
+    [
+     174.714,
+     938.618
+    ]
+   ],
+   "evidence": "ortho2020 (concrete concourse behind the stands and between the stands and the stadium building and museum); osm 291712746 (pedestrian area); lidar2017 (concourse level 115.5 m)",
+   "unverified": "covers the seating bowl under the stands too; outer edge on the 3B side read to about 1 m where grass and trees meet it"
+  },
+  {
+   "name": "ST_yogi_picnic_deck",
+   "kind": "concrete",
+   "ring": [
+    [
+     116.722,
+     996.117
+    ],
+    [
+     102.3,
+     983.8
+    ],
+    [
+     95.0,
+     984.7
+    ],
+    [
+     93.5,
+     1000.8
+    ],
+    [
+     98.4,
+     1004.0
+    ],
+    [
+     99.908,
+     1016.102
+    ],
+    [
+     105.37,
+     1006.682
+    ],
+    [
+     110.566,
+     997.722
+    ]
+   ],
+   "evidence": "ortho2020 (paved deck with tables in left field foul ground); osm 265888029 (walls); lidar2017 (deck 112.2 m)",
+   "unverified": "surface material (grey-brown in the ortho)"
+  },
+  {
+   "name": "ST_yogi_entry_steps",
+   "kind": "concrete",
+   "ring": [
+    [
+     179.4,
+     909.5
+    ],
+    [
+     188.2,
+     913.7
+    ],
+    [
+     195.3,
+     917.2
+    ],
+    [
+     199.2,
+     909.4
+    ],
+    [
+     192.5,
+     905.7
+    ],
+    [
+     185.4,
+     901.8
+    ]
+   ],
+   "evidence": "osm 291712743 (highway=steps, area); ortho2020 (stepped band); lidar2017 (119.7 m at the plaza, 115.5 m at the concourse)",
+   "unverified": "the steps are drawn as a sloping concrete surface"
+  },
+  {
+   "name": "ST_yogi_garden_W",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     185.4,
+     901.8
+    ],
+    [
+     179.4,
+     909.5
+    ],
+    [
+     174.3,
+     912.6
+    ],
+    [
+     174.3,
+     902.5
+    ],
+    [
+     181.9,
+     902.5
+    ]
+   ],
+   "evidence": "osm 265888021 (garden); ortho2020 (trees and planting)",
+   "unverified": "mulch bed assumed; edges from OSM"
+  },
+  {
+   "name": "ST_yogi_garden_E",
+   "kind": "mulch",
+   "layer": 5.5,
+   "ring": [
+    [
+     195.3,
+     917.2
+    ],
+    [
+     199.2,
+     909.4
+    ],
+    [
+     200.6,
+     912.6
+    ],
+    [
+     200.6,
+     915.9
+    ],
+    [
+     198.4,
+     918.3
+    ]
+   ],
+   "evidence": "osm 265888022 (garden); ortho2020",
+   "unverified": "mulch bed assumed; edges from OSM"
+  }
+ ],
+ "markings": [
+  {
+   "type": "area",
+   "name": "ST_yogi_infield_skin",
+   "ring": [
+    [
+     148.274,
+     971.267
+    ],
+    [
+     138.471,
+     980.996
+    ],
+    [
+     139.765,
+     985.517,
+     28.906
+    ],
+    [
+     145.084,
+     993.277,
+     28.906
+    ],
+    [
+     152.584,
+     998.954,
+     28.906
+    ],
+    [
+     161.496,
+     1001.965,
+     28.906
+    ],
+    [
+     170.903,
+     1002.001,
+     28.906
+    ],
+    [
+     179.837,
+     999.057,
+     28.906
+    ],
+    [
+     187.381,
+     993.437,
+     28.906
+    ],
+    [
+     192.758,
+     985.718,
+     28.906
+    ],
+    [
+     194.086,
+     981.206
+    ],
+    [
+     184.357,
+     971.403
+    ],
+    [
+     183.059,
+     972.692
+    ],
+    [
+     180.828,
+     976.244
+    ],
+    [
+     179.72,
+     979.386
+    ],
+    [
+     166.234,
+     992.77,
+     6.0
+    ],
+    [
+     152.85,
+     979.285
+    ],
+    [
+     151.766,
+     976.134
+    ],
+    [
+     149.563,
+     972.565
+    ]
+   ],
+   "colour": "#7a5641",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book; ortho2020 (skin edge R 29.25 m measured, grass edge 27.0 m from the plate with notches at the bases); aerial photo (2024 turf: brown infield arc, green base paths)",
+   "unverified": "brown infield turf drawn as paint on the turf; arc from the rule book (R 95 ft about the front of the pitcher's plate; the 2020 edge reads 0.3 m wider); grass edge and notches measured on the 2020 grass layout"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_home_circle",
+   "ring": [
+    [
+     170.954,
+     954.587,
+     3.912
+    ],
+    [
+     168.667,
+     958.549,
+     3.912
+    ],
+    [
+     164.091,
+     958.549,
+     3.912
+    ],
+    [
+     161.804,
+     954.587,
+     3.912
+    ],
+    [
+     164.091,
+     950.625,
+     3.912
+    ],
+    [
+     168.667,
+     950.625,
+     3.912
+    ]
+   ],
+   "colour": "#7a5641",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "unverified": "circle centred on the apex of the plate (the 2020 tarp centroid is 0.19 m ahead of it)"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_mound",
+   "ring": [
+    [
+     169.478,
+     972.57,
+     2.693
+    ],
+    [
+     167.895,
+     975.313,
+     2.693
+    ],
+    [
+     164.727,
+     975.313,
+     2.693
+    ],
+    [
+     163.143,
+     972.57,
+     2.693
+    ],
+    [
+     164.727,
+     969.827,
+     2.693
+    ],
+    [
+     167.895,
+     969.827,
+     2.693
+    ]
+   ],
+   "colour": "#7a5641",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book (mound centre 59 ft from the apex; tarp centroid 0.43 m beyond)"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_warning_track_3B",
+   "ring": [
+    [
+     166.44,
+     938.587
+    ],
+    [
+     157.843,
+     938.555
+    ],
+    [
+     116.722,
+     996.117
+    ],
+    [
+     110.566,
+     997.722
+    ],
+    [
+     105.37,
+     1006.682
+    ],
+    [
+     99.908,
+     1016.102
+    ],
+    [
+     100.0,
+     1020.8
+    ],
+    [
+     103.48,
+     1040.7
+    ],
+    [
+     141.55,
+     1076.86
+    ],
+    [
+     165.916,
+     1076.941
+    ],
+    [
+     165.931,
+     1072.341
+    ],
+    [
+     143.393,
+     1072.266
+    ],
+    [
+     107.75,
+     1038.411
+    ],
+    [
+     104.592,
+     1020.356
+    ],
+    [
+     104.547,
+     1018.068
+    ],
+    [
+     109.696,
+     1009.19
+    ],
+    [
+     113.845,
+     1002.034
+    ],
+    [
+     119.737,
+     1000.498
+    ],
+    [
+     160.409,
+     943.564
+    ],
+    [
+     166.421,
+     943.587
+    ]
+   ],
+   "colour": "#5a463a",
+   "evidence": "ortho2020 (dark brown band: 4.6 m inside the wall line in the outfield, about 5 m in front of the stands)",
+   "unverified": "the 2024 track material and colour (drawn as dark brown paint on the turf); widths from the 2020 grass layout"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_warning_track_1B",
+   "ring": [
+    [
+     165.916,
+     1076.941
+    ],
+    [
+     189.74,
+     1077.02
+    ],
+    [
+     229.097,
+     1041.018
+    ],
+    [
+     231.414,
+     1030.606
+    ],
+    [
+     231.928,
+     1020.635
+    ],
+    [
+     232.657,
+     1006.5
+    ],
+    [
+     206.5,
+     979.0
+    ],
+    [
+     202.222,
+     975.37
+    ],
+    [
+     174.714,
+     938.618
+    ],
+    [
+     166.44,
+     938.587
+    ],
+    [
+     166.421,
+     943.587
+    ],
+    [
+     172.204,
+     943.609
+    ],
+    [
+     198.557,
+     978.818
+    ],
+    [
+     203.061,
+     982.64
+    ],
+    [
+     227.933,
+     1008.788
+    ],
+    [
+     227.334,
+     1020.398
+    ],
+    [
+     226.84,
+     1029.984
+    ],
+    [
+     224.922,
+     1038.603
+    ],
+    [
+     187.96,
+     1072.414
+    ],
+    [
+     165.931,
+     1072.341
+    ]
+   ],
+   "colour": "#5a463a",
+   "evidence": "ortho2020 (dark brown band: 4.6 m inside the wall line in the outfield, about 5 m in front of the stands)",
+   "unverified": "the 2024 track material and colour (drawn as dark brown paint on the turf); widths from the 2020 grass layout"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_foul_line_3B",
+   "path": [
+    [
+     166.406,
+     954.614
+    ],
+    [
+     99.859,
+     1020.658
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_foul_line_1B",
+   "path": [
+    [
+     166.352,
+     954.614
+    ],
+    [
+     231.901,
+     1020.661
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_home_plate",
+   "ring": [
+    [
+     166.379,
+     954.587
+    ],
+    [
+     166.594,
+     954.804
+    ],
+    [
+     166.593,
+     955.02
+    ],
+    [
+     166.161,
+     955.018
+    ],
+    [
+     166.162,
+     954.802
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_first_base",
+   "ring": [
+    [
+     185.434,
+     973.787
+    ],
+    [
+     185.703,
+     974.058
+    ],
+    [
+     185.432,
+     974.326
+    ],
+    [
+     185.164,
+     974.056
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_third_base",
+   "ring": [
+    [
+     147.179,
+     973.642
+    ],
+    [
+     146.908,
+     973.911
+    ],
+    [
+     147.177,
+     974.181
+    ],
+    [
+     147.447,
+     973.913
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_second_base",
+   "ring": [
+    [
+     166.233,
+     993.112
+    ],
+    [
+     166.501,
+     993.382
+    ],
+    [
+     166.231,
+     993.651
+    ],
+    [
+     165.963,
+     993.38
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "area",
+   "name": "ST_yogi_pitchers_plate",
+   "ring": [
+    [
+     166.614,
+     973.028
+    ],
+    [
+     166.613,
+     973.181
+    ],
+    [
+     166.004,
+     973.179
+    ],
+    [
+     166.004,
+     973.026
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_batters_box_1B",
+   "path": [
+    [
+     166.75,
+     953.89
+    ],
+    [
+     166.743,
+     955.719
+    ],
+    [
+     167.962,
+     955.723
+    ],
+    [
+     167.969,
+     953.895
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_batters_box_3B",
+   "path": [
+    [
+     166.013,
+     953.887
+    ],
+    [
+     166.006,
+     955.716
+    ],
+    [
+     164.787,
+     955.711
+    ],
+    [
+     164.794,
+     953.882
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_catchers_box",
+   "path": [
+    [
+     165.836,
+     953.886
+    ],
+    [
+     165.845,
+     951.448
+    ],
+    [
+     166.937,
+     951.452
+    ],
+    [
+     166.928,
+     953.891
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "unverified": "length behind the batter's boxes (8 ft) as drawn in the rule book diagram"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_coach_box_1B",
+   "path": [
+    [
+     188.948,
+     970.837
+    ],
+    [
+     184.654,
+     966.51
+    ],
+    [
+     182.49,
+     968.657
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "unverified": "placement along the line: the outfield end level with the base"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_coach_box_3B",
+   "path": [
+    [
+     143.688,
+     970.666
+    ],
+    [
+     148.015,
+     966.371
+    ],
+    [
+     150.162,
+     968.535
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "unverified": "placement along the line: the outfield end level with the base"
+  },
+  {
+   "type": "line",
+   "name": "ST_yogi_running_lane",
+   "path": [
+    [
+     176.041,
+     964.322
+    ],
+    [
+     176.69,
+     963.678
+    ],
+    [
+     186.352,
+     973.414
+    ]
+   ],
+   "width": 0.07619999999999999,
+   "colour": "white",
+   "evidence": "ortho2020 (base-path centre lines fitted as tan stripes on 25 profiles each, rms 0.03-0.06 m, 89.6 deg apart; home circle and mound tarps); NCAA/MLB rule book",
+   "unverified": "3 ft running lane in the second half of the 1B line"
+  }
+ ],
+ "fences": [
+  {
+   "name": "ST_yogi_outfield_wall",
+   "kind": "wall_padded",
+   "height": 2.45,
+   "thickness": 0.3,
+   "path": [
+    [
+     99.681,
+     1004.5
+    ],
+    [
+     99.908,
+     1016.102
+    ],
+    [
+     100.0,
+     1020.8
+    ],
+    [
+     103.48,
+     1040.7
+    ],
+    [
+     141.55,
+     1076.86
+    ],
+    [
+     189.74,
+     1077.02
+    ],
+    [
+     229.097,
+     1041.018
+    ],
+    [
+     231.414,
+     1030.606
+    ],
+    [
+     231.928,
+     1020.635
+    ],
+    [
+     232.657,
+     1006.5
+    ]
+   ],
+   "closed": false,
+   "evidence": "lidar2017 (wall-top returns 2.4-2.5 m above the warning track along five straight runs; corners by intersection; foul poles where the foul lines meet it: LF 93.75 m, RF 93.05 m); ortho2020; https://montclairathletics.com/news/2023/9/27/baseball-yogi-berra-stadium-to-get-upgraded-renovated.aspx (new padded outfield wall, 2024); aerial photo 2024 (dark green padding)",
+   "unverified": "the 2024 wall is assumed on the 2017 line at the 2017 height; padding colour; foul poles and the yellow line not drawn"
+  },
+  {
+   "name": "ST_yogi_lawn_wall_1B",
+   "kind": "wall_padded",
+   "height": 1.2,
+   "path": [
+    [
+     232.657,
+     1006.5
+    ],
+    [
+     206.5,
+     979.0
+    ],
+    [
+     202.222,
+     975.37
+    ]
+   ],
+   "closed": false,
+   "evidence": "osm 265888028 (barrier=wall); lidar2017 (faint returns along the line, field side of the right-field lawn)",
+   "unverified": "kind and height (the LiDAR hardly shows it); 1.2 m as the stand front wall"
+  },
+  {
+   "name": "ST_yogi_field_wall_3B",
+   "kind": "wall_padded",
+   "height": 1.2,
+   "path": [
+    [
+     116.722,
+     996.117
+    ],
+    [
+     137.066,
+     967.639
+    ]
+   ],
+   "evidence": "lidar2017 (the front of the seating deck is 1.1-1.2 m above the field in the LiDAR); ortho2020",
+   "unverified": "padded like the outfield wall (2024 photos show a dark wall)"
+  },
+  {
+   "name": "ST_yogi_field_wall_home",
+   "kind": "wall_padded",
+   "height": 1.2,
+   "path": [
+    [
+     146.795,
+     954.019
+    ],
+    [
+     157.843,
+     938.555
+    ],
+    [
+     166.44,
+     938.587
+    ],
+    [
+     174.714,
+     938.618
+    ],
+    [
+     186.188,
+     953.948
+    ]
+   ],
+   "evidence": "lidar2017 (the front of the seating deck is 1.1-1.2 m above the field in the LiDAR); ortho2020",
+   "unverified": "padded like the outfield wall (2024 photos show a dark wall)"
+  },
+  {
+   "name": "ST_yogi_field_wall_1B",
+   "kind": "wall_padded",
+   "height": 1.2,
+   "path": [
+    [
+     196.171,
+     967.286
+    ],
+    [
+     202.222,
+     975.37
+    ]
+   ],
+   "evidence": "lidar2017 (the front of the seating deck is 1.1-1.2 m above the field in the LiDAR); ortho2020",
+   "unverified": "padded like the outfield wall"
+  },
+  {
+   "name": "ST_yogi_backstop_net",
+   "kind": "netting_black",
+   "height": 8.2,
+   "path": [
+    [
+     155.025,
+     942.5
+    ],
+    [
+     157.843,
+     938.555
+    ],
+    [
+     166.44,
+     938.587
+    ],
+    [
+     174.714,
+     938.618
+    ],
+    [
+     177.824,
+     942.773
+    ]
+   ],
+   "evidence": "lidar2017 (net and post returns up to 117.9 m along the stand front behind home, field 109.7 m)",
+   "unverified": "ends taken symmetric at 11.4 m either side of the axis (returns seen from -11.4 to +3 m); posts not placed"
+  },
+  {
+   "name": "ST_yogi_deck_wall",
+   "kind": "wall_concrete",
+   "height": 1.1,
+   "path": [
+    [
+     102.3,
+     983.8
+    ],
+    [
+     95.0,
+     984.7
+    ],
+    [
+     93.5,
+     1000.8
+    ],
+    [
+     98.4,
+     1004.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "osm 265888029 (barrier=wall); ortho2020 (light wall round the left-field picnic deck)",
+   "unverified": "height and material"
+  },
+  {
+   "name": "ST_yogi_deck_front_wall",
+   "kind": "wall_concrete",
+   "height": 2.4,
+   "path": [
+    [
+     116.722,
+     996.117
+    ],
+    [
+     110.566,
+     997.722
+    ],
+    [
+     105.37,
+     1006.682
+    ],
+    [
+     99.908,
+     1016.102
+    ]
+   ],
+   "evidence": "lidar2017 (deck 112.2 m, field 109.3 m: a 2.9 m retaining wall)",
+   "unverified": "a retaining wall with a railing assumed; height is to about 1 m above the deck from the middle of the bank"
+  }
+ ],
+ "stands": [
+  {
+   "name": "ST_yogi_stand_3B_home",
+   "ring": [
+    [
+     157.843,
+     938.555
+    ],
+    [
+     146.795,
+     954.019
+    ],
+    [
+     135.027,
+     942.161
+    ],
+    [
+     146.144,
+     926.767
+    ]
+   ],
+   "front": [
+    [
+     157.843,
+     938.555
+    ],
+    [
+     146.795,
+     954.019
+    ]
+   ],
+   "rows": 18,
+   "first_row_height": 0.93,
+   "rise": 0.24,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red seats, a lower and an upper tier with a cross aisle (ortho); LiDAR deck 111.08 m behind the front walkway, 115.16 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_3B_dugout",
+   "ring": [
+    [
+     144.259,
+     951.464
+    ],
+    [
+     134.53,
+     965.084
+    ],
+    [
+     125.362,
+     955.846
+    ],
+    [
+     135.027,
+     942.161
+    ]
+   ],
+   "front": [
+    [
+     144.259,
+     951.464
+    ],
+    [
+     134.53,
+     965.084
+    ]
+   ],
+   "rows": 14,
+   "first_row_height": 2.01,
+   "rise": 0.223,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red seats behind the 3B dugout, upper part aluminium bleachers; LiDAR deck 112.16 m behind the front walkway, 115.06 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_3B_mid",
+   "ring": [
+    [
+     137.066,
+     967.639
+    ],
+    [
+     127.041,
+     981.671
+    ],
+    [
+     115.972,
+     970.518
+    ],
+    [
+     125.362,
+     955.846
+    ]
+   ],
+   "front": [
+    [
+     137.066,
+     967.639
+    ],
+    [
+     127.041,
+     981.671
+    ]
+   ],
+   "rows": 18,
+   "first_row_height": 1.15,
+   "rise": 0.229,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red box seats below, aluminium bleachers above (ortho 2020; red seats in 2024); LiDAR deck 111.30 m behind the front walkway, 115.20 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_3B_left",
+   "ring": [
+    [
+     127.041,
+     981.671
+    ],
+    [
+     116.722,
+     996.117
+    ],
+    [
+     104.749,
+     984.052
+    ],
+    [
+     115.972,
+     970.518
+    ]
+   ],
+   "front": [
+    [
+     127.041,
+     981.671
+    ],
+    [
+     116.722,
+     996.117
+    ]
+   ],
+   "rows": 18,
+   "first_row_height": 1.27,
+   "rise": 0.209,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "aluminium bleachers, two tiers (ortho 2020; red seats in 2024); LiDAR deck 111.42 m behind the front walkway, 114.98 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_1B_home",
+   "ring": [
+    [
+     174.714,
+     938.618
+    ],
+    [
+     186.188,
+     953.948
+    ],
+    [
+     197.856,
+     942.367
+    ],
+    [
+     186.663,
+     926.759
+    ]
+   ],
+   "front": [
+    [
+     174.714,
+     938.618
+    ],
+    [
+     186.188,
+     953.948
+    ]
+   ],
+   "rows": 18,
+   "first_row_height": 0.75,
+   "rise": 0.247,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red seats, lower and upper tier; LiDAR deck 110.90 m behind the front walkway, 115.10 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_1B_dugout",
+   "ring": [
+    [
+     188.672,
+     951.482
+    ],
+    [
+     198.655,
+     964.821
+    ],
+    [
+     208.095,
+     955.452
+    ],
+    [
+     197.856,
+     942.367
+    ]
+   ],
+   "front": [
+    [
+     188.672,
+     951.482
+    ],
+    [
+     198.655,
+     964.821
+    ]
+   ],
+   "rows": 14,
+   "first_row_height": 1.65,
+   "rise": 0.253,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red seats behind the 1B dugout, aluminium bleachers above; LiDAR deck 111.80 m behind the front walkway, 115.10 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_1B_end",
+   "ring": [
+    [
+     196.171,
+     967.286
+    ],
+    [
+     202.827,
+     976.179
+    ],
+    [
+     215.134,
+     963.964
+    ],
+    [
+     208.095,
+     955.452
+    ]
+   ],
+   "front": [
+    [
+     196.171,
+     967.286
+    ],
+    [
+     202.827,
+     976.179
+    ]
+   ],
+   "rows": 19,
+   "first_row_height": 1.15,
+   "rise": 0.225,
+   "elevated": true,
+   "sections": 1,
+   "count_note": "red box seats below, aluminium bleachers above; LiDAR deck 111.30 m behind the front walkway, 115.35 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  },
+  {
+   "name": "ST_yogi_stand_home",
+   "ring": [
+    [
+     157.843,
+     938.555
+    ],
+    [
+     174.714,
+     938.618
+    ],
+    [
+     174.762,
+     926.019
+    ],
+    [
+     157.891,
+     925.955
+    ]
+   ],
+   "front": [
+    [
+     157.843,
+     938.555
+    ],
+    [
+     174.714,
+     938.618
+    ]
+   ],
+   "rows": 13,
+   "first_row_height": 1.07,
+   "rise": 0.238,
+   "elevated": true,
+   "sections": 2,
+   "count_note": "red seats behind home plate, 13 rows between the front wall and the press box; LiDAR deck 111.22 m behind the front walkway, 114.07 m at the back row, field 109.7 m",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats)",
+   "unverified": "rows from 0.85 m treads (the ortho shows about 12 rows in 10 m); rise fitted to the LiDAR deck; the stand is a concrete bowl with chairs, drawn with the aluminium grandstand kit; first row height taken over the field level (the ground under the stand is filled from around it)"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "ST_yogi_stadium_west_wing",
+   "roof": "flat",
+   "top": 119.35,
+   "style": "hall",
+   "floors": 1,
+   "ring": [
+    [
+     159.3,
+     911.87
+    ],
+    [
+     137.8,
+     923.02
+    ],
+    [
+     131.31,
+     932.17
+    ],
+    [
+     121.67,
+     927.96
+    ],
+    [
+     130.17,
+     915.37
+    ],
+    [
+     152.98,
+     903.6
+    ],
+    [
+     159.3,
+     903.58
+    ]
+   ],
+   "wall": "#e9e4d8",
+   "trim": "#c9c2b2",
+   "roof_colour": "#e8e8e4",
+   "windows": {
+    "width": 1.2,
+    "height": 1.0,
+    "spacing": 6.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm); osm 313032761; ortho2020 (white roof); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (white stucco walls); aerial photo 2024",
+   "unverified": "one storey on the concourse side (concourse 115.5 m, roof 119.3 m), more toward the lower ground on the west; windows and colours guessed"
+  },
+  {
+   "name": "ST_yogi_stadium_south_block",
+   "roof": "flat",
+   "top": 124.1,
+   "style": "hall",
+   "floors": 2,
+   "ring": [
+    [
+     159.3,
+     898.0
+    ],
+    [
+     173.6,
+     898.2
+    ],
+    [
+     174.1,
+     913.5
+    ],
+    [
+     159.4,
+     913.5
+    ]
+   ],
+   "wall": "#e9e4d8",
+   "trim": "#c46a2c",
+   "roof_colour": "#e8e8e4",
+   "windows": {
+    "width": 1.4,
+    "height": 1.2,
+    "spacing": 5.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (roof 124.0 m, a 125.8 m band along the south face); osm 313032761; ortho2020 (white roof, orange band on the south face)",
+   "unverified": "two storeys over the south plaza (119.7 m); the higher south band is not drawn; windows and colours guessed"
+  },
+  {
+   "name": "ST_yogi_press_box",
+   "roof": "shed",
+   "top": 119.8,
+   "eave": 118.8,
+   "ridge_angle": 180.2,
+   "style": "hall",
+   "floors": 1,
+   "ring": [
+    [
+     157.887,
+     925.955
+    ],
+    [
+     175.087,
+     926.02
+    ],
+    [
+     175.108,
+     920.62
+    ],
+    [
+     157.908,
+     920.555
+    ]
+   ],
+   "wall": "#e9e4d8",
+   "trim": "#2b3a55",
+   "roof_colour": "#2b3a55",
+   "windows": {
+    "width": 2.0,
+    "height": 1.2,
+    "spacing": 2.4
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (roof 118.8 m at the field side rising to 119.8 m); osm 313032762; ortho2020 (dark blue roof); aerial photo 2024 (glazed press box over the seats behind home)",
+   "unverified": "outline squared to the axis (LiDAR edges at u -28.6 and -34.0 m, v +-8.6 m); glazing and colours guessed"
+  },
+  {
+   "name": "ST_yogi_museum_roof_NW",
+   "roof": "shed",
+   "top": 129.6,
+   "eave": 123.5,
+   "ridge_angle": 233.1,
+   "style": "hall",
+   "floors": 2,
+   "ring": [
+    [
+     211.092,
+     934.806
+    ],
+    [
+     224.324,
+     952.429
+    ],
+    [
+     200.131,
+     948.521
+    ],
+    [
+     197.498,
+     945.013
+    ]
+   ],
+   "wall": "#d9d4c8",
+   "trim": "#b9b2a4",
+   "roof_colour": "#8f3b2e",
+   "windows": {
+    "width": 3.0,
+    "height": 2.0,
+    "spacing": 8.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (ridge 129.6 m along 53 deg, eaves 123.4-123.6 m, 17 m to the north-west and 11 m to the south-east of the ridge); osm 265888018; ortho2020 (red-brown standing-seam roof); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (museum adjoins the first-base side); aerial photo 2024 (grey stucco gable end, red roof)",
+   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed"
+  },
+  {
+   "name": "ST_yogi_museum_roof_SE",
+   "roof": "shed",
+   "top": 129.6,
+   "eave": 123.5,
+   "ridge_angle": 53.1,
+   "style": "hall",
+   "floors": 2,
+   "ring": [
+    [
+     219.889,
+     928.202
+    ],
+    [
+     239.978,
+     954.958
+    ],
+    [
+     224.324,
+     952.429
+    ],
+    [
+     211.092,
+     934.806
+    ]
+   ],
+   "wall": "#d9d4c8",
+   "trim": "#b9b2a4",
+   "roof_colour": "#8f3b2e",
+   "windows": {
+    "width": 3.0,
+    "height": 2.0,
+    "spacing": 8.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (ridge 129.6 m along 53 deg, eaves 123.4-123.6 m, 17 m to the north-west and 11 m to the south-east of the ridge); osm 265888018; ortho2020 (red-brown standing-seam roof); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (museum adjoins the first-base side); aerial photo 2024 (grey stucco gable end, red roof)",
+   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed"
+  },
+  {
+   "name": "ST_yogi_museum_flat_roof",
+   "roof": "flat",
+   "top": 125.95,
+   "style": "hall",
+   "floors": 2,
+   "ring": [
+    [
+     197.6,
+     926.3
+    ],
+    [
+     206.8,
+     918.8
+    ],
+    [
+     218.3,
+     929.6
+    ],
+    [
+     205.3,
+     938.0
+    ]
+   ],
+   "wall": "#e9e4d8",
+   "trim": "#b9b2a4",
+   "roof_colour": "#e6e6e2",
+   "windows": {
+    "width": 1.5,
+    "height": 1.4,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (flat roof 125.8-126.1 m with rooftop units); osm 265888018; ortho2020 (white roof)",
+   "unverified": "corners read on the LiDAR height map to about 0.5 m; windows and colours guessed"
+  },
+  {
+   "name": "ST_yogi_museum_south_wing",
+   "roof": "flat",
+   "top": 123.85,
+   "style": "hall",
+   "floors": 1,
+   "ring": [
+    [
+     200.6,
+     915.9
+    ],
+    [
+     206.2,
+     909.6
+    ],
+    [
+     214.2,
+     917.6
+    ],
+    [
+     208.6,
+     922.2
+    ]
+   ],
+   "wall": "#e9e4d8",
+   "trim": "#b9b2a4",
+   "roof_colour": "#e6e6e2",
+   "windows": {
+    "width": 1.5,
+    "height": 1.4,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (flat roof 123.7-123.9 m); osm 265888018; ortho2020 (white roof)",
+   "unverified": "corners read on the LiDAR height map to about 0.5 m; windows guessed"
+  },
+  {
+   "name": "ST_yogi_dugout_3B",
+   "roof": "flat",
+   "top": 111.85,
+   "style": "shed",
+   "floors": 1,
+   "ring": [
+    [
+     146.795,
+     954.019
+    ],
+    [
+     137.066,
+     967.639
+    ],
+    [
+     134.53,
+     965.084
+    ],
+    [
+     144.259,
+     951.464
+    ]
+   ],
+   "wall": "#8c8a84",
+   "roof_colour": "#e6e6e2",
+   "evidence": "ortho2020 (white roof in front of the seats, 16.5 m long); lidar2017 (roof 111.8-111.9 m, field 109.7 m); https://www.montclair.edu/news-media/news-stories/yogi-berra-stadium-its-brand-new-ball-game (upgraded dugouts)",
+   "unverified": "sunken floor and open front not modelled; depth 3.5 m from the ortho"
+  },
+  {
+   "name": "ST_yogi_dugout_1B",
+   "roof": "flat",
+   "top": 111.9,
+   "style": "shed",
+   "floors": 1,
+   "ring": [
+    [
+     186.188,
+     953.948
+    ],
+    [
+     196.171,
+     967.286
+    ],
+    [
+     198.655,
+     964.821
+    ],
+    [
+     188.672,
+     951.482
+    ]
+   ],
+   "wall": "#8c8a84",
+   "roof_colour": "#e6e6e2",
+   "evidence": "ortho2020 (white roof in front of the seats, 16.5 m long); lidar2017 (roof 111.8-111.9 m, field 109.7 m); https://www.montclair.edu/news-media/news-stories/yogi-berra-stadium-its-brand-new-ball-game (upgraded dugouts)",
+   "unverified": "sunken floor and open front not modelled; depth 3.5 m from the ortho"
+  },
+  {
+   "name": "ST_yogi_storage_CF",
+   "roof": "flat",
+   "top": 111.5,
+   "style": "shed",
+   "floors": 1,
+   "ring": [
+    [
+     160.0,
+     1079.0
+    ],
+    [
+     172.5,
+     1079.0
+    ],
+    [
+     172.5,
+     1087.2
+    ],
+    [
+     160.0,
+     1087.2
+    ]
+   ],
+   "wall": "#b8b4aa",
+   "roof_colour": "#b8b4aa",
+   "evidence": "ortho2020 (grey roof with a pale trailer), lidar2017 (roof 111.5 m, ground 108.7)",
+   "unverified": "2017-2020 state behind the centre-field wall; the 2024 renovation added a storage building and moved the bullpens beyond the outfield wall, where is not known"
+  },
+  {
+   "name": "ST_yogi_container_CF",
+   "roof": "flat",
+   "top": 111.25,
+   "style": "shed",
+   "floors": 1,
+   "ring": [
+    [
+     174.7,
+     1079.0
+    ],
+    [
+     177.9,
+     1079.0
+    ],
+    [
+     177.9,
+     1084.8
+    ],
+    [
+     174.7,
+     1084.8
+    ]
+   ],
+   "wall": "#b0503a",
+   "roof_colour": "#b0503a",
+   "evidence": "ortho2020 (red container), lidar2017 (111.2 m)",
+   "unverified": "2017-2020 state behind the centre-field wall; the 2024 renovation added a storage building and moved the bullpens beyond the outfield wall, where is not known"
+  },
+  {
+   "name": "ST_yogi_shed_CF",
+   "roof": "flat",
+   "top": 111.5,
+   "style": "shed",
+   "floors": 1,
+   "ring": [
+    [
+     179.6,
+     1079.0
+    ],
+    [
+     184.8,
+     1079.0
+    ],
+    [
+     184.8,
+     1083.6
+    ],
+    [
+     179.6,
+     1083.6
+    ]
+   ],
+   "wall": "#8e9088",
+   "roof_colour": "#8e9088",
+   "evidence": "ortho2020 (grey roof), lidar2017 (111.5 m)",
+   "unverified": "2017-2020 state behind the centre-field wall; the 2024 renovation added a storage building and moved the bullpens beyond the outfield wall, where is not known"
+  }
+ ],
+ "points": [
+  {
+   "name": "ST_yogi_light_pole_home_3B",
+   "kind": "light_pole",
+   "at": [
+    120.18,
+    934.26
+   ],
+   "height": 31.4,
+   "angle": 47.5,
+   "evidence": "lidar2017 (head returns up to 144.00 m, ground 112.61 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_home_1B",
+   "kind": "light_pole",
+   "at": [
+    219.72,
+    929.27
+   ],
+   "height": 25.8,
+   "angle": 134.0,
+   "evidence": "lidar2017 (head returns up to 145.44 m, ground 119.64 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_3B",
+   "kind": "light_pole",
+   "at": [
+    101.69,
+    986.86
+   ],
+   "height": 29.0,
+   "angle": -2.0,
+   "evidence": "lidar2017 (head returns up to 141.80 m, ground 112.83 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_LF",
+   "kind": "light_pole",
+   "at": [
+    106.86,
+    1045.35
+   ],
+   "height": 32.3,
+   "angle": -45.6,
+   "evidence": "lidar2017 (head returns up to 141.23 m, ground 108.89 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_LCF",
+   "kind": "light_pole",
+   "at": [
+    139.58,
+    1075.1
+   ],
+   "height": 32.5,
+   "angle": -73.6,
+   "evidence": "lidar2017 (head returns up to 141.29 m, ground 108.81 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_RCF",
+   "kind": "light_pole",
+   "at": [
+    194.65,
+    1075.22
+   ],
+   "height": 32.4,
+   "angle": -107.4,
+   "evidence": "lidar2017 (head returns up to 141.26 m, ground 108.85 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_light_pole_RF",
+   "kind": "light_pole",
+   "at": [
+    228.59,
+    1046.1
+   ],
+   "height": 32.0,
+   "angle": -135.4,
+   "evidence": "lidar2017 (head returns up to 141.38 m, ground 109.35 m; position = centre of the head returns); aerial photo 2024",
+   "unverified": "2024 LED fixtures assumed on the old poles; pole drawn under the centre of the heads"
+  },
+  {
+   "name": "ST_yogi_scoreboard",
+   "kind": "scoreboard",
+   "at": [
+    123.28,
+    1060.15
+   ],
+   "angle": -47.4,
+   "width": 16.5,
+   "board_height": 4.5,
+   "evidence": "lidar2017 (a 16.5 m straight band of single returns at 42.6 deg behind the left-field wall, top 119.1 m, ground 108.9 m); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (720 sq ft video board in left field, 2018; new scoreboard 2024)",
+   "unverified": "face height (about 4.5 m, from public descriptions); the 2024 board assumed in the same place; faces home plate",
+   "clear": 5.7
+  }
+ ]
+}

@@ -124,6 +124,18 @@ def fences(lay, terrain):
         name, kind = _name(f["zone"], f, "fence"), f.get("kind", "chain_link_black")
         if kind == "hedge":
             out.append(hedge(name, line, terrain, f.get("height", 4.5), f.get("width", 1.6)))
+        elif kind.startswith("wall"):
+            out.append(
+                fixtures.wall(
+                    name,
+                    line,
+                    f.get("height", 2.4),
+                    ground=terrain.at,
+                    kind=kind,
+                    colour=f.get("colour"),
+                    thickness=f.get("thickness", 0.25),
+                )
+            )
         elif "net" in kind:
             out.append(fixtures.net_poles(name, line, f.get("height", 9.0), ground=terrain.at))
         else:
@@ -196,12 +208,21 @@ def points(lay, terrain):
                 gx, gy = to_model(side * (60 * 0.9144 + 1.83), 0.0)
                 at, angle = (gx, gy, terrain.at(gx, gy)), ff["angle"] + (180 if side > 0 else 0)
             out.append(fixtures.goalpost(name, at, angle, unverified=bool(p.get("unverified"))))
+        elif kind == "foul_pole":
+            out.append(fixtures.foul_pole(name, at, angle, side=p.get("side", "left"), **opt))
+        elif kind == "soccer_goal":
+            out.append(fixtures.soccer_goal(name, at, angle))
         elif kind == "pylon":
             out.append(fixtures.pylon(name, at, angle, **opt))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(
-                    name, at, angle, p.get("width", 6.0), p.get("board_height", 3.0)
+                    name,
+                    at,
+                    angle,
+                    p.get("width", 6.0),
+                    p.get("board_height", 3.0),
+                    clear=p.get("clear", 3.0),
                 )
             )
         elif kind == "bench":
@@ -215,6 +236,22 @@ def points(lay, terrain):
                     bx, by, _ = run((i - (n - 1) / 2) * 7.5, 0)
                     seat = (bx, by, terrain.at(bx, by))
                     out.append(fixtures.team_bench(f"{name}_{i + 1}", seat, facing, 6.0))
+            elif p.get("length", 1.8) >= 4.0:
+                # a long bench beside a pitch is a team bench: `angle` is its long direction, and
+                # it faces the nearest turf unless the plan gives `facing`
+                facing = p.get("facing")
+                if facing is None:
+                    turf = [t["ring"] for t in lay["surfaces"] if t["kind"] == "turf"]
+                    mids = [
+                        (sum(q[0] for q in r) / len(r), sum(q[1] for q in r) / len(r)) for r in turf
+                    ]
+                    facing = angle + 90
+                    if mids:
+                        mx, my = min(mids, key=lambda m: (m[0] - x) ** 2 + (m[1] - y) ** 2)
+                        a = math.radians(facing)
+                        if (mx - x) * math.cos(a) + (my - y) * math.sin(a) < 0:
+                            facing += 180
+                out.append(fixtures.team_bench(name, at, facing, p["length"]))
             else:
                 out.append(fixtures.platform_bench(name, at, angle, p.get("length", 1.8)))
         elif kind in ("gate", "flasher"):

@@ -2,23 +2,23 @@
  "tiles": [
   {
    "file": "skirt.glb",
-   "bytes": 8163916
+   "bytes": 8188096
   },
   {
    "file": "context.glb",
-   "bytes": 16429596
+   "bytes": 16405884
   },
   {
    "file": "far_houses.glb",
-   "bytes": 1725556
+   "bytes": 1723768
   },
   {
    "file": "n_context.glb",
-   "bytes": 1817592
+   "bytes": 1794016
   },
   {
    "file": "sw_context.glb",
-   "bytes": 101804
+   "bytes": 106244
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -252,43 +252,53 @@
   },
   {
    "file": "sw_t_-1_2.glb",
-   "bytes": 60852,
+   "bytes": 60840,
    "center": [
     -80.0,
     -400.0
    ],
    "lod": "lod/sw_t_-1_2.glb",
-   "lod_bytes": 52764
+   "lod_bytes": 52776
   },
   {
    "file": "sw_t_-1_3.glb",
-   "bytes": 1971928,
+   "bytes": 2136100,
    "center": [
     -80.0,
     -560.0
    ],
    "lod": "lod/sw_t_-1_3.glb",
-   "lod_bytes": 562564
+   "lod_bytes": 581868
   },
   {
    "file": "sw_t_-1_4.glb",
-   "bytes": 1268256,
+   "bytes": 1570284,
    "center": [
     -80.0,
     -720.0
    ],
    "lod": "lod/sw_t_-1_4.glb",
-   "lod_bytes": 342348
+   "lod_bytes": 498236
   },
   {
    "file": "sw_t_-1_5.glb",
-   "bytes": 64336,
+   "bytes": 1932092,
    "center": [
     -80.0,
     -880.0
    ],
    "lod": "lod/sw_t_-1_5.glb",
-   "lod_bytes": 50748
+   "lod_bytes": 718308
+  },
+  {
+   "file": "sw_t_-1_6.glb",
+   "bytes": 1078488,
+   "center": [
+    -80.0,
+    -1040.0
+   ],
+   "lod": "lod/sw_t_-1_6.glb",
+   "lod_bytes": 416088
   },
   {
    "file": "sw_t_-2_-1.glb",
@@ -318,7 +328,7 @@
     80.0
    ],
    "lod": "lod/sw_t_-3_-1.glb",
-   "lod_bytes": 597476
+   "lod_bytes": 597540
   },
   {
    "file": "sw_t_-3_-2.glb",
@@ -352,73 +362,113 @@
   },
   {
    "file": "sw_t_0_2.glb",
-   "bytes": 70796,
+   "bytes": 70680,
    "center": [
     80.0,
     -400.0
    ],
    "lod": "lod/sw_t_0_2.glb",
-   "lod_bytes": 62512
+   "lod_bytes": 62528
   },
   {
    "file": "sw_t_0_3.glb",
-   "bytes": 1555904,
+   "bytes": 1514564,
    "center": [
     80.0,
     -560.0
    ],
    "lod": "lod/sw_t_0_3.glb",
-   "lod_bytes": 612344
+   "lod_bytes": 600612
   },
   {
    "file": "sw_t_0_4.glb",
-   "bytes": 2041448,
+   "bytes": 1995028,
    "center": [
     80.0,
     -720.0
    ],
    "lod": "lod/sw_t_0_4.glb",
-   "lod_bytes": 665572
+   "lod_bytes": 530484
   },
   {
    "file": "sw_t_0_5.glb",
-   "bytes": 1020172,
+   "bytes": 1846148,
    "center": [
     80.0,
     -880.0
    ],
    "lod": "lod/sw_t_0_5.glb",
-   "lod_bytes": 307856
+   "lod_bytes": 700732
+  },
+  {
+   "file": "sw_t_0_6.glb",
+   "bytes": 1441640,
+   "center": [
+    80.0,
+    -1040.0
+   ],
+   "lod": "lod/sw_t_0_6.glb",
+   "lod_bytes": 316564
   },
   {
    "file": "sw_t_1_3.glb",
-   "bytes": 1532164,
+   "bytes": 966800,
    "center": [
     240.0,
     -560.0
    ],
    "lod": "lod/sw_t_1_3.glb",
-   "lod_bytes": 466848
+   "lod_bytes": 113152
   },
   {
    "file": "sw_t_1_4.glb",
-   "bytes": 2042784,
+   "bytes": 1572028,
    "center": [
     240.0,
     -720.0
    ],
    "lod": "lod/sw_t_1_4.glb",
-   "lod_bytes": 1084040
+   "lod_bytes": 645892
   },
   {
    "file": "sw_t_1_5.glb",
-   "bytes": 1061980,
+   "bytes": 1532752,
    "center": [
     240.0,
     -880.0
    ],
    "lod": "lod/sw_t_1_5.glb",
-   "lod_bytes": 317036
+   "lod_bytes": 473784
+  },
+  {
+   "file": "sw_t_1_6.glb",
+   "bytes": 1438800,
+   "center": [
+    240.0,
+    -1040.0
+   ],
+   "lod": "lod/sw_t_1_6.glb",
+   "lod_bytes": 299868
+  },
+  {
+   "file": "sw_t_2_5.glb",
+   "bytes": 1221112,
+   "center": [
+    400.0,
+    -880.0
+   ],
+   "lod": "lod/sw_t_2_5.glb",
+   "lod_bytes": 371476
+  },
+  {
+   "file": "sw_t_2_6.glb",
+   "bytes": 943764,
+   "center": [
+    400.0,
+    -1040.0
+   ],
+   "lod": "lod/sw_t_2_6.glb",
+   "lod_bytes": 233412
   },
   {
    "file": "t_-1_-1.glb",
@@ -786,8 +836,8 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 19, 2026, 3:32 PM ET",
-   "version": "sw5",
+   "saved": "November 19, 2026, 4:40 PM ET",
+   "version": "sw6",
    "file": "montclair_southwest.blend"
   }
  },
@@ -799,6 +849,6 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 19, 2026, 3:33 PM ET",
- "total_bytes": 179772112
+ "exported": "November 19, 2026, 4:44 PM ET",
+ "total_bytes": 188382156
 }

@@ -1,0 +1,14 @@
+{
+ "zone": "st_footprint",
+ "notes": "The ground this area owns: the stadium district north of the north-east area (Yogi Berra Stadium and the museum, the soccer field with its running track, the north part of the softball stadium, the lots south of the stadium and the roads between them). South: the north edge of the north-east area (y 826), shared with it. West: clear of the railway and the station (north model): the turning circle south-west of the track, then 3 to 4 m outside the running track. North: beyond the stadium's outfield wall (the quarry ground and Floyd Hall Arena further north are not in this area). East: the wood east of the big lot and the road.",
+ "footprint": [
+  [-67, 826], [345, 826], [345, 1105], [5, 1105], [5, 1030], [-8, 1012], [-22, 990], [-35, 940],
+  [-36, 885], [-56, 872], [-56, 850]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles.",
+  "clip": ["Context_skirt", "BD_farfield_3DEP", "North_ground_ortho2020", "MH_ground_ortho2020"],
+  "drop": ["far_houses"],
+  "tuck": 0.5
+ }
+}

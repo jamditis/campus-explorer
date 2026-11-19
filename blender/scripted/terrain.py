@@ -13,6 +13,7 @@ import numpy as np
 
 BLEND = 4.0  # width of the band along the footprint edge that blends into the neighbours' ground
 GRADE = 5.0  # smoothing length of paved ground, metres
+REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
 EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
@@ -144,12 +145,15 @@ class Terrain:
         self.edge = None
         if edge:
             e = np.array(edge, float)
-            if (
-                EDGE_RUN > 0
-            ):  # the samples run round the footprint: average along it, wrapping at the ends
-                k = np.ones(2 * EDGE_RUN + 1) / (2 * EDGE_RUN + 1)
-                ring = np.concatenate([e[-EDGE_RUN:, 2], e[:, 2], e[:EDGE_RUN, 2]])
-                e[:, 2] = np.convolve(ring, k, mode="valid")
+            if EDGE_RUN > 0 and len(e):
+                # the samples run round the footprint: average along it, wrapping at the ends, but
+                # only over samples that are also near in space (the run has gaps where the old
+                # ground had none, or where the edge is shared with another scripted area)
+                n, lv = len(e), e[:, 2].copy()
+                for i in range(n):
+                    idx = np.arange(i - EDGE_RUN, i + EDGE_RUN + 1) % n
+                    near = np.hypot(e[idx, 0] - e[i, 0], e[idx, 1] - e[i, 1]) <= 1.5 * EDGE_RUN
+                    e[i, 2] = lv[idx[near]].mean()
             self.edge = e
 
     def z(self, x, y, smooth=False):
@@ -188,7 +192,9 @@ class Terrain:
         return out
 
     def neighbour_z(self, x, y):
-        """Height of the neighbours' ground at the nearest edge sample, NaN when there are none."""
+        """Height of the neighbours' ground at the nearest edge sample, NaN where none is within
+        REACH (an edge with no samples has no neighbour to meet).
+        """
         if self.edge is None or not len(self.edge):
             return np.full(np.shape(x), np.nan)
         out = np.empty(len(x))
@@ -196,7 +202,10 @@ class Terrain:
             d = (np.asarray(x)[k : k + 4096, None] - self.edge[None, :, 0]) ** 2 + (
                 np.asarray(y)[k : k + 4096, None] - self.edge[None, :, 1]
             ) ** 2
-            out[k : k + 4096] = self.edge[d.argmin(1), 2]
+            near = d.argmin(1)
+            out[k : k + 4096] = np.where(
+                d[np.arange(len(near)), near] <= REACH**2, self.edge[near, 2], np.nan
+            )
         return out
 
     def at(self, x, y):
