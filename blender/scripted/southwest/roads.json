@@ -85,8 +85,13 @@
      -58.08
     ],
     [
-     -408.4,
+     -404.76,
      -58.0
+    ],
+    [
+     -408.4,
+     -72.0,
+     20.0
     ],
     [
      -408.6,
@@ -114,7 +119,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "west curb north of y -110 hidden by tree cover; north end cut at y -58 where the lot entrance joins"
+   "unverified": "west curb north of y -110 hidden by tree cover; north of y -72 the west edge follows the paved edge in the LiDAR (no curb), bending to x -404.8 at the cut; north end cut at y -58 where the lot entrance joins"
   },
   {
    "name": "Normal_Ave_median_W",
@@ -377,12 +382,12 @@
      30
     ],
     [
-     -408.4,
-     -58.0
+     -408.45,
+     -74.0
     ]
    ],
    "evidence": "lidar2017, ortho2020",
-   "unverified": "Carlisle west curb north of y -110"
+   "unverified": "Carlisle west curb north of y -110; ends at y -74: north of there the LiDAR shows a soft paved edge falling to the ditch, no curb"
   },
   {
    "name": "Carlisle_E_curb_Normal_N_curb_E",
@@ -611,8 +616,13 @@
    "type": "line",
    "path": [
     [
-     -399.9,
+     -399.16,
      -58.0
+    ],
+    [
+     -400.0,
+     -62.47,
+     40.0
     ],
     [
      -400.2,
@@ -636,15 +646,21 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg"
+   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_CL",
    "type": "line",
    "path": [
     [
-     -400.1,
+     -399.36,
      -58.0
+    ],
+    [
+     -400.2,
+     -62.45,
+     40.0
     ],
     [
      -400.4,
@@ -668,7 +684,8 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg"
+   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_lane_dash",
