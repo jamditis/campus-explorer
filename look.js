@@ -8,6 +8,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { fixTone } from './viewer/tone.js';
+export { fixTone };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
 const CATS = {
@@ -520,6 +522,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         // The exporter does not know this yet, so the viewer corrects it by material name.
         const raw = /(ground|skirt)_ortho/i.test(m.name) ? 'grass' : m.userData?.cat || '';
         const cat = fixCat(m.name || '', raw);
+        fixTone(m.name || '', m.color, !!m.map);
         if (cat !== 'glass' && cat !== (m.userData?.cat || '')) m.userData.glass = false;
         if ((m.userData?.glass || cat === 'glass') && !m.userData.glassDone) {
           m.userData.glassDone = true; // shared materials: tint once
