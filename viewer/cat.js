@@ -1,6 +1,8 @@
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
   if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
+  // fence fabric and netting exported as glass (anything see-through was): they are metal you can see through
+  if (cat === 'glass' && /chain.?link|netting|goal_net/i.test(name)) return 'metal';
   // white line paint filed as grass (Lot 9 stalls, Sprague field lines) was retinted lawn green: keep it paint
   if (cat === 'grass' && /paint|stripe|marking/i.test(name) && !/lawn|nostripe/i.test(name)) return '';
   if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
@@ -16,4 +18,13 @@ export function fixCat(name, cat) {
   if (/soffit|fascia/i.test(name)) return 'plaster';
   if (/BD_osm_light|BD_fill_massing/i.test(name)) return 'concrete';
   return '';
+}
+
+/**
+ * True for a see-through material that is not glazing: fence fabric, netting. It keeps its own category
+ * and stays see-through; every other see-through material is treated as window or lamp glass.
+ */
+export function isSeeThroughSolid(name, cat) {
+  const c = fixCat(name, cat);
+  return c !== '' && c !== 'glass';
 }

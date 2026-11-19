@@ -9,7 +9,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone } from './viewer/tone.js';
-import { fixCat } from './viewer/cat.js';
+import { fixCat, isSeeThroughSolid } from './viewer/cat.js';
 export { fixTone, fixCat };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
@@ -21,6 +21,7 @@ const CATS = {
   rooftile: { file: 'rooftile', size: 2, k: 0.9 },
   pavers: { file: 'pavers', size: 2, k: 0.85 },
   grass: { file: 'grass', size: 2.4, k: 0.9 },
+  turf: { file: 'grass', size: 1.4, k: 0.45 }, // artificial turf: finer and more even than lawn, and it carries painted lines
   mulch: { file: 'mulch', size: 1.6, k: 0.9 },
   gravel: { file: 'gravel', size: 1.5, k: 0.8 },
   stone: { file: 'stone', size: 1.8, k: 0.6 },
@@ -28,13 +29,13 @@ const CATS = {
   wood: { file: 'wood', size: 1.2, k: 0.7 },
   bark: { file: 'bark', size: 1.0, k: 0.8 },
 };
-const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, rooftile: 0.75, pavers: 0.85, grass: 1, mulch: 1, gravel: 0.95, stone: 0.7, metal: 0.45, wood: 0.8, bark: 0.95 };
+const ROUGH = { asphalt: 0.92, concrete: 0.85, brick: 0.88, plaster: 0.9, rooftile: 0.75, pavers: 0.85, grass: 1, turf: 0.9, mulch: 1, gravel: 0.95, stone: 0.7, metal: 0.45, wood: 0.8, bark: 0.95 };
 // relief strength from each texture's displacement (alpha channel); fades out by 80 m
-const BUMP = { asphalt: 0.35, concrete: 0.3, brick: 1.4, plaster: 0.12, rooftile: 1.5, pavers: 1.1, grass: 0.8, mulch: 1.2, gravel: 1.1, stone: 0.5, metal: 0.1, wood: 0.5, bark: 2 };
+const BUMP = { asphalt: 0.35, concrete: 0.3, brick: 1.4, plaster: 0.12, rooftile: 1.5, pavers: 1.1, grass: 0.8, turf: 0.4, mulch: 1.2, gravel: 1.1, stone: 0.5, metal: 0.1, wood: 0.5, bark: 2 };
 // image-based (sky) reflection: rough ground and masonry reflect little of it
-const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, mulch: 0.25, gravel: 0.25, stone: 0.4, plaster: 0.45, brick: 0.4, rooftile: 0.5, metal: 1, wood: 0.45, bark: 0.3 };
+const ENV = { asphalt: 0.22, concrete: 0.28, pavers: 0.28, grass: 0.3, turf: 0.3, mulch: 0.25, gravel: 0.25, stone: 0.4, plaster: 0.45, brick: 0.4, rooftile: 0.5, metal: 1, wood: 0.45, bark: 0.3 };
 // tangent-space normal maps (ambientCG NormalGL, CC0) for these categories, applied triplanar; strength
-const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
+const NRM = { asphalt: 0.8, concrete: 0.7, brick: 1, plaster: 0.6, rooftile: 1, pavers: 1, grass: 0.8, turf: 0.4, mulch: 1, gravel: 1, wood: 0.7, bark: 1.2 };
 // slight colour warmth per category, applied after texturing (sky-lit shade otherwise reads blue)
 // [r, g, b, desaturation]; plaster keeps its own colour (cream and white stucco) and only loses the sky-blue cast
 const WARM = { asphalt: [1.04, 1.0, 0.92, 0.55], concrete: [1.05, 1.0, 0.92, 0.55], pavers: [1.04, 1.0, 0.94, 0.55], plaster: [1.05, 1.0, 0.92, 0] };
@@ -248,7 +249,15 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
             if (tpMacro > 0.5) t = mix(t, tpSample(vTpPos * tpScale * 0.13 + 0.37, w).rgb, 0.35);
             t *= 2.7; // textures are normalised to a mid-grey mean (sRGB 160 ~ linear 0.37)
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
-            ${warm ? `{ float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), ${warm[3].toFixed(2)}) * vec3(${warm.slice(0, 3).map(x => x.toFixed(3)).join(',')}); }` : ''}
+            ${warm ? `{
+              float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)), desat = ${warm[3].toFixed(2)};
+              #ifdef USE_MAP
+                // a surface with its own paint sheet: coloured paint (yellow lines, red letters) keeps its colour
+                float chroma = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b)) - min(diffuseColor.r, min(diffuseColor.g, diffuseColor.b));
+                desat *= 1.0 - smoothstep(0.15, 0.45, chroma / max(l, 0.001));
+              #endif
+              diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), desat) * vec3(${warm.slice(0, 3).map(x => x.toFixed(3)).join(',')});
+            }` : ''}
             ${isAsphalt ? `
             for (int i = 0; i < ${PAINT_MAX}; i++) {
               if (i >= pN) break;
@@ -414,11 +423,12 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       if (/^Icosphere/.test(o.name)) { o.material = CROWN; return; }
       for (const m of [].concat(o.material)) {
         if (!m) continue;
-        if (m.map) m.map.anisotropy = 4;
+        if (m.map) m.map.anisotropy = /_painted_/.test(m.name) ? 16 : 4; // paint sheets lie flat and are seen at grazing angles
         // leaf cards exported without an opacity map would show their white texture background: draw them as solid foliage
         if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.needsUpdate = true; continue; }
         if (m.alphaTest > 0 || (m.transparent && m.map)) { m.alphaTest = 0.45; m.transparent = false; m.side = THREE.DoubleSide; m.userData.leaf = true; }
-        else if (m.transparent) { m.depthWrite = false; m.userData.glass = true; }
+        // see-through and not glazing (fence fabric, netting) keeps its category and stays see-through
+        else if (m.transparent) { m.depthWrite = false; m.userData.glass = !isSeeThroughSolid(m.name || '', m.userData.cat || ''); }
       }
     });
   }
