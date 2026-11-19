@@ -71,13 +71,13 @@
      56.1
     ],
     [
-     -399.93,
-     -95.5,
+     -402.88,
+     -122.88,
      76.1
     ],
     [
-     -396.41,
-     -72.34,
+     -396.66,
+     -83.94,
      43.9
     ],
     [
@@ -397,13 +397,13 @@
      -58.08
     ],
     [
-     -396.41,
-     -72.34,
+     -396.66,
+     -83.94,
      43.9
     ],
     [
-     -399.93,
-     -95.5,
+     -402.88,
+     -122.88,
      76.1
     ],
     [
@@ -431,7 +431,7 @@
      -255.58
     ]
    ],
-   "evidence": "lidar2017, ortho2020"
+   "evidence": "lidar2017, ortho2020; y -84..-123 refitted to the asphalt/hedge edge (ortho brightness and LiDAR hedge face, profiles every 2 m, rms 0.3 m)"
   },
   {
    "name": "Normal_Ave_S_curb_W",
@@ -692,19 +692,21 @@
    "type": "line",
    "path": [
     [
-     -406.8,
-     -100.0
+     -406.56,
+     -101.5
     ],
     [
-     -410.8,
-     -126.0
+     -411.91,
+     -136.16,
+     60.0
     ],
     [
-     -412.3,
-     -145.0
+     -414.27,
+     -158.03,
+     56.2
     ],
     [
-     -412.3,
+     -411.53,
      -180.0
     ]
    ],
@@ -715,7 +717,7 @@
     9.0
    ],
    "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "dash phase; south of y -150 the dashes are faint"
+   "unverified": "dashes located on the paint at y -103, -114.5, -126, -138, -150, -161, -174 (0.1 m); dash length 3 m and gap 9 m kept"
   },
   {
    "name": "Carlisle_Rd_W_edge_line",
