@@ -1,5 +1,5 @@
 # ws223 runbook (Nov 18, 2026 ~10:28-11:15 PM ET): W39 curb-return / Kasser landing corner (W44)
-Main before: ws222i. Main after: ws223f. Fix chain (merge208, all modifiers off during the edit, raise-only / topology-only):
+Main before: ws222i. Main after: ws223h (ws223f 10:38 PM, then ws223h 10:46 PM ET). Fix chain (merge208, all modifiers off during the edit, raise-only / topology-only):
 - ws223a: INF=main ws222i  CHAIN="ws223/fix223a.py"  (curb tops of WS220 return rings k16..k29 + WS27 curb_left rings 0-1
   RAISED 0.5-6.2 cm so the curb back sits 3 mm under the WS72 landing edge; profile now rises monotonically into curb_left ring 2)
 - ws223b: INF=ws223a  CHAIN="ws223/fix223b.py"  (7 WS72 top faces with downward normals flipped; no vertex moves)
@@ -8,13 +8,16 @@ Main before: ws222i. Main after: ws223f. Fix chain (merge208, all modifiers off 
   (v150 lies west of edge v140-v142, so the second quad was folded over the first); both re-filled as one simple polygon)
 - REJECTED: fix223c (raise-only Laplacian of v152) made the folded quad steeper; dropped from the chain. fix223e (split the
   folded quad) superseded by fix223f.
-Rebuild from scratch: CHAIN="ws223/fix223a.py ws223/fix223b.py ws223/fix223d.py ws223/fix223f.py" from ws222i.
+- ws223h: INF=ws223f  CHAIN="ws223/fix223h.py"  (W45: WS70 verge walk cut re-aimed at a hidden copy of the CURRENT landing,
+  WS223_WS70_cut_helper_hidden, via node-group copy WS223_WS70_walk_cut_current_landing; the old helper was the pre-W40
+  footprint. Terrain/WS60/WS68 keep the old helper.) Then regenerate bbox205.json (BBF=<file> bbox205.py).
+Rebuild from scratch: CHAIN="ws223/fix223a.py ws223/fix223b.py ws223/fix223d.py ws223/fix223f.py ws223/fix223h.py" from ws222i.
 Probes: runp.sh (modifiers off): probe223a (ring/landing verts), probe223b (lip along the curb back), probe223c/d (landing top
 verts/faces), probe223e (stacked top faces by ray). probe223g = evaluated top-surface map, run as CHAIN inside subrend212.py:
   FILE=$PWD/montclair_state.blend CULL="-300,-220,-90,-20" CHAIN="ws223/probe223g.py" GRID="x0,x1,y0,y1,step" blender -b --python scripts/ws212/subrend212.py
 Tests: t1.sh (F=..., TAG=...); WIPs: jobwip223.sh. No objects added (bbox205.json unchanged).
 Residual: two thin wedge triangles (v150,v132,v140)/(v140,v132,v130) along the straight return segment slope 3 cm over ~3 cm
-(landing edge ring is 2-4 cm above the landing interior f72); NE view: WS69 curb end / landing corner notch still open.
+(landing edge ring is 2-4 cm above the landing interior f72); NE view: landing-corner V-notch still open (W45b; not the grass).
 - REJECTED: fix223g (W45: subdivide the WS70 verge grass by the landing S edge so the WS72_KasserSW_walk_cut GN drops only
   verts under the slab). The evaluated map (probe223g, GRID -250,-248.3,-55.4,-54.3,0.1) got WORSE: a wider 125.67 band just
   outside the slab edge, so the trench is the cut GN reaching verts OUTSIDE the slab footprint, not long-triangle ramping.
