@@ -1,4 +1,53 @@
-# Viewer upgrade: fun, fast, accurate
+# Model fidelity and completeness, southwest corner first
+
+Joe's ask (2026-11-19): better fidelity, realism and completeness of the models, with optimized geometry and level of detail kept. Start at the southwest corner (Sprague Field, Montclair Heights station) and work toward the College of Communication and Media. Use any free public source.
+
+What the survey found (viewer at `74a6a95`): the campus is 36.1 million triangles (16.7 million plain, 19.3 million instanced; tree trunks and branches are 38% of it). In the southwest corner the station exists, but Normal Avenue, the grade crossing, the station lot, Carlisle Road, the west half of Sprague Field and its west grandstand are missing, and three grounds (4 km skirt, north terrain, main terrain) overlap there.
+
+Method: a scripted build, `blender/southwest/`, makes its own `.blend` from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap). It is a third export source (`sw_` tiles). Inside its footprint it owns the ground: the export takes the other sources' ground out of their tiles there (`tools/web-export/supersede.mjs`).
+
+## Phase 1: station to Sprague Field
+
+- [x] Evidence tools: `tools/evidence/` (fetch ortho, LiDAR, OSM; plan of the published tiles; gridded overlay)
+- [x] Plan format with true-arc corners (`blender/southwest/geom.py`, `README.md`)
+- [x] Seamless ground builder: one triangulation for terrain, paving, turf; curbs (`ground.py`)
+- [x] Paint sheets: lane lines, stalls, football markings drawn into textures (`paint.py`)
+- [x] Digitised plan: roads, station, field (`plan/*.json`), checked against the ortho
+- [x] Objects: west grandstand, press box, east bleachers, light poles, goalposts, scoreboard, fences, crossing gates, lot lamps (`stand.py`, `fixtures.py`, `place.py`)
+- [x] Trees from the LiDAR canopy (the main model's tree asset) and the hedge row
+- [x] Export: `sw` scene in `build_web.sh`, supersede step, manifest, far versions
+- [x] Viewer: turf category, see-through fences, paint colour kept on painted sheets
+- [x] Before/after screenshots of the same views; triangle and size budget recorded
+- [x] Tests, lint, docs (VIEWER.md, ROADMAP.md, README.md, AGENTS.md index, CLAUDE.md index)
+- [x] Independent review pass before the PR
+
+## Phase 2: toward the communication school (not started)
+
+- [ ] Carlisle Road north of the field, Lot 42 north part, the maintenance building
+- [ ] Red Hawk Deck, College Avenue, Cole Hall, CCOM: these are in the main model; changes there are scripts for the modelling box, tested on the released copy
+- [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
+
+## Review
+
+What was built and how it was checked:
+
+- **Result in the viewer** (same views before and after, `tools/viewer-test/shoot.mjs` views `sw_top`, `sw_station`, `sw_field`, `eye_crossing`): Normal Avenue with centre lines, medians and the gated crossing; the station lot with 63 stalls, islands, lamps, a ticket machine and the mini-high platforms; Carlisle Road; the whole of Sprague Field with rule-book lines, numerals and the 2025 lettering; the west grandstand (22 rows, 5 sections) with its press box; the east bleachers (7 units); five light poles, goalposts, scoreboard, fences, netting, team benches, the hedge and nine trees.
+- **Budget.** The southwest tiles are 96,151 plain triangles, 47,226 instanced (trees), 1.8 MB, 12 paint sheets. The whole campus went from 207.5 MB to 174.6 MB and from 16.74 to 16.37 million plain triangles, because the superseded ground left the other tiles (433,162 triangles of the 4 km skirt alone) and `compact.mjs` dropped 33.5 MB of unused instance data.
+- **Plan accuracy.** The football field frame fits the four white boundary lines in the 2020 ortho to 0.15 m. Road, lot and stand outlines were drawn over the ortho and corrected until they sat on the image edges (about 0.5 m; the ortho is 0.3 m per pixel).
+- **Seams.** After the supersede step, 184 m² of the skirt and 75 m² of the north terrain remain inside the 36,000 m² footprint: thin tucked strips along its 1.2 km edge. Before the cut-in-four rule it was 3,662 m², and one old triangle showed on Normal Avenue.
+- **Tests.** `node --test` 121 pass; `python3 -m unittest discover -s tests/py` 18 pass; Ruff clean; `check_viewer_refs.py` and `repo_guard.py` clean.
+- **Independent review** (a second agent, read-only) found two bugs and four minor issues; all are fixed: ground patches facing down after `recalc_face_normals`, an unchecked supersede failure in `build_web.sh`, a small-file read in `supersede.mjs`, paint ownership, a seam in closed curbs, and an evidence box 2.5 m short of the footprint.
+
+Not verified (UNVERIFIED), also flagged in object names and plan files:
+
+- Heights and details taken from photographs by eye: stand row rise, press box form, fence and netting heights, lamp heads, crossing mast types, mini-high platform sizes, hedge and tree species.
+- The north model's track stands about 0.65 m above the LiDAR ground. This build lifts its ground to it along the corridor (`station.json`, `lifts`). The right fix is in the north model.
+- Frame rate on a real GPU: this machine draws WebGL in software.
+- The export ran here in a copy of the box's folder layout, from the scripted `.blend` only. The main and north tiles were not re-exported; they were changed only by `supersede.mjs` and `compact.mjs`.
+
+---
+
+# Earlier: viewer upgrade (done)
 
 Plan for the viewer work on branch `joe/wizardly-pasteur-n7mq4j`. Architecture and module contract: [docs/VIEWER.md](../docs/VIEWER.md).
 

@@ -144,8 +144,10 @@ if os.environ.get("MERGE_WITH") and os.path.exists(CLIP):
         print("WEB WARNING: no MAIN_FILE; terrain not trimmed", flush=True)
 
 # ---------- materials ----------
+# CC0 ambientCG sets, the two authored leaf sets, and the paint sheets drawn by blender/southwest/paint.py
 ALLOW = re.compile(
     r"(^|/)([A-Z][A-Za-z]+\d{3}[A-Z]?_\dK-(JPG|PNG)_(Color|Opacity)\.(jpg|png))$|SweetgumStar_(Color|Opacity)|TulipPoplar_(Color|Opacity)"
+    r"|(^|/)authored_[A-Za-z0-9_]+\.png$"
 )
 DENY = re.compile(
     r"ortho|naip|aerial|photo|joe|skirt|ground_classes|paving_mask|walk_panel_tone|_far|mask|\.exr",
@@ -334,6 +336,17 @@ CATS = [
     ("wood", r"wood|timber|bench|Wood049"),
 ]
 PAINT = set()
+# Materials of the scripted southwest build are named SW_<kind word>_<name> (blender/southwest/kit.py): the
+# kind word decides the category, whatever else the name contains.
+SW_CAT = {
+    "asphalt": "asphalt", "concrete": "concrete", "brick": "brick", "turf": "turf", "lawn": "grass", "mulch": "mulch",
+    "gravel": "gravel", "metal": "metal", "wood": "wood", "stone": "stone", "stucco": "plaster", "glass": "glass",
+}
+
+
+def sw_kind(m):
+    mm = re.match(r"SW_([a-z]+)_", m.name)
+    return mm.group(1) if mm else None
 
 
 def mat_images(nt, dep=0, acc=None):
@@ -351,6 +364,8 @@ def category(m, glass, leaf):
         return "leaf"
     if glass:
         return "glass"
+    if sw_kind(m):
+        return SW_CAT.get(sw_kind(m), "")
     imgs = mat_images(m.node_tree) if m.use_nodes and m.node_tree else []
     for i in imgs:
         mm = re.search(r"(ws\d+[a-z]?)_mask_tile_", i)
@@ -440,6 +455,8 @@ def flatten(m):
     if glass and re.search(r"leaf|needle|foliage|crown|canopy|hedge|shrub|grass", m.name, re.I):
         glass = False
         alpha = 1.0
+    if glass and sw_kind(m) not in (None, "glass"):
+        glass = False  # a see-through part that is not glazing (chain-link, netting): keeps its colour and category
     if glass:
         col = [0.55, 0.62, 0.66, 1]
         alpha = 0.35

@@ -1,0 +1,1191 @@
+{
+ "zone": "field",
+ "notes": "Field frame: u along the long axis (76.18 deg, towards the north goal), v to its left (west). Most field-related outlines were read in that frame on brightness/colour profiles of the 2020 ortho and converted to model x, y, then checked on --plan overlays at 16-20 px/m. Turf (2020 ortho): straight sides on the white edge strip at |v| = 32.1; north apron a true arc R 34 centred on the axis 35.5 m north of centre (apex 69.5 m), meeting the sides at u = 46.7 at a slight angle; south apron R 42.4 (apex 66.9 m) meeting the sides at u = -52.2. Apron readings scatter about 1 m (NW and SW edges run ~1 m outside the arcs). In 2025 photos (0151, 0163) an asphalt walk and the black netting cross the north apron 3-6 m beyond the end line; the ortho shows a lighter band there, kept as North_cross_walk. Ring walk: west edge on the grandstand front (v 37.4), east edge on the bleacher front (v -36.2), north curb arc concentric with the turf arc, R 37.9; there is no walk round the south apron (lawn and trees, 0163). Stands: outlines from the ortho roofs, which agree with OSM 232846650/232846674 to ~0.5 m; rows and sections counted on the drone photos (see stands[].count_note). Press box: OSM 232846675 and a 13.3 m LiDAR 2017 return; not distinct in the ortho. Lot 42: hedge-side curb and both stall rows from the ortho (stall lines located as brightness peaks along offset rows); building wall on the north-east from OSM; drive connections from OSM aisle 232846631 (north, beyond y -70, and south to Carlisle Rd at y -158 to -168). Light poles: five, as in photos 0147/0151/0163 (NW and SW of the west stand, the antenna mast behind the press box, N and S ends of the east bleachers); only the SW pole is in the 2017 LiDAR (24.5 m); the mast is from OSM; the other three are placed from photos and ortho shadows and are UNVERIFIED to 2-3 m. Trees: crown tops and radii from the 2017 LiDAR nDSM (hedge, stand and building returns excluded). Hedge height 6.5 m from the LiDAR. Scoreboard projected from two oblique drone photos (UNVERIFIED +-3 m). Football markings are not traced: they are to be generated from field_frame. The 2017 LiDAR predates the present west grandstand, so no stand heights were taken from it. Not digitised: gates, the flagpole south-east of the south apron, the practice-area goal boxes, the north buildings (other zone), the Carlisle Rd and Normal Ave carriageways and sidewalks (other zones).",
+ "field_frame": {
+  "centre": [
+   -336.48,
+   -157.33
+  ],
+  "angle": 76.18,
+  "evidence": "ortho2020: the four white boundary lines found as brightness peaks on profiles taken in a rotated frame (end lines at u = -54.93/+54.94, sidelines at v = -24.40/+24.39, constant to 0.05 m along their length, so the angle is good to ~0.05 deg); rectangle of exactly 109.73 x 48.77 m fitted to the line centres; goal lines check at +-45.8 (91.44 m apart)",
+  "fit_error_m": 0.15,
+  "corners": [
+   [
+    -325.91,
+    -216.43
+   ],
+   [
+    -299.7,
+    -109.88
+   ],
+   [
+    -347.05,
+    -98.23
+   ],
+   [
+    -373.26,
+    -204.78
+   ]
+  ]
+ },
+ "surfaces": [
+  {
+   "name": "Sprague_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     -317.78,
+     -215.69
+    ],
+    [
+     -294.15,
+     -119.64
+    ],
+    [
+     -303.36,
+     -22.69,
+     33.98
+    ],
+    [
+     -356.49,
+     -104.31
+    ],
+    [
+     -380.12,
+     -200.35
+    ],
+    [
+     -357.83,
+     -244.14,
+     42.379999999999995
+    ]
+   ],
+   "evidence": "ortho2020 (edges read on colour profiles across and along the field frame); msu_sprague_..._0163_D.jpg",
+   "unverified": "apron arcs fitted to 4-5 edge readings each (north R 34 m, south R 42.4 m, both centred on the field axis); readings scatter about 1 m; south apron edge partly under tree shade"
+  },
+  {
+   "name": "Ring_walk",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -380.12,
+     -200.35
+    ],
+    [
+     -380.6,
+     -196.5
+    ],
+    [
+     -383.38,
+     -190.59
+    ],
+    [
+     -363.37,
+     -109.25
+    ],
+    [
+     -290.16,
+     81.13,
+     37.879999999999995
+    ],
+    [
+     -290.1,
+     -122.85
+    ],
+    [
+     -292.24,
+     -131.55
+    ],
+    [
+     -292.63,
+     -131.46
+    ],
+    [
+     -309.4,
+     -199.62
+    ],
+    [
+     -301.8,
+     -201.5
+    ],
+    [
+     -300.0,
+     -202.0
+    ],
+    [
+     -300.0,
+     -238.0
+    ],
+    [
+     -336.9,
+     -238.0
+    ],
+    [
+     -332.0,
+     -221.3
+    ],
+    [
+     -317.78,
+     -215.69
+    ],
+    [
+     -347.23,
+     -201.03
+    ]
+   ],
+   "evidence": "ortho2020; osm (Lot 36 west edge); msu_sprague_..._0151_D.jpg",
+   "unverified": "SE paved area east of x -310 and south of y -225 read through tree shade; south edge stops at y -238 (Normal Ave sidewalk belongs to the next zone). Closed across the turf, which wins by layer"
+  },
+  {
+   "name": "North_cross_walk",
+   "kind": "asphalt",
+   "layer": 4.5,
+   "ring": [
+    [
+     -351.76,
+     -93.84
+    ],
+    [
+     -349.05,
+     -91.21
+    ],
+    [
+     -294.67,
+     -104.59
+    ],
+    [
+     -293.49,
+     -108.18
+    ]
+   ],
+   "evidence": "ortho2020 (light 3 m band 3.1-6.3 m beyond the north end line); msu_sprague_..._0151_D.jpg (asphalt walk between the north netting and the MONTCLAIR STATE apron)",
+   "unverified": "surface type: the ortho band is greyish green, the 2025 photo shows asphalt; layer 4.5 so it cuts the turf"
+  },
+  {
+   "name": "North_plaza",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -372.1,
+     -101.5
+    ],
+    [
+     -370.4,
+     -94.3
+    ],
+    [
+     -372.0,
+     -80.0
+    ],
+    [
+     -322.0,
+     -80.0
+    ],
+    [
+     -326.0,
+     -87.0
+    ],
+    [
+     -320.71,
+     -93.24
+    ],
+    [
+     -362.34,
+     -105.04
+    ]
+   ],
+   "evidence": "ortho2020 (grey paving between the north buildings, the ring walk and the stand's north end)",
+   "unverified": "largely under the shade of trees 3-4 and the building; may include planted beds round the trees"
+  },
+  {
+   "name": "Practice_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     -394.18,
+     -192.54
+    ],
+    [
+     -380.17,
+     -196.03
+    ],
+    [
+     -385.32,
+     -217.26
+    ],
+    [
+     -399.32,
+     -213.97
+    ]
+   ],
+   "evidence": "ortho2020 (white outline); msu_sprague_..._0163_D.jpg, _0151_D.jpg (small turf with two goals)",
+   "unverified": "turf margin beyond the white outline (0.8 m) guessed"
+  },
+  {
+   "name": "Lot_42",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -392.0,
+     -70.0
+    ],
+    [
+     -392.4,
+     -80.0
+    ],
+    [
+     -394.4,
+     -100.0
+    ],
+    [
+     -398.0,
+     -125.0
+    ],
+    [
+     -400.6,
+     -142.0
+    ],
+    [
+     -401.4,
+     -155.5,
+     1.5
+    ],
+    [
+     -406.6,
+     -158.0
+    ],
+    [
+     -406.4,
+     -168.5
+    ],
+    [
+     -398.8,
+     -168.5,
+     1.5
+    ],
+    [
+     -394.7,
+     -166.69
+    ],
+    [
+     -381.92,
+     -114.74
+    ],
+    [
+     -381.1,
+     -109.0
+    ],
+    [
+     -379.0,
+     -100.4
+    ],
+    [
+     -384.5,
+     -99.2
+    ],
+    [
+     -382.5,
+     -91.3
+    ],
+    [
+     -379.9,
+     -92.0
+    ],
+    [
+     -378.0,
+     -79.7
+    ],
+    [
+     -381.0,
+     -70.0
+    ]
+   ],
+   "evidence": "ortho2020 (hedge edge, stalls, stand back); osm 312848722 (Lot 42) for the building wall on the north-east, 232846631 (aisle) for the two drive connections",
+   "unverified": "north drive continues beyond y -70 (outside the zone); south drive mouth width on Carlisle Rd guessed 10 m; east edge under the stand overhang"
+  },
+  {
+   "name": "Lawn_NE",
+   "kind": "lawn",
+   "ring": [
+    [
+     -326.0,
+     -80.0
+    ],
+    [
+     -316.0,
+     -79.5
+    ],
+    [
+     -298.0,
+     -85.0
+    ],
+    [
+     -283.0,
+     -90.0
+    ],
+    [
+     -283.0,
+     -134.0
+    ],
+    [
+     -292.41,
+     -137.28
+    ],
+    [
+     -302.73,
+     -103.84
+    ],
+    [
+     -340.14,
+     -88.46
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "north edge against the building walk not resolved; east part continues past x -300"
+  },
+  {
+   "name": "Lawn_S",
+   "kind": "lawn",
+   "ring": [
+    [
+     -401.8,
+     -168.5
+    ],
+    [
+     -395.5,
+     -168.5
+    ],
+    [
+     -391.0,
+     -190.0
+    ],
+    [
+     -381.0,
+     -193.0
+    ],
+    [
+     -379.0,
+     -200.0
+    ],
+    [
+     -366.0,
+     -219.0
+    ],
+    [
+     -345.0,
+     -223.5
+    ],
+    [
+     -332.0,
+     -221.3
+    ],
+    [
+     -337.5,
+     -240.0
+    ],
+    [
+     -348.5,
+     -240.0
+    ],
+    [
+     -377.3,
+     -231.3
+    ],
+    [
+     -395.6,
+     -227.3,
+     6.0
+    ],
+    [
+     -400.8,
+     -214.0
+    ]
+   ],
+   "evidence": "ortho2020; msu_sprague_..._0163_D.jpg (grass between the RED HAWKS apron fence, the practice turf and Normal Ave)",
+   "unverified": "mostly under tree crowns south of y -218; south edge set 0.8 m north of the OSM Normal Ave footway; west edge on the Carlisle Rd / Normal Ave corner curb"
+  },
+  {
+   "name": "Lawn_hedge_strip",
+   "kind": "lawn",
+   "ring": [
+    [
+     -397.0,
+     -70.0
+    ],
+    [
+     -392.0,
+     -70.0
+    ],
+    [
+     -392.4,
+     -80.0
+    ],
+    [
+     -394.4,
+     -100.0
+    ],
+    [
+     -398.0,
+     -125.0
+    ],
+    [
+     -400.6,
+     -142.0
+    ],
+    [
+     -401.4,
+     -155.5
+    ],
+    [
+     -406.6,
+     -158.0
+    ],
+    [
+     -406.5,
+     -152.0
+    ],
+    [
+     -405.5,
+     -140.0
+    ],
+    [
+     -403.5,
+     -120.0
+    ],
+    [
+     -400.5,
+     -90.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "ground under the hedge not visible; west edge (Carlisle Rd sidewalk) taken from OSM road centre + 4 m"
+  },
+  {
+   "name": "West_stand_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -383.19,
+     -190.64
+    ],
+    [
+     -362.14,
+     -105.09
+    ],
+    [
+     -378.55,
+     -101.05
+    ],
+    [
+     -397.88,
+     -179.61
+    ],
+    [
+     -391.76,
+     -181.11
+    ],
+    [
+     -393.48,
+     -188.1
+    ]
+   ],
+   "evidence": "ortho2020 (stand roof outline); osm 232846650",
+   "unverified": "ground under the raised stand assumed paved concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
+   "grade": false
+  },
+  {
+   "name": "East_bleacher_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -309.59,
+     -199.58
+    ],
+    [
+     -292.82,
+     -131.41
+    ],
+    [
+     -285.06,
+     -133.32
+    ],
+    [
+     -301.82,
+     -201.49
+    ]
+   ],
+   "evidence": "ortho2020; osm 232846674",
+   "unverified": "ground under the bleachers assumed concrete; the 2017 LiDAR ground under the stand is a bank up to 3 m high (it has no stand); the pad follows that bank, and whether the ground there is still a bank is not known",
+   "grade": false
+  },
+  {
+   "name": "Press_box_equipment_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -401.0,
+     -148.6
+    ],
+    [
+     -390.3,
+     -148.6
+    ],
+    [
+     -392.2,
+     -157.6
+    ],
+    [
+     -401.6,
+     -157.0
+    ]
+   ],
+   "evidence": "ortho2020 (equipment cluster behind the stand); msu_sprague_..._0147_D.jpg (green-fenced equipment yard behind the press box)",
+   "unverified": "extent and surface guessed"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "Lot_42_west_curb",
+   "path": [
+    [
+     -392.0,
+     -70.0
+    ],
+    [
+     -392.4,
+     -80.0
+    ],
+    [
+     -394.4,
+     -100.0
+    ],
+    [
+     -398.0,
+     -125.0
+    ],
+    [
+     -400.6,
+     -142.0
+    ],
+    [
+     -401.4,
+     -155.5,
+     1.5
+    ],
+    [
+     -406.6,
+     -158.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb vs. flush edge not visible"
+  },
+  {
+   "name": "Lot_42_south_drive_curb",
+   "path": [
+    [
+     -406.4,
+     -168.5
+    ],
+    [
+     -398.8,
+     -168.5,
+     1.5
+    ],
+    [
+     -394.7,
+     -166.69
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020; osm 232846631",
+   "unverified": "position of the south drive edge"
+  }
+ ],
+ "markings": [
+  {
+   "type": "line",
+   "path": [
+    [
+     -393.8,
+     -193.6
+    ],
+    [
+     -381.0,
+     -196.8
+    ],
+    [
+     -385.7,
+     -216.2
+    ],
+    [
+     -398.5,
+     -213.2
+    ]
+   ],
+   "closed": true,
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "note": "practice area outline; inner goal-box lines not traced"
+  },
+  {
+   "type": "stalls",
+   "name": "Lot_42_west_row",
+   "line": [
+    [
+     -390.7,
+     -78.3
+    ],
+    [
+     -400.1,
+     -128.2
+    ]
+   ],
+   "count": 13,
+   "depth": 6.7,
+   "side": "left",
+   "angle": 44,
+   "colour": "white",
+   "evidence": "ortho2020 (brightness peaks on three rows parallel to the curb: 14 lines 3.85 m apart at 44 deg)",
+   "unverified": "lines under the van at y -108 and one at y -115 not seen; west ends in hedge shade"
+  },
+  {
+   "type": "stalls",
+   "name": "Lot_42_east_row",
+   "line": [
+    [
+     -389.6,
+     -120.5
+    ],
+    [
+     -393.5,
+     -135.1
+    ]
+   ],
+   "count": 4,
+   "depth": 7.5,
+   "side": "left",
+   "angle": 135,
+   "colour": "white",
+   "evidence": "ortho2020 (4 lines 3.7 m apart, two more faint ones at y -134/-137)",
+   "unverified": "fifth line and the line ends at the stand back"
+  }
+ ],
+ "points": [
+  {
+   "name": "Light_pole_SW",
+   "kind": "light_pole",
+   "at": [
+    -392.2,
+    -180.8
+   ],
+   "height": 24.5,
+   "evidence": "lidar2017 (24.5 m column); ortho2020 shadow on the stand; photos 0147, 0163"
+  },
+  {
+   "name": "Light_pole_W_mast",
+   "kind": "light_pole",
+   "at": [
+    -393.66,
+    -150.99
+   ],
+   "height": 25.0,
+   "evidence": "osm 13991131954 (lighting mast with mobile antennas); photos 0147, 0163",
+   "unverified": "height (not in 2017 LiDAR), position from OSM only"
+  },
+  {
+   "name": "Light_pole_NW",
+   "kind": "light_pole",
+   "at": [
+    -373.5,
+    -99.0
+   ],
+   "height": 24.5,
+   "evidence": "msu_sprague_..._0151_D.jpg, _0163_D.jpg (north end of the west stand); ortho2020 lamp-head glint and shadow",
+   "unverified": "base position +-2 m, height"
+  },
+  {
+   "name": "Light_pole_NE",
+   "kind": "light_pole",
+   "at": [
+    -291.5,
+    -129.5
+   ],
+   "height": 24.5,
+   "evidence": "msu_sprague_..._0151_D.jpg (north end of the east bleachers); ortho2020 shadow line running NE from here",
+   "unverified": "base position +-2 m, height; outside the zone box"
+  },
+  {
+   "name": "Light_pole_SE",
+   "kind": "light_pole",
+   "at": [
+    -302.0,
+    -204.0
+   ],
+   "height": 24.5,
+   "evidence": "msu_sprague_..._0163_D.jpg, _0147_D.jpg (south end of the east bleachers, by Lot 3)",
+   "unverified": "base position +-3 m (tree shade in the ortho), height"
+  },
+  {
+   "name": "Scoreboard",
+   "kind": "scoreboard",
+   "at": [
+    -340.5,
+    -233.0
+   ],
+   "angle": 86,
+   "width": 8.0,
+   "height": 7.0,
+   "evidence": "msu_sprague_..._0151_D.jpg, _0163_D.jpg (black board on two posts behind the south apron, ~14 m east of the axis, by the Normal Ave sidewalk)",
+   "unverified": "position +-3 m (projected from two oblique drone views), size, height; faces the field"
+  },
+  {
+   "name": "Goalpost_N",
+   "kind": "goalpost",
+   "at": [
+    -323.38,
+    -104.06
+   ],
+   "angle": 256.18,
+   "evidence": "field_frame (end line centre); ortho2020 crossbar shadow; photo 0151 (yellow offset single-pedestal post)",
+   "unverified": "pedestal stands ~1-2 m behind the end line"
+  },
+  {
+   "name": "Goalpost_S",
+   "kind": "goalpost",
+   "at": [
+    -349.58,
+    -210.6
+   ],
+   "angle": 76.18,
+   "evidence": "field_frame; ortho2020 base pad; photos 0151, 0163",
+   "unverified": "pedestal offset as north"
+  },
+  {
+   "name": "Bench_area_W",
+   "kind": "bench",
+   "at": [
+    -370.27,
+    -149.02
+   ],
+   "angle": 76.18,
+   "length": 45.72,
+   "evidence": "photos C04A0106 (aluminium team bench in front of the west stand), 0147",
+   "unverified": "team area taken as between the 25-yard lines on the walk"
+  },
+  {
+   "name": "Bench_area_E",
+   "kind": "bench",
+   "at": [
+    -303.27,
+    -165.5
+   ],
+   "angle": 76.18,
+   "length": 45.72,
+   "evidence": "photos DSC05256 (white team bench by the east bleachers), 0151, 0163 (white benches on the east walk)",
+   "unverified": "extent as west"
+  },
+  {
+   "name": "Tree_1",
+   "kind": "tree",
+   "at": [
+    -386.8,
+    -73.2
+   ],
+   "height": 15.6,
+   "radius": 5.1,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_2",
+   "kind": "tree",
+   "at": [
+    -390.8,
+    -76.8
+   ],
+   "height": 15.7,
+   "radius": 5.5,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_3",
+   "kind": "tree",
+   "at": [
+    -369.8,
+    -84.8
+   ],
+   "height": 16.3,
+   "radius": 5.6,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017",
+   "skip": "the north model already has a tree here"
+  },
+  {
+   "name": "Tree_4",
+   "kind": "tree",
+   "at": [
+    -357.5,
+    -91.0
+   ],
+   "height": 16.2,
+   "radius": 7.5,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017",
+   "skip": "the north model already has a tree here"
+  },
+  {
+   "name": "Tree_5",
+   "kind": "tree",
+   "at": [
+    -306.5,
+    -212.0
+   ],
+   "height": 20.0,
+   "radius": 6.5,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_6",
+   "kind": "tree",
+   "at": [
+    -312.0,
+    -218.5
+   ],
+   "height": 20.0,
+   "radius": 6.8,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_7",
+   "kind": "tree",
+   "at": [
+    -375.2,
+    -228.0
+   ],
+   "height": 17.9,
+   "radius": 7.5,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_8",
+   "kind": "tree",
+   "at": [
+    -363.8,
+    -227.8
+   ],
+   "height": 13.6,
+   "radius": 6.8,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_9",
+   "kind": "tree",
+   "at": [
+    -356.5,
+    -231.5
+   ],
+   "height": 16.1,
+   "radius": 6.9,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  },
+  {
+   "name": "Tree_10",
+   "kind": "tree",
+   "at": [
+    -338.2,
+    -235.8
+   ],
+   "height": 10.1,
+   "radius": 4.4,
+   "evidence": "lidar2017 ndsm (crown top, radius of crown above 45% of top height)",
+   "unverified": "species; growth since 2017"
+  }
+ ],
+ "stands": [
+  {
+   "name": "West_grandstand",
+   "ring": [
+    [
+     -383.19,
+     -190.64
+    ],
+    [
+     -362.14,
+     -105.09
+    ],
+    [
+     -378.55,
+     -101.05
+    ],
+    [
+     -397.88,
+     -179.61
+    ],
+    [
+     -391.76,
+     -181.11
+    ],
+    [
+     -393.48,
+     -188.1
+    ]
+   ],
+   "front": [
+    [
+     -383.19,
+     -190.64
+    ],
+    [
+     -362.14,
+     -105.09
+    ]
+   ],
+   "rows": 22,
+   "sections": 5,
+   "aisles": 4,
+   "count_note": "rows: brightness profile across the seat deck in msu_sprague_..._0151_D.jpg gives 22 riser/plank periods (+-1) between the front concourse and the back rail; sections: 4 aisles with handrails cross the deck, each opposite one of the 4 stair towers from the front concourse (0151, 0147), so 5 sections",
+   "evidence": "ortho2020 (outline, front edge v=37.4 on the field frame); osm 232846650; photos 0151, 0147, 0163",
+   "unverified": "footprint read from the roof in the ortho, which may be shifted ~1-2 m west by relief; rows +-1; aisle count from oblique views; the south-west notch (8 m by 6 m) from ortho and OSM; row rise 0.33 m is set so that the top row (8.5 m) sits under the press box, whose roof is 13.3 m above the ground in the 2017 LiDAR",
+   "rise": 0.33,
+   "first_row_height": 1.2
+  },
+  {
+   "name": "East_bleachers",
+   "ring": [
+    [
+     -309.59,
+     -199.58
+    ],
+    [
+     -292.82,
+     -131.41
+    ],
+    [
+     -285.06,
+     -133.32
+    ],
+    [
+     -301.82,
+     -201.49
+    ]
+   ],
+   "front": [
+    [
+     -309.59,
+     -199.58
+    ],
+    [
+     -292.82,
+     -131.41
+    ]
+   ],
+   "rows": 9,
+   "sections": 7,
+   "aisles": 6,
+   "count_note": "7 sections divided by 6 red stepped aisles, plus red end stairs at both ends (0163, 0151); aisle gaps also read on the ortho every ~10.2 m at u = -24.9, -14.7, -4.5, 5.6, 15.9, 26.0; rows: 9 plank periods on a profile across one section in 0151",
+   "evidence": "ortho2020; osm 232846674; msu_sprague_..._0163_D.jpg, _0151_D.jpg, DSC05256.jpg",
+   "unverified": "rows +-1 (only blurred top views); back wall height"
+  },
+  {
+   "name": "Press_box",
+   "ring": [
+    [
+     -388.3,
+     -139.9
+    ],
+    [
+     -391.4,
+     -139.2
+    ],
+    [
+     -393.6,
+     -148.1
+    ],
+    [
+     -390.5,
+     -148.8
+    ]
+   ],
+   "front": [
+    [
+     -388.3,
+     -139.9
+    ],
+    [
+     -390.5,
+     -148.8
+    ]
+   ],
+   "height": 13.3,
+   "evidence": "osm 232846675; lidar2017 (13.3 m high return at -391.2, -147.2); photos 0147, 0163, C04A0106 (red box with grey field face, next to the antenna mast)",
+   "unverified": "not distinct in the 2020 ortho; footprint and height from OSM and the 2017 LiDAR, which predates the present stand",
+   "cabin": 3.2,
+   "on": "West_grandstand"
+  }
+ ],
+ "fences": [
+  {
+   "name": "Field_fence",
+   "path": [
+    [
+     -347.39,
+     -94.92
+    ],
+    [
+     -356.49,
+     -104.31
+    ],
+    [
+     -380.12,
+     -200.35
+    ],
+    [
+     -357.83,
+     -244.14,
+     42.379999999999995
+    ],
+    [
+     -317.78,
+     -215.69
+    ],
+    [
+     -294.15,
+     -119.64
+    ],
+    [
+     -297.86,
+     -107.1
+    ]
+   ],
+   "closed": false,
+   "height": 1.8,
+   "kind": "chain_link_black",
+   "evidence": "msu_sprague_..._0151_D.jpg, _0163_D.jpg (black fence on the turf edge round the sides and the RED HAWKS apron); ortho2020 shadow line on the turf edge",
+   "unverified": "height; gates not placed; north corners run as straight diagonals to the netting"
+  },
+  {
+   "name": "North_goal_netting",
+   "path": [
+    [
+     -347.39,
+     -94.92
+    ],
+    [
+     -297.86,
+     -107.1
+    ]
+   ],
+   "closed": false,
+   "height": 4.5,
+   "kind": "netting_black",
+   "evidence": "msu_sprague_..._0151_D.jpg (black posts with net 3 m behind the north end line)",
+   "unverified": "height (scaled from the goal crossbar), post spacing"
+  },
+  {
+   "name": "Carlisle_hedge",
+   "kind": "hedge",
+   "path": [
+    [
+     -393.8,
+     -78.0
+    ],
+    [
+     -396.6,
+     -100.0
+    ],
+    [
+     -400.6,
+     -125.0
+    ],
+    [
+     -403.8,
+     -145.0
+    ],
+    [
+     -405.0,
+     -157.0
+    ]
+   ],
+   "closed": false,
+   "height": 6.5,
+   "width": 4.5,
+   "evidence": "ortho2020 (dark band); lidar2017 (6-7 m tops along x -394 to -401)",
+   "unverified": "south end and width; centre taken from LiDAR tops, about 1.5 m east of the band seen in the ortho"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "Field_house",
+   "ring": [
+    [
+     -381.1,
+     -109.0
+    ],
+    [
+     -374.2,
+     -110.6
+    ],
+    [
+     -372.1,
+     -101.5
+    ],
+    [
+     -370.4,
+     -94.3
+    ],
+    [
+     -379.9,
+     -92.0
+    ],
+    [
+     -382.5,
+     -91.3
+    ],
+    [
+     -384.5,
+     -99.2
+    ],
+    [
+     -379.0,
+     -100.4
+    ]
+   ],
+   "height": 4.2,
+   "evidence": "osm way 232846699 (footprint), lidar2017 (roof 3.6 to 4.3 m above ground), msu_sprague_DJI_20250530101718_0163_D.jpg",
+   "unverified": "roof form (drawn flat; the 2025 photo shows low grey gables), wall colour, no doors or windows"
+  },
+  {
+   "name": "Storage_shed_N",
+   "ring": [
+    [
+     -380.2,
+     -82.6
+    ],
+    [
+     -376.6,
+     -83.4
+    ],
+    [
+     -378.1,
+     -90.0
+    ],
+    [
+     -381.7,
+     -89.2
+    ]
+   ],
+   "height": 3.0,
+   "evidence": "ortho2020 (outline), lidar2017 (3.0 m above ground)",
+   "unverified": "use, roof form, wall colour"
+  }
+ ]
+}
