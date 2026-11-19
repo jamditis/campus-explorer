@@ -38,7 +38,8 @@ async function playwright() {
 /** Open the viewer in headless Chromium. Collects console errors, page errors and failed requests in `problems`. */
 export async function open(url, { width = 1280, height = 800, touch = false, init = null, minutes = 30 } = {}) {
   const { chromium } = await playwright();
-  const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
+  // CHROME_PATH points at an installed Chrome when Playwright's own browser is not downloaded
+  const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
   const context = await browser.newContext({ viewport: { width, height }, hasTouch: touch });
   const page = await context.newPage(); page.setDefaultTimeout(minutes * 60 * 1000); // software WebGL is slow
   const problems = [];

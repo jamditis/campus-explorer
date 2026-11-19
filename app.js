@@ -67,6 +67,8 @@ app.player = createPlayer(app);
 const cam = createCamera(app);
 /** Ease the camera to a pose. `by` names the module that asked, so others can tell their own moves from a new one. */
 app.flyTo = (pose, opts = {}) => { app.emit('fly', { by: opts.by ?? null }); return cam.flyTo(pose, opts); };
+/** Stop any camera move without touching the pose, for modules that place the camera themselves. */
+app.cancelFly = (by = null) => { app.emit('fly', { by }); cam.cancel(); };
 /** Draw the whole campus with another camera into `target` (the minimap). The main view's tree and size culling is undone for the picture. */
 app.renderPlain = (camera2, target) => { scenery.trees.showAll(); app.look.renderPlain(camera2, target); scenery.trees.update(true); };
 

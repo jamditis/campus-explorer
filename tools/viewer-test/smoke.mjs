@@ -97,6 +97,23 @@ try {
     await app(h => { location.hash = '#x'; location.hash = h; }, hash);
     await page.waitForFunction(() => Math.abs(window.__campus.camera.position.x + 120) < 0.2);
   });
+  await step('a fly link keeps an upward look and its label setting', async () => {
+    const before = await page.getAttribute('#tool-labels', 'aria-pressed');
+    const want = before === 'true' ? '0' : '1';
+    await app(l => { location.hash = `#v=1&m=fly&c=-120.0,140.0,140.0&t=-120.0,150.0,120.0&l=${l}`; }, want);
+    await page.waitForFunction(() => window.__campus.app.state.mode === 'fly');
+    const [y, dy] = await app(() => [window.__campus.camera.position.y, window.__campus.camera.getWorldDirection(new window.__campus.THREE.Vector3()).y]);
+    assert.ok(Math.abs(y - 140) < 0.2, `camera moved to y ${y}`);
+    assert.ok(dy > 0.2, `the view looks ${dy > 0 ? 'too flat' : 'down'} (${dy})`);
+    assert.equal(await page.getAttribute('#tool-labels', 'aria-pressed'), want === '1' ? 'true' : 'false', 'the link label setting was not applied');
+    await page.keyboard.press('Digit1');
+  });
+  await step('clicking a search result flies there', async () => {
+    await app(() => window.__campus.goto(0, 500, 0, 0, 120, -1));
+    await page.fill('#search', 'kasser');
+    await page.click('#search-results li');
+    await page.waitForFunction(() => { const t = window.__campus.controls.target; return Math.hypot(t.x + 216, t.z - 30) < 15; });
+  });
   await step('nothing is drawn while the view is still', async () => {
     // the last frames after a move (sharpening, late textures) can take a while in software; then it must go quiet
     let n = Infinity;
