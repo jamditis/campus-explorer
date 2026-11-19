@@ -5,6 +5,7 @@ Parts of the campus built whole by script from plan files: one folder per area, 
 | Area folder | What it holds |
 |---|---|
 | `southwest/` | Montclair Heights station surroundings, Normal Avenue, Carlisle Road, Sprague Field |
+| `northeast/` | CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts, and the lots and roads between them |
 
 The engine (`*.py` in this folder) is shared. An area is a folder with a `footprint.json`; object names carry the area or a zone name, and zone names are unique across areas.
 
@@ -64,7 +65,9 @@ Model metres, the same frame as every other source: +X east, +Y grid north, Z NA
 | `layout.py` | Loads the plan files: dense outlines, layers, which surface gets which paint sheet. No bpy |
 | `stand.py` | Grandstand, press box and low bleacher builders |
 | `fixtures.py` | Light poles, goalposts, scoreboard, fences, crossing gates, lamps, benches and the like |
-| `place.py` | Puts stands, fences, hedges, fixtures and plain building massing where the plan says |
+| `massing.py` | Pure geometry of building parts: gable, hip, shed and mansard roofs, window bays. No bpy |
+| `building.py` | Buildings from measured parts: walls, roofs, window rows, parking deck levels |
+| `place.py` | Puts stands, fences, hedges, fixtures, trees and buildings where the plan says |
 | `edge.py` | Samples the neighbours' ground along the footprint into `<area>/edge_heights.json` |
 | `supersede.py` | Writes the rules for `tools/web-export/supersede.mjs` from `<area>/footprint.json` |
 | `build.py` | Entry point: `blender -b --python blender/scripted/build.py -- DATA_DIR OUT.blend` |
@@ -105,5 +108,7 @@ Evidence is fetched with `tools/evidence/fetch.py` into a data folder outside th
 - **markings** are paint. They are drawn into the texture of the surface under them and never become geometry. `stalls`: `count` stalls along `line` give `count + 1` divider lines, each `depth` long, to the `side` ("left" or "right") of the direction from the first point to the second.
 - **lifts** (`ring`, `dz`, `feather`) raise the ground inside a ring by `dz`, eased to nothing over `feather` metres outside it. Use one only to meet another model's level, and say why in `unverified`.
 - **points** place objects: `lamp`, `light_pole`, `sign`, `gate`, `goalpost`, `scoreboard`, `bench`, `bike_rack`, `ticket_machine`, `mini_high`, `utility_pole`, `tree`. `height` in metres when the evidence gives one.
-- **stands** (`ring`, `front` edge, `rows`, `sections`), **fences** (`path`, `height`, `kind`: `chain_link_black`, `netting_black`, `hedge`) and **buildings** (`ring`, `height`: plain massing) are extra lists a zone may carry. `field_frame` (`centre`, `angle`) fixes the football field; its lines are generated from the rule book, never traced.
+- **stands** (`ring`, `front` edge, `rows`, `sections`), **fences** (`path`, `height`, `kind`: `chain_link_black`, `netting_black`, `hedge`) and **buildings** are extra lists a zone may carry. `field_frame` (`centre`, `angle`) fixes the football field; its lines are generated from the rule book, never traced.
+- **buildings** are lists of parts; split a building where the roof height or type changes. A part has a `ring`, a `roof` (`flat`, `gable`, `hip`, `shed`), `top` (NAVD88 metres from the LiDAR: parapet top, or ridge) and, for pitched roofs, `eave` (and `ridge_angle` when the ridge does not follow the long side; a shed roof is high on the left of that direction). `base` stands a part on another part's roof. `style` (`dorm`, `hall`, `plant`, `deck`, `shed`), `floors`, `levels` (deck), `wall`, `trim`, `roof_colour` and `windows` (`width`, `height`, `spacing`) set the look. Outline and heights are measured; the window grid and colours are estimates, so every building object is named `_UNVERIFIED`. A part with `height` and no `top` is a plain box that tall.
+- **trees**: a `tree` point may carry `species` (`red_maple`, `sugar_maple`, `pin_oak`, `tulip_poplar`, `american_beech`, `sweetgum`, `white_pine`). `tools/evidence/trees.py` writes a zone of tree points from the LiDAR canopy; do not edit that zone by hand.
 - `evidence` names the source (`ortho2020`, `lidar2017`, `lidar2014`, `osm`, a photo file name). `unverified` says in a few words what was guessed.

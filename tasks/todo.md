@@ -21,11 +21,18 @@ Method: a scripted build, `blender/scripted/`, makes its own `.blend` from publi
 - [x] Tests, lint, docs (VIEWER.md, ROADMAP.md, README.md, AGENTS.md index, CLAUDE.md index)
 - [x] Independent review pass before the PR
 
-## Phase 2: toward the communication school (not started)
+## Phase 2: the rest of the map, worst gaps first (Joe, 2026-11-19: all three areas, stacked PRs)
 
-- [ ] Carlisle Road north of the field, Lot 42 north part, the maintenance building
-- [ ] Red Hawk Deck, College Avenue, Cole Hall, CCOM: these are in the main model; changes there are scripts for the modelling box, tested on the released copy
-- [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
+A survey of OpenStreetMap against the published tiles ranks the gaps: the north half of the campus (y above 420) is mostly bare ground; the south half is mostly modelled.
+
+- [x] Engine serves several areas: one plan folder per area under `blender/scripted/`, one `.blend`, one supersede mark per area
+- [x] Buildings from measured parts (`massing.py`, `building.py`); trees from the LiDAR canopy (`tools/evidence/trees.py`)
+- [ ] North-east district (`northeast/`): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
+- [ ] Stadium district (north of y 826): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
+- [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
+- [ ] Red Hawk Deck to Cole Hall, and the communication school: scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+
+Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
 
 ## Review
 
