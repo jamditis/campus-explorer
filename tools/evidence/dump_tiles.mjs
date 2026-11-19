@@ -1,6 +1,6 @@
 // Dump the triangles of published tiles that touch a box, in the model frame (x east, y north, z up),
 // so a script can draw a plan of what the viewer already has there (tools/evidence/plan.py).
-//   node tools/evidence/dump_tiles.mjs OUT_DIR X0 Y0 X1 Y1 [models/main] [--no-instances] [--skip TILE_REGEX]
+//   node tools/evidence/dump_tiles.mjs OUT_DIR X0 Y0 X1 Y1 [models/main] [--no-instances] [--skip PREFIX,PREFIX]
 // Writes OUT_DIR/tiles.json (one entry per mesh primitive: tile, mesh, material, colour, category, offsets)
 // and OUT_DIR/tiles.bin (float32 triangle corners, 9 numbers per triangle). Instanced meshes are expanded.
 // Needs @gltf-transform/core, @gltf-transform/extensions and meshoptimizer (not vendored: use NODE_PATH).
@@ -9,9 +9,14 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
 import { readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 
-const argv = process.argv.slice(2).filter(a => !a.startsWith('--'));
-const plain = process.argv.includes('--no-instances'); // leave out instanced meshes (trees, shrubs): far fewer triangles
-const skip = process.argv.includes('--skip') ? new RegExp(process.argv[process.argv.indexOf('--skip') + 1]) : null; // tile files to leave out
+// options first, so an option's value is never read as a positional argument
+const raw = process.argv.slice(2), argv = [];
+let plain = false, skip = []; // plain: leave out instanced meshes (trees, shrubs): far fewer triangles
+for (let i = 0; i < raw.length; i++) {
+  if (raw[i] === '--no-instances') plain = true;
+  else if (raw[i] === '--skip') skip = (raw[++i] ?? '').split(',').filter(Boolean); // tile files to leave out, by the start of their name
+  else argv.push(raw[i]);
+}
 const [out, X0, Y0, X1, Y1, dir = 'models/main'] = argv;
 const [x0, y0, x1, y1] = [X0, Y0, X1, Y1].map(Number);
 await MeshoptDecoder.ready;
@@ -33,7 +38,7 @@ const trs = (t, q, s) => {
   return [(1 - 2 * (y * y + z * z)) * sx, 2 * (x * y + z * w) * sx, 2 * (x * z - y * w) * sx, 0, 2 * (x * y - z * w) * sy, (1 - 2 * (x * x + z * z)) * sy, 2 * (y * z + x * w) * sy, 0,
     2 * (x * z + y * w) * sz, 2 * (y * z - x * w) * sz, (1 - 2 * (x * x + y * y)) * sz, 0, t[0], t[1], t[2], 1];
 };
-for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && touches(f) && !(skip && skip.test(f))).sort()) {
+for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && touches(f) && !skip.some(p => f.startsWith(p))).sort()) {
   const doc = await io.read(`${dir}/${f}`);
   for (const node of doc.getRoot().listNodes()) {
     const mesh = node.getMesh(); if (!mesh) continue;
