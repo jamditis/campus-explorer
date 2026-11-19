@@ -1,0 +1,14 @@
+{
+ "zone": "ne_footprint",
+ "notes": "The ground this area owns: the north-east district (CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts and the lots and roads between them). West: 3 m outside the Ice Arena's east wall and the east edge of its lot (north model), then the rail side of the tennis courts and the softball stadium, 8 m or more clear of the ballast. South: the south side of the road past the Energy Plant, then 5 m outside Blanton Hall's north-west wall (main model). East: the wood edge at x 300. North: the edge of the fetched evidence.",
+ "footprint": [
+  [-56, 438], [0, 455], [60, 468], [90, 455], [176, 499], [205, 497], [300, 497], [300, 826],
+  [-67, 826], [-88, 775], [-88, 712], [-18, 690], [-18, 664], [-26, 661], [-53, 600], [-56, 598]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles.",
+  "clip": ["Context_skirt", "BD_farfield_3DEP", "WF_east_dorm_LiDAR_terrain_patch", "North_ground_ortho2020", "MH_ground_ortho2020"],
+  "drop": ["far_houses"],
+  "tuck": 0.5
+ }
+}

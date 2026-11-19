@@ -8,6 +8,7 @@ two: it seats each thing on the ground and turns it the way the plan says.
 import math
 import re
 
+import building
 import fixtures
 import geom
 import kit
@@ -248,6 +249,8 @@ def buildings(lay, terrain):
     wall = kit.mat("plaster", "massing_wall", kit.srgb("#b9b6ad"), rough=0.9)
     roof = kit.mat("metal", "massing_roof", kit.srgb("#7d8084"), rough=0.6, metal=0.3)
     for b in lay["buildings"]:
+        if "top" in b:
+            continue  # a part with a measured roof height: building.py makes it
         ring = geom.expand(b["ring"], True)
         if geom.area(ring) < 0:
             ring = ring[::-1]
@@ -283,15 +286,18 @@ def trees(lay, terrain, assets):
     if not assets:
         print("SW no --assets file: skipping", len(todo), "trees")
         return []
-    with bpy.data.libraries.load(str(assets)) as (src, dst):
-        dst.meshes = [TREE_MESH] if TREE_MESH in src.meshes else []
-    if not dst.meshes:
-        print("SW", TREE_MESH, "not found in", assets, ": skipping trees")
-        return []
+    mesh = bpy.data.meshes.get(TREE_MESH)  # an earlier area of this run has loaded it
+    if mesh is None:
+        with bpy.data.libraries.load(str(assets)) as (src, dst):
+            dst.meshes = [TREE_MESH] if TREE_MESH in src.meshes else []
+        if not dst.meshes:
+            print("SW", TREE_MESH, "not found in", assets, ": skipping trees")
+            return []
+        mesh = dst.meshes[0]
     out = []
     for i, p in enumerate(todo):
         x, y = p["at"]
-        ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", dst.meshes[0])
+        ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", mesh)
         k = p.get("height", 12.0) / TREE_HEIGHT
         ob.location = (x, y, terrain.at(x, y) - 0.1)
         ob.scale = (k, k, k)
@@ -305,6 +311,7 @@ def build(lay, terrain, assets=None):
     return (
         trees(lay, terrain, assets)
         + stands(lay, terrain)
+        + building.build(lay, terrain, lambda b: _name(b["zone"], b))
         + fences(lay, terrain)
         + points(lay, terrain)
         + buildings(lay, terrain)

@@ -179,6 +179,16 @@ def main():
             elif m["type"] == "stalls":
                 for seg in geom.stalls(m):
                     poly(seg, col, False, 1)
+        for key, colour in (("buildings", (255, 80, 255)), ("stands", (255, 80, 255))):
+            for b in plan.get(key, []):
+                ring = geom.expand(b["ring"], True)
+                poly(ring, colour, True, 2)
+                if labels:
+                    bb = geom.bounds(ring)
+                    dr.text(px(((bb[0] + bb[2]) / 2, (bb[1] + bb[3]) / 2)), b["name"], fill=colour)
+        for fence in plan.get("fences", []):
+            closed = fence.get("closed", False)
+            poly(geom.expand(fence["path"], closed), (255, 255, 255), closed, 1)
         for p in plan.get("points", []):
             c = px(p["at"])
             dr.ellipse([c[0] - 4, c[1] - 4, c[0] + 4, c[1] + 4], outline=(255, 0, 255), width=2)
