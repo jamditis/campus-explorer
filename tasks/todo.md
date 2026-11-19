@@ -5,8 +5,8 @@ Plan for the viewer work on branch `joe/wizardly-pasteur-n7mq4j`. Architecture a
 ## One campus (added after Joe's correction, 2026-11-18)
 
 - [x] Remove the main / north scene switch from the viewer, links, docs and tools
-- [x] `tools/web-export/unify.mjs`: divide the ground between the two Blender files on a 2 m grid, write `models/manifest.json` and `models/ownership.png`
-- [x] Viewer draws and collides with each cell from one file only (shader discard, depth materials, `solidAt`)
+- [x] Merge main, which now joins the source models at export (`models/main/`, `n_` tiles, `hide` list), and remove the viewer-side ownership grid that it replaces
+- [x] Port main's far tile versions, tree level of detail, far trees, land cover, grass tufts and material work into the new modules (`viewer/world.js`, `viewer/scenery.js`, `look.js`)
 
 ## Phones and full screen (added on Joe's request, 2026-11-18)
 
@@ -58,7 +58,7 @@ Plan for the viewer work on branch `joe/wizardly-pasteur-n7mq4j`. Architecture a
 
 What was checked, and how:
 
-- Unit tests: 117 pass (`node --test`). They cover the georeference, solar position, tile order, share links, place search, ownership rules and the arithmetic of the compass, labels, measuring tool and hunt.
+- Unit tests: 111 pass (`node --test`). They cover the georeference, solar position, tile order, share links, place search, and the arithmetic of the compass, labels, measuring tool and hunt.
 - Georeference: `viewer/geo.js` agrees with pyproj to 5.5e-9 m. Building positions in both source models agree with OpenStreetMap to 4 m or better, with no systematic shift.
 - Headless browser (software WebGL): smoke test of every mode and tool, plus screenshots at 1280x800, 390x844 (portrait, touch) and 844x390 (landscape, touch). No overlapping controls, no console errors.
 - An independent review of the viewer core found 15 defects; all are fixed (commit 77d2500).
@@ -66,9 +66,7 @@ What was checked, and how:
 
 Not verified (UNVERIFIED):
 
-- The border between the two source models. The 2 m ownership grid and its two patches (University Hall, softball stadium) are a viewer-side rule, not a merge. Sprague Field is drawn half from each file. The real merge belongs in Blender.
 - Phone memory and frame rate. The nine-tile lite budget is an estimate; it was tested only in an emulated phone viewport, not on a device.
-- `tools/web-export/export_web.py`: the "aerial-draped ground is grass" rule was not run, because Blender is not installed here. The viewer applies the same rule by material name until the next export.
 - Frame rates. This machine draws with software WebGL, so no real GPU timing exists.
 - Reduced-motion behaviour of the tour and labels (coded, not exercised in a browser).
 

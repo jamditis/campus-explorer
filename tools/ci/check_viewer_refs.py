@@ -77,6 +77,9 @@ def main():
             name = t.get("file") if isinstance(t, dict) else t
             if name and not os.path.exists(os.path.join(os.path.dirname(manifest), name)):
                 problems.append(f"{manifest}: lists missing tile {name}")
+            lod = t.get("lod") if isinstance(t, dict) else None
+            if lod and not os.path.exists(os.path.join(os.path.dirname(manifest), lod)):
+                problems.append(f"{manifest}: lists missing far version {lod}")
     for p in problems:
         print(f"::error::{p}")
     print(f"viewer refs: {len(html)} page(s), {len(scripts)} script(s), {len(problems)} problem(s)")

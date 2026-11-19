@@ -11,12 +11,8 @@ const TAG_KEYS = new Set(['building', 'building:levels', 'height', 'amenity', 'l
   'short_name', 'wikidata']);
 const TILE_HALF = 80;
 
-function tileCentres(scene) {
-  const manifest = JSON.parse(readFileSync(new URL(`models/${scene}/manifest.json`, root), 'utf8'));
-  return manifest.tiles.filter((t) => t.center).map((t) => t.center);
-}
-
-const CENTRES = { main: tileCentres('main'), north: tileCentres('north') };
+// One manifest holds the whole campus.
+const CENTRES = JSON.parse(readFileSync(new URL('models/main/manifest.json', root), 'utf8')).tiles.filter((t) => t.center).map((t) => t.center);
 
 test('header', () => {
   assert.equal(data.source, 'OpenStreetMap contributors');
@@ -38,8 +34,7 @@ test('every place has the expected shape', () => {
     assert.ok(p.r >= 0, where);
     assert.match(p.osm, /^(node|way|relation)\/\d+$/, where);
     if (p.osm.startsWith('node/')) assert.equal(p.r, 0, where);
-    assert.ok(Array.isArray(p.scenes) && p.scenes.length > 0, where);
-    for (const s of p.scenes) assert.ok(s in CENTRES, `${where}: scene ${s}`);
+    assert.equal('scenes' in p, false, `${where}: the campus is one scene`);
     assert.equal(typeof p.tags, 'object', where);
     for (const [k, v] of Object.entries(p.tags)) {
       assert.ok(TAG_KEYS.has(k), `${where}: tag ${k}`);
@@ -72,13 +67,10 @@ test('sorted by name, then osm type and id', () => {
   }
 });
 
-test('every place lies inside a tile square of each scene it lists', () => {
+test('every place lies inside a tile square of the campus', () => {
   for (const p of data.places) {
-    for (const scene of Object.keys(CENTRES)) {
-      const inside = CENTRES[scene].some(([cx, cz]) =>
-        Math.abs(p.x - cx) <= TILE_HALF && Math.abs(p.z - cz) <= TILE_HALF);
-      assert.equal(p.scenes.includes(scene), inside, `${p.osm} ${p.name} in ${scene}`);
-    }
+    const inside = CENTRES.some(([cx, cz]) => Math.abs(p.x - cx) <= TILE_HALF && Math.abs(p.z - cz) <= TILE_HALF);
+    assert.equal(inside, true, `${p.osm} ${p.name}`);
   }
 });
 

@@ -72,7 +72,9 @@ dialog h2{font-size:17px;margin:0 0 10px}dialog h3{font-size:13px;margin:0 0 6px
 dialog form{margin-top:14px;text-align:right}
 
 /* ---- footer ---- */
-footer{position:fixed;left:var(--gap);right:var(--gap);bottom:8px;display:flex;gap:12px;align-items:center;font-size:11px;color:#2c2f33;pointer-events:none;text-shadow:0 0 3px rgba(255,255,255,.9);bottom:max(8px,env(safe-area-inset-bottom))}
+footer{position:fixed;left:var(--gap);right:var(--gap);bottom:8px;display:flex;gap:8px;align-items:center;font-size:11px;color:#2c2f33;pointer-events:none;bottom:max(8px,env(safe-area-inset-bottom))}
+/* the far ground can be dark woodland: the footer text sits on its own light chips */
+footer>span{background:rgba(255,255,255,.78);padding:2px 7px;border-radius:6px}footer>span:empty{display:none}
 footer a,footer button{pointer-events:auto;color:inherit}
 footer button{font-size:11px;min-height:0;padding:3px 8px}
 #stream{font-weight:600}

@@ -44,8 +44,10 @@ export function createUI(app) {
   });
   app.on('scene:start', ({ manifest }) => {
     $('load').hidden = false; $('error').hidden = true; $('load-bar').value = 0;
-    const src = (manifest.sources ?? []).map(s => `${s.scene} model saved ${s.source_saved}${s.source_version ? ` (${s.source_version})` : ''}, exported ${s.exported}`);
-    $('source-snapshot').textContent = src.length ? `Source snapshots: ${src.join('; ')}. Later modelling changes may not appear here yet.` : 'Source snapshot: not recorded.';
+    const north = manifest.sources?.north?.saved;
+    $('source-snapshot').textContent = manifest.source_saved
+      ? `Source snapshot: model saved ${manifest.source_saved}${manifest.source_version ? ` (${manifest.source_version})` : ''}${north ? `; north campus model saved ${north}` : ''}; browser export ${manifest.exported}. Later modelling changes may not appear here yet.`
+      : 'Source snapshot: not recorded.';
   });
   app.on('scene:ready', () => {
     $('load').hidden = true;

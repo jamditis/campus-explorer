@@ -23,7 +23,8 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 |---|---|
 | `app.js` | Entry. Renderer, the shared `app` object, frame loop (draws on demand), modes, sun |
 | `look.js` | Sky, sun, shadows, textures, paint, culling, adaptive resolution, quality levels |
-| `viewer/world.js` | Streams tiles from `models/manifest.json`; collision (BVH on demand), ray casts |
+| `viewer/world.js` | Streams tiles from `models/main/manifest.json`, swaps far versions; collision (BVH on demand), ray casts |
+| `viewer/scenery.js`, `trees.js` | Tree level of detail, far trees, land cover, grass tufts near the camera |
 | `viewer/player.js` | Fly and walk movement and collision |
 | `viewer/input.js` | Keyboard, pointer lock, touch sticks, gamepad |
 | `viewer/camera.js`, `viewer/tour.js` | Eased camera moves; guided tour |

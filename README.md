@@ -11,16 +11,16 @@ This is a work in progress, not a survey or an as-built record. Anything inferre
 ```
 index.html, app.js, look.js,    Static three.js viewer (no build step), served by GitHub Pages
 style.css, viewer/              (viewer/ holds the modules; see docs/VIEWER.md)
-models/manifest.json            The campus as one scene: every tile of every exported model
-models/ownership.png            Which model owns each 2 m cell of ground (written by unify.mjs)
-models/main/, models/north/     Meshopt-compressed GLB tiles of the two Blender files, 160 m squares
+trees.js                        Per-tree level of detail (near trees in full, far trees as simple crowns)
+models/main/                    The campus as meshopt-compressed GLB tiles (160 m squares), their far
+                                versions in lod/, and manifest.json
 vendor/                         three.js r170, GLTF loader, meshopt decoder, three-mesh-bvh (MIT)
 blender/
   smoke_test.py                 Headless Blender check that CI runs on a tiny generated scene
   montclair-state/scripts/      Archive of the bpy scripts used to build the Montclair State scene,
                                 one folder per working session (historical, run inside Blender 4.5)
 tools/
-  web-export/                   Blender → GLB tile export, leaf tinting, manifests, and unify.mjs that joins the scenes
+  web-export/                   Blender → GLB tile export, leaf tinting, far versions, land cover, manifest
   places/                       Builds viewer/places.json (names and positions) from OpenStreetMap
   viewer-test/                  Headless smoke test and the standard before/after screenshots
   ci/                           Repo guard and viewer reference checks used by CI
@@ -60,17 +60,16 @@ The viewer draws only when something changes, redraws shadows only when they mov
 - **Layered builds.** A new section starts as a hybrid layered build (terrain, paving, curbs, buildings, planting), then unification passes stitch the seams. Areas that are already fine-tuned are not rebuilt.
 - **Wobble-free edges.** Curbs, walks and lot edges are straight runs or true arcs fitted to the aerial, flush with their neighbours.
 - **Soft light** and a physically based sky set from Montclair's latitude and longitude.
-- **Web edition.** `tools/web-export/` splits each Blender file (main and north campus) into 160 m tiles, exports each in its own low-memory Blender process, and optimizes them with gltf-transform. Materials keep the model's colours and a category; the viewer lays tileable CC0 textures over them in world space, paints the lot markings from the model's own line work, and adds a sky, sun shadows, fog and (on High) ambient occlusion. The two files share one origin and overlap in the middle; until they are merged in Blender, `unify.mjs` divides the ground between them on a 2 m grid and the viewer draws each cell from one file only (borders are UNVERIFIED).
+- **Web edition.** `tools/web-export/` splits the campus into 160 m tiles (main campus, plus north campus merged in at its real coordinates as `n_` tiles, so the viewer shows one scene), exports each in its own low-memory Blender process, and optimizes them with gltf-transform. Materials keep the model's colours and a category; the viewer lays tileable CC0 textures over them in world space, paints the lot markings from the model's own line work, and adds a sky, sun shadows, fog and (on High) ambient occlusion. Tiles stream in nearest-first, far tiles swap to lighter versions, lawn grass is reduced to tufts near the camera and trees become impostors with distance. See [docs/ROADMAP.md](docs/ROADMAP.md) for what is still missing.
 
 ## Refreshing the viewer after a day's modelling
 
 On the modelling box, read-only against the `.blend` files, between modelling sessions (the script waits for the scene lock):
 
-1. Run `SCENE=main SOURCE_VERSION=<session id> SOURCE_SAVED="<main save time, ET>" bash tools/web-export/build_web.sh` from this checkout, then the same with `SCENE=north`. Point it at a frozen copy of the main file (for example `montclair_state_ws214c.blend`) so a session can't change it mid-export. Before every Blender process it waits for the scene `.lock` to be free, for no other Blender, and for the memory gate. It plans tiles, exports each tile, fixes leaf UVs and tints, optimizes with gltf-transform (meshopt, webp, join, instance, no palette), composes the paint layers and writes `models/<scene>/manifest.json`. Any failed tile stops the build before anything is published; tiles no longer in the plan are pruned.
+1. Run `SCENE=main SOURCE_VERSION=<session id> SOURCE_SAVED="<main save time, ET>" bash tools/web-export/build_web.sh` from this checkout, then the same with `SCENE=north`. Point it at a frozen copy of the main file (for example `montclair_state_ws214c.blend`) so a session can't change it mid-export. Before every Blender process it waits for the scene `.lock` to be free, for no other Blender, and for the memory gate. It plans tiles, exports each tile, fixes leaf UVs and tints, optimizes with gltf-transform (meshopt, webp, join, instance, no palette), composes the paint layers and writes `models/main/manifest.json` (one manifest for the whole campus; the north run skips anything main already has and clips north terrain to where main has none). Any failed tile stops the build before anything is published; tiles no longer in the plan are pruned.
 2. Leave `textures/` alone unless you are changing the CC0 set (credits in `textures/CREDITS.md`).
-3. The build ends with `node tools/web-export/unify.mjs`, which rewrites `models/manifest.json` and `models/ownership.png` so the viewer shows every exported model as one campus (see "One campus" in [docs/VIEWER.md](docs/VIEWER.md)). Run it yourself if you rebuilt only some tiles.
-4. Take the standard before/after screenshots with `node tools/viewer-test/shoot.mjs <outdir>` (needs Playwright with Chromium). `node tools/viewer-test/smoke.mjs` is an optional browser check of every mode and tool.
-5. Commit `models/` (and any viewer changes) on a branch and open a PR. Pages redeploys from `main` a minute or two after merge.
+3. Take the standard before/after screenshots with `node tools/viewer-test/shoot.mjs <outdir>` (needs Playwright with Chromium). `node tools/viewer-test/smoke.mjs` is an optional browser check of every mode and tool.
+4. Commit `models/` (and any viewer changes) on a branch and open a PR. Pages redeploys from `main` a minute or two after merge.
 
 The exporter keeps only images on an allowlist and refuses anything named ortho, naip, aerial, photo or mask. The paint layers are composed from the model's own authored line-work tiles and are written as `paint_*.webp`.
 
@@ -87,6 +86,8 @@ The models are built from free public data. The source data is credited here but
 | [NJ Office of GIS](https://njgin.nj.gov/) 2020 natural-colour orthoimagery (0.1 m) | Tracing edges, stalls, markings and paving | NJ public data; credited, not redistributed |
 | NJ / [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR and DEMs | Terrain, grades and building heights | Public domain (USGS); NJ data credited |
 | [OpenStreetMap](https://www.openstreetmap.org/copyright) | Building footprints, roads, paths, names | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/) |
+| [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints) | Far-field building footprints beyond campus where OSM has none | © Microsoft, [ODbL](https://opendatacommons.org/licenses/odbl/) |
+| [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) LiDAR point clouds (NJ NW 6-County 2017, NJ Sandy 2014), via the [public Entwine bucket](https://registry.opendata.aws/usgs-lidar/) | Far-field building heights (last-return surface minus ground, capped to plausible heights) | Public domain (USGS) |
 | [ambientCG](https://ambientcg.com/) | PBR textures | CC0 |
 | Blender add-ons listed in [notes/ADDONS.md](notes/ADDONS.md) | Modelling helpers | GPL (not redistributed) |
 
@@ -95,7 +96,7 @@ Reference photographs, including Joe's own campus photos, guide the modelling bu
 ## Licence
 
 - **Code** (scripts, viewer, tools, CI): [MIT](LICENSE).
-- **Models and written content** (GLB tiles, released .blend files, notes, renders): [CC BY 4.0](LICENSE-CONTENT). Credit "Joe Amditis, Campus explorer" and keep the OpenStreetMap attribution, since parts of the geometry are derived from OSM data.
+- **Models and written content** (GLB tiles, released .blend files, notes, renders): [CC BY 4.0](LICENSE-CONTENT). Credit "Joe Amditis, Campus explorer" and keep the OpenStreetMap and Microsoft Building Footprints attributions, since parts of the geometry are derived from that ODbL data.
 - **Vendored libraries** in `vendor/` keep their own MIT licences.
 
-Map data © OpenStreetMap contributors. Created by [Joe Amditis](https://github.com/jamditis).
+Map data © OpenStreetMap contributors. Far-field building footprints © Microsoft (ODbL). Created by [Joe Amditis](https://github.com/jamditis).

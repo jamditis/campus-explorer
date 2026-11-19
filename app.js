@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createLook } from './look.js';
 import { createWorld } from './viewer/world.js';
+import { createScenery } from './viewer/scenery.js';
 import { createInput } from './viewer/input.js';
 import { createPlayer } from './viewer/player.js';
 import { createCamera } from './viewer/camera.js';
@@ -49,7 +50,8 @@ const _v = new THREE.Vector3();
 let dirty = 2, lastMove = 0;
 
 app.look = createLook(renderer, scene, camera, () => app.invalidate());
-app.world = createWorld(app, (root, tile) => app.look.decorate(root, tile.scene), root => app.look.forget(root));
+const scenery = createScenery(app);
+app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); });
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
@@ -162,10 +164,9 @@ app.load = async ({ view = null } = {}) => {
     console.error(e); app.emit('scene:error', { error: e });
   }
 };
-app.on('scene:start', async ({ manifest, ownership }) => {
+app.on('scene:start', async ({ manifest, base }) => {
   app.manifest = manifest;
-  app.look.setOwnership(ownership?.texture ?? null, ownership?.box, app.world.solidAt);
-  app.look.setPaint(manifest.paint || [], './models/');
+  app.look.setPaint(manifest.paint || [], base);
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
   app.emit('places');
 });
@@ -226,4 +227,5 @@ window.__campus = {
   get loaded() { return app.state.complete; }, get ready() { return app.state.ready; },
   goto(x, y, z, tx, ty, tz) { if (app.state.mode !== 'orbit') app.setMode('orbit'); cam.cancel(); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); app.invalidate(); },
   groundAt: (x, z) => app.world.groundAt(x, z),
+  trees: scenery.trees, get lods() { return app.world.lods; }, get grass() { return scenery.grass; },
 };

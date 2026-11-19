@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { forScene, searchPlaces, nearestPlace, normalize } from '../viewer/places.js';
+import { searchPlaces, nearestPlace, normalize } from '../viewer/places.js';
 
 const place = (name, extra = {}) => ({
-  name, kind: 'building', x: 0, z: 0, lat: 0, lon: 0, r: 10, osm: 'way/1', scenes: ['main'], tags: {}, ...extra,
+  name, kind: 'building', x: 0, z: 0, lat: 0, lon: 0, r: 10, osm: 'way/1', tags: {}, ...extra,
 });
 
 const places = [
@@ -13,7 +13,7 @@ const places = [
   place('Coleman House'),
   place('Café Diem'),
   place('University Hall', { tags: { alt_name: 'UN Hall;Uni' } }),
-  place('Blanton Hall', { scenes: ['north'] }),
+  place('Blanton Hall'),
   place('Nicholas Center'),
 ];
 
@@ -27,12 +27,6 @@ test('normalize folds case, diacritics and punctuation', () => {
   assert.equal(normalize(null), '');
 });
 
-test('forScene filters by scene', () => {
-  assert.deepEqual(forScene(places, 'north').map((p) => p.name), ['Blanton Hall']);
-  assert.equal(forScene(places, 'main').length, 7);
-  assert.deepEqual(forScene(null, 'main'), []);
-  assert.deepEqual(forScene([{ name: 'x' }], 'main'), []);
-});
 
 test('empty query returns nothing', () => {
   assert.deepEqual(searchPlaces(places, ''), []);

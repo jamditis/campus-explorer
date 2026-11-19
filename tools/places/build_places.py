@@ -1,6 +1,6 @@
 """Build viewer/places.json, the named places the viewer labels and offers in search.
 
-Reads the tile centres from models/main/manifest.json and models/north/manifest.json,
+Reads the tile centres from models/main/manifest.json (the whole campus is one scene),
 fetches OpenStreetMap data for the area they cover from the OSM API 0.6, keeps named
 buildings, car parks, sports grounds, stations and landmarks, and projects each one
 into the viewer's three.js frame with the same Transverse Mercator maths as
@@ -32,7 +32,6 @@ USER_AGENT = "places-builder/1.0"
 TILE_HALF = 80.0  # each tile covers a 160 m square around its centre
 MARGIN = 40.0  # extra metres fetched around the tiles
 DEDUPE_RADIUS = 30.0
-SCENES = ("main", "north")
 KEEP_TAGS = (
     "building", "building:levels", "height", "amenity", "leisure", "railway", "tourism",
     "historic", "sport", "operator", "start_date", "alt_name", "short_name", "wikidata",
@@ -144,25 +143,18 @@ def from_local(x: float, z: float) -> tuple[float, float]:
 # --- Area of interest ---------------------------------------------------------------------
 
 
-def load_tiles(repo: Path) -> dict[str, list[tuple[float, float]]]:
-    tiles = {}
-    for scene in SCENES:
-        manifest = json.loads((repo / "models" / scene / "manifest.json").read_text())
-        tiles[scene] = [tuple(t["center"]) for t in manifest["tiles"] if t.get("center")]
-    return tiles
+def load_tiles(repo: Path) -> list[tuple[float, float]]:
+    manifest = json.loads((repo / "models" / "main" / "manifest.json").read_text())
+    return sorted({tuple(t["center"]) for t in manifest["tiles"] if t.get("center")})
 
 
-def scenes_covering(x: float, z: float, tiles: dict) -> list[str]:
-    return [
-        scene
-        for scene, centres in tiles.items()
-        if any(abs(x - cx) <= TILE_HALF and abs(z - cz) <= TILE_HALF for cx, cz in centres)
-    ]
+def covered(x: float, z: float, tiles: list) -> bool:
+    return any(abs(x - cx) <= TILE_HALF and abs(z - cz) <= TILE_HALF for cx, cz in tiles)
 
 
-def fetch_bbox(tiles: dict) -> tuple[float, float, float, float]:
+def fetch_bbox(tiles: list) -> tuple[float, float, float, float]:
     """(left, bottom, right, top) in degrees around every tile square plus the margin."""
-    centres = [c for cs in tiles.values() for c in cs]
+    centres = tiles
     pad = TILE_HALF + MARGIN
     x0 = min(c[0] for c in centres) - pad
     x1 = max(c[0] for c in centres) + pad
@@ -384,7 +376,7 @@ def geometry(data: OsmData, kind: str, oid: int):
     return x, z, r
 
 
-def collect(data: OsmData, tiles: dict) -> list[dict]:
+def collect(data: OsmData, tiles: list) -> list[dict]:
     candidates = []
     sources = (
         ("node", data.node_tags), ("way", data.way_tags), ("relation", data.relation_tags),
@@ -400,8 +392,7 @@ def collect(data: OsmData, tiles: dict) -> list[dict]:
             if geom is None:
                 continue
             x, z, r = geom
-            scenes = scenes_covering(x, z, tiles)
-            if not scenes:
+            if not covered(x, z, tiles):
                 continue
             lat, lon = from_local(x, z)
             candidates.append({
@@ -413,7 +404,6 @@ def collect(data: OsmData, tiles: dict) -> list[dict]:
                 "lon": round(lon, 7),
                 "r": round(r, 1),
                 "osm": f"{osm_type}/{oid}",
-                "scenes": scenes,
                 "tags": {k: tags[k] for k in KEEP_TAGS if k in tags},
             })
     return dedupe(candidates)

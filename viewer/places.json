@@ -13,9 +13,6 @@
       "lon": -74.1973956,
       "r": 7.3,
       "osm": "way/232850562",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "yes"
       }
@@ -29,9 +26,6 @@
       "lon": -74.1987989,
       "r": 14.4,
       "osm": "way/313032739",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -45,10 +39,6 @@
       "lon": -74.1997511,
       "r": 40.0,
       "osm": "way/312849089",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "theatre"
@@ -63,10 +53,6 @@
       "lon": -74.1984125,
       "r": 64.6,
       "osm": "way/313023307",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "leisure": "park",
         "wikidata": "Q34806866"
@@ -81,10 +67,6 @@
       "lon": -74.2014556,
       "r": 8.7,
       "osm": "way/232846660",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university",
         "operator": "Montclair State University"
@@ -99,10 +81,6 @@
       "lon": -74.1992354,
       "r": 28.6,
       "osm": "way/232850516",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "theatre"
       }
@@ -116,9 +94,6 @@
       "lon": -74.1982925,
       "r": 33.9,
       "osm": "way/312845862",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "restaurant"
@@ -133,9 +108,6 @@
       "lon": -74.1990074,
       "r": 47.1,
       "osm": "way/313031568",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "childcare"
@@ -150,10 +122,6 @@
       "lon": -74.195489,
       "r": 60.9,
       "osm": "way/313029108",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -167,9 +135,6 @@
       "lon": -74.1944565,
       "r": 39.2,
       "osm": "way/232853538",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -183,10 +148,6 @@
       "lon": -74.1982611,
       "r": 42.1,
       "osm": "way/313024770",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university",
         "building:levels": "2"
@@ -201,10 +162,6 @@
       "lon": -74.1992697,
       "r": 10.0,
       "osm": "way/232846651",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -218,10 +175,6 @@
       "lon": -74.1969163,
       "r": 30.4,
       "osm": "way/313024779",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -235,10 +188,6 @@
       "lon": -74.1959944,
       "r": 37.1,
       "osm": "way/313026393",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -252,10 +201,6 @@
       "lon": -74.1994821,
       "r": 46.2,
       "osm": "relation/4196109",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -269,9 +214,6 @@
       "lon": -74.1988492,
       "r": 51.4,
       "osm": "way/552443363",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "leisure": "park"
       }
@@ -285,10 +227,6 @@
       "lon": -74.2007933,
       "r": 17.8,
       "osm": "way/232850536",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -302,9 +240,6 @@
       "lon": -74.1982948,
       "r": 36.8,
       "osm": "way/313032036",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -318,10 +253,6 @@
       "lon": -74.1990621,
       "r": 48.4,
       "osm": "way/313021892",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -335,10 +266,6 @@
       "lon": -74.1998298,
       "r": 39.3,
       "osm": "way/375626230",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -352,10 +279,6 @@
       "lon": -74.1976507,
       "r": 24.4,
       "osm": "way/313021890",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -369,9 +292,6 @@
       "lon": -74.199512,
       "r": 38.2,
       "osm": "way/313031583",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -385,9 +305,6 @@
       "lon": -74.1982816,
       "r": 27.5,
       "osm": "way/312845860",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -401,9 +318,6 @@
       "lon": -74.1977313,
       "r": 15.2,
       "osm": "way/232846662",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "yes"
       }
@@ -417,9 +331,6 @@
       "lon": -74.1993682,
       "r": 13.2,
       "osm": "way/233913252",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -433,9 +344,6 @@
       "lon": -74.2005016,
       "r": 37.3,
       "osm": "way/313030885",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -449,9 +357,6 @@
       "lon": -74.2001862,
       "r": 43.1,
       "osm": "way/313030893",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -465,9 +370,6 @@
       "lon": -74.2008482,
       "r": 46.3,
       "osm": "way/313030872",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -481,10 +383,6 @@
       "lon": -74.1965211,
       "r": 9.7,
       "osm": "way/313027427",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "doctors"
@@ -499,10 +397,6 @@
       "lon": -74.1959676,
       "r": 36.7,
       "osm": "way/313027434",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -516,10 +410,6 @@
       "lon": -74.1961668,
       "r": 0.0,
       "osm": "node/3189425424",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "theatre"
       }
@@ -533,10 +423,6 @@
       "lon": -74.1968442,
       "r": 51.9,
       "osm": "way/313021866",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -550,10 +436,6 @@
       "lon": -74.1975601,
       "r": 24.1,
       "osm": "way/312932817",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -567,10 +449,6 @@
       "lon": -74.196678,
       "r": 61.4,
       "osm": "way/313029107",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -584,9 +462,6 @@
       "lon": -74.1946464,
       "r": 58.1,
       "osm": "way/313029928",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "amenity": "parking",
         "operator": "Montclair State University"
@@ -601,9 +476,6 @@
       "lon": -74.2000373,
       "r": 61.9,
       "osm": "way/313030648",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -617,9 +489,6 @@
       "lon": -74.1985366,
       "r": 40.3,
       "osm": "way/313031581",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -633,9 +502,6 @@
       "lon": -74.1994127,
       "r": 55.6,
       "osm": "way/313031565",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -649,9 +515,6 @@
       "lon": -74.2002231,
       "r": 118.9,
       "osm": "way/313030881",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -665,10 +528,6 @@
       "lon": -74.2007084,
       "r": 29.3,
       "osm": "way/312847995",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -682,10 +541,6 @@
       "lon": -74.2004323,
       "r": 59.6,
       "osm": "way/313029916",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -699,9 +554,6 @@
       "lon": -74.2014513,
       "r": 80.4,
       "osm": "way/313021899",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -715,10 +567,6 @@
       "lon": -74.2013047,
       "r": 40.7,
       "osm": "way/312848723",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -732,10 +580,6 @@
       "lon": -74.2010675,
       "r": 16.9,
       "osm": "way/487498693",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -749,10 +593,6 @@
       "lon": -74.196978,
       "r": 23.0,
       "osm": "way/313028558",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -766,10 +606,6 @@
       "lon": -74.1996233,
       "r": 24.7,
       "osm": "way/312841186",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -783,10 +619,6 @@
       "lon": -74.201808,
       "r": 35.1,
       "osm": "way/312848722",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -800,9 +632,6 @@
       "lon": -74.1987149,
       "r": 36.3,
       "osm": "way/312841181",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -816,10 +645,6 @@
       "lon": -74.2000706,
       "r": 21.8,
       "osm": "way/785130900",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -833,10 +658,6 @@
       "lon": -74.1999728,
       "r": 21.1,
       "osm": "way/291713841",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -850,9 +671,6 @@
       "lon": -74.198035,
       "r": 15.9,
       "osm": "way/312845867",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "amenity": "parking"
       }
@@ -866,9 +684,6 @@
       "lon": -74.1974905,
       "r": 50.3,
       "osm": "way/233324747",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "leisure": "stadium"
       }
@@ -882,10 +697,6 @@
       "lon": -74.201434,
       "r": 35.6,
       "osm": "way/232850495",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -899,10 +710,6 @@
       "lon": -74.1964194,
       "r": 31.7,
       "osm": "way/313021868",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "theatre"
@@ -917,9 +724,6 @@
       "lon": -74.197617,
       "r": 31.3,
       "osm": "way/232853403",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -933,10 +737,6 @@
       "lon": -74.202584,
       "r": 0.0,
       "osm": "node/7009814496",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "railway": "station",
         "operator": "New Jersey Transit Rail Operations",
@@ -952,9 +752,6 @@
       "lon": -74.1974764,
       "r": 0.0,
       "osm": "node/7009814504",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "railway": "station",
         "operator": "New Jersey Transit Rail Operations",
@@ -970,9 +767,6 @@
       "lon": -74.198143,
       "r": 56.6,
       "osm": "way/233324743",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "leisure": "ice_rink",
@@ -988,9 +782,6 @@
       "lon": -74.2014034,
       "r": 16.8,
       "osm": "way/232846896",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "police"
@@ -1005,10 +796,6 @@
       "lon": -74.1974773,
       "r": 31.0,
       "osm": "way/312933183",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1022,9 +809,6 @@
       "lon": -74.1981726,
       "r": 66.3,
       "osm": "way/233913197",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "parking",
@@ -1040,9 +824,6 @@
       "lon": -74.1954543,
       "r": 62.3,
       "osm": "way/313431637",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "office"
       }
@@ -1056,10 +837,6 @@
       "lon": -74.2003659,
       "r": 59.4,
       "osm": "way/312847981",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "leisure": "sports_centre"
@@ -1074,9 +851,6 @@
       "lon": -74.1988367,
       "r": 37.0,
       "osm": "way/313032037",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -1090,10 +864,6 @@
       "lon": -74.2004402,
       "r": 70.0,
       "osm": "way/232853515",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "leisure": "pitch",
         "sport": "soccer"
@@ -1108,10 +878,6 @@
       "lon": -74.2004158,
       "r": 11.9,
       "osm": "way/958074957",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1125,9 +891,6 @@
       "lon": -74.1966176,
       "r": 12.0,
       "osm": "way/232850502",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "amenity": "place_of_worship"
       }
@@ -1141,10 +904,6 @@
       "lon": -74.2005835,
       "r": 53.3,
       "osm": "way/312849085",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "parking",
@@ -1160,10 +919,6 @@
       "lon": -74.1974802,
       "r": 16.4,
       "osm": "way/313028560",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "restaurant"
@@ -1178,10 +933,6 @@
       "lon": -74.1961733,
       "r": 34.7,
       "osm": "way/313027426",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1195,9 +946,6 @@
       "lon": -74.1989851,
       "r": 30.0,
       "osm": "way/312841182",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -1211,10 +959,6 @@
       "lon": -74.1972208,
       "r": 46.5,
       "osm": "way/313023306",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1228,10 +972,6 @@
       "lon": -74.1971561,
       "r": 38.5,
       "osm": "way/1188721159",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university",
         "building:levels": "2"
@@ -1246,10 +986,6 @@
       "lon": -74.198166,
       "r": 25.5,
       "osm": "way/313026395",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1263,10 +999,6 @@
       "lon": -74.1964714,
       "r": 47.6,
       "osm": "way/552443707",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "leisure": "park"
       }
@@ -1280,10 +1012,6 @@
       "lon": -74.1961644,
       "r": 22.9,
       "osm": "way/313023807",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1297,10 +1025,6 @@
       "lon": -74.2011793,
       "r": 64.0,
       "osm": "way/232846653",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "leisure": "pitch",
         "sport": "american_football",
@@ -1316,10 +1040,6 @@
       "lon": -74.198098,
       "r": 51.5,
       "osm": "way/313021863",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "library"
@@ -1334,10 +1054,6 @@
       "lon": -74.1953713,
       "r": 48.9,
       "osm": "way/313028565",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "dormitory"
       }
@@ -1351,10 +1067,6 @@
       "lon": -74.19722,
       "r": 49.0,
       "osm": "way/313026743",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1368,10 +1080,6 @@
       "lon": -74.1981135,
       "r": 41.2,
       "osm": "way/313026744",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1385,10 +1093,6 @@
       "lon": -74.197667,
       "r": 51.8,
       "osm": "way/313024806",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "leisure": "park"
       }
@@ -1402,9 +1106,6 @@
       "lon": -74.1946102,
       "r": 51.6,
       "osm": "way/313029984",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "yes",
         "leisure": "sports_centre"
@@ -1419,10 +1120,6 @@
       "lon": -74.198529,
       "r": 58.3,
       "osm": "way/312932811",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university",
         "building:levels": "3"
@@ -1437,9 +1134,6 @@
       "lon": -74.2003687,
       "r": 12.5,
       "osm": "way/233913195",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1453,9 +1147,6 @@
       "lon": -74.1976267,
       "r": 33.9,
       "osm": "way/233324761",
-      "scenes": [
-        "north"
-      ],
       "tags": {
         "leisure": "pitch",
         "sport": "tennis"
@@ -1470,10 +1161,6 @@
       "lon": -74.1990514,
       "r": 55.9,
       "osm": "relation/4198963",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }
@@ -1487,9 +1174,6 @@
       "lon": -74.1942239,
       "r": 20.0,
       "osm": "way/1549169315",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "commercial",
         "amenity": "veterinary"
@@ -1504,9 +1188,6 @@
       "lon": -74.1936052,
       "r": 39.6,
       "osm": "way/1549169316",
-      "scenes": [
-        "main"
-      ],
       "tags": {
         "building": "yes",
         "amenity": "events_venue"
@@ -1521,10 +1202,6 @@
       "lon": -74.1957963,
       "r": 34.6,
       "osm": "way/313029100",
-      "scenes": [
-        "main",
-        "north"
-      ],
       "tags": {
         "building": "university"
       }

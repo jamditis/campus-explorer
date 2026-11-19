@@ -55,9 +55,6 @@ jobs:
           done
       - name: Unit tests (pure viewer modules)
         run: node --test
-      - name: Campus manifest and ownership map are current
-        # models/manifest.json and models/ownership.png join the exported models into one campus.
-        run: node tools/web-export/unify.mjs --check
       - name: HTML validation
         run: |
           files=$(git ls-files '*.html' | grep -v '^vendor/' || true)

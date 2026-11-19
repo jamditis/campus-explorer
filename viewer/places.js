@@ -23,11 +23,6 @@ export function normalize(text) {
     .trim();
 }
 
-/** Places whose scenes list includes `scene` ('main' or 'north'). */
-export function forScene(places, scene) {
-  if (!Array.isArray(places)) return [];
-  return places.filter((p) => p && Array.isArray(p.scenes) && p.scenes.includes(scene));
-}
 
 function isSubsequence(needle, hay) {
   let i = 0;

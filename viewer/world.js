@@ -1,4 +1,4 @@
-// Streams the GLB tiles of the campus (models/manifest.json) and owns the collision index.
+// Streams the GLB tiles of the campus (models/main/manifest.json) and owns the collision index.
 // The view is usable after the far-field ground and the nearest tiles; the rest load nearest-first
 // around whatever the user is looking at. BVHs are built per mesh the first time a ray needs them.
 import * as THREE from 'three';
@@ -6,7 +6,6 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
 import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
-import { shows } from './ownership.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -32,30 +31,7 @@ export function createWorld(app, prepare, release = () => {}) {
   let tiles = [], colliders = [], token = 0, abort = null, base = '', paused = false, resume = null;
   let budget = Infinity, pumping = false, watch = 0;
 
-  // ---- ownership: which model owns each 2 m cell of ground (see tools/web-export/unify.mjs) ----
-  let own = null; // { data, w, h, x0, z0, cell, values, texture }
-  async function loadOwnership(o) {
-    own = null; if (!o) return null;
-    // the grey levels are data: decode without colour management
-    const blob = await (await fetch(base + o.file, { signal: abort?.signal })).blob();
-    const img = await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
-    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
-    const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0);
-    const rgba = g.getImageData(0, 0, c.width, c.height).data, data = new Uint8Array(c.width * c.height);
-    for (let i = 0; i < data.length; i++) data[i] = rgba[i * 4];
-    const texture = new THREE.DataTexture(data, c.width, c.height, THREE.RedFormat); texture.needsUpdate = true; // nearest filter, no mipmaps
-    own = { data, w: c.width, h: c.height, x0: o.x0, z0: o.z0, cell: o.cell, values: o.values, texture, box: o };
-    return own;
-  }
   const tilesAt = (x, z) => tiles.filter(t => t.center && squareDistance(t, x, z) === 0);
-  /** Ownership value of the cell at (x, z); 0 outside the map. */
-  function ownerAt(x, z) {
-    if (!own) return 0;
-    const c = Math.floor((x - own.x0) / own.cell), r = Math.floor((z - own.z0) / own.cell);
-    return c < 0 || r < 0 || c >= own.w || r >= own.h ? 0 : own.data[r * own.w + c];
-  }
-  /** Is a surface of this model drawn, and so solid, at (x, z)? The same rule as the shaders (viewer/ownership.js). */
-  const solidAt = (group, x, z) => !own || shows(group, ownerAt(x, z));
   const urgent = new Set();
   const progress = { loaded: 0, total: 1, tiles: 0, count: 0 };
 
@@ -72,8 +48,7 @@ export function createWorld(app, prepare, release = () => {}) {
     abort?.abort(); abort = null; clearInterval(watch);
     free(group);
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
-    tiles = []; colliders = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
-    own?.texture.dispose(); own = null;
+    tiles = []; colliders = []; lods = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
     Object.assign(progress, { loaded: 0, total: 1, tiles: 0, count: 0 });
   }
 
@@ -94,7 +69,7 @@ export function createWorld(app, prepare, release = () => {}) {
   function addColliders(root, tile) {
     const from = colliders.length;
     collect(root);
-    for (let i = from; i < colliders.length; i++) { colliders[i].tile = tile; colliders[i].group = tile.scene; }
+    for (let i = from; i < colliders.length; i++) colliders[i].tile = tile;
   }
   function collect(root) {
     root.traverse(o => {
@@ -104,8 +79,11 @@ export function createWorld(app, prepare, release = () => {}) {
       if (m?.userData.leaf || m?.userData.glass) return; // you walk through foliage and look through glass
       const g = o.geometry; if (!g.boundingBox) g.computeBoundingBox();
       const tris = (g.index ? g.index.count : g.attributes.position.count) / 3;
-      if (tris > SPLIT_TRIS && g.index) for (const part of splitByCell(o)) colliders.push(part);
-      else colliders.push({ mesh: o, box: g.boundingBox.clone().applyMatrix4(o.matrixWorld), tris });
+      const box = g.boundingBox.clone().applyMatrix4(o.matrixWorld);
+      // `big`: wide and not tall, so ground, paving or a roof rather than a post or a bench (see raycast's bigOnly)
+      const big = Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > 15 && box.max.y - box.min.y < 150;
+      if (tris > SPLIT_TRIS && g.index) for (const part of splitByCell(o)) { part.big = big; colliders.push(part); }
+      else colliders.push({ mesh: o, box, tris, big });
     });
   }
 
@@ -146,7 +124,8 @@ export function createWorld(app, prepare, release = () => {}) {
       const gltf = await loader.parseAsync(buf, base);
       if (my !== token) return;
       const root = gltf.scene; root.name = tile.file.replace('.glb', '').split('/').pop();
-      prepare(root, tile);
+      strip(root);
+      prepare(root, tile, { far: false });
       root.updateMatrixWorld(true);
       // compile this tile's shaders before it joins the scene, so adding it does not stall a frame
       try { await renderer.compileAsync(root, camera, scene); } catch { /* compiled on first draw instead */ }
@@ -164,6 +143,60 @@ export function createWorld(app, prepare, release = () => {}) {
       console.error(e);
       app.emit('tile:error', { tile, error: e });
     }
+  }
+
+  // Ground of one source model that the other model's merge superseded (the manifest's `hide` list, written by
+  // tools/web-export/make_chunks.py), e.g. a terrain feather lying across a north sports field.
+  let hide = new Set();
+  function strip(root) {
+    if (!hide.size) return;
+    const drop = [];
+    root.traverse(o => { if (o.isMesh && hide.has(o.name)) drop.push(o); });
+    for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
+  }
+
+  // ---- far versions of tiles (LOD) ----
+  // A tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances, small parts or
+  // interiors, about 0.5 m error). Past a distance set by the quality level, the full tile's plain meshes move
+  // to layer 2 (not drawn, no shadows) and the far version takes layer 0. Instanced trees stay with the full
+  // tile: trees.js culls and swaps those per instance. Collision and picks always use the full tiles.
+  // Far versions load after the full campus is in, and never while a memory budget is evicting tiles.
+  const LOD_DIST = { low: 260, medium: 420, high: 650 };
+  let lods = [], lodLast = 0;
+  async function loadLods(my) {
+    for (const tile of tiles) {
+      if (my !== token || budget !== Infinity) return;
+      if (!tile.lod || tile.far || tile.state !== 'ready') continue;
+      let root;
+      try {
+        const res = await fetch(base + tile.lod, { signal: abort.signal });
+        if (!res.ok) throw new Error(`${tile.lod}: HTTP ${res.status}`);
+        root = (await loader.parseAsync(await res.arrayBuffer(), base)).scene;
+      } catch (e) { if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; }
+      if (my !== token || tile.state !== 'ready') { free(root); return; }
+      root.name = `lod_${tile.root.name}`;
+      strip(root); // the far version carries the same objects as the full tile
+      prepare(root, tile, { far: true });
+      const hi = [];
+      tile.root.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) hi.push(o); });
+      root.traverse(o => { if (o.isMesh) { o.userData.hidden = o.userData.lod = true; o.layers.set(2); } });
+      group.add(root); tile.far = root;
+      lods.push({ hi, lo: root, box: new THREE.Box3().setFromObject(tile.root), far: false });
+      if (updateLods(true)) app.invalidate();
+    }
+  }
+  /** Swap full tiles and far versions for the camera position. Returns true when something changed. */
+  function updateLods(force = false) {
+    const now = performance.now(); if (!force && now - lodLast < 250) return false; lodLast = now;
+    const reach = LOD_DIST[app.look.quality] ?? LOD_DIST.medium; let changed = false;
+    for (const l of lods) {
+      const far = l.box.distanceToPoint(camera.position) > reach;
+      if (far === l.far) continue;
+      l.far = far; changed = true;
+      for (const o of l.hi) o.layers.set(far ? 2 : 0);
+      l.lo.traverse(o => { if (o.isMesh) o.layers.set(far ? 0 : 2); });
+    }
+    return changed;
   }
 
   // ---- memory budget (phones): keep only the tiles nearest the view ----
@@ -219,7 +252,7 @@ export function createWorld(app, prepare, release = () => {}) {
   async function load({ limit = Infinity, stream = true, focus = null, budget: cap = Infinity, skirt = true } = {}) {
     dispose();
     const my = ++token; abort = new AbortController();
-    base = './models/';
+    base = './models/main/';
     const man = await (await fetch(base + 'manifest.json', { cache: 'no-cache', signal: abort.signal })).json();
     if (my !== token) return;
     let list = man.tiles.filter(t => skirt || !t.file.endsWith('skirt.glb')).map(t => ({ ...t, state: 'queued', root: null, got: 0 }));
@@ -229,13 +262,11 @@ export function createWorld(app, prepare, release = () => {}) {
       const keep = new Set(orderTiles(list.filter(t => t.center), at).slice(0, limit));
       list = list.filter(t => !t.center || keep.has(t));
     }
-    tiles = list; budget = cap;
+    tiles = list; budget = cap; hide = new Set(man.hide || []);
     app.bounds.makeEmpty();
     if (b) app.bounds.set(new THREE.Vector3(b.minX, Infinity, b.minZ), new THREE.Vector3(b.maxX, -Infinity, b.maxZ));
     Object.assign(progress, { loaded: 0, total: tiles.reduce((s, t) => s + t.bytes, 0), tiles: 0, count: tiles.length });
-    const ownership = await loadOwnership(man.ownership).catch(e => { console.error('ownership map did not load', e); return null; });
-    if (my !== token) return;
-    app.emit('scene:start', { manifest: man, focus: at, ownership });
+    app.emit('scene:start', { manifest: man, focus: at, base });
 
     const first = firstBatch(tiles, at, FIRST_TILES);
     progress.first = first.reduce((s, t) => s + t.bytes, 0);
@@ -257,12 +288,15 @@ export function createWorld(app, prepare, release = () => {}) {
     if (my !== token) return;
     app.emit('scene:complete');
     if (budget !== Infinity) watch = setInterval(() => rebalance(my), 600);
+    else loadLods(my);
   }
   /** Drop the memory budget and load every tile. */
   async function loadAll() {
     if (budget === Infinity) return;
     budget = Infinity; clearInterval(watch); app.emit('progress', progress);
-    await pump(token);
+    const my = token;
+    await pump(my);
+    if (my === token) loadLods(my);
   }
 
   // The proxy stand-ins are not in the scene graph: drop their BVHs with the scene.
@@ -280,12 +314,13 @@ export function createWorld(app, prepare, release = () => {}) {
   /**
    * First solid surface along a ray, in world space.
    * `builtOnly` skips meshes whose BVH is not built yet (never stalls; may miss).
+   * `bigOnly` keeps to wide surfaces (ground, paving, roofs) and ignores small objects.
    */
-  function raycast(origin, dir, far = Infinity, { builtOnly = false } = {}) {
+  function raycast(origin, dir, far = Infinity, { builtOnly = false, bigOnly = false } = {}) {
     ray.set(origin, dir); ray.near = 0;
     _cand.length = 0;
     for (const c of colliders) {
-      if ((builtOnly && !c.mesh.geometry.boundsTree)) continue;
+      if ((builtOnly && !c.mesh.geometry.boundsTree) || (bigOnly && !c.big)) continue;
       let enter = 0;
       if (!c.box.containsPoint(origin)) {
         if (!ray.ray.intersectBox(c.box, _p)) continue;
@@ -298,18 +333,10 @@ export function createWorld(app, prepare, release = () => {}) {
     for (const { c, enter } of _cand) {
       if (best && enter > best.distance) break;
       ensureBVH(c);
-      const limit = best ? best.distance : far;
-      // a hit in a cell this model does not own is on hidden geometry: step past it and look again
-      let h = null, skipped = 0;
-      for (let tries = 0; tries < 6; tries++) {
-        ray.far = limit - skipped; _hits.length = 0;
-        c.mesh.raycast(ray, _hits);
-        h = _hits[0] ?? null;
-        if (!h || solidAt(c.group, h.point.x, h.point.z)) break;
-        skipped += h.distance + 0.02; ray.ray.origin.copy(origin).addScaledVector(dir, skipped); h = null;
-      }
-      ray.ray.origin.copy(origin);
-      if (h) { h.distance += skipped; if (!best || h.distance < best.distance) best = h; }
+      ray.far = best ? best.distance : far; _hits.length = 0;
+      c.mesh.raycast(ray, _hits); // straight to the mesh: layers do not apply, so far-swapped full tiles still collide
+      const h = _hits[0];
+      if (h && (!best || h.distance < best.distance)) best = h;
     }
     if (!best) return null;
     const normal = best.face ? _n.copy(best.face.normal).transformDirection(best.object.matrixWorld).clone() : new THREE.Vector3(0, 1, 0);
@@ -334,7 +361,7 @@ export function createWorld(app, prepare, release = () => {}) {
 
   // ---- capsule against walls (walk mode) ----
   const _seg = new THREE.Line3(), _box = new THREE.Box3(), _lbox = new THREE.Box3(), _inv = new THREE.Matrix4();
-  const _tp = new THREE.Vector3(), _cp = new THREE.Vector3(), _tn = new THREE.Vector3(), _wp = new THREE.Vector3();
+  const _tp = new THREE.Vector3(), _cp = new THREE.Vector3(), _tn = new THREE.Vector3();
   /**
    * Push a vertical capsule (world space, `a` bottom sphere centre, `b` top) out of steep surfaces.
    * Adds the horizontal correction to `out` and returns true if it touched a wall. Floors are left to the ground ray.
@@ -357,8 +384,6 @@ export function createWorld(app, prepare, release = () => {}) {
           if (Math.abs(_tn.y) > 0.6) return; // floor or soffit
           const d = tri.closestPointToSegment(_seg, _tp, _cp);
           if (d >= r) return;
-          // a wall the ownership map hides is not there: test where the capsule touches it, not where the walker stands
-          if (own && (_wp.copy(_tp).applyMatrix4(mw), !solidAt(c.group, _wp.x, _wp.z))) return;
           _cp.sub(_tp); _cp.y = 0; // walls only push sideways
           if (_cp.lengthSq() < 1e-12) return;
           _cp.normalize().multiplyScalar(r - d);
@@ -411,13 +436,13 @@ export function createWorld(app, prepare, release = () => {}) {
   return {
     load, loadAll, dispose, raycast, groundAt, pick, pushOut, warm,
     get budget() { return budget; },
-    ownerAt, solidAt,
+    updateLods, get lods() { return lods.length; },
     get tiles() { return tiles; },
     get group() { return group; },
     get progress() { return progress; },
     get paused() { return paused; },
     resume() { resume?.(); resume = null; },
-    // a square can hold one tile from each model
+    // a square can hold more than one tile (the two source models overlap in places)
     isLoaded(x, z) { return tilesAt(x, z).every(t => t.state === 'ready' || t.state === 'error'); },
     prioritize(x, z) {
       for (const t of tilesAt(x, z)) if (t.state === 'queued') urgent.add(t);
