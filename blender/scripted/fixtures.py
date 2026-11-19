@@ -344,6 +344,45 @@ def fence(
     return b.finish()
 
 
+def foul_pole(name, at, angle, height=12.0, *, side="left", unverified=True):
+    """Ballpark foul pole: a yellow 0.3 m pole with a 0.75 m screen wing on its fair side over
+    the upper two thirds. `angle` points along the foul line away from home plate; `side` says
+    whether fair ground is to the "left" or the "right" of that direction."""
+    side = 1 if side == "left" else -1
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    yellow = kit.mat("paint", "foul_pole_yellow", kit.srgb("#e3c21c"), rough=0.5)
+    b.tube(P(0, 0, -0.1), P(0, 0, height), 0.15, yellow, sides=8)
+    z0, w = height / 3, 0.75 * side
+    for z in (z0, height - 0.05):
+        b.beam(P(0, 0, z), P(0, w, z), 0.05, 0.05, yellow)
+    b.beam(P(0, w, z0), P(0, w, height - 0.05), 0.05, 0.05, yellow)
+    for k in range(1, 6):
+        z = z0 + (height - z0) * k / 6
+        b.beam(P(0, 0, z), P(0, w, z), 0.03, 0.03, yellow)
+    return b.finish()
+
+
+def soccer_goal(name, at, angle, *, unverified=True):
+    """Full-size soccer goal (7.32 m x 2.44 m inside, 0.12 m white posts) with a 2 m deep net
+    frame. `at` is the middle of the goal line; the mouth faces `angle` (toward the pitch)."""
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    white, net = _m("white_alu"), _m("net")
+    hw, h, d = 3.72, 2.5, 2.0
+    for v in (-hw, hw):
+        b.tube(P(0, v, -0.05), P(0, v, h), 0.06, white, sides=8)
+        b.tube(P(0, v, h), P(-d, v, 0.05), 0.03, white, sides=6)
+        b.tube(P(0, v, 0.03), P(-d, v, 0.03), 0.03, white, sides=6)
+    b.tube(P(0, -hw, h), P(0, hw, h), 0.06, white, sides=8)
+    b.tube(P(-d, -hw, 0.03), P(-d, hw, 0.03), 0.03, white, sides=6)
+    # net: the sloping back and the two sides, each seen from both sides
+    back = [P(0, -hw, h), P(0, hw, h), P(-d, hw, 0.05), P(-d, -hw, 0.05)]
+    b.faces(back, [(0, 1, 2, 3), (3, 2, 1, 0)], net)
+    for v in (-hw, hw):
+        tri = [P(0, v, 0.05), P(0, v, h), P(-d, v, 0.05)]
+        b.faces(tri, [(0, 1, 2), (2, 1, 0)], net)
+    return b.finish(recalc=False)
+
+
 WALLS = {  # plan fence kinds that are solid walls: material kind, default colour
     "wall_padded": ("paint", "#1f4a33"),  # a ballpark's padded outfield wall
     "wall_brick": ("brick", "#8e4f3c"),

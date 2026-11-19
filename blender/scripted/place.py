@@ -208,12 +208,21 @@ def points(lay, terrain):
                 gx, gy = to_model(side * (60 * 0.9144 + 1.83), 0.0)
                 at, angle = (gx, gy, terrain.at(gx, gy)), ff["angle"] + (180 if side > 0 else 0)
             out.append(fixtures.goalpost(name, at, angle, unverified=bool(p.get("unverified"))))
+        elif kind == "foul_pole":
+            out.append(fixtures.foul_pole(name, at, angle, side=p.get("side", "left"), **opt))
+        elif kind == "soccer_goal":
+            out.append(fixtures.soccer_goal(name, at, angle))
         elif kind == "pylon":
             out.append(fixtures.pylon(name, at, angle, **opt))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(
-                    name, at, angle, p.get("width", 6.0), p.get("board_height", 3.0)
+                    name,
+                    at,
+                    angle,
+                    p.get("width", 6.0),
+                    p.get("board_height", 3.0),
+                    clear=p.get("clear", 3.0),
                 )
             )
         elif kind == "bench":
