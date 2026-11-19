@@ -68,3 +68,23 @@ Rules learned from corrections. Read at the start of a session.
 - **Instruction (Joe):** "i only answer questions via AUQ".
 - **What went wrong:** I ended three reports with open questions in plain text (logo artwork, reference sources, how to work in main-model areas). None was answered.
 - **Rule:** when a decision is Joe's, ask it with the AskUserQuestion dialog, with a recommended option first. Do not leave questions in the text of a report. Decide everything else myself and record the reasoning.
+
+## Do not switch branches in a checkout that subagents are writing to (2026-11-19)
+
+- What happened: while subagents were writing plan files in the working tree, I checked out another branch there to fix a PR. Their files vanished and came back as an older copy; one subagent had to regenerate its file.
+- Rule: when a subagent works in the checkout, do other-branch work in a separate `git worktree`, never with `git checkout` or `git stash` in the shared tree.
+
+## Do not stage everything while an export is writing tiles (2026-11-19)
+
+- What happened: a docs commit made with `git add -A` during a tile export took half-written tiles with it and was pushed. The next commit replaced them, and the branch had no PR yet, so nothing reached a reviewer.
+- Rule: while an export, a subagent or any other job writes in the tree, stage by path (`git add docs/ ...`), never `git add -A`.
+
+## A detached job gives no wake-up (2026-11-19)
+
+- What happened: I started the screenshots with `( ... &)` inside a shell call and told Joe "about 8 minutes". The session restarted, the job died after one picture, and nothing told me. Joe had to ask.
+- Rule: start every long job with the harness's background option (it reports completion and failure). Never detach with `&`. Do not give a time estimate for a job that cannot report back.
+
+## Read the shader before changing a colour rule (2026-11-19)
+
+- What happened: brick dorm walls looked near black in one eye-level picture. I assumed the viewer multiplies the wall colour into a red brick texture and added a correcting tint. The walls then came out white. The viewer's textures are normalised to a mid-grey mean (`look.js`, `t *= 2.7`), so a material's colour passes through; the dark wall was the shaded side of a dark brick.
+- Rule: before changing how a colour is written, read the code that shows it, and look at a sunlit and a shaded view. One picture of one side is not evidence of a wrong colour.

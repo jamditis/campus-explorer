@@ -36,17 +36,18 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 
 ## Scripted builds index
 
-`blender/southwest/` builds the southwest corner from plan files; its [README](blender/southwest/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `northeast/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|
-| `blender/southwest/plan/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
+| `blender/scripted/<area>/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
 | `geom.py`, `layout.py` | Pure plan geometry (true-arc corners) and the layout shared by paint and ground |
 | `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
 | `stand.py`, `fixtures.py`, `place.py` | Grandstands and fixtures, and where the plan puts them |
+| `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels |
 | `build.py` | Entry point, run inside Blender |
-| `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles) |
-| `tools/web-export/supersede.mjs`, `compact.mjs` | Take other sources' ground out of the southwest footprint; drop unused vertex data from tiles |
+| `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
+| `tools/web-export/supersede.mjs`, `compact.mjs` | Take other sources' ground out of each area's footprint; drop unused vertex data from tiles |
 
 ## Git identity
 

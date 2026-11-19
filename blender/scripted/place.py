@@ -8,6 +8,7 @@ two: it seats each thing on the ground and turns it the way the plan says.
 import math
 import re
 
+import building
 import fixtures
 import geom
 import kit
@@ -19,7 +20,14 @@ def _slug(text):
 
 
 def _name(zone, item, kind=""):
-    return f"SW_{_slug(zone).capitalize()}_{_slug(item.get('name') or kind)}"
+    """Object name: SW_<Zone>_<item>. An item whose name already starts with the zone's first word
+    (zone `ne_buildings`, item `NE_bldg_...`) is not given the zone again: Blender cuts names at
+    63 characters, and the cut would take the `_UNVERIFIED` ending.
+    """
+    z, n = _slug(zone), _slug(item.get("name") or kind)
+    if n.lower().startswith(z.split("_")[0].lower() + "_"):
+        return f"SW_{n}"
+    return f"SW_{z.capitalize()}_{n}"
 
 
 def _front_frame(ring, front):
@@ -188,6 +196,8 @@ def points(lay, terrain):
                 gx, gy = to_model(side * (60 * 0.9144 + 1.83), 0.0)
                 at, angle = (gx, gy, terrain.at(gx, gy)), ff["angle"] + (180 if side > 0 else 0)
             out.append(fixtures.goalpost(name, at, angle, unverified=bool(p.get("unverified"))))
+        elif kind == "pylon":
+            out.append(fixtures.pylon(name, at, angle, **opt))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(
@@ -248,6 +258,8 @@ def buildings(lay, terrain):
     wall = kit.mat("plaster", "massing_wall", kit.srgb("#b9b6ad"), rough=0.9)
     roof = kit.mat("metal", "massing_roof", kit.srgb("#7d8084"), rough=0.6, metal=0.3)
     for b in lay["buildings"]:
+        if "top" in b:
+            continue  # a part with a measured roof height: building.py makes it
         ring = geom.expand(b["ring"], True)
         if geom.area(ring) < 0:
             ring = ring[::-1]
@@ -261,18 +273,48 @@ def buildings(lay, terrain):
     return out
 
 
-TREE_MESH, TREE_HEIGHT = (
-    "Tree_RedMaple_LOD1_v2Oct",
-    16.56,
-)  # a tree mesh of the main model, its height
+# tree meshes of the main model, by the plan's `species` (none given: red maple)
+TREES = {
+    "red_maple": "Tree_RedMaple_LOD1_v2Oct",
+    "sugar_maple": "Tree_SugarMaple_LOD1_v2Oct",
+    "pin_oak": "Tree_PinOak_LOD1_v2Oct",
+    "tulip_poplar": "Tree_TulipPoplar_LOD1",
+    "american_beech": "Tree_AmericanBeech_LOD1",
+    "sweetgum": "Tree_Sweetgum_LOD1",
+    "white_pine": "Tree_WhitePine_LOD1",
+}
+
+
+def _tree_meshes(assets, wanted):
+    """Load the tree meshes for the wanted species from a main-model .blend (once per run).
+    Returns {species: (mesh, lowest z, highest z)}; a species whose mesh is missing is left out.
+    The meshes do not all start at z 0, so both ends are needed to seat a scaled tree.
+    """
+    import bpy
+
+    names = {sp: TREES.get(sp, TREES["red_maple"]) for sp in wanted}
+    missing = sorted({n for n in names.values() if n not in bpy.data.meshes})
+    if missing:
+        with bpy.data.libraries.load(str(assets)) as (src, dst):
+            dst.meshes = [n for n in missing if n in src.meshes]
+    out = {}
+    for sp, n in names.items():
+        mesh = bpy.data.meshes.get(n)
+        if mesh is None:
+            print("SW", n, "not found in", assets)
+            continue
+        zs = [v.co.z for v in mesh.vertices]
+        out[sp] = (mesh, min(zs), max(zs))
+    return out
 
 
 def trees(lay, terrain, assets):
-    """Single trees from the LiDAR canopy, as copies of one tree mesh of the main model.
+    """Single trees, as copies of tree meshes of the main model.
 
-    `assets` is a main-model .blend (a release file will do). Position and height are from the plan;
-    the species is not known, so every tree is the red maple asset, UNVERIFIED. Trees that another
-    source model already has (plan field `skip`) and trees outside the footprint are left out.
+    `assets` is a main-model .blend (a release file will do). Position and height are from the plan.
+    The species is a guess at best (the plan's `species`, red maple when it gives none), so every
+    tree is UNVERIFIED for it. Trees that another source model already has (plan field `skip`) and
+    trees outside the footprint are left out.
     """
     import bpy
 
@@ -283,17 +325,17 @@ def trees(lay, terrain, assets):
     if not assets:
         print("SW no --assets file: skipping", len(todo), "trees")
         return []
-    with bpy.data.libraries.load(str(assets)) as (src, dst):
-        dst.meshes = [TREE_MESH] if TREE_MESH in src.meshes else []
-    if not dst.meshes:
-        print("SW", TREE_MESH, "not found in", assets, ": skipping trees")
-        return []
+    meshes = _tree_meshes(assets, {p.get("species", "red_maple") for p in todo})
     out = []
     for i, p in enumerate(todo):
+        sp = p.get("species", "red_maple")
+        if sp not in meshes:
+            continue
+        mesh, low, high = meshes[sp]
         x, y = p["at"]
-        ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", dst.meshes[0])
-        k = p.get("height", 12.0) / TREE_HEIGHT
-        ob.location = (x, y, terrain.at(x, y) - 0.1)
+        ob = bpy.data.objects.new(_name(p["zone"], p, "tree") + "_UNVERIFIEDspecies", mesh)
+        k = p.get("height", 12.0) / (high - low)
+        ob.location = (x, y, terrain.at(x, y) - 0.1 - low * k)
         ob.scale = (k, k, k)
         ob.rotation_euler = (0, 0, math.radians((i * 137.5) % 360))
         kit.collection().objects.link(ob)
@@ -305,6 +347,7 @@ def build(lay, terrain, assets=None):
     return (
         trees(lay, terrain, assets)
         + stands(lay, terrain)
+        + building.build(lay, terrain, lambda b: _name(b["zone"], b))
         + fences(lay, terrain)
         + points(lay, terrain)
         + buildings(lay, terrain)

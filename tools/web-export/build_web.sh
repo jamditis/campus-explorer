@@ -3,8 +3,8 @@
 # usage: SCENE=main|north|sw bash tools/web-export/build_web.sh [FILE]
 #   One unified campus: north is merged into models/main at its real coordinates (same Blender origin).
 #   Run main first; the north run reads main's plan and skips anything main already has.
-#   sw is the scripted southwest build (blender/southwest/): its tiles carry the sw_ prefix, and every run
-#   ends by taking the other sources' ground out of their tiles inside the southwest footprint (supersede.mjs).
+#   sw is the scripted build (blender/scripted/, every area in one .blend): its tiles carry the sw_ prefix, and every run
+#   ends by taking the other sources' ground out of their tiles inside every area's footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
@@ -96,7 +96,7 @@ fi
 # The southwest build owns the ground inside its footprint: take the other sources' ground out of their tiles
 # there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
 if ls $S/sw_*.glb >/dev/null 2>&1; then
-  python3 $W/../../blender/southwest/supersede.py $WORK/supersede.json ${SW_PLAN:+--plan $SW_PLAN} || fail "supersede rules"
+  python3 $W/../../blender/scripted/supersede.py $WORK/supersede.json ${SW_AREAS:+--areas $SW_AREAS} || fail "supersede rules"
   cp $W/supersede.mjs $W/lod.mjs ./
   node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
   [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"

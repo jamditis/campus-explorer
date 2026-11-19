@@ -146,7 +146,7 @@ def build(lay, terrain, image_dir=None):
             count[(min(a, b), max(a, b))] = count.get((min(a, b), max(a, b)), 0) + 1
     objects = []
     for (kind, unverified, tx, ty), items in sorted(groups.items()):
-        name = f"SW_ground_{kind}_{tx}_{ty}" + ("_UNVERIFIED" if unverified else "")
+        name = f"SW_ground_{lay['area']}_{kind}_{tx}_{ty}" + ("_UNVERIFIED" if unverified else "")
         bm = bmesh.new()
         uv = bm.loops.layers.uv.new("UVMap")
         mats, vmap = [], {}
@@ -262,7 +262,9 @@ def curbs(lay, terrain):
         key = (kind, bool(c.get("unverified")))
         b = out.get(key)
         if b is None:
-            b = out[key] = kit.Builder(f"SW_curbs_{kind}" + ("_UNVERIFIED" if key[1] else ""))
+            b = out[key] = kit.Builder(
+                f"SW_curbs_{lay['area']}_{kind}" + ("_UNVERIFIED" if key[1] else "")
+            )
         m = kit.mat(
             "concrete" if kind == "concrete" else "stone",
             f"curb_{kind}",

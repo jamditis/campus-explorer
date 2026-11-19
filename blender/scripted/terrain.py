@@ -92,7 +92,7 @@ class Terrain:
     blend.
 
     edge       [x, y, z] along the footprint, in order: the neighbours' ground there
-    (plan/edge_heights.json)
+    (<area>/edge_heights.json)
     lifts      the plan's `lifts`
     footprint  closed outline of the build; the edge blend acts within BLEND of it
     paved      outlines of the paved surfaces (roads, lots, walks, turf): the cells that grade

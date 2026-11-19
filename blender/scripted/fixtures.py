@@ -10,7 +10,7 @@ Sizes from standards are named in each docstring. Everything else is estimated f
 photographs in refs/sw (see meta.txt there), so those objects default to `unverified=True`.
 
 Demo row and previews:
-    blender -b --factory-startup --python blender/southwest/fixtures.py
+    blender -b --factory-startup --python blender/scripted/fixtures.py
 """
 
 import math
@@ -600,6 +600,50 @@ def utility_pole(name, at, angle, height=11.0, *, unverified=True):
         b.beam(P(0.15, 0, wa - 0.65), P(0.15, s * 0.65, wa - 0.04), 0.05, 0.02, _m("grey"))
     for v in (-1.05, -0.45, 1.05):
         b.tube(P(0.16, v, wa + 0.045), P(0.16, v, wa + 0.2), 0.045, _m("insulator"), sides=6)
+    return b.finish()
+
+
+def pylon(name, at, angle, height=54.0, *, base=12.0, waist=2.3, arm=5.5, unverified=True):
+    """Lattice transmission tower: four legs that taper from `base` wide at the ground to `waist`
+    at 0.65 of the height, a straight top, and three pairs of cross arms `arm` long across the
+    line (the line runs along `angle`). Height, base, waist and arm span are LiDAR sizes; the
+    lattice pattern and member sizes are typical ones, not measured.
+    """
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    steel = _m("galv")
+    hw = 0.65 * height  # waist height
+
+    def half(z):  # half width of the body at height z
+        return (base + (waist - base) * z / hw) / 2 if z < hw else waist / 2
+
+    # body panels grow shorter towards the waist, so the bracing keeps a steady angle
+    levels, z = [0.0], 0.0
+    while z < hw - 2.5:
+        z = min(hw, z + max(3.0, 1.5 * half(z)))
+        levels.append(z)
+    levels[-1] = hw
+    while z < height - 0.1:
+        z = min(height, z + 3.2)
+        levels.append(z)
+    corners = ((1, 1), (-1, 1), (-1, -1), (1, -1))
+    for z0, z1 in zip(levels, levels[1:], strict=False):
+        h0, h1 = half(z0), half(z1)
+        leg = 0.3 if z0 < hw else 0.16
+        for k, (cu, cv) in enumerate(corners):
+            nu, nv = corners[(k + 1) % 4]
+            b.beam(P(cu * h0, cv * h0, z0), P(cu * h1, cv * h1, z1), leg, leg, steel)
+            b.beam(P(cu * h1, cv * h1, z1), P(nu * h1, nv * h1, z1), 0.1, 0.1, steel)
+            b.beam(P(cu * h0, cv * h0, z0), P(nu * h1, nv * h1, z1), 0.09, 0.09, steel)
+            b.beam(P(nu * h0, nv * h0, z0), P(cu * h1, cv * h1, z1), 0.09, 0.09, steel)
+    # cross arms across the line (local v), each a tapered pair of chords with a tie above
+    w = waist / 2
+    for z in (hw + 0.06 * height, hw + 0.17 * height, hw + 0.28 * height):
+        for side in (-1, 1):
+            tip = P(0, side * (w + arm), z)
+            for u in (-w, w):
+                b.beam(P(u, side * w, z), tip, 0.12, 0.12, steel)
+                b.beam(P(u, side * w, z + 1.6), tip, 0.08, 0.08, steel)
+            b.tube(tip, P(0, side * (w + arm), z - 2.2), 0.07, _m("insulator"), sides=6)
     return b.finish()
 
 

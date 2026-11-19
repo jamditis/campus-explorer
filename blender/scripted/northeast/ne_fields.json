@@ -1,0 +1,1805 @@
+{
+ "zone": "ne_fields",
+ "notes": "Softball frame (fitted): the apex of home plate is at (-39.505, 817.623) (intersection of the outer edges of the two foul lines; their centrelines were fitted as brightness peaks on 12 profiles each, rms 0.04-0.05 m, and meet at 89.998 deg); 3B line -114.05 deg, 1B line -24.05 deg. Checks: home plate (brightest dot) at 0.06 m and the pitcher's plate at 0.06 m of where the rule book puts them. Everything of the diamond is computed from that frame (NCAA: 60 ft bases, 43 ft pitching distance, 8 ft circle, 3 x 7 ft batter's boxes 6 in from the plate with the front line 4 ft ahead of the plate centre, catcher's box 10 ft x 8 ft 5 in, coach's box lines 15 ft long 12 ft outside the base lines, 3 in lines with the outer edges of the foul lines on the base lines). The skin arc (R 60 ft about the front of the pitcher's plate), the warning-track edge (R 49.0) and the outfield fence (R 52.05) are all centred on the pitcher's plate, as the ortho shows (circle fits rms 0.13-0.3 m). The infield is clay (gravel here): it is uniform tan, the foul lines stop at its edge and none of the chalk lines shows, so it is not inlaid turf; chalk lines on it are listed but gravel takes no paint. Tennis: three courts fitted one by one as templates (78 x 36 ft, singles 27 ft, service lines 21 ft from the net, centre service line), centres and angles: (-52.248, 729.512) -113.905 deg; (-37.190, 722.898) -113.987 deg; (-22.187, 716.143) -113.763 deg; 16.45 m between centres. The block is drawn in the frame of court 2 with the mean angle -113.885 deg. Not drawn: the backstop, the seats behind home plate and the press box (all north of the footprint edge, y 826); light poles (none in the 2017 LiDAR, none seen in the ortho); the scoreboard (left-centre field per the athletics site, not found in the ortho); the red hawk logo painted in centre field; the red sheds south-west of the courts (outside the footprint).",
+ "surfaces": [
+  {
+   "name": "NE_field_softball_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     -56.826,
+     798.195
+    ],
+    [
+     -70.521,
+     767.507
+    ],
+    [
+     -55.663,
+     753.502,
+     52.04
+    ],
+    [
+     -14.827,
+     753.167,
+     52.04
+    ],
+    [
+     15.344,
+     780.688,
+     52.04
+    ],
+    [
+     17.05,
+     801.035
+    ],
+    [
+     -13.638,
+     814.73
+    ]
+   ],
+   "evidence": "ortho2020; https://montclairathletics.com/facilities/?id=6 (FieldTurf playing surface)",
+   "unverified": "turf ends at the fence line; the infield skin (higher layer) covers its home-plate end"
+  },
+  {
+   "name": "NE_field_infield_skin",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     -49.707,
+     794.762
+    ],
+    [
+     -56.921,
+     797.982
+    ],
+    [
+     -52.954,
+     806.87
+    ],
+    [
+     -53.502,
+     807.115
+    ],
+    [
+     -44.822,
+     826.566
+    ],
+    [
+     -43.924,
+     826.8
+    ],
+    [
+     -30.624,
+     826.8
+    ],
+    [
+     -29.135,
+     826.136
+    ],
+    [
+     -30.48,
+     823.122
+    ],
+    [
+     -17.148,
+     817.172
+    ],
+    [
+     -17.474,
+     816.442
+    ],
+    [
+     -13.425,
+     814.635
+    ],
+    [
+     -16.644,
+     807.421
+    ],
+    [
+     -15.948,
+     801.212,
+     18.278
+    ],
+    [
+     -22.445,
+     790.538,
+     18.278
+    ],
+    [
+     -34.114,
+     786.07,
+     18.278
+    ],
+    [
+     -46.078,
+     789.676,
+     18.278
+    ]
+   ],
+   "evidence": "ortho2020 (uniform tan clay: arc of R 18.25 m about the pitcher's plate, cut square to the foul lines at 25 m in foul territory; no base paths, circle or boxes visible, and the foul lines stop at its edge, so the lines on it are chalk, not inlaid turf)",
+   "unverified": "material: real clay assumed (the plan has no infield-mix kind, so gravel); north edge cut at the footprint edge (backstop at y 826.5-828 is outside it)"
+  },
+  {
+   "name": "NE_field_bullpen_3B_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     -65.598,
+     784.918
+    ],
+    [
+     -73.668,
+     766.836
+    ],
+    [
+     -80.516,
+     769.893
+    ],
+    [
+     -72.447,
+     787.974
+    ]
+   ],
+   "evidence": "ortho2020 (dark green turf inside a white-edged frame)",
+   "unverified": "outline corners read to about 0.5 m"
+  },
+  {
+   "name": "NE_field_bullpen_3B_mounds",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     -65.771,
+     784.776
+    ],
+    [
+     -69.154,
+     777.196
+    ],
+    [
+     -71.345,
+     778.174
+    ],
+    [
+     -67.963,
+     785.754
+    ]
+   ],
+   "evidence": "ortho2020 (tan strip on the field side of the pen)",
+   "unverified": "read as clay pitching mounds; size to about 0.5 m"
+  },
+  {
+   "name": "NE_field_bullpen_1B_cage_turf",
+   "kind": "turf",
+   "ring": [
+    [
+     -2.6,
+     810.6
+    ],
+    [
+     21.0,
+     800.3
+    ],
+    [
+     24.4,
+     815.4
+    ],
+    [
+     4.4,
+     826.5
+    ]
+   ],
+   "evidence": "ortho2020 (dark green turf between the right-field fence and the walk to the north, frame and tunnel lines on it)",
+   "unverified": "NE corner (x 24) and N corner read to about 0.7 m; the east end passes x 22"
+  },
+  {
+   "name": "NE_field_bullpen_1B_mounds",
+   "kind": "gravel",
+   "layer": 4.5,
+   "ring": [
+    [
+     14.336,
+     802.574
+    ],
+    [
+     19.176,
+     800.414
+    ],
+    [
+     22.272,
+     806.37
+    ],
+    [
+     17.067,
+     808.693
+    ]
+   ],
+   "evidence": "ortho2020 (tan rectangle at the east end of the pen)",
+   "unverified": "read as clay pitching mounds"
+  },
+  {
+   "name": "NE_field_plaza_1B",
+   "kind": "concrete",
+   "ring": [
+    [
+     -17.27,
+     816.898
+    ],
+    [
+     -2.567,
+     810.337
+    ],
+    [
+     4.4,
+     826.5
+    ],
+    [
+     4.6,
+     826.8
+    ],
+    [
+     -12.8,
+     826.8
+    ]
+   ],
+   "evidence": "ortho2020 (light grey paving between the 1B dugout, the right-field fence and the cage)",
+   "unverified": "concrete assumed from the tone; it runs on north past the footprint edge to the stands and the drive"
+  },
+  {
+   "name": "NE_field_plaza_south",
+   "kind": "concrete",
+   "ring": [
+    [
+     -88.6,
+     766.6
+    ],
+    [
+     -74.6,
+     766.6
+    ],
+    [
+     -74.0,
+     760.4
+    ],
+    [
+     -83.0,
+     758.6
+    ],
+    [
+     -88.6,
+     757.0
+    ]
+   ],
+   "evidence": "ortho2020 (paved landing where the west walk meets the walk along the futsal court)",
+   "unverified": "a lower panel at x -82..-76 (ramp or planter) drawn as plain paving; the west edge is the footprint edge"
+  },
+  {
+   "name": "NE_field_walk_futsal_west",
+   "kind": "concrete",
+   "ring": [
+    [
+     -81.5,
+     759.7
+    ],
+    [
+     -85.2,
+     741.7
+    ],
+    [
+     -87.9,
+     728.7
+    ],
+    [
+     -88.8,
+     728.7
+    ],
+    [
+     -88.8,
+     741.0
+    ],
+    [
+     -88.5,
+     742.4
+    ],
+    [
+     -84.8,
+     760.4
+    ]
+   ],
+   "evidence": "ortho2020 (3.4 m walk along the west side of the futsal court)",
+   "unverified": "cut at 0.8 m outside the footprint edge (x -88) south of y 742, where the walk runs on west of it; edges to about 0.4 m"
+  },
+  {
+   "name": "NE_field_tennis_block",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -57.867,
+     752.396
+    ],
+    [
+     -73.334,
+     717.468
+    ],
+    [
+     -21.627,
+     694.571
+    ],
+    [
+     -6.16,
+     729.499
+    ]
+   ],
+   "evidence": "ortho2020 (court surface to the fence lines, found as dark minima on profiles in the court frame); osm 233324761 (Tennis Courts)",
+   "unverified": "south end under tree shadow (fence at u 19.5 from three profiles); hard court on asphalt assumed"
+  },
+  {
+   "name": "NE_field_futsal_block",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -74.554,
+     759.786
+    ],
+    [
+     -90.021,
+     724.857
+    ],
+    [
+     -73.151,
+     717.387
+    ],
+    [
+     -57.684,
+     752.315
+    ]
+   ],
+   "evidence": "ortho2020 (green court west of the tennis courts, same fence lines north and south)",
+   "unverified": "hard court assumed (it may be carpet turf); south end under tree shadow"
+  }
+ ],
+ "strips": [
+  {
+   "name": "NE_field_walk_outfield",
+   "kind": "concrete",
+   "width": 0.9,
+   "centre": [
+    [
+     -65.971,
+     762.505
+    ],
+    [
+     -53.27,
+     753.277,
+     52.99
+    ],
+    [
+     -21.915,
+     751.634,
+     52.99
+    ],
+    [
+     -8.319,
+     759.483
+    ]
+   ],
+   "evidence": "ortho2020 (bright 0.8-1 m band just outside the fence, R 53.0 m about the pitcher's plate, from left field to right-centre)",
+   "unverified": "a concrete mow strip assumed; not seen east of right-centre field"
+  },
+  {
+   "name": "NE_field_walk_west",
+   "kind": "concrete",
+   "width": 2.4,
+   "centre": [
+    [
+     -84.0,
+     764.3
+    ],
+    [
+     -68.6,
+     801.3,
+     4.0
+    ],
+    [
+     -60.3,
+     813.0,
+     4.0
+    ],
+    [
+     -59.8,
+     826.8
+    ]
+   ],
+   "evidence": "ortho2020 (walk between Carlisle Road and the stadium, from the south plaza along the back of the 3B dugout to the stands; centre from brightness runs every 4 m)",
+   "unverified": "the bends at y 801 and 813 are read to about 0.5 m; the north end runs on past the footprint edge"
+  },
+  {
+   "name": "NE_field_walk_3B_dugout",
+   "kind": "concrete",
+   "width": 1.9,
+   "centre": [
+    [
+     -67.6,
+     808.4
+    ],
+    [
+     -56.0,
+     806.6
+    ]
+   ],
+   "evidence": "ortho2020 (white band south of the 3B dugout)",
+   "unverified": "width"
+  }
+ ],
+ "markings": [
+  {
+   "type": "area",
+   "ring": [
+    [
+     -53.816,
+     796.596
+    ],
+    [
+     -66.556,
+     768.05
+    ],
+    [
+     -52.642,
+     756.222,
+     48.99
+    ],
+    [
+     -16.121,
+     756.547,
+     48.99
+    ],
+    [
+     11.279,
+     780.695,
+     48.99
+    ],
+    [
+     13.736,
+     798.79
+    ],
+    [
+     -14.811,
+     811.53
+    ],
+    [
+     -13.384,
+     814.726
+    ],
+    [
+     17.155,
+     801.097
+    ],
+    [
+     15.472,
+     780.682,
+     52.14
+    ],
+    [
+     -14.785,
+     753.058,
+     52.14
+    ],
+    [
+     -55.754,
+     753.412,
+     52.14
+    ],
+    [
+     -70.641,
+     767.483
+    ],
+    [
+     -57.012,
+     798.023
+    ]
+   ],
+   "colour": "#7d3e30",
+   "name": "NE_field_warning_track",
+   "evidence": "ortho2020 (red-brown band: inner edge an arc of R 49.0 m about the pitcher's plate, 4.5 m outside the foul lines; 3.0-3.4 m wide to the fence)",
+   "unverified": "colour and material: drawn as red-brown paint on the turf (FieldTurf warning tracks are usually coloured turf); it may be crushed brick"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -39.592,
+     817.333
+    ],
+    [
+     -64.102,
+     762.411
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "name": "NE_field_foul_line_3B",
+   "evidence": "NCAA rule book; foul-line directions and home plate fitted to the ortho (rms 0.04-0.05 m)"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -39.246,
+     817.466
+    ],
+    [
+     15.675,
+     792.955
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "name": "NE_field_foul_line_1B",
+   "evidence": "NCAA rule book; foul-line directions and home plate fitted to the ortho (rms 0.04-0.05 m)"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -39.505,
+     817.623
+    ],
+    [
+     -39.226,
+     817.499
+    ],
+    [
+     -39.149,
+     817.297
+    ],
+    [
+     -39.552,
+     817.142
+    ],
+    [
+     -39.629,
+     817.344
+    ]
+   ],
+   "colour": "white",
+   "name": "NE_field_home_plate"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -35.103,
+     805.274
+    ],
+    [
+     -34.534,
+     805.492
+    ],
+    [
+     -34.479,
+     805.349
+    ],
+    [
+     -35.049,
+     805.131
+    ]
+   ],
+   "colour": "white",
+   "name": "NE_field_pitchers_plate"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -32.38,
+     807.821,
+     2.436
+    ],
+    [
+     -37.257,
+     807.821,
+     2.436
+    ],
+    [
+     -37.257,
+     802.944,
+     2.436
+    ],
+    [
+     -32.38,
+     802.944,
+     2.436
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "closed": true,
+   "name": "NE_field_pitchers_circle"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -40.12,
+     818.094
+    ],
+    [
+     -39.385,
+     816.173
+    ],
+    [
+     -40.168,
+     815.873
+    ],
+    [
+     -40.903,
+     817.794
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "closed": true,
+   "name": "NE_field_batters_box_3B"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -39.361,
+     818.385
+    ],
+    [
+     -38.626,
+     816.463
+    ],
+    [
+     -37.843,
+     816.763
+    ],
+    [
+     -38.579,
+     818.684
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "closed": true,
+   "name": "NE_field_batters_box_1B"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -38.592,
+     818.72
+    ],
+    [
+     -39.668,
+     821.531
+    ],
+    [
+     -41.993,
+     820.641
+    ],
+    [
+     -40.917,
+     817.83
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "name": "NE_field_catchers_box"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -48.435,
+     806.588
+    ],
+    [
+     -50.298,
+     802.413
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "name": "NE_field_coach_box_3B"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -25.489,
+     815.373
+    ],
+    [
+     -21.314,
+     813.51
+    ]
+   ],
+   "width": 0.0762,
+   "colour": "white",
+   "name": "NE_field_coach_box_1B"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -57.816,
+     752.264
+    ],
+    [
+     -73.202,
+     717.519
+    ],
+    [
+     -21.678,
+     694.702
+    ],
+    [
+     -6.292,
+     729.448
+    ]
+   ],
+   "colour": "#55705f",
+   "name": "NE_field_tennis_surround",
+   "evidence": "ortho2020 (median colour outside the court lines)",
+   "unverified": "paint colour from the ortho tone"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -74.503,
+     759.654
+    ],
+    [
+     -89.889,
+     724.908
+    ],
+    [
+     -73.202,
+     717.519
+    ],
+    [
+     -57.816,
+     752.264
+    ]
+   ],
+   "colour": "#55705f",
+   "name": "NE_field_futsal_colour",
+   "evidence": "ortho2020",
+   "unverified": "paint colour from the ortho tone"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -52.447,
+     742.603
+    ],
+    [
+     -62.081,
+     720.868
+    ],
+    [
+     -52.049,
+     716.421
+    ],
+    [
+     -42.415,
+     738.156
+    ]
+   ],
+   "colour": "#4b6a59",
+   "name": "NE_field_tennis_1_play",
+   "evidence": "ortho2020 (play area a shade darker than the surround)",
+   "unverified": "paint colour from the ortho tone"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -52.424,
+     742.592
+    ],
+    [
+     -62.057,
+     720.857
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -51.17,
+     742.037
+    ],
+    [
+     -60.804,
+     720.302
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -52.467,
+     742.556
+    ],
+    [
+     -42.436,
+     738.11
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -53.426,
+     737.008
+    ],
+    [
+     -45.903,
+     733.673
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -47.472,
+     740.287
+    ],
+    [
+     -47.513,
+     740.194
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -42.439,
+     738.167
+    ],
+    [
+     -52.072,
+     716.432
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -43.692,
+     738.722
+    ],
+    [
+     -53.326,
+     716.987
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -62.06,
+     720.914
+    ],
+    [
+     -52.029,
+     716.468
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -58.593,
+     725.351
+    ],
+    [
+     -51.07,
+     722.016
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -57.024,
+     718.737
+    ],
+    [
+     -56.983,
+     718.83
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -49.654,
+     735.364
+    ],
+    [
+     -54.842,
+     723.66
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -37.37,
+     735.989
+    ],
+    [
+     -47.035,
+     714.268
+    ],
+    [
+     -37.01,
+     709.807
+    ],
+    [
+     -27.345,
+     731.528
+    ]
+   ],
+   "colour": "#4b6a59",
+   "name": "NE_field_tennis_2_play",
+   "evidence": "ortho2020 (play area a shade darker than the surround)",
+   "unverified": "paint colour from the ortho tone"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -37.347,
+     735.979
+    ],
+    [
+     -47.012,
+     714.257
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -36.094,
+     735.421
+    ],
+    [
+     -45.759,
+     713.7
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -37.391,
+     735.943
+    ],
+    [
+     -27.366,
+     731.482
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -38.358,
+     730.396
+    ],
+    [
+     -30.839,
+     727.05
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -32.399,
+     733.666
+    ],
+    [
+     -32.44,
+     733.573
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -27.368,
+     731.539
+    ],
+    [
+     -37.033,
+     709.817
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -28.621,
+     732.096
+    ],
+    [
+     -38.286,
+     710.375
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -47.014,
+     714.314
+    ],
+    [
+     -36.989,
+     709.853
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -43.541,
+     718.746
+    ],
+    [
+     -36.022,
+     715.4
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -41.981,
+     712.13
+    ],
+    [
+     -41.94,
+     712.223
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -34.588,
+     728.746
+    ],
+    [
+     -39.792,
+     717.05
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "area",
+   "ring": [
+    [
+     -22.418,
+     729.233
+    ],
+    [
+     -31.998,
+     707.474
+    ],
+    [
+     -21.956,
+     703.053
+    ],
+    [
+     -12.376,
+     724.812
+    ]
+   ],
+   "colour": "#4b6a59",
+   "name": "NE_field_tennis_3_play",
+   "evidence": "ortho2020 (play area a shade darker than the surround)",
+   "unverified": "paint colour from the ortho tone"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -22.395,
+     729.223
+    ],
+    [
+     -31.975,
+     707.464
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -21.14,
+     728.67
+    ],
+    [
+     -30.72,
+     706.911
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -22.439,
+     729.187
+    ],
+    [
+     -12.396,
+     724.765
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -23.384,
+     723.636
+    ],
+    [
+     -15.852,
+     720.32
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -17.438,
+     726.929
+    ],
+    [
+     -17.479,
+     726.836
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -12.399,
+     724.822
+    ],
+    [
+     -21.979,
+     703.063
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -13.654,
+     725.375
+    ],
+    [
+     -23.234,
+     703.616
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -31.978,
+     707.521
+    ],
+    [
+     -21.935,
+     703.099
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -28.522,
+     711.966
+    ],
+    [
+     -20.99,
+     708.65
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -26.936,
+     705.357
+    ],
+    [
+     -26.895,
+     705.45
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -19.608,
+     722.001
+    ],
+    [
+     -24.766,
+     710.285
+    ]
+   ],
+   "width": 0.0508,
+   "colour": "white"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -74.88,
+     757.196
+    ],
+    [
+     -88.04,
+     727.48
+    ],
+    [
+     -72.614,
+     720.649
+    ],
+    [
+     -59.455,
+     750.366
+    ]
+   ],
+   "width": 0.08,
+   "colour": "white",
+   "closed": true,
+   "name": "NE_field_futsal_outline",
+   "evidence": "ortho2020 (brightness peaks: sidelines v -48.35/-31.48, end lines u -16.1/16.4 in the court-2 frame)",
+   "unverified": "traced, not from a rule book"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -71.1,
+     755.522
+    ],
+    [
+     -71.821,
+     753.893,
+     4.29
+    ],
+    [
+     -70.537,
+     750.57,
+     4.29
+    ],
+    [
+     -67.28,
+     749.128,
+     4.29
+    ],
+    [
+     -63.957,
+     750.411,
+     4.29
+    ],
+    [
+     -63.236,
+     752.04
+    ]
+   ],
+   "width": 0.08,
+   "colour": "white",
+   "name": "NE_field_futsal_arc_N",
+   "evidence": "ortho2020 (semicircle points on six profiles, R 4.25-4.35 m)",
+   "unverified": "traced"
+  },
+  {
+   "type": "line",
+   "path": [
+    [
+     -84.259,
+     725.805
+    ],
+    [
+     -83.538,
+     727.434,
+     4.29
+    ],
+    [
+     -80.215,
+     728.717,
+     4.29
+    ],
+    [
+     -76.957,
+     727.275,
+     4.29
+    ],
+    [
+     -75.674,
+     723.952,
+     4.29
+    ],
+    [
+     -76.395,
+     722.323
+    ]
+   ],
+   "width": 0.08,
+   "colour": "white",
+   "name": "NE_field_futsal_arc_S",
+   "evidence": "ortho2020 (semicircle points on six profiles, R 4.25-4.35 m)",
+   "unverified": "traced"
+  }
+ ],
+ "fences": [
+  {
+   "name": "NE_field_outfield_fence",
+   "path": [
+    [
+     -52.954,
+     806.87
+    ],
+    [
+     -70.521,
+     767.507
+    ],
+    [
+     -55.663,
+     753.502,
+     52.04
+    ],
+    [
+     -14.827,
+     753.167,
+     52.04
+    ],
+    [
+     15.344,
+     780.688,
+     52.04
+    ],
+    [
+     17.05,
+     801.035
+    ],
+    [
+     -17.474,
+     816.442
+    ]
+   ],
+   "closed": false,
+   "height": 2.4,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (dark fence line at the outer edge of the warning track: an arc of R 52.0 m about the pitcher's plate, side runs 7.7-8.0 m outside the foul lines); https://montclairathletics.com/facilities/?id=6 (LF 200, CF 215, RF 200 ft)",
+   "unverified": "height (no LiDAR returns on the fence; 8 ft assumed); padding, gates and the yellow top cap not seen"
+  },
+  {
+   "name": "NE_field_dugout_front_3B",
+   "path": [
+    [
+     -49.101,
+     816.977
+    ],
+    [
+     -53.502,
+     807.115
+    ]
+   ],
+   "closed": false,
+   "height": 2.2,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (dark line along the dugout front)",
+   "unverified": "a screen along the dugout front is assumed (not visible from above); height set to the roof eave"
+  },
+  {
+   "name": "NE_field_dugout_front_1B",
+   "path": [
+    [
+     -30.023,
+     822.919
+    ],
+    [
+     -17.148,
+     817.172
+    ]
+   ],
+   "closed": false,
+   "height": 2.2,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (dark line along the dugout front)",
+   "unverified": "a screen along the dugout front is assumed (not visible from above); height set to the roof eave"
+  },
+  {
+   "name": "NE_field_bullpen_3B_fence",
+   "path": [
+    [
+     -65.598,
+     784.918
+    ],
+    [
+     -73.668,
+     766.836
+    ],
+    [
+     -80.516,
+     769.893
+    ],
+    [
+     -72.447,
+     787.974
+    ]
+   ],
+   "closed": true,
+   "height": 2.4,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (white frame lines and posts round the pen)",
+   "unverified": "a fence on the frame is assumed; height"
+  },
+  {
+   "name": "NE_field_bullpen_1B_netting",
+   "path": [
+    [
+     -2.6,
+     810.6
+    ],
+    [
+     21.0,
+     800.3
+    ],
+    [
+     24.4,
+     815.4
+    ],
+    [
+     4.4,
+     826.5
+    ]
+   ],
+   "closed": true,
+   "height": 3.7,
+   "kind": "netting_black",
+   "evidence": "ortho2020 (frame of the cage)",
+   "unverified": "batting-cage netting assumed round the whole pen; height (12 ft); the inner tunnel nets are not drawn"
+  },
+  {
+   "name": "NE_field_tennis_fence",
+   "path": [
+    [
+     -57.816,
+     752.264
+    ],
+    [
+     -73.202,
+     717.519
+    ],
+    [
+     -21.678,
+     694.702
+    ],
+    [
+     -6.292,
+     729.448
+    ]
+   ],
+   "closed": true,
+   "height": 3.05,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (dark fence lines round the court block); osm 233324761",
+   "unverified": "height (10 ft assumed: no LiDAR returns); gates not placed"
+  },
+  {
+   "name": "NE_field_futsal_fence",
+   "path": [
+    [
+     -57.816,
+     752.264
+    ],
+    [
+     -74.503,
+     759.654
+    ],
+    [
+     -89.889,
+     724.908
+    ],
+    [
+     -73.202,
+     717.519
+    ]
+   ],
+   "closed": false,
+   "height": 3.05,
+   "kind": "chain_link_black",
+   "evidence": "ortho2020 (dark fence lines)",
+   "unverified": "height (10 ft assumed); shares the tennis fence on its east side"
+  }
+ ],
+ "stands": [
+  {
+   "name": "NE_field_stand_3B",
+   "ring": [
+    [
+     -48.969,
+     817.028
+    ],
+    [
+     -44.812,
+     826.343
+    ],
+    [
+     -51.929,
+     826.343
+    ],
+    [
+     -54.904,
+     819.677
+    ]
+   ],
+   "front": [
+    [
+     -48.969,
+     817.028
+    ],
+    [
+     -44.812,
+     826.343
+    ]
+   ],
+   "rows": 8,
+   "sections": 1,
+   "aisles": 0,
+   "rise": 0.26,
+   "first_row_height": 1.2,
+   "evidence": "ortho2020 (aluminium bleacher planks north of the 3B dugout, roof shifted about 2 m west by relief); lidar2017 dsm (deck rising from 111.1 m at the front to 112.9 m, a 114.7 m back rail or screen, ground 109.7 m)",
+   "unverified": "rows, rise and aisles fitted to the LiDAR slope only; the stand runs on north past the footprint edge (y 826) to the seats behind home plate, which are not drawn"
+  },
+  {
+   "name": "NE_field_stand_LF",
+   "ring": [
+    [
+     -64.276,
+     786.408
+    ],
+    [
+     -61.22,
+     793.257
+    ],
+    [
+     -68.982,
+     796.721
+    ],
+    [
+     -72.038,
+     789.872
+    ]
+   ],
+   "front": [
+    [
+     -64.276,
+     786.408
+    ],
+    [
+     -61.22,
+     793.257
+    ]
+   ],
+   "rows": 7,
+   "sections": 1,
+   "aisles": 0,
+   "rise": 0.4,
+   "first_row_height": 0.4,
+   "evidence": "ortho2020 (white aluminium bleacher behind the 3B side fence, aligned with the foul line); lidar2017 dsm (low at the field side 110.0, back edge 112.9 m, ground 109.8-110.2)",
+   "unverified": "rows and rise from the height only; no aisles seen"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "NE_field_dugout_3B",
+   "ring": [
+    [
+     -49.101,
+     816.977
+    ],
+    [
+     -53.502,
+     807.115
+    ],
+    [
+     -59.894,
+     809.968
+    ],
+    [
+     -55.493,
+     819.83
+    ]
+   ],
+   "roof": "gable",
+   "top": 113.3,
+   "eave": 111.95,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#8c8a84",
+   "roof_colour": "#8f5446",
+   "evidence": "ortho2020 (red-brown roof, front face parallel to the foul line); lidar2017 dsm (eave 111.9-112.0 at the field face, ridge 113.2-113.5 m, ground 109.5-109.7)",
+   "unverified": "wall colour and openings; ridge drawn centred (the LiDAR puts it 1 m behind centre); dugout floor level"
+  },
+  {
+   "name": "NE_field_dugout_1B",
+   "ring": [
+    [
+     -30.023,
+     822.919
+    ],
+    [
+     -26.926,
+     829.859
+    ],
+    [
+     -14.05,
+     824.113
+    ],
+    [
+     -17.148,
+     817.172
+    ]
+   ],
+   "roof": "gable",
+   "top": 112.95,
+   "eave": 111.9,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#8c8a84",
+   "roof_colour": "#8f5446",
+   "evidence": "ortho2020 (red-brown roof, front face parallel to the foul line); lidar2017 dsm (eave 111.9-112.0 at the field face, ridge 112.9-113.0 m, ground 109.5-109.7)",
+   "unverified": "wall colour and openings; ridge drawn centred (the LiDAR puts it 1 m behind centre); dugout floor level; the back half lies up to 3.8 m north of the footprint edge"
+  },
+  {
+   "name": "NE_field_shed_SW",
+   "ring": [
+    [
+     -87.4,
+     720.6
+    ],
+    [
+     -80.6,
+     718.4
+    ],
+    [
+     -82.4,
+     713.2
+    ],
+    [
+     -88.0,
+     715.2
+    ]
+   ],
+   "roof": "flat",
+   "top": 115.18,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#b8b4aa",
+   "roof_colour": "#d8d8d2",
+   "evidence": "ortho2020 (white roof); lidar2017 dsm (roof)",
+   "unverified": "outline to about 0.5 m; roof form and wall colour"
+  }
+ ],
+ "points": []
+}
