@@ -132,20 +132,37 @@ def _hood(b, place, u0, u1, cv, cw, r, material, t=0.015, segs=4):
     b.faces(v, f, material)
 
 
+def _runs(pts, turn=12.0):
+    """Split a polyline at its corners (a turn of more than `turn` degrees), keeping arcs whole."""
+    runs, start = [], 0
+    for i in range(1, len(pts) - 1):
+        a, b = pts[i] - pts[i - 1], pts[i + 1] - pts[i]
+        if a.length > 1e-9 and b.length > 1e-9 and math.degrees(a.angle(b)) > turn:
+            runs.append(pts[start : i + 1])
+            start = i
+    runs.append(pts[start:])
+    return runs
+
+
 def _resample(path, spacing):
-    """Points every ~`spacing` metres (evenly) along an open polyline, ends included."""
-    pts = [Vector((p[0], p[1])) for p in path]
-    seg = [(pts[i + 1] - pts[i]).length for i in range(len(pts) - 1)]
-    total = sum(seg)
-    n = max(1, math.ceil(total / spacing - 1e-6))
-    out, i, acc = [], 0, 0.0
-    for k in range(n + 1):
-        s = total * k / n
-        while i < len(seg) - 1 and acc + seg[i] < s:
-            acc += seg[i]
-            i += 1
-        t = 0.0 if seg[i] == 0 else min(1.0, (s - acc) / seg[i])
-        out.append(pts[i].lerp(pts[i + 1], t))
+    """Points every ~`spacing` metres along an open polyline, ends and corners included.
+
+    Each straight run or arc between two corners is divided evenly, so a post stands on every corner
+    of the plan and the rails follow its runs instead of cutting across them.
+    """
+    out = []
+    for run in _runs([Vector((p[0], p[1])) for p in path]):
+        seg = [(run[i + 1] - run[i]).length for i in range(len(run) - 1)]
+        total = sum(seg)
+        n = max(1, math.ceil(total / spacing - 1e-6))
+        i, acc = 0, 0.0
+        for k in range(0 if not out else 1, n + 1):
+            s = total * k / n
+            while i < len(seg) - 1 and acc + seg[i] < s:
+                acc += seg[i]
+                i += 1
+            t = 0.0 if seg[i] == 0 else min(1.0, (s - acc) / seg[i])
+            out.append(run[i].lerp(run[i + 1], t))
     return out
 
 

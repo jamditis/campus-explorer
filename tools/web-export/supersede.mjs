@@ -8,7 +8,8 @@
 //         `tuck` metres, so the old ground ends at the new ground's edge and dips under it
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
 // Far-field trees (far_trees.bin) inside the footprint are removed too: they are a scatter, not real trees.
-// A primitive is marked in its extras once done, so a second run leaves it alone. Geometry stays in its
+// A primitive is marked in its extras once done (with a hash of the rules), so a second run leaves it alone,
+// and a run with a changed footprint stops instead of leaving old holes or old ground. Geometry stays in its
 // quantized form and is written back with the same meshopt filters, so a tile does not grow or lose precision.
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
@@ -21,6 +22,10 @@ if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MO
 const rules = JSON.parse(readFileSync(rulesFile, 'utf8'));
 const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6, TILE = 160;
 const CLIP = rules.clip.map(r => new RegExp(r)), DROP = rules.drop.map(r => new RegExp(r));
+// What a done primitive is marked with: a short hash of the rules. Removed triangles cannot be put back, so a
+// tile that was done with other rules (another footprint) must be exported again before it is done with these.
+const RULES = (() => { let h = 2166136261; for (const c of JSON.stringify([ring, rules.clip, rules.drop, TUCK, CUT])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); })();
+const stale = new Set();
 const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
 /** Even-odd test in the model frame (x east, y north). */
 function inside(ring, x, y) {
@@ -55,7 +60,9 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
     for (const prim of mesh.listPrimitives()) {
       const label = `${mesh.getName()} ${prim.getMaterial()?.getName() ?? ''}`;
       const mode = DROP.some(r => r.test(label)) ? 'drop' : CLIP.some(r => r.test(label)) ? 'clip' : null;
-      if (!mode || prim.getMode() !== 4 || prim.getExtras().superseded) continue;
+      if (!mode || prim.getMode() !== 4) continue;
+      const done = prim.getExtras().superseded;
+      if (done) { if (done !== RULES) stale.add(f); continue; }
       const src = prim.getAttribute('POSITION'), idx = prim.getIndices();
       if (!src || !idx) continue;
       const n = src.getCount(), p = [0, 0, 0];
@@ -122,7 +129,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       prim.setIndices(idx.clone().setArray(total > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
       for (const old of olds) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
       compactPrimitive(prim); // drops the corners no triangle uses any more; the index buffer compresses badly with gaps
-      prim.setExtras({ ...prim.getExtras(), superseded: true });
+      prim.setExtras({ ...prim.getExtras(), superseded: RULES });
     }
     if (!mesh.listPrimitives().length) node.setMesh(null);
   }
@@ -142,6 +149,11 @@ if (existsSync(ft)) {
   const a = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length - (raw.length % 4))), keep = [];
   for (let i = 0; i + 4 < a.length; i += 5) if (!within(a[i], -a[i + 2])) keep.push(a[i], a[i + 1], a[i + 2], a[i + 3], a[i + 4]);
   if (keep.length !== a.length) { writeFileSync(ft, Buffer.from(new Float32Array(keep).buffer)); console.log(`supersede far_trees.bin: removed ${(a.length - keep.length) / 5} trees`); }
+}
+if (stale.size) {
+  console.error(`supersede: ${[...stale].join(' ')} were done with other rules (the footprint or the patterns changed). ` +
+    'Export those tiles again (or restore them from before the southwest build), then run this again.');
+  process.exit(1);
 }
 // the caller rebuilds the far versions (lod/) of these tiles
 console.log('CHANGED', changedTiles.join(' '));

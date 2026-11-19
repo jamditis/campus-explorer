@@ -18,8 +18,10 @@ let offset = 0;
 const touches = f => {
   const m = /^(?:n_)?t_(-?\d+)_(-?\d+)\.glb$/.exec(f);
   if (!m) return true; // context, skirt, far houses: no tile grid
-  const tx = +m[1] * TILE, ty = +m[2] * TILE;
-  return tx < x1 && tx + TILE > x0 && ty < y1 && ty + TILE > y0;
+  // objects are filed under the tile that holds their centre and can reach well past it: take a wide margin
+  // (the per-triangle test below keeps only what is in the box)
+  const tx = +m[1] * TILE, ty = +m[2] * TILE, pad = 350;
+  return tx - pad < x1 && tx + TILE + pad > x0 && ty - pad < y1 && ty + TILE + pad > y0;
 };
 const mul = (m, p) => [m[0] * p[0] + m[4] * p[1] + m[8] * p[2] + m[12], m[1] * p[0] + m[5] * p[1] + m[9] * p[2] + m[13], m[2] * p[0] + m[6] * p[1] + m[10] * p[2] + m[14]];
 const compose = (a, b) => { const o = new Array(16); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3]; return o; };

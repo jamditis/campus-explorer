@@ -187,7 +187,7 @@ def points(lay, terrain):
                 side = 1 if to_local(x, y)[0] > 0 else -1
                 gx, gy = to_model(side * (60 * 0.9144 + 1.83), 0.0)
                 at, angle = (gx, gy, terrain.at(gx, gy)), ff["angle"] + (180 if side > 0 else 0)
-            out.append(fixtures.goalpost(name, at, angle))
+            out.append(fixtures.goalpost(name, at, angle, unverified=bool(p.get("unverified"))))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(
