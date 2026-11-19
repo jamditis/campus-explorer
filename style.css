@@ -297,4 +297,8 @@ body.shoot>:not(#viewer){display:none!important}
 @media (max-width:700px),(max-height:520px){
   /* the tour caption needs the full width: the compass and readouts step aside while it is up */
   body:has(.tour-card:not([hidden])) .hud{display:none}
+  /* the footer holds a button here (lite mode), so the compass and the touch buttons sit above it */
+  .hud{bottom:calc(46px + env(safe-area-inset-bottom,0px))}
+  .touch-buttons{bottom:calc(50px + env(safe-area-inset-bottom,0px))}
+  .tour-card{bottom:calc(46px + env(safe-area-inset-bottom,0px))}
 }
