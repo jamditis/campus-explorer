@@ -1012,7 +1012,10 @@
    ],
    "height": 3.3,
    "evidence": "lidar2017, subwaynut_montclair_heights20.jpg",
-   "unverified": "sign face"
+   "unverified": "sign face",
+   "width": 0.6,
+   "board": 0.75,
+   "clear": 1.2
   },
   {
    "name": "Crossing_sign_median_E",
@@ -1023,7 +1026,10 @@
    ],
    "height": 3.0,
    "evidence": "lidar2017, subwaynut_montclair_heights20.jpg",
-   "unverified": "sign face"
+   "unverified": "sign face",
+   "width": 0.6,
+   "board": 0.75,
+   "clear": 1.2
   },
   {
    "name": "Normal_Ave_pole_1",

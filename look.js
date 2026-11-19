@@ -212,6 +212,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     }
     const warm = WARM[cat];
     const hasN = NRM[cat] !== undefined;
+    const painted = /_painted_/.test(m.name); // a paint sheet of the southwest build (blender/southwest/paint.py)
     m.onBeforeCompile = sh => {
       sh.uniforms.tpMap = { value: texFor(cat) };
       sh.uniforms.tpScale = { value: 1 / def.size };
@@ -251,11 +252,10 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
             diffuseColor.rgb *= mix(vec3(1.0), t, tpK);
             ${warm ? `{
               float l = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722)), desat = ${warm[3].toFixed(2)};
-              #ifdef USE_MAP
+              ${painted ? `
                 // a surface with its own paint sheet: coloured paint (yellow lines, red letters) keeps its colour
                 float chroma = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b)) - min(diffuseColor.r, min(diffuseColor.g, diffuseColor.b));
-                desat *= 1.0 - smoothstep(0.15, 0.45, chroma / max(l, 0.001));
-              #endif
+                desat *= 1.0 - smoothstep(0.15, 0.45, chroma / max(l, 0.001));` : ''}
               diffuseColor.rgb = mix(diffuseColor.rgb, vec3(l), desat) * vec3(${warm.slice(0, 3).map(x => x.toFixed(3)).join(',')});
             }` : ''}
             ${isAsphalt ? `
@@ -301,7 +301,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
             normal = normalize(abs(det) * normal - g);
           }`);
     };
-    m.customProgramCacheKey = () => 'tp_' + cat;
+    m.customProgramCacheKey = () => 'tp_' + cat + (painted ? '_painted' : '');
     m.needsUpdate = true;
   }
 

@@ -12,6 +12,7 @@ or the neighbouring models change.
 """
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -36,7 +37,9 @@ def main():
     out = []
     for x, y, _s in geom.resample(lay["footprint"], 1.0, True):
         # median of the cells within 1.5 m: one raised curb or a tree base must not set the level
-        i, j = int((x - x0) / mpp), int((y1 - y) / mpp)
+        i, j = math.floor((x - x0) / mpp), math.floor((y1 - y) / mpp)
+        if not (0 <= i < h.shape[1] and 0 <= j < h.shape[0]):
+            continue  # outside the raster: no sample here
         r = max(1, round(1.5 / mpp))
         win = h[max(0, j - r) : j + r + 1, max(0, i - r) : i + r + 1]
         if np.isfinite(win).any():

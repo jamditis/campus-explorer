@@ -285,6 +285,10 @@ def build(lay, terrain, image_dir=None):
 
         plain = kit.mat(kind, "base", COLOUR[kind], ROUGH[kind])
         for t, s in items:
+            # anticlockwise seen from above, so the face looks up and its skirt looks outward
+            (ax, ay), (bx, by), (cx, cy) = xy[t]
+            if (bx - ax) * (cy - ay) - (by - ay) * (cx - ax) < 0:
+                t = t[::-1]
             face = bm.faces.new([vert(i) for i in t])
             face.smooth = True
             sheet = None
@@ -306,10 +310,7 @@ def build(lay, terrain, image_dir=None):
                     lo = [bm.verts.new((xy[i, 0], xy[i, 1], z[i] - LIP)) for i in (a, b)]
                     lip = bm.faces.new([vert(b), vert(a), lo[0], lo[1]])
                     lip.material_index = slot(plain)
-        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-        tops = [f for f in bm.faces if len(f.verts) == 3]
-        if sum(f.normal.z for f in tops) < 0:
-            bmesh.ops.reverse_faces(bm, faces=bm.faces)
+        # no recalc_face_normals here: on an open sheet it flips whole patches face down
         me = bpy.data.meshes.new(name)
         bm.to_mesh(me)
         bm.free()
@@ -361,7 +362,11 @@ def curbs(lay, terrain):
             else 1.0
         )
         dense = [(p[0], p[1]) for p in pts]
-        back = geom.offset(dense, side * CURB_W, False)
+        if closed:  # offset the ring as a ring, so its two ends get the same normal and meet
+            back = geom.offset(dense[:-1], side * CURB_W, True)
+            back.append(back[0])
+        else:
+            back = geom.offset(dense, side * CURB_W, False)
         kind = c.get("kind", "concrete")
         key = (kind, bool(c.get("unverified")))
         b = out.get(key)

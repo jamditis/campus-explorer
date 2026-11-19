@@ -48,10 +48,32 @@ def fillet(p, v, n, r, chord=CHORD):
     ]
 
 
+def tangent(p, v, n, r):
+    """Length of run that a corner radius `r` at `v` uses up on each side."""
+    ux, uy, _ = _unit(v[0], v[1], p[0], p[1])
+    wx, wy, _ = _unit(v[0], v[1], n[0], n[1])
+    ang = math.acos(max(-1.0, min(1.0, ux * wx + uy * wy)))
+    return 0.0 if r <= 0 or ang < 1e-6 or math.pi - ang < 1e-6 else r / math.tan(ang / 2)
+
+
 def expand(path, closed=False, chord=CHORD):
     """Dense polyline for a path. A closed path does not repeat its first point."""
     n = len(path)
     out = []
+    # two corner arcs on one run must not overlap: the path would fold back on itself
+    used = []
+    for i, v in enumerate(path):
+        ends = not closed and i in (0, n - 1)
+        r = v[2] if len(v) > 2 and not ends else 0
+        used.append(tangent(path[(i - 1) % n], v, path[(i + 1) % n], r) if r else 0.0)
+    for i in range(n if closed else n - 1):
+        a, b = path[i], path[(i + 1) % n]
+        run = math.hypot(b[0] - a[0], b[1] - a[1])
+        if used[i] + used[(i + 1) % n] > run + 1e-9:
+            raise ValueError(
+                f"corner radii at {a[:2]} and {b[:2]} need {used[i] + used[(i + 1) % n]:.2f} m "
+                f"of a {run:.2f} m run"
+            )
     for i, v in enumerate(path):
         r = v[2] if len(v) > 2 else 0
         ends = not closed and i in (0, n - 1)

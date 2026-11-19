@@ -216,7 +216,16 @@ def points(lay, terrain):
         elif kind == "lamp":
             out.append(fixtures.lot_lamp(name, at, angle, heads=p.get("heads", 1), **opt))
         elif kind == "sign":
-            out.append(fixtures.station_sign(name, at, angle))
+            out.append(
+                fixtures.station_sign(
+                    name,
+                    at,
+                    angle,
+                    p.get("width", 1.8),
+                    p.get("board", 0.9),
+                    clear=p.get("clear", 1.6),
+                )
+            )
         elif kind == "bike_rack":
             out.append(fixtures.bike_rack(name, at, angle, p.get("hoops", 4)))
         elif kind == "ticket_machine":

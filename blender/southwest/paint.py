@@ -149,17 +149,19 @@ def football_extras(sheet, ff):
         "RED HAWKS", to_model(south * (hl + 6.5), 0), ang - 90 * south, 3.4, 27.0, "red", "white"
     )
     north = -south
+    # the north apron: beyond the cross walk (3 to 6 m past the end line) the turf runs on to about
+    # 15.7 m, and carries MONTCLAIR over STATE, read from the field (photo 0151)
     sheet.text(
         "MONTCLAIR",
-        to_model(north * (hl + 17.5), 0),
+        to_model(north * (hl + 11.2), 0),
         ang - 90 * north + 180,
-        3.4,
-        27.0,
+        2.8,
+        22.0,
         "red",
         "white",
     )
     sheet.text(
-        "STATE", to_model(north * (hl + 13.2), 0), ang - 90 * north + 180, 2.4, 11.0, "red", "white"
+        "STATE", to_model(north * (hl + 8.0), 0), ang - 90 * north + 180, 2.0, 9.0, "red", "white"
     )
 
 

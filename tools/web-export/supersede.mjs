@@ -3,8 +3,9 @@
 // blender/southwest/supersede.py (footprint outline, and which meshes are ground there).
 //   node supersede.mjs RULES.json MODELS_DIR
 // For every tile that is not a southwest tile:
-//   clip  meshes: triangles wholly inside the footprint are removed; a kept triangle that reaches into it has
-//         those corners lowered by `tuck` metres, so the old ground dips under the new ground's edge
+//   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge is cut
+//         into small pieces first (`cut` metres), and the last straddlers have their inside corners lowered by
+//         `tuck` metres, so the old ground ends at the new ground's edge and dips under it
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
 // Far-field trees (far_trees.bin) inside the footprint are removed too: they are a scatter, not real trees.
 // A primitive is marked in its extras once done, so a second run leaves it alone. Geometry stays in its
@@ -18,7 +19,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 const [rulesFile, dir] = process.argv.slice(2);
 if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MODELS_DIR'); process.exit(2); }
 const rules = JSON.parse(readFileSync(rulesFile, 'utf8'));
-const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, TILE = 160;
+const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6, TILE = 160;
 const CLIP = rules.clip.map(r => new RegExp(r)), DROP = rules.drop.map(r => new RegExp(r));
 const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
 /** Even-odd test in the model frame (x east, y north). */
@@ -57,33 +58,69 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       if (!mode || prim.getMode() !== 4 || prim.getExtras().superseded) continue;
       const src = prim.getAttribute('POSITION'), idx = prim.getIndices();
       if (!src || !idx) continue;
-      const n = src.getCount(), isIn = new Uint8Array(n), p = [0, 0, 0];
+      const n = src.getCount(), p = [0, 0, 0];
+      // model-frame position of every corner (viewer z is minus model y), and whether it is inside
+      const wx = new Float64Array(n), wy = new Float64Array(n), isIn = Array.from({ length: n }, () => 0);
       let any = false;
       for (let i = 0; i < n; i++) {
         src.getElement(i, p);
-        const x = w[0] * p[0] + w[4] * p[1] + w[8] * p[2] + w[12], z = w[2] * p[0] + w[6] * p[1] + w[10] * p[2] + w[14];
-        if (within(x, -z)) { isIn[i] = 1; any = true; } // viewer z is minus model y
+        wx[i] = w[0] * p[0] + w[4] * p[1] + w[8] * p[2] + w[12]; wy[i] = -(w[2] * p[0] + w[6] * p[1] + w[10] * p[2] + w[14]);
+        if (within(wx[i], wy[i])) { isIn[i] = 1; any = true; }
       }
       if (!any) continue;
-      const I = idx.getArray(), keep = [], lower = new Uint8Array(n);
-      for (let t = 0; t < I.length; t += 3) {
-        const a = I[t], b = I[t + 1], c = I[t + 2];
-        if (isIn[a] && isIn[b] && isIn[c]) { removed++; continue; }
+      // corners added by cutting: [parent a, parent b], numbered after the original ones
+      const added = [], ax = [], ay = [], mids = new Map();
+      const X = i => (i < n ? wx[i] : ax[i - n]), Y = i => (i < n ? wy[i] : ay[i - n]);
+      const mid = (a, b) => {
+        const key = a < b ? a * 4294967296 + b : b * 4294967296 + a;
+        let m = mids.get(key);
+        if (m === undefined) {
+          m = n + added.length; mids.set(key, m); added.push([a, b]);
+          ax.push((X(a) + X(b)) / 2); ay.push((Y(a) + Y(b)) / 2); isIn[m] = within(ax[m - n], ay[m - n]) ? 1 : 0;
+        }
+        return m;
+      };
+      const I = idx.getArray(), keep = [], lower = new Set();
+      // A triangle wholly inside goes. One that straddles the edge is cut into four, again and again, until
+      // its pieces are small (CUT metres); then the pieces inside go and the last straddlers are tucked.
+      const visit = (a, b, c, depth) => {
+        const k = isIn[a] + isIn[b] + isIn[c];
+        if (k === 3) { removed++; return; }
+        if (k === 0) { keep.push(a, b, c); return; }
+        const longest = Math.max(Math.hypot(X(a) - X(b), Y(a) - Y(b)), Math.hypot(X(b) - X(c), Y(b) - Y(c)), Math.hypot(X(c) - X(a), Y(c) - Y(a)));
+        if (mode === 'clip' && depth < 8 && longest > CUT) {
+          const ab = mid(a, b), bc = mid(b, c), ca = mid(c, a);
+          visit(a, ab, ca, depth + 1); visit(ab, b, bc, depth + 1); visit(ca, bc, c, depth + 1); visit(ab, bc, ca, depth + 1);
+          return;
+        }
         keep.push(a, b, c);
-        if (mode === 'clip') { if (isIn[a]) lower[a] = 1; if (isIn[b]) lower[b] = 1; if (isIn[c]) lower[c] = 1; }
-      }
+        if (mode === 'clip') for (const v of [a, b, c]) if (isIn[v]) lower.add(v);
+      };
+      for (let t = 0; t < I.length; t += 3) visit(I[t], I[t + 1], I[t + 2], 0);
       if (!keep.length) { mesh.removePrimitive(prim); prim.dispose(); removedAll++; continue; }
-      // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more
-      const pos = src.clone(); prim.setAttribute('POSITION', pos);
-      const q = [0, 0, 0];
-      for (let i = 0; i < n; i++) {
-        if (!lower[i]) continue;
+      // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more.
+      // Every attribute gets the added corners, each the mean of its two parents (parents come first).
+      const total = n + added.length, olds = [idx];
+      for (const sem of prim.listSemantics()) {
+        const old = prim.getAttribute(sem), copy = old.clone(), size = old.getElementSize();
+        if (added.length) {
+          const arr = new (old.getArray().constructor)(total * size); arr.set(old.getArray()); copy.setArray(arr);
+          const ea = [], eb = [];
+          for (let k = 0; k < added.length; k++) {
+            copy.getElement(added[k][0], ea); copy.getElement(added[k][1], eb);
+            copy.setElement(n + k, ea.map((v, q) => (v + eb[q]) / 2));
+          }
+        }
+        prim.setAttribute(sem, copy); olds.push(old);
+      }
+      const pos = prim.getAttribute('POSITION'), q = [0, 0, 0];
+      for (const i of lower) {
         pos.getElement(i, p); pos.setElement(i, [p[0] + down[0], p[1] + down[1], p[2] + down[2]]); pos.getElement(i, q);
         // positions are quantized to the mesh's own box: a corner already at the bottom of it cannot go lower
         if (Math.abs(q[1] - p[1] - down[1]) > Math.abs(down[1]) * 0.2) pos.setElement(i, p); else tucked++;
       }
-      prim.setIndices(idx.clone().setArray(n > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
-      for (const old of [src, idx]) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
+      prim.setIndices(idx.clone().setArray(total > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
+      for (const old of olds) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
       compactPrimitive(prim); // drops the corners no triangle uses any more; the index buffer compresses badly with gaps
       prim.setExtras({ ...prim.getExtras(), superseded: true });
     }
@@ -101,7 +138,8 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
 if (existsSync(ft)) {
-  const a = new Float32Array(readFileSync(ft).buffer.slice(0)), keep = [];
+  const raw = readFileSync(ft); // a small file's Buffer is a view into a shared pool: copy exactly its bytes
+  const a = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length - (raw.length % 4))), keep = [];
   for (let i = 0; i + 4 < a.length; i += 5) if (!within(a[i], -a[i + 2])) keep.push(a[i], a[i + 1], a[i + 2], a[i + 3], a[i + 4]);
   if (keep.length !== a.length) { writeFileSync(ft, Buffer.from(new Float32Array(keep).buffer)); console.log(`supersede far_trees.bin: removed ${(a.length - keep.length) / 5} trees`); }
 }

@@ -29,7 +29,8 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 ## Completeness
 
 - [x] Southwest corner, phase 1 (`blender/southwest/`, `sw_` tiles): Normal Avenue with the grade crossing, the station lot, Carlisle Road, the whole of Sprague Field with its 2025 markings, the west grandstand and press box, the east bleachers, light poles, fences and the hedge. Scripted from public evidence (2025 drone and station photographs, NJ 2020 ortho, 3DEP LiDAR 2017 and 2014, OpenStreetMap); inferred parts are UNVERIFIED in the object names and plan files
-- [ ] Southwest corner: the midfield logo (not drawn: it is the university's artwork), lacrosse and field hockey lines, turn arrows, the brick band on the east platform, single trees from the LiDAR canopy
+- [ ] Southwest corner: the midfield logo (not drawn: it is the university's artwork), lacrosse and field hockey lines, turn arrows, the brick band on the east platform, the east platform canopy
+- [ ] North model: the track and platforms stand about 0.65 m above the LiDAR ground; the southwest build lifts its ground to them along the corridor until the track is lowered
 - [ ] Toward the communication school: Carlisle Road north of the field, Lot 42 north part, the maintenance building, then the Red Hawk Deck, College Avenue, Cole Hall and CCOM in the main model
 
 - [x] Far-field land cover over the 4 km skirt from OpenStreetMap (woods, parks, water, roads, mapped buildings), about 36,000 far-field trees on wooded and residential land, and extruded houses (`tools/web-export/landcover.py`)

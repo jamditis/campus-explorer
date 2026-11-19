@@ -98,7 +98,9 @@ fi
 if ls $S/sw_*.glb >/dev/null 2>&1; then
   python3 $W/../../blender/southwest/supersede.py $WORK/supersede.json ${SW_PLAN:+--plan $SW_PLAN} || fail "supersede rules"
   cp $W/supersede.mjs $W/lod.mjs ./
-  CHANGED=$(node supersede.mjs $WORK/supersede.json $S | tee /dev/stderr | sed -n 's/^CHANGED //p'); [ "${PIPESTATUS[0]}" -eq 0 ] || fail "supersede"
+  node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
+  [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"
+  CHANGED=$(sed -n 's/^CHANGED //p' $WORK/supersede.out)
   for f in $CHANGED; do
     C=${f%.glb}; [[ $C == t_* || $C == n_t_* ]] || continue
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"

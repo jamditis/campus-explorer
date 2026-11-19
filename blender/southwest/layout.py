@@ -11,7 +11,9 @@ import geom
 
 LAYER = {"lawn": 0, "mulch": 1, "gravel": 2, "asphalt": 3, "turf": 4, "concrete": 5, "brick": 6}
 YD = 0.9144
-PAINTABLE = {"asphalt", "concrete", "brick", "turf"}
+PAINTABLE = {"asphalt", "turf"}
+# texture sheet resolution, pixels per metre: 4 in lines are 2 to 3 pixels wide
+PPM = {"asphalt": 20.0, "turf": 24.0}
 
 
 def load(plan_dir):
@@ -69,13 +71,14 @@ def load(plan_dir):
     out["surfaces"].sort(key=lambda s: s["layer"])
     if out["field_frame"]:
         out["markings"].extend(football(out["field_frame"]))
+    painted = painted_surfaces(out["surfaces"], out["markings"])
     for i, s in enumerate(out["surfaces"]):
         # sheet names carry the surface's number, not its name: the web exporter refuses images
         # whose
         # names contain words such as "mask" or "photo", and a surface name must not be able to trip
         # that
         s["sheets"] = (
-            geom.sheets(f"p{i:03d}", s["ring"]) if is_painted(s, out["markings"]) else None
+            geom.sheets(f"p{i:03d}", s["ring"], ppm=PPM[s["kind"]]) if i in painted else None
         )
     return out
 
@@ -97,20 +100,29 @@ def primitives(m):
     return [dict(line=p, width=m.get("width", 0.1), colour=colour) for p in parts]
 
 
-def is_painted(surface, markings):
-    """A paved surface gets a paint texture when a marking has a point inside it."""
-    if surface["kind"] not in PAINTABLE:
-        return False
-    b = geom.bounds(surface["ring"])
+def painted_surfaces(surfaces, markings):
+    """Indices of the surfaces that carry paint: the top surface under a point of some marking.
+
+    Surfaces are sorted by layer, so the last one that contains a point is the one you see there. A
+    ring
+    walk around a field contains the whole field, but the turf lies over it: the walk gets no sheet.
+    Football lines belong to turf only. Only asphalt and turf take paint.
+    """
+    boxes = [geom.bounds(s["ring"]) for s in surfaces]
+    out = set()
     for m in markings:
-        for p in m.get("line") or m["ring"]:
-            if (
-                b[0] <= p[0] <= b[2]
-                and b[1] <= p[1] <= b[3]
-                and geom.inside(surface["ring"], p[0], p[1])
-            ):
-                return True
-    return False
+        pts = m.get("line") or m["ring"]
+        if len(pts) == 2:  # a long straight line: test along it, not only its ends
+            pts = [(p[0], p[1]) for p in geom.resample(pts, 3.0)]
+        for x, y in pts:
+            for i in range(len(surfaces) - 1, -1, -1):
+                b, s = boxes[i], surfaces[i]
+                if b[0] <= x <= b[2] and b[1] <= y <= b[3] and geom.inside(s["ring"], x, y):
+                    if not any(geom.inside(h, x, y) for h in s["holes"]):
+                        if s["kind"] in PAINTABLE and (s["kind"] == "turf" or not m.get("field")):
+                            out.add(i)
+                        break
+    return out
 
 
 def football(ff):

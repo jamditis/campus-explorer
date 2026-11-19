@@ -34,6 +34,12 @@ class Geometry(unittest.TestCase):
         with self.assertRaises(ValueError):
             geom.expand([[0, 0], [1, 0, 5], [1, 1]], False)
 
+    def test_two_fillets_that_overlap_on_one_run_are_an_error(self):
+        # each 4 m radius fits its own corner; together they need 8 m of the 6 m run between them
+        with self.assertRaises(ValueError):
+            geom.expand([[0, 0], [10, 0, 4], [10, 6, 4], [0, 6]], False)
+        geom.expand([[0, 0], [10, 0, 3], [10, 6, 3], [0, 6]], False)  # 3 + 3 fits exactly
+
     def test_open_path_keeps_its_ends(self):
         line = geom.expand([[0, 0, 3], [10, 0, 3], [10, 10, 3]], False)
         self.assertEqual(line[0], (0, 0))
@@ -82,6 +88,23 @@ class Geometry(unittest.TestCase):
         x, y = to_model(*to_local(3.5, -7.25))
         self.assertAlmostEqual(x, 3.5)
         self.assertAlmostEqual(y, -7.25)
+
+
+class Paint(unittest.TestCase):
+    def test_paint_goes_to_the_surface_you_see(self):
+        # a walk whose outline contains the field, and the turf lying over it
+        walk = dict(kind="asphalt", ring=[(0, 0), (100, 0), (100, 60), (0, 60)], holes=[])
+        turf = dict(kind="turf", ring=[(10, 10), (90, 10), (90, 50), (10, 50)], holes=[])
+        lawn = dict(kind="lawn", ring=[(200, 0), (220, 0), (220, 20), (200, 20)], holes=[])
+        on_turf = dict(line=[(20, 30), (80, 30)], width=0.1, colour="white", field=True)
+        on_lawn = dict(line=[(205, 10), (215, 10)], width=0.1, colour="white")
+        self.assertEqual(layout.painted_surfaces([walk, turf, lawn], [on_turf, on_lawn]), {1})
+        # a lane line on the walk itself, outside the turf
+        on_walk = dict(line=[(2, 2), (2, 58)], width=0.1, colour="yellow")
+        self.assertEqual(layout.painted_surfaces([walk, turf, lawn], [on_walk]), {0})
+        # football lines never paint asphalt, even where they overrun the turf
+        overrun = dict(line=[(5, 30), (95, 30)], width=0.1, colour="white", field=True)
+        self.assertEqual(layout.painted_surfaces([walk, turf, lawn], [overrun]), {1})
 
 
 class PlanFiles(unittest.TestCase):

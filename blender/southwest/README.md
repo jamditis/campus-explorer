@@ -8,9 +8,9 @@ Evidence order here: public photographs, then the NJ 2020 ortho (plan), then 3DE
 
 ```sh
 # 1. Evidence, into a folder outside the repository (default /workspace/data/<name>)
-python3 tools/evidence/fetch.py ortho sw -560 -380 -200 -60 0.15
-python3 tools/evidence/fetch.py lidar sw -560 -380 -200 -60 0.5
-python3 tools/evidence/fetch.py osm   sw -560 -380 -200 -60
+python3 tools/evidence/fetch.py ortho sw -560 -380 -200 -50 0.15
+python3 tools/evidence/fetch.py lidar sw -560 -380 -200 -50 0.5
+python3 tools/evidence/fetch.py osm   sw -560 -380 -200 -50
 
 # 2. Paint sheets (system Python with Pillow), then the .blend (Blender 4.5)
 python3 blender/southwest/paint.py /workspace/data/sw
@@ -25,7 +25,7 @@ SCENE=sw bash tools/web-export/build_web.sh OUT/montclair_southwest.blend
 `plan/edge_heights.json` holds the height of the neighbouring models' ground along the footprint, so the new ground meets it flush. Make it again only when the footprint or the neighbours change, from tiles that still have their ground there (before `supersede.mjs` ran on them):
 
 ```sh
-node tools/evidence/dump_tiles.mjs /workspace/data/sw/tiles -560 -380 -200 -60 models/main
+node tools/evidence/dump_tiles.mjs /workspace/data/sw/tiles -560 -380 -200 -50 models/main
 python3 tools/evidence/plan.py /workspace/data/sw/tiles 1.0 --name ground --only "(?i)terrain|ground|skirt|lawn|asphalt|patch|apron|carriageway|walk|turf|fill|platform|ballast" --skip "(?i)far_houses|crown|Tree|roof|bleacher|field_lines|endzone"
 python3 blender/southwest/edge.py /workspace/data/sw/tiles
 ```
@@ -36,6 +36,7 @@ python3 blender/southwest/edge.py /workspace/data/sw/tiles
 - **What stays.** The north model's station (tracks, ballast, platforms, shelter, catenary, fences, signs) and its retaining wall at the field's north-east corner stay as they are. The main model's paved corner south-east of the field (drive mouth, dumpster enclosure, shrubs) stays too: the footprint runs round it.
 - **What is replaced.** The main model's partial Sprague Field (ws167 to ws189: south-east quarter of the turf, lines, end zone blocks, a goalpost, the south part of the east bleachers, one light pole). Its lines lie about 14 degrees off the field in the 2020 ortho; this build fits the whole field to the ortho (0.15 m corner misfit) and draws the 2025 markings.
 - **Trees.** Trees of the other models are not touched. Far-field scatter trees and far-field houses inside the footprint are removed.
+- **Track level.** The north model's track and platforms stand about 0.65 m above the LiDAR ground. `plan/station.json` carries a `lifts` entry that raises this build's ground to them along the corridor, eased out over 10 m, so the road meets the rails at the crossing. Remove it when the north track is lowered. Things that stand on a platform carry `base`, the platform top read from the published tiles.
 
 ## Frame
 
@@ -92,6 +93,7 @@ Evidence is fetched with `tools/evidence/fetch.py` into a data folder outside th
 - **strips** are open centre paths with a `width` (walks, bands). They become surfaces.
 - **curbs** run along the edge between a carriageway and what is behind it, on the carriageway side's edge line. Give them in any direction.
 - **markings** are paint. They are drawn into the texture of the surface under them and never become geometry. `stalls`: `count` stalls along `line` give `count + 1` divider lines, each `depth` long, to the `side` ("left" or "right") of the direction from the first point to the second.
+- **lifts** (`ring`, `dz`, `feather`) raise the ground inside a ring by `dz`, eased to nothing over `feather` metres outside it. Use one only to meet another model's level, and say why in `unverified`.
 - **points** place objects: `lamp`, `light_pole`, `sign`, `gate`, `goalpost`, `scoreboard`, `bench`, `bike_rack`, `ticket_machine`, `mini_high`, `utility_pole`, `tree`. `height` in metres when the evidence gives one.
 - **stands** (`ring`, `front` edge, `rows`, `sections`), **fences** (`path`, `height`, `kind`: `chain_link_black`, `netting_black`, `hedge`) and **buildings** (`ring`, `height`: plain massing) are extra lists a zone may carry. `field_frame` (`centre`, `angle`) fixes the football field; its lines are generated from the rule book, never traced.
 - `evidence` names the source (`ortho2020`, `lidar2017`, `lidar2014`, `osm`, a photo file name). `unverified` says in a few words what was guessed.
