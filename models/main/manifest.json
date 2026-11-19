@@ -10,7 +10,7 @@
   },
   {
    "file": "far_houses.glb",
-   "bytes": 1287876
+   "bytes": 1730072
   },
   {
    "file": "n_context.glb",
@@ -441,12 +441,12 @@
   }
  ],
  "source_saved": "November 18, 2026, 5:38 PM ET",
- "source_version": "",
+ "source_version": "ws218b",
  "sources": {
   "main": {
    "saved": "November 18, 2026, 5:38 PM ET",
-   "version": "",
-   "file": "montclair_state.blend"
+   "version": "ws218b",
+   "file": "montclair_state_ws218b.blend"
   },
   "north": {
    "saved": "November 18, 2026, 1:05 PM ET",
@@ -460,5 +460,5 @@
  },
  "far_trees": "far_trees.bin",
  "exported": "November 18, 2026, 6:33 PM ET",
- "total_bytes": 208502464
+ "total_bytes": 208944660
 }

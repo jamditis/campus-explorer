@@ -45,7 +45,7 @@
     <summary>About this model</summary>
     <p id="source-snapshot">Source snapshot: loading…</p>
     <p>This is a work in progress, not a survey or an as-built record. Building detail, ground grading and geographic alignment remain provisional, and many parts are marked unverified in the source model.</p>
-    <p>The browser edition simplifies the original Blender model: materials become the model’s own colours over tileable CC0 textures mapped in world space, lot markings are painted from the model’s own line work, trees are thinned, distant scenery is lighter, small details fade out with distance, lawn grass is reduced to short tufts near the camera, and some interiors are left out. North campus and Sprague Library with Café Diem come from their own source files and are placed at their real coordinates, so the whole campus is one scene. Beyond the campus, land cover, woods and houses are generated from OpenStreetMap data; most distant houses are placeholders set along the streets, not real buildings. It does not change the original model.</p>
+    <p>The browser edition simplifies the original Blender model: materials become the model’s own colours over tileable CC0 textures mapped in world space, lot markings are painted from the model’s own line work, trees are thinned, distant scenery is lighter, small details fade out with distance, lawn grass is reduced to short tufts near the camera, and some interiors are left out. North campus and Sprague Library with Café Diem come from their own source files and are placed at their real coordinates, so the whole campus is one scene. Beyond the campus, land cover and woods come from OpenStreetMap, and buildings are real footprints from OpenStreetMap and Microsoft’s Global ML Building Footprints, raised to heights measured by USGS LiDAR where it covers them; no buildings are invented. It does not change the original model.</p>
     <p>Walk mode follows the modeled ground and stops at solid walls. Trees and small details do not block you.</p>
     <p>Selected surface and leaf textures are from <a href="https://ambientcg.com/" target="_blank" rel="noopener">ambientCG</a>, licensed CC0; other leaf atlases are authored for this project. Reference photographs and aerial imagery are not redistributed. Elevation comes from public NJ/USGS LiDAR; some layout follows OpenStreetMap.</p>
   </details>
@@ -54,7 +54,7 @@
 <section id="error" role="alert" hidden><h2 id="error-title">Couldn’t open the campus</h2><p id="error-text"></p><button type="button" id="retry">Try again</button></section>
 <footer>
   <span id="scene-label">Montclair State University</span>
-  <span class="footnote" id="footnote">Working model · Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors · ODbL</a></span>
+  <span class="footnote" id="footnote">Working model · Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · buildings © <a href="https://github.com/microsoft/GlobalMLBuildingFootprints" target="_blank" rel="noopener">Microsoft</a> · ODbL</span>
   <span id="performance" aria-live="off"></span>
 </footer>
 <script type="module" src="./app.js"></script>
