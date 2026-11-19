@@ -137,10 +137,10 @@
   {
    "name": "NE_road_Softball_path_W",
    "kind": "asphalt",
-   "ring": [[66.5, 808.31], [49.41, 812.43], [7.2, 826.5], [20.8, 826.5], [50.59, 816.57], [67.5, 812.49]],
+   "ring": [[49.41, 812.43], [11.5, 825.07], [11.5, 826.5], [20.8, 826.5], [50.59, 816.57], [67.5, 812.49], [66.5, 808.31]],
    "evidence": "ortho2020",
    "unverified": "surface kind (asphalt or worn concrete) and the north edge under trees",
-   "notes": "Paved path from the junction west towards the softball stadium, 4.3 m wide, cut at the north edge"
+   "notes": "Paved path from the junction west towards the softball stadium, 4.3 m wide, cut at the north edge and short of the 1B cage of the softball stadium"
   },
   {
    "name": "NE_road_Softball_path_N",
