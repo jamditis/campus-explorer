@@ -98,6 +98,59 @@ def _deck_levels(b, part, ring, top, ground, band, void):
                     _panel(b, a, u, nrm, s0, s1, max(z0, g - 0.5), z0 + h, band)
 
 
+def _canopy(name, p, ring, kind, tops, slopes, ground, roof_hex):
+    """An open canopy (`"open": true`): the roof as a 0.2 m slab on a row of posts along its long
+    axis, no walls. Used for solar canopies over parking and for shelters.
+    """
+    b = kit.Builder(name)
+    sheet = kit.mat("metal", "roof_" + roof_hex[1:], kit.srgb(roof_hex), 0.5, 0.3)
+    steel = kit.mat("metal", "canopy_steel", kit.srgb("#8d9195"), 0.5, 0.7)
+    faces = slopes or [[(q[0], q[1], p["top"]) for q in ring]]
+    for face in faces:
+        b.faces(face, [tuple(range(len(face)))], sheet)
+        under = [(x, y, z - 0.2) for x, y, z in face]
+        b.faces(under, [tuple(range(len(face) - 1, -1, -1))], steel)
+        m = len(face)
+        rim = face + under
+        b.faces(rim, [((i + 1) % m, i, m + i, m + (i + 1) % m) for i in range(m)], steel)
+    # the roof plane through the wall tops, to stand the posts under it
+    (x0, y0), z0 = ring[0], tops[0]
+    far = max(range(len(ring)), key=lambda i: (ring[i][0] - x0) ** 2 + (ring[i][1] - y0) ** 2)
+    off = max(
+        range(len(ring)),
+        key=lambda i: abs(
+            (ring[far][0] - x0) * (ring[i][1] - y0) - (ring[far][1] - y0) * (ring[i][0] - x0)
+        ),
+    )
+    ax, ay, az = ring[far][0] - x0, ring[far][1] - y0, tops[far] - z0
+    bx, by, bz = ring[off][0] - x0, ring[off][1] - y0, tops[off] - z0
+    det = (ax * by - ay * bx) or 1.0
+    gx, gy = (az * by - bz * ay) / det, (ax * bz - bx * az) / det
+
+    def roof_z(x, y):
+        if kind in ("gable", "hip"):
+            return p["top"]  # the posts stand under the ridge
+        return z0 + gx * (x - x0) + gy * (y - y0)
+
+    ang = geom.long_axis(ring)
+    to_local, to_model = geom.frame((0.0, 0.0), ang)
+    loc = [to_local(q[0], q[1]) for q in ring]
+    u0, u1 = min(q[0] for q in loc), max(q[0] for q in loc)
+    v0, v1 = min(q[1] for q in loc), max(q[1] for q in loc)
+    vm = (v0 + v1) / 2
+    # end posts 3 m in from the ends (under a hip: where the ridge begins), the rest no more
+    # than 9 m apart
+    end = (v1 - v0) / 2 if kind == "hip" else 3.0
+    span = u1 - u0 - 2 * end
+    count = max(1, math.ceil(span / 9.0)) + 1 if span > 1.0 else 1
+    us = [u0 + end + span * i / (count - 1) for i in range(count)] if count > 1 else [(u0 + u1) / 2]
+    for u in us:
+        x, y = to_model(u, vm)
+        foot, head = ground(x, y) - 0.3, roof_z(x, y) - 0.2
+        b.box((x, y, (foot + head) / 2), (0.3, 0.3, head - foot), steel, angle=ang)
+    return b.finish(recalc=False)
+
+
 def part(lay_part, name, ground):
     """One building part as an object. `ground(x, y)` gives the terrain height."""
     p = lay_part
@@ -116,6 +169,8 @@ def part(lay_part, name, ground):
     # walls go 0.6 m into the lowest ground round the part, or stand on another part's roof
     samples = [q[:2] for q in geom.resample(ring, 2.0, True)]
     base = p["base"] if "base" in p else min(ground(x, y) for x, y in samples) - 0.6
+    if p.get("open"):
+        return _canopy(name, p, ring, kind, tops, slopes, ground, hexes["roof"])
     b = kit.Builder(name)
     n = len(ring)
     v = [(q[0], q[1], base) for q in ring] + [

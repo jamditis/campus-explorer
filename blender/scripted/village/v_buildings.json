@@ -1,0 +1,1622 @@
+{
+ "zone": "v_buildings",
+ "notes": "Buildings of the Village district, one entry per roof part. Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest ground return beyond it, but no more than 0.4 m past the roof return: the tall walls hide the ground at their foot from the scanner, which pushed the plain midpoint 1 m out on the 5 and 6 storey walls), each building at its own axis angle (fitted to its long walls), corners exact right angles; OSM footprints used only as a start. Heights NAVD88 from the LiDAR: flat tops are the roof deck median plus the 0.2 m rim seen at the edge; hip parts give ridge (99.5th percentile, parts above excluded) and eave (returns 0.2 to 1.2 m inside the edge). Hawk Crossings (Falco, Accipiter, Buteo): flat-roofed garden apartments stepped in plan, each building split where its roof steps down (about 0.9 to 1.6 m); Buteo's low south end block is its own part. The Village halls (Williams, Fenwick, Count Basie, Paul) share one design: two 20.4 x 32 m hipped wings joined by a link round an open courtyard; the link is a flat white roof at both ends, a smaller hip in the middle and a raised hipped block (tower) over half of it; 3 m rooftop boxes over 20 m2 on the flat link roofs are parts with base. Sinatra Hall: two hipped wings and a middle block (flat white roof to the west, a raised hipped block with a small peak to the east). Abbott and Costello Center: one hip with a higher hipped block on its south-east side. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): Hawk Crossings Falco 126.4..128.5 m; Hawk Crossings Accipiter 123.5..126.4 m; Hawk Crossings Buteo 122.2..124.2 m; Fenwick Hall 113.0..116.4 m; Williams Hall 108.7..114.6 m; Paul Hall 105.7..111.3 m; Count Basie Hall 104.9..106.6 m; Francis A. Sinatra Hall 113.3..118.2 m; Abbott and Costello Center 107.4..112.8 m; kiosk (OSM 233913142) 104.3..105.0 m. Not modelled: no pool house by the pool (the LiDAR shows nothing over 2 m there but trees and fences); the 'small building' at x -123..-101, y 1113..1131 in the footprint notes is an OSM road (way 313032738), no building there; the solar canopies of Lot 61 belong to another zone. Facade colours, window sizes and some floor counts are guesses unless a source is cited.",
+ "buildings": [
+  {
+   "name": "V_bldg_HC_Falco_south",
+   "ring": [
+    [
+     -314.63,
+     618.84
+    ],
+    [
+     -312.48,
+     634.55
+    ],
+    [
+     -310.65,
+     634.3
+    ],
+    [
+     -308.49,
+     650.05
+    ],
+    [
+     -307.02,
+     649.85
+    ],
+    [
+     -305.87,
+     658.27
+    ],
+    [
+     -319.52,
+     660.14
+    ],
+    [
+     -320.67,
+     651.72
+    ],
+    [
+     -322.0,
+     651.9
+    ],
+    [
+     -324.16,
+     636.15
+    ],
+    [
+     -325.55,
+     636.34
+    ],
+    [
+     -327.7,
+     620.63
+    ]
+   ],
+   "roof": "flat",
+   "top": 136.5,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Falco_north",
+   "ring": [
+    [
+     -304.59,
+     657.89
+    ],
+    [
+     -302.48,
+     673.25
+    ],
+    [
+     -299.54,
+     672.85
+    ],
+    [
+     -297.36,
+     688.8
+    ],
+    [
+     -294.69,
+     688.43
+    ],
+    [
+     -292.46,
+     704.74
+    ],
+    [
+     -305.68,
+     706.55
+    ],
+    [
+     -307.92,
+     690.24
+    ],
+    [
+     -310.75,
+     690.63
+    ],
+    [
+     -312.94,
+     674.68
+    ],
+    [
+     -315.91,
+     675.09
+    ],
+    [
+     -318.01,
+     659.73
+    ]
+   ],
+   "roof": "flat",
+   "top": 135.6,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Accipiter_south",
+   "ring": [
+    [
+     -283.16,
+     713.53
+    ],
+    [
+     -282.16,
+     721.28
+    ],
+    [
+     -280.81,
+     721.11
+    ],
+    [
+     -278.7,
+     737.37
+    ],
+    [
+     -276.79,
+     737.13
+    ],
+    [
+     -274.7,
+     753.29
+    ],
+    [
+     -288.24,
+     755.04
+    ],
+    [
+     -290.34,
+     738.88
+    ],
+    [
+     -292.09,
+     739.1
+    ],
+    [
+     -294.19,
+     722.84
+    ],
+    [
+     -295.38,
+     722.99
+    ],
+    [
+     -296.39,
+     715.24
+    ]
+   ],
+   "roof": "flat",
+   "top": 135.27,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Accipiter_north",
+   "ring": [
+    [
+     -273.25,
+     752.9
+    ],
+    [
+     -271.29,
+     768.02
+    ],
+    [
+     -268.2,
+     767.62
+    ],
+    [
+     -266.07,
+     784.07
+    ],
+    [
+     -279.74,
+     785.84
+    ],
+    [
+     -281.87,
+     769.39
+    ],
+    [
+     -284.95,
+     769.79
+    ],
+    [
+     -286.9,
+     754.67
+    ]
+   ],
+   "roof": "flat",
+   "top": 133.74,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Buteo_south",
+   "ring": [
+    [
+     -258.3,
+     792.83
+    ],
+    [
+     -257.26,
+     800.26
+    ],
+    [
+     -268.45,
+     801.82
+    ],
+    [
+     -269.49,
+     794.39
+    ]
+   ],
+   "roof": "flat",
+   "top": 130.56,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 2,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height (this low end block 7.3 m: 2 floors guessed); wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Buteo_middle",
+   "ring": [
+    [
+     -256.14,
+     799.9
+    ],
+    [
+     -252.84,
+     823.52
+    ],
+    [
+     -249.99,
+     823.12
+    ],
+    [
+     -247.76,
+     839.11
+    ],
+    [
+     -261.26,
+     841.0
+    ],
+    [
+     -263.5,
+     825.01
+    ],
+    [
+     -266.28,
+     825.4
+    ],
+    [
+     -269.59,
+     801.78
+    ]
+   ],
+   "roof": "flat",
+   "top": 132.21,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_HC_Buteo_north",
+   "ring": [
+    [
+     -244.96,
+     838.52
+    ],
+    [
+     -242.74,
+     854.42
+    ],
+    [
+     -238.32,
+     853.8
+    ],
+    [
+     -236.03,
+     870.19
+    ],
+    [
+     -249.53,
+     872.08
+    ],
+    [
+     -251.82,
+     855.69
+    ],
+    [
+     -256.09,
+     856.28
+    ],
+    [
+     -258.31,
+     840.39
+    ]
+   ],
+   "roof": "flat",
+   "top": 131.61,
+   "style": "dorm",
+   "wall": "#b39a80",
+   "trim": "#8c6e62",
+   "roof_colour": "#2f3337",
+   "windows": {
+    "width": 1.0,
+    "height": 1.4,
+    "spacing": 3.6
+   },
+   "floors": 3,
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, stepped blocks measured one by one) and heights; ortho2020 (dark flat roofs, brown rim); osm; https://inside.montclair.edu/campus-life-and-recreation/residence-life/residence-halls (garden apartments, multi-floor units); https://montclair.edu/residence-life/?p=31 (3 buildings, 29 stairwells of 3 apartments each)",
+   "unverified": "flat roof read as parapet top (deck median + 0.2 m rim); floors from the stairwell count and the 9 m height; wall and trim colours guessed (walls not seen in the ortho), window grid guessed"
+  },
+  {
+   "name": "V_bldg_Fenwick_wing_SW",
+   "ring": [
+    [
+     -219.47,
+     1087.3
+    ],
+    [
+     -205.15,
+     1101.79
+    ],
+    [
+     -227.69,
+     1124.06
+    ],
+    [
+     -242.01,
+     1109.57
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.5,
+   "eave": 133.71,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Fenwick_wing_NE",
+   "ring": [
+    [
+     -187.59,
+     1119.56
+    ],
+    [
+     -173.27,
+     1134.05
+    ],
+    [
+     -195.81,
+     1156.32
+    ],
+    [
+     -210.13,
+     1141.83
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.5,
+   "eave": 133.69,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Fenwick_link_SW",
+   "ring": [
+    [
+     -215.1,
+     1111.49
+    ],
+    [
+     -211.53,
+     1115.1
+    ],
+    [
+     -224.19,
+     1127.61
+    ],
+    [
+     -227.76,
+     1123.99
+    ]
+   ],
+   "roof": "flat",
+   "top": 132.74,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Fenwick_link_hip",
+   "ring": [
+    [
+     -211.6,
+     1115.03
+    ],
+    [
+     -201.41,
+     1125.34
+    ],
+    [
+     -214.07,
+     1137.85
+    ],
+    [
+     -224.26,
+     1127.53
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.8,
+   "eave": 136.79,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; the hip under the tower is drawn whole"
+  },
+  {
+   "name": "V_bldg_Fenwick_link_NE",
+   "ring": [
+    [
+     -201.48,
+     1125.27
+    ],
+    [
+     -197.41,
+     1129.4
+    ],
+    [
+     -210.06,
+     1141.9
+    ],
+    [
+     -214.14,
+     1137.78
+    ]
+   ],
+   "roof": "flat",
+   "top": 132.75,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Fenwick_tower",
+   "ring": [
+    [
+     -217.47,
+     1120.83
+    ],
+    [
+     -211.85,
+     1126.52
+    ],
+    [
+     -218.64,
+     1133.22
+    ],
+    [
+     -224.26,
+     1127.53
+    ]
+   ],
+   "roof": "hip",
+   "top": 142.91,
+   "eave": 141.77,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; a raised block over the link (stair/lounge tower, use not known), 6 floors guessed from its height"
+  },
+  {
+   "name": "V_bldg_Fenwick_roof_box_SW",
+   "ring": [
+    [
+     -215.1,
+     1114.69
+    ],
+    [
+     -213.2,
+     1116.61
+    ],
+    [
+     -222.81,
+     1126.1
+    ],
+    [
+     -224.71,
+     1124.18
+    ]
+   ],
+   "roof": "flat",
+   "top": 135.55,
+   "base": 132.54,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#bdbab2",
+   "trim": "#bdbab2",
+   "roof_colour": "#8f9194",
+   "evidence": "lidar2017 (a 3 m box on the flat link roof); ortho2020",
+   "unverified": "a rooftop mechanical enclosure read from the LiDAR; colour guessed"
+  },
+  {
+   "name": "V_bldg_Williams_wing_NE",
+   "ring": [
+    [
+     -162.13,
+     1123.1
+    ],
+    [
+     -176.43,
+     1108.5
+    ],
+    [
+     -153.96,
+     1086.47
+    ],
+    [
+     -139.65,
+     1101.07
+    ]
+   ],
+   "roof": "hip",
+   "top": 136.68,
+   "eave": 131.86,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Williams_wing_SW",
+   "ring": [
+    [
+     -193.85,
+     1090.73
+    ],
+    [
+     -208.12,
+     1076.17
+    ],
+    [
+     -185.64,
+     1054.14
+    ],
+    [
+     -171.37,
+     1068.7
+    ]
+   ],
+   "roof": "hip",
+   "top": 136.71,
+   "eave": 131.92,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Williams_link_NE",
+   "ring": [
+    [
+     -166.61,
+     1099.02
+    ],
+    [
+     -170.05,
+     1095.51
+    ],
+    [
+     -157.32,
+     1083.04
+    ],
+    [
+     -153.89,
+     1086.54
+    ]
+   ],
+   "roof": "flat",
+   "top": 130.93,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Williams_link_hip",
+   "ring": [
+    [
+     -169.98,
+     1095.58
+    ],
+    [
+     -179.78,
+     1085.58
+    ],
+    [
+     -167.05,
+     1073.11
+    ],
+    [
+     -157.25,
+     1083.11
+    ]
+   ],
+   "roof": "hip",
+   "top": 136.97,
+   "eave": 134.92,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; the hip under the tower is drawn whole"
+  },
+  {
+   "name": "V_bldg_Williams_link_SW",
+   "ring": [
+    [
+     -179.71,
+     1085.65
+    ],
+    [
+     -184.17,
+     1081.1
+    ],
+    [
+     -171.44,
+     1068.63
+    ],
+    [
+     -166.98,
+     1073.18
+    ]
+   ],
+   "roof": "flat",
+   "top": 130.89,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Williams_tower",
+   "ring": [
+    [
+     -168.59,
+     1085.82
+    ],
+    [
+     -174.19,
+     1080.11
+    ],
+    [
+     -167.05,
+     1073.11
+    ],
+    [
+     -161.45,
+     1078.82
+    ]
+   ],
+   "roof": "hip",
+   "top": 141.09,
+   "eave": 139.68,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; a raised block over the link (stair/lounge tower, use not known), 6 floors guessed from its height"
+  },
+  {
+   "name": "V_bldg_Williams_roof_box_SW",
+   "ring": [
+    [
+     -178.48,
+     1084.31
+    ],
+    [
+     -180.58,
+     1082.16
+    ],
+    [
+     -171.29,
+     1073.07
+    ],
+    [
+     -169.19,
+     1075.21
+    ]
+   ],
+   "roof": "flat",
+   "top": 133.73,
+   "base": 130.69,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#bdbab2",
+   "trim": "#bdbab2",
+   "roof_colour": "#8f9194",
+   "evidence": "lidar2017 (a 3 m box on the flat link roof); ortho2020",
+   "unverified": "a rooftop mechanical enclosure read from the LiDAR; colour guessed"
+  },
+  {
+   "name": "V_bldg_Paul_wing_SW",
+   "ring": [
+    [
+     -141.32,
+     1179.58
+    ],
+    [
+     -132.69,
+     1197.83
+    ],
+    [
+     -161.25,
+     1211.32
+    ],
+    [
+     -169.87,
+     1193.07
+    ]
+   ],
+   "roof": "hip",
+   "top": 133.63,
+   "eave": 128.84,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Paul_wing_NE",
+   "ring": [
+    [
+     -121.95,
+     1220.56
+    ],
+    [
+     -113.3,
+     1238.88
+    ],
+    [
+     -141.85,
+     1252.37
+    ],
+    [
+     -150.51,
+     1234.05
+    ]
+   ],
+   "roof": "hip",
+   "top": 133.62,
+   "eave": 128.87,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Paul_link_SW",
+   "ring": [
+    [
+     -145.51,
+     1203.78
+    ],
+    [
+     -143.39,
+     1208.26
+    ],
+    [
+     -159.17,
+     1215.72
+    ],
+    [
+     -161.29,
+     1211.23
+    ]
+   ],
+   "roof": "flat",
+   "top": 127.86,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Paul_link_hip",
+   "ring": [
+    [
+     -143.44,
+     1208.17
+    ],
+    [
+     -137.03,
+     1221.73
+    ],
+    [
+     -152.81,
+     1229.19
+    ],
+    [
+     -159.21,
+     1215.63
+    ]
+   ],
+   "roof": "hip",
+   "top": 134.4,
+   "eave": 131.94,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; the hip under the tower is drawn whole"
+  },
+  {
+   "name": "V_bldg_Paul_link_NE",
+   "ring": [
+    [
+     -137.07,
+     1221.64
+    ],
+    [
+     -134.69,
+     1226.69
+    ],
+    [
+     -150.46,
+     1234.14
+    ],
+    [
+     -152.85,
+     1229.1
+    ]
+   ],
+   "roof": "flat",
+   "top": 127.92,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Paul_tower",
+   "ring": [
+    [
+     -148.47,
+     1217.19
+    ],
+    [
+     -144.84,
+     1224.87
+    ],
+    [
+     -153.02,
+     1228.74
+    ],
+    [
+     -156.65,
+     1221.05
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.1,
+   "eave": 136.85,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; a raised block over the link (stair/lounge tower, use not known), 6 floors guessed from its height"
+  },
+  {
+   "name": "V_bldg_Count_Basie_wing_NE",
+   "ring": [
+    [
+     -98.93,
+     1232.09
+    ],
+    [
+     -107.71,
+     1213.6
+    ],
+    [
+     -79.34,
+     1200.12
+    ],
+    [
+     -70.56,
+     1218.61
+    ]
+   ],
+   "roof": "hip",
+   "top": 128.47,
+   "eave": 123.67,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Count_Basie_wing_SW",
+   "ring": [
+    [
+     -118.4,
+     1191.09
+    ],
+    [
+     -127.14,
+     1172.7
+    ],
+    [
+     -98.77,
+     1159.22
+    ],
+    [
+     -90.03,
+     1177.61
+    ]
+   ],
+   "roof": "hip",
+   "top": 128.52,
+   "eave": 123.67,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Count_Basie_link_NE",
+   "ring": [
+    [
+     -95.4,
+     1207.86
+    ],
+    [
+     -97.57,
+     1203.3
+    ],
+    [
+     -81.46,
+     1195.65
+    ],
+    [
+     -79.3,
+     1200.21
+    ]
+   ],
+   "roof": "flat",
+   "top": 122.73,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Count_Basie_link_hip",
+   "ring": [
+    [
+     -97.53,
+     1203.39
+    ],
+    [
+     -103.53,
+     1190.74
+    ],
+    [
+     -87.43,
+     1183.09
+    ],
+    [
+     -81.42,
+     1195.74
+    ]
+   ],
+   "roof": "hip",
+   "top": 129.08,
+   "eave": 126.53,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; the hip under the tower is drawn whole"
+  },
+  {
+   "name": "V_bldg_Count_Basie_link_SW",
+   "ring": [
+    [
+     -103.49,
+     1190.83
+    ],
+    [
+     -106.18,
+     1185.17
+    ],
+    [
+     -90.07,
+     1177.52
+    ],
+    [
+     -87.38,
+     1183.18
+    ]
+   ],
+   "roof": "flat",
+   "top": 122.67,
+   "style": "dorm",
+   "floors": 5,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Count_Basie_tower",
+   "ring": [
+    [
+     -89.87,
+     1199.75
+    ],
+    [
+     -93.3,
+     1192.52
+    ],
+    [
+     -84.85,
+     1188.51
+    ],
+    [
+     -81.42,
+     1195.74
+    ]
+   ],
+   "roof": "hip",
+   "top": 132.92,
+   "eave": 131.76,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.2
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roofs between); osm; https://montclair.edu/residence-life/living-on-campus/residence-halls (The Village: 4 halls, 5 floors); https://www.montclair.edu/procurement/wp-content/uploads/sites/159/2023/03/RFP-1555-MSU-Spec-Book-Village-bid-wayfinding.pdf (Village facade: portland cement stucco, elastomeric coating)",
+   "unverified": "window grid and wall colour guessed (stucco per the facade spec, tone not seen); roof colour from the ortho; a raised block over the link (stair/lounge tower, use not known), 6 floors guessed from its height"
+  },
+  {
+   "name": "V_bldg_Count_Basie_roof_box_NE",
+   "ring": [
+    [
+     -94.45,
+     1205.25
+    ],
+    [
+     -95.74,
+     1202.54
+    ],
+    [
+     -83.54,
+     1196.75
+    ],
+    [
+     -82.26,
+     1199.46
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.51,
+   "base": 122.53,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#bdbab2",
+   "trim": "#bdbab2",
+   "roof_colour": "#8f9194",
+   "evidence": "lidar2017 (a 3 m box on the flat link roof); ortho2020",
+   "unverified": "a rooftop mechanical enclosure read from the LiDAR; colour guessed"
+  },
+  {
+   "name": "V_bldg_Count_Basie_roof_box_SW",
+   "ring": [
+    [
+     -99.01,
+     1187.49
+    ],
+    [
+     -100.3,
+     1184.78
+    ],
+    [
+     -93.98,
+     1181.77
+    ],
+    [
+     -92.69,
+     1184.48
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.24,
+   "base": 122.47,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#bdbab2",
+   "trim": "#bdbab2",
+   "roof_colour": "#8f9194",
+   "evidence": "lidar2017 (a 3 m box on the flat link roof); ortho2020",
+   "unverified": "a rooftop mechanical enclosure read from the LiDAR; colour guessed"
+  },
+  {
+   "name": "V_bldg_Sinatra_wing_S",
+   "ring": [
+    [
+     -196.01,
+     917.04
+    ],
+    [
+     -188.66,
+     949.32
+    ],
+    [
+     -207.34,
+     953.57
+    ],
+    [
+     -214.69,
+     921.3
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.59,
+   "eave": 134.86,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d3c2a2",
+   "trim": "#ece3cf",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roof on the middle block); osm; https://www.cbsnews.com/newyork/news/montclair-st-dedicates-dorm-named-for-sinatra/ (six-story, over 300 students); https://montclair.edu/residence-life/?p=43 (opened 2010, six floors, suites)",
+   "unverified": "wall colour and window grid guessed; roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Sinatra_wing_N",
+   "ring": [
+    [
+     -190.02,
+     957.68
+    ],
+    [
+     -182.72,
+     989.73
+    ],
+    [
+     -201.23,
+     993.95
+    ],
+    [
+     -208.53,
+     961.89
+    ]
+   ],
+   "roof": "hip",
+   "top": 138.57,
+   "eave": 134.87,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d3c2a2",
+   "trim": "#ece3cf",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roof on the middle block); osm; https://www.cbsnews.com/newyork/news/montclair-st-dedicates-dorm-named-for-sinatra/ (six-story, over 300 students); https://montclair.edu/residence-life/?p=43 (opened 2010, six floors, suites)",
+   "unverified": "wall colour and window grid guessed; roof colour from the ortho"
+  },
+  {
+   "name": "V_bldg_Sinatra_core",
+   "ring": [
+    [
+     -198.08,
+     951.36
+    ],
+    [
+     -196.3,
+     959.21
+    ],
+    [
+     -208.98,
+     962.1
+    ],
+    [
+     -210.77,
+     954.25
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.24,
+   "style": "dorm",
+   "floors": 6,
+   "wall": "#d3c2a2",
+   "trim": "#ece3cf",
+   "roof_colour": "#cfcfc8",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roof on the middle block); osm; https://www.cbsnews.com/newyork/news/montclair-st-dedicates-dorm-named-for-sinatra/ (six-story, over 300 students); https://montclair.edu/residence-life/?p=43 (opened 2010, six floors, suites)",
+   "unverified": "wall colour and window grid guessed; roof colour from the ortho; flat roof white in the ortho"
+  },
+  {
+   "name": "V_bldg_Sinatra_core_tower",
+   "ring": [
+    [
+     -189.31,
+     949.36
+    ],
+    [
+     -187.52,
+     957.21
+    ],
+    [
+     -196.49,
+     959.25
+    ],
+    [
+     -198.28,
+     951.4
+    ]
+   ],
+   "roof": "hip",
+   "top": 143.22,
+   "eave": 140.83,
+   "style": "dorm",
+   "floors": 7,
+   "wall": "#d3c2a2",
+   "trim": "#ece3cf",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.0,
+    "height": 1.5,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs, white flat roof on the middle block); osm; https://www.cbsnews.com/newyork/news/montclair-st-dedicates-dorm-named-for-sinatra/ (six-story, over 300 students); https://montclair.edu/residence-life/?p=43 (opened 2010, six floors, suites)",
+   "unverified": "wall colour and window grid guessed; roof colour from the ortho; the raised east half of the middle block, hipped; 7 floors guessed from its height"
+  },
+  {
+   "name": "V_bldg_Abbott_Costello_main",
+   "ring": [
+    [
+     -136.41,
+     1129.37
+    ],
+    [
+     -124.84,
+     1145.21
+    ],
+    [
+     -142.38,
+     1158.03
+    ],
+    [
+     -153.96,
+     1142.19
+    ]
+   ],
+   "roof": "hip",
+   "top": 122.19,
+   "eave": 117.8,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.4,
+    "height": 1.8,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Abbott & Costello Center); https://flp.montclair.edu/campus-map/campus-map-2021-11.pdf (Village community office and recreation building)",
+   "unverified": "floors guessed (eave 5 to 7.6 m above the ground round it); walls guessed to match the Village stucco; window grid guessed"
+  },
+  {
+   "name": "V_bldg_Abbott_Costello_tower",
+   "ring": [
+    [
+     -129.74,
+     1136.84
+    ],
+    [
+     -124.94,
+     1143.4
+    ],
+    [
+     -131.81,
+     1148.42
+    ],
+    [
+     -136.61,
+     1141.86
+    ]
+   ],
+   "roof": "hip",
+   "top": 124.52,
+   "eave": 123.51,
+   "style": "hall",
+   "floors": 2,
+   "wall": "#d8c6a4",
+   "trim": "#eee5d0",
+   "roof_colour": "#a5543e",
+   "windows": {
+    "width": 1.4,
+    "height": 1.8,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Abbott & Costello Center); https://flp.montclair.edu/campus-map/campus-map-2021-11.pdf (Village community office and recreation building)",
+   "unverified": "a higher hipped block at the south-east side, use not known; floors, colours and windows guessed"
+  },
+  {
+   "name": "V_bldg_kiosk",
+   "ring": [
+    [
+     -48.41,
+     1150.76
+    ],
+    [
+     -47.35,
+     1156.77
+    ],
+    [
+     -50.6,
+     1157.34
+    ],
+    [
+     -51.66,
+     1151.33
+    ]
+   ],
+   "roof": "shed",
+   "top": 109.0,
+   "eave": 108.1,
+   "ridge_angle": 260,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#c9b9a0",
+   "trim": "#c9b9a0",
+   "roof_colour": "#a5584a",
+   "evidence": "lidar2017 (one roof plane, 109.0 m on the east side falling to 108.1 m on the west side); ortho2020 (red roof); osm (way 233913142, unnamed)",
+   "unverified": "use not known (OSM building=yes beside the station parking); a lower 107.0 m awning on its west side is left out; wall colour guessed"
+  }
+ ]
+}
