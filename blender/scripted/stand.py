@@ -316,10 +316,11 @@ def bowl_profile(walk, tiers, aisles, back, depth, tread=BOWL_TREAD):
     return flats
 
 
-def bowl_block(length, flats, base, slopes=(0.0, 0.0)):
+def bowl_block(length, flats, base, slopes=(0.0, 0.0), inset=0.0):
     """The solid stepped block of a bowl `length` long at the front: vertices (u, v, w) and faces
     wound anticlockwise seen from outside. `slopes` (du/dv of the left and right ends) let the
     ends follow a section's slanted sides, so sections fanned round home plate meet without gaps.
+    `inset` moves the whole block back from the front line (behind a wall standing on it).
     Treads and risers run the whole length; each end is one strip per flat (its edges carry the
     neighbours' corners, so the shell is closed); the front, back and bottom are one face each."""
     verts, index = [], {}
@@ -355,7 +356,7 @@ def bowl_block(length, flats, base, slopes=(0.0, 0.0)):
     edges = [0.0] + [f["v"][1] for f in flats]
     faces.append([vid(0, v, base) for v in edges] + [vid(L, v, base) for v in reversed(edges)])
     sl, sr = slopes  # every vertex is on an end (u = 0 or L): slide it along that end's side
-    return [(u + (sl if u == 0 else sr) * v, v, w) for u, v, w in verts], faces
+    return [(u + (sl if u == 0 else sr) * (v + inset), v + inset, w) for u, v, w in verts], faces
 
 
 def side_slopes(ring, at, angle, length):
@@ -398,11 +399,12 @@ def bowl(name, at, angle, length, depth, spec, unverified=True):
         spec["tiers"],
         spec.get("aisles", []),
         spec["back"],
-        depth,
+        depth - spec.get("inset", 0.0),
         spec.get("tread", BOWL_TREAD),
     )
     sl, sr = side_slopes(spec["ring"], at, angle, length) if "ring" in spec else (0.0, 0.0)
-    verts, faces = bowl_block(length, flats, spec["base"], (sl, sr))
+    inset = spec.get("inset", 0.0)  # a field wall on the front line: start behind its back face
+    verts, faces = bowl_block(length, flats, spec["base"], (sl, sr), inset)
     concrete = kit.mat("concrete", "seating_bowl", kit.srgb(spec.get("concrete", "#b5b1a8")), 0.9)
     b = kit.Builder(f"{name}_bowl{tag}")
     b.faces([place(*p) for p in verts], faces, concrete)
@@ -414,7 +416,7 @@ def bowl(name, at, angle, length, depth, spec, unverified=True):
     for f in flats:
         if f["kind"] != "row":
             continue
-        back, w = f["v"][1], f["level"]
+        back, w = f["v"][1] + inset, f["level"]
         ul = sl * (back - 0.3) + 0.05 + 0.25 * abs(sl)  # the row's ends, clear of slanted sides
         ur = length + sr * (back - 0.3) - 0.05 - 0.25 * abs(sr)
         sec = (ur - ul - (n - 1) * aw) / n

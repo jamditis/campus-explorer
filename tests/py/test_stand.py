@@ -107,6 +107,16 @@ class BowlBlock(unittest.TestCase):
         self.assertAlmostEqual(vol, want, places=6)
         self.assertIn((sl * 17.0, 17.0, 115.5), verts)  # back-left corner on the slanted side
 
+    def test_inset_starts_the_block_behind_a_front_wall(self):
+        # the profile is laid out in the depth left behind the inset; the ends stay on the sides
+        flats = stand.bowl_profile(WALK, TIERS, AISLES, back=115.5, depth=17.0 - 0.13, tread=0.85)
+        verts, faces = stand.bowl_block(12.0, flats, base=109.3, slopes=(-0.4, 0.3), inset=0.13)
+        self.assertTrue(closed_and_outward(verts, faces)[0])
+        self.assertAlmostEqual(min(v for _, v, _ in verts), 0.13)
+        self.assertAlmostEqual(max(v for _, v, _ in verts), 17.0)
+        front_left = min((p for p in verts if abs(p[1] - 0.13) < 1e-9), key=lambda p: p[0])
+        self.assertAlmostEqual(front_left[0], -0.4 * 0.13)
+
     def test_few_faces(self):
         flats = stand.bowl_profile(WALK, TIERS, AISLES, back=115.5, depth=17.0, tread=0.85)
         _, faces = stand.bowl_block(12.0, flats, base=109.3)

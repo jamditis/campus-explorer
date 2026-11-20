@@ -1274,11 +1274,11 @@
    "sections": 2,
    "count_note": "red seats, a lower and an upper tier with a cross aisle (ortho); LiDAR deck 111.08 m behind the front walkway, 115.16 m at the back row, field 109.7 m",
    "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.09 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    1.35,
+    1.22,
     110.8
    ],
    "tiers": [
@@ -1319,7 +1319,8 @@
      "type": "chairs",
      "colour": "#9c3a32"
     }
-   ]
+   ],
+   "inset": 0.13
   },
   {
    "name": "ST_yogi_stand_3B_dugout",
@@ -1434,11 +1435,11 @@
    "sections": 2,
    "count_note": "red box seats below, aluminium bleachers above (ortho 2020; red seats in 2024); LiDAR deck 111.30 m behind the front walkway, 115.20 m at the back row, field 109.7 m",
    "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.11 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    0.6,
+    0.47,
     110.8
    ],
    "tiers": [
@@ -1478,7 +1479,8 @@
      ],
      "type": "bench"
     }
-   ]
+   ],
+   "inset": 0.13
   },
   {
    "name": "ST_yogi_stand_3B_left",
@@ -1513,11 +1515,11 @@
    "sections": 2,
    "count_note": "aluminium bleachers, two tiers (ortho 2020; red seats in 2024); LiDAR deck 111.42 m behind the front walkway, 114.98 m at the back row, field 109.7 m",
    "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.11 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    0.6,
+    0.47,
     110.84
    ],
    "tiers": [
@@ -1556,7 +1558,8 @@
      ],
      "type": "bench"
     }
-   ]
+   ],
+   "inset": 0.13
   },
   {
    "name": "ST_yogi_stand_1B_home",
@@ -1570,12 +1573,12 @@
      953.948
     ],
     [
-     197.856,
-     942.367
+     198.73,
+     941.5
     ],
     [
-     186.663,
-     926.759
+     187.256,
+     926.17
     ]
    ],
    "front": [
@@ -1590,12 +1593,12 @@
    ],
    "sections": 2,
    "count_note": "red seats, lower and upper tier; LiDAR deck 110.90 m behind the front walkway, 115.10 m at the back row, field 109.7 m",
-   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.12 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.12 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections); back edge moved to where the LiDAR shows the top row ending (median profile: concourse level from 17.55 m)",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    1.35,
+    1.22,
     110.81
    ],
    "tiers": [
@@ -1605,7 +1608,7 @@
      "rise": 0.19
     },
     {
-     "rows": 10,
+     "rows": 11,
      "first": 113.11,
      "rise": 0.193
     }
@@ -1636,7 +1639,8 @@
      "type": "chairs",
      "colour": "#9c3a32"
     }
-   ]
+   ],
+   "inset": 0.13
   },
   {
    "name": "ST_yogi_stand_1B_dugout",
@@ -1650,12 +1654,12 @@
      964.821
     ],
     [
-     208.095,
-     955.452
+     208.38,
+     955.169
     ],
     [
-     197.856,
-     942.367
+     198.397,
+     941.83
     ]
    ],
    "front": [
@@ -1670,7 +1674,7 @@
    ],
    "sections": 2,
    "count_note": "red seats behind the 1B dugout, aluminium bleachers above; LiDAR deck 111.80 m behind the front walkway, 115.10 m at the back row, field 109.7 m",
-   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.11 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
+   "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.11 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections); back edge moved to where the LiDAR shows the top row ending (median profile: concourse level from 13.50 m)",
    "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
    "style": "bowl",
    "tread": 0.85,
@@ -1685,7 +1689,7 @@
      "rise": 0.282
     },
     {
-     "rows": 10,
+     "rows": 11,
      "first": 113.1,
      "rise": 0.216
     }
@@ -1750,11 +1754,11 @@
    "sections": 1,
    "count_note": "red box seats below, aluminium bleachers above; LiDAR deck 111.30 m behind the front walkway, 115.35 m at the back row, field 109.7 m",
    "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.10 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    0.8,
+    0.67,
     110.82
    ],
    "tiers": [
@@ -1794,7 +1798,8 @@
      ],
      "type": "bench"
     }
-   ]
+   ],
+   "inset": 0.13
   },
   {
    "name": "ST_yogi_stand_home",
@@ -1829,11 +1834,11 @@
    "sections": 2,
    "count_note": "red seats behind home plate, 13 rows between the front wall and the press box; LiDAR deck 111.22 m behind the front walkway, 114.07 m at the back row, field 109.7 m",
    "evidence": "ortho2020 (outline: front on the stand front wall, back on the concourse edge, read in the foul-line frame); lidar2017 dsm (seat deck heights); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (3,784 seats); aerial photo 2024 (red seats); lidar2017 bowl profile (ground returns across the whole deck: solid concrete on fill) fitted as walkway, tiers of 0.85 m rows and a cross aisle by least squares on median profiles along the stand, rms 0.15 m; concourse 115.5 m; Esri World Imagery 11 May 2025 (reference only: red seats, aluminium benches in the upper rows of the outer sections)",
-   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails",
+   "unverified": "seats drawn as one low strip per row and section (not single chairs); seat colour and which rows are benches from the 2025 image; stair aisles as gaps in the seat rows; no handrails; the bowl starts 0.13 m behind the front line, behind the padded field wall (0.25 m thick, centred on the line), whose top is level with the walkway in the LiDAR: no rail is seen",
    "style": "bowl",
    "tread": 0.85,
    "walk": [
-    0.9,
+    0.77,
     110.79
    ],
    "tiers": [
@@ -1874,7 +1879,8 @@
      "type": "chairs",
      "colour": "#9c3a32"
     }
-   ]
+   ],
+   "inset": 0.13
   }
  ],
  "buildings": [
