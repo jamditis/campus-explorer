@@ -1,0 +1,258 @@
+{
+ "zone": "green_sprague_foot",
+ "notes": "Along the south face of Sprague Library (the face the green looks at; the wall line is the main model's L0 base, (-100.3, -10.2) along 103.5 degrees). Photo 1000102881 (2026-11-20) shows seven young conifers clear of the big tree, at even spacing, and more of the row behind it to the lamp post, and six black benches in front of them. Bearings were read from the photo with a camera fitted to the library's raised bay (top corners at 147.25 m, LiDAR), then cut with lines 0.7 m (conifers, between the wall and the main model's walk) and 3.6 m (benches, on the walk's outer side) out from the wall. The row is even from the first to the last tree seen; the count behind the tree is UNVERIFIED. The main model has neither the row nor the benches.",
+ "points": [
+  {
+   "name": "Sprague_S_conifer_01",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -104.41,
+    -9.93
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_02",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -102.53,
+    -10.38
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_03",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -100.66,
+    -10.83
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_04",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -98.79,
+    -11.28
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_05",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -96.91,
+    -11.73
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_06",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -95.04,
+    -12.18
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_07",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -93.17,
+    -12.63
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_08",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -91.29,
+    -13.08
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_09",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -89.42,
+    -13.53
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_10",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -87.55,
+    -13.98
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_11",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -85.67,
+    -14.43
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_12",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -83.8,
+    -14.88
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_13",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -81.93,
+    -15.33
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_14",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -80.05,
+    -15.78
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_conifer_15",
+   "kind": "tree",
+   "species": "white_pine",
+   "at": [
+    -78.18,
+    -16.23
+   ],
+   "height": 4.5,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; species (young spruce or juniper in the photo: white pine is the engine's only conifer); height 4.5 m from the first-floor window heads"
+  },
+  {
+   "name": "Sprague_S_bench_1",
+   "kind": "bench",
+   "at": [
+    -102.01,
+    -13.49
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  },
+  {
+   "name": "Sprague_S_bench_2",
+   "kind": "bench",
+   "at": [
+    -98.76,
+    -14.27
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  },
+  {
+   "name": "Sprague_S_bench_3",
+   "kind": "bench",
+   "at": [
+    -95.51,
+    -15.05
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  },
+  {
+   "name": "Sprague_S_bench_4",
+   "kind": "bench",
+   "at": [
+    -92.26,
+    -15.83
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  },
+  {
+   "name": "Sprague_S_bench_5",
+   "kind": "bench",
+   "at": [
+    -89.02,
+    -16.61
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  },
+  {
+   "name": "Sprague_S_bench_6",
+   "kind": "bench",
+   "at": [
+    -85.77,
+    -17.39
+   ],
+   "angle": -103.5,
+   "length": 1.8,
+   "evidence": "1000102881_alumni_green_sprague_library.jpg",
+   "unverified": "position 1.5 m along the wall, 1 m across; black metal benches with backs, length from the photo (about 1.8 m)"
+  }
+ ]
+}

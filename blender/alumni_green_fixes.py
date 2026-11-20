@@ -15,6 +15,10 @@ What it changes, all inside the plaza that session ws5 built (WS5_Cole_plaza_cir
   outside the edge (photos 1 and 2). Positions are relations read from the photos (inlay on the
   gable axis, hatch and lamp west of it), not measurements: UNVERIFIED, about 1.5 m.
 
+The scripted build runs the same changes on the adopted plaza through `apply` (the `fix` of
+blender/scripted/green/adopt.json), so they reach the viewer in sw_ tiles; green/footprint.json
+then takes the main model's plaza mesh out of its tiles.
+
 Larger corrections that need the plaza and its walks laid out again are listed in LATER.
 """
 
@@ -282,13 +286,16 @@ def _mesh_object(bpy, coll, name, verts, faces, mats):
 
 
 def add_inlay(bpy, coll, z):
+    """The stone tiles and the bent letters. Returns the two new objects."""
     th0 = math.radians(ANG + 90)
     pts = arc_strip(INLAY_R, INLAY_DEPTH, th0, INLAY_LEN, 0.1)
     n = len(pts) // 2
     verts = [(x, y, z(x, y) + LIFT) for x, y in pts]
     faces = [(i, i + 1, n + i + 1, n + i) for i in range(n - 1)]
     stone = _material(bpy, "GRN_inlay_limestone_light", (0.78, 0.76, 0.70), 0.7)
-    _mesh_object(bpy, coll, "GRN_AlumniGreen_inlay_tiles_UNVERIFIED", verts, faces, [stone])
+    tiles = _mesh_object(
+        bpy, coll, "GRN_AlumniGreen_inlay_tiles_UNVERIFIED", verts, faces, [stone]
+    )
     # letters: Blender's own sans font, converted to a mesh and bent onto the arc
     cu = bpy.data.curves.new("GRN_inlay_text", "FONT")
     cu.body = INLAY_TEXT
@@ -311,9 +318,11 @@ def add_inlay(bpy, coll, z):
     ob = bpy.data.objects.new(tm.name, tm)
     ob["evidence"] = EVIDENCE
     coll.objects.link(ob)
+    return [tiles, ob]
 
 
 def add_hatch(bpy, coll, z):
+    """The steel access hatch: a frame and a darker plate. Returns the new object."""
     x, y, hd = places()["hatch"]
     a = math.radians(hd)
     ca, sa = math.cos(a), math.sin(a)
@@ -329,22 +338,45 @@ def add_hatch(bpy, coll, z):
     plate = _material(bpy, "GRN_hatch_plate_steel_dark", (0.10, 0.10, 0.10), 0.55, 0.8)
     ob = _mesh_object(bpy, coll, "GRN_access_hatch_UNVERIFIED", verts, faces, [frame, plate])
     ob.data.polygons[1].material_index = 1
+    return ob
 
 
-def add_lamp(bpy, coll, z):
-    src = bpy.data.objects.get(LAMP_SRC)
-    if src is None:
-        print("missing", LAMP_SRC, ": no lamp added")
-        return
+def place_lamp(lamp, z):
+    """Stand `lamp` (an acorn lamp object) on the lawn north of the plaza edge."""
     x, y, _ = places()["lamp"]
-    ob = src.copy()  # shares the mesh, like the other acorn lamps
-    ob.name = "GRN_Lamp_acorn_fluted_N_UNVERIFIED"
-    ob.location = (x, y, z(x, y) - 0.02)
-    ob["evidence"] = EVIDENCE
-    coll.objects.link(ob)
+    lamp.location = (x, y, z(x, y) - 0.02)
+    lamp["evidence"] = EVIDENCE
+
+
+def fix(bpy, plaza, lamp, coll):
+    """Every change, on the ws5 plaza object and an acorn lamp object to move: both ways of
+    running this file come here. Returns the new objects (linked into `coll`)."""
+    if plaza.data.users > 1:
+        plaza.data = plaza.data.copy()
+    z = rebuild_plaza(bpy, plaza)
+    new = add_inlay(bpy, coll, z)
+    new.append(add_hatch(bpy, coll, z))
+    if lamp is not None:
+        place_lamp(lamp, z)
+    return new
+
+
+def apply(objects, collection):
+    """Hook for the scripted build (blender/scripted/green/adopt.json, group `fix`): `objects`
+    maps source names to the adopted objects. The adopted plaza is changed in place; the adopted
+    copy of the acorn lamp is moved to the plaza's north edge (the main tiles keep their own)."""
+    import bpy
+
+    missing = [n for n in (PLAZA, LAMP_SRC) if n not in objects]
+    if missing:
+        raise ValueError(f"alumni_green_fixes: not adopted: {missing}")
+    lamp = objects[LAMP_SRC]
+    lamp.name = "SW_adopt_GRN_Lamp_acorn_fluted_N_UNVERIFIED"
+    return fix(bpy, objects[PLAZA], lamp, collection)
 
 
 def main():
+    """Box script on a copy of the main .blend: the lamp is a new copy of Lamp_acorn_017."""
     import bpy
 
     args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
@@ -362,10 +394,15 @@ def main():
     coll = bpy.data.collections.get(COLL) or bpy.data.collections.new(COLL)
     if coll.name not in bpy.context.scene.collection.children:
         bpy.context.scene.collection.children.link(coll)
-    z = rebuild_plaza(bpy, plaza)
-    add_inlay(bpy, coll, z)
-    add_hatch(bpy, coll, z)
-    add_lamp(bpy, coll, z)
+    src = bpy.data.objects.get(LAMP_SRC)
+    lamp = None
+    if src is None:
+        print("missing", LAMP_SRC, ": no lamp added")
+    else:
+        lamp = src.copy()  # shares the mesh, like the other acorn lamps
+        lamp.name = "GRN_Lamp_acorn_fluted_N_UNVERIFIED"
+        coll.objects.link(lamp)
+    fix(bpy, plaza, lamp, coll)
     out = [a for a in args if not a.startswith("--")]
     if out:
         bpy.ops.wm.save_as_mainfile(filepath=out[0], compress=True)
