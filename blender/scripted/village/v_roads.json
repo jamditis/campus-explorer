@@ -1447,8 +1447,12 @@
      1140.0
     ],
     [
-     -47.9,
-     1155.0
+     -48.25,
+     1150.6
+    ],
+    [
+     -47.2,
+     1156.9
     ],
     [
      -45.5,
@@ -3516,8 +3520,8 @@
    "kind": "concrete",
    "centre": [
     [
-     -163.58,
-     1076.06
+     -163.15,
+     1075.64
     ],
     [
      -174.73,
@@ -4394,18 +4398,14 @@
      2064.7
     ],
     [
-     -236.0,
-     710.44,
-     3170.9
-    ],
-    [
-     -182.64,
-     875.28
+     -236.7,
+     708.3
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "ends at y 708: further north no painted line is separate from the curb on the colour profiles (y 760, 786)"
   },
   {
    "name": "V_road_Clove_N1_W_edge_line",

@@ -4002,17 +4002,17 @@
      1363.99
     ],
     [
-     -108.83,
-     1375.69
+     -113.56,
+     1373.56
     ]
    ],
-   "count": 11,
+   "count": 9,
    "depth": 5.5,
    "side": "left",
    "angle": 90.0,
    "colour": "white",
    "evidence": "ortho2020",
-   "unverified": "hidden under the solar canopy: north half inferred only where the canopy is 12 m deep, pitch 2.59 m"
+   "unverified": "hidden under the solar canopy: north half inferred only where the canopy is 12 m deep, pitch 2.59 m; continues two more stalls east under the canopy past the area outline and the lot curb: cut there"
   },
   {
    "name": "V_lot_station_W",
@@ -4040,20 +4040,21 @@
    "type": "stalls",
    "line": [
     [
-     -41.02,
-     1129.11
+     -40.25,
+     1133.59
     ],
     [
      -34.8,
      1165.09
     ]
    ],
-   "count": 8,
+   "count": 7,
    "depth": 7.4,
    "side": "right",
    "angle": 145.2,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "row continues one more stall south (divider at the loop island) past the area outline: cut there"
   },
   {
    "name": "V_lot_station_axis",
