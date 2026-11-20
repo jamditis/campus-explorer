@@ -94,14 +94,18 @@ export function simplify({ e }, tol) {
  * The stand-in: a curtain through the kept profile points, each from its true top down to the lowest
  * source height, with level normals facing the eye. Two vertices a point (top, then foot) and two
  * triangles between neighbours, wound to face the eye. Model frame.
+ * `reach` (metres, 0 for none): a point farther than that from the eye comes nearer along its sight line,
+ * top and foot each keeping their elevation angle, so the outline from the eye stays the same while the
+ * whole curtain stays inside the viewer's far plane.
  */
-export function curtain(runs, prof, eye) {
+export function curtain(runs, prof, eye, reach = 0) {
   const pos = [], nor = [], index = [];
   for (const run of runs) {
     const first = pos.length / 3;
     run.forEach((i, k) => {
       const dx = prof.x[i] - eye[0], dy = prof.y[i] - eye[1], d = Math.hypot(dx, dy) || 1;
-      pos.push(prof.x[i], prof.y[i], prof.z[i], prof.x[i], prof.y[i], prof.zMin);
+      const s = reach > 0 && d > reach ? reach / d : 1, x = eye[0] + dx * s, y = eye[1] + dy * s;
+      pos.push(x, y, eye[2] + (prof.z[i] - eye[2]) * s, x, y, eye[2] + (prof.zMin - eye[2]) * s);
       nor.push(-dx / d, -dy / d, 0, -dx / d, -dy / d, 0);
       if (k) {
         const a = first + 2 * (k - 1), b = a + 2; // a, a+1: previous top, foot; b, b+1: this top, foot

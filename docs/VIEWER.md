@@ -167,6 +167,29 @@ An image that two or more published files carry (the leaf textures are in almost
 - Network: each tile still asks for the file; the browser's HTTP cache answers after the first download (GitHub Pages sends `max-age=600`, then revalidates).
 - Tools that read published tiles (`supersede.mjs`, `compact.mjs`, `lod.mjs`, `tools/evidence/dump_tiles.mjs`) read the images through gltf-transform's NodeIO, which resolves the URI against the tile's folder. gltf-transform writes every image into a GLB, so `compact.mjs` and `lod.mjs` write through `keepShared` (tex.mjs), which points the unchanged shared images back at their files; the export's last step catches anything else.
 
+### Far field
+
+What is not the campus: `skirt.glb` (the 4 km 3DEP ground), `context.glb` (campus terrain, roads and paths, the far
+3DEP ground `BD_farfield_3DEP_ortho` out to 29 km, the mid-distance houses, street trees and canopy out to 10 km, and
+the skyline), `n_context.glb`, `sw_context.glb`, `far_houses.glb`, `far_trees.bin` and `landcover.webp`. Three
+facts set what of it can be seen. The fog (`look.js`, FogExp2 0.00027) leaves 31 % of a surface's own colour at
+4 km, 7 % at 6 km and under 0.1 % past 10 km. The camera's far plane (`app.js`) is 20 km. The flight limit keeps
+the camera within about 2.5 km of the origin. So past 10 km only an outline against the sky shows, and a 30 m wide
+building there is under 3 px wide at the walk view's 68 degrees on a 1080 px screen.
+
+The export applies three steps to the published tiles (`build_web.sh`, after supersede, before the shared images):
+
+- `farcut.mjs`: every mesh that is not ground and lies wholly past 10 km (the New York, Jersey City and American
+  Dream buildings of the main model, 148,598 triangles in six meshes) becomes one stand-in,
+  `BD_skyline_silhouette_STANDIN`: a curtain through the highest point the source triangles reach in each 0.1 degree
+  of bearing, seen from the campus centre (`skyline.mjs`), kept where the outline turns by more than 0.05 degrees
+  (450 triangles). Its points are the source's own tops, at their bearings, distances and heights. `REACH=17000`
+  brings points past 17 km nearer along their sight lines (same outline from the centre) so the far plane no longer
+  cuts them: today it cuts 70 % of the skyline's columns from the campus centre, in the 3D meshes and the stand-in alike.
+- `skirt.mjs`: the skirt simplified to 5 cm (borders locked, only existing vertices kept), once (marked in extras).
+- `drop_zero.mjs`: triangles of zero area in the stored positions are dropped from every tile and far version
+  (3.98 M of 22.4 M when this was written, 2.75 M of them in the skirt). They draw nothing.
+
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
 
 ## Moving to a place

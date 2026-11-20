@@ -99,3 +99,18 @@ test('beyond: a mesh counts as super distant only when all its corners are past 
   assert.equal(beyond([...wall(12000, 0, 12000, 10, 0, 50), ...wall(0, -12000, 10, -12000, 0, 50)], 10000), true);
   assert.equal(beyond([], 10000), false);
 });
+
+test('with a reach, points past it come nearer along their sight line: same bearing and elevation from the eye', () => {
+  const p = profile(new Float32Array(wall(22000, 500, 22000, -500, -40, 400)), EYE, 0.5);
+  const runs = simplify(p, 0.01);
+  const far = curtain(runs, p, EYE), pulled = curtain(runs, p, EYE, 17000);
+  for (let v = 0; v < far.position.length / 3; v++) {
+    const [x, y, z] = far.position.slice(v * 3, v * 3 + 3), [a, b, c] = pulled.position.slice(v * 3, v * 3 + 3);
+    near(Math.hypot(a, b), 17000, 1e-3 * 17000);
+    near(Math.atan2(b, a), Math.atan2(y, x), 1e-6);
+    near(Math.atan2(c - EYE[2], Math.hypot(a, b)), Math.atan2(z - EYE[2], Math.hypot(x, y)), 1e-6);
+  }
+  // nearer than the reach: unchanged
+  const q = profile(new Float32Array(wall(12000, 500, 12000, -500, -40, 400)), EYE, 0.5);
+  assert.deepEqual(curtain(simplify(q, 0.01), q, EYE, 17000).position, curtain(simplify(q, 0.01), q, EYE).position);
+});

@@ -124,6 +124,13 @@ if [ "${REPACK:-0}" = 1 ]; then
     if [[ $C == t_* || $C == n_t_* ]]; then RATIO=0.1 ERR_M=0.5 node lod.mjs $f $S/lod/$C.glb >/dev/null || fail "repack lod $C"; fi
   done
 fi
+# Far field and empty triangles, on the published tiles (no .blend needed), so every run applies them again:
+# buildings past 10 km become one silhouette (farcut.mjs; REACH=17000 keeps it inside the viewer's far plane),
+# the skirt is simplified to 5 cm once (skirt.mjs), and triangles of zero area are dropped everywhere (drop_zero.mjs)
+cp $W/farcut.mjs $W/skyline.mjs $W/skirt.mjs $W/drop_zero.mjs $W/zero.mjs $W/tex.mjs ./
+for f in $S/*context.glb; do node farcut.mjs $f || fail "far cut $(basename $f)"; done
+if [ -e $S/skirt.glb ]; then node skirt.mjs $S/skirt.glb || fail "skirt"; fi
+node drop_zero.mjs $S/*.glb $S/lod/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "zero-area triangles"
 # Images two or more tiles carry (leaf textures, paint sheets in a tile and its far version) are stored once as
 # $S/tex/<content hash>.webp and the tiles refer to them by URI (share_tex.mjs, on every published tile, so it
 # needs no .blend). Last, because gltf-transform puts every image back into a GLB it writes. SHARE_TEX=0 puts

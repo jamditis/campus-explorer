@@ -67,5 +67,23 @@ class Existing(unittest.TestCase):
             self.assertFalse(trees.is_vegetation(name), name)
 
 
+class MappedBuildings(unittest.TestCase):
+    def test_closed_building_ways_become_rings(self):
+        osm = dict(
+            elements=[
+                dict(type="node", id=1, x=0.0, y=0.0),
+                dict(type="node", id=2, x=4.0, y=0.0),
+                dict(type="node", id=3, x=4.0, y=3.0),
+                dict(type="node", id=4, x=0.0, y=3.0),
+                dict(type="way", id=9, nodes=[1, 2, 3, 4, 1], tags=dict(building="yes")),
+                dict(type="way", id=10, nodes=[1, 2, 3], tags=dict(highway="footway")),
+                dict(type="way", id=11, nodes=[1, 2, 3], tags=dict(building="yes")),  # open
+            ]
+        )
+        self.assertEqual(
+            trees.mapped_buildings(osm), [[(0.0, 0.0), (4.0, 0.0), (4.0, 3.0), (0.0, 3.0)]]
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

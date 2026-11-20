@@ -8,7 +8,10 @@
 // Rewrites a file in place only when it holds such meshes; a later export brings them back and this step,
 // run again by build_web.sh after the context tile is optimized, replaces them again. Ground (terrain, the
 // far-field 3DEP surface) is never cut. Env: FAR_M (10000), STEP (bin, degrees, 0.1: 1.2 to 1.6 px), TOL (degrees, 0.05: under a pixel),
-// EYE_Z (eye height at the campus centre, NAVD88 m, 138: LiDAR ground 136.7 plus eye height).
+// EYE_Z (eye height at the campus centre, NAVD88 m, 138: LiDAR ground 136.7 plus eye height), REACH (0).
+// The viewer's far plane (app.js, 20 km) cuts off every part of the 3D skyline past 20 km from the camera,
+// most of Manhattan seen from the campus: REACH=17000 keeps the whole outline inside it from anywhere in the
+// flight box (2 km round the centre), at the same bearings and elevation angles from the campus centre.
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
@@ -19,6 +22,8 @@ import { keepShared, sharedRefs } from './tex.mjs';
 
 const FAR_M = +(process.env.FAR_M || 10000), STEP = +(process.env.STEP || 0.1), TOL = +(process.env.TOL || 0.05);
 const EYE = [0, 0, +(process.env.EYE_Z || 138)];
+// REACH (m, 0: none): bring stand-in points past it nearer along their sight line (skyline.mjs curtain)
+const REACH = +(process.env.REACH || 0);
 const NAME = 'BD_skyline_silhouette_STANDIN';
 const GROUND = /terrain|DTM|ground|farfield|3DEP|skirt|apron|ortho|road|street/i;
 
@@ -52,7 +57,7 @@ for (const f of process.argv.slice(2)) {
     far.push(node); for (const v of t) tris.push(v);
   }
   if (!far.length) { console.log(`farcut ${f.split('/').pop()}: nothing past ${FAR_M} m`); continue; }
-  const prof = profile(Float64Array.from(tris), EYE, STEP), runs = simplify(prof, TOL), c = curtain(runs, prof, EYE);
+  const prof = profile(Float64Array.from(tris), EYE, STEP), runs = simplify(prof, TOL), c = curtain(runs, prof, EYE, REACH);
   // to the viewer frame (x east, y up, z south)
   const P = new Float32Array(c.position.length), N = new Float32Array(c.normal.length);
   for (let i = 0; i < P.length; i += 3) {

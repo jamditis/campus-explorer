@@ -1,6 +1,6 @@
 {
  "zone": "l60_lot",
- "notes": "Zone l60_lot: Lot 60, its west drive, the north-west paving up to the B/C border, the spine drive with its south-west walk, the stall row against the Center for Clinical Services, the Facilities forecourt asphalt and the junction apron north of the Village edge. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_lot/gen.py); it is the source. Frame (t, s): t along 136 deg, s along 46 deg. Sources: NJ 2020 ortho at 0.15 m and 0.075 m (positions, paint), 3DEP 2017 LiDAR (heights, curbs, pads), OSM 233913162 and 233913165 (names, what a thing is). Lot 60's rows and islands run at 136.27 deg (island edges fitted: B north-east edge 35 points rms 0.041 m; A edges 17 and 65 points rms 0.047 and 0.043; R1 island 23 points rms 0.032). Stall rows fitted by least squares through the divider lines (ridge filter on brightness profiles): pitch 2.59 m (8.5 ft) in every Lot 60 row, rms 0.013 to 0.043 m, max 0.19 m; counts R1 39, R2 37, R3 37, R4 37, R5 37, R6 32 (+ 2 accessible bays), R7 31, R8 30; west edge row 12 at 2.54 m (faint); Clinical row 11 + 1 + 8 at 2.75 m (9 ft, rms 0.16 m) with two accessible stalls and a hatched aisle. About 300 marked stalls in this zone, fewer than OSM's 430 for Lot 60. Lot 60's south-east column (t 1121 to 1127) holds accessible bays with hatched aisles (OSM has one accessible space at (-198.2, 1412.5)): their layout is read roughly. The long islands A and B and the R1 island are sunk 0.2 to 0.3 m in the LiDAR (rain gardens?), drawn as lawn; their dark south-east ends as mulch. The spine (s 917.0 to 927.25) has a raised curb only on its south-west side (LiDAR): the north-east 'band' is two painted lines and the Clinical row's stalls run flush to it. Divider: 0.15 to 0.2 m curb on the lot side, flush with the bus lot. The south-east walk has its curb on its south-east side. The spine walk's outer edge is flush with l60_south's lot (no curb). West drive: its south-west curb is the divider's north-east line run on to a 13 m corner; its west edge (t 1244.2) has no curb, buses park on the flat ground 4 to 6 m beyond it at the rock cut's foot (not paved in the ortho). North of the grass island the paving runs out to a curb at t 1258.3 (fitted, rms 0.42 m). Facilities' north-west wall has no walk: the asphalt runs to it (t 1234.9). Left out: the dashed driving-course markings (arcs and lanes) painted over Lot 60's middle rows, four patches of dots on the spine and the junction (unknown purpose), vehicles and containers (a red box at the Facilities' north-west corner is not in the 2017 LiDAR), the equipment on the two north-west pads. Lamps: no LiDAR returns; five placed from pole shadows.",
+ "notes": "Zone l60_lot: Lot 60, its west drive, the north-west paving up to the B/C border, the spine drive with its south-west walk, the stall row against the Center for Clinical Services, the Facilities forecourt asphalt and the junction apron north of the Village edge. The JSON was written by a generator (/tmp/claude-0/p4/lot60/l60_lot/gen.py). Since the review of 2026-11-20 this file is edited by hand; it is the source. Frame (t, s): t along 136 deg, s along 46 deg. Sources: NJ 2020 ortho at 0.15 m and 0.075 m (positions, paint), 3DEP 2017 LiDAR (heights, curbs, pads), OSM 233913162 and 233913165 (names, what a thing is). Lot 60's rows and islands run at 136.27 deg (island edges fitted: B north-east edge 35 points rms 0.041 m; A edges 17 and 65 points rms 0.047 and 0.043; R1 island 23 points rms 0.032). Stall rows fitted by least squares through the divider lines (ridge filter on brightness profiles): pitch 2.59 m (8.5 ft) in every Lot 60 row, rms 0.013 to 0.043 m, max 0.19 m; counts R1 39, R2 37, R3 37, R4 37, R5 37, R6 32 (+ 2 accessible bays), R7 31, R8 30; west edge row 12 at 2.54 m (faint); Clinical row 11 + 1 + 8 at 2.75 m (9 ft, rms 0.16 m) with two accessible stalls and a hatched aisle. About 300 marked stalls in this zone, fewer than OSM's 430 for Lot 60. Lot 60's south-east column (t 1121 to 1127) holds accessible bays with hatched aisles (OSM has one accessible space at (-198.2, 1412.5)): their layout is read roughly. The long islands A and B and the R1 island are sunk 0.2 to 0.3 m in the LiDAR (rain gardens?), drawn as lawn; their dark south-east ends as mulch. The spine (s 917.0 to 927.25) has a raised curb only on its south-west side (LiDAR): the north-east 'band' is two painted lines and the Clinical row's stalls run flush to it. Divider: 0.15 to 0.2 m curb on the lot side, flush with the bus lot. The south-east walk has its curb on its south-east side. The spine walk's outer edge is flush with l60_south's lot (no curb). West drive: its south-west curb is the divider's north-east line run on to a 13 m corner; its west edge (t 1244.2) has no curb, buses park on the flat ground 4 to 6 m beyond it at the rock cut's foot (not paved in the ortho). North of the grass island the paving runs out to a curb at t 1258.3 (fitted, rms 0.42 m). Facilities' north-west wall has no walk: the asphalt runs to it (t 1234.9). Left out: the dashed driving-course markings (arcs and lanes) painted over Lot 60's middle rows, four patches of dots on the spine and the junction (unknown purpose), vehicles and containers (a red box at the Facilities' north-west corner is not in the 2017 LiDAR), the equipment on the two north-west pads. Lamps: no LiDAR returns; five placed from pole shadows.",
  "surfaces": [
   {
    "name": "L6L_lot_60_asphalt",
@@ -90,20 +90,26 @@
      13.0
     ],
     [
-     -265.89,
-     1442.92
+     -274.0,
+     1450.68,
+     1.0
     ],
     [
-     -264.9,
-     1442.06
+     -273.0,
+     1448.5,
+     1.0
     ],
     [
-     -266.95,
-     1439.91
+     -273.6,
+     1446.2
+    ],
+    [
+     -267.1,
+     1439.8
     ]
    ],
    "evidence": "ortho2020, lidar2017; osm 233913162",
-   "unverified": "west edge north of the grass island (bus parking, buses hide it) and the edge along the yard wall read by eye; asphalt runs under the divider, the south-east walk and the islands"
+   "unverified": "west edge north of the grass island (bus parking, buses hide it) and the edge along the yard wall read by eye; asphalt runs under the divider, the south-east walk and the islands; the grass nose at the bus lot mouth read on the 0.075 m ortho"
   },
   {
    "name": "L6L_spine_asphalt",
@@ -188,8 +194,8 @@
    "kind": "concrete",
    "ring": [
     [
-     -212.7,
-     1387.95
+     -203.3,
+     1397.56
     ],
     [
      -166.4,
@@ -200,11 +206,11 @@
      1437.81
     ],
     [
-     -210.54,
-     1390.16
+     -205.34,
+     1399.55
     ]
    ],
-   "evidence": "ortho2020 (fitted edges)"
+   "evidence": "ortho2020 (fitted edges; the concrete ends 10.5 m short of the divider, a crosswalk crosses the rest)"
   },
   {
    "name": "L6L_spine_SW_walk",
@@ -390,8 +396,9 @@
    "kind": "lawn",
    "ring": [
     [
-     -174.73,
-     1457.28
+     -183.31,
+     1465.49,
+     2.5
     ],
     [
      -243.37,
@@ -422,13 +429,50 @@
      1526.68
     ],
     [
-     -171.72,
-     1460.39
+     -181.24,
+     1469.49
+    ],
+    [
+     -177.66,
+     1473.17,
+     0.6
+    ],
+    [
+     -176.73,
+     1472.27,
+     0.6
     ]
    ],
    "evidence": "ortho2020, lidar2017",
    "layer": 3.5,
-   "unverified": "fill read as lawn from tone; sunk 0.3 m; north-west hook read by eye"
+   "unverified": "fill read as lawn from tone; sunk 0.3 m; north-west hook read by eye; the south-east end and its curbed finger to the north-east read by eye on the 0.075 m ortho; the finger taken as lawn"
+  },
+  {
+   "name": "L6L_island_A_SE_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -175.4,
+     1456.6
+    ],
+    [
+     -176.6,
+     1462.3,
+     1.5
+    ],
+    [
+     -174.6,
+     1464.0,
+     1.5
+    ],
+    [
+     -170.2,
+     1460.6
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (white curb), lidar2017 (0.1 m above the aisle); its south-east side runs under the walk",
+   "layer": 3.5,
+   "unverified": "dark bed: mulch or shrubs"
   },
   {
    "name": "L6L_end_island_R2R3_NW",
@@ -709,8 +753,9 @@
    "name": "L6L_island_A_curb",
    "path": [
     [
-     -174.73,
-     1457.28
+     -183.31,
+     1465.49,
+     2.5
     ],
     [
      -243.37,
@@ -741,12 +786,47 @@
      1526.68
     ],
     [
-     -171.72,
-     1460.39
+     -181.24,
+     1469.49
+    ],
+    [
+     -177.66,
+     1473.17,
+     0.6
+    ],
+    [
+     -176.73,
+     1472.27,
+     0.6
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_island_A_SE_bed_curb",
+   "path": [
+    [
+     -175.4,
+     1456.6
+    ],
+    [
+     -176.6,
+     1462.3,
+     1.5
+    ],
+    [
+     -174.6,
+     1464.0,
+     1.5
+    ],
+    [
+     -170.2,
+     1460.6
     ]
    ],
    "closed": false,
-   "evidence": "ortho2020, lidar2017"
+   "evidence": "ortho2020 (white curb)"
   },
   {
    "name": "L6L_end_island_R2R3_NW_curb",
@@ -888,8 +968,18 @@
    "name": "L6L_west_drive_SW_curb",
    "path": [
     [
-     -266.0,
-     1443.02
+     -273.59,
+     1446.25
+    ],
+    [
+     -273.0,
+     1448.5,
+     1.0
+    ],
+    [
+     -274.0,
+     1450.68,
+     1.0
     ],
     [
      -302.45,
@@ -908,8 +998,8 @@
    "name": "L6L_lot_60_SE_walk_curb",
    "path": [
     [
-     -212.7,
-     1387.95
+     -203.3,
+     1397.56
     ],
     [
      -168.87,
@@ -2645,6 +2735,42 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "pattern reads as a grid of short bars; style taken as continental"
+  },
+  {
+   "name": "L6L_crosswalk_SE_walk_divider",
+   "type": "crosswalk",
+   "line": [
+    [
+     -204.07,
+     1398.42
+    ],
+    [
+     -211.4,
+     1390.91
+    ]
+   ],
+   "width": 2.0,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (9 bars at 1.21 m centres from the walk's end to the divider, 2.0 m long, fitted from profiles)"
+  },
+  {
+   "name": "L6L_island_A_SE_bar",
+   "type": "line",
+   "path": [
+    [
+     -182.3,
+     1466.2
+    ],
+    [
+     -179.8,
+     1464.1
+    ]
+   ],
+   "width": 0.3,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "what the bar is for is not known; ends read by eye"
   },
   {
    "name": "L6L_crosswalk_spine_Clinical",

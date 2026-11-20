@@ -1,6 +1,6 @@
 {
  "zone": "l60_north",
- "notes": "Zone l60_north of the lot60 area: the buildings and everything north-east of them. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_north/gen.py, scratch, not kept); this file is the source: edit it by hand and say so here. Digitised in a frame along the buildings' axis (t along 136 deg, s along 46 deg). Sources: the NJ 2020 ortho at 0.15 and 0.075 m (positions, paint), the 2017 LiDAR (building outlines from roof-edge returns, roof and ground heights), OSM (names, what a thing is; outlines only as a guide). Names: University Facilities and the Center for Clinical Services (montclair.edu), Lot 60N (OSM 287527901). Buildings: University Facilities and the Center for Clinical Services are one long red-roofed block joined at t 1127.7; both have low gables (rise 0.4 and 0.7 m); the Clinical building's white annex is a flat part 3 m higher. The LiDAR outlines lie up to 1 m from the OSM ones (the B/C border): the Clinical south-east end 1.0 m south-east of OSM's corner, Facilities' north-west wall 0.9 m inside the border: a 0.9 m asphalt strip fills the gap to l60_lot's asphalt there. The walk round the Clinical building's south-east end runs about 3 m past the junction border to join the south-west walk (3 m2 over l60_lot's asphalt; concrete wins). North of Facilities: a white shed (2017 LiDAR and 2020 ortho), a white structure (2020 ortho only), two tanks (ortho): none is in OSM, all UNVERIFIED. Left out: a 15 by 13 m, 3.9 m high structure at (-145, 1515) in the 2017 LiDAR that is gone by 2020 (hatched paving there), a blue container and an orange container, vehicles, the rooftop units on the annex, the Great Notch Yard House, the substation and the NJT service road (outside the footprint). Ground: one asphalt surface from the walls to the footprint (the yard wall line), starting at y 1378.3 on the Village edge and running 0.2 m past the B/C border at the two open cuts; the walks along the south-west walls and the forecourts from the walls to 0.2 m past l60_lot's apron curb; no walk on the north-east sides (the LiDAR ground is flat to the walls; the dark band there is the buildings' shadow). Stalls: rows fitted by least squares through divider positions found as brightness ridges along the row (pitch 2.745 m, 9 ft): fits in each marking's evidence. The north-east side of Facilities has a row of parked cars with only short irregular marks between them: no stall lines drawn there. Lamps: no pole returns in the 2017 LiDAR in this zone; none placed. Trees come from tools/evidence/trees.py.",
+ "notes": "Zone l60_north of the lot60 area: the buildings and everything north-east of them. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_north/gen.py, scratch, not kept); this file is the source. Since the review of 2026-11-20 this file is edited by hand; it is the source. Digitised in a frame along the buildings' axis (t along 136 deg, s along 46 deg). Sources: the NJ 2020 ortho at 0.15 and 0.075 m (positions, paint), the 2017 LiDAR (building outlines from roof-edge returns, roof and ground heights), OSM (names, what a thing is; outlines only as a guide). Names: University Facilities and the Center for Clinical Services (montclair.edu), Lot 60N (OSM 287527901). Buildings: University Facilities and the Center for Clinical Services are one long red-roofed block joined at t 1127.7; both have low gables (rise 0.4 and 0.7 m); the Clinical building's white annex is a flat part 3 m higher. The LiDAR outlines lie up to 1 m from the OSM ones (the B/C border): the Clinical south-east end 1.0 m south-east of OSM's corner, Facilities' north-west wall 0.9 m inside the border: a 0.9 m asphalt strip fills the gap to l60_lot's asphalt there. The walk round the Clinical building's south-east end runs about 3 m past the junction border to join the south-west walk (3 m2 over l60_lot's asphalt; concrete wins). North of Facilities: a white shed (2017 LiDAR and 2020 ortho), a white structure (2020 ortho only), two tanks (ortho): none is in OSM, all UNVERIFIED. Left out: a 15 by 13 m, 3.9 m high structure at (-145, 1515) in the 2017 LiDAR that is gone by 2020 (hatched paving there), a blue container and an orange container, vehicles, the rooftop units on the annex, the Great Notch Yard House, the substation and the NJT service road (outside the footprint). Ground: one asphalt surface from the walls to the footprint (the yard wall line), starting at y 1378.3 on the Village edge and running 0.2 m past the B/C border at the two open cuts; the walks along the south-west walls and the forecourts from the walls to 0.2 m past l60_lot's apron curb; no walk on the north-east sides (the LiDAR ground is flat to the walls; the dark band there is the buildings' shadow). Stalls: rows fitted by least squares through divider positions found as brightness ridges along the row (pitch 2.745 m, 9 ft): fits in each marking's evidence. The north-east side of Facilities has a row of parked cars with only short irregular marks between them: no stall lines drawn there. Lamps: no pole returns in the 2017 LiDAR in this zone; none placed. Trees come from tools/evidence/trees.py.",
  "surfaces": [
   {
    "name": "L6N_asphalt",
@@ -195,12 +195,12 @@
      1457.35
     ],
     [
-     -147.98,
-     1431.72
+     -147.69,
+     1431.44
     ],
     [
-     -141.93,
-     1437.98
+     -141.64,
+     1437.7
     ],
     [
      -88.63,
@@ -973,314 +973,263 @@
    "type": "line",
    "path": [
     [
-     -140.0,
-     1504.23
+     -131.59,
+     1496.1
     ],
     [
-     -140.01,
-     1505.03
+     -119.54,
+     1497.16
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_2",
    "type": "line",
    "path": [
     [
-     -139.19,
-     1503.44
+     -130.82,
+     1495.36
     ],
     [
-     -139.23,
-     1505.84
+     -120.39,
+     1496.27
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_3",
    "type": "line",
    "path": [
     [
-     -138.37,
-     1502.66
+     -130.05,
+     1494.62
     ],
     [
-     -138.44,
-     1506.66
+     -121.24,
+     1495.39
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_4",
    "type": "line",
    "path": [
     [
-     -137.56,
-     1501.87
+     -129.29,
+     1493.88
     ],
     [
-     -137.66,
-     1507.47
+     -122.1,
+     1494.51
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_5",
    "type": "line",
    "path": [
     [
-     -136.75,
-     1501.09
+     -128.52,
+     1493.14
     ],
     [
-     -136.87,
-     1508.29
+     -122.95,
+     1493.63
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_6",
    "type": "line",
    "path": [
     [
-     -135.93,
-     1500.3
+     -127.75,
+     1492.4
     ],
     [
-     -136.09,
-     1509.1
+     -123.8,
+     1492.74
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_7",
    "type": "line",
    "path": [
     [
-     -135.12,
-     1499.51
+     -126.99,
+     1491.66
     ],
     [
-     -135.3,
-     1509.91
+     -124.65,
+     1491.86
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_8",
    "type": "line",
    "path": [
     [
-     -134.3,
-     1498.73
+     -126.22,
+     1490.92
     ],
     [
-     -134.51,
-     1510.73
+     -125.5,
+     1490.98
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_9",
    "type": "line",
    "path": [
     [
-     -133.49,
-     1497.94
+     -132.36,
+     1496.84
     ],
     [
-     -133.72,
-     1510.95
+     -120.21,
+     1497.91
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_10",
    "type": "line",
    "path": [
     [
-     -132.68,
-     1497.16
+     -133.12,
+     1497.58
     ],
     [
-     -132.9,
-     1510.17
+     -120.98,
+     1498.65
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_11",
    "type": "line",
    "path": [
     [
-     -131.86,
-     1496.37
+     -133.89,
+     1498.33
     ],
     [
-     -132.09,
-     1509.38
+     -121.75,
+     1499.39
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_12",
    "type": "line",
    "path": [
     [
-     -131.05,
-     1495.59
+     -134.66,
+     1499.07
     ],
     [
-     -131.28,
-     1508.59
+     -122.51,
+     1500.13
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_13",
    "type": "line",
    "path": [
     [
-     -130.23,
-     1494.8
+     -135.43,
+     1499.81
     ],
     [
-     -130.46,
-     1507.81
+     -123.28,
+     1500.87
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_14",
    "type": "line",
    "path": [
     [
-     -129.42,
-     1494.01
+     -136.19,
+     1500.55
     ],
     [
-     -129.65,
-     1507.02
+     -124.05,
+     1501.61
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_15",
    "type": "line",
    "path": [
     [
-     -128.61,
-     1493.23
+     -136.96,
+     1501.29
     ],
     [
-     -128.83,
-     1506.24
+     -124.82,
+     1502.35
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_16",
    "type": "line",
    "path": [
     [
-     -127.79,
-     1492.44
-    ],
-    [
-     -128.02,
-     1505.45
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
-  },
-  {
-   "name": "L6N_hatch_NW_17",
-   "type": "line",
-   "path": [
-    [
-     -126.98,
-     1491.66
-    ],
-    [
-     -127.21,
-     1504.66
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
-  },
-  {
-   "name": "L6N_hatch_NW_18",
-   "type": "line",
-   "path": [
-    [
-     -126.17,
-     1490.87
-    ],
-    [
-     -126.39,
-     1503.88
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
-  },
-  {
-   "name": "L6N_hatch_NW_19",
-   "type": "line",
-   "path": [
-    [
-     -125.37,
-     1491.12
+     -137.73,
+     1502.03
     ],
     [
      -125.58,
@@ -1289,126 +1238,177 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_17",
+   "type": "line",
+   "path": [
+    [
+     -138.5,
+     1502.77
+    ],
+    [
+     -126.35,
+     1503.83
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_18",
+   "type": "line",
+   "path": [
+    [
+     -139.26,
+     1503.51
+    ],
+    [
+     -127.12,
+     1504.58
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_19",
+   "type": "line",
+   "path": [
+    [
+     -140.03,
+     1504.25
+    ],
+    [
+     -127.88,
+     1505.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_20",
    "type": "line",
    "path": [
     [
-     -124.58,
-     1491.93
+     -134.87,
+     1510.36
     ],
     [
-     -124.76,
-     1502.31
+     -133.26,
+     1510.5
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_21",
    "type": "line",
    "path": [
     [
-     -123.8,
-     1492.74
+     -135.72,
+     1509.48
     ],
     [
-     -123.95,
-     1501.52
+     -132.49,
+     1509.76
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_22",
    "type": "line",
    "path": [
     [
-     -123.01,
-     1493.56
+     -136.57,
+     1508.6
     ],
     [
-     -123.14,
-     1500.73
+     -131.72,
+     1509.02
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_23",
    "type": "line",
    "path": [
     [
-     -122.23,
-     1494.37
+     -137.42,
+     1507.71
     ],
     [
-     -122.32,
-     1499.95
+     -130.95,
+     1508.28
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_24",
    "type": "line",
    "path": [
     [
-     -121.44,
-     1495.19
+     -138.28,
+     1506.83
     ],
     [
-     -121.51,
-     1499.16
+     -130.19,
+     1507.54
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_25",
    "type": "line",
    "path": [
     [
-     -120.65,
-     1496.0
+     -139.13,
+     1505.95
     ],
     [
-     -120.7,
-     1498.38
+     -129.42,
+     1506.8
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_hatch_NW_26",
    "type": "line",
    "path": [
     [
-     -119.87,
-     1496.81
+     -139.98,
+     1505.07
     ],
     [
-     -119.88,
-     1497.59
+     -128.65,
+     1506.06
     ]
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (stripes about 0.8 m apart)"
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
   },
   {
    "name": "L6N_stalls_E1",
@@ -1462,7 +1462,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_2",
@@ -1479,7 +1479,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_3",
@@ -1496,7 +1496,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_4",
@@ -1513,7 +1513,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_5",
@@ -1530,7 +1530,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_6",
@@ -1547,7 +1547,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_7",
@@ -1564,7 +1564,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_8",
@@ -1581,7 +1581,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_9",
@@ -1598,7 +1598,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_stall_E_curve_10",
@@ -1615,96 +1615,7 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
-  },
-  {
-   "name": "L6N_stall_E_curve_11",
-   "type": "line",
-   "path": [
-    [
-     -43.77,
-     1441.1
-    ],
-    [
-     -48.48,
-     1439.27
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m (11 dividers read by eye, a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
-  },
-  {
-   "name": "L6N_stall_E_bend_1",
-   "type": "line",
-   "path": [
-    [
-     -46.4,
-     1444.1
-    ],
-    [
-     -50.9,
-     1441.4
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m",
-   "unverified": "read by eye one by one"
-  },
-  {
-   "name": "L6N_stall_E_bend_2",
-   "type": "line",
-   "path": [
-    [
-     -47.7,
-     1446.1
-    ],
-    [
-     -53.0,
-     1443.2
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m",
-   "unverified": "read by eye one by one"
-  },
-  {
-   "name": "L6N_stall_E_bend_3",
-   "type": "line",
-   "path": [
-    [
-     -50.0,
-     1448.2
-    ],
-    [
-     -55.0,
-     1445.2
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m",
-   "unverified": "read by eye one by one"
-  },
-  {
-   "name": "L6N_stall_E_bend_4",
-   "type": "line",
-   "path": [
-    [
-     -52.3,
-     1450.0
-    ],
-    [
-     -57.0,
-     1446.8
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020 0.075 m",
-   "unverified": "read by eye one by one"
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
   },
   {
    "name": "L6N_hatch_E_outline",

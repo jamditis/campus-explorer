@@ -1,6 +1,6 @@
 {
  "zone": "wb_footprint",
- "notes": "The ground this area owns (86,100 m2, 280 points): the band north of the Student Center and south of the Ice Arena, east of the railway. Names (the university's where known; OpenStreetMap for positions only): Yogi Berra Drive from the railway bridge to the north-east area; Carlisle Road from the west area's cut north to the Ice Arena drive; Webster Road from the west area's cut to Lot 17; Quad Road; Stone Street north of Stone Hall; Blanton Road; Lot 17, Lot 38, the north end of Lot 30 and the unnamed lot south of the Ice Arena (OSM 313030643); Webster Hall, Irvin D. Reid Hall and the Red Hawk Diner (none in the published model). 'webster' is the area's label only: Webster Road runs through it and Webster Hall stands in it. Webster Hall still stands in the newest USGS NAIP Plus mosaic (leaf-on, after 2020). West: 3.4 m east of the rail ballast's east edge (published Ballast/Rail ties meshes: x = -295.5 + 0.4408 (y - 330), a straight run), from the west area's north-west corner (-285.89, 344.1) to the Ice Arena drive; round the east end of the Yogi Berra Drive bridge 1.5 m outside the deck (LiDAR class 17, x -266..-222): the road over the railway is left to the published model. South-west: the west area's own vertices, reused exactly: its cut across Carlisle Road (-257.14, 331.11)-(-285.89, 344.1), the east side of Lot 30's walk down to (-289.33, 255.06) and Webster Road's north-west edge back to its cut across Webster Road (-201.1, 317.7)-(-195.25, 306.55); the wooded wedge between them (north model terrain) is taken. South: University Hall (north model) 1 m out, 0.2 m inside the edge of the main model's walk along its north wall (SB_footway), round the published WS24 junction of Webster Road (Joe's photos) 0.2 m inside its asphalt, the Student Center Annex and its north-east deck, the Student Center 1 m out; Lot 38 and the garden east of it are inside; down the main model's walks (QS_footway, QW_footway) 0.2 m inside their outer edge round Irvin D. Reid Hall, which adjoins Richardson Hall (Richardson 1 m out; Reid's last metre at Richardson's wall lies outside); up the west edge of the published Stone Street (QS/QW_service) 0.2 m inside it to its north end (y 352), across it and its east walk, east to Bohn Hall. East: 0.5 m inside Bohn Hall's west walls, its courtyard and north landing (see free_edges), then straight north at x 232..234 to the north-east area's edge at (232, 497), a point on its segment (205, 497)-(300, 497). North: the north-east area's vertices reused exactly, (205, 497), (176, 499), then round Blanton Hall (main model) 1 m out on its south side and both ends: the 5 m strip between Blanton's north-west wall and the north-east edge (90, 455)-(176, 499) stays with the main model; then (90, 455), (60, 468), (4, 450), (-22, 440), (-56, 431) and up the north-east area's west edge x -56 to (-56, 598); 1 m south of the Ice Arena's south wall, 0.2 m inside the published arena walk and drive aisle (KP IceArena SSW, north model), and square across Carlisle Road at y 600..612 to the railway. Published things left standing inside the outline (not ground): building 313028541 by the substation and building 232853526 north of Webster Road (north model), the Lot 38 roll-off containers (main), 54 published tree groups. Left out: the ground west of the railway (the TV Tower and the building beside it, Yogi Berra Drive west of the bridge and its junction with Clove Road): a footprint is one ring and cannot cross the rail cutting except on the bridge, which the engine cannot build; that ground touches the village area's south-east edge. Evidence in /workspace/data/webster: ortho2020 (x -330..250, y 260..630, 0.15 m), lidar.npz (x -370..290, y 250..670, 0.5 m), osm.json, tiles (dump of models/main for x -380..300, y 240..680, with instances; ground.png from plan.py), tiles_plain (no instances; plan.png). Edge heights: 2506 samples; away from the scripted neighbours and outside the free_edges ring they lie within 0.06 m (median) of the LiDAR ground, 95 % within 0.41 m.",
+ "notes": "The ground this area owns (86,100 m2, 280 points): the band north of the Student Center and south of the Ice Arena, east of the railway. Names (the university's where known; OpenStreetMap for positions only): Yogi Berra Drive from the railway bridge to the north-east area; Carlisle Road from the west area's cut north to the Ice Arena drive; Webster Road from the west area's cut to Lot 17; Quad Road; Stone Street north of Stone Hall; Blanton Road; Lot 17, Lot 38, the north end of Lot 30 and the unnamed lot south of the Ice Arena (OSM 313030643); Webster Hall, Irvin D. Reid Hall and the Red Hawk Diner (none in the published model). 'webster' is the area's label only: Webster Road runs through it and Webster Hall stands in it. Webster Hall still stands in the newest USGS NAIP Plus mosaic (leaf-on, after 2020). West: 3.4 m east of the rail ballast's east edge (published Ballast/Rail ties meshes: x = -295.5 + 0.4408 (y - 330), a straight run), from the west area's north-west corner (-285.89, 344.1) to the Ice Arena drive; round the east end of the Yogi Berra Drive bridge 1.5 m outside the deck (LiDAR class 17, x -266..-222): the road over the railway is left to the published model. South-west: the west area's own vertices, reused exactly: its cut across Carlisle Road (-257.14, 331.11)-(-285.89, 344.1), the east side of Lot 30's walk down to (-289.33, 255.06) and Webster Road's north-west edge back to its cut across Webster Road (-201.1, 317.7)-(-195.25, 306.55); the wooded wedge between them (north model terrain) is taken. South: University Hall (north model) 1 m out, 0.2 m inside the edge of the main model's walk along its north wall (SB_footway), round the published WS24 junction of Webster Road (Joe's photos) 0.2 m inside its asphalt, the Student Center Annex and its north-east deck, the Student Center 1 m out; Lot 38 and the garden east of it are inside; down the main model's walks (QS_footway, QW_footway) 0.2 m inside their outer edge round Irvin D. Reid Hall, which adjoins Richardson Hall (Richardson 1 m out; Reid's last metre at Richardson's wall lies outside); up the west edge of the published Stone Street (QS/QW_service) 0.2 m inside it to its north end (y 352), across it and its east walk, east to Bohn Hall. East: 0.5 m inside Bohn Hall's west walls, its courtyard and north landing (see free_edges), then straight north at x 232..234 to the north-east area's edge at (232, 497), a point on its segment (205, 497)-(300, 497). North: the north-east area's vertices reused exactly, (205, 497), (176, 499), then round Blanton Hall (main model) 1 m out on its south side and both ends: the 5 m strip between Blanton's north-west wall and the north-east edge (90, 455)-(176, 499) stays with the main model; then (90, 455), (60, 468), (4, 450), (-22, 440), (-56, 431) and up the north-east area's west edge x -56 to (-56, 598); 1 m south of the Ice Arena's south wall, 0.2 m inside the published arena walk and drive aisle (KP IceArena SSW, north model), and square across Carlisle Road at y 600..612 to the railway. Published things left standing inside the outline (not ground): building 313028541 by the substation and building 232853526 north of Webster Road (north model), the Lot 38 roll-off containers (main), 54 published tree groups. Left out: the ground west of the railway (the TV Tower and the building beside it, Yogi Berra Drive west of the bridge and its junction with Clove Road): a footprint is one ring and cannot cross the rail cutting except on the bridge, which the engine cannot build; that ground touches the village area's south-east edge. Evidence in /workspace/data/webster: ortho2020 (x -330..250, y 260..630, 0.15 m), lidar.npz (x -370..290, y 250..670, 0.5 m), osm.json, tiles (dump of models/main for x -380..300, y 240..680, with instances; ground.png from plan.py), tiles_plain (no instances; plan.png). Edge heights: 2506 samples; away from the scripted neighbours and outside the free_edges ring they lie within 0.06 m (median) of the LiDAR ground, 95 % within 0.41 m. Fix-up pass (2026-11-20): a notch 2.8 m wide takes the ground under Reid Hall's link up to 0.5 m past Richardson Hall's wall (see free_edges); the main tiles need exporting again before supersede.mjs runs.",
  "footprint": [
   [
    -246.5,
@@ -651,6 +651,22 @@
    280.21
   ],
   [
+   111.36,
+   282.73
+  ],
+  [
+   110.64,
+   281.05
+  ],
+  [
+   108.07,
+   282.15
+  ],
+  [
+   108.75,
+   283.75
+  ],
+  [
    107.09,
    284.4
   ],
@@ -1144,6 +1160,27 @@
     ]
    ],
    "why": "Bohn Hall (main model): the published ground beside its west face, courtyard and north landing is the coarse 4 km skirt, 1.0 to 2.0 m under the LiDAR ground (edge samples 132.1-134.6 m against 134.0-135.4 m). The edge runs 0.5 m inside the walls there, so that ground is clipped and hidden, and follows this area's own grade instead of dipping 2 m to the skirt in front of the wall."
+  },
+  {
+   "ring": [
+    [
+     107.4,
+     280.3
+    ],
+    [
+     111.6,
+     280.3
+    ],
+    [
+     111.6,
+     284.6
+    ],
+    [
+     107.4,
+     284.6
+    ]
+   ],
+   "why": "Irvin D. Reid Hall's link to Richardson Hall (main model): the footprint runs 0.5 m under Richardson's tower wall for the width of the link only, so the link lies inside; the main model's ground there is hidden inside Richardson, and the edge follows this area's own grade."
   }
  ],
  "supersede": {

@@ -1,6 +1,6 @@
 {
  "zone": "wb_lots",
- "notes": "Zone wb_lots: the lots of the webster area. The JSON is written by a generator (/tmp/claude-0/p4/webster/wb_lots/gen.py with lib.py there); edit it by hand from now on and say so here. Sources: NJ 2020 ortho fetched at 0.075 m for each lot (WMS crops), read in rectified frames (one per row family); LiDAR 2017 for poles; OSM for names and outlines where the ortho is hidden. Stall rows: divider positions from brightness peaks along each row, then a least-squares fit of position = a + pitch * k; divider ends from brightness profiles along the dividers, and the row line fitted through them. Lot 17 (147 stalls drawn): north row on 24.5 deg, the rest on -16 deg; the three double rows end in painted islands (yellow outline and hatching, drawn as paint); the east block is blue-tinted accessible stalls in pairs with a 1.3 m hatched aisle between pairs (only the white dividers are drawn); a painted ladder walkway crosses the lot from the north walk to the south curb. Lot 38: one row of faint angled stalls; the roll-off containers (published) stand on the lot and get no stall. Lot 30 north end: continues the west area's W_lot_30 as offsets of Carlisle Road's arc (median v 5.26..6.56, lot 6.36..16.06, stall line v 10.97 at 46.5 deg, depth 6.62). The lot south of the Ice Arena (OSM 313030643, no name or number in OSM): two blocks on 66.2 deg with 9 ft (2.74 m) stalls, a planted median between them, planted islands at the north ends of the west double rows and a planted strip along the drive from Carlisle Road. Lamps: none. At 2 returns per m2 the 2017 LiDAR shows no isolated pole return inside any of these lots (the dark spots with shadows in Lot 17 have none). Borders: mouths run 0.2 m into the roads zone's carriageways (Webster Road's fitted end, WB_road_Quad_W's south edge, WB_road_Carlisle_N_parking's east edge, the junction ring's Carlisle edge at Lot 30); Lot 17 runs 0.2 m under WB_road_Blanton_N and WB_road_Blanton_S, which end on the OSM edge of the lot. The lane east of Lot 17's east block and the hook in front of Blanton Hall (Blanton Road in OSM 313029103, inside the OSM outline of Lot 17) are drawn here as lot paving, with the accessible stalls along Blanton Hall's south walk; the lane's east edge is in tree shade. The unnamed lot's north edge is the footprint (under the published Ice Arena drive aisle and walk); its east edge is the north-east area's edge x -56. Lot 30's two stalls across the west area's cut are drawn by neither area. Not drawn: the blue tint and hatching of the accessible stalls, the hatched gore at the east end of Lot 17's north row (inside WB_road_Blanton_N), the painted end shapes of the unnamed lot's south-east double row, three short stalls at Lot 17's west end (their angle could not be read), wheel stops, and the hatched concrete band on Lot 38's east side. Stalls drawn: Lot 17 147, Lot 38 6, Lot 30 north end 5, the lot south of the Ice Arena 184. Fits: WB_lot_17_N_stalls_W: 6 stalls, pitch 2.593 m, rms 0.017 m (max 0.031); WB_lot_17_N_stalls_E: 25 stalls, pitch 2.591 m, rms 0.026 m (max 0.051); WB_lot_17_S_stalls_1: 9 stalls, pitch 2.6 m, rms 0.032 m (max 0.048); WB_lot_17_S_stalls_2: 12 stalls, pitch 2.617 m, rms 0.062 m (max 0.12); WB_lot_17_D_stalls_S: 19 stalls, pitch 2.607 m, rms 0.118 m (max 0.253); WB_lot_17_D_stalls_N: 15 stalls, pitch 2.595 m, rms 0.053 m (max 0.159); WB_lot_17_E_stalls_S: 11 stalls, pitch 2.592 m, rms 0.05 m (max 0.091); WB_lot_17_E_stalls_N: 10 stalls, pitch 2.585 m, rms 0.073 m (max 0.139); WB_lot_17_F_stalls_S: 4 stalls, pitch 2.618 m, rms 0.05 m (max 0.084); WB_lot_17_F_stalls_N: 2 stalls, pitch 2.6 m, rms 0.024 m (max 0.033); WB_lot_17_east_W: 12 stalls, pair pitch 6.407 m, rms 0.031 m; WB_lot_17_east_E: 14 stalls, pair pitch 6.439 m, rms 0.057 m; WB_lot_17_Blanton_stalls: 5 stalls, pitch 2.484 m, rms 0.084 m (max 0.118); WB_lot_38_N_stalls: 6 stalls, pitch 2.738 m, rms 0.031 m (max 0.047); WB_lot_30_N_stalls: 5 stalls, pitch 3.52 m, rms 0.078 m (max 0.113); WB_lot_ice_arena_S_R1: 18 stalls, pitch 2.729 m, rms 0.071 m (max 0.209); WB_lot_ice_arena_S_DR1_W: 16 stalls, pitch 2.744 m, rms 0.039 m (max 0.075); WB_lot_ice_arena_S_DR1_E: 16 stalls, pitch 2.738 m, rms 0.03 m (max 0.068); WB_lot_ice_arena_S_DR2_W: 18 stalls, pitch 2.743 m, rms 0.084 m (max 0.221); WB_lot_ice_arena_S_DR2_E: 20 stalls, pitch 2.747 m, rms 0.069 m (max 0.258); WB_lot_ice_arena_S_R7_W: 9 stalls, pitch 2.752 m, rms 0.054 m (max 0.132); WB_lot_ice_arena_S_R7_E: 7 stalls, pitch 2.766 m, rms 0.102 m (max 0.21); WB_lot_ice_arena_S_R7_E2: 2 stalls, pitch 2.795 m, rms 0.007 m (max 0.01); WB_lot_ice_arena_S_DR3_W: 17 stalls, pitch 2.741 m, rms 0.021 m (max 0.049); WB_lot_ice_arena_S_DR3_E: 18 stalls, pitch 2.744 m, rms 0.035 m (max 0.101); WB_lot_ice_arena_S_R10: 21 stalls, pitch 2.745 m, rms 0.057 m (max 0.194); WB_lot_ice_arena_S_R6: 7 stalls, pitch 2.759 m, rms 0.109 m (max 0.245); WB_lot_ice_arena_S_R11: 8 stalls, pitch 2.743 m, rms 0.072 m (max 0.181); WB_lot_ice_arena_S_R12: 7 stalls, pitch 2.739 m, rms 0.022 m (max 0.046).",
+ "notes": "Zone wb_lots: the lots of the webster area. The JSON is written by a generator (/tmp/claude-0/p4/webster/wb_lots/gen.py with lib.py there); edit it by hand from now on and say so here. Sources: NJ 2020 ortho fetched at 0.075 m for each lot (WMS crops), read in rectified frames (one per row family); LiDAR 2017 for poles; OSM for names and outlines where the ortho is hidden. Stall rows: divider positions from brightness peaks along each row, then a least-squares fit of position = a + pitch * k; divider ends from brightness profiles along the dividers, and the row line fitted through them. Lot 17 (147 stalls drawn): north row on 24.5 deg, the rest on -16 deg; the three double rows end in painted islands (yellow outline and hatching, drawn as paint); the east block is blue-tinted accessible stalls in pairs with a 1.3 m hatched aisle between pairs (only the white dividers are drawn); a painted ladder walkway crosses the lot from the north walk to the south curb. Lot 38: one row of faint angled stalls; the roll-off containers (published) stand on the lot and get no stall. Lot 30 north end: continues the west area's W_lot_30 as offsets of Carlisle Road's arc (median v 5.26..6.56, lot 6.36..16.06, stall line v 10.97 at 46.5 deg, depth 6.62). The lot south of the Ice Arena (OSM 313030643, no name or number in OSM): two blocks on 66.2 deg with 9 ft (2.74 m) stalls, a planted median between them, planted islands at the north ends of the west double rows and a planted strip along the drive from Carlisle Road. Lamps: none. At 2 returns per m2 the 2017 LiDAR shows no isolated pole return inside any of these lots (the dark spots with shadows in Lot 17 have none). Borders: mouths run 0.2 m into the roads zone's carriageways (Webster Road's fitted end, WB_road_Quad_W's south edge, WB_road_Carlisle_N_parking's east edge, the junction ring's Carlisle edge at Lot 30); Lot 17 runs 0.2 m under WB_road_Blanton_N and WB_road_Blanton_S, which end on the OSM edge of the lot. The lane east of Lot 17's east block and the hook in front of Blanton Hall (Blanton Road in OSM 313029103, inside the OSM outline of Lot 17) are drawn here as lot paving, with the accessible stalls along Blanton Hall's south walk; the lane's east edge is in tree shade. The unnamed lot's north edge is the footprint (under the published Ice Arena drive aisle and walk); its east edge is the north-east area's edge x -56. Lot 30's two stalls across the west area's cut are drawn by neither area. Not drawn: the blue tint and hatching of the accessible stalls, the hatched gore at the east end of Lot 17's north row (inside WB_road_Blanton_N), the painted end shapes of the unnamed lot's south-east double row, three short stalls at Lot 17's west end (their angle could not be read), wheel stops, and the hatched concrete band on Lot 38's east side. Stalls drawn: Lot 17 147, Lot 38 6, Lot 30 north end 5, the lot south of the Ice Arena 184. Fits: WB_lot_17_N_stalls_W: 6 stalls, pitch 2.593 m, rms 0.017 m (max 0.031); WB_lot_17_N_stalls_E: 25 stalls, pitch 2.591 m, rms 0.026 m (max 0.051); WB_lot_17_S_stalls_1: 9 stalls, pitch 2.6 m, rms 0.032 m (max 0.048); WB_lot_17_S_stalls_2: 12 stalls, pitch 2.617 m, rms 0.062 m (max 0.12); WB_lot_17_D_stalls_S: 19 stalls, pitch 2.607 m, rms 0.118 m (max 0.253); WB_lot_17_D_stalls_N: 15 stalls, pitch 2.595 m, rms 0.053 m (max 0.159); WB_lot_17_E_stalls_S: 11 stalls, pitch 2.592 m, rms 0.05 m (max 0.091); WB_lot_17_E_stalls_N: 10 stalls, pitch 2.585 m, rms 0.073 m (max 0.139); WB_lot_17_F_stalls_S: 4 stalls, pitch 2.618 m, rms 0.05 m (max 0.084); WB_lot_17_F_stalls_N: 2 stalls, pitch 2.6 m, rms 0.024 m (max 0.033); WB_lot_17_east_W: 12 stalls, pair pitch 6.407 m, rms 0.031 m; WB_lot_17_east_E: 14 stalls, pair pitch 6.439 m, rms 0.057 m; WB_lot_17_Blanton_stalls: 5 stalls, pitch 2.484 m, rms 0.084 m (max 0.118); WB_lot_38_N_stalls: 6 stalls, pitch 2.738 m, rms 0.031 m (max 0.047); WB_lot_30_N_stalls: 5 stalls, pitch 3.52 m, rms 0.078 m (max 0.113); WB_lot_ice_arena_S_R1: 18 stalls, pitch 2.729 m, rms 0.071 m (max 0.209); WB_lot_ice_arena_S_DR1_W: 16 stalls, pitch 2.744 m, rms 0.039 m (max 0.075); WB_lot_ice_arena_S_DR1_E: 16 stalls, pitch 2.738 m, rms 0.03 m (max 0.068); WB_lot_ice_arena_S_DR2_W: 18 stalls, pitch 2.743 m, rms 0.084 m (max 0.221); WB_lot_ice_arena_S_DR2_E: 20 stalls, pitch 2.747 m, rms 0.069 m (max 0.258); WB_lot_ice_arena_S_R7_W: 9 stalls, pitch 2.752 m, rms 0.054 m (max 0.132); WB_lot_ice_arena_S_R7_E: 7 stalls, pitch 2.766 m, rms 0.102 m (max 0.21); WB_lot_ice_arena_S_R7_E2: 2 stalls, pitch 2.795 m, rms 0.007 m (max 0.01); WB_lot_ice_arena_S_DR3_W: 17 stalls, pitch 2.741 m, rms 0.021 m (max 0.049); WB_lot_ice_arena_S_DR3_E: 18 stalls, pitch 2.744 m, rms 0.035 m (max 0.101); WB_lot_ice_arena_S_R10: 21 stalls, pitch 2.745 m, rms 0.057 m (max 0.194); WB_lot_ice_arena_S_R6: 7 stalls, pitch 2.759 m, rms 0.109 m (max 0.245); WB_lot_ice_arena_S_R11: 8 stalls, pitch 2.743 m, rms 0.072 m (max 0.181); WB_lot_ice_arena_S_R12: 7 stalls, pitch 2.739 m, rms 0.022 m (max 0.046). Edited by hand in the fix-up pass of 2026-11-20: WB_lot_19_S (the south part of Lot 19 east of Stone Street's bend, with its painted island and two stall dividers), Lot 30's cut vertices moved 0.2 m past the west area's cut and its east edge 0.6 m east to the walk, the Lot 17 painted walkway drawn as two runs.",
  "surfaces": [
   {
    "name": "WB_lot_17",
@@ -187,26 +187,26 @@
    "kind": "asphalt",
    "ring": [
     [
-     -268.202,
-     336.984
+     -268.616,
+     336.076
     ],
     [
-     -259.364,
-     332.986
+     -259.777,
+     332.082
     ],
     [
-     -254.902,
-     342.767,
-     1729.0
+     -254.356,
+     342.518,
+     100.0
     ],
     [
-     -250.38,
-     352.52,
-     5.0
+     -249.25,
+     352.3,
+     3.0
     ],
     [
-     -249.688,
-     357.912
+     -248.6,
+     358.0
     ],
     [
      -250.34,
@@ -238,8 +238,8 @@
    "kind": "concrete",
    "ring": [
     [
-     -269.204,
-     337.437
+     -269.618,
+     336.528
     ],
     [
      -265.027,
@@ -262,8 +262,8 @@
      1738.5
     ],
     [
-     -268.019,
-     336.901
+     -268.433,
+     335.993
     ]
    ],
    "evidence": "ortho2020, lidar2017",
@@ -473,6 +473,34 @@
    ],
    "evidence": "ortho2020",
    "unverified": "planted end island: surface guessed"
+  },
+  {
+   "name": "WB_lot_19_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     220.6,
+     473.4
+    ],
+    [
+     232.75,
+     476.1
+    ],
+    [
+     232.2,
+     497.2
+    ],
+    [
+     212.0,
+     497.2
+    ],
+    [
+     219.5,
+     482.0
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m), lidar2017 (bank on its south side)",
+   "unverified": "south edge under a tree crown, read from the hillshade bank and the brightness columns to about 0.5 m; east edge is the footprint (0.2 m past); named after the north-east area's Lot 19, which it continues"
   }
  ],
  "curbs": [
@@ -591,8 +619,8 @@
    "name": "WB_lot_30_N_median_curb",
    "path": [
     [
-     -269.204,
-     337.437
+     -269.618,
+     336.528
     ],
     [
      -265.027,
@@ -615,8 +643,8 @@
      1738.5
     ],
     [
-     -268.019,
-     336.901
+     -268.433,
+     335.993
     ]
    ],
    "closed": true,
@@ -626,22 +654,22 @@
    "name": "WB_lot_30_N_E_curb",
    "path": [
     [
-     -259.364,
-     332.986
+     -259.777,
+     332.082
     ],
     [
-     -254.902,
-     342.767,
-     1729.0
+     -254.356,
+     342.518,
+     100.0
     ],
     [
-     -250.38,
-     352.52,
-     5.0
+     -249.25,
+     352.3,
+     3.0
     ],
     [
-     -249.688,
-     357.912
+     -248.6,
+     358.0
     ],
     [
      -250.34,
@@ -2979,15 +3007,34 @@
      426.392
     ],
     [
-     16.796,
-     388.7
+     13.6,
+     397.0
     ]
    ],
    "width": 2.4,
    "style": "ladder",
    "colour": "white",
    "evidence": "ortho2020, osm 313029918",
-   "unverified": "a painted walkway across the lot: two side lines and bars"
+   "unverified": "a painted walkway across the lot: two side lines and bars; the centre line fitted to the ladder's mid-points (y 397..425)"
+  },
+  {
+   "name": "WB_lot_17_walkway_S",
+   "type": "crosswalk",
+   "line": [
+    [
+     13.6,
+     397.0
+    ],
+    [
+     13.6,
+     390.3
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020, osm 313029918",
+   "unverified": "the ladder's south run, due south to the walk; read at 0.075 m to about 0.2 m"
   },
   {
    "name": "WB_lot_38_N_stalls",
@@ -3382,6 +3429,376 @@
    "width": 0.1,
    "evidence": "ortho2020",
    "unverified": "the dividers run on 1.5 m under the published arena walk; drawn to the footprint only"
+  },
+  {
+   "name": "WB_lot_19_S_island_outline",
+   "type": "line",
+   "path": [
+    [
+     220.0,
+     489.9
+    ],
+    [
+     222.25,
+     486.0
+    ],
+    [
+     223.9,
+     484.6
+    ],
+    [
+     226.0,
+     486.0
+    ],
+    [
+     228.0,
+     488.25
+    ],
+    [
+     230.0,
+     490.75
+    ],
+    [
+     231.0,
+     493.5
+    ],
+    [
+     230.5,
+     494.6
+    ],
+    [
+     229.0,
+     494.6
+    ],
+    [
+     225.75,
+     493.0
+    ],
+    [
+     226.25,
+     491.75
+    ],
+    [
+     227.6,
+     488.25
+    ],
+    [
+     225.0,
+     487.25
+    ],
+    [
+     223.0,
+     486.5
+    ],
+    [
+     221.5,
+     489.0
+    ],
+    [
+     221.25,
+     490.5
+    ],
+    [
+     220.55,
+     490.9
+    ]
+   ],
+   "closed": true,
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "painted hatched island, outline read to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_19_S_island_1",
+   "type": "line",
+   "path": [
+    [
+     223.6,
+     485.59
+    ],
+    [
+     223.02,
+     486.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_2",
+   "type": "line",
+   "path": [
+    [
+     222.28,
+     487.71
+    ],
+    [
+     220.42,
+     490.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_3",
+   "type": "line",
+   "path": [
+    [
+     222.82,
+     485.52
+    ],
+    [
+     220.04,
+     489.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_4",
+   "type": "line",
+   "path": [
+    [
+     228.97,
+     489.46
+    ],
+    [
+     230.31,
+     491.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_5",
+   "type": "line",
+   "path": [
+    [
+     225.97,
+     485.98
+    ],
+    [
+     227.32,
+     488.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_6",
+   "type": "line",
+   "path": [
+    [
+     227.52,
+     488.46
+    ],
+    [
+     230.86,
+     493.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_7",
+   "type": "line",
+   "path": [
+    [
+     224.55,
+     485.03
+    ],
+    [
+     226.23,
+     487.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_8",
+   "type": "line",
+   "path": [
+    [
+     227.2,
+     489.28
+    ],
+    [
+     230.51,
+     494.57
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_9",
+   "type": "line",
+   "path": [
+    [
+     223.61,
+     484.85
+    ],
+    [
+     225.15,
+     487.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_10",
+   "type": "line",
+   "path": [
+    [
+     226.89,
+     490.09
+    ],
+    [
+     229.7,
+     494.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_11",
+   "type": "line",
+   "path": [
+    [
+     223.6,
+     486.15
+    ],
+    [
+     224.07,
+     486.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_12",
+   "type": "line",
+   "path": [
+    [
+     226.57,
+     490.91
+    ],
+    [
+     228.82,
+     494.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_13",
+   "type": "line",
+   "path": [
+    [
+     226.26,
+     491.73
+    ],
+    [
+     227.63,
+     493.93
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_14",
+   "type": "line",
+   "path": [
+    [
+     225.94,
+     492.53
+    ],
+    [
+     226.44,
+     493.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_divider",
+   "type": "line",
+   "path": [
+    [
+     223.25,
+     491.75
+    ],
+    [
+     225.0,
+     487.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)"
+  },
+  {
+   "name": "WB_lot_19_S_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     229.0,
+     479.25
+    ],
+    [
+     231.0,
+     481.0
+    ]
+   ],
+   "count": 1,
+   "depth": 3.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "two dividers of a row that runs on east of the footprint; their south ends are under a tree crown, depth as seen"
   }
  ],
  "points": []
