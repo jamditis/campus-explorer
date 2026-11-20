@@ -465,7 +465,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         if (!m) continue;
         if (m.map) m.map.anisotropy = /_painted_/.test(m.name) ? 16 : 4; // paint sheets lie flat and are seen at grazing angles
         // leaf cards exported without an opacity map would show their white texture background: draw them as solid foliage
-        if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.needsUpdate = true; continue; }
+        if (/^Leaf_|needle/i.test(m.name) && !(m.alphaTest > 0) && !m.transparent) { m.map = null; m.color.set('#4f5a33'); m.side = THREE.DoubleSide; m.userData.leaf = true; m.needsUpdate = true; continue; } // still a crown: tree stand-ins at distance, no collision
         if (m.alphaTest > 0 || (m.transparent && m.map)) { m.alphaTest = 0.45; m.transparent = false; m.side = THREE.DoubleSide; m.userData.leaf = true; }
         // see-through and not glazing (fence fabric, netting) keeps its category and stays see-through
         else if (m.transparent) { m.depthWrite = false; m.userData.glass = !isSeeThroughSolid(m.name || '', m.userData.cat || ''); }
