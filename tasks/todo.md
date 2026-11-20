@@ -131,3 +131,23 @@ Not verified (UNVERIFIED):
 - Reduced-motion behaviour of the tour and labels (coded, not exercised in a browser).
 
 Lessons are in [lessons.md](lessons.md).
+
+## Phase 3: fix-ups, format extensions, water, viewer (Joe, 2026-11-20: "all of the above")
+
+Order: the engine first (plan agents need the new format), then the plans, then one export per PR.
+
+PR A, engine and the first uses of it:
+- [ ] Building format: sunken roof areas (`wells`), a rim with a second roof colour, a garage ramp bay; Overlook tower, wing and garage corrected with them
+- [ ] Surface kind `water` (a level surface) in the engine, and a water material in the viewer; the Village basin and pool, the Overlook pond
+- [ ] Marking types for junctions: `arrow`, `crosswalk`, `text` (lane numbers), drawn from the rule book, never traced
+- [ ] Paint on a parking deck's roof level (stalls on CarParc Diem and the Overlook garage)
+
+PR B, stacked on A, the fix-up pass per area from the "not modelled yet" lists in `docs/ROADMAP.md`:
+- [ ] Southwest, west, northeast, stadium, village, overlook: one agent per area, then an independent cross-area review, then the export
+- [ ] Only what a source shows. Items with no source stay on the list (2024 bullpens, lamps without returns or visible shadows)
+
+PR C, viewer only, from `main`:
+- [ ] Pittser Field turf tone (north model)
+- [ ] Detail levels at 220 MB: measure, then the cheapest real saving
+
+Blocked: the corridor to the communication school needs Joe's photos (the 2020 ortho shows a construction site there).
