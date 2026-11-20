@@ -90,6 +90,8 @@ def load(plan_dir):
             out["markings"].extend(primitives(m))
         for lift in plan.get("lifts", []):
             out["lifts"].append(dict(lift, zone=zone, ring=geom.expand(lift["ring"], True)))
+        for q in plan.get("points", []):
+            check_point(q)
         for key in ("points", "stands", "fences", "buildings"):
             out[key].extend(dict(p, zone=zone) for p in plan.get(key, []))
     for i, s in enumerate(out["surfaces"]):
@@ -148,7 +150,10 @@ def primitives(m):
     if m["type"] == "area":
         return [dict(ring=geom.expand(m["ring"], True), colour=colour)]
     if m["type"] == "arrow":
-        return [dict(ring=r, colour=colour) for r in marks.arrow(m["at"], m["angle"], m["shape"])]
+        return [
+            dict(ring=r, colour=colour)
+            for r in marks.arrow(m["at"], m["angle"], m["shape"], m.get("length"))
+        ]
     if m["type"] == "crosswalk":
         rings = marks.crosswalk(
             m["line"],
@@ -181,6 +186,20 @@ def primitives(m):
         line = line + line[:1]
     parts = geom.dashes(line, *m["dash"]) if m.get("dash") else [line]
     return [dict(line=p, width=m.get("width", 0.1), colour=colour) for p in parts]
+
+
+POINT_KINDS = {
+    "lamp", "light_pole", "sign", "gate", "flasher", "goalpost", "scoreboard", "bench",
+    "bike_rack", "ticket_machine", "mini_high", "utility_pole", "pylon", "foul_pole",
+    "soccer_goal", "tree",
+}  # fmt: skip
+
+
+def check_point(p):
+    """A point of a kind no builder makes was skipped without a word (a station canopy was lost
+    that way): refuse it when the plan is read."""
+    if p.get("kind") not in POINT_KINDS:
+        raise ValueError(f"point {p.get('name')!r}: unknown kind {p.get('kind')!r}")
 
 
 def check_surface(s):

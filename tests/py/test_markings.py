@@ -38,6 +38,22 @@ class Arrows(unittest.TestCase):
         self.assertAlmostEqual(v1 - v0, 1.0)  # head width
         self.assertAlmostEqual(v0, -0.5)
 
+    def test_length_scales_the_whole_arrow(self):
+        full = layout.primitives(dict(type="arrow", at=[0, 0], angle=0, shape="straight"))
+        small = layout.primitives(
+            dict(type="arrow", at=[0, 0], angle=0, shape="straight", length=1.5)
+        )
+        xs = [p[0] for r in small for p in r["ring"]]
+        ys = [p[1] for r in small for p in r["ring"]]
+        fy = [p[1] for r in full for p in r["ring"]]
+        self.assertAlmostEqual(max(xs) - min(xs), 1.5, places=6)
+        self.assertAlmostEqual(max(ys) - min(ys), (max(fy) - min(fy)) / 2, places=6)
+
+    def test_a_point_of_an_unknown_kind_is_refused(self):
+        with self.assertRaises(ValueError):
+            layout.check_point(dict(name="Canopy_east", kind="canopy"))
+        layout.check_point(dict(name="L", kind="lamp"))
+
     def test_turn_arrows_bend_to_their_side_and_mirror(self):
         _, _, lv0, lv1 = extent(self.rings("left"), 30.0)
         _, _, rv0, rv1 = extent(self.rings("right"), 30.0)

@@ -65,12 +65,14 @@ def arrow_rings(shape):
     return shapes[shape]
 
 
-def arrow(at, angle, shape):
+def arrow(at, angle, shape, length=None):
     """An arrow pointing toward `angle` (degrees from east), `at` the middle of its length on the
-    line of its shaft. Returns model outlines."""
-    rings, length = arrow_rings(shape)
+    line of its shaft. `length` scales the whole standard shape to that length (the small arrows
+    of a parking aisle). Returns model outlines."""
+    rings, full = arrow_rings(shape)
+    k = (length / full) if length else 1.0
     to_model = geom.frame(at, angle)[1]
-    return [[to_model(u - length / 2, v) for u, v in r] for r in rings]
+    return [[to_model((u - full / 2) * k, v * k) for u, v in r] for r in rings]
 
 
 def _rect(to_model, u0, u1, v0, v1):
