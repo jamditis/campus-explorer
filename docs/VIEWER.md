@@ -183,9 +183,11 @@ The export applies three steps to the published tiles (`build_web.sh`, after sup
   Dream buildings of the main model, 148,598 triangles in six meshes) becomes one stand-in,
   `BD_skyline_silhouette_STANDIN`: a curtain along the highest elevation the source triangles reach in each 0.05
   degree of bearing, seen from the campus centre (`skyline.mjs`), flat over each bin so a slim tower keeps its
-  vertical sides, kept where the outline turns by more than 0.05 degrees (700 triangles). Its tops are at the source's own elevation angles and distances. `REACH=17000`
-  brings points past 17 km nearer along their sight lines (same outline from the centre) so the far plane no longer
-  cuts them: today it cuts 70 % of the skyline's columns from the campus centre, in the 3D meshes and the stand-in alike.
+  vertical sides, kept where the outline turns by more than 0.05 degrees (700 triangles). Its tops are at the
+  source's own elevation angles and distances, so it looks the same as the 3D meshes from anywhere the camera can go.
+  The far plane cuts both the same way: today 70 % of the skyline's columns seen from the campus centre lie past
+  20 km. `REACH=17000` (not the default) brings points past 17 km nearer along their sight lines so all of
+  Manhattan shows from the campus centre; from a raised camera those points then sit lower than they should.
 - `skirt.mjs`: the skirt simplified to 5 cm (borders locked, only existing vertices kept), once (marked in extras).
 - `drop_zero.mjs`: triangles of zero area in the stored positions are dropped from every tile and far version
   (3.98 M of 22.4 M when this was written, 2.75 M of them in the skirt). They draw nothing.

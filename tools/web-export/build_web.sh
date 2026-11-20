@@ -125,7 +125,7 @@ if [ "${REPACK:-0}" = 1 ]; then
   done
 fi
 # Far field and empty triangles, on the published tiles (no .blend needed), so every run applies them again:
-# buildings past 10 km become one silhouette (farcut.mjs; REACH=17000 keeps it inside the viewer's far plane),
+# buildings past 10 km become one silhouette (farcut.mjs; REACH=17000 would pull it inside the 20 km far plane),
 # the skirt is simplified to 5 cm once (skirt.mjs), and triangles of zero area are dropped everywhere (drop_zero.mjs)
 cp $W/farcut.mjs $W/skyline.mjs $W/skirt.mjs $W/drop_zero.mjs $W/zero.mjs $W/tex.mjs ./
 for f in $S/*context.glb; do node farcut.mjs $f || fail "far cut $(basename $f)"; done
