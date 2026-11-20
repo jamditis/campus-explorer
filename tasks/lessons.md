@@ -98,3 +98,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: after PR #58 went up I stopped and waited for the merge, with work still listed. Joe asked why I was not working on and stacking further PRs, and told me to merge from the top of the stack so CI does not run again after every merge.
 - Rule: while a PR waits, start the next one on a branch based on it (base = the branch below, not `main`). Merge top-down: the top PR into the one below it, and so on, then the bottom PR into `main` once. Never merge the bottom first: every PR above it then needs a new base and a new CI run. Merge only on Joe's word (he gave merge and deploy authority for that session; it does not carry over).
+
+## Use the university's name for a building, not the map's (2026-11-20)
+
+- What happened: I wrote "communication school" and "School of Communication and Media" in reports, plans and agent briefs. Joe corrected it: the building is the College of Communication and Media. The viewer's label, search and landmark hunt carried the same wrong name, taken from OpenStreetMap.
+- Rule: OpenStreetMap is a source for positions, not for what the university calls a place. Where Joe or the university's own signs give a name, use it everywhere (reports, plans, viewer labels) and record it in `NAMES` in `tools/places/build_places.py` so a rebuild keeps it. Object names inside the main `.blend` and the historical scripts stay as they are.

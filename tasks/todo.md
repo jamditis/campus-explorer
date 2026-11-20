@@ -32,8 +32,8 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [x] The Village west of the railway (`village/`): Clove Road, Hawk Crossings, Sinatra Hall, the four Village halls, nine lots
 - [x] Overlook Corporate Center block and the quarry ground north of the stadium district (`overlook/`; first planned under the wrong name "Floyd Hall Arena block", see lessons)
-- [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the communication school are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
-- [ ] Red Hawk Deck to Cole Hall, and the communication school (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+- [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the College of Communication and Media are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
+- [ ] Red Hawk Deck to Cole Hall, and the College of Communication and Media (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
 - [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
 
 Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
@@ -149,6 +149,6 @@ One PR, not two: a PR with new plans and old tiles would leave `main` inconsiste
 - [x] Export: tree instances for groups of 2 to 4, packed rotations, half-size far images, `REPACK=1`
 - [ ] Export `sw10`, before/after screenshots, PR
 
-Blocked: the corridor to the communication school needs Joe's photos (the 2020 ortho shows a construction site there).
+Blocked: the corridor to the College of Communication and Media needs Joe's photos (the 2020 ortho shows a construction site there).
 
 Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per area.
