@@ -1,6 +1,6 @@
 {
  "zone": "f_paving",
- "notes": "Zone f_paving: roads, drives, lots, walks and the quarry ground of the Floyd Hall block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The arena drive (OSM 770562283) runs west from the loop along the arena's south face (drop-off at x 120..160), past the arena's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the arena's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nNot drawn: lamp heads and signs (no isolated pole returns in the paved areas worth naming beyond those listed), buildings (other zone), stalls on the deck roof.",
+ "notes": "Zone f_paving: roads, drives, lots, walks and the quarry ground of the Floyd Hall block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The arena drive (OSM 770562283) runs west from the loop along the arena's south face (drop-off at x 120..160), past the arena's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the arena's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the arena's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
  "surfaces": [
   {
    "name": "F_road_access_N",
@@ -128,7 +128,7 @@
      1295.7
     ],
     [
-     300.0,
+     301.2,
      1292.8
     ],
     [
@@ -226,35 +226,35 @@
      28.9
     ],
     [
-     271.0,
+     271.5,
      1180.0
     ],
     [
-     275.0,
+     276.0,
      1200.0
     ],
     [
-     281.0,
+     283.2,
      1250.0
     ],
     [
-     284.0,
+     285.8,
      1262.0
     ],
     [
-     287.5,
+     289.2,
      1271.0
     ],
     [
-     290.4,
+     292.0,
      1278.7
     ],
     [
-     294.0,
+     295.6,
      1285.3
     ],
     [
-     300.0,
+     301.2,
      1292.8
     ]
    ],
@@ -756,7 +756,7 @@
    "ring": [
     [
      58.6,
-     1224.3
+     1223.1
     ],
     [
      58.6,
@@ -768,17 +768,17 @@
      1253.9
     ],
     [
-     75.5,
+     76.3,
      1253.9
     ],
     [
-     87.4,
+     88.2,
      1227.5,
      1.0
     ],
     [
-     87.4,
-     1224.3
+     88.2,
+     1219.8
     ]
    ],
    "evidence": "ortho2020",
@@ -1071,12 +1071,12 @@
    "kind": "concrete",
    "centre": [
     [
-     312.1,
-     1257.6
+     311.8,
+     1257.1
     ],
     [
-     322.1,
-     1251.2
+     321.8,
+     1250.7
     ]
    ],
    "width": 1.2,
@@ -1088,12 +1088,12 @@
    "kind": "concrete",
    "centre": [
     [
-     329.2,
-     1246.8
+     328.9,
+     1246.3
     ],
     [
-     338.5,
-     1240.6
+     338.2,
+     1240.1
     ]
    ],
    "width": 1.2,
@@ -1128,16 +1128,17 @@
    "kind": "concrete",
    "centre": [
     [
-     58.4,
-     1225.4
+     58.6,
+     1224.15
     ],
     [
-     87.0,
-     1225.4
+     88.0,
+     1220.75
     ]
    ],
-   "width": 2.0,
-   "evidence": "ortho2020"
+   "width": 2.1,
+   "evidence": "ortho2020",
+   "unverified": "slant read from brightness bands (centre y 1223.3 at x 66, 1221.8 at x 79)"
   },
   {
    "name": "F_lot_arena_W_walk_NS",
@@ -1145,7 +1146,7 @@
    "centre": [
     [
      66.0,
-     1225.0
+     1223.4
     ],
     [
      66.0,
@@ -1160,11 +1161,11 @@
    "kind": "concrete",
    "centre": [
     [
-     73.0,
+     74.0,
      1248.0
     ],
     [
-     85.6,
+     86.6,
      1229.0
     ]
    ],
@@ -1218,8 +1219,8 @@
    "kind": "concrete",
    "centre": [
     [
-     291.5,
-     1274.0
+     290.6,
+     1274.8
     ],
     [
      305.3,
@@ -1235,23 +1236,23 @@
    "name": "F_road_loop_curb_E",
    "path": [
     [
-     271.0,
+     271.5,
      1180.0
     ],
     [
-     275.0,
+     276.0,
      1200.0
     ],
     [
-     281.0,
+     283.2,
      1250.0
     ],
     [
-     284.0,
+     285.8,
      1262.0
     ],
     [
-     287.5,
+     289.2,
      1271.0
     ]
    ],
@@ -1347,10 +1348,6 @@
   {
    "name": "F_lot_E_curb_N",
    "path": [
-    [
-     318.0,
-     1297.4
-    ],
     [
      340.8,
      1288.4
@@ -1690,7 +1687,7 @@
    "path": [
     [
      58.6,
-     1224.3
+     1223.1
     ],
     [
      58.6,
@@ -1702,17 +1699,17 @@
      1253.9
     ],
     [
-     75.5,
+     76.3,
      1253.9
     ],
     [
-     87.4,
+     88.2,
      1227.5,
      1.0
     ],
     [
-     87.4,
-     1224.3
+     88.2,
+     1219.8
     ]
    ],
    "closed": true,
@@ -1784,12 +1781,12 @@
    "type": "stalls",
    "line": [
     [
-     301.62,
-     1264.8
+     302.21,
+     1264.44
     ],
     [
-     317.7,
-     1290.84
+     318.29,
+     1290.47
     ]
    ],
    "count": 11,
@@ -2037,17 +2034,17 @@
    "line": [
     [
      62.4,
-     1224.3
+     1222.62
     ],
     [
      85.9,
-     1224.3
+     1219.91
     ]
    ],
    "count": 8,
-   "depth": 5.6,
+   "depth": 5.5,
    "side": "right",
-   "angle": 90,
+   "angle": 83.4,
    "colour": "white",
    "evidence": "ortho2020 (brightness profile: dividers at 62.4 + 2.94 k)",
    "unverified": "last divider (x 85.9) under a tree crown, from the pitch"
