@@ -1,9 +1,9 @@
 {
- "zone": "f_buildings",
+ "zone": "ov_buildings",
  "notes": "Buildings of the Floyd block outline. NAME: the large octagonal building with the green roof is NOT Floyd Hall Arena: OSM names it (way 313431637) the Overlook Corporate Center, a 1988 Class A office building at 150 Clove Road (415,000 sq ft, listings give a ground floor and floors 1-11), and the LiDAR gives a 41-48 m wall (12 storeys of about 4.0 m above a ground floor at about 112 m) under a 12 m high mansard roof. Floyd Hall Arena, now the Montclair State University Ice Arena, is OSM way 233324743 at about x -133..-29, y 600..696 (northeast district), outside this outline. The office complex is: the octagonal tower (sides 13.5-15.5 m on the axis and 29-31 m on the diagonals, axis -7.5 deg), three stepped tiers wrapping its south-west, south and south-east sides at storey levels 5, 7 and 9 (flat brown roofs at 132.0, 140.1 and 148.2 m, 1 m rims), the 4-storey east wing (chamfered plan, green mansard border round a white roof, screened roof plant), the glazed link between tower and wing, the link block to the parking deck, and the 6-level L-shaped parking deck (OSM way 313431636). Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest lower return beyond it, at most 0.4 m past the roof return), angles snapped to the building axis (-7.5 deg office, -6.7 deg deck) where the fit agreed within 3 deg, corners by intersection; lower tiers are drawn as whole outlines closed inside the higher parts, and walls shared with a higher part are set 0.3 m inside it. Heights NAVD88 from the LiDAR: flat tops are the rim (parapet) tops, the deck median being about 1 m lower on the tiers (0.4 m on the link, 1.2 m on the deck). Tower roof: wall top 160.4 m, a 2 m ledge, then about 36 deg up to a ridge ring at 172.3 m about 13.5 m in, then a flat well at 169.2 m in the centre that opens east through a slot (169.9 m rim) to the east wall; the single 45 deg mansard part (eave 160.4, top 172.3) stays within about 1 m of the measured slope; the well is not modelled. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): tower 112.0..119.8 m (low on the north); tier 9 118.4..119.7; tier 7 118.5..119.0; tier 5 116.7..118.9; east wing 108.9..117.2; glazed link 113.4..115.1; deck link 108.8..110.2; parking deck 101.2..111.8 (low to the north-east); bus shelter 109.8..111.4; gate booth 104.9..105.4. Not modelled: the quarry yard (x 150..200, y 1110..1150) has nothing over 1.5 m in the 2017 LiDAR but a 2 m box at (173..176, 1141..1146) and a 2.4 m box at (160..163, 1113..1118), read as movable containers (the 2020 ortho shows vans, trailers and containers in other places); west of the tower (x 67..90, y 1271..1293) three 2.2-2.8 m objects (a teal container under trees at (67..73, 1271..1275), a 9 x 3 m diagonal box at (75..84, 1287..1293) and two separate boxes at (84..90, 1285..1292)) read as containers, a trailer and dumpsters/compactor, not structures; no shed or booth elsewhere in the outline; solar panels on the east wing's south roof, light poles and rooftop plant on the tower are left out. Wall colours, trims, window sizes are estimates (no public photo found); roof colours are from the 2020 ortho.",
  "buildings": [
   {
-   "name": "F_bldg_OCC_tower",
+   "name": "OV_bldg_OCC_tower",
    "ring": [
     [
      128.11,
@@ -55,7 +55,7 @@
    "unverified": "roof given as one mansard (45 deg from the 160.4 m wall top to a flat top at the 172.3 m ridge): the measured roof has a 2 m ledge at 160.4, then rises at about 36 deg from about 164 to the ridge 13 m in, and the centre is a 3 m lower flat well (169.2 m) that is not modelled; floors from the 4.0 m storey grid (ground floor at about 112 m on the low north side, roof at 160.4 m = 12 storeys); wall colour, trim and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_tower_roof_slot",
+   "name": "OV_bldg_OCC_tower_roof_slot",
    "ring": [
     [
      130.75,
@@ -85,7 +85,7 @@
    "unverified": "read as a slot in the roof open to the east, modelled as a box standing on the wall top; its west end is buried in the mansard; colours guessed"
   },
   {
-   "name": "F_bldg_OCC_tier_9",
+   "name": "OV_bldg_OCC_tier_9",
    "ring": [
     [
      90.46,
@@ -128,7 +128,7 @@
    "unverified": "roof deck 148.2 m with a 1 m rim (149.2 m); the stepped tier is drawn as a whole outline whose hidden north side runs inside the higher parts; floors are the storeys above the south grade (about 118.5 m) on the 4.0 m grid; brown roof from the ortho, walls and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_tier_7",
+   "name": "OV_bldg_OCC_tier_7",
    "ring": [
     [
      101.34,
@@ -171,7 +171,7 @@
    "unverified": "roof deck 140.1 m with a 1 m rim (141.2 m); the stepped tier is drawn as a whole outline whose hidden north side runs inside the higher parts; floors are the storeys above the south grade (about 118.5 m) on the 4.0 m grid; brown roof from the ortho, walls and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_tier_5",
+   "name": "OV_bldg_OCC_tier_5",
    "ring": [
     [
      111.74,
@@ -214,7 +214,7 @@
    "unverified": "roof deck 132.0 m with a 1 m rim (133.0 m); the stepped tier is drawn as a whole outline whose hidden north side runs inside the higher parts; floors are the storeys above the south grade (about 118.5 m) on the 4.0 m grid; brown roof from the ortho, walls and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_east_wing",
+   "name": "OV_bldg_OCC_east_wing",
    "ring": [
     [
      161.9,
@@ -282,7 +282,7 @@
    "unverified": "function not found in public sources (joined to the tower, part of the same OSM outline); the green border is a 3 m mansard from the 128.1 m wall top to 131.1 m (measured slope about 45 deg) round a white roof deck at 129.1 m, modelled as one mansard whose flat top sits at 131.1 m, so the white deck is drawn 2 m high and green; west face hidden under the 132 m tier and the link; floors on the 4.0 m grid from 112 m (the north side ground is about 109 m); solar panels not modelled; colours and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_east_wing_plant",
+   "name": "OV_bldg_OCC_east_wing_plant",
    "ring": [
     [
      169.43,
@@ -312,7 +312,7 @@
    "unverified": "read as a screened rooftop plant enclosure; top at the screen and plant tops; colours guessed"
   },
   {
-   "name": "F_bldg_OCC_glazed_link",
+   "name": "OV_bldg_OCC_glazed_link",
    "ring": [
     [
      150.29,
@@ -347,7 +347,7 @@
    "unverified": "drawn as one flat block; a small light court or glass roof at about (156..161, 1255..1257) (returns at 115-117 m) and the west side's 1 m jogs are not modelled; south edge tucked under the 132 m tier, east edge under the wing; glazing look guessed"
   },
   {
-   "name": "F_bldg_OCC_deck_link",
+   "name": "OV_bldg_OCC_deck_link",
    "ring": [
     [
      191.52,
@@ -382,7 +382,7 @@
    "unverified": "read as the stair/lobby link between the office and the deck (no public source); west face shares the wing's east wall (set 0.3 m inside it); north and east faces stand over the deck's corner; colours and windows guessed"
   },
   {
-   "name": "F_bldg_OCC_parking_deck",
+   "name": "OV_bldg_OCC_parking_deck",
    "ring": [
     [
      226.11,
@@ -444,7 +444,7 @@
    "unverified": "6 levels from a listing summary (the page itself could not be read), consistent with the height: about 105 m on the low east side to the 119.7 m roof deck = 5 decks of about 2.9 m plus the roof; the roof level's central ramp bay (about x 230..252, y 1225..1285) lies 0.7-2 m lower than the rest and cannot be modelled yet; no stair towers stand above the roof (stairs are probably in the link block at its north-west corner); the north-west part under the link block is assumed to continue at the deck level; colours guessed"
   },
   {
-   "name": "F_bldg_bus_shelter",
+   "name": "OV_bldg_bus_shelter",
    "ring": [
     [
      288.8,
@@ -474,7 +474,7 @@
    "unverified": "read as a shuttle or bus shelter (no public source names it); roof on posts with no walls; the roof dips about 0.2 m along its middle (two roof panels), drawn flat; colours guessed"
   },
   {
-   "name": "F_bldg_gate_booth",
+   "name": "OV_bldg_gate_booth",
    "ring": [
     [
      283.4,

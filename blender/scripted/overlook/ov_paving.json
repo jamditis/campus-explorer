@@ -1,9 +1,9 @@
 {
- "zone": "f_paving",
- "notes": "Zone f_paving: roads, drives, lots, walks and the quarry ground of the Floyd Hall block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The arena drive (OSM 770562283) runs west from the loop along the arena's south face (drop-off at x 120..160), past the arena's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the arena's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the arena's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
+ "zone": "ov_paving",
+ "notes": "Zone f_paving: roads, drives, lots, walks and the quarry ground of the Overlook Corporate Center block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The tower drive (OSM 770562283) runs west from the loop along the tower's south face (drop-off at x 120..160), past the tower's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the tower's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the tower's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
  "surfaces": [
   {
-   "name": "F_road_access_N",
+   "name": "OV_road_access_N",
    "kind": "asphalt",
    "ring": [
     [
@@ -78,7 +78,7 @@
    "unverified": "south edge under the deck's shadow and tree cover: taken from the LiDAR flat; west end cut at the area edge (y 1328), where the road leaves for the highway"
   },
   {
-   "name": "F_road_junction_NE",
+   "name": "OV_road_junction_NE",
    "kind": "asphalt",
    "ring": [
     [
@@ -145,7 +145,7 @@
    "unverified": "NE arm cut at the area edge; it leaves for Oak Hill Road (off campus)"
   },
   {
-   "name": "F_road_loop_deck",
+   "name": "OV_road_loop_deck",
    "kind": "asphalt",
    "ring": [
     [
@@ -262,7 +262,7 @@
    "unverified": "the side next to the deck is drawn to the deck's wall line (OSM, checked on the LiDAR); the loop's inner and outer curbs are read as true circles about (242, 1180)"
   },
   {
-   "name": "F_road_arena_S",
+   "name": "OV_road_tower_S",
    "kind": "asphalt",
    "ring": [
     [
@@ -336,10 +336,10 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm 770562283",
-   "unverified": "south edge from the LiDAR (the ortho shows tree crowns over it); the wider paving at x 120..160 in front of the arena's south face is read as the drop-off"
+   "unverified": "south edge from the LiDAR (the ortho shows tree crowns over it); the wider paving at x 120..160 in front of the tower's south face is read as the drop-off"
   },
   {
-   "name": "F_road_arena_W_leg",
+   "name": "OV_road_tower_W_leg",
    "kind": "asphalt",
    "ring": [
     [
@@ -395,7 +395,7 @@
    "unverified": "the entrance road is cut at the area's west edge (x 22); its south edge at x 22..28 is under trees"
   },
   {
-   "name": "F_lot_arena_W",
+   "name": "OV_lot_tower_W",
    "kind": "asphalt",
    "ring": [
     [
@@ -446,10 +446,10 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm 770562283/770562284",
-   "unverified": "south edge from the LiDAR level (tree crowns hide it in the ortho); north-east edge along the arena wall line"
+   "unverified": "south edge from the LiDAR level (tree crowns hide it in the ortho); north-east edge along the tower wall line"
   },
   {
-   "name": "F_lot_E",
+   "name": "OV_lot_E",
    "kind": "asphalt",
    "ring": [
     [
@@ -554,7 +554,7 @@
    "unverified": "east edge (cut at x 388.6, the area edge) follows the LiDAR wall; the south-east part under tree crowns is drawn to the LiDAR wall, not to the canopy edge"
   },
   {
-   "name": "F_lot_E_cap_N1",
+   "name": "OV_lot_E_cap_N1",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -583,7 +583,7 @@
    "unverified": "hedge-planted end cap; outline from the curb"
   },
   {
-   "name": "F_lot_E_cap_N2",
+   "name": "OV_lot_E_cap_N2",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -612,7 +612,7 @@
    "unverified": "hedge-planted end cap"
   },
   {
-   "name": "F_lot_E_cap_N3",
+   "name": "OV_lot_E_cap_N3",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -641,7 +641,7 @@
    "unverified": "hedge-planted end cap"
   },
   {
-   "name": "F_lot_E_cap_T1",
+   "name": "OV_lot_E_cap_T1",
    "kind": "mulch",
    "layer": 3.5,
    "ring": [
@@ -668,7 +668,7 @@
    "unverified": "under a tree crown: the curb is seen only on the west and NE sides"
   },
   {
-   "name": "F_lot_E_cap_T2",
+   "name": "OV_lot_E_cap_T2",
    "kind": "mulch",
    "layer": 3.5,
    "ring": [
@@ -694,7 +694,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_S1",
+   "name": "OV_lot_E_cap_S1",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -722,7 +722,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_S2",
+   "name": "OV_lot_E_cap_S2",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -750,7 +750,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_plaza",
+   "name": "OV_lot_tower_W_plaza",
    "kind": "mulch",
    "layer": 3.5,
    "ring": [
@@ -785,7 +785,7 @@
    "unverified": "planting beds with trees between the walks; the walks are drawn on it"
   },
   {
-   "name": "F_lot_arena_W_island_SW",
+   "name": "OV_lot_tower_W_island_SW",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -818,7 +818,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_island_E",
+   "name": "OV_lot_tower_W_island_E",
    "kind": "lawn",
    "layer": 3.5,
    "ring": [
@@ -846,7 +846,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_arena_NW_plaza",
+   "name": "OV_road_tower_NW_plaza",
    "kind": "concrete",
    "ring": [
     [
@@ -879,10 +879,10 @@
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "light paving with tree pits between the lot and the yard drive; read as the arena's north-west entrance plaza"
+   "unverified": "light paving with tree pits between the lot and the yard drive; read as the tower's north-west entrance plaza"
   },
   {
-   "name": "F_road_quarry_yard",
+   "name": "OV_road_quarry_yard",
    "kind": "gravel",
    "ring": [
     [
@@ -922,7 +922,7 @@
    "unverified": "state after 2020 unknown (the quarry ground was being graded); outline of the dark gravel yard with parked vehicles"
   },
   {
-   "name": "F_road_quarry_bare",
+   "name": "OV_road_quarry_bare",
    "kind": "gravel",
    "ring": [
     [
@@ -990,7 +990,7 @@
    "unverified": "state after 2020 unknown (the quarry ground was being graded); bare graded ground and stockpiles in the 2020 ortho, simple outline; the low wet ground at the south-west (x 25..55, y 1105..1155) and the wooded banks are left as lawn"
   },
   {
-   "name": "F_road_bus_shelter_pad",
+   "name": "OV_road_bus_shelter_pad",
    "kind": "concrete",
    "ring": [
     [
@@ -1014,7 +1014,7 @@
    "unverified": "pad extent around the shelter guessed"
   },
   {
-   "name": "F_road_deck_gate_island",
+   "name": "OV_road_deck_gate_island",
    "kind": "concrete",
    "ring": [
     [
@@ -1040,7 +1040,7 @@
  ],
  "strips": [
   {
-   "name": "F_road_arena_W_yard",
+   "name": "OV_road_tower_W_yard",
    "kind": "asphalt",
    "centre": [
     [
@@ -1064,10 +1064,10 @@
    ],
    "width": 7.5,
    "evidence": "ortho2020, lidar2017, osm 770562283",
-   "unverified": "east end at the service yard by the arena's north-west corner"
+   "unverified": "east end at the service yard by the tower's north-west corner"
   },
   {
-   "name": "F_lot_E_cap_T1_band",
+   "name": "OV_lot_E_cap_T1_band",
    "kind": "concrete",
    "centre": [
     [
@@ -1084,7 +1084,7 @@
    "unverified": "bright band on the cap's north-east edge read as a concrete curb band"
   },
   {
-   "name": "F_lot_E_cap_T2_band",
+   "name": "OV_lot_E_cap_T2_band",
    "kind": "concrete",
    "centre": [
     [
@@ -1101,7 +1101,7 @@
    "unverified": "bright band on the cap's north-east edge read as a concrete curb band"
   },
   {
-   "name": "F_lot_E_strip_SE",
+   "name": "OV_lot_E_strip_SE",
    "kind": "lawn",
    "layer": 3.5,
    "centre": [
@@ -1124,7 +1124,7 @@
    "unverified": "planted strip with trees; its east side is in tree shadow"
   },
   {
-   "name": "F_lot_arena_W_walk_EW",
+   "name": "OV_lot_tower_W_walk_EW",
    "kind": "concrete",
    "centre": [
     [
@@ -1141,7 +1141,7 @@
    "unverified": "slant read from brightness bands (centre y 1223.3 at x 66, 1221.8 at x 79)"
   },
   {
-   "name": "F_lot_arena_W_walk_NS",
+   "name": "OV_lot_tower_W_walk_NS",
    "kind": "concrete",
    "centre": [
     [
@@ -1157,7 +1157,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_walk_drive",
+   "name": "OV_lot_tower_W_walk_drive",
    "kind": "concrete",
    "centre": [
     [
@@ -1173,7 +1173,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_walk_top",
+   "name": "OV_lot_tower_W_walk_top",
    "kind": "concrete",
    "centre": [
     [
@@ -1189,7 +1189,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_quarry_track",
+   "name": "OV_road_quarry_track",
    "kind": "gravel",
    "centre": [
     [
@@ -1212,10 +1212,10 @@
    ],
    "width": 6.0,
    "evidence": "lidar2017 (cut in the ground model)",
-   "unverified": "state after 2020 unknown (the quarry ground was being graded); a cut ramp from the arena drive down to the yard in the LiDAR; under tree crowns in the ortho"
+   "unverified": "state after 2020 unknown (the quarry ground was being graded); a cut ramp from the tower drive down to the yard in the LiDAR; under tree crowns in the ortho"
   },
   {
-   "name": "F_road_walk_lot_E_island",
+   "name": "OV_road_walk_lot_E_island",
    "kind": "concrete",
    "centre": [
     [
@@ -1233,7 +1233,7 @@
  ],
  "curbs": [
   {
-   "name": "F_road_loop_curb_E",
+   "name": "OV_road_loop_curb_E",
    "path": [
     [
      271.5,
@@ -1259,7 +1259,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_loop_curb_inner",
+   "name": "OV_road_loop_curb_inner",
    "path": [
     [
      262.0,
@@ -1283,7 +1283,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_loop_curb_outer",
+   "name": "OV_road_loop_curb_outer",
    "path": [
     [
      213.0,
@@ -1308,7 +1308,7 @@
    "unverified": "under trees on the south-west quarter"
   },
   {
-   "name": "F_lot_E_curb_W",
+   "name": "OV_lot_E_curb_W",
    "path": [
     [
      283.0,
@@ -1346,7 +1346,7 @@
    "evidence": "ortho2020, lidar2017"
   },
   {
-   "name": "F_lot_E_curb_N",
+   "name": "OV_lot_E_curb_N",
    "path": [
     [
      340.8,
@@ -1377,7 +1377,7 @@
    "unverified": "east of x 350 the edge is a grass bank; curb assumed"
   },
   {
-   "name": "F_road_junction_curb_wedge",
+   "name": "OV_road_junction_curb_wedge",
    "path": [
     [
      290.0,
@@ -1400,7 +1400,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_junction_curb_lawn",
+   "name": "OV_road_junction_curb_lawn",
    "path": [
     [
      341.0,
@@ -1419,7 +1419,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_loop_curb_oval",
+   "name": "OV_road_loop_curb_oval",
    "path": [
     [
      288.0,
@@ -1443,7 +1443,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_road_arena_S_curb_lawn",
+   "name": "OV_road_tower_S_curb_lawn",
    "path": [
     [
      158.0,
@@ -1470,7 +1470,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_curb_N",
+   "name": "OV_lot_tower_W_curb_N",
    "path": [
     [
      44.5,
@@ -1498,7 +1498,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_N1_curb",
+   "name": "OV_lot_E_cap_N1_curb",
    "path": [
     [
      340.39,
@@ -1525,7 +1525,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_N2_curb",
+   "name": "OV_lot_E_cap_N2_curb",
    "path": [
     [
      371.68,
@@ -1552,7 +1552,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_N3_curb",
+   "name": "OV_lot_E_cap_N3_curb",
    "path": [
     [
      388.68,
@@ -1579,7 +1579,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_T1_curb",
+   "name": "OV_lot_E_cap_T1_curb",
    "path": [
     [
      302.7,
@@ -1604,7 +1604,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_T2_curb",
+   "name": "OV_lot_E_cap_T2_curb",
    "path": [
     [
      321.8,
@@ -1629,7 +1629,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_S1_curb",
+   "name": "OV_lot_E_cap_S1_curb",
    "path": [
     [
      295.0,
@@ -1656,7 +1656,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_E_cap_S2_curb",
+   "name": "OV_lot_E_cap_S2_curb",
    "path": [
     [
      315.0,
@@ -1683,7 +1683,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_plaza_curb",
+   "name": "OV_lot_tower_W_plaza_curb",
    "path": [
     [
      58.6,
@@ -1716,7 +1716,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_island_SW_curb",
+   "name": "OV_lot_tower_W_island_SW_curb",
    "path": [
     [
      51.5,
@@ -1748,7 +1748,7 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_island_E_curb",
+   "name": "OV_lot_tower_W_island_E_curb",
    "path": [
     [
      88.5,
@@ -1777,7 +1777,7 @@
  ],
  "markings": [
   {
-   "name": "F_lot_E_row_R1_E",
+   "name": "OV_lot_E_row_R1_E",
    "type": "stalls",
    "line": [
     [
@@ -1798,7 +1798,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length"
   },
   {
-   "name": "F_lot_E_row_DR1_W",
+   "name": "OV_lot_E_row_DR1_W",
    "type": "stalls",
    "line": [
     [
@@ -1819,7 +1819,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length"
   },
   {
-   "name": "F_lot_E_row_DR1_E",
+   "name": "OV_lot_E_row_DR1_E",
    "type": "stalls",
    "line": [
     [
@@ -1840,7 +1840,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length"
   },
   {
-   "name": "F_lot_E_row_DR2_W",
+   "name": "OV_lot_E_row_DR2_W",
    "type": "stalls",
    "line": [
     [
@@ -1861,7 +1861,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length"
   },
   {
-   "name": "F_lot_E_row_DR2_E",
+   "name": "OV_lot_E_row_DR2_E",
    "type": "stalls",
    "line": [
     [
@@ -1882,7 +1882,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length"
   },
   {
-   "name": "F_lot_E_row_DR3_W",
+   "name": "OV_lot_E_row_DR3_W",
    "type": "stalls",
    "line": [
     [
@@ -1903,7 +1903,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length; south end of DR3 under tree crowns, guessed"
   },
   {
-   "name": "F_lot_E_row_DR3_E",
+   "name": "OV_lot_E_row_DR3_E",
    "type": "stalls",
    "line": [
     [
@@ -1924,7 +1924,7 @@
    "unverified": "dividers are too faded to fit one by one; pitch from a Fourier fit of the row brightness, ends at the end caps, depth from the cap length; south end of DR3 under tree crowns, guessed"
   },
   {
-   "name": "F_lot_E_row_SW",
+   "name": "OV_lot_E_row_SW",
    "type": "stalls",
    "line": [
     [
@@ -1945,7 +1945,7 @@
    "unverified": "dividers not resolved in the ortho: 2.7 m pitch assumed, rows placed between the end caps on the long paint lines"
   },
   {
-   "name": "F_lot_E_row_DS1_W",
+   "name": "OV_lot_E_row_DS1_W",
    "type": "stalls",
    "line": [
     [
@@ -1966,7 +1966,7 @@
    "unverified": "dividers not resolved in the ortho: 2.7 m pitch assumed, rows placed between the end caps on the long paint lines"
   },
   {
-   "name": "F_lot_E_row_DS1_E",
+   "name": "OV_lot_E_row_DS1_E",
    "type": "stalls",
    "line": [
     [
@@ -1987,7 +1987,7 @@
    "unverified": "dividers not resolved in the ortho: 2.7 m pitch assumed, rows placed between the end caps on the long paint lines"
   },
   {
-   "name": "F_lot_E_row_DS2_W",
+   "name": "OV_lot_E_row_DS2_W",
    "type": "stalls",
    "line": [
     [
@@ -2008,7 +2008,7 @@
    "unverified": "dividers not resolved in the ortho: 2.7 m pitch assumed, rows placed between the end caps on the long paint lines"
   },
   {
-   "name": "F_lot_E_row_DS2_E",
+   "name": "OV_lot_E_row_DS2_E",
    "type": "stalls",
    "line": [
     [
@@ -2029,7 +2029,7 @@
    "unverified": "dividers not resolved in the ortho: 2.7 m pitch assumed, rows placed between the end caps on the long paint lines"
   },
   {
-   "name": "F_lot_arena_W_row_S",
+   "name": "OV_lot_tower_W_row_S",
    "type": "stalls",
    "line": [
     [
@@ -2050,7 +2050,7 @@
    "unverified": "last divider (x 85.9) under a tree crown, from the pitch"
   },
   {
-   "name": "F_lot_arena_W_row_W",
+   "name": "OV_lot_tower_W_row_W",
    "type": "stalls",
    "line": [
     [
@@ -2071,7 +2071,7 @@
    "unverified": "faint; last two dividers inferred from the pitch"
   },
   {
-   "name": "F_road_loop_walkway_E",
+   "name": "OV_road_loop_walkway_E",
    "type": "stalls",
    "line": [
     [
@@ -2093,7 +2093,7 @@
    "unverified": "yellow ladder walkway along the curb; bar count from the ortho spacing"
   },
   {
-   "name": "F_road_deck_NE_crosswalk",
+   "name": "OV_road_deck_NE_crosswalk",
    "type": "stalls",
    "line": [
     [
@@ -2117,7 +2117,7 @@
  ],
  "points": [
   {
-   "name": "F_lot_E_lamp_S",
+   "name": "OV_lot_E_lamp_S",
    "kind": "lamp",
    "at": [
     302.8,
@@ -2127,7 +2127,7 @@
    "unverified": "base from the start of the pole shadow; height not in the LiDAR (no returns)"
   },
   {
-   "name": "F_lot_E_lamp_N",
+   "name": "OV_lot_E_lamp_N",
    "kind": "lamp",
    "at": [
     346.8,
