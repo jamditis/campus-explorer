@@ -117,10 +117,14 @@ def load(plan_dir):
 
 
 def roof_paint(part, name):
-    """Paint on a flat roof (the top level of a parking deck): the part's `markings` as primitives
-    in `paint`, and one sheet over the whole roof in `sheets`, since the roof deck is one face."""
-    if part.get("roof", "flat") != "flat" or part.get("open"):
-        raise ValueError(f"{part.get('name')}: markings need a flat roof")
+    """Paint on a flat roof (the top level of a parking deck) or on a deck's ramp (a `shed` roof:
+    one sloped plane): the part's `markings` as primitives in `paint`, and one sheet over the whole
+    roof in `sheets`. The sheet is mapped straight down from the plan, like the ground's sheets.
+    """
+    roof = part.get("roof", "flat")
+    ramp = roof == "shed" and part.get("style") == "deck"
+    if (roof != "flat" and not ramp) or part.get("open"):
+        raise ValueError(f"{part.get('name')}: markings need a flat roof or a deck's ramp")
     part["paint"] = [p for m in part["markings"] for p in primitives(m)]
     ring = geom.expand(part["ring"], True)
     part["sheets"] = geom.sheets(name, ring, max_len=1e9, ppm=PPM["asphalt"])

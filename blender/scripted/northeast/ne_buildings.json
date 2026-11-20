@@ -94,44 +94,6 @@
      "evidence": "ortho2020 (divider pitch and ends fitted over the whole row)"
     },
     {
-     "name": "NE_bldg_CarParc_Diem_roof_stalls_row2_E_half",
-     "type": "stalls",
-     "line": [
-      [
-       -13.75,
-       555.88
-      ],
-      [
-       10.18,
-       616.31
-      ]
-     ],
-     "count": 25,
-     "depth": 5.0,
-     "side": "left",
-     "colour": "white",
-     "evidence": "ortho2020 (divider pitch and ends fitted over the whole row)"
-    },
-    {
-     "name": "NE_bldg_CarParc_Diem_roof_stalls_row3_W_half",
-     "type": "stalls",
-     "line": [
-      [
-       -6.5,
-       553.01
-      ],
-      [
-       17.41,
-       613.37
-      ]
-     ],
-     "count": 25,
-     "depth": 5.05,
-     "side": "right",
-     "colour": "white",
-     "evidence": "ortho2020 (divider pitch and ends fitted over the whole row)"
-    },
-    {
      "name": "NE_bldg_CarParc_Diem_roof_stalls_row3_E_half",
      "type": "stalls",
      "line": [
@@ -280,6 +242,46 @@
    "style": "deck",
    "wall": "#cbbfa8",
    "trim": "#e4ddcd",
+   "markings": [
+    {
+     "name": "NE_bldg_CarParc_Diem_roof_stalls_row2_E_half",
+     "type": "stalls",
+     "line": [
+      [
+       -13.75,
+       555.88
+      ],
+      [
+       10.18,
+       616.31
+      ]
+     ],
+     "count": 25,
+     "depth": 5.0,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider pitch and ends fitted over the whole row)"
+    },
+    {
+     "name": "NE_bldg_CarParc_Diem_roof_stalls_row3_W_half",
+     "type": "stalls",
+     "line": [
+      [
+       -6.5,
+       553.01
+      ],
+      [
+       17.41,
+       613.37
+      ]
+     ],
+     "count": 25,
+     "depth": 5.05,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider pitch and ends fitted over the whole row)"
+    }
+   ],
    "evidence": "lidar2017 (the roof level's middle bay is one sloped slab 17.5 x 65.8 m between two walls: 142.16 m at its south-west end, falling 4.8 cm per metre (median of each metre along the bay, fitted) to 139.01 m at its north-east end, where the flat roof stands 3.3 m higher; axis 68.4 deg; the roof slab beside it lies at 142.3-142.4 m); ortho2020 (stalls on the slab, walls with light poles along both long edges)",
    "unverified": "read as the top of a sloped parking floor (a ramped bay) that runs on under the north-east part of the roof; the opening at its low end is not modelled; colours guessed"
   },

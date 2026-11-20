@@ -143,6 +143,15 @@ class DeckRoof(unittest.TestCase):
         with self.assertRaises(ValueError):
             layout.roof_paint(part, "demo_d000")
 
+    def test_a_deck_ramp_is_one_sloped_plane_and_takes_paint(self):
+        stalls = dict(type="stalls", line=[[1, 1], [21, 1]], count=8, depth=5)
+        ring = [[0, 0], [30, 0], [30, 12], [0, 12]]
+        ramp = dict(name="Ramp", ring=ring, roof="shed", style="deck", markings=[stalls])
+        layout.roof_paint(ramp, "demo_d002")
+        self.assertEqual(ramp["sheets"][0]["name"], "authored_demo_d002_0")
+        with self.assertRaises(ValueError):
+            layout.roof_paint(dict(ramp, style="shed"), "demo_d002")  # a shed's tin roof: no
+
 
 class Standards(unittest.TestCase):
     def test_turn_arrow_follows_the_sheet(self):

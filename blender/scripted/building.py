@@ -221,6 +221,8 @@ def part(lay_part, name, ground, image_dir=None):
         # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
         look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)
         sheet = kit.mat(look[0], "roof_" + hexes["roof"][1:], kit.srgb(hexes["roof"]), *look[1:])
+        if p.get("sheets"):  # a deck's ramp painted by the plan (layout.roof_paint, paint.py)
+            sheet = deck = sheet_material("concrete", p["sheets"][0], image_dir)
         wells = _wells(p, hexes["roof"])
         if wells:  # wells sink into the flat top of a mansard, the last face of `slopes`
             if kind not in ("gable", "hip") or n == 4:
