@@ -13,6 +13,9 @@ import { createUI } from './viewer/ui.js';
 import { CAMPUS, convergenceDeg, gridToTrueBearing } from './viewer/geo.js';
 import { sunPosition, zonedDate } from './viewer/sun.js';
 import { parseRooms, roomPlaces, walkStartY } from './viewer/rooms-math.js';
+import { landPose } from './viewer/pose-math.js';
+import { flightLimit, clampToLimit } from './viewer/flight-math.js';
+import { southWestOffset } from './viewer/labels-math.js';
 
 const params = new URLSearchParams(location.search);
 const canvas = document.getElementById('canvas');
@@ -36,7 +39,7 @@ const app = {
   THREE, renderer, scene, camera, canvas, controls,
   state: { mode: 'orbit', view: 'first', ready: false, complete: false },
   bounds: new THREE.Box3(),
-  places: [], home: null, rooms: { volumes: [], rooms: [] }, roomPlaces: [],
+  places: [], home: null, limit: null, rooms: { volumes: [], rooms: [] }, roomPlaces: [],
   time: { date: zonedDate(DEFAULT_TIME), preset: true },
   on(type, fn) { (listeners.get(type) ?? listeners.set(type, new Set()).get(type)).add(fn); return () => app.off(type, fn); },
   off(type, fn) { listeners.get(type)?.delete(fn); },
@@ -67,7 +70,34 @@ app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 const cam = createCamera(app);
 /** Ease the camera to a pose. `by` names the module that asked, so others can tell their own moves from a new one. */
-app.flyTo = (pose, opts = {}) => { app.emit('fly', { by: opts.by ?? null }); return cam.flyTo(pose, opts); };
+/**
+ * `land: true` (moves to a place): once the move arrives and the tiles there are in, put the target on the
+ * real ground and keep the camera above the ground or roof under it (viewer/pose-math.js landPose).
+ * `app.landing` is the promise of that last step while it runs.
+ */
+app.flyTo = (pose, opts = {}) => {
+  app.emit('fly', { by: opts.by ?? null });
+  const moved = cam.flyTo(pose, opts);
+  if (!opts.land) return moved;
+  return moved.then(done => { if (done) { const my = landSeq; app.landing = land(my).finally(() => { if (my === landSeq) app.landing = null; }); } return done; });
+};
+let landSeq = 0;
+app.on('fly', () => { landSeq++; });
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function land(my) {
+  const t = controls.target, c = camera.position, w = app.world;
+  // the lookup before the move may have hit nothing (tiles still streaming) or only the far-field skirt
+  while (!w.isLoaded(t.x, t.z) || !w.isLoaded(c.x, c.z)) {
+    w.prioritize(t.x, t.z); w.prioritize(c.x, c.z);
+    await sleep(250); if (my !== landSeq) return;
+  }
+  await w.warm(t.x, t.z, 2); await w.warm(c.x, c.z, 2);
+  if (my !== landSeq || app.state.mode !== 'orbit') return;
+  const next = landPose({ position: c, target: t }, w.groundAt(t.x, t.z), w.groundAt(c.x, c.z));
+  if (!next) return;
+  c.set(next.position.x, next.position.y, next.position.z); t.set(next.target.x, next.target.y, next.target.z);
+  controls.update(); app.invalidate();
+}
 /** Stop any camera move without touching the pose, for modules that place the camera themselves. */
 app.cancelFly = (by = null) => { app.emit('fly', { by }); cam.cancel(); };
 /** Draw the whole campus with another camera into `target` (the minimap). The main view's tree and size culling is undone for the picture. */
@@ -117,14 +147,23 @@ app.topPose = () => {
 /** Fly to a place from places.json, keeping the current heading so the move is easy to follow. */
 app.goToPlace = (place, opts) => {
   if (place.kind === 'room') return goToRoom(place, opts);
-  const floor = isFinite(app.bounds.min.y) ? app.bounds.min.y + 20 : 130;
-  const y = app.world.groundAt(place.x, place.z, null, { builtOnly: true }) ?? floor;
+  app.world.prioritize(place.x, place.z); app.emit('place', { place });
+  return app.flyTo(app.placePose(place), { ...opts, land: true });
+};
+/**
+ * Where a move to a place ends: looking at its ground from 70 m or more, along the current heading, or
+ * from the south-west (`southwest`, the tour). The ground is a first guess (collision that is already
+ * built, else the full lookup where the tiles are in, else the campus floor); `land` corrects it on arrival.
+ */
+app.placePose = (place, from = 'heading') => {
+  const w = app.world, floor = isFinite(app.bounds.min.y) ? app.bounds.min.y + 20 : 130;
+  const y = w.groundAt(place.x, place.z, null, { builtOnly: true }) ?? (w.isLoaded(place.x, place.z) ? w.groundAt(place.x, place.z) : null) ?? floor;
+  const target = new THREE.Vector3(place.x, y, place.z);
+  if (from === 'southwest') { const o = southWestOffset(place.r); return { target, position: target.clone().add(new THREE.Vector3(o.dx, o.dy, o.dz)) }; }
   const dist = Math.max(70, (place.r || 20) * 2.4);
   camera.getWorldDirection(_v); _v.y = 0; if (_v.lengthSq() < 1e-4) _v.set(0, 0, -1);
-  const target = new THREE.Vector3(place.x, y, place.z);
   const position = target.clone().addScaledVector(_v.normalize(), -dist * 0.8); position.y += dist * 0.6;
-  app.world.prioritize(place.x, place.z); app.emit('place', { place });
-  return app.flyTo({ position, target }, opts);
+  return { position, target };
 };
 /** A room (viewer/rooms.json): glide to eye height on its floor, then stand there in walk mode. */
 async function goToRoom(room, opts) {
@@ -194,6 +233,7 @@ app.load = async ({ view = null } = {}) => {
 };
 app.on('scene:start', async ({ manifest, base }) => {
   app.manifest = manifest;
+  setLimit();
   app.look.setPaint(manifest.paint || [], base);
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
   // buildings with a real interior and their room numbers (?interiors=0 leaves the rule out, for comparison)
@@ -203,11 +243,22 @@ app.on('scene:start', async ({ manifest, base }) => {
   app.emit('places');
 });
 app.on('scene:ready', () => {
-  app.state.ready = true;
+  app.state.ready = true; setLimit();
   // the lite profile has no terrain skirt: a flat disc keeps the campus from floating
   if (app.lite) { const c = app.bounds.getCenter(_v); app.look.setFarGround(true, c.x, (isFinite(app.bounds.min.y) ? app.bounds.min.y : 110) - 6, c.z); }
 });
-app.on('scene:complete', () => { app.state.complete = true; });
+app.on('scene:complete', () => { app.state.complete = true; setLimit(); });
+// the soft flight limit (viewer/flight-math.js): from the manifest's tiles and skirt, the ceiling over the campus floor
+function setLimit() {
+  const m = app.manifest; if (!m) return;
+  app.limit = flightLimit(m.tiles, { skirtHalf: m.landcover?.half ?? 2000, floorY: isFinite(app.bounds.min.y) ? app.bounds.min.y : 100 });
+}
+// hard stop for everything that is not eased at the limit: orbit zoom and pan, eased moves, share links
+function clampView() {
+  if (!app.limit) return;
+  camera.position.copy(clampToLimit(camera.position, app.limit));
+  if (app.state.mode === 'orbit') controls.target.copy(clampToLimit(controls.target, app.limit));
+}
 
 // ---- frame loop: draw only when something changed ----
 const lastCam = new Float64Array(18); let moving = false, fov = 50, last = performance.now(), frames = 0, acc = 0;
@@ -227,6 +278,7 @@ function loop(now) {
   const mode = app.state.mode;
   app.emit('frame', { dt, time: now });
   if (mode === 'orbit') controls.update(); else app.player.step(dt, app.input.update(dt));
+  clampView();
   const want = FOV[mode];
   if (Math.abs(fov - want) > 0.05) { fov += (want - fov) * (1 - Math.exp(-dt * 6)); camera.fov = fov; camera.updateProjectionMatrix(); }
   const changed = cameraChanged();

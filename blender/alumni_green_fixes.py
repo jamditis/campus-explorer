@@ -51,23 +51,24 @@ LAMP_R, LAMP_DA = R + 0.8, 20.0  # on the lawn, 20 degrees west of the inlay (ph
 LATER = [
     "Plaza position: photo 2 (camera fitted to the Cole Hall gable, the ws5 north addition) puts "
     "the band centre about 6 m in front of the doors, its far tips 2 to 3 m from the face; the "
-    "2025 Esri image puts it at about (-105, -55.5). The model has it 11 m out, at (-107, -50.5). "
-    "Move the plaza about 5 m toward the doors, to about (-104.4, -56.0) +-1.5 m, radius about "
-    "7.8 m +-0.7 (photo 2: inlay at the edge 7.3 to 7.8 m from the band centre), and run the "
-    "north-west and north-east walks (WS3_Cole_plaza_paving_20261109) on to the new edge; lawn "
-    "where the old north cap was. Photo 1 agrees within its error (the library's arched bay "
-    "seen about 20 degrees east of north from about 40 m). The move rests on one photo and an "
-    "image with 8 m stated accuracy: pace doors to band and doors to inlay on site first.",
-    "Sprague Library south face (photo 1): the model's walls are dark red brick; the photo shows "
-    "buff brick on the arched bay and the east block, red brick only on the west end. A row of "
-    "about nine young conifers and six benches stands along its foot (model: none).",
+    "2025 Esri image puts it at about (-105, -55.5); photo 1's camera, fitted to Sprague's raised "
+    "bay, stands at about (-106, -56.5). The model has the band 11 m out, at (-107, -50.5). Move "
+    "the plaza about 5 m toward the doors, to about (-104.4, -56.0) +-1.5 m, radius about 7.8 m "
+    "+-0.7, run the north-west and north-east walks (WS3_Cole_plaza_paving_20261109) on to the "
+    "new edge, lawn where the old north cap was. Joe: tape or pace the doors' centre to the "
+    "band's near edge and to the inlay's middle, and the band's tip-to-tip width.",
     "Cole Hall north addition (TZ_Cole_north_addition_UNVERIFIED, WS6, WS7): photo 2 shows the "
     "arched window over the doors about 6 m wide (model 3.5 m), the eave about 2 m higher than "
     "142.9, a tall window either side, two black lanterns beside the doors and the name "
-    "'SUSAN A. COLE HALL' in black on a light band over them.",
+    "'SUSAN A. COLE HALL' in black on a light band over them. Joe: a square-on photo of the "
+    "gable from the band's middle, and the door opening's width paced or taped.",
+    "Sprague Library south face (photo 1): the model's walls are dark red brick; the photo shows "
+    "buff brick on the arched bay and the east block, red brick only on the west end. Joe: a "
+    "square-on photo of the whole south face in daylight, ends included.",
     "Boulder with a bronze plaque (about 1.5 to 2.5 m wide, 1 to 1.6 m high) and a row of "
     "slender white string-light poles among small trees west of the plaza, toward the Kasser "
-    "steps (photo 3). No source gives their position closer than about 5 m.",
+    "steps (photo 3): no point kinds, and no source gives their position closer than about "
+    "5 m. Joe: a photo from the plaza's west edge toward them, and the pole count.",
 ]
 
 

@@ -359,7 +359,9 @@ def trees(lay, terrain, assets):
     import bpy
 
     todo = [p for p in lay["points"] if p["kind"] == "tree" and not p.get("skip")]
-    todo = [p for p in todo if geom.inside(lay["footprint"], *p["at"])]
+    # an area with no ground of its own has no outline to keep its trees inside
+    foot = lay["footprint"]
+    todo = [p for p in todo if foot is None or geom.inside(foot, *p["at"])]
     if not todo:
         return []
     if not assets:

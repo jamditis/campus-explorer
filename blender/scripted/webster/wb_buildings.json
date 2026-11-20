@@ -1,0 +1,1164 @@
+{
+ "zone": "wb_buildings",
+ "notes": "Buildings of the webster area, one entry per roof part, with their aprons, landings and the plaza south of Blanton Hall. The JSON is written by a generator (/tmp/claude-0/p4/webster/wb_buildings/gen.py with aprons.py, scratch, not in the repository); edit the generator or edit this file by hand and say so here. Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns in each building's own frame (outermost roof return and the nearest ground return beyond it, midway, but no more than 0.4 m past the roof return), corners exact right angles; inner part lines where the roof level steps (least misclassified split of the returns above and below the mid level). OSM footprints only as a start: the 2020 ortho shows the tall walls leaning north-west, so no outline is read from it. Heights NAVD88 from the LiDAR: flat tops are the deck median plus the rim. Webster Hall (frame -23.5 deg from (81.94, 376.19)): one flat block 59 x 13.6 m, its east end 8 m long and 11 m wide, deck 145.3 m over ground 135.3..136.5 m; a one-storey north wing at 139.2 m. It stands in the 2017 LiDAR, the 2020 ortho and the newer NAIP Plus mosaic; a Montclarion piece gives three storeys. Irvin D. Reid Hall (the former Science Hall; frame -23.1 deg from (83.09, 305.14)): a 4-storey block at 157.1 m with lower wings at 151.6-155.5 m, a one-storey north-west wing at 142.9 m, an east entrance canopy at 141.5 m (open) and a link south to Richardson Hall at 151.5 m that ends on the published Richardson corner tower wall (its last 1.3 m lies outside the footprint, as agreed); ground round it 136.4..138.0 m. Rooftop units on the tower (up to 161 m) are not modelled. The covered walk at 141 m between Reid Hall's south-west block and Richardson Hall (x 83..86, y 288..300) is not modelled: it stands over the published walk outside the footprint. Red Hawk Diner (axis-aligned): main block 30.4 x 8.8 m, deck 144.6 m inside a 145.3 m parapet, a lower north strip at 143.8 m and the entrance at 143.9 m; ground 140.3..140.7 m. Aprons from the 2020 ortho at 0.075 m: Webster Hall's west landing, two south landings where the roads zone's walks reach the wall, and the walk along its east end between the two roads zone pieces; the diner's brick plaza (OSM footway 313028561 runs round it), the concrete round it and in front of the diner with two planter beds. Reid Hall gets no apron: the main model's walks and courtyard stay on its west and south sides, and on its north and east sides the ortho shows only the leaning roof, shadow and lawn. Plaza between Blanton Hall and Webster Hall / Stone Street: concrete from the footprint line 1 m off Blanton's walls (footprint vertices reused) to the lawn edges, which are straight runs read on a brightness mask, east to 0.2 m into the Stone Street walk and carriageway, south to y 380.0 where the roads zone's walks start; a planted triangle (border bed, lawn inside, an oval bed of 9.8 x 3.2 m with true-arc ends) and a square bed east of the lawn, given layers above the concrete. Facade colours, window sizes and floor counts are guesses unless a source is cited.",
+ "buildings": [
+  {
+   "name": "WB_bldg_Webster_Hall_main",
+   "ring": [
+    [
+     81.2,
+     375.75
+    ],
+    [
+     135.22,
+     352.26
+    ],
+    [
+     135.86,
+     353.73
+    ],
+    [
+     143.38,
+     350.46
+    ],
+    [
+     147.78,
+     360.59
+    ],
+    [
+     140.26,
+     363.86
+    ],
+    [
+     140.66,
+     364.78
+    ],
+    [
+     86.65,
+     388.27
+    ]
+   ],
+   "roof": "flat",
+   "top": 145.4,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#a8705a",
+   "trim": "#e2dccf",
+   "roof_colour": "#7d8584",
+   "windows": {
+    "width": 1.2,
+    "height": 1.4,
+    "spacing": 3.2
+   },
+   "parapet": 0.15,
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); deck 145.3 m (median of 1404 returns), outer 0.7 m band 144.9 m (fascia); ground round it 135.3..136.5 m; ortho2020 (grey flat roof); osm 313029100; NAIP Plus (it still stands after 2020); https://themontclarion.org/opinion/the-mystery-of-an-abandoned-building-webster-hall/ (three storeys)",
+   "unverified": "name of the object only from OSM and the university map; floors (3) from a Montclarion piece and the 9.3 m height; wall and trim colours and window grid guessed (walls not seen in the ortho)"
+  },
+  {
+   "name": "WB_bldg_Webster_Hall_north_wing",
+   "ring": [
+    [
+     129.66,
+     369.56
+    ],
+    [
+     137.82,
+     366.02
+    ],
+    [
+     141.11,
+     373.58
+    ],
+    [
+     132.95,
+     377.13
+    ]
+   ],
+   "roof": "flat",
+   "top": 139.25,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#a8705a",
+   "trim": "#e2dccf",
+   "roof_colour": "#8a8f8c",
+   "windows": {
+    "width": 1.2,
+    "height": 1.4,
+    "spacing": 3.2
+   },
+   "parapet": 0.1,
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); roof 139.2 m (108 returns), ground 135.3..135.8 m; ortho2020 (light flat roof)",
+   "unverified": "name of the object only from OSM and the university map; floors (3) from a Montclarion piece and the 9.3 m height; wall and trim colours and window grid guessed (walls not seen in the ortho)"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_tower",
+   "ring": [
+    [
+     80.79,
+     315.8
+    ],
+    [
+     93.48,
+     310.38
+    ],
+    [
+     91.52,
+     305.78
+    ],
+    [
+     109.09,
+     298.29
+    ],
+    [
+     110.93,
+     302.61
+    ],
+    [
+     117.74,
+     299.71
+    ],
+    [
+     116.25,
+     296.22
+    ],
+    [
+     120.39,
+     294.45
+    ],
+    [
+     127.33,
+     310.73
+    ],
+    [
+     86.12,
+     328.31
+    ]
+   ],
+   "roof": "flat",
+   "top": 157.15,
+   "style": "hall",
+   "floors": 4,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 157.06 m (1186 returns)",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps; rooftop units (up to 161 m) not modelled"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_west_wing",
+   "ring": [
+    [
+     71.29,
+     309.85
+    ],
+    [
+     89.87,
+     301.92
+    ],
+    [
+     93.48,
+     310.38
+    ],
+    [
+     80.79,
+     315.8
+    ],
+    [
+     81.65,
+     317.82
+    ],
+    [
+     75.76,
+     320.33
+    ]
+   ],
+   "roof": "flat",
+   "top": 151.65,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 151.6 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_north_west_wing",
+   "ring": [
+    [
+     70.69,
+     323.48
+    ],
+    [
+     76.12,
+     321.16
+    ],
+    [
+     75.76,
+     320.33
+    ],
+    [
+     81.65,
+     317.82
+    ],
+    [
+     86.08,
+     328.22
+    ],
+    [
+     74.77,
+     333.04
+    ]
+   ],
+   "roof": "flat",
+   "top": 143.0,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 142.93 m (204 returns)",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps; its south edge between v 11 and 12 is not clear in the LiDAR"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_south_west_block",
+   "ring": [
+    [
+     73.43,
+     304.15
+    ],
+    [
+     81.15,
+     300.86
+    ],
+    [
+     82.88,
+     304.9
+    ],
+    [
+     75.15,
+     308.2
+    ]
+   ],
+   "roof": "flat",
+   "top": 154.8,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 154.75 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_south_block",
+   "ring": [
+    [
+     89.75,
+     301.65
+    ],
+    [
+     107.32,
+     294.15
+    ],
+    [
+     109.09,
+     298.29
+    ],
+    [
+     91.52,
+     305.78
+    ]
+   ],
+   "roof": "flat",
+   "top": 155.55,
+   "style": "hall",
+   "floors": 4,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 155.5 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_middle_wing",
+   "ring": [
+    [
+     107.32,
+     294.15
+    ],
+    [
+     111.92,
+     292.19
+    ],
+    [
+     114.04,
+     297.16
+    ],
+    [
+     116.25,
+     296.22
+    ],
+    [
+     117.74,
+     299.71
+    ],
+    [
+     110.93,
+     302.61
+    ]
+   ],
+   "roof": "flat",
+   "top": 151.65,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 151.6 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps; a 155.5 m strip along the tower (v 7..8.6) is taken into this part"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_south_east_block",
+   "ring": [
+    [
+     110.59,
+     289.06
+    ],
+    [
+     120.61,
+     284.79
+    ],
+    [
+     122.24,
+     288.6
+    ],
+    [
+     114.61,
+     291.86
+    ],
+    [
+     116.43,
+     296.14
+    ],
+    [
+     114.04,
+     297.16
+    ]
+   ],
+   "roof": "flat",
+   "top": 154.8,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 154.7 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_east_wing_south",
+   "ring": [
+    [
+     114.61,
+     291.86
+    ],
+    [
+     122.24,
+     288.6
+    ],
+    [
+     121.95,
+     287.91
+    ],
+    [
+     124.15,
+     286.97
+    ],
+    [
+     128.84,
+     297.96
+    ],
+    [
+     122.96,
+     300.47
+    ],
+    [
+     120.39,
+     294.45
+    ],
+    [
+     116.43,
+     296.14
+    ]
+   ],
+   "roof": "flat",
+   "top": 151.8,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 151.7 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_east_wing_north",
+   "ring": [
+    [
+     122.96,
+     300.47
+    ],
+    [
+     129.3,
+     297.77
+    ],
+    [
+     131.36,
+     302.6
+    ],
+    [
+     132.28,
+     302.2
+    ],
+    [
+     134.44,
+     307.26
+    ],
+    [
+     127.17,
+     310.36
+    ]
+   ],
+   "roof": "flat",
+   "top": 153.35,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 153.3 m",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_east_canopy",
+   "ring": [
+    [
+     126.67,
+     292.86
+    ],
+    [
+     128.87,
+     291.92
+    ],
+    [
+     132.48,
+     300.38
+    ],
+    [
+     130.73,
+     301.13
+    ],
+    [
+     129.3,
+     297.77
+    ],
+    [
+     128.84,
+     297.96
+    ]
+   ],
+   "roof": "flat",
+   "top": 141.55,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#ece6da",
+   "trim": "#ece6da",
+   "roof_colour": "#9a9a96",
+   "open": true,
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); slab returns 141.5 m, 4.8 m over the ground",
+   "unverified": "read as an entrance canopy (open, on posts) from its height; posts not seen"
+  },
+  {
+   "name": "WB_bldg_Reid_Hall_link_to_Richardson",
+   "ring": [
+    [
+     108.27,
+     282.61
+    ],
+    [
+     110.84,
+     281.51
+    ],
+    [
+     113.53,
+     287.81
+    ],
+    [
+     110.95,
+     288.91
+    ]
+   ],
+   "roof": "flat",
+   "top": 151.5,
+   "style": "hall",
+   "floors": 3,
+   "wall": "#d6cbb5",
+   "trim": "#ece6da",
+   "roof_colour": "#2b3236",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 3.4
+   },
+   "evidence": "lidar2017 (wall lines fitted to the roof-edge returns in the building frame, top from the roof returns); ground round it 136.4..138.0 m; ortho2020 (dark roofs with white coping; the walls lean north-west in the image, so outlines come from the LiDAR); osm 313027434; https://montclair.edu/newscenter/?p=220189 (the former Science Hall, renamed in 2023); deck 151.5 m; south end on the published Richardson Hall corner tower wall (v -10.85)",
+   "unverified": "floors from the heights; wall, trim and roof colours and window grid guessed; split into parts where the 2017 LiDAR roof level steps; its last metre at Richardson Hall lies outside the footprint, as agreed"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_main",
+   "ring": [
+    [
+     -42.2,
+     370.6
+    ],
+    [
+     -11.8,
+     370.6
+    ],
+    [
+     -11.8,
+     379.4
+    ],
+    [
+     -42.2,
+     379.4
+    ]
+   ],
+   "roof": "flat",
+   "top": 145.3,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#e8e2d4",
+   "trim": "#9b4a3a",
+   "roof_colour": "#e9e9e6",
+   "windows": {
+    "width": 1.8,
+    "height": 1.6,
+    "spacing": 3.0
+   },
+   "parapet": 0.7,
+   "evidence": "lidar2017 (walls fitted to the roof-edge returns; main deck 144.6 m with a 145.2-145.4 m parapet, north strip 143.8 m, entrance 143.9 m; ground round it 140.3..140.7 m); ortho2020 0.075 m (white roof, red tile fascia band); osm 313028560",
+   "unverified": "wall colour, window grid and the red tile fascia (not modelled) from the ortho and guesses"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_north_strip",
+   "ring": [
+    [
+     -22.9,
+     379.4
+    ],
+    [
+     -11.8,
+     379.4
+    ],
+    [
+     -11.8,
+     382.0
+    ],
+    [
+     -22.9,
+     382.0
+    ]
+   ],
+   "roof": "flat",
+   "top": 143.85,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#e8e2d4",
+   "trim": "#9b4a3a",
+   "roof_colour": "#d8d8d4",
+   "parapet": 0.2,
+   "evidence": "lidar2017 (walls fitted to the roof-edge returns; main deck 144.6 m with a 145.2-145.4 m parapet, north strip 143.8 m, entrance 143.9 m; ground round it 140.3..140.7 m); ortho2020 0.075 m (white roof, red tile fascia band); osm 313028560",
+   "unverified": "wall colour, window grid and the red tile fascia (not modelled) from the ortho and guesses; north wall under trees, taken at the last roof return (382.0)"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_entrance",
+   "ring": [
+    [
+     -28.6,
+     368.3
+    ],
+    [
+     -22.0,
+     368.3
+    ],
+    [
+     -22.0,
+     370.6
+    ],
+    [
+     -28.6,
+     370.6
+    ]
+   ],
+   "roof": "flat",
+   "top": 143.95,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#e8e2d4",
+   "trim": "#9b4a3a",
+   "roof_colour": "#d8d8d4",
+   "parapet": 0.2,
+   "evidence": "lidar2017 (walls fitted to the roof-edge returns; main deck 144.6 m with a 145.2-145.4 m parapet, north strip 143.8 m, entrance 143.9 m; ground round it 140.3..140.7 m); ortho2020 0.075 m (white roof, red tile fascia band); osm 313028560",
+   "unverified": "wall colour, window grid and the red tile fascia (not modelled) from the ortho and guesses"
+  }
+ ],
+ "surfaces": [
+  {
+   "name": "WB_bldg_Webster_W_landing",
+   "kind": "concrete",
+   "ring": [
+    [
+     77.32,
+     381.0
+    ],
+    [
+     82.7,
+     379.2
+    ],
+    [
+     84.9,
+     384.25
+    ],
+    [
+     81.4,
+     388.0
+    ],
+    [
+     80.45,
+     388.0
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the paved patch between the Quad Road diagonal walk and the west end wall; its east side is the LiDAR wall line",
+   "unverified": "its north edge read under the leaning roof of the image"
+  },
+  {
+   "name": "WB_bldg_Webster_S_landing_W",
+   "kind": "concrete",
+   "ring": [
+    [
+     123.38,
+     355.12
+    ],
+    [
+     126.13,
+     353.92
+    ],
+    [
+     126.96,
+     355.85
+    ],
+    [
+     124.21,
+     357.05
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the walk from the south (WB_road_Webster_Hall_SW_walk) runs to the wall here",
+   "unverified": "landing width (3 m) and door position guessed"
+  },
+  {
+   "name": "WB_bldg_Webster_S_landing_E",
+   "kind": "concrete",
+   "ring": [
+    [
+     128.8,
+     352.8
+    ],
+    [
+     131.55,
+     351.61
+    ],
+    [
+     132.37,
+     353.5
+    ],
+    [
+     129.62,
+     354.69
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the walk from the south (WB_road_Webster_Hall_S_stub) runs to the wall here",
+   "unverified": "landing width (3 m) and door position guessed"
+  },
+  {
+   "name": "WB_bldg_Blanton_plaza",
+   "kind": "concrete",
+   "ring": [
+    [
+     92.47,
+     416.41
+    ],
+    [
+     89.58,
+     408.75
+    ],
+    [
+     95.0,
+     408.75
+    ],
+    [
+     95.0,
+     405.5
+    ],
+    [
+     121.3,
+     415.2
+    ],
+    [
+     148.8,
+     404.0
+    ],
+    [
+     156.2,
+     385.4,
+     4.0
+    ],
+    [
+     156.4,
+     380.0
+    ],
+    [
+     171.44,
+     380.0
+    ],
+    [
+     175.11,
+     388.48
+    ],
+    [
+     177.6,
+     390.4
+    ],
+    [
+     177.65,
+     392.3
+    ],
+    [
+     179.6,
+     396.4
+    ],
+    [
+     165.5,
+     404.5
+    ],
+    [
+     158.3,
+     426.1
+    ],
+    [
+     157.69,
+     431.97
+    ],
+    [
+     155.3,
+     431.04
+    ],
+    [
+     152.67,
+     425.73
+    ],
+    [
+     151.39,
+     426.35
+    ],
+    [
+     153.23,
+     430.24
+    ],
+    [
+     152.48,
+     429.95
+    ],
+    [
+     152.13,
+     430.86
+    ],
+    [
+     149.22,
+     429.71
+    ],
+    [
+     149.08,
+     430.07
+    ],
+    [
+     148.74,
+     430.0
+    ],
+    [
+     112.12,
+     415.32
+    ],
+    [
+     107.14,
+     413.19
+    ],
+    [
+     107.35,
+     412.7
+    ],
+    [
+     105.75,
+     412.7
+    ],
+    [
+     105.51,
+     412.12
+    ],
+    [
+     104.87,
+     412.4
+    ],
+    [
+     104.6,
+     412.29
+    ],
+    [
+     104.48,
+     412.57
+    ],
+    [
+     98.48,
+     415.3
+    ],
+    [
+     93.19,
+     417.42
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch) (concrete edges against the lawns read as straight runs on a brightness mask); north edge on the footprint line 1 m from Blanton Hall (footprint vertices reused); east edge 0.2 m into the Stone Street west walk and carriageway (wb_roads); south end on y 380.0, 0.2 m short of the roads zone walk ends",
+   "unverified": "the north edge lies under the leaning roof of Blanton Hall in the image: the concrete is taken to run to the footprint line; the corner of the lawn edge south of the square planter is under a tree"
+  },
+  {
+   "name": "WB_bldg_Blanton_plaza_planter_hedge",
+   "kind": "mulch",
+   "ring": [
+    [
+     131.75,
+     414.9
+    ],
+    [
+     135.2,
+     419.9
+    ],
+    [
+     144.9,
+     423.9
+    ],
+    [
+     150.8,
+     409.5
+    ],
+    [
+     147.1,
+     408.1
+    ]
+   ],
+   "layer": 5.5,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the planted triangle in the plaza, dark border band",
+   "unverified": "read as a hedge or shrub border on a bed; no LiDAR height over 1 m except a few returns"
+  },
+  {
+   "name": "WB_bldg_Blanton_plaza_planter_lawn",
+   "kind": "lawn",
+   "ring": [
+    [
+     147.13,
+     409.18
+    ],
+    [
+     149.49,
+     410.07
+    ],
+    [
+     144.35,
+     422.59
+    ],
+    [
+     135.85,
+     419.09
+    ],
+    [
+     133.26,
+     415.33
+    ]
+   ],
+   "layer": 5.6,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): pale green inside the border",
+   "unverified": "lawn guessed from the colour; border width 1.0 m"
+  },
+  {
+   "name": "WB_bldg_Blanton_plaza_planted_ring",
+   "kind": "mulch",
+   "ring": [
+    [
+     136.43,
+     415.54,
+     1.55
+    ],
+    [
+     145.33,
+     411.45,
+     1.55
+    ],
+    [
+     146.67,
+     414.36,
+     1.55
+    ],
+    [
+     137.77,
+     418.45,
+     1.55
+    ]
+   ],
+   "layer": 5.7,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the dark oval bed inside the planter (9.8 x 3.2 m)",
+   "unverified": "shrubs on a bed guessed from the colour"
+  },
+  {
+   "name": "WB_bldg_Blanton_plaza_square_planter",
+   "kind": "mulch",
+   "ring": [
+    [
+     160.2,
+     400.75
+    ],
+    [
+     165.2,
+     397.6
+    ],
+    [
+     162.25,
+     391.0
+    ],
+    [
+     155.9,
+     393.75
+    ]
+   ],
+   "layer": 5.5,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): dark square bed in the plaza east of the lawn",
+   "unverified": "bed or tree pit read from the colour; its south corner lies in a tree shadow; the light bar across it (a bench or a sculpture) is not modelled"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_W_apron",
+   "kind": "concrete",
+   "ring": [
+    [
+     -60.0,
+     365.15
+    ],
+    [
+     -44.8,
+     364.97
+    ],
+    [
+     -44.8,
+     367.3
+    ],
+    [
+     -42.2,
+     367.3
+    ],
+    [
+     -42.2,
+     384.4
+    ],
+    [
+     -60.0,
+     384.4
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): light band round the brick plaza and between it and the west wall; south edge on the Quad Road carriageway edge (wb_roads WB_road_Quad_W)",
+   "unverified": "west end at x -60 from the 0.15 m ortho"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_brick_plaza",
+   "kind": "brick",
+   "ring": [
+    [
+     -59.8,
+     365.15
+    ],
+    [
+     -45.0,
+     364.97
+    ],
+    [
+     -45.0,
+     383.3
+    ],
+    [
+     -59.8,
+     383.3
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the red brick plaza west of the diner (OSM footway 313028561 runs round it)",
+   "unverified": "the planter in its south-east corner and the tables are not modelled"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_S_apron",
+   "kind": "concrete",
+   "ring": [
+    [
+     -44.8,
+     367.3
+    ],
+    [
+     -11.8,
+     367.3
+    ],
+    [
+     -11.8,
+     370.6
+    ],
+    [
+     -22.0,
+     370.6
+    ],
+    [
+     -22.0,
+     368.3
+    ],
+    [
+     -28.6,
+     368.3
+    ],
+    [
+     -28.6,
+     370.6
+    ],
+    [
+     -44.8,
+     370.6
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (fetched into scratch): paving between the Quad Road north walk (0.2 m into it) and the south wall",
+   "unverified": "paving under the planters taken as concrete"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_S_bed_W",
+   "kind": "mulch",
+   "ring": [
+    [
+     -40.0,
+     367.6
+    ],
+    [
+     -30.6,
+     367.6
+    ],
+    [
+     -30.6,
+     369.9
+    ],
+    [
+     -40.0,
+     369.9
+    ]
+   ],
+   "layer": 5.5,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): dark planter bed in front of the diner",
+   "unverified": "bed outline read at 0.075 m; plants not modelled"
+  },
+  {
+   "name": "WB_bldg_Red_Hawk_Diner_S_bed_E",
+   "kind": "mulch",
+   "ring": [
+    [
+     -21.8,
+     367.6
+    ],
+    [
+     -12.2,
+     367.6
+    ],
+    [
+     -12.2,
+     370.3
+    ],
+    [
+     -21.8,
+     370.3
+    ]
+   ],
+   "layer": 5.5,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): dark planter bed in front of the diner",
+   "unverified": "bed outline read at 0.075 m; plants not modelled"
+  }
+ ],
+ "strips": [
+  {
+   "name": "WB_bldg_Webster_E_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     145.76,
+     349.33
+    ],
+    [
+     150.14,
+     362.16
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020 0.075 m (fetched into scratch): the walk along the east end, between the roads zone pieces WB_road_Stone_W_diag_walk_2 and _1 (0.2 m into each)"
+  }
+ ]
+}

@@ -7,6 +7,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
 import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
 import { dirOf, resolveUri, imageUri, textureKey, createTextureShare, sharedBytes, newBytes } from './texshare.js';
+import { inCampusBox } from './pose-math.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -138,7 +139,7 @@ export function createWorld(app, prepare, release = () => {}) {
       try { await renderer.compileAsync(root, camera, scene); } catch { /* compiled on first draw instead */ }
       if (my !== token) { free(root); release(root); return; }
       group.add(root); tile.root = root; tile.state = 'ready';
-      if (tile.center) app.bounds.expandByObject(root);
+      if (tile.center) expandBounds(root);
       addColliders(root, tile);
       warmIdle(); // collision near the view gets ready in idle time, so picks and the elevation readout do not wait
       progress.tiles++; progress.loaded += newBytes(tile, texSeen, texSizes);
@@ -150,6 +151,19 @@ export function createWorld(app, prepare, release = () => {}) {
       console.error(e);
       app.emit('tile:error', { tile, error: e });
     }
+  }
+
+  // The campus box (app.bounds) grows by the meshes of a centred tile, but not by far-field ground
+  // (n_t_0_0.glb holds BD_farfield_3DEP_ortho, 2.3 km wide and down to y -54): its floor is the fallback
+  // ground height of place moves and the base of the overview, and that mesh put both 150 m underground.
+  const _mb = new THREE.Box3(), _ms = new THREE.Vector3();
+  function expandBounds(root) {
+    root.updateMatrixWorld(true);
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      _mb.setFromObject(o);
+      if (!_mb.isEmpty() && inCampusBox(_mb.getSize(_ms))) app.bounds.union(_mb);
+    });
   }
 
   // Ground of one source model that the other model's merge superseded (the manifest's `hide` list, written by

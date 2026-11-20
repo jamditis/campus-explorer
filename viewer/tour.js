@@ -2,7 +2,7 @@
 // card names it, then returns to the overview. Built on app.flyTo; any direct input on the view, and any
 // camera move that another module asks for, stops it.
 import * as THREE from 'three';
-import { selectStops, tourCaption, southWestOffset, TOUR_NAMES } from './labels-math.js';
+import { selectStops, tourCaption, TOUR_NAMES } from './labels-math.js';
 
 const FLY_SECONDS = 3.2;
 const CIRCLE_SECONDS = 7;
@@ -67,13 +67,8 @@ export function createTour(app) {
     app.emit('tour', { running, index, count: stops.length, place: running ? stops[index] : null });
   }
 
-  function poseFor(place) {
-    const floor = Number.isFinite(app.bounds.min.y) ? app.bounds.min.y + 20 : 130;
-    const y = app.world.groundAt(place.x, place.z, null, { builtOnly: true }) ?? floor;
-    const target = new THREE.Vector3(place.x, y, place.z);
-    const o = southWestOffset(place.r);
-    return { target, position: target.clone().add(new THREE.Vector3(o.dx, o.dy, o.dz)) };
-  }
+  // framed from the south-west; `land` puts it on the real ground once the tiles there are in (app.js)
+  const poseFor = place => app.placePose(place, 'southwest');
 
   // Wait at a stop, circling (or holding still) until time runs out or the tour moves on.
   function hold() {
@@ -95,7 +90,7 @@ export function createTour(app) {
       announce();
       app.emit('place', { place });
       app.world.prioritize(place.x, place.z);
-      const arrived = await app.flyTo(poseFor(place), { duration: FLY_SECONDS, by: 'tour' });
+      const arrived = await app.flyTo(poseFor(place), { duration: FLY_SECONDS, by: 'tour', land: true });
       if (my !== token) return;
       if (!arrived) { stop({ halt: false }); return; }
       await hold();

@@ -236,7 +236,7 @@ export function createHud(app) {
       const y = app.world.groundAt(x, z, null, { builtOnly: true }) ?? t.y;
       const next = new THREE.Vector3(x, y, z);
       app.world.prioritize?.(x, z);
-      app.flyTo({ position: next.clone().add(off), target: next }, { duration });
+      app.flyTo({ position: next.clone().add(off), target: next }, { duration, land: true }); // land: keeps the camera above the ground there
     } else if (mode === 'walk') {
       app.player.teleport(x, z);
     } else {
