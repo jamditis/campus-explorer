@@ -1,0 +1,493 @@
+{
+ "source": "blender/scripted/<area>/interior.json: room numbers from the floor signs",
+ "builder": "tools/places/build_rooms.py",
+ "frame": "three.js viewer metres: x east, y up, z = -model y (grid north is -z)",
+ "volumes": [
+  {
+   "id": "ccom",
+   "building": "College of Communication and Media",
+   "short": "CCOM",
+   "ring": [
+    [
+     -10.76,
+     -41.65
+    ],
+    [
+     -14.7,
+     -24.12
+    ],
+    [
+     -18.3,
+     -25.03
+    ],
+    [
+     -20.0,
+     -18.34
+    ],
+    [
+     -18.68,
+     -17.56
+    ],
+    [
+     -20.92,
+     -8.15
+    ],
+    [
+     -19.12,
+     -7.6
+    ],
+    [
+     -26.21,
+     21.4
+    ],
+    [
+     -13.88,
+     24.41
+    ],
+    [
+     -12.38,
+     18.18
+    ],
+    [
+     -10.59,
+     18.61
+    ],
+    [
+     18.99,
+     25.82
+    ],
+    [
+     20.88,
+     18.11
+    ],
+    [
+     24.88,
+     19.09
+    ],
+    [
+     28.57,
+     3.98
+    ],
+    [
+     31.94,
+     4.8
+    ],
+    [
+     34.27,
+     -4.75
+    ],
+    [
+     34.56,
+     -5.71
+    ],
+    [
+     12.62,
+     -10.74
+    ],
+    [
+     17.57,
+     -32.01
+    ],
+    [
+     12.62,
+     -33.08
+    ],
+    [
+     13.02,
+     -35.04
+    ],
+    [
+     -0.26,
+     -39.39
+    ]
+   ],
+   "y0": 137.3,
+   "y1": 147.7,
+   "levels": [
+    {
+     "floor": 1,
+     "y": 137.3
+    },
+    {
+     "floor": 2,
+     "y": 141.8
+    }
+   ],
+   "unverified": [
+    "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign",
+    "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign; studio wall thickness as drawn (0.35 to 0.5 m)"
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "name": "1000",
+   "x": -22.75,
+   "z": 17.84,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002",
+   "x": -15.48,
+   "z": 2.99,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002A",
+   "x": -5.4,
+   "z": -0.35,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002B1",
+   "x": -6.87,
+   "z": 5.03,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002B",
+   "x": -9.51,
+   "z": 9.53,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002B2",
+   "x": -7.0,
+   "z": 10.13,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1002B3",
+   "x": -9.06,
+   "z": 13.45,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1005",
+   "x": -0.95,
+   "z": 17.41,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1005A",
+   "x": -0.02,
+   "z": 13.81,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1005B",
+   "x": 6.82,
+   "z": 19.25,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1009",
+   "x": 0.38,
+   "z": 10.81,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1011",
+   "x": 4.51,
+   "z": 3.68,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1011A",
+   "x": 11.73,
+   "z": 1.1,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1011B",
+   "x": 5.16,
+   "z": 11.94,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1020",
+   "x": 20.05,
+   "z": 11.3,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1021",
+   "x": 10.83,
+   "z": 4.58,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "1023",
+   "x": 9.28,
+   "z": 10.53,
+   "y": 137.3,
+   "floor": 1,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2002",
+   "x": -9.21,
+   "z": 13.42,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2004",
+   "x": -8.03,
+   "z": 8.95,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2006",
+   "x": -6.69,
+   "z": 3.89,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2012",
+   "x": -5.47,
+   "z": -0.69,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2005",
+   "x": 3.35,
+   "z": 7.07,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2007",
+   "x": 1.95,
+   "z": 12.35,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2008",
+   "x": 4.77,
+   "z": 1.7,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2009",
+   "x": 8.81,
+   "z": 13.96,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2010",
+   "x": 11.64,
+   "z": 3.3,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2010A",
+   "x": 11.15,
+   "z": 8.89,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2015",
+   "x": -2.62,
+   "z": 19.5,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2017",
+   "x": 1.11,
+   "z": 20.37,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2019",
+   "x": 4.69,
+   "z": 21.21,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2021",
+   "x": 8.71,
+   "z": 22.15,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2023",
+   "x": 12.21,
+   "z": 22.97,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2025",
+   "x": 16.74,
+   "z": 22.95,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2026",
+   "x": 12.6,
+   "z": 16.91,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2027",
+   "x": 18.05,
+   "z": 17.85,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2028",
+   "x": 13.68,
+   "z": 12.86,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2031",
+   "x": 23.15,
+   "z": 14.25,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2031A",
+   "x": 19.25,
+   "z": 13.34,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2032",
+   "x": 14.66,
+   "z": 9.13,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2034",
+   "x": 15.36,
+   "z": 6.53,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  },
+  {
+   "name": "2035",
+   "x": 22.66,
+   "z": 7.45,
+   "y": 141.8,
+   "floor": 2,
+   "building": "College of Communication and Media",
+   "unverified": true
+  }
+ ]
+}

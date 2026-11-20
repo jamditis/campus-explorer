@@ -105,7 +105,7 @@ fi
 # there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
 if ls $S/sw_*.glb >/dev/null 2>&1; then
   python3 $W/../../blender/scripted/supersede.py $WORK/supersede.json ${SW_AREAS:+--areas $SW_AREAS} || fail "supersede rules"
-  cp $W/supersede.mjs $W/cut.mjs $W/lod.mjs $W/pack.mjs $W/tex.mjs ./
+  cp $W/supersede.mjs $W/cut.mjs $W/volume.mjs $W/lod.mjs $W/pack.mjs $W/tex.mjs ./
   node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
   [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"
   CHANGED=$(sed -n 's/^CHANGED //p' $WORK/supersede.out)

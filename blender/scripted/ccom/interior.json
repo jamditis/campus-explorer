@@ -214,12 +214,12 @@
        -16.0
       ],
       [
-       -5.22,
-       3.43
+       -5.28,
+       3.18
       ],
       [
-       -19.91,
-       7.01
+       -19.97,
+       6.76
       ]
      ],
      "objects": "MS_CCOM_newsroom_studio_*, MS_CCOM_back_rooms_furnish_20261030na, CCOM newsroom back offices (mw), adopted as is",
@@ -608,12 +608,12 @@
        8.17
       ],
       [
-       -19.26,
-       6.91
+       -19.33,
+       6.63
       ],
       [
-       -5.17,
-       3.47
+       -5.24,
+       3.19
       ]
      ],
      "z0": 137.0,
@@ -1376,12 +1376,12 @@
        -16.0
       ],
       [
-       -5.24,
-       3.34
+       -5.28,
+       3.18
       ],
       [
-       -19.93,
-       6.92
+       -19.97,
+       6.76
       ]
      ],
      "objects": "MS_CCOM_newsroom_studio_* (double height), CCOM newsroom back mezzanine slab + fascia (mw), MS_CCM_office_interior_20261030na",
@@ -2120,20 +2120,40 @@
        0.26
       ],
       [
+       9.85,
+       1.15
+      ],
+      [
+       10.06,
+       2.0
+      ],
+      [
+       -0.33,
+       4.54
+      ],
+      [
+       -0.54,
+       3.68
+      ],
+      [
        -18.95,
        8.17
       ],
       [
-       -19.26,
-       6.91
+       -19.33,
+       6.63
       ],
       [
-       -5.17,
-       3.47
+       -5.24,
+       3.19
       ]
      ],
      "z0": 141.45,
-     "z1": 141.85
+     "z1": 141.85,
+     "under": [
+      "atrium_T1"
+     ],
+     "unverified": "reaches the adopted 2F hallway slab (b 4.35) under the studios' north wall"
     }
    ],
    "blocks": [],

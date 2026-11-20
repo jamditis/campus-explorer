@@ -18,10 +18,12 @@
 // quantized form and is written back with the same meshopt filters, so a tile does not grow or lose precision.
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
-import { compactPrimitive } from '@gltf-transform/functions';
+import { compactPrimitive, getBounds } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, appendFileSync } from 'node:fs';
 import { crossings, cornersIn, edgesCross, outsidePart } from './cut.mjs';
+import { keepShared, sharedRefs } from './tex.mjs';
+import { pattern, region, cutVolume } from './volume.mjs';
 
 const [rulesFile, dir] = process.argv.slice(2);
 if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MODELS_DIR'); process.exit(2); }
@@ -41,9 +43,10 @@ await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
 const stale = new Set(), changedTiles = new Set(), KNOWN = new Set();
 // Every area's hash first: a mark that is none of them is from rules that no longer exist.
-const hashOf = rules => { let h = 2166136261; for (const c of JSON.stringify([rules.footprint, rules.clip, rules.drop ?? [], rules.tuck ?? 0.5, rules.cut ?? 0.6])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); };
+// (an area's volumes join the hash only when it has some, so the marks of the areas with ground stay what they were)
+const hashOf = rules => { let h = 2166136261; for (const c of JSON.stringify([rules.footprint, rules.clip, rules.drop ?? [], rules.tuck ?? 0.5, rules.cut ?? 0.6, ...(rules.volumes ? [rules.volumes] : [])])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); };
 for (const rules of AREAS) KNOWN.add(hashOf(rules));
-const areas = AREAS.filter(rules => !rules.skip).map(rules => { // a skipped area's marks stay known, its ground stays
+const areas = AREAS.filter(rules => !rules.skip && rules.footprint).map(rules => { // a skipped area's marks stay known, its ground stays
   // moved by a fraction of a millimetre, so that no corner of a ground mesh drawn on a round-metre grid lies exactly
   // on the outline (where the inside test and the edge crossings could disagree)
   const ring = rules.footprint.map(([x, y]) => [x + 1.37e-4, y + 2.71e-4]);
@@ -57,6 +60,145 @@ const areas = AREAS.filter(rules => !rules.skip).map(rules => { // a skipped are
     within: (x, y) => x >= bx[0] && x <= bx[2] && y >= bx[1] && y <= bx[3] && inside(ring, x, y),
   };
 });
+
+// ---------- volumes: an area that owns no ground (a building the scripted build rebuilds) ----------
+// Per volume, in order: a `ring` takes out the other sources' triangles inside it (at any height, or only above
+// `above`, model metres), cut exactly at the ring's walls and at the level (volume.mjs), except primitives whose
+// 'mesh name material name' matches `keep`; instanced nodes whose origin lies inside lose those instances. `meshes`
+// drops meshes of exactly those names, wherever they are. Done primitives and nodes carry the area's hash in their
+// extras `superseded`, and so does the tile's scene, so a changed volume stops the run like a changed footprint.
+const volumeAreas = AREAS.filter(rules => !rules.skip && rules.volumes).map(rules => ({
+  name: rules.name ?? '', RULES: hashOf(rules),
+  vols: rules.volumes.map(v => ({
+    name: v.name, meshes: new Set(v.meshes ?? []), reg: v.ring ? region(v.ring) : null,
+    above: v.above ?? null, keep: (v.keep ?? []).map(pattern),
+  })),
+}));
+const marksOf = x => (x.getExtras().superseded ?? '').split(' ').filter(Boolean);
+const mark = (x, RULES) => { const m = marksOf(x); if (!m.includes(RULES)) x.setExtras({ ...x.getExtras(), superseded: [...m, RULES].join(' ') }); };
+// what each volume took, per 'mesh material' label: VOLUME_STATS=FILE appends one JSON line per changed tile
+const tally = (st, vol, label, key, n) => {
+  const t = (st[vol] ??= {})[label] ??= { removed: 0, cut: 0, instances: 0, whole: 0 };
+  t[key] += n;
+};
+// model frame (x east, y north, z up) of a point in a node's space: viewer y is up, viewer z is minus north
+const toModel = (w, p) => [w[0] * p[0] + w[4] * p[1] + w[8] * p[2] + w[12], -(w[2] * p[0] + w[6] * p[1] + w[10] * p[2] + w[14]), w[1] * p[0] + w[5] * p[1] + w[9] * p[2] + w[13]];
+const boxMeets = (lo, hi, bx) => !(hi[0] < bx[0] || lo[0] > bx[2] || hi[1] < bx[1] || lo[1] > bx[3]);
+
+/** A primitive's new corners and triangles: every attribute gets the added corners as weighted means. */
+function rewrite(prim, n, added, keep) {
+  const idx = prim.getIndices(), total = n + added.length, olds = [idx];
+  for (const sem of prim.listSemantics()) {
+    const old = prim.getAttribute(sem), copy = old.clone(), size = old.getElementSize();
+    if (added.length) { const arr = new (old.getArray().constructor)(total * size); arr.set(old.getArray()); copy.setArray(arr); }
+    const e = [], sum = new Array(size);
+    for (let k = 0; k < added.length; k++) {
+      sum.fill(0);
+      for (const [i, wgt] of added[k]) { copy.getElement(i, e); for (let q = 0; q < size; q++) sum[q] += e[q] * wgt; }
+      copy.setElement(n + k, sum);
+    }
+    prim.setAttribute(sem, copy); olds.push(old);
+  }
+  prim.setIndices(idx.clone().setArray(total > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
+  for (const old of olds) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
+  compactPrimitive(prim);
+}
+
+/** Instances of an instanced node whose origin lies in a volume go; returns how many went. */
+function dropInstances(node, w, test) {
+  const inst = node.getExtension('EXT_mesh_gpu_instancing'), tr = inst.getAttribute('TRANSLATION');
+  const count = inst.listAttributes()[0]?.getCount() ?? 0, p = [0, 0, 0], keepRows = [];
+  for (let i = 0; i < count; i++) {
+    if (tr) tr.getElement(i, p); else p.fill(0);
+    if (!test(toModel(w, p))) keepRows.push(i);
+  }
+  if (keepRows.length === count) return 0;
+  if (!keepRows.length) { node.setMesh(null); node.setExtension('EXT_mesh_gpu_instancing', null); return count; }
+  for (const sem of inst.listSemantics()) {
+    const a = inst.getAttribute(sem), size = a.getElementSize(), src = a.getArray();
+    const arr = new src.constructor(keepRows.length * size);
+    keepRows.forEach((r, k) => arr.set(src.subarray(r * size, r * size + size), k * size));
+    inst.setAttribute(sem, a.clone().setArray(arr));
+    if (!a.listParents().some(x => x.propertyType !== 'Root')) a.dispose();
+  }
+  return count - keepRows.length;
+}
+
+function applyVolumes(doc, f, { name, RULES, vols }) {
+  const scene = doc.getRoot().getDefaultScene() ?? doc.getRoot().listScenes()[0];
+  if (scene && marksOf(scene).some(m => !KNOWN.has(m))) { stale.add(f); return false; }
+  let changed = false;
+  const st = {};
+  for (const node of doc.getRoot().listNodes()) {
+    let mesh = node.getMesh();
+    if (!mesh) continue;
+    const w = node.getWorldMatrix(), mname = mesh.getName();
+    const label = p => `${mname} ${p?.getMaterial()?.getName() ?? ''}`;
+    for (const v of vols) if (v.meshes.has(mname) && node.getMesh()) {
+      for (const p of mesh.listPrimitives()) tally(st, v.name, label(p), 'whole', (p.getIndices()?.getCount() ?? 0) / 3);
+      node.setMesh(null); changed = true;
+    }
+    if (!node.getMesh()) continue;
+    if (marksOf(node).some(m => !KNOWN.has(m))) { stale.add(f); continue; }
+    if (node.getExtension('EXT_mesh_gpu_instancing')) {
+      const labels = mesh.listPrimitives().map(label).join(' ');
+      for (const v of vols) {
+        if (!v.reg || v.keep.some(r => r.test(labels)) || !node.getMesh()) continue;
+        const n = dropInstances(node, w, ([x, y, z]) => v.reg.within(x, y) && (v.above === null || z > v.above));
+        if (n) { tally(st, v.name, labels, 'instances', n); mark(node, RULES); changed = true; }
+      }
+      continue;
+    }
+    const rings = vols.filter(v => v.reg);
+    if (!rings.length) continue;
+    // a mesh that two nodes share is cut for this node's place only: it gets a copy of its own first
+    const { min, max } = getBounds(node), lo = [min[0], -max[2]], hi = [max[0], -min[2]];
+    if (!rings.some(v => boxMeets(lo, hi, v.reg.bx))) continue;
+    if (mesh.listParents().filter(x => x.propertyType === 'Node').length > 1) {
+      const own = doc.createMesh(mname);
+      for (const p of mesh.listPrimitives()) own.addPrimitive(p.clone());
+      node.setMesh(own); mesh = own;
+    }
+    for (const prim of mesh.listPrimitives()) {
+      if (prim.getMode() !== 4 || !prim.getIndices()) continue;
+      const done = marksOf(prim);
+      if (done.some(m => !KNOWN.has(m))) { stale.add(f); continue; }
+      if (done.includes(RULES)) continue;
+      const lab = label(prim), todo = rings.filter(v => !v.keep.some(r => r.test(lab)));
+      if (!todo.length) continue;
+      const pos = prim.getAttribute('POSITION'), n = pos.getCount(), p = [0, 0, 0];
+      const X = new Array(n), Y = new Array(n), Z = new Array(n);
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (let i = 0; i < n; i++) {
+        pos.getElement(i, p); [X[i], Y[i], Z[i]] = toModel(w, p);
+        x0 = Math.min(x0, X[i]); x1 = Math.max(x1, X[i]); y0 = Math.min(y0, Y[i]); y1 = Math.max(y1, Y[i]);
+      }
+      const pts = { X, Y, Z }, added = [];
+      let tris = Array.from(prim.getIndices().getArray()), any = false;
+      for (const v of todo) {
+        if (!boxMeets([x0, y0], [x1, y1], v.reg.bx)) continue;
+        const r = cutVolume(pts, added, tris, v.reg, v.above);
+        if (!r.removed && !r.cut) continue;
+        tally(st, v.name, lab, 'removed', r.removed); tally(st, v.name, lab, 'cut', r.cut);
+        tris = r.keep; any = true;
+      }
+      if (!any) continue;
+      changed = true;
+      if (!tris.length) { mesh.removePrimitive(prim); prim.dispose(); continue; }
+      rewrite(prim, n, added, tris);
+      mark(prim, RULES);
+    }
+    if (!mesh.listPrimitives().length) node.setMesh(null);
+  }
+  if (!changed) return false;
+  if (scene) mark(scene, RULES);
+  for (const [v, labels] of Object.entries(st)) {
+    const s = Object.values(labels).reduce((a, b) => ({ removed: a.removed + b.removed, cut: a.cut + b.cut, instances: a.instances + b.instances, whole: a.whole + b.whole }), { removed: 0, cut: 0, instances: 0, whole: 0 });
+    console.log(`supersede ${name}/${v} ${f}: removed ${s.removed} triangles, cut ${s.cut} at the ring or level, ${s.instances} instances, ${s.whole} triangles of whole meshes`);
+  }
+  if (process.env.VOLUME_STATS) appendFileSync(process.env.VOLUME_STATS, JSON.stringify({ tile: f, area: name, volumes: st }) + '\n');
+  return true;
+}
 
 // Every tile, read once: an object is filed under the tile that holds its centre, and a far-field ground filed under
 // one tile reaches a kilometre and more past it, so no tile can be left out by its name.
@@ -200,17 +342,22 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
   dirty = true;
   console.log(`supersede ${name} ${f}: removed ${removed} triangles (${removedAll} whole primitives), cut ${cutN} at the outline, mended ${mended} corners`);
   }
+  for (const va of volumeAreas) if (applyVolumes(doc, f, va)) dirty = true;
   if (!dirty) continue;
   for (const m of doc.getRoot().listMeshes()) if (!m.listPrimitives().length) m.dispose();
   for (const a of doc.getRoot().listAccessors()) if (!a.listParents().some(x => x.propertyType !== 'Root')) a.dispose();
   // same encoding as `gltf-transform optimize --compress meshopt` wrote
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
-  await io.write(`${dir}/${f}`, doc);
+  // images the tile shares with others (models/main/tex/) stay outside it: io.write would embed them
+  const path = `${dir}/${f}`;
+  writeFileSync(path, keepShared(await io.writeBinary(doc), sharedRefs(doc.getRoot().listTextures().map(t => t.getURI()), path, path)));
   changedTiles.add(f);
 }
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
-for (const { within } of areas) if (existsSync(ft)) {
+// (and inside a volume's ring that keeps nothing and has no level)
+const treeRings = volumeAreas.flatMap(a => a.vols.filter(v => v.reg && v.above === null && !v.keep.length).map(v => v.reg));
+for (const { within } of [...areas, ...treeRings]) if (existsSync(ft)) {
   const raw = readFileSync(ft); // a small file's Buffer is a view into a shared pool: copy exactly its bytes
   const a = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length - (raw.length % 4))), keep = [];
   for (let i = 0; i + 4 < a.length; i += 5) if (!within(a[i], -a[i + 2])) keep.push(a[i], a[i + 1], a[i + 2], a[i + 3], a[i + 4]);
