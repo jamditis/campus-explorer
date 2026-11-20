@@ -71,12 +71,12 @@ for f in $B/raw/*.glb; do
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
   # optimize leaves an unused second copy of every instance transform in the file: drop it
-  cp $W/compact.mjs ./compact.mjs; node compact.mjs $S/$C.glb || fail "compact $C"
+  cp $W/compact.mjs $W/pack.mjs ./; node compact.mjs $S/$C.glb || fail "compact $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
   # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
   # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
   if [[ $C == t_* || $C == n_t_* || $C == sw_t_* ]]; then
-    mkdir -p $S/lod; cp $W/lod.mjs ./lod.mjs  # run from here so it resolves this folder's node_modules
+    mkdir -p $S/lod; cp $W/lod.mjs $W/pack.mjs ./  # run from here so it resolves this folder's node_modules
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
   fi
 done
@@ -97,7 +97,7 @@ fi
 # there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
 if ls $S/sw_*.glb >/dev/null 2>&1; then
   python3 $W/../../blender/scripted/supersede.py $WORK/supersede.json ${SW_AREAS:+--areas $SW_AREAS} || fail "supersede rules"
-  cp $W/supersede.mjs $W/lod.mjs ./
+  cp $W/supersede.mjs $W/lod.mjs $W/pack.mjs ./
   node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
   [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"
   CHANGED=$(sed -n 's/^CHANGED //p' $WORK/supersede.out)

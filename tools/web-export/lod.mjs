@@ -1,9 +1,12 @@
 // Far-distance version of a campus tile: drops instanced nodes (trees, repeated assets: the viewer keeps the full
 // tile's instances), interiors and meshes smaller than MIN m, then simplifies what is left without tearing it. usage: node lod.mjs in.glb out.glb
+// Its images are half size per side (pack.mjs farImageSize).
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, quantize } from '@gltf-transform/functions';
+import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, quantize, compressTexture } from '@gltf-transform/functions';
 import { MeshoptSimplifier, MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
+import sharp from 'sharp';
+import { farImageSize } from './pack.mjs';
 const [inp, out] = process.argv.slice(2);
 const MIN = +(process.env.MIN || 6), RATIO = +(process.env.RATIO || 0.3), ERR_M = +(process.env.ERR_M || 0.25); // error in metres
 await Promise.all([MeshoptSimplifier.ready, MeshoptEncoder.ready, MeshoptDecoder.ready]);
@@ -49,6 +52,10 @@ for (const mesh of root.listMeshes()) for (const prim of mesh.listPrimitives()) 
 }
 for (const mesh of root.listMeshes()) if (!mesh.listPrimitives().length) mesh.dispose();
 await doc.transform(prune(), quantize(), meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
+for (const t of root.listTextures()) {
+  const size = t.getSize(), want = size && farImageSize(size);
+  if (want && (want[0] !== size[0] || want[1] !== size[1])) await compressTexture(t, { encoder: sharp, targetFormat: 'webp', resize: want });
+}
 console.log('tris', before, '->', after);
 await io.write(out, doc);
 console.log('lod', inp.split('/').pop(), 'dropped nodes', dropped);
