@@ -5685,231 +5685,18 @@
    "colour": "white",
    "evidence": "ortho2020"
   },
-  {
-   "name": "NE_lot_24_ED_cap_N_outline",
-   "type": "line",
-   "path": [
-    [
-     76.32,
-     747.51
-    ],
-    [
-     76.74,
-     748.95
-    ],
-    [
-     87.01,
-     745.98
-    ],
-    [
-     86.6,
-     744.54
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "closed": true,
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_1",
-   "type": "line",
-   "path": [
-    [
-     86.62,
-     745.0
-    ],
-    [
-     85.98,
-     746.16
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_2",
-   "type": "line",
-   "path": [
-    [
-     85.91,
-     744.84
-    ],
-    [
-     85.03,
-     746.44
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_3",
-   "type": "line",
-   "path": [
-    [
-     84.96,
-     745.12
-    ],
-    [
-     84.08,
-     746.72
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_4",
-   "type": "line",
-   "path": [
-    [
-     84.01,
-     745.4
-    ],
-    [
-     83.13,
-     746.99
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_5",
-   "type": "line",
-   "path": [
-    [
-     83.06,
-     745.67
-    ],
-    [
-     82.18,
-     747.27
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_6",
-   "type": "line",
-   "path": [
-    [
-     82.11,
-     745.95
-    ],
-    [
-     81.23,
-     747.54
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_7",
-   "type": "line",
-   "path": [
-    [
-     81.16,
-     746.22
-    ],
-    [
-     80.28,
-     747.82
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_8",
-   "type": "line",
-   "path": [
-    [
-     80.2,
-     746.5
-    ],
-    [
-     79.33,
-     748.09
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_9",
-   "type": "line",
-   "path": [
-    [
-     79.25,
-     746.77
-    ],
-    [
-     78.37,
-     748.37
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_10",
-   "type": "line",
-   "path": [
-    [
-     78.3,
-     747.05
-    ],
-    [
-     77.42,
-     748.64
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_11",
-   "type": "line",
-   "path": [
-    [
-     77.35,
-     747.32
-    ],
-    [
-     76.71,
-     748.48
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
+  {"name": "NE_lot_24_ED_cap_N_outline", "type": "line", "path": [[75.94, 746.21], [76.36, 747.65], [86.64, 744.68], [86.22, 743.24]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "closed": true, "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_1", "type": "line", "path": [[86.25, 743.7], [85.61, 744.86]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_2", "type": "line", "path": [[85.53, 743.54], [84.66, 745.14]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_3", "type": "line", "path": [[84.58, 743.82], [83.7, 745.42]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_4", "type": "line", "path": [[83.64, 744.1], [82.75, 745.69]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_5", "type": "line", "path": [[82.69, 744.37], [81.81, 745.97]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_6", "type": "line", "path": [[81.73, 744.65], [80.86, 746.24]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_7", "type": "line", "path": [[80.78, 744.92], [79.91, 746.52]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_8", "type": "line", "path": [[79.83, 745.2], [78.95, 746.79]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_9", "type": "line", "path": [[78.88, 745.47], [78.0, 747.07]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_10", "type": "line", "path": [[77.92, 745.75], [77.05, 747.34]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_11", "type": "line", "path": [[76.97, 746.02], [76.33, 747.18]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
   {
    "name": "NE_lot_24_ED_zone_S_outline",
    "type": "line",
@@ -6733,9 +6520,10 @@
    "colour": "white",
    "evidence": "ortho2020"
   },
+  {"name": "NE_lot_24_ED_bar_N", "type": "line", "path": [[76.95, 748.9], [78.65, 754.9]], "width": 0.4, "colour": "white", "evidence": "ortho2020 (0.075 m fetch: bright bar 6.2 m long, fitted on 30 profiles, rms 0.05 m)", "unverified": "width (0.66 m at half height in a soft image, taken as 0.4 m); what it marks (an end or edge bar of the row)"},
   {"name": "NE_lot_25_mouth_stop_bar", "type": "line", "path": [[29.65, 511.4], [30.05, 507.4]], "width": 0.45, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (bar across the exit lane at the mouth on Yogi Berra Drive)", "unverified": "width (0.4-0.6 m in a soft image)"},
   {"name": "NE_lot_25_mouth_stop_word", "type": "text", "at": [31.25, 509.15], "angle": 172.0, "text": "STOP", "height": 1.9, "width": 2.6, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (a block of paint about 1.9 x 2.7 m just behind the stop bar)", "unverified": "the letters cannot be read; taken as STOP from its place behind a stop bar"},
-  {"name": "NE_lot_25_cap_E_outline", "type": "line", "path": [[58.7, 520.2], [63.1, 518.3], [65.0, 522.1]], "closed": true, "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (hatched wedge at the east end of the north row, against the curb)", "unverified": "corners read to about 0.3 m"},
+  {"name": "NE_lot_25_cap_E_outline", "type": "line", "path": [[58.7, 520.2], [62.79, 518.46], [64.69, 522.26]], "closed": true, "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (hatched wedge at the east end of the north row, against the curb)", "unverified": "corners read to about 0.3 m; east side kept 0.35 m inside the curb line (fix-up pass)"},
   {"name": "NE_lot_25_cap_E_1", "type": "line", "path": [[60.02, 519.63], [60.68, 520.83]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
   {"name": "NE_lot_25_cap_E_2", "type": "line", "path": [[60.9, 519.25], [62.0, 521.25]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
   {"name": "NE_lot_25_cap_E_3", "type": "line", "path": [[61.78, 518.87], [63.32, 521.67]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},

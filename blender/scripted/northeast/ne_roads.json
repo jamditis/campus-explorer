@@ -97,9 +97,9 @@
   {
    "name": "NE_road_Plant_yard_deck_S_drive",
    "kind": "asphalt",
-   "ring": [[-11.0, 466.0], [-12.5, 474.0], [-21.0, 498.5], [-22.5, 505.0], [-16.0, 512.0], [-17.8, 522.0, 12.0], [-25.3, 537.0], [-26.0, 546.5], [-17.0, 546.5], [-17.0, 536.5, 4.0], [-12.5, 531.0], [11.5, 524.6], [15.9, 523.5], [14.3, 510.5], [8.0, 512.6], [1.0, 512.8], [-4.56, 512.0], [-13.2, 491.5], [-0.3, 486.4], [-1.5, 484.0], [-5.0, 478.0], [0.8, 476.0]],
+   "ring": [[-11.0, 466.0], [-8.66, 474.48], [-18.05, 496.08], [-21.0, 498.5], [-22.5, 505.0], [-16.0, 512.0], [-17.8, 522.0, 12.0], [-25.3, 537.0], [-26.0, 546.5], [-17.0, 546.5], [-17.0, 536.5, 4.0], [-12.5, 531.0], [2.34, 527.02], [11.85, 523.26], [15.9, 523.5], [14.3, 510.5], [8.0, 512.6], [1.0, 512.8], [-4.56, 512.0], [-13.2, 491.5], [-0.3, 486.4], [-1.5, 484.0], [-5.0, 478.0], [0.8, 476.0]],
    "evidence": "ortho2020, lidar2017",
-   "unverified": "plant and kiosk walls in shadow: yard edge along their LiDAR outline to about 1 m; west curb of the deck drive under trees",
+   "unverified": "plant and kiosk walls in shadow: yard edge along their LiDAR outline to about 1 m; edges against the Energy Plant's east wall and the CarParc Diem south-west stair tower moved onto their LiDAR wall lines (0.1 m outside) in the fix-up pass, where the paving ran under them; west curb of the deck drive under trees",
    "notes": "Service yard between the District Energy Plant and the brick substation, and the CarParc Diem south drive (OSM service) from Yogi Berra Drive to the deck"
   },
   {

@@ -183,9 +183,14 @@
      273.812
     ],
     [
+     -244.6,
+     275.6,
+     1.0
+    ],
+    [
      -235.9,
-     284.517,
-     6.5
+     267.5,
+     4.0
     ],
     [
      -235.9,
@@ -213,7 +218,7 @@
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "south edge is the footprint (1 m off Feliciano's wall, under its shadow); the drive's west curb radius 6.5 m read from a shaded curve"
+   "unverified": "south edge is the footprint (1 m off Feliciano's wall, under its shadow); the drive's west curb (a sharp corner at the walk's end, a straight run and a 4 m arc into x -235.9) read from a shaded curve"
   },
   {
    "name": "W_webster_loop_island",
@@ -491,9 +496,14 @@
      273.812
     ],
     [
+     -244.6,
+     275.6,
+     1.0
+    ],
+    [
      -235.9,
-     284.517,
-     6.5
+     267.5,
+     4.0
     ],
     [
      -235.9,

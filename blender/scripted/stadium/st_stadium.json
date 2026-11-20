@@ -2007,7 +2007,7 @@
    "name": "ST_yogi_museum_roof_NW",
    "roof": "shed",
    "top": 129.6,
-   "eave": 123.5,
+   "eave": 124.45,
    "ridge_angle": 233.1,
    "style": "hall",
    "floors": 2,
@@ -2021,12 +2021,12 @@
      952.429
     ],
     [
-     200.131,
-     948.521
+     203.896,
+     949.129
     ],
     [
-     197.498,
-     945.013
+     199.625,
+     943.416
     ]
    ],
    "wall": "#d9d4c8",
@@ -2038,7 +2038,7 @@
     "spacing": 8.0
    },
    "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (ridge 129.6 m along 53 deg, eaves 123.4-123.6 m, 17 m to the north-west and 11 m to the south-east of the ridge); osm 265888018; ortho2020 (red-brown standing-seam roof); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (museum adjoins the first-base side); aerial photo 2024 (grey stucco gable end, red roof)",
-   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed"
+   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed; walls set back 2.65 m to the back of the first-base seating bowl: the roof overhangs the top rows (LiDAR returns at seat level, 114.5-115.5 m, under its north-west edge), the overhang is not drawn; eave raised so the roof plane is unchanged"
   },
   {
    "name": "ST_yogi_museum_roof_SE",
@@ -2050,8 +2050,8 @@
    "floors": 2,
    "ring": [
     [
-     219.889,
-     928.202
+     222.591,
+     931.801
     ],
     [
      239.978,
@@ -2064,6 +2064,10 @@
     [
      211.092,
      934.806
+    ],
+    [
+     217.49,
+     930.003
     ]
    ],
    "wall": "#d9d4c8",
@@ -2075,7 +2079,7 @@
     "spacing": 8.0
    },
    "evidence": "lidar2017 (outline: wall lines fitted to the roof-edge returns; heights from the dsm) (ridge 129.6 m along 53 deg, eaves 123.4-123.6 m, 17 m to the north-west and 11 m to the south-east of the ridge); osm 265888018; ortho2020 (red-brown standing-seam roof); https://en.wikipedia.org/wiki/Yogi_Berra_Stadium (museum adjoins the first-base side); aerial photo 2024 (grey stucco gable end, red roof)",
-   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed"
+   "unverified": "the gable drawn as two shed halves meeting on the ridge (its slopes differ); the north-east end follows the LiDAR edge, not square to the ridge; window band guessed; south corner cut back (4.5 m along the south-east eave, 3 m along the gable): the LiDAR shows plaza level there round the light pole"
   },
   {
    "name": "ST_yogi_museum_flat_roof",

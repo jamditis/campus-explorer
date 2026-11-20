@@ -1656,9 +1656,9 @@
   {
    "name": "V_road_Clove_S_crossing_W",
    "kind": "asphalt",
-   "ring": [[-277.68, 617.24], [-275.05, 616.29], [-274.2, 618.64], [-276.83, 619.59]],
+   "ring": [[-278.15, 617.41], [-274.11, 615.95], [-273.26, 618.3], [-277.3, 619.76]],
    "evidence": "ortho2020 (the crosswalk's west bars lie on asphalt between the road edge and the walk end; cross-area review)",
-   "unverified": "patch ends square to the crossing; overlaps Clove Road's asphalt by about 1 m"
+   "unverified": "patch ends square to the crossing; reaches 1 m onto Clove Road's asphalt and 0.3 m under the walk end"
   },
   {
    "name": "V_road_Lot61_exit_crossing",
@@ -3228,7 +3228,7 @@
     [
      -124.67,
      1138.82,
-     24.49
+     20.0
     ],
     [
      -121.76,
