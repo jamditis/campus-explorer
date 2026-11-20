@@ -316,11 +316,12 @@ def bowl_profile(walk, tiers, aisles, back, depth, tread=BOWL_TREAD):
     return flats
 
 
-def bowl_block(length, flats, base):
-    """The solid stepped block of a bowl `length` long: vertices (u, v, w) and faces wound
-    anticlockwise seen from outside. Treads and risers run the whole length; each end is one
-    strip per flat (its edges carry the neighbours' corners, so the shell is closed); the front,
-    back and bottom are one face each."""
+def bowl_block(length, flats, base, slopes=(0.0, 0.0)):
+    """The solid stepped block of a bowl `length` long at the front: vertices (u, v, w) and faces
+    wound anticlockwise seen from outside. `slopes` (du/dv of the left and right ends) let the
+    ends follow a section's slanted sides, so sections fanned round home plate meet without gaps.
+    Treads and risers run the whole length; each end is one strip per flat (its edges carry the
+    neighbours' corners, so the shell is closed); the front, back and bottom are one face each."""
     verts, index = [], {}
 
     def vid(u, v, w):
@@ -353,7 +354,23 @@ def bowl_block(length, flats, base):
     faces.append([vid(0, ve, top1), vid(L, ve, top1), vid(L, ve, base), vid(0, ve, base)])
     edges = [0.0] + [f["v"][1] for f in flats]
     faces.append([vid(0, v, base) for v in edges] + [vid(L, v, base) for v in reversed(edges)])
-    return verts, faces
+    sl, sr = slopes  # every vertex is on an end (u = 0 or L): slide it along that end's side
+    return [(u + (sl if u == 0 else sr) * v, v, w) for u, v, w in verts], faces
+
+
+def side_slopes(ring, at, angle, length):
+    """du/dv of a section's left and right sides in its front frame (`at` the front-left corner,
+    `angle` the front edge's direction): from the ring corner farthest back on each half."""
+    c, s = math.cos(math.radians(angle)), math.sin(math.radians(angle))
+    rel = [(p[0] - at[0], p[1] - at[1]) for p in ring]
+    loc = [(dx * c + dy * s, dy * c - dx * s) for dx, dy in rel]
+    back = [p for p in loc if p[1] > 0.5]
+    left = max((p for p in back if p[0] < length / 2), key=lambda p: p[1], default=None)
+    right = max((p for p in back if p[0] >= length / 2), key=lambda p: p[1], default=None)
+    return (
+        left[0] / left[1] if left else 0.0,
+        (right[0] - length) / right[1] if right else 0.0,
+    )
 
 
 def seat_for(seats, row, section):
@@ -384,13 +401,13 @@ def bowl(name, at, angle, length, depth, spec, unverified=True):
         depth,
         spec.get("tread", BOWL_TREAD),
     )
-    verts, faces = bowl_block(length, flats, spec["base"])
+    sl, sr = side_slopes(spec["ring"], at, angle, length) if "ring" in spec else (0.0, 0.0)
+    verts, faces = bowl_block(length, flats, spec["base"], (sl, sr))
     concrete = kit.mat("concrete", "seating_bowl", kit.srgb(spec.get("concrete", "#b5b1a8")), 0.9)
     b = kit.Builder(f"{name}_bowl{tag}")
     b.faces([place(*p) for p in verts], faces, concrete)
     out = [b.finish(recalc=False)]
     n, aw = int(spec.get("sections") or 1), spec.get("aisle_width", 1.2)
-    sec = (length - (n - 1) * aw) / n
     seats = spec.get("seats", [])
     lc = Local(f"{name}_seats{tag}", place, angle)
     plank = materials()["plank"]
@@ -398,17 +415,20 @@ def bowl(name, at, angle, length, depth, spec, unverified=True):
         if f["kind"] != "row":
             continue
         back, w = f["v"][1], f["level"]
+        ul = sl * (back - 0.3) + 0.05 + 0.25 * abs(sl)  # the row's ends, clear of slanted sides
+        ur = length + sr * (back - 0.3) - 0.05 - 0.25 * abs(sr)
+        sec = (ur - ul - (n - 1) * aw) / n
         for k in range(n):
             s = seat_for(seats, f["row"], k)
             if s is None:
                 continue
-            u0 = k * (sec + aw)
+            u0 = ul + k * (sec + aw)
             if s["type"] == "chairs":
                 col = s.get("colour", "#a3322c")
                 m = kit.mat("plastic", f"seat_{col.lstrip('#')}", kit.srgb(col), 0.5)
-                lc.box(u0 + 0.05, u0 + sec - 0.05, back - 0.55, back - 0.1, w, w + 0.45, m)
+                lc.box(u0, u0 + sec, back - 0.55, back - 0.1, w, w + 0.45, m)
             else:
-                lc.box(u0 + 0.05, u0 + sec - 0.05, back - 0.35, back - 0.1, w, w + 0.43, plank)
+                lc.box(u0, u0 + sec, back - 0.35, back - 0.1, w, w + 0.43, plank)
     if seats:
         out.append(lc.finish())
     return out

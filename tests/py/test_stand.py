@@ -93,11 +93,34 @@ class BowlBlock(unittest.TestCase):
         self.assertTrue(closed)
         self.assertAlmostEqual(vol, 5.0 * self.profile_area(flats, 109.3), places=6)
 
+    def test_slanted_ends_follow_the_section_sides(self):
+        flats = stand.bowl_profile(WALK, TIERS, AISLES, back=115.5, depth=17.0, tread=0.85)
+        sl, sr = -0.4, 0.3  # a section that widens toward the back, as round home plate
+        verts, faces = stand.bowl_block(12.0, flats, base=109.3, slopes=(sl, sr))
+        closed, vol = closed_and_outward(verts, faces)
+        self.assertTrue(closed)
+        want = sum(
+            (f["level"] - 109.3)
+            * (12.0 * (f["v"][1] - f["v"][0]) + (sr - sl) * (f["v"][1] ** 2 - f["v"][0] ** 2) / 2)
+            for f in flats
+        )
+        self.assertAlmostEqual(vol, want, places=6)
+        self.assertIn((sl * 17.0, 17.0, 115.5), verts)  # back-left corner on the slanted side
+
     def test_few_faces(self):
         flats = stand.bowl_profile(WALK, TIERS, AISLES, back=115.5, depth=17.0, tread=0.85)
         _, faces = stand.bowl_block(12.0, flats, base=109.3)
         # a tread and a riser per flat, one end strip each side per flat, front, back and bottom
         self.assertLessEqual(len(faces), 4 * len(flats) + 3)
+
+
+class SideSlopes(unittest.TestCase):
+    def test_slopes_of_a_fanned_section(self):
+        # front edge along +y from (10, 0) to (10, 8); the body lies to its left (-x)
+        ring = [[10, 0], [10, 8], [0, 10], [0, -3]]
+        sl, sr = stand.side_slopes(ring, (10, 0), 90.0, 8.0)
+        self.assertAlmostEqual(sl, -0.3)
+        self.assertAlmostEqual(sr, 0.2)
 
 
 class SeatRows(unittest.TestCase):
