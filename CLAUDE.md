@@ -42,12 +42,13 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 |---|---|
 | `blender/scripted/<area>/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
 | `geom.py`, `layout.py` | Pure plan geometry (true-arc corners) and the layout shared by paint and ground |
-| `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
-| `stand.py`, `fixtures.py`, `place.py` | Grandstands and fixtures, and where the plan puts them |
-| `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels |
+| `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR, level water); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
+| `stand.py`, `fixtures.py`, `place.py` | Grandstands (aluminium kit, solid concrete bowl) and fixtures, and where the plan puts them |
+| `marks.py` | Shapes of lane arrows, crosswalks and pavement words as paint outlines (pure, tested) |
+| `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels, roof wells, ramp bays, paint on a deck roof |
 | `build.py` | Entry point, run inside Blender |
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
-| `tools/web-export/supersede.mjs`, `compact.mjs` | Take other sources' ground out of each area's footprint; drop unused vertex data from tiles |
+| `tools/web-export/supersede.mjs`, `compact.mjs`, `tree_instance.mjs`, `pack.mjs` | Take other sources' ground out of each area's footprint; drop unused vertex data and pack instance rotations; make small tree groups instances |
 
 ## Git identity
 

@@ -136,18 +136,19 @@ Lessons are in [lessons.md](lessons.md).
 
 Order: the engine first (plan agents need the new format), then the plans, then one export per PR.
 
-PR A, engine and the first uses of it:
-- [ ] Building format: sunken roof areas (`wells`), a rim with a second roof colour, a garage ramp bay; Overlook tower, wing and garage corrected with them
-- [ ] Surface kind `water` (a level surface) in the engine, and a water material in the viewer; the Village basin and pool, the Overlook pond
-- [ ] Marking types for junctions: `arrow`, `crosswalk`, `text` (lane numbers), drawn from the rule book, never traced
-- [ ] Paint on a parking deck's roof level (stalls on CarParc Diem and the Overlook garage)
+One PR, not two: a PR with new plans and old tiles would leave `main` inconsistent, and only one branch can be pushed.
 
-PR B, stacked on A, the fix-up pass per area from the "not modelled yet" lists in `docs/ROADMAP.md`:
-- [ ] Southwest, west, northeast, stadium, village, overlook: one agent per area, then an independent cross-area review, then the export
-- [ ] Only what a source shows. Items with no source stay on the list (2024 bullpens, lamps without returns or visible shadows)
-
-PR C, viewer only, from `main`:
-- [ ] Pittser Field turf tone (north model)
-- [ ] Detail levels at 220 MB: measure, then the cheapest real saving
+- [x] Building format: `wells` (sunken roof areas, second roof colour), garage ramp bays; Overlook tower, wing and garage; CarParc Diem
+- [x] Surface kind `water` and a water material in the viewer; the Village basin pond and pool
+- [x] Marking types `arrow` (with a measured `length`), `crosswalk`, `text`; paint on a deck's roof
+- [x] Stand style `bowl`; Yogi Berra Stadium's concrete seating
+- [x] `free_edges`: the footprint may run under another model's building
+- [x] Fix-up pass, one agent per area; an independent code review (5 defects, fixed) and a cross-area plan review (6 defects, fixed)
+- [x] West footprint widened: Webster Road beyond its mouth, the Feliciano loop, the lot by University Hall
+- [x] Viewer: Pittser Field turf tone; pines with an opaque leaf material count as crowns
+- [x] Export: tree instances for groups of 2 to 4, packed rotations, half-size far images, `REPACK=1`
+- [ ] Export `sw10`, before/after screenshots, PR
 
 Blocked: the corridor to the communication school needs Joe's photos (the 2020 ortho shows a construction site there).
+
+Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per area.
