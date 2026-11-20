@@ -651,7 +651,7 @@
     -80.0
    ],
    "lod": "lod/sw_t_-2_0.glb",
-   "lod_bytes": 42824,
+   "lod_bytes": 42828,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -855,7 +855,7 @@
     -1360.0
    ],
    "lod": "lod/sw_t_-2_8.glb",
-   "lod_bytes": 126288,
+   "lod_bytes": 126292,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/82fdbfa4e05cd7f52f09.webp",
@@ -900,13 +900,13 @@
   },
   {
    "file": "sw_t_-3_-1.glb",
-   "bytes": 963916,
+   "bytes": 963912,
    "center": [
     -400.0,
     80.0
    ],
    "lod": "lod/sw_t_-3_-1.glb",
-   "lod_bytes": 361660,
+   "lod_bytes": 361680,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -1150,7 +1150,7 @@
   },
   {
    "file": "sw_t_0_0.glb",
-   "bytes": 493304,
+   "bytes": 493296,
    "center": [
     80.0,
     -80.0
@@ -1571,7 +1571,7 @@
   },
   {
    "file": "sw_t_2_8.glb",
-   "bytes": 803736,
+   "bytes": 803732,
    "center": [
     400.0,
     -1360.0
@@ -2098,7 +2098,7 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 20, 2026, 3:27 PM ET",
+   "saved": "November 20, 2026, 5:35 PM ET",
    "version": "sw11",
    "file": "montclair_southwest.blend"
   }
@@ -2111,7 +2111,7 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 20, 2026, 3:35 PM ET",
+ "exported": "November 20, 2026, 5:42 PM ET",
  "tex": {
   "tex/03f48791ef4e88e66401.webp": 3472,
   "tex/0561d1e460e344080c40.webp": 1420,
@@ -2284,5 +2284,5 @@
   "tex/fe0cc9e37df7dc75a9b0.webp": 3844,
   "tex/ffc0e69be8e2a820a243.webp": 8756
  },
- "total_bytes": 180213912
+ "total_bytes": 180213896
 }
