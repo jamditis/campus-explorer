@@ -39,7 +39,7 @@ SCENE=sw bash tools/web-export/build_web.sh OUT/montclair_southwest.blend
 
 ```sh
 node tools/evidence/dump_tiles.mjs /workspace/data/southwest/tiles -560 -380 -200 -50 models/main
-python3 tools/evidence/plan.py /workspace/data/southwest/tiles 1.0 --name ground --only "(?i)terrain|ground|skirt|lawn|asphalt|patch|apron|carriageway|walk|turf|fill|platform|ballast" --skip "(?i)far_houses|crown|Tree|roof|bleacher|field_lines|endzone"
+python3 tools/evidence/plan.py /workspace/data/southwest/tiles 1.0 --name ground --only "(?i)terrain|ground|skirt|farfield|lawn|asphalt|patch|apron|carriageway|walk|turf|fill|platform|ballast" --skip "(?i)far_houses|crown|Tree|roof|bleacher|field_lines|endzone"
 python3 blender/scripted/edge.py southwest /workspace/data/southwest/tiles
 ```
 

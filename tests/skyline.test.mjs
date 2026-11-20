@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { bearing, profile, simplify, curtain, beyond } from '../tools/web-export/skyline.mjs';
+import { bearing, profile, simplify, curtain, beyond, isFiller } from '../tools/web-export/skyline.mjs';
 
 const near = (a, b, tol = 1e-9) => assert.ok(Math.abs(a - b) <= tol, `${a} vs ${b}`);
 const EYE = [0, 0, 100];
@@ -116,4 +116,9 @@ test('with a reach, points past it come nearer along their sight line: same bear
   // nearer than the reach: unchanged
   const q = profile(new Float32Array(wall(12000, 500, 12000, -500, -40, 400)), EYE, 0.5);
   assert.deepEqual(curtain(simplify(q, 0.01), q, EYE, 17000).position, curtain(simplify(q, 0.01), q, EYE).position);
+});
+
+test('isFiller names the far-field filler the viewer hides in context.glb (look.js FILLER), by mesh name', () => {
+  for (const n of ['WS62_crown_broad', 'WS62_crown_tall', 'MID_street_trunk_mesh_20261015ah', 'Icosphere.001', 'Icosphere001']) assert.equal(isFiller(n), true, n);
+  for (const n of ['Icosphere', 'Icosphere.002', 'Tree_WS62_crown_x', 'MID_lod1_20261014ad_003', '']) assert.equal(isFiller(n), false, n);
 });

@@ -177,7 +177,7 @@ facts set what of it can be seen. The fog (`look.js`, FogExp2 0.00027) leaves 31
 the camera within about 2.5 km of the origin. So past 10 km only an outline against the sky shows, and a 30 m wide
 building there is under 3 px wide at the walk view's 68 degrees on a 1080 px screen.
 
-The export applies three steps to the published tiles (`build_web.sh`, after supersede, before the shared images):
+The export applies four steps to the published files (`build_web.sh`, after supersede, before the shared images):
 
 - `farcut.mjs`: every mesh that is not ground and lies wholly past 10 km (the New York, Jersey City and American
   Dream buildings of the main model, 148,598 triangles in six meshes) becomes one stand-in,
@@ -188,9 +188,19 @@ The export applies three steps to the published tiles (`build_web.sh`, after sup
   The far plane cuts both the same way: today 70 % of the skyline's columns seen from the campus centre lie past
   20 km. `REACH=17000` (not the default) brings points past 17 km nearer along their sight lines so all of
   Manhattan shows from the campus centre; from a raised camera those points then sit lower than they should.
+  It also drops the far-field filler `look.js` hides in `context.glb` (`FILLER`: the canopy carpet `WS62_crown_*`,
+  its trunks and the 1,300-triangle street-tree crowns `Icosphere.001`, about 3.1 M triangles in 133,000 instances,
+  never drawn because they float above the skirt): 3.3 MB that was downloaded and decoded for nothing.
 - `skirt.mjs`: the skirt simplified to 5 cm (borders locked, only existing vertices kept), once (marked in extras).
 - `drop_zero.mjs`: triangles of zero area in the stored positions are dropped from every tile and far version
-  (3.98 M of 22.4 M when this was written, 2.75 M of them in the skirt). They draw nothing.
+  (3.98 M of 22.4 M when this was written, 2.75 M of them in the skirt). They draw nothing. Most come from the
+  main model: the skirt's `*_skirt_under_*` geometry-node patches each subdivide the mesh again (levels 2 to 5),
+  so 5.3 M of the 7.0 M evaluated triangles have an edge under 6 cm, the 16-bit position step over the skirt's
+  4 km; quantized, they collapse.
+- `far_thin.py`: a far tree (`far_trees.bin`) whose crown is under 4 px wide (68 degrees, 1080 px) grows to that
+  width, and only the share (old radius / new radius)^2 of them stays, chosen by a hash of the position: the same
+  covered area, fewer crowns (35,134 to 30,510). Fog leaves 56 % even at the skirt's corners, so none is dropped
+  for fog. A second run changes nothing.
 
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
 

@@ -23,6 +23,7 @@ EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
 )
 RUN_STEP = 1.5  # edge samples further apart than this are not one run (edge.py: 1 m apart)
+FOLLOW_TOL = 0.05  # metres: a neighbour this close to following the LiDAR is met as an offset
 
 
 def _blur(a, sigma):
@@ -93,22 +94,43 @@ def _sample(a, x, y, x0, y1, cell):
     return top * (1 - ty) + bottom * ty
 
 
-def _run_mean(e, v, kind):
-    """Mean of v over a symmetric window along the run of samples e (in footprint order, wrapping
-    at the ends): the same number k <= EDGE_RUN each side, so a sample at the end of a run keeps
-    its own value. The window stops at a gap between samples (more than RUN_STEP apart: the old
-    ground had none, or the edge is shared with another scripted area) and where `kind` changes.
-    """
+def _windows(e, kind=None):
+    """Symmetric windows along the run of samples e (in footprint order, wrapping at the ends):
+    for each sample the indices of the k <= EDGE_RUN samples each side, where the run goes on
+    unbroken both ways (no step over RUN_STEP: the old ground had none there, or the edge is
+    shared with another scripted area; and no change of `kind`). A run's end sample has k = 0."""
     n = len(e)
     step = np.hypot(*(np.roll(e[:, :2], -1, 0) - e[:, :2]).T)  # i to i + 1
-    joined = (step <= RUN_STEP) & (np.roll(kind, -1) == kind)
-    out = np.empty(n)
+    joined = step <= RUN_STEP
+    if kind is not None:
+        joined &= np.roll(kind, -1) == kind
+    out = []
     for i in range(n):
         k = 0
         while k < EDGE_RUN and k < (n - 1) // 2 and joined[(i - k - 1) % n] and joined[(i + k) % n]:
             k += 1
-        out[i] = v[np.arange(i - k, i + k + 1) % n].mean()
+        out.append(np.arange(i - k, i + k + 1) % n)
     return out
+
+
+def _follows(e, off, tol=FOLLOW_TOL):
+    """Whether the neighbour follows the LiDAR at each sample: over its window, its offset from
+    the LiDAR varies no more than its height strays from a straight line (plus `tol`)."""
+    out = np.ones(len(e), bool)
+    for i, idx in enumerate(_windows(e)):
+        if len(idx) < 3:
+            continue
+        t = np.arange(len(idx), dtype=float)
+        z = e[idx, 2]
+        line = np.polyval(np.polyfit(t, z, 1), t)
+        out[i] = off[idx].std() <= (z - line).std() + tol
+    return out
+
+
+def _run_mean(e, v, kind):
+    """Mean of v over each sample's symmetric window (`_windows`): a sample at the end of a run
+    keeps its own value; offsets and heights (`kind`) are not averaged together."""
+    return np.array([v[idx].mean() for idx in _windows(e, kind)])
 
 
 def shore_level(samples):
@@ -207,8 +229,11 @@ class Terrain:
             # the LiDAR has no ground under a sample (a roof, a stand), its height is used as is.
             i = np.clip(((e[:, 0] - self.x0) / cell).astype(int), 0, nx - 1)
             j = np.clip(((self.y1 - e[:, 1]) / cell).astype(int), 0, ny - 1)
-            rel = self.measured[j, i]
             ground = _sample(self.rough, e[:, 0], e[:, 1], self.x0, self.y1, cell)
+            # A neighbour that does not follow the LiDAR (a coarse skirt over a bank) is met as a
+            # height: there its offset swings along the run more than its height strays from a
+            # straight line.
+            rel = self.measured[j, i] & _follows(e, e[:, 2] - ground)
             v = np.where(rel, e[:, 2] - ground, e[:, 2])
             e[:, 2] = _run_mean(e, v, rel) if EDGE_RUN > 0 else v
             self.edge, self.relative = e, rel

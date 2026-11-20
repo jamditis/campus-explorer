@@ -141,3 +141,12 @@ export function beyond(tris, dist) {
   for (let i = 0; i < tris.length; i += 3) if (Math.hypot(tris[i], tris[i + 1]) <= dist) return false;
   return true;
 }
+
+/**
+ * Far-field filler the viewer never draws: `look.js` (FILLER) hides these meshes when they come from the
+ * context tile, because they float above the exported skirt (the canopy carpet, its trunks, the 1,300-triangle
+ * street-tree crowns). Same rule, by glTF mesh name (three.js drops the dot from `Icosphere.001`).
+ */
+export function isFiller(name) {
+  return /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/.test(name);
+}

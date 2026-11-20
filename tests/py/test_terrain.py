@@ -140,6 +140,19 @@ class Grading(unittest.TestCase):
         got = t.surface(x, np.full(3, 0.2), np.zeros(3, bool))
         np.testing.assert_allclose(got, f(x, 0), atol=0.06)
 
+    def test_a_coarse_neighbour_that_ignores_the_relief_is_met_at_its_own_height(self):
+        # a coarse skirt lies flat at 100 m over ground with 2 m bumps every 12 m: its offset from
+        # the LiDAR swings by 4 m along the run, so it is met as a height, not as an offset
+        def f(x, y):
+            return 100 + 2 * np.sin(x / 2)
+
+        samples = [[x, 0.0, 100.0] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT)
+        x = np.arange(5.0, 195.0, 1.0)
+        got = t.surface(x, np.full(len(x), 0.05), np.zeros(len(x), bool))
+        np.testing.assert_allclose(got, 100.0, atol=0.05)
+
     def test_a_sample_over_a_void_keeps_its_own_height(self):
         # under a stand (a void) the LiDAR has no ground: there the neighbour's height is used as
         # it is, not as an offset from ground filled in from round the stand
