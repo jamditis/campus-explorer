@@ -7,6 +7,7 @@
 #   ends by taking the other sources' ground out of their tiles inside every area's footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
+#   TREE_INSTANCE=0 leaves trees used 2 to 4 times in a tile to optimize (joined into one plain mesh), as before
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
 #   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
 # Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
@@ -66,6 +67,11 @@ for f in $B/raw/*.glb; do
   C=$(basename $f .glb); [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
   echo "$(date +%T) optimize $C"
   node $W/tint_leaves.mjs $f || fail "tint $C"
+  # optimize instances a mesh only from 5 uses and joins the rest: make trees used 2 to 4 times instances first
+  # (tree_instance.mjs: Tree_* meshes only; fixtures stay joined, with collision)
+  if [ "${TREE_INSTANCE:-1}" != 0 ]; then
+    cp $W/tree_instance.mjs $W/pack.mjs ./; node tree_instance.mjs $f || fail "tree instances $C"
+  fi
   # no palette: materials keep their names and the 'cat' extras the viewer textures by
   npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size ${TEX:-1024} \
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3

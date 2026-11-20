@@ -1,6 +1,6 @@
 {
  "zone": "st_roads",
- "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 11.2 m between the worn north-west edge (axis +4.9, white edge line at +3.7) and the south-east curb (axis -6.3); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.4 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -5.19 with a 1.5 m walk (centre -6.35) to the Lot 22 curb, west curb +5.55 with a 2.0 m concrete band (centre +6.6); white edge lines at +3.7 and -3.7 (only the west one drawn). Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): every item that continues a ne_* item is the measured line carried straight to y 826.2 to 826.4, overlapping the ne_* surface by about 0.4 m, on the positions ne_roads and ne_lots now give at the seam (no tapers). Stall rows that cross the seam start at the first divider after the last one ne_lots draws, on the same pitch phase. Yogi Berra Drive north-west edge: the asphalt fades into a worn shoulder between axis +4.2 and +5.0, taken at +4.9 to meet ne_roads. Webster Road curb lines at axis +5.55 / -5.19 as ne_roads has them (the curb faces read here at about +5.3 / -4.9); the bright line at -3.7 and +3.7 are painted edge lines.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nNot drawn: stencilled letters and arrows; the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive; stop bars that could not be seen (only the south-west-bound bar north of the junction is drawn).",
+ "notes": "Zone st_roads: roads, walks and parking lots of the stadium district outside Yogi Berra Stadium (with its plaza and the museum) and outside the soccer field, running track and softball remainder. Read from the NJ 2020 ortho (0.15 m) on gridded and straightened sheets, with the 2017 LiDAR for the hidden road bed and lamp returns, and OpenStreetMap for names and lines under trees.\nMethod: every road and lot was read in its own straight frame. Yogi Berra Drive: axis on the painted centre line through (152.31, 825.34) at 53.57 deg (brightness profiles across the road every 2 to 3 m keep within 0.1 m of it from y 826 to the junction and on to the gore, u 0 to 115). Webster Road: axis on its centre line through (228.15, 825.0) at 96.76 deg. Edges are offsets read from the same profiles. Lots: frames along the stall rows (Lot 21/22 at 97.1 deg, the west lot at 56.7 deg, Lot 23N rows continue ne_lots); stall rows were fitted to brightness profiles of the painted lines (pitch, offset and skew by least squares, rms 0.02 to 0.1 m; pitch 2.59 m = 8.5 ft nearly everywhere); line ends and islands read on 0.04 to 0.06 m/px sheets and checked with --plan overlays.\nYogi Berra Drive: 11.2 m between the worn north-west edge (axis +4.9, white edge line at +3.7) and the south-east curb (axis -6.3); double yellow on the axis, a white lane line at -3.7; a bus bay (curb at -8.1, u 36.5 to 64) with an edge line and hatching; 2.4 m concrete walk behind the curb, stepping round the bay. North of the junction the road keeps the axis to u 115, where the south-east lane becomes a hatched gore and the road turns east as the one-way loop round Lot 22 (7.0 m). East of x 292 that loop is under trees: its line follows OpenStreetMap and the flat bed in the LiDAR ground (within about 1 m) and is cut at the footprint edge (x 345.6).\nWebster Road: east curb at axis -5.19 with a 1.5 m walk (centre -6.35) to the Lot 22 curb, west curb +5.55 with a 2.0 m concrete band (centre +6.6); white edge lines at +3.7 and -3.7 (only the west one drawn). Its west curb returns into Yogi Berra Drive with r 10, its east curb follows the junction island (r 23) to the island tip. The island has a walk all round and is planted inside. Crosswalks: across Yogi Berra Drive north of the junction, across the Webster mouth along the drive, from the island tip to the drive, and across the Lot 22 mouth (0.5 m bars).\nSeam with the north-east area (y 826): every item that continues a ne_* item is the measured line carried straight to y 826.2 to 826.4, overlapping the ne_* surface by about 0.4 m, on the positions ne_roads and ne_lots now give at the seam (no tapers). Stall rows that cross the seam start at the first divider after the last one ne_lots draws, on the same pitch phase. Yogi Berra Drive north-west edge: the asphalt fades into a worn shoulder between axis +4.2 and +5.0, taken at +4.9 to meet ne_roads. Webster Road curb lines at axis +5.55 / -5.19 as ne_roads has them (the curb faces read here at about +5.3 / -4.9); the bright line at -3.7 and +3.7 are painted edge lines.\nLots: Lot 21 north part and Lot 22 (OSM names) as one paved area with three double rows split by a cross aisle (curbed pill islands at both ends), a west row along the Webster walk, the north row and fanned stalls round the north-east corner; lamps on the cross-aisle islands from single low LiDAR returns and pole shadows. Lot 23N north part: the double row and its island, the north-east row, and accessible stalls with blue hatched aisles along the Yogi Berra Drive walk. The unnamed lot west of Yogi Berra Drive: north-west row, a double row with yellow hatched ends, south-east row and north-east end row; it runs on south of y 826, where no plan draws it yet.\nPaths: the asphalt path east of the track continues NE_road_Softball_path_N to the gravel-grey apron on the stadium's south-west side; the apron drive runs from the west lot's north-east end along the stadium to the service drive going north past the stadium's west side (it fades out at y 989). South-west corner: the Carlisle Road drive from the ne_roads end round to the turning circle (one circle r 11.8 with a planted centre r 3.85) and on along the south side of the track; its west side is cut along the footprint edge. The softball path continues NE_road_Softball_path_W to the drive.\nFix-up pass (edited by hand with /tmp/claude-0/p3/fx_st/py/gen_roads.py): the four crosswalks are now `crosswalk` markings on the same lines (ladder where the ortho shows edge lines); 32 lane-use arrows: through and left-turn arrows in the two lanes north of the junction (shapes seen on a straightened sheet), a right-turn arrow in the north-east-bound lane before the junction, and pairs of aisle arrows in Lots 21/22 and 23N, keep-right, whose direction was read from the faint shaft that trails each bright head on brightness profiles (all 14 pairs agree with keep-right). The road north of the junction is one-way south-west, so its double yellow is now one white line; its stop bar spans both lanes; stop bars added on Webster Road at the junction and at the Lot 22 mouth, where the east walk of Webster Road is split (the crossing is painted asphalt). The Lot 23N arrow pair at the seam (198.2, 826.9) has only its north-west arrow: the other lies across y 826. Not drawn: stencilled letters (a word in the bus bay, a faint mark inside the Lot 22 mouth); the museum walk north-west of the one-way loop (stadium zone); the bare-ground shoulder north-west of Yogi Berra Drive.",
  "surfaces": [
   {
    "name": "ST_lot_22_asphalt",
@@ -970,7 +970,7 @@
    "unverified": "square end at the seam overlaps NE_road_Webster_W_walk_N2 by up to 1 m"
   },
   {
-   "name": "ST_road_Webster_E_walk",
+   "name": "ST_road_Webster_E_walk_S",
    "kind": "concrete",
    "centre": [
     [
@@ -978,12 +978,30 @@
      827.0
     ],
     [
+     231.31,
+     852.3
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "ortho2020",
+   "unverified": "split at the Lot 22 mouth, where the crossing is painted asphalt (ortho2020)"
+  },
+  {
+   "name": "ST_road_Webster_E_walk_N",
+   "kind": "concrete",
+   "centre": [
+    [
+     230.53,
+     858.9
+    ],
+    [
      228.81,
      873.41
     ]
    ],
    "width": 1.5,
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "split at the Lot 22 mouth, where the crossing is painted asphalt (ortho2020)"
   },
   {
    "name": "ST_road_YB_one_way",
@@ -2271,27 +2289,6 @@
    "unverified": "hatch count and direction"
   },
   {
-   "name": "ST_lot_22_mouth_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     232.12,
-     852.39
-    ],
-    [
-     231.36,
-     858.5
-    ]
-   ],
-   "count": 5,
-   "depth": 2.6,
-   "side": "left",
-   "angle": 90,
-   "width": 0.5,
-   "colour": "white",
-   "evidence": "ortho2020"
-  },
-  {
    "name": "ST_lot_22_N",
    "type": "stalls",
    "line": [
@@ -2487,40 +2484,6 @@
    "unverified": "hatch spacing read by eye; the stencilled letters in the bay are not drawn"
   },
   {
-   "name": "ST_road_YB_N_CL_a",
-   "type": "line",
-   "path": [
-    [
-     209.83,
-     903.44
-    ],
-    [
-     220.52,
-     917.93
-    ]
-   ],
-   "width": 0.1,
-   "colour": "yellow",
-   "evidence": "ortho2020"
-  },
-  {
-   "name": "ST_road_YB_N_CL_b",
-   "type": "line",
-   "path": [
-    [
-     209.99,
-     903.33
-    ],
-    [
-     220.68,
-     917.81
-    ]
-   ],
-   "width": 0.1,
-   "colour": "yellow",
-   "evidence": "ortho2020"
-  },
-  {
    "name": "ST_road_YB_N_lane_line",
    "type": "line",
    "path": [
@@ -2534,45 +2497,6 @@
     ]
    ],
    "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020"
-  },
-  {
-   "name": "ST_road_YB_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     211.19,
-     895.85
-    ],
-    [
-     203.67,
-     901.41
-    ]
-   ],
-   "count": 8,
-   "depth": 2.4,
-   "side": "right",
-   "angle": 90,
-   "width": 0.5,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "bars under the shadow at the south-east end inferred from the pitch"
-  },
-  {
-   "name": "ST_road_YB_stop_bar_SW",
-   "type": "line",
-   "path": [
-    [
-     209.36,
-     903.05
-    ],
-    [
-     206.42,
-     905.22
-    ]
-   ],
-   "width": 0.4,
    "colour": "white",
    "evidence": "ortho2020"
   },
@@ -2639,50 +2563,6 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "the line is faint; its north end is a guess"
-  },
-  {
-   "name": "ST_road_Webster_mouth_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     201.88,
-     881.22
-    ],
-    [
-     205.45,
-     886.05
-    ]
-   ],
-   "count": 5,
-   "depth": 2.4,
-   "side": "right",
-   "angle": 90,
-   "width": 0.5,
-   "colour": "white",
-   "evidence": "ortho2020, osm",
-   "unverified": "bar count"
-  },
-  {
-   "name": "ST_road_YB_island_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     210.3,
-     889.8
-    ],
-    [
-     212.0,
-     895.8
-    ]
-   ],
-   "count": 5,
-   "depth": 2.6,
-   "side": "left",
-   "angle": 90,
-   "width": 0.5,
-   "colour": "white",
-   "evidence": "ortho2020, osm",
-   "unverified": "bar count and direction read by eye"
   },
   {
    "name": "ST_road_YB_gore_line",
@@ -3462,6 +3342,568 @@
    "angle": 90,
    "colour": "white",
    "evidence": "ortho2020"
+  },
+  {
+   "name": "ST_lot_22_mouth_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     230.83,
+     852.23
+    ],
+    [
+     230.07,
+     858.34
+    ]
+   ],
+   "width": 2.6,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020 (bars only, no edge lines)",
+   "unverified": "bar pitch from the standard (0.6 m bars at 1.2 m), not counted"
+  },
+  {
+   "name": "ST_road_YB_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     211.9,
+     896.81
+    ],
+    [
+     204.38,
+     902.37
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020 (bars between two edge lines)",
+   "unverified": "bars under the shadow at the south-east end inferred from the pitch; bar pitch from the standard (0.6 m bars at 1.2 m), not counted"
+  },
+  {
+   "name": "ST_road_Webster_mouth_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     202.85,
+     880.51
+    ],
+    [
+     206.42,
+     885.34
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020, osm (bars between two edge lines)",
+   "unverified": "bar count; bar pitch from the standard (0.6 m bars at 1.2 m), not counted"
+  },
+  {
+   "name": "ST_road_YB_island_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     209.05,
+     890.15
+    ],
+    [
+     210.75,
+     896.15
+    ]
+   ],
+   "width": 2.6,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020, osm (bars between two edge lines)",
+   "unverified": "bar count and direction read by eye; bar pitch from the standard (0.6 m bars at 1.2 m), not counted"
+  },
+  {
+   "name": "ST_road_YB_stop_bar_SW",
+   "type": "line",
+   "path": [
+    [
+     206.42,
+     905.22
+    ],
+    [
+     212.46,
+     900.77
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (one bar across both south-west-bound lanes at the crosswalk)"
+  },
+  {
+   "name": "ST_road_Webster_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     209.97,
+     886.13
+    ],
+    [
+     212.17,
+     889.11
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (bar across the inbound lane of Webster Road at the junction)",
+   "unverified": "its north-west end (by the centre line) is faint"
+  },
+  {
+   "name": "ST_lot_22_mouth_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     232.57,
+     858.46
+    ],
+    [
+     232.91,
+     855.68
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (bar across the outbound half of the Lot 22 mouth, just inside the crosswalk)"
+  },
+  {
+   "name": "ST_road_YB_N_lane_divider",
+   "type": "line",
+   "path": [
+    [
+     209.91,
+     903.39
+    ],
+    [
+     220.6,
+     917.87
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020 (one neutral-white line, no yellow cast (R-B as the asphalt), between two south-west-bound lanes)",
+   "unverified": "width"
+  },
+  {
+   "name": "ST_road_YB_N_arrow_through_0",
+   "type": "arrow",
+   "at": [
+    216.65,
+    915.93
+   ],
+   "angle": 233.57,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (arrow shapes seen on a straightened 0.03 m/px sheet: through arrows in the north-west lane, left-turn arrows in the south-east lane)",
+   "unverified": "sizes FHWA; positions to about 0.3 m"
+  },
+  {
+   "name": "ST_road_YB_N_arrow_left_0",
+   "type": "arrow",
+   "at": [
+    218.98,
+    914.21
+   ],
+   "angle": 233.57,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (arrow shapes seen on a straightened 0.03 m/px sheet: through arrows in the north-west lane, left-turn arrows in the south-east lane)",
+   "unverified": "sizes FHWA; positions to about 0.3 m"
+  },
+  {
+   "name": "ST_road_YB_N_arrow_through_1",
+   "type": "arrow",
+   "at": [
+    209.97,
+    906.88
+   ],
+   "angle": 233.57,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (arrow shapes seen on a straightened 0.03 m/px sheet: through arrows in the north-west lane, left-turn arrows in the south-east lane)",
+   "unverified": "sizes FHWA; positions to about 0.3 m"
+  },
+  {
+   "name": "ST_road_YB_N_arrow_left_1",
+   "type": "arrow",
+   "at": [
+    212.3,
+    905.16
+   ],
+   "angle": 233.57,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (arrow shapes seen on a straightened 0.03 m/px sheet: through arrows in the north-west lane, left-turn arrows in the south-east lane)",
+   "unverified": "sizes FHWA; positions to about 0.3 m"
+  },
+  {
+   "name": "ST_road_YB_arrow_right",
+   "type": "arrow",
+   "at": [
+    186.41,
+    870.02
+   ],
+   "angle": 53.57,
+   "shape": "right",
+   "colour": "white",
+   "evidence": "ortho2020 (a curved arrow turning right in the north-east-bound lane before the junction: the road north of it is one-way)",
+   "unverified": "drawn 2.5 m (FHWA); the mark reads about 2 m"
+  },
+  {
+   "name": "ST_lot_22_arrow_00",
+   "type": "arrow",
+   "at": [
+    234.51,
+    881.96
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_01",
+   "type": "arrow",
+   "at": [
+    237.96,
+    881.58
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_02",
+   "type": "arrow",
+   "at": [
+    252.35,
+    881.65
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_03",
+   "type": "arrow",
+   "at": [
+    255.72,
+    881.5
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_04",
+   "type": "arrow",
+   "at": [
+    270.23,
+    886.64
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_05",
+   "type": "arrow",
+   "at": [
+    273.71,
+    886.28
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_06",
+   "type": "arrow",
+   "at": [
+    287.67,
+    888.79
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_07",
+   "type": "arrow",
+   "at": [
+    291.16,
+    888.54
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_08",
+   "type": "arrow",
+   "at": [
+    258.08,
+    836.25
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_09",
+   "type": "arrow",
+   "at": [
+    261.4,
+    836.97
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_10",
+   "type": "arrow",
+   "at": [
+    277.16,
+    831.1
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_11",
+   "type": "arrow",
+   "at": [
+    280.38,
+    831.7
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_12",
+   "type": "arrow",
+   "at": [
+    292.83,
+    847.02
+   ],
+   "angle": 277.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_13",
+   "type": "arrow",
+   "at": [
+    296.2,
+    847.72
+   ],
+   "angle": 97.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_14",
+   "type": "arrow",
+   "at": [
+    247.85,
+    859.0
+   ],
+   "angle": 187.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_15",
+   "type": "arrow",
+   "at": [
+    248.32,
+    855.75
+   ],
+   "angle": 7.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_16",
+   "type": "arrow",
+   "at": [
+    265.54,
+    861.2
+   ],
+   "angle": 187.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_17",
+   "type": "arrow",
+   "at": [
+    266.42,
+    857.88
+   ],
+   "angle": 7.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_18",
+   "type": "arrow",
+   "at": [
+    283.31,
+    863.45
+   ],
+   "angle": 187.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_19",
+   "type": "arrow",
+   "at": [
+    284.33,
+    860.14
+   ],
+   "angle": 7.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_20",
+   "type": "arrow",
+   "at": [
+    242.04,
+    909.69
+   ],
+   "angle": 187.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_21",
+   "type": "arrow",
+   "at": [
+    241.26,
+    906.38
+   ],
+   "angle": 7.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_22",
+   "type": "arrow",
+   "at": [
+    263.97,
+    909.58
+   ],
+   "angle": 187.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_22_arrow_23",
+   "type": "arrow",
+   "at": [
+    263.56,
+    906.3
+   ],
+   "angle": 7.1,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_23N_arrow_0",
+   "type": "arrow",
+   "at": [
+    188.71,
+    849.56
+   ],
+   "angle": 233.2,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_23N_arrow_1",
+   "type": "arrow",
+   "at": [
+    191.19,
+    847.21
+   ],
+   "angle": 53.2,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
+  },
+  {
+   "name": "ST_lot_23N_arrow_2",
+   "type": "arrow",
+   "at": [
+    195.71,
+    829.13
+   ],
+   "angle": 233.2,
+   "shape": "straight",
+   "colour": "white",
+   "evidence": "ortho2020 (direction read from the faint shaft trailing the bright head on brightness profiles along the aisle)",
+   "unverified": "shape (straight assumed) and size cannot be read at 0.15 m; FHWA sizes"
   }
  ],
  "points": [

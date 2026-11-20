@@ -1,6 +1,6 @@
 {
  "zone": "ov_buildings",
- "notes": "Buildings of the Floyd block outline. NAME: the large octagonal building with the green roof is NOT Floyd Hall Arena: OSM names it (way 313431637) the Overlook Corporate Center, a 1988 Class A office building at 150 Clove Road (415,000 sq ft, listings give a ground floor and floors 1-11), and the LiDAR gives a 41-48 m wall (12 storeys of about 4.0 m above a ground floor at about 112 m) under a 12 m high mansard roof. Floyd Hall Arena, now the Montclair State University Ice Arena, is OSM way 233324743 at about x -133..-29, y 600..696 (northeast district), outside this outline. The office complex is: the octagonal tower (sides 13.5-15.5 m on the axis and 29-31 m on the diagonals, axis -7.5 deg), three stepped tiers wrapping its south-west, south and south-east sides at storey levels 5, 7 and 9 (flat brown roofs at 132.0, 140.1 and 148.2 m, 1 m rims), the 4-storey east wing (chamfered plan, green mansard border round a white roof, screened roof plant), the glazed link between tower and wing, the link block to the parking deck, and the 6-level L-shaped parking deck (OSM way 313431636). Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest lower return beyond it, at most 0.4 m past the roof return), angles snapped to the building axis (-7.5 deg office, -6.7 deg deck) where the fit agreed within 3 deg, corners by intersection; lower tiers are drawn as whole outlines closed inside the higher parts, and walls shared with a higher part are set 0.3 m inside it. Heights NAVD88 from the LiDAR: flat tops are the rim (parapet) tops, the deck median being about 1 m lower on the tiers (0.4 m on the link, 1.2 m on the deck). Tower roof: wall top 160.4 m, a 2 m ledge, then about 36 deg up to a ridge ring at 172.3 m about 13.5 m in, then a flat well at 169.2 m in the centre that opens east through a slot (169.9 m rim) to the east wall; the single 45 deg mansard part (eave 160.4, top 172.3) stays within about 1 m of the measured slope; the well is not modelled. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): tower 112.0..119.8 m (low on the north); tier 9 118.4..119.7; tier 7 118.5..119.0; tier 5 116.7..118.9; east wing 108.9..117.2; glazed link 113.4..115.1; deck link 108.8..110.2 (south side); parking deck 101.2..111.8 (low to the north-east); bus shelter 109.8..111.4; gate booth 104.9..105.4. Not modelled: the quarry yard (x 150..200, y 1110..1150) has nothing over 1.5 m in the 2017 LiDAR but a 2 m box at (173..176, 1141..1146) and a 2.4 m box at (160..163, 1113..1118), read as movable containers (the 2020 ortho shows vans, trailers and containers in other places); west of the tower (x 67..90, y 1271..1293) three 2.2-2.8 m objects (a teal container under trees at (67..73, 1271..1275), a 9 x 3 m diagonal box at (75..84, 1287..1293) and two separate boxes at (84..90, 1285..1292)) read as containers, a trailer and dumpsters/compactor, not structures; no shed or booth elsewhere in the outline; solar panels on the east wing's south roof, light poles and rooftop plant on the tower are left out. Wall colours, trims, window sizes are estimates (no public photo found); roof colours are from the 2020 ortho. Hand edits after the generator (do not regenerate over them): the tower's roof well and the east wing's white roof inside its green rim are `wells` (a hole in the flat top with walls down to a floor; the wing's white roof is a wide, shallow well), the wing's lower south end is its own flat part, and the deck's middle bay is a sloped `shed` slab in a well of the roof deck; the LiDAR shows the 172.3 m ridge band continuous between the tower well and the east roof slot, so the well does not open into the slot.",
+ "notes": "Buildings of the Floyd block outline. NAME: the large octagonal building with the green roof is NOT Floyd Hall Arena: OSM names it (way 313431637) the Overlook Corporate Center, a 1988 Class A office building at 150 Clove Road (415,000 sq ft, listings give a ground floor and floors 1-11), and the LiDAR gives a 41-48 m wall (12 storeys of about 4.0 m above a ground floor at about 112 m) under a 12 m high mansard roof. Floyd Hall Arena, now the Montclair State University Ice Arena, is OSM way 233324743 at about x -133..-29, y 600..696 (northeast district), outside this outline. The office complex is: the octagonal tower (sides 13.5-15.5 m on the axis and 29-31 m on the diagonals, axis -7.5 deg), three stepped tiers wrapping its south-west, south and south-east sides at storey levels 5, 7 and 9 (flat brown roofs at 132.0, 140.1 and 148.2 m, 1 m rims), the 4-storey east wing (chamfered plan, green mansard border round a white roof, screened roof plant), the glazed link between tower and wing, the link block to the parking deck, and the 6-level L-shaped parking deck (OSM way 313431636). Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest lower return beyond it, at most 0.4 m past the roof return), angles snapped to the building axis (-7.5 deg office, -6.7 deg deck) where the fit agreed within 3 deg, corners by intersection; lower tiers are drawn as whole outlines closed inside the higher parts, and walls shared with a higher part are set 0.3 m inside it. Heights NAVD88 from the LiDAR: flat tops are the rim (parapet) tops, the deck median being about 1 m lower on the tiers (0.4 m on the link, 1.2 m on the deck). Tower roof: wall top 160.4 m, a 2 m ledge, then about 36 deg up to a ridge ring at 172.3 m about 13.5 m in, then a flat well at 169.2 m in the centre that opens east through a slot (169.9 m rim) to the east wall; the single 45 deg mansard part (eave 160.4, top 172.3) stays within about 1 m of the measured slope; the well is not modelled. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): tower 112.0..119.8 m (low on the north); tier 9 118.4..119.7; tier 7 118.5..119.0; tier 5 116.7..118.9; east wing 108.9..117.2; glazed link 113.4..115.1; deck link 108.8..110.2 (south side); parking deck 101.2..111.8 (low to the north-east); bus shelter 109.8..111.4; gate booth 104.9..105.4. Not modelled: the quarry yard (x 150..200, y 1110..1150) has nothing over 1.5 m in the 2017 LiDAR but a 2 m box at (173..176, 1141..1146) and a 2.4 m box at (160..163, 1113..1118), read as movable containers (the 2020 ortho shows vans, trailers and containers in other places); west of the tower (x 67..90, y 1271..1293) three 2.2-2.8 m objects (a teal container under trees at (67..73, 1271..1275), a 9 x 3 m diagonal box at (75..84, 1287..1293) and two separate boxes at (84..90, 1285..1292)) read as containers, a trailer and dumpsters/compactor, not structures; no shed or booth elsewhere in the outline; solar panels on the east wing's south roof, light poles and rooftop plant on the tower are left out. Wall colours, trims, window sizes are estimates (no public photo found); roof colours are from the 2020 ortho. Hand edits after the generator (do not regenerate over them): the tower's roof well and the east wing's white roof inside its green rim are `wells` (a hole in the flat top with walls down to a floor; the wing's white roof is a wide, shallow well), the wing's lower south end is its own flat part, and the deck's middle bay is a sloped `shed` slab in a well of the roof deck; the LiDAR shows the 172.3 m ridge band continuous between the tower well and the east roof slot, so the well does not open into the slot. Deck roof paint (2026-11-20, edited by hand): stall rows, centre lines, arrows and hatched areas on the deck part and its ramp part, fitted on the 2020 ortho and mapped onto the LiDAR outline by an affine fit to the parapet edges (the ortho shows the roof about 2 m south and 0.5-0.9 m west of the walls by lean). Rows left out: the two end stalls of the south wall row (they do not follow the row pitch), the first two stalls of the north-west wall row and the west wall row between u 50 and 66 of the deck frame (paint not seen), the marks at the north end of the ramp bay (a short hatch and a curved mark, too faint to read).",
  "buildings": [
   {
    "name": "OV_bldg_OCC_tower",
@@ -508,52 +508,52 @@
    "name": "OV_bldg_OCC_parking_deck",
    "ring": [
     [
-     226.11,
-     1180.16
+     226.1,
+     1180.42
     ],
     [
-     258.99,
-     1176.3
+     258.02,
+     1176.17
     ],
     [
-     272.94,
-     1295.04
+     273.8,
+     1294.39
     ],
     [
-     205.64,
-     1302.94
+     205.74,
+     1303.46
     ],
     [
-     205.18,
-     1299.05
+     205.14,
+     1299.01
     ],
     [
-     199.74,
-     1299.69
+     199.92,
+     1299.71
     ],
     [
-     194.14,
-     1252.02
+     193.58,
+     1252.23
     ],
     [
-     210.75,
-     1250.07
+     210.98,
+     1249.91
     ],
     [
-     207.11,
-     1219.07
+     206.88,
+     1219.24
     ],
     [
-     224.29,
-     1217.05
+     224.52,
+     1216.88
     ],
     [
-     220.64,
-     1185.97
+     220.4,
+     1186.05
     ],
     [
-     226.71,
-     1185.26
+     226.74,
+     1185.21
     ]
    ],
    "roof": "flat",
@@ -563,29 +563,1704 @@
    "wall": "#c9c4b8",
    "trim": "#d8d4ca",
    "roof_colour": "#8f8f8b",
-   "evidence": "lidar2017 outline (wall lines fitted to the roof-edge returns, axis -6.7 deg) and heights (roof deck 119.7 m, parapet 120.9 m); ortho2020 (L plan, concrete roof level, light poles); osm (way 313431636, amenity=parking, parking=multi-storey); https://loopnet.com/Listing/150-Clove-Rd-Little-Falls-NJ/32000903 (search listing summary: 6 level parking deck, about 1,214 covered spaces); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (1,660 spaces in all)",
+   "evidence": "lidar2017 outline (wall lines fitted to the roof-edge returns, axis -7.6 deg: each wall turned 0.9 deg about its midpoint on 2026-11-20, where the outermost roof returns along the east wall (119 m) and the north wall lie straight (spread 0.03-0.05 m against 0.4 m at -6.7 deg); the 2020 ortho parapet edges agree) and heights (roof deck 119.7 m, parapet 120.9 m); ortho2020 (L plan, concrete roof level, light poles); osm (way 313431636, amenity=parking, parking=multi-storey); https://loopnet.com/Listing/150-Clove-Rd-Little-Falls-NJ/32000903 (search listing summary: 6 level parking deck, about 1,214 covered spaces); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (1,660 spaces in all)",
    "unverified": "6 levels from a listing summary (the page itself could not be read), consistent with the height: about 105 m on the low east side to the 119.7 m roof deck = 5 decks of about 2.9 m plus the roof; the roof level's ramp bay is its own part (OV_bldg_OCC_parking_deck_ramp), cut out of the roof deck as a well whose floor lies under the ramp slab; no stair towers stand above the roof (stairs are probably in the link block at its north-west corner); the north-west part under the link block is assumed to continue at the deck level; colours guessed",
    "wells": [
     {
      "ring": [
       [
-       228.85,
-       1240.3
+       228.51,
+       1240.49
       ],
       [
-       247.23,
-       1238.14
+       246.85,
+       1238.04
       ],
       [
-       252.59,
-       1283.82
+       252.93,
+       1283.63
       ],
       [
-       234.22,
-       1285.98
+       234.6,
+       1286.08
       ]
      ],
      "floor": 116.56
+    }
+   ],
+   "markings": [
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_E_wall_row",
+     "type": "stalls",
+     "line": [
+      [
+       258.35,
+       1184.51
+      ],
+      [
+       271.85,
+       1283.8
+      ]
+     ],
+     "count": 37,
+     "depth": 5.3,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 30 dividers, rms 0.046 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_E_half_S",
+     "type": "stalls",
+     "line": [
+      [
+       240.88,
+       1191.59
+      ],
+      [
+       245.52,
+       1227.58
+      ]
+     ],
+     "count": 14,
+     "depth": 5.75,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 15 dividers, rms 0.045 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_W_half_S",
+     "type": "stalls",
+     "line": [
+      [
+       240.91,
+       1191.84
+      ],
+      [
+       245.54,
+       1227.74
+      ]
+     ],
+     "count": 14,
+     "depth": 5.5,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 15 dividers, rms 0.062 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_E_half_N",
+     "type": "stalls",
+     "line": [
+      [
+       246.49,
+       1232.78
+      ],
+      [
+       253.16,
+       1281.76
+      ]
+     ],
+     "count": 18,
+     "depth": 5.35,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 18 dividers, rms 0.033 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_W_half_N_flat",
+     "type": "stalls",
+     "line": [
+      [
+       246.1,
+       1233.01
+      ],
+      [
+       246.85,
+       1238.48
+      ]
+     ],
+     "count": 2,
+     "depth": 5.55,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.044 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row3_E_half_flat",
+     "type": "stalls",
+     "line": [
+      [
+       228.05,
+       1235.64
+      ],
+      [
+       228.79,
+       1241.09
+      ]
+     ],
+     "count": 2,
+     "depth": 5.0,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.029 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row3_W_half",
+     "type": "stalls",
+     "line": [
+      [
+       227.28,
+       1235.98
+      ],
+      [
+       234.01,
+       1287.17
+      ]
+     ],
+     "count": 19,
+     "depth": 5.35,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 20 dividers, rms 0.064 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_W_wall_row_S",
+     "type": "stalls",
+     "line": [
+      [
+       221.47,
+       1189.61
+      ],
+      [
+       224.97,
+       1215.38
+      ]
+     ],
+     "count": 10,
+     "depth": 5.5,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 11 dividers, rms 0.052 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_W_wall_row_mid",
+     "type": "stalls",
+     "line": [
+      [
+       208.51,
+       1225.7
+      ],
+      [
+       209.45,
+       1233.5
+      ]
+     ],
+     "count": 3,
+     "depth": 5.4,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 4 dividers, rms 0.031 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row5_E_half",
+     "type": "stalls",
+     "line": [
+      [
+       212.78,
+       1259.3
+      ],
+      [
+       216.58,
+       1289.58
+      ]
+     ],
+     "count": 11,
+     "depth": 5.6,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 11 dividers, rms 0.074 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row5_W_half",
+     "type": "stalls",
+     "line": [
+      [
+       215.23,
+       1278.86
+      ],
+      [
+       216.58,
+       1289.6
+      ]
+     ],
+     "count": 4,
+     "depth": 5.3,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 5 dividers, rms 0.035 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_NW_wall_row",
+     "type": "stalls",
+     "line": [
+      [
+       198.76,
+       1286.01
+      ],
+      [
+       200.14,
+       1296.56
+      ]
+     ],
+     "count": 4,
+     "depth": 5.3,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 5 dividers, rms 0.028 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_S_wall_row",
+     "type": "stalls",
+     "line": [
+      [
+       248.23,
+       1178.52
+      ],
+      [
+       229.5,
+       1181.19
+      ]
+     ],
+     "count": 7,
+     "depth": 4.85,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 8 dividers, rms 0.055 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_N_wall_row",
+     "type": "stalls",
+     "line": [
+      [
+       263.13,
+       1290.53
+      ],
+      [
+       208.44,
+       1297.99
+      ]
+     ],
+     "count": 20,
+     "depth": 4.9,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 21 dividers, rms 0.03 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_SW_inner_wall_row",
+     "type": "stalls",
+     "line": [
+      [
+       223.16,
+       1218.4
+      ],
+      [
+       212.96,
+       1219.66
+      ]
+     ],
+     "count": 4,
+     "depth": 5.25,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 5 dividers, rms 0.048 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_line_row2_centre",
+     "type": "line",
+     "path": [
+      [
+       240.89,
+       1191.66
+      ],
+      [
+       245.54,
+       1227.75
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_line_row5_centre",
+     "type": "line",
+     "path": [
+      [
+       212.78,
+       1259.33
+      ],
+      [
+       216.58,
+       1289.55
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_line_ramp_aisle_flat",
+     "type": "line",
+     "path": [
+      [
+       236.67,
+       1232.54
+      ],
+      [
+       237.59,
+       1239.46
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_SW_aisle",
+     "type": "arrow",
+     "at": [
+      233.69,
+      1210.57
+     ],
+     "angle": 83.2,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_E_aisle_S",
+     "type": "arrow",
+     "at": [
+      252.31,
+      1207.11
+     ],
+     "angle": -97.4,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_E_aisle_mid",
+     "type": "arrow",
+     "at": [
+      255.59,
+      1232.28
+     ],
+     "angle": -96.8,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_E_aisle_N",
+     "type": "arrow",
+     "at": [
+      260.43,
+      1268.29
+     ],
+     "angle": -96.9,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_N",
+     "type": "arrow",
+     "at": [
+      238.88,
+      1233.99
+     ],
+     "angle": 83.1,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_turn",
+     "type": "arrow",
+     "at": [
+      236.0,
+      1234.34
+     ],
+     "angle": -96.8,
+     "shape": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow); turn arrow: shaft and bent head read at 0.15 m, shape unverified"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_W_aisle_S",
+     "type": "arrow",
+     "at": [
+      219.24,
+      1241.42
+     ],
+     "angle": 83.2,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_W_aisle_N",
+     "type": "arrow",
+     "at": [
+      225.02,
+      1283.96
+     ],
+     "angle": 83.1,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_N_aisle",
+     "type": "arrow",
+     "at": [
+      244.33,
+      1289.27
+     ],
+     "angle": -6.8,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_1",
+     "type": "line",
+     "path": [
+      [
+       205.45,
+       1260.24
+      ],
+      [
+       204.64,
+       1259.76
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_2",
+     "type": "line",
+     "path": [
+      [
+       206.94,
+       1260.05
+      ],
+      [
+       204.5,
+       1258.64
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_3",
+     "type": "line",
+     "path": [
+      [
+       208.43,
+       1259.87
+      ],
+      [
+       204.36,
+       1257.51
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_4",
+     "type": "line",
+     "path": [
+      [
+       209.92,
+       1259.69
+      ],
+      [
+       204.23,
+       1256.39
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_5",
+     "type": "line",
+     "path": [
+      [
+       211.4,
+       1259.5
+      ],
+      [
+       204.09,
+       1255.27
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_6",
+     "type": "line",
+     "path": [
+      [
+       212.89,
+       1259.32
+      ],
+      [
+       203.96,
+       1254.14
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_7",
+     "type": "line",
+     "path": [
+      [
+       214.38,
+       1259.14
+      ],
+      [
+       203.82,
+       1253.02
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_8",
+     "type": "line",
+     "path": [
+      [
+       215.87,
+       1258.95
+      ],
+      [
+       204.78,
+       1252.52
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_9",
+     "type": "line",
+     "path": [
+      [
+       217.35,
+       1258.77
+      ],
+      [
+       206.26,
+       1252.34
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_10",
+     "type": "line",
+     "path": [
+      [
+       217.85,
+       1258.01
+      ],
+      [
+       207.75,
+       1252.16
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_11",
+     "type": "line",
+     "path": [
+      [
+       217.72,
+       1256.89
+      ],
+      [
+       209.24,
+       1251.97
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_12",
+     "type": "line",
+     "path": [
+      [
+       217.58,
+       1255.76
+      ],
+      [
+       210.73,
+       1251.79
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_13",
+     "type": "line",
+     "path": [
+      [
+       217.45,
+       1254.64
+      ],
+      [
+       212.21,
+       1251.61
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_14",
+     "type": "line",
+     "path": [
+      [
+       217.31,
+       1253.51
+      ],
+      [
+       213.7,
+       1251.42
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_15",
+     "type": "line",
+     "path": [
+      [
+       217.17,
+       1252.39
+      ],
+      [
+       215.19,
+       1251.24
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_16",
+     "type": "line",
+     "path": [
+      [
+       217.04,
+       1251.26
+      ],
+      [
+       216.68,
+       1251.06
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_1",
+     "type": "line",
+     "path": [
+      [
+       210.59,
+       1279.35
+      ],
+      [
+       209.78,
+       1278.98
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_2",
+     "type": "line",
+     "path": [
+      [
+       212.31,
+       1279.14
+      ],
+      [
+       209.65,
+       1277.93
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_3",
+     "type": "line",
+     "path": [
+      [
+       214.02,
+       1278.93
+      ],
+      [
+       209.52,
+       1276.87
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_4",
+     "type": "line",
+     "path": [
+      [
+       215.01,
+       1278.39
+      ],
+      [
+       209.4,
+       1275.82
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_5",
+     "type": "line",
+     "path": [
+      [
+       214.88,
+       1277.33
+      ],
+      [
+       209.27,
+       1274.77
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_6",
+     "type": "line",
+     "path": [
+      [
+       214.75,
+       1276.28
+      ],
+      [
+       209.14,
+       1273.71
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_7",
+     "type": "line",
+     "path": [
+      [
+       214.63,
+       1275.23
+      ],
+      [
+       209.02,
+       1272.66
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_8",
+     "type": "line",
+     "path": [
+      [
+       214.5,
+       1274.17
+      ],
+      [
+       208.89,
+       1271.61
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_9",
+     "type": "line",
+     "path": [
+      [
+       214.37,
+       1273.12
+      ],
+      [
+       208.76,
+       1270.55
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_10",
+     "type": "line",
+     "path": [
+      [
+       214.24,
+       1272.07
+      ],
+      [
+       208.64,
+       1269.5
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_11",
+     "type": "line",
+     "path": [
+      [
+       214.12,
+       1271.01
+      ],
+      [
+       208.51,
+       1268.45
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_12",
+     "type": "line",
+     "path": [
+      [
+       213.99,
+       1269.96
+      ],
+      [
+       208.38,
+       1267.39
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_13",
+     "type": "line",
+     "path": [
+      [
+       213.86,
+       1268.91
+      ],
+      [
+       208.25,
+       1266.34
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_14",
+     "type": "line",
+     "path": [
+      [
+       213.74,
+       1267.85
+      ],
+      [
+       208.13,
+       1265.29
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_15",
+     "type": "line",
+     "path": [
+      [
+       213.61,
+       1266.8
+      ],
+      [
+       208.0,
+       1264.23
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_16",
+     "type": "line",
+     "path": [
+      [
+       213.48,
+       1265.75
+      ],
+      [
+       207.87,
+       1263.18
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_17",
+     "type": "line",
+     "path": [
+      [
+       213.36,
+       1264.69
+      ],
+      [
+       207.75,
+       1262.13
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_18",
+     "type": "line",
+     "path": [
+      [
+       213.23,
+       1263.64
+      ],
+      [
+       207.62,
+       1261.07
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_19",
+     "type": "line",
+     "path": [
+      [
+       213.1,
+       1262.59
+      ],
+      [
+       207.49,
+       1260.02
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_20",
+     "type": "line",
+     "path": [
+      [
+       212.98,
+       1261.53
+      ],
+      [
+       209.15,
+       1259.78
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_21",
+     "type": "line",
+     "path": [
+      [
+       212.85,
+       1260.48
+      ],
+      [
+       210.86,
+       1259.57
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_22",
+     "type": "line",
+     "path": [
+      [
+       207.95,
+       1277.15
+      ],
+      [
+       206.66,
+       1276.56
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_23",
+     "type": "line",
+     "path": [
+      [
+       209.52,
+       1276.87
+      ],
+      [
+       206.53,
+       1275.5
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_24",
+     "type": "line",
+     "path": [
+      [
+       209.4,
+       1275.82
+      ],
+      [
+       206.4,
+       1274.45
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_25",
+     "type": "line",
+     "path": [
+      [
+       209.27,
+       1274.77
+      ],
+      [
+       206.28,
+       1273.4
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_26",
+     "type": "line",
+     "path": [
+      [
+       209.14,
+       1273.71
+      ],
+      [
+       206.15,
+       1272.34
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_27",
+     "type": "line",
+     "path": [
+      [
+       209.02,
+       1272.66
+      ],
+      [
+       206.02,
+       1271.29
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_28",
+     "type": "line",
+     "path": [
+      [
+       208.89,
+       1271.61
+      ],
+      [
+       205.9,
+       1270.24
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_29",
+     "type": "line",
+     "path": [
+      [
+       208.76,
+       1270.55
+      ],
+      [
+       205.77,
+       1269.18
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_30",
+     "type": "line",
+     "path": [
+      [
+       208.64,
+       1269.5
+      ],
+      [
+       205.64,
+       1268.13
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_31",
+     "type": "line",
+     "path": [
+      [
+       208.51,
+       1268.45
+      ],
+      [
+       205.52,
+       1267.08
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_32",
+     "type": "line",
+     "path": [
+      [
+       208.38,
+       1267.39
+      ],
+      [
+       205.39,
+       1266.02
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_33",
+     "type": "line",
+     "path": [
+      [
+       208.25,
+       1266.34
+      ],
+      [
+       205.26,
+       1264.97
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_34",
+     "type": "line",
+     "path": [
+      [
+       208.13,
+       1265.29
+      ],
+      [
+       205.14,
+       1263.92
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_35",
+     "type": "line",
+     "path": [
+      [
+       208.0,
+       1264.23
+      ],
+      [
+       205.01,
+       1262.86
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_36",
+     "type": "line",
+     "path": [
+      [
+       207.87,
+       1263.18
+      ],
+      [
+       204.88,
+       1261.81
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_37",
+     "type": "line",
+     "path": [
+      [
+       207.75,
+       1262.13
+      ],
+      [
+       204.75,
+       1260.76
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_38",
+     "type": "line",
+     "path": [
+      [
+       207.62,
+       1261.07
+      ],
+      [
+       205.72,
+       1260.2
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 0.9 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_1",
+     "type": "line",
+     "path": [
+      [
+       209.09,
+       1225.86
+      ],
+      [
+       208.58,
+       1225.46
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_2",
+     "type": "line",
+     "path": [
+      [
+       210.7,
+       1225.66
+      ],
+      [
+       208.38,
+       1223.84
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_3",
+     "type": "line",
+     "path": [
+      [
+       212.32,
+       1225.46
+      ],
+      [
+       208.19,
+       1222.22
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_4",
+     "type": "line",
+     "path": [
+      [
+       213.68,
+       1225.06
+      ],
+      [
+       208.14,
+       1220.71
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_5",
+     "type": "line",
+     "path": [
+      [
+       213.48,
+       1223.44
+      ],
+      [
+       209.76,
+       1220.51
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_6",
+     "type": "line",
+     "path": [
+      [
+       213.29,
+       1221.81
+      ],
+      [
+       211.38,
+       1220.31
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_1",
+     "type": "line",
+     "path": [
+      [
+       227.01,
+       1222.05
+      ],
+      [
+       225.96,
+       1221.42
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_2",
+     "type": "line",
+     "path": [
+      [
+       227.66,
+       1221.1
+      ],
+      [
+       225.79,
+       1219.96
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_3",
+     "type": "line",
+     "path": [
+      [
+       228.32,
+       1220.14
+      ],
+      [
+       225.61,
+       1218.51
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_4",
+     "type": "line",
+     "path": [
+      [
+       228.98,
+       1219.19
+      ],
+      [
+       226.7,
+       1217.81
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_5",
+     "type": "line",
+     "path": [
+      [
+       229.63,
+       1218.23
+      ],
+      [
+       228.56,
+       1217.59
+      ]
+     ],
+     "width": 0.15,
+     "colour": "white",
+     "evidence": "ortho2020 (stripe angle and spacing 1.15 m fitted over the hatched area)",
+     "unverified": "line width (the 0.15 m ortho cannot resolve it) and the exact outline of the hatched area"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_link_W_edge",
+     "type": "line",
+     "path": [
+      [
+       216.96,
+       1251.02
+      ],
+      [
+       217.88,
+       1258.7
+      ],
+      [
+       212.71,
+       1259.34
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_N_edge",
+     "type": "line",
+     "path": [
+      [
+       213.03,
+       1220.11
+      ],
+      [
+       213.66,
+       1225.3
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_hatch_SW_corner_S_edge",
+     "type": "line",
+     "path": [
+      [
+       230.22,
+       1217.38
+      ],
+      [
+       226.18,
+       1223.25
+      ],
+      [
+       225.55,
+       1217.96
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
     }
    ]
   },
@@ -593,20 +2268,20 @@
    "name": "OV_bldg_OCC_parking_deck_ramp",
    "ring": [
     [
-     228.85,
-     1240.3
+     228.51,
+     1240.49
     ],
     [
-     247.23,
-     1238.14
+     246.85,
+     1238.04
     ],
     [
-     252.59,
-     1283.82
+     252.93,
+     1283.63
     ],
     [
-     234.22,
-     1285.98
+     234.6,
+     1286.08
     ]
    ],
    "roof": "shed",
@@ -617,8 +2292,65 @@
    "wall": "#c9c4b8",
    "trim": "#d8d4ca",
    "roof_colour": "#8f8f8b",
-   "evidence": "lidar2017 (the roof level's middle bay is one sloped slab: 119.34 m at its south end, falling 6.1 cm per metre (median of each metre along the bay, fitted) to 116.56 m at its north end, where the flat roof stands 2.9 m higher; straight edges 18.5 m apart across it, axis -6.7 deg; the rest of the roof deck lies at 119.4-120.0 m); ortho2020 (stalls and arrows on the slab, dark lines along both long edges ending at about y 1231 and y 1285)",
-   "unverified": "read as the top of a sloped parking floor (a ramped bay of a split-level garage) that runs on under the north part of the roof; the opening at its low end into the level below and the rails or curbs along its edges are not modelled; colours guessed"
+   "evidence": "lidar2017 (the roof level's middle bay is one sloped slab: 119.34 m at its south end, falling 6.1 cm per metre (median of each metre along the bay, fitted) to 116.56 m at its north end, where the flat roof stands 2.9 m higher; straight edges 18.5 m apart across it, axis -7.6 deg (edges turned with the deck walls; the slab edge returns lie straight at -7.6 deg); the rest of the roof deck lies at 119.4-120.0 m); ortho2020 (stalls and arrows on the slab, dark lines along both long edges ending at about y 1231 and y 1285)",
+   "unverified": "read as the top of a sloped parking floor (a ramped bay of a split-level garage) that runs on under the north part of the roof; the opening at its low end into the level below and the rails or curbs along its edges are not modelled; colours guessed",
+   "markings": [
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_W_half_N",
+     "type": "stalls",
+     "line": [
+      [
+       246.85,
+       1238.48
+      ],
+      [
+       252.82,
+       1282.27
+      ]
+     ],
+     "count": 16,
+     "depth": 5.55,
+     "side": "left",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.044 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row3_E_half",
+     "type": "stalls",
+     "line": [
+      [
+       228.79,
+       1241.09
+      ],
+      [
+       234.75,
+       1284.65
+      ]
+     ],
+     "count": 16,
+     "depth": 5.0,
+     "side": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.029 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_line_ramp_aisle",
+     "type": "line",
+     "path": [
+      [
+       237.57,
+       1239.26
+      ],
+      [
+       241.8,
+       1271.15
+      ]
+     ],
+     "width": 0.1,
+     "colour": "white",
+     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    }
+   ]
   },
   {
    "name": "OV_bldg_bus_shelter",

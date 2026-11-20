@@ -1652,6 +1652,13 @@
    ],
    "evidence": "ortho2020; stall row V_lot_VR_Abbott of the lots zone",
    "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Lot61_exit_crossing",
+   "kind": "asphalt",
+   "ring": [[-60.23, 1347.08], [-68.04, 1355.57], [-70.37, 1353.37], [-62.56, 1344.88]],
+   "evidence": "ortho2020 (the Lot 61 exit runs through the walk line on a painted crossing; asphalt between the bars)",
+   "unverified": "the walk is cut where the crossing's bars end; the patch overlaps the lot and road asphalt by about 0.6 m"
   }
  ],
  "strips": [
@@ -1762,14 +1769,26 @@
      37.74
     ],
     [
-     -62.15,
-     1346.99,
-     68.01
+     -61.6,
+     1346.2
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm 233913133 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls; cut at the painted crossing of the Lot 61 exit (v_marks)"
+  },
+  {
+   "name": "V_road_Walk_233913133_0_b2",
+   "kind": "concrete",
+   "centre": [
+    [
+     -69.0,
+     1354.25
     ],
     [
      -70.09,
      1355.41,
-     31.01
+     10.0
     ],
     [
      -74.57,
@@ -5047,50 +5066,6 @@
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
-  },
-  {
-   "name": "V_road_Clove_S_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     -274.63,
-     613.89
-    ],
-    [
-     -267.86,
-     611.44
-    ]
-   ],
-   "count": 6,
-   "depth": 3.5,
-   "side": "left",
-   "angle": 90,
-   "width": 0.6,
-   "colour": "white",
-   "evidence": "ortho2020 (colour scans along and across the road)",
-   "unverified": "bar count and spacing drawn at 0.6 m bars and 0.6 m gaps; the crossing is drawn square to the road"
-  },
-  {
-   "name": "V_road_Village_Rd_W_crosswalk",
-   "type": "stalls",
-   "line": [
-    [
-     -203.44,
-     1165.82
-    ],
-    [
-     -199.53,
-     1161.28
-    ]
-   ],
-   "count": 5,
-   "depth": 2.6,
-   "side": "left",
-   "angle": 90,
-   "width": 0.6,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "bar length and spacing estimated"
   },
   {
    "name": "V_road_Drive_E_of_T_stop_bar",

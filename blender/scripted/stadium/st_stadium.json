@@ -1,6 +1,6 @@
 {
  "zone": "st_stadium",
- "notes": "Yogi Berra Stadium and the Yogi Berra Museum. Field frame (fitted): apex of home plate at (166.379, 954.587), the intersection of the 3B and 1B base-path centre lines, each fitted as a tan stripe on 25 profiles of the 2020 ortho (rms 0.06 and 0.03 m; 135.01 and 45.42 deg, 89.6 deg apart); axis to second base at 90.217 deg (bisector), foul lines at 135.217 (3B) and 45.217 deg (1B). Checks: the home-circle tarp centroid is 0.19 m from the apex, the mound tarp centroid 0.43 m beyond the rule-book mound centre; the skin edge reads R 29.25 m about the front of the pitcher's plate (rule 28.96); the LiDAR outfield wall meets the foul lines at 93.75 m (LF, 307.6 ft) and 93.05 m (RF), against 308 ft published. Everything of the diamond is generated from the rule book in that frame (90 ft bases, 60 ft 6 in to the pitcher's plate, 18 ft mound centred 59 ft out, 26 ft home circle, 95 ft infield arc, 3 ft base-path half width, 4 x 6 ft batter's boxes, 43 in catcher's box, coach's boxes 15 ft out, 3 in chalk) by /tmp/claude-0/st/st_stadium/gen.py; the grass edge (27.0 m) and its notches at the bases are measured. Surface: the 2017 LiDAR and the 2020 ortho show natural grass and a clay infield, but the field was converted to synthetic turf for the 2024 season (sources in the turf surface), with a brown turf infield arc, home circle and mound and green base paths (aerial photo of Feb 2024), so the playing field is turf with the brown parts and the warning track as paint. Stands: the bowl is read in the foul-line frames; the front runs straight from home to the left-field deck at 9.7 deg to the 3B line and at 8 deg to the 1B line; sections split at the dugouts and where seat types change. Bullpens in the foul corners (2020) were removed in 2024 and the new bullpens, batting cages and storage building are not seen in any source used, so not drawn. Heights NAVD88 from the 2017 LiDAR.",
+ "notes": "Yogi Berra Stadium and the Yogi Berra Museum. Field frame (fitted): apex of home plate at (166.379, 954.587), the intersection of the 3B and 1B base-path centre lines, each fitted as a tan stripe on 25 profiles of the 2020 ortho (rms 0.06 and 0.03 m; 135.01 and 45.42 deg, 89.6 deg apart); axis to second base at 90.217 deg (bisector), foul lines at 135.217 (3B) and 45.217 deg (1B). Checks: the home-circle tarp centroid is 0.19 m from the apex, the mound tarp centroid 0.43 m beyond the rule-book mound centre; the skin edge reads R 29.25 m about the front of the pitcher's plate (rule 28.96); the LiDAR outfield wall meets the foul lines at 93.75 m (LF, 307.6 ft) and 93.05 m (RF), against 308 ft published. Everything of the diamond is generated from the rule book in that frame (90 ft bases, 60 ft 6 in to the pitcher's plate, 18 ft mound centred 59 ft out, 26 ft home circle, 95 ft infield arc, 3 ft base-path half width, 4 x 6 ft batter's boxes, 43 in catcher's box, coach's boxes 15 ft out, 3 in chalk) by /tmp/claude-0/st/st_stadium/gen.py; the grass edge (27.0 m) and its notches at the bases are measured. Surface: the 2017 LiDAR and the 2020 ortho show natural grass and a clay infield, but the field was converted to synthetic turf for the 2024 season (sources in the turf surface), with a brown turf infield arc, home circle and mound and green base paths (aerial photo of Feb 2024), so the playing field is turf with the brown parts and the warning track as paint. Stands: the bowl is read in the foul-line frames; the front runs straight from home to the left-field deck at 9.7 deg to the 3B line and at 8 deg to the 1B line; sections split at the dugouts and where seat types change. Bullpens in the foul corners (2020) were removed in 2024 and the new bullpens, batting cages and storage building are not seen in any source used, so not drawn. Fix-up pass (edited by hand): the paved plaza between the first-base stand, the museum and the right-field lawn is added (ST_yogi_plaza_1B). The right-field lawn seating hill (Wikipedia: grass seating in right field) is checked: no surface covers it, so it is soft ground on the LiDAR, rising from 109.6 m at the lawn wall to 115.4 m at the plaza over about 20 m. Esri World Imagery of 11 May 2025 (reference only) shows a sunken two-lane bullpen with pitching rubbers just behind the centre-field wall where the 2020 storage building, container and shed stand, a dark netted box in the yard north-east of it (read as the three-lane hitting facility) and a red-roofed building behind; its registration to this frame is off by several metres (non-affine), so none of them is drawn. Heights NAVD88 from the 2017 LiDAR.",
  "surfaces": [
   {
    "name": "ST_yogi_field_turf",
@@ -335,6 +335,38 @@
    ],
    "evidence": "osm 265888022 (garden); ortho2020",
    "unverified": "mulch bed assumed; edges from OSM"
+  },
+  {
+   "name": "ST_yogi_plaza_1B",
+   "kind": "concrete",
+   "ring": [
+    [
+     215.134,
+     963.964
+    ],
+    [
+     220.9,
+     962.9
+    ],
+    [
+     229.3,
+     975.3
+    ],
+    [
+     236.3,
+     971.4
+    ],
+    [
+     228.6,
+     953.9
+    ],
+    [
+     225.071,
+     954.102
+    ]
+   ],
+   "evidence": "ortho2020 (pale paving with three round planters between the first-base stand, the museum and the grass; its north-west and north edges as osm 265888032 (landuse grass) has them); lidar2017 (flat at 115.5 m, the concourse level; the ground rises east of the line (236.3, 971.4)-(228.6, 953.9))",
+   "unverified": "south part hidden by the museum roof and its shadow; east edge from the LiDAR break of slope (+-0.7 m); planters not drawn"
   }
  ],
  "markings": [

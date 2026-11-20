@@ -21,3 +21,28 @@ export function farImageSize([w, h]) {
   if (Math.max(w, h) <= 64) return [w, h];
   return [Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(h / 2))];
 }
+
+/**
+ * Tree meshes: the shared `Tree_*` meshes the Blender files link into every tree object (main, north and
+ * scripted alike). Shrubs are not trees here, as in the viewer's trees.js.
+ */
+export function isTreeMesh(name) {
+  return typeof name === 'string' && name.startsWith('Tree_') && !/shrub/i.test(name);
+}
+
+/**
+ * Which nodes tree_instance.mjs turns into one GPU instance batch each, before `optimize`. `nodes` is
+ * one entry per node: { mesh (any key, compared by identity; null for none), name (the mesh's name),
+ * skin, instanced }. A tree mesh used by `min` or more plain nodes gives one batch: the list of those
+ * node indices. Other meshes are left to `optimize`, which instances only at 5 or more and joins the
+ * rest: joined fixtures keep their collision. A mesh with a skinned node is skipped, as instance() does.
+ */
+export function treeBatches(nodes, min = 2) {
+  const byMesh = new Map();
+  nodes.forEach((n, i) => {
+    if (n.mesh == null || n.instanced || !isTreeMesh(n.name)) return;
+    if (!byMesh.has(n.mesh)) byMesh.set(n.mesh, []);
+    byMesh.get(n.mesh).push(i);
+  });
+  return [...byMesh.values()].filter(ix => ix.length >= min && !ix.some(i => nodes[i].skin));
+}
