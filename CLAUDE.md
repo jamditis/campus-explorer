@@ -31,12 +31,13 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `viewer/hud.js`, `viewer/labels.js` | Compass, scale bar, position readout, minimap; place labels |
 | `viewer/measure.js`, `viewer/hunt.js` | Measuring tool; landmark hunt |
 | `viewer/ui.js` | Panel, search, sunlight controls, shortcuts, share link, photo |
-| `viewer/geo.js`, `sun.js`, `schedule.js`, `permalink.js`, `places.js`, `cat.js`, `tone.js`, `*-math.js` | Pure logic, unit tested in `tests/` |
+| `viewer/geo.js`, `sun.js`, `schedule.js`, `permalink.js`, `places.js`, `cat.js`, `tone.js`, `texshare.js`, `*-math.js` (`rooms`, `pose`, `flight`, ...) | Pure logic, unit tested in `tests/` |
+| `viewer/rooms.json` | Room numbers and interior volumes, built by `tools/places/build_rooms.py` from `blender/scripted/<area>/interior.json` |
 | `viewer/places.json` | Place names from OpenStreetMap, built by `tools/places/build_places.py` |
 
 ## Scripted builds index
 
-`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`, `overlook/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`, `overlook/`, `webster/`, `lot60/`, and two with no ground of their own: `ccom/`, the College of Communication and Media, and `green/`, the Alumni Green); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|
@@ -46,9 +47,14 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `stand.py`, `fixtures.py`, `place.py` | Grandstands (aluminium kit, solid concrete bowl) and fixtures, and where the plan puts them |
 | `marks.py` | Shapes of lane arrows, crosswalks and pavement words as paint outlines (pure, tested) |
 | `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels, roof wells, ramp bays, paint on a deck roof |
+| `rooms.py`, `interior.py` | Interiors from floor plans: partitions with door openings, slabs, room numbers (pure part tested) |
+| `adopt.py` | Carries named objects over from the release `.blend` (checked by sha256), optionally moved and corrected by a fix function under `blender/` |
 | `build.py` | Entry point, run inside Blender |
+| `tools/places/build_rooms.py` | `viewer/rooms.json` from the interior plans; run after an interior plan changes |
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
-| `tools/web-export/supersede.mjs`, `compact.mjs`, `tree_instance.mjs`, `pack.mjs` | Take other sources' ground out of each area's footprint; drop unused vertex data and pack instance rotations; make small tree groups instances |
+| `tools/web-export/supersede.mjs`, `cut.mjs`, `volume.mjs` | Take other sources' ground out of each area's footprint, cut exactly at the outline; take a building out of the other sources' tiles by a ring |
+| `tools/web-export/compact.mjs`, `tree_instance.mjs`, `pack.mjs`, `share_tex.mjs`, `tex.mjs` | Drop unused vertex data and pack instance rotations; make small tree groups instances; store each repeated image once under `models/main/tex/` |
+| `tools/web-export/farcut.mjs`, `skyline.mjs`, `skirt.mjs`, `drop_zero.mjs` | Far field: a skyline stand-in for buildings past 10 km, a lighter far ground, empty triangles dropped |
 
 ## Git identity
 
