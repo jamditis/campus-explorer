@@ -670,16 +670,16 @@
      "type": "stalls",
      "line": [
       [
-       246.1,
-       1233.01
+       245.95,
+       1233.03
       ],
       [
-       246.85,
-       1238.48
+       246.7,
+       1238.5
       ]
      ],
      "count": 2,
-     "depth": 5.55,
+     "depth": 5.4,
      "side": "left",
      "colour": "white",
      "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.044 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
@@ -917,8 +917,8 @@
        1232.54
       ],
       [
-       237.59,
-       1239.46
+       237.62,
+       1239.66
       ]
      ],
      "width": 0.1,
@@ -2300,16 +2300,16 @@
      "type": "stalls",
      "line": [
       [
-       246.85,
-       1238.48
+       246.7,
+       1238.5
       ],
       [
-       252.82,
-       1282.27
+       252.67,
+       1282.29
       ]
      ],
      "count": 16,
-     "depth": 5.55,
+     "depth": 5.4,
      "side": "left",
      "colour": "white",
      "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.044 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
@@ -2338,8 +2338,8 @@
      "type": "line",
      "path": [
       [
-       237.57,
-       1239.26
+       237.62,
+       1239.66
       ],
       [
        241.8,

@@ -13,11 +13,14 @@ import math
 import os
 import sys
 
-import bpy
+try:
+    import bpy
+except ImportError:  # outside Blender: the unit tests use the pure bowl parts
+    bpy = None
 
 try:
     import kit
-except ImportError:  # run as a script: demo() puts this folder on sys.path first
+except ImportError:  # run as a script: demo() puts this folder on sys.path first (or no Blender)
     kit = None
 
 GUARD = 1.07  # guard height above a walking surface (IBC 1015)
@@ -275,6 +278,140 @@ def _stand_frame(oname, place, angle, length, depth, rows, walk, t, h, rise, m):
             fr.beam((us[k], v + 0.12, 0.4), (us[k + 1], v + 0.12, w - 0.2), m["frame"], 0.08)
             fr.beam((us[k + 1], v + 0.12, 0.4), (us[k], v + 0.12, w - 0.2), m["frame"], 0.04)
     return fr.finish()
+
+
+# Solid concrete seating bowl (Yogi Berra Stadium): stepped concrete on fill, read from the
+# LiDAR, which classes the whole deck as ground. No frame, no columns, no stairs to the ground.
+# Levels are absolute (NAVD88 metres); v runs back from the front edge, u along it.
+BOWL_TREAD = 0.85  # row depth measured on the Yogi Berra Stadium LiDAR profiles
+
+
+def bowl_profile(walk, tiers, aisles, back, depth, tread=BOWL_TREAD):
+    """The flats of a bowl from the front edge back: a front walkway, rows in tiers with a cross
+    aisle between each pair of tiers, then a back walkway at `back` up to `depth` if room is left.
+
+    `walk` = [depth, level]; a tier = {"rows", "first" (level of its first row), "rise"}; an aisle
+    = {"width", "level"}. Returns [{"kind", "v": (v0, v1), "level", "row", "tier"}]; rows are
+    numbered from 0 through all tiers.
+    """
+    if len(aisles) != len(tiers) - 1:
+        raise ValueError("a bowl needs one cross aisle between each pair of tiers")
+
+    def flat(kind, v0, v1, level, row=None, tier=None):
+        return dict(kind=kind, v=(v0, v1), level=level, row=row, tier=tier)
+
+    flats = [flat("walk", 0.0, walk[0], walk[1])] if walk[0] > 0 else []
+    v, row = walk[0], 0
+    for k, t in enumerate(tiers):
+        for i in range(t["rows"]):
+            flats.append(flat("row", v, v + tread, t["first"] + i * t["rise"], row, k))
+            v, row = v + tread, row + 1
+        if k < len(aisles):
+            flats.append(flat("aisle", v, v + aisles[k]["width"], aisles[k]["level"]))
+            v += aisles[k]["width"]
+    if v > depth + 1e-6:
+        raise ValueError(f"the rows run to {v:.2f} m, past the stand's depth {depth:.2f} m")
+    if v < depth - 1e-6:
+        flats.append(flat("back", v, depth, back))
+    return flats
+
+
+def bowl_block(length, flats, base):
+    """The solid stepped block of a bowl `length` long: vertices (u, v, w) and faces wound
+    anticlockwise seen from outside. Treads and risers run the whole length; each end is one
+    strip per flat (its edges carry the neighbours' corners, so the shell is closed); the front,
+    back and bottom are one face each."""
+    verts, index = [], {}
+
+    def vid(u, v, w):
+        key = (round(u, 9), round(v, 9), round(w, 9))
+        if key not in index:
+            index[key] = len(verts)
+            verts.append((u, v, w))
+        return index[key]
+
+    L, n = length, len(flats)
+    lv = [f["level"] for f in flats]
+    faces = []
+    for k, f in enumerate(flats):
+        v0, v1 = f["v"]
+        faces.append([vid(0, v0, lv[k]), vid(L, v0, lv[k]), vid(L, v1, lv[k]), vid(0, v1, lv[k])])
+        if k + 1 < n and lv[k + 1] != lv[k]:  # riser: faces the field going up, the back going down
+            faces.append(
+                [vid(0, v1, lv[k]), vid(L, v1, lv[k]), vid(L, v1, lv[k + 1]), vid(0, v1, lv[k + 1])]
+            )
+        ring = [(v0, base), (v1, base)]
+        if k + 1 < n and base < lv[k + 1] < lv[k]:
+            ring.append((v1, lv[k + 1]))
+        ring += [(v1, lv[k]), (v0, lv[k])]
+        if k > 0 and base < lv[k - 1] < lv[k]:
+            ring.append((v0, lv[k - 1]))
+        faces.append([vid(L, v, w) for v, w in ring])  # the end at u = L faces +u
+        faces.append([vid(0, v, w) for v, w in reversed(ring)])
+    ve, top0, top1 = flats[-1]["v"][1], lv[0], lv[-1]
+    faces.append([vid(0, 0, base), vid(L, 0, base), vid(L, 0, top0), vid(0, 0, top0)])
+    faces.append([vid(0, ve, top1), vid(L, ve, top1), vid(L, ve, base), vid(0, ve, base)])
+    edges = [0.0] + [f["v"][1] for f in flats]
+    faces.append([vid(0, v, base) for v in edges] + [vid(L, v, base) for v in reversed(edges)])
+    return verts, faces
+
+
+def seat_for(seats, row, section):
+    """The seat entry that covers this row (numbered through all tiers) and section, or None."""
+    for s in seats:
+        r0, r1 = s["rows"]
+        if r0 <= row <= r1 and section in s.get("sections", [section]):
+            return s
+    return None
+
+
+def bowl(name, at, angle, length, depth, spec, unverified=True):
+    """A solid concrete seating bowl from a plan stand with `"style": "bowl"`: `at` = (x, y) of
+    the front-left corner, `angle` the front edge's direction. `spec` carries `walk`, `tiers`,
+    `aisles`, `back`, `base` (the block's bottom, below the ground in front), `tread`,
+    `sections` and `aisle_width` (stair aisles: gaps in the seat rows) and `seats`.
+
+    Seats are a simplification: one low box per row and section in the seat colour (`chairs`,
+    0.45 m high) or an aluminium bench plank box (`bench`), not single chairs.
+    """
+    tag = "_UNVERIFIED" if unverified else ""
+    place = kit.placer((at[0], at[1], 0.0), angle)
+    flats = bowl_profile(
+        spec["walk"],
+        spec["tiers"],
+        spec.get("aisles", []),
+        spec["back"],
+        depth,
+        spec.get("tread", BOWL_TREAD),
+    )
+    verts, faces = bowl_block(length, flats, spec["base"])
+    concrete = kit.mat("concrete", "seating_bowl", kit.srgb(spec.get("concrete", "#b5b1a8")), 0.9)
+    b = kit.Builder(f"{name}_bowl{tag}")
+    b.faces([place(*p) for p in verts], faces, concrete)
+    out = [b.finish(recalc=False)]
+    n, aw = int(spec.get("sections") or 1), spec.get("aisle_width", 1.2)
+    sec = (length - (n - 1) * aw) / n
+    seats = spec.get("seats", [])
+    lc = Local(f"{name}_seats{tag}", place, angle)
+    plank = materials()["plank"]
+    for f in flats:
+        if f["kind"] != "row":
+            continue
+        back, w = f["v"][1], f["level"]
+        for k in range(n):
+            s = seat_for(seats, f["row"], k)
+            if s is None:
+                continue
+            u0 = k * (sec + aw)
+            if s["type"] == "chairs":
+                col = s.get("colour", "#a3322c")
+                m = kit.mat("plastic", f"seat_{col.lstrip('#')}", kit.srgb(col), 0.5)
+                lc.box(u0 + 0.05, u0 + sec - 0.05, back - 0.55, back - 0.1, w, w + 0.45, m)
+            else:
+                lc.box(u0 + 0.05, u0 + sec - 0.05, back - 0.35, back - 0.1, w, w + 0.43, plank)
+    if seats:
+        out.append(lc.finish())
+    return out
 
 
 def press_box(
