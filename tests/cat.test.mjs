@@ -16,6 +16,19 @@ test('known misfilings are corrected', () => {
   assert.equal(fixCat('Roof_barrel_tile_course', ''), 'rooftile');
 });
 
+test('synthetic turf the exporter filed as lawn is turf', () => {
+  // Pittser Field (north model) and a strip of Sprague turf in the main model: the exporter's
+  // grass rule matches "turf", and only SW_ names get the turf category
+  assert.equal(fixCat('fs_turf', 'grass'), 'turf');
+  assert.equal(fixCat('WS186_Sprague_artificial_turf_ortho2020_UNVERIFIEDtone', 'grass'), 'turf');
+  // lawns stay lawn, field paint stays paint, fieldstone stays stone
+  assert.equal(fixCat('CCOM_lawn_grass', 'grass'), 'grass');
+  assert.equal(fixCat('BD_farfield_ortho_haze', 'grass'), 'grass');
+  assert.equal(fixCat('turfgrass_lawn', 'grass'), 'grass');
+  assert.equal(fixCat('fs_turf_line_paint', 'grass'), '');
+  assert.equal(fixCat('hn_amphi_base_fieldstone', 'grass'), 'stone');
+});
+
 test('fence fabric and netting exported as glass are see-through metal', () => {
   assert.equal(fixCat('MH_chainlink_galv', 'glass'), 'metal');
   assert.equal(fixCat('fs_goal_net', 'glass'), 'metal');

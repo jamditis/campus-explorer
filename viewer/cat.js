@@ -7,6 +7,9 @@ export function fixCat(name, cat) {
   if (cat === 'glass' && /chain.?link|netting|goal_net/i.test(name)) return 'metal';
   // white line paint filed as grass (Lot 9 stalls, Sprague field lines) was retinted lawn green: keep it paint
   if (cat === 'grass' && /paint|stripe|marking/i.test(name) && !/lawn|nostripe/i.test(name)) return '';
+  // synthetic turf filed as lawn (Pittser Field's fs_turf): the exporter gives turf its own category only
+  // for SW_ names. As lawn it took the lawn tone, the lawn texture and grass tufts.
+  if (cat === 'grass' && /turf/i.test(name) && !/lawn|grass/i.test(name)) return 'turf';
   if (cat === 'asphalt' && /slot_/i.test(name)) return /brick/i.test(name) ? 'brick' : '';
   if (cat === 'asphalt' && /concrete/i.test(name)) return 'concrete'; // e.g. KX_drive_concrete
   if (cat === 'asphalt' && /atlas|_tv_|screen/i.test(name)) return ''; // signage textures filed as asphalt

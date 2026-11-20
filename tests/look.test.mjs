@@ -65,6 +65,24 @@ test('fixTone does not invent amphitheater colours when a map is present', () =>
   assert.equal(lum(c), 1);
 });
 
+test('fixTone gives turf that lost its colour in the export the scripted turf tone', () => {
+  // fs_turf (Pittser Field) ships as the export's neutral 0.45 grey
+  const c = color(0.45, 0.45, 0.45);
+  fixTone('fs_turf', c, false);
+  assert.deepEqual([c.r, c.g, c.b], [0.03, 0.12, 0.04]);
+  // an authored turf green is kept
+  const own = color(0.029, 0.051, 0.025);
+  fixTone('WS186_Sprague_artificial_turf_ortho2020_UNVERIFIEDtone', own, false);
+  assert.deepEqual([own.r, own.g, own.b], [0.029, 0.051, 0.025]);
+  // a grey lawn, or turf with its own image, is left alone
+  const lawn = color(0.45, 0.45, 0.45);
+  fixTone('COLE_lawn_post2020_bs', lawn, false);
+  assert.equal(lawn.r, 0.45);
+  const mapped = color(1, 1, 1);
+  fixTone('SW_turf_painted_stadium_p037_0', mapped, true);
+  assert.equal(mapped.r, 1);
+});
+
 import { fixCat } from '../viewer/cat.js';
 
 test('fixCat refiles fieldstone and concrete bed curbs, and labels amphitheater nosings as stone', () => {
