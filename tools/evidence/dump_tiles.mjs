@@ -26,6 +26,9 @@ let offset = 0;
 const touches = f => {
   const m = /^(?:n_)?t_(-?\d+)_(-?\d+)\.glb$/.exec(f);
   if (!m) return true; // context, skirt, far houses: no tile grid
+  // the north model files its far-field ground (BD_farfield_3DEP, 108 m triangles from y -630 to 1710) under this
+  // tile: a dump that left it out missed ground standing over the scripted areas
+  if (f === 'n_t_0_0.glb') return true;
   // objects are filed under the tile that holds their centre and can reach well past it: take a wide margin
   // (the per-triangle test below keeps only what is in the box)
   const tx = +m[1] * TILE, ty = +m[2] * TILE, pad = 350;
