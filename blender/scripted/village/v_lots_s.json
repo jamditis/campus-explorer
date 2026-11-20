@@ -130,8 +130,8 @@
    "kind": "asphalt",
    "ring": [
     [
-     -279.7,
-     604.6
+     -278.75,
+     604.29
     ],
     [
      -303.64,
@@ -215,8 +215,8 @@
      6.5
     ],
     [
-     -276.43,
-     614.37
+     -275.48,
+     614.05
     ]
    ],
    "evidence": "ortho2020; osm 313030881, 313030647, 313030873",
@@ -389,12 +389,12 @@
    "kind": "mulch",
    "ring": [
     [
-     -179.2,
-     821.26
+     -178.73,
+     821.11
     ],
     [
-     -171.25,
-     847.27
+     -170.77,
+     847.13
     ],
     [
      -175.36,
@@ -407,13 +407,13 @@
      1.5
     ],
     [
-     -167.22,
-     859.42,
+     -167.03,
+     859.37,
      1.0
     ],
     [
-     -170.82,
-     847.66
+     -170.44,
+     847.54
     ],
     [
      -168.71,
@@ -437,8 +437,16 @@
      886.41
     ],
     [
-     -105.96,
-     871.59
+     -152.4,
+     884.09
+    ],
+    [
+     -150.28,
+     884.3
+    ],
+    [
+     -105.8,
+     872.17
     ],
     [
      -104.11,
@@ -458,7 +466,7 @@
     ]
    ],
    "evidence": "ortho2020; osm 313031581",
-   "unverified": "west part (s 3.5..12 in the lot frame) is the service road from the Children's Center to the deck road (osm 313031570) and is drawn so no gap is left; north side cut at the aisle north of the island (the deck road and the frontage along the deck are left to the roads); east edge under tree shade"
+   "unverified": "west part (s 3.5..12 in the lot frame) is the service road from the Children's Center to the deck road (osm 313031570) and is drawn so no gap is left; south side cut at the area outline + 1 m from s 14 east (the lot continues 0.6 to 0.75 m further south to its curb on the walk at t 2.1 to 2.4; the walk is published); north side cut at the aisle north of the island (the deck road and the frontage along the deck are left to the roads); east edge under tree shade"
   },
   {
    "name": "V_lot_28_island_N",
@@ -532,18 +540,18 @@
      970.88
     ],
     [
-     -119.2,
-     953.71,
+     -119.38,
+     952.62,
      4.4
     ],
     [
-     -110.32,
-     952.26,
+     -110.59,
+     951.19,
      4.4
     ],
     [
-     -107.52,
-     969.44
+     -107.62,
+     969.45
     ]
    ],
    "evidence": "ortho2020",
@@ -600,60 +608,63 @@
     [
      -179.5,
      1005.34,
-     9.6
+     8.0
     ],
     [
-     -176.72,
-     1016.09
+     -177.44,
+     1013.28
     ],
     [
-     -181.85,
-     1017.42
+     -183.35,
+     1014.81
     ],
     [
-     -175.84,
-     1040.65
+     -176.74,
+     1040.37
     ],
     [
-     -171.77,
-     1039.6,
-     2.0
+     -171.9,
+     1039.12,
+     1.5
     ],
     [
-     -170.52,
-     1044.44,
-     2.0
+     -170.77,
+     1043.47,
+     1.5
     ],
     [
-     -178.27,
-     1046.45,
-     2.0
+     -173.35,
+     1045.48
     ],
     [
-     -179.44,
-     1041.9
+     -176.22,
+     1045.19
     ],
     [
-     -182.35,
-     1042.65
+     -179.98,
+     1042.24
     ],
     [
-     -184.38,
-     1040.8
+     -182.47,
+     1042.16
     ],
     [
-     -190.19,
-     1042.3,
-     1.4
+     -184.79,
+     1041.21
     ],
     [
-     -190.94,
-     1039.39,
-     1.4
+     -190.21,
+     1042.61,
+     1.5
     ],
     [
-     -185.71,
-     1038.04
+     -191.01,
+     1039.51,
+     1.5
+    ],
+    [
+     -185.68,
+     1038.14
     ],
     [
      -190.47,
@@ -662,7 +673,7 @@
    ],
    "evidence": "ortho2020",
    "layer": 3.5,
-   "unverified": "heads at the east end partly read past parked cars"
+   "unverified": "east lobe and north head traced past parked cars (edges to about 0.3 m)"
   }
  ],
  "curbs": [
@@ -1020,12 +1031,12 @@
    "name": "V_lot_CC_median_N_curb",
    "path": [
     [
-     -179.2,
-     821.26
+     -178.73,
+     821.11
     ],
     [
-     -171.25,
-     847.27
+     -170.77,
+     847.13
     ],
     [
      -175.36,
@@ -1038,13 +1049,13 @@
      1.5
     ],
     [
-     -167.22,
-     859.42,
+     -167.03,
+     859.37,
      1.0
     ],
     [
-     -170.82,
-     847.66
+     -170.44,
+     847.54
     ],
     [
      -168.71,
@@ -1059,15 +1070,11 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "V_lot_28_curb_S",
+   "name": "V_lot_28_curb_E",
    "path": [
     [
-     -152.79,
-     884.2
-    ],
-    [
-     -105.96,
-     871.59
+     -105.8,
+     872.17
     ],
     [
      -104.11,
@@ -1084,7 +1091,7 @@
    ],
    "closed": false,
    "evidence": "ortho2020",
-   "unverified": "curb along the south walk; east edge by the trees and the shelter at the south-east corner read from the ortho"
+   "unverified": "east edge by the trees and the shelter at the south-east corner read from the ortho; the south curb along the walk (t 2.1 to 2.4 in the lot frame) lies 1.5 m outside the area outline and is not drawn"
   },
   {
    "name": "V_lot_28_island_N_curb",
@@ -1119,18 +1126,18 @@
      969.89
     ],
     [
-     -119.2,
-     953.71,
+     -119.38,
+     952.62,
      4.4
     ],
     [
-     -110.32,
-     952.26,
+     -110.59,
+     951.19,
      4.4
     ],
     [
-     -107.68,
-     968.45
+     -107.78,
+     968.46
     ]
    ],
    "closed": false,
@@ -1177,60 +1184,63 @@
     [
      -179.5,
      1005.34,
-     9.6
+     8.0
     ],
     [
-     -176.72,
-     1016.09
+     -177.44,
+     1013.28
     ],
     [
-     -181.85,
-     1017.42
+     -183.35,
+     1014.81
     ],
     [
-     -175.84,
-     1040.65
+     -176.74,
+     1040.37
     ],
     [
-     -171.77,
-     1039.6,
-     2.0
+     -171.9,
+     1039.12,
+     1.5
     ],
     [
-     -170.52,
-     1044.44,
-     2.0
+     -170.77,
+     1043.47,
+     1.5
     ],
     [
-     -178.27,
-     1046.45,
-     2.0
+     -173.35,
+     1045.48
     ],
     [
-     -179.44,
-     1041.9
+     -176.22,
+     1045.19
     ],
     [
-     -182.35,
-     1042.65
+     -179.98,
+     1042.24
     ],
     [
-     -184.38,
-     1040.8
+     -182.47,
+     1042.16
     ],
     [
-     -190.19,
-     1042.3,
-     1.4
+     -184.79,
+     1041.21
     ],
     [
-     -190.94,
-     1039.39,
-     1.4
+     -190.21,
+     1042.61,
+     1.5
     ],
     [
-     -185.71,
-     1038.04
+     -191.01,
+     1039.51,
+     1.5
+    ],
+    [
+     -185.68,
+     1038.14
     ],
     [
      -190.47,
@@ -2230,7 +2240,7 @@
     ]
    ],
    "count": 8,
-   "depth": 6.28,
+   "depth": 4.6,
    "side": "right",
    "angle": 89.2,
    "colour": "white",
@@ -2546,49 +2556,50 @@
    "type": "stalls",
    "line": [
     [
-     -150.17,
-     883.49
+     -149.99,
+     884.17
     ],
     [
-     -124.51,
-     876.58
+     -124.33,
+     877.26
     ]
    ],
    "count": 10,
-   "depth": 5.4,
+   "depth": 4.7,
    "side": "left",
    "angle": 90.0,
    "colour": "white",
    "evidence": "ortho2020",
-   "unverified": "dividers 2 to 5 (from the west) under tree shadow, placed by the pitch"
+   "unverified": "dividers 2 to 5 (from the west) under tree shadow, placed by the pitch; cut at the area outline + 1 m, the dividers continue 0.7 m south to the curb"
   },
   {
    "name": "V_lot_28_stalls_S_E",
    "type": "stalls",
    "line": [
     [
-     -117.51,
-     874.7
+     -117.33,
+     875.38
     ],
     [
-     -107.46,
-     871.99
+     -107.28,
+     872.67
     ]
    ],
    "count": 4,
-   "depth": 5.4,
+   "depth": 4.7,
    "side": "left",
    "angle": 90.0,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "cut at the area outline + 1 m, the dividers continue 0.7 m south to the curb"
   },
   {
    "name": "V_lot_28_access_line_1",
    "type": "line",
    "path": [
     [
-     -122.13,
-     875.94
+     -121.95,
+     876.62
     ],
     [
      -120.73,
@@ -2597,15 +2608,16 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "cut at the area outline + 1 m; the line continues 0.7 m south to the curb"
   },
   {
    "name": "V_lot_28_access_line_2",
    "type": "line",
    "path": [
     [
-     -119.91,
-     875.34
+     -119.73,
+     876.02
     ],
     [
      -118.51,
@@ -2614,7 +2626,8 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "cut at the area outline + 1 m; the line continues 0.7 m south to the curb"
   },
   {
    "name": "V_lot_28_access_aisle_1",
@@ -3260,17 +3273,17 @@
    "kind": "concrete",
    "centre": [
     [
-     -190.0,
-     1007.85
+     -189.42,
+     1007.7
     ],
     [
-     -181.09,
-     1042.32
+     -180.46,
+     1042.36
     ]
    ],
-   "width": 2.2,
+   "width": 1.8,
    "evidence": "ortho2020; osm 313032025",
-   "unverified": "width read from the ortho (2.0 to 2.5 m)"
+   "unverified": "width 1.75 to 1.8 m from brightness profiles; the west end meets the round island head"
   }
  ]
 }
