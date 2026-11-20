@@ -12,6 +12,7 @@ import { createCamera } from './viewer/camera.js';
 import { createUI } from './viewer/ui.js';
 import { CAMPUS, convergenceDeg, gridToTrueBearing } from './viewer/geo.js';
 import { sunPosition, zonedDate } from './viewer/sun.js';
+import { parseRooms, roomPlaces, walkStartY } from './viewer/rooms-math.js';
 
 const params = new URLSearchParams(location.search);
 const canvas = document.getElementById('canvas');
@@ -35,7 +36,7 @@ const app = {
   THREE, renderer, scene, camera, canvas, controls,
   state: { mode: 'orbit', view: 'first', ready: false, complete: false },
   bounds: new THREE.Box3(),
-  places: [], home: null,
+  places: [], home: null, rooms: { volumes: [], rooms: [] }, roomPlaces: [],
   time: { date: zonedDate(DEFAULT_TIME), preset: true },
   on(type, fn) { (listeners.get(type) ?? listeners.set(type, new Set()).get(type)).add(fn); return () => app.off(type, fn); },
   off(type, fn) { listeners.get(type)?.delete(fn); },
@@ -115,6 +116,7 @@ app.topPose = () => {
 };
 /** Fly to a place from places.json, keeping the current heading so the move is easy to follow. */
 app.goToPlace = (place, opts) => {
+  if (place.kind === 'room') return goToRoom(place, opts);
   const floor = isFinite(app.bounds.min.y) ? app.bounds.min.y + 20 : 130;
   const y = app.world.groundAt(place.x, place.z, null, { builtOnly: true }) ?? floor;
   const dist = Math.max(70, (place.r || 20) * 2.4);
@@ -124,6 +126,16 @@ app.goToPlace = (place, opts) => {
   app.world.prioritize(place.x, place.z); app.emit('place', { place });
   return app.flyTo({ position, target }, opts);
 };
+/** A room (viewer/rooms.json): glide to eye height on its floor, then stand there in walk mode. */
+async function goToRoom(room, opts) {
+  const at = new THREE.Vector3(room.x, room.y, room.z), eye = at.clone().setY(room.y + 1.65);
+  camera.getWorldDirection(_v); _v.y = 0; if (_v.lengthSq() < 1e-4) _v.set(0, 0, -1); _v.normalize();
+  app.world.prioritize(room.x, room.z); app.emit('place', { place: room });
+  // the target sits a little low: orbit controls do not look up
+  const ok = await app.flyTo({ position: eye, target: eye.clone().addScaledVector(_v, 4).setY(eye.y - 0.3) }, opts);
+  if (ok) await app.setMode('walk', { at });
+  return ok;
+}
 app.overview = opts => app.flyTo(app.overviewPose(), opts);
 app.topView = opts => app.flyTo(app.topPose(), opts);
 
@@ -153,7 +165,8 @@ app.setMode = async (mode, { at = null } = {}) => {
       spot = hit ? hit.point : from === 'orbit' ? controls.target : camera.position;
     }
     // false: nothing to stand on there, so start from the middle. null: the user moved on; leave the camera alone.
-    if (await app.player.teleport(spot.x, spot.z, at || from === 'orbit' ? spot.y : null) === false) await app.player.respawn();
+    // the storey under the camera, not the roof above it (walkStartY): from fly mode inside a building too
+    if (await app.player.teleport(spot.x, spot.z, at ? spot.y : walkStartY(from, spot.y)) === false) await app.player.respawn();
   }
 };
 app.setView = view => {
@@ -183,6 +196,10 @@ app.on('scene:start', async ({ manifest, base }) => {
   app.manifest = manifest;
   app.look.setPaint(manifest.paint || [], base);
   try { app.places = (await (await fetch('./viewer/places.json')).json()).places.filter(p => app.world.tileAt(p.x, p.z)); } catch { app.places = []; }
+  // buildings with a real interior and their room numbers (?interiors=0 leaves the rule out, for comparison)
+  try { app.rooms = params.get('interiors') === '0' ? parseRooms(null) : parseRooms(await (await fetch('./viewer/rooms.json')).json()); } catch { app.rooms = parseRooms(null); }
+  app.roomPlaces = roomPlaces(app.rooms);
+  app.look.setInteriors(app.rooms.volumes);
   app.emit('places');
 });
 app.on('scene:ready', () => {

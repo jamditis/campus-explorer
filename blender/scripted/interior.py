@@ -43,7 +43,10 @@ def floor(f):
             out.append(b.finish(recalc=False))
     for s in f["slabs"]:
         b = kit.Builder(s["name"])
-        _add(b, *rooms.prism(s["ring"], s["z0"], s["z1"]), _mat(SLAB))
+        spec = (s.get("kind", SLAB[0]), "interior_" + s["colour"][1:], s["colour"], 0.6) if s.get(
+            "colour"
+        ) else SLAB  # a slab may give its own finish (the lobby's terrazzo)
+        _add(b, *rooms.prism(s["ring"], s["z0"], s["z1"]), _mat(spec))
         out.append(b.finish(recalc=False))
     for s in f["blocks"]:
         b = kit.Builder(s["name"])
