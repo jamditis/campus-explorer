@@ -129,18 +129,25 @@ def _canopy(name, p, ring, kind, tops, slopes, ground, roof_hex):
 
     def roof_z(x, y):
         if kind in ("gable", "hip"):
-            return min(tops)  # posts stop at the eave height under a pitched canopy
+            return p["top"]  # the posts stand under the ridge
         return z0 + gx * (x - x0) + gy * (y - y0)
 
     ang = geom.long_axis(ring)
     to_local, to_model = geom.frame((0.0, 0.0), ang)
     loc = [to_local(q[0], q[1]) for q in ring]
     u0, u1 = min(q[0] for q in loc), max(q[0] for q in loc)
-    vm = (min(q[1] for q in loc) + max(q[1] for q in loc)) / 2
-    for u in [u0 + 1.5 + d for d in massing.bays(u1 - u0 - 3.0, 9.0, 0.0)] or [(u0 + u1) / 2]:
+    v0, v1 = min(q[1] for q in loc), max(q[1] for q in loc)
+    vm = (v0 + v1) / 2
+    # end posts 3 m in from the ends (under a hip: where the ridge begins), the rest no more
+    # than 9 m apart
+    end = (v1 - v0) / 2 if kind == "hip" else 3.0
+    span = u1 - u0 - 2 * end
+    count = max(1, math.ceil(span / 9.0)) + 1 if span > 1.0 else 1
+    us = [u0 + end + span * i / (count - 1) for i in range(count)] if count > 1 else [(u0 + u1) / 2]
+    for u in us:
         x, y = to_model(u, vm)
-        b.box((x, y, (ground(x, y) - 0.3 + roof_z(x, y) - 0.2) / 2),
-              (0.3, 0.3, roof_z(x, y) - 0.2 - ground(x, y) + 0.3), steel, angle=ang)  # fmt: skip
+        foot, head = ground(x, y) - 0.3, roof_z(x, y) - 0.2
+        b.box((x, y, (foot + head) / 2), (0.3, 0.3, head - foot), steel, angle=ang)
     return b.finish(recalc=False)
 
 
