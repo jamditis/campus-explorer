@@ -31,7 +31,7 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [x] Stadium district (`stadium/`, y 826 to 1105; PR #54, merged 2026-11-19): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [x] The Village west of the railway (`village/`): Clove Road, Hawk Crossings, Sinatra Hall, the four Village halls, nine lots
-- [ ] Floyd Hall Arena block and the quarry ground north of the stadium district
+- [x] Overlook Corporate Center block and the quarry ground north of the stadium district (`overlook/`; first planned under the wrong name "Floyd Hall Arena block", see lessons)
 - [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the communication school are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
 - [ ] Red Hawk Deck to Cole Hall, and the communication school (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
 - [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
