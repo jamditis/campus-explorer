@@ -28,8 +28,17 @@ PREFIX = "SW_adopt_"
 MAX_NAME = 63  # bytes: Blender cuts longer names
 TRANSFORM_KEYS = {"rotate_z_deg", "about", "translate"}
 GROUP_KEYS = {
-    "name", "objects", "transform", "text", "clip", "swap_instances", "place", "materials", "why",
+    "name", "objects", "transform", "text", "clip", "swap_instances", "place", "materials", "fix",
+    "why",
 }  # fmt: skip
+
+
+def fix_target(spec):
+    """A group's `fix`, "module:function" (a module under blender/), as (module, function)."""
+    m = re.fullmatch(r"([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*):([A-Za-z_]\w*)", str(spec))
+    if not m:
+        raise ValueError(f"fix must be 'module:function', not {spec!r}")
+    return m.group(1), m.group(2)
 
 
 def export_skips(name):
@@ -108,6 +117,11 @@ def place_matrix(m):
 def _check_extras(g, names):
     """clip, swap_instances, place and materials of a group (all optional)."""
     who = f"group {g['name']!r}"
+    if "fix" in g:
+        try:
+            fix_target(g["fix"])
+        except ValueError as e:
+            raise ValueError(f"{who}: {e}") from None
     for c in g.get("clip", []):
         if c.get("keep") not in ("outside", "inside") or len(c.get("ring", [])) < 3:
             raise ValueError(f"{who}: a clip needs a ring and keep 'outside' or 'inside'")
@@ -276,6 +290,35 @@ def _recolour(m, new):
         m.name = new["name"]
 
 
+def _run_fix(g, objects, coll):
+    """Call a group's `fix` (blender/<module>.py): function(objects, collection), where `objects`
+    maps each source name to its adopted object; it edits them in place and returns the new
+    objects it made. Anything wrong stops the build, naming the group."""
+    import importlib
+
+    import bpy
+
+    mod, fn = fix_target(g["fix"])
+    where = str(HERE.parent)
+    if where not in sys.path:
+        sys.path.insert(0, where)
+    who = f"adopt: group {g['name']!r}: fix {g['fix']!r}"
+    try:
+        f = getattr(importlib.import_module(mod), fn)
+    except (ImportError, AttributeError) as e:
+        raise SystemExit(f"{who}: {e}") from None
+    try:
+        made = f(objects, coll)
+    except Exception as e:  # noqa: BLE001 (any failure of the fix stops the build)
+        raise SystemExit(f"{who} failed: {type(e).__name__}: {e}") from e
+    made = list(made or [])
+    bad = [m for m in made if not isinstance(m, bpy.types.Object)]
+    if bad:
+        raise SystemExit(f"{who} returned {bad[:3]}, not objects")
+    print(f"SW adopt: group {g['name']!r}: {g['fix']} made {len(made)} objects")
+    return made
+
+
 def build(plan, path, coll):
     """Append, move and link the objects of one `adopt` block from release file `path` into
     collection `coll`. Returns the new objects."""
@@ -366,6 +409,20 @@ def build(plan, path, coll):
     out = [r for r in out if r[0].name not in gone]
     for n in gone:
         bpy.data.objects.remove(bpy.data.objects[n])
+    for g in plan["groups"]:
+        if g.get("fix"):
+            objects = {name: ob for ob, name, gg, _w in out if gg is g}
+            for ob in _run_fix(g, objects, coll):
+                if ob.name not in coll.objects:
+                    coll.objects.link(ob)
+                if not ob.name.startswith(PREFIX):
+                    new = adopt_name(ob.name, taken)
+                    taken.add(new)
+                    ob.name = new
+                ob["adopt_source"] = "made by " + g["fix"]
+                ob["adopt_group"] = g["name"]
+                ob["adopt_file"] = path.name
+                out.append((ob, ob.name, g, None))
     bpy.context.view_layer.update()
     # data the listed objects do not use (a parent, a cutter of a baked object) is not kept
     bpy.data.orphans_purge(do_local_ids=True, do_linked_ids=True, do_recursive=True)

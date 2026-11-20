@@ -166,6 +166,14 @@ class Extras(unittest.TestCase):
             )
         )  # fmt: skip
 
+    def test_a_fix_names_a_module_and_a_function(self):
+        got = adopt.fix_target("alumni_green_fixes:apply")
+        self.assertEqual(got, ("alumni_green_fixes", "apply"))
+        adopt.check(self.group(fix="alumni_green_fixes:apply"))
+        for bad in ("alumni_green_fixes", "a:b:c", "a b:c", ":apply", "mod:"):
+            with self.assertRaises(ValueError, msg=bad):
+                adopt.check(self.group(fix=bad))
+
     def test_bad_extras_are_errors(self):
         bad = [
             dict(clip=[dict(ring=self.SQ, keep="above")]),
