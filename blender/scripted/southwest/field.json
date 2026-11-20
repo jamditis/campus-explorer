@@ -1,6 +1,6 @@
 {
  "zone": "field",
- "notes": "Field frame: u along the long axis (76.18 deg, towards the north goal), v to its left (west). Most field-related outlines were read in that frame on brightness/colour profiles of the 2020 ortho and converted to model x, y, then checked on --plan overlays at 16-20 px/m. Turf (2020 ortho): straight sides on the white edge strip at |v| = 32.1; north apron a true arc R 34 centred on the axis 35.5 m north of centre (apex 69.5 m), meeting the sides at u = 46.7 at a slight angle; south apron R 42.4 (apex 66.9 m) meeting the sides at u = -52.2. Apron readings scatter about 1 m (NW and SW edges run ~1 m outside the arcs). In 2025 photos (0151, 0163) an asphalt walk and the black netting cross the north apron 3-6 m beyond the end line; the ortho shows a lighter band there, kept as North_cross_walk. Ring walk: west edge on the grandstand front (v 37.4), east edge on the bleacher front (v -36.2), north curb arc concentric with the turf arc, R 37.9; there is no walk round the south apron (lawn and trees, 0163). Stands: outlines from the ortho roofs, which agree with OSM 232846650/232846674 to ~0.5 m; rows and sections counted on the drone photos (see stands[].count_note). Press box: OSM 232846675 and a 13.3 m LiDAR 2017 return; not distinct in the ortho. Lot 42: hedge-side curb and both stall rows from the ortho (stall lines located as brightness peaks along offset rows); building wall on the north-east from OSM; drive connections from OSM aisle 232846631 (north, beyond y -70, and south to Carlisle Rd at y -158 to -168). Light poles: five, as in photos 0147/0151/0163 (NW and SW of the west stand, the antenna mast behind the press box, N and S ends of the east bleachers); only the SW pole is in the 2017 LiDAR (24.5 m); the mast is from OSM; the other three are placed from photos and ortho shadows and are UNVERIFIED to 2-3 m. Trees: crown tops and radii from the 2017 LiDAR nDSM (hedge, stand and building returns excluded). Hedge height 6.5 m from the LiDAR. Scoreboard projected from two oblique drone photos (UNVERIFIED +-3 m). Football markings are not traced: they are to be generated from field_frame. The 2017 LiDAR predates the present west grandstand, so no stand heights were taken from it. Not digitised: gates, the flagpole south-east of the south apron, the practice-area goal boxes, the north buildings (other zone), the Carlisle Rd and Normal Ave carriageways and sidewalks (other zones). Correction: an earlier note said the 2017 LiDAR does not show the west grandstand. That was an error in the fetch tool, which dropped every 10 m block without ground returns. The stand is in the cloud, classed as ground: its seating deck rises 5.7 m over 20 m. The build leaves those returns out of the ground and takes the stand height from them.",
+ "notes": "Field frame: u along the long axis (76.18 deg, towards the north goal), v to its left (west). Most field-related outlines were read in that frame on brightness/colour profiles of the 2020 ortho and converted to model x, y, then checked on --plan overlays at 16-20 px/m. Turf (2020 ortho): straight sides on the white edge strip at |v| = 32.1; north apron a true arc R 34 centred on the axis 35.5 m north of centre (apex 69.5 m), meeting the sides at u = 46.7 at a slight angle; south apron R 42.4 (apex 66.9 m) meeting the sides at u = -52.2. Apron readings scatter about 1 m (NW and SW edges run ~1 m outside the arcs). In 2025 photos (0151, 0163) an asphalt walk and the black netting cross the north apron 3-6 m beyond the end line; the ortho shows a lighter band there, kept as North_cross_walk. Ring walk: west edge on the grandstand front (v 37.4), east edge on the bleacher front (v -36.2), north curb arc concentric with the turf arc, R 37.9; there is no walk round the south apron (lawn and trees, 0163). Stands: outlines from the ortho roofs, which agree with OSM 232846650/232846674 to ~0.5 m; rows and sections counted on the drone photos (see stands[].count_note). Press box: OSM 232846675 and a 13.3 m LiDAR 2017 return; not distinct in the ortho. Lot 42: hedge-side curb and both stall rows from the ortho (stall lines located as brightness peaks along offset rows); building wall on the north-east from OSM; drive connections from OSM aisle 232846631 (north, beyond y -70, and south to Carlisle Rd at y -158 to -168). Light poles: five, as in photos 0147/0151/0163 (NW and SW of the west stand, the antenna mast behind the press box, N and S ends of the east bleachers); only the SW pole is in the 2017 LiDAR (24.5 m); the mast is from OSM; the other three are placed from photos and ortho shadows and are UNVERIFIED to 2-3 m. Trees: crown tops and radii from the 2017 LiDAR nDSM (hedge, stand and building returns excluded). Hedge height 6.5 m from the LiDAR. Scoreboard projected from two oblique drone photos (UNVERIFIED +-3 m). Football markings are not traced: they are to be generated from field_frame. The 2017 LiDAR predates the present west grandstand, so no stand heights were taken from it. Not digitised: gates, the flagpole south-east of the south apron, the practice-area goal boxes, the north buildings (other zone), the Carlisle Rd and Normal Ave carriageways and sidewalks (other zones). Correction: an earlier note said the 2017 LiDAR does not show the west grandstand. That was an error in the fetch tool, which dropped every 10 m block without ground returns. The stand is in the cloud, classed as ground: its seating deck rises 5.7 m over 20 m. The build leaves those returns out of the ground and takes the stand height from them. Lacrosse and field hockey lines (markings Lax_W_*, Lax_M_*, FH_*) are drawn to the rule books on field_frame, never traced. The 2020 ortho shows faint women's lacrosse lines (goal circles fitted at u +-45.7 with r 2.55, 14.6 m fans centred there, a 9.1 m centre circle) and men's creases (u +36.4 and -36.7, r 2.7): women's goals on the football goal lines (100 yd apart), men's 80 yd apart. The 2025 photos (0151, 0163) show the colours: women's lacrosse thin white, men's lacrosse black (creases, end lines 15 yd behind the goals, box and wing lines 10 yd in from the 60 yd sidelines), field hockey red (100 x 60 yd outline on the football goal lines, shooting circles 16 yd from the posts, wider than the lacrosse fans; not seen in the 2020 ortho, so painted after 2020). Lines that fall on a football line (restraining lines, 23 m lines, centre lines, the goal lines inside the women's circles) are not drawn twice. The midfield hawk logo is not drawn (the university's artwork).",
  "field_frame": {
   "centre": [
    -336.48,
@@ -669,6 +669,1032 @@
    "colour": "white",
    "evidence": "ortho2020 (4 lines 3.7 m apart, two more faint ones at y -134/-137)",
    "unverified": "fifth line and the line ends at the stand back"
+  },
+  {
+   "name": "Lax_W_goal_circle_N",
+   "type": "line",
+   "path": [
+    [
+     -325.983,
+     -110.152,
+     2.59
+    ],
+    [
+     -327.826,
+     -111.267,
+     2.59
+    ],
+    [
+     -328.341,
+     -113.358,
+     2.59
+    ],
+    [
+     -327.226,
+     -115.201,
+     2.59
+    ],
+    [
+     -325.134,
+     -115.716,
+     2.59
+    ],
+    [
+     -323.291,
+     -114.6,
+     2.59
+    ],
+    [
+     -322.777,
+     -112.509,
+     2.59
+    ],
+    [
+     -323.892,
+     -110.666,
+     2.59
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "closed": true,
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; goal line inside the circle not drawn (the football goal line lies on it)"
+  },
+  {
+   "name": "Lax_W_12m_fan_N",
+   "type": "line",
+   "path": [
+    [
+     -328.083,
+     -112.312
+    ],
+    [
+     -339.736,
+     -109.446
+    ],
+    [
+     -341.181,
+     -115.318,
+     14.59
+    ],
+    [
+     -334.919,
+     -125.666,
+     14.59
+    ],
+    [
+     -323.174,
+     -128.555,
+     14.59
+    ],
+    [
+     -312.826,
+     -122.294,
+     14.59
+    ],
+    [
+     -311.381,
+     -116.421
+    ],
+    [
+     -323.034,
+     -113.555
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_arc_N",
+   "type": "line",
+   "path": [
+    [
+     -328.083,
+     -112.312
+    ],
+    [
+     -335.442,
+     -116.765
+    ],
+    [
+     -333.448,
+     -121.909,
+     10.59
+    ],
+    [
+     -322.734,
+     -124.544,
+     10.59
+    ],
+    [
+     -318.581,
+     -120.913
+    ],
+    [
+     -323.034,
+     -113.555
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_0",
+   "type": "line",
+   "path": [
+    [
+     -335.806,
+     -114.984
+    ],
+    [
+     -336.1,
+     -115.043
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_1",
+   "type": "line",
+   "path": [
+    [
+     -334.329,
+     -118.616
+    ],
+    [
+     -334.581,
+     -118.779
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_2",
+   "type": "line",
+   "path": [
+    [
+     -331.618,
+     -121.447
+    ],
+    [
+     -331.792,
+     -121.692
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_3",
+   "type": "line",
+   "path": [
+    [
+     -328.055,
+     -123.081
+    ],
+    [
+     -328.127,
+     -123.372
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_4",
+   "type": "line",
+   "path": [
+    [
+     -324.14,
+     -123.287
+    ],
+    [
+     -324.1,
+     -123.584
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_5",
+   "type": "line",
+   "path": [
+    [
+     -320.425,
+     -122.036
+    ],
+    [
+     -320.278,
+     -122.297
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_6",
+   "type": "line",
+   "path": [
+    [
+     -317.433,
+     -119.504
+    ],
+    [
+     -317.199,
+     -119.692
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_goal_line_L",
+   "type": "line",
+   "path": [
+    [
+     -335.888,
+     -110.547
+    ],
+    [
+     -335.816,
+     -110.256
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_N_goal_line_R",
+   "type": "line",
+   "path": [
+    [
+     -315.301,
+     -115.611
+    ],
+    [
+     -315.23,
+     -115.32
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; rule book"
+  },
+  {
+   "name": "Lax_M_crease_N",
+   "type": "line",
+   "path": [
+    [
+     -328.191,
+     -118.878,
+     2.733
+    ],
+    [
+     -330.135,
+     -120.054,
+     2.733
+    ],
+    [
+     -330.678,
+     -122.261,
+     2.733
+    ],
+    [
+     -329.502,
+     -124.205,
+     2.733
+    ],
+    [
+     -327.295,
+     -124.748,
+     2.733
+    ],
+    [
+     -325.351,
+     -123.571,
+     2.733
+    ],
+    [
+     -324.808,
+     -121.365,
+     2.733
+    ],
+    [
+     -325.984,
+     -119.42,
+     2.733
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "closed": true,
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_goal_line_N",
+   "type": "line",
+   "path": [
+    [
+     -328.631,
+     -121.594
+    ],
+    [
+     -326.855,
+     -122.031
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "drawn to the rule book; not resolved in the photos"
+  },
+  {
+   "name": "Lax_M_end_line_N",
+   "type": "line",
+   "path": [
+    [
+     -351.104,
+     -101.941
+    ],
+    [
+     -297.829,
+     -115.047
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_box_line_N_W",
+   "type": "line",
+   "path": [
+    [
+     -349.87,
+     -135.203
+    ],
+    [
+     -342.225,
+     -104.125
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_box_line_N_E",
+   "type": "line",
+   "path": [
+    [
+     -314.353,
+     -143.94
+    ],
+    [
+     -306.708,
+     -112.862
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "FH_circle_N",
+   "type": "line",
+   "path": [
+    [
+     -341.541,
+     -109.002
+    ],
+    [
+     -342.989,
+     -114.887,
+     14.62
+    ],
+    [
+     -336.714,
+     -125.256,
+     14.62
+    ],
+    [
+     -321.393,
+     -129.025,
+     14.62
+    ],
+    [
+     -311.024,
+     -122.75,
+     14.62
+    ],
+    [
+     -309.576,
+     -116.865
+    ]
+   ],
+   "width": 0.075,
+   "colour": "red",
+   "evidence": "NCAA field hockey rule 1 (100 x 60 yd, circle 16 yd (14.63 m) from the inside of posts 4 yd (3.66 m) apart); 2025 photos 0151, 0163 (red pitch outline on the football goal lines, red circles wider than the white lacrosse fans); not seen in ortho2020",
+   "unverified": "line width 75 mm (FIH); drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_goal_circle_S",
+   "type": "line",
+   "path": [
+    [
+     -347.826,
+     -198.944,
+     2.59
+    ],
+    [
+     -349.669,
+     -200.06,
+     2.59
+    ],
+    [
+     -350.183,
+     -202.151,
+     2.59
+    ],
+    [
+     -349.068,
+     -203.994,
+     2.59
+    ],
+    [
+     -346.977,
+     -204.508,
+     2.59
+    ],
+    [
+     -345.134,
+     -203.393,
+     2.59
+    ],
+    [
+     -344.619,
+     -201.302,
+     2.59
+    ],
+    [
+     -345.734,
+     -199.459,
+     2.59
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "closed": true,
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; goal line inside the circle not drawn (the football goal line lies on it)"
+  },
+  {
+   "name": "Lax_W_12m_fan_S",
+   "type": "line",
+   "path": [
+    [
+     -349.926,
+     -201.105
+    ],
+    [
+     -361.579,
+     -198.239
+    ],
+    [
+     -360.134,
+     -192.366,
+     14.59
+    ],
+    [
+     -349.786,
+     -186.105,
+     14.59
+    ],
+    [
+     -338.041,
+     -188.994,
+     14.59
+    ],
+    [
+     -331.779,
+     -199.342,
+     14.59
+    ],
+    [
+     -333.224,
+     -205.214
+    ],
+    [
+     -344.877,
+     -202.348
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_arc_S",
+   "type": "line",
+   "path": [
+    [
+     -349.926,
+     -201.105
+    ],
+    [
+     -354.379,
+     -193.747
+    ],
+    [
+     -350.226,
+     -190.116,
+     10.59
+    ],
+    [
+     -339.512,
+     -192.751,
+     10.59
+    ],
+    [
+     -337.518,
+     -197.895
+    ],
+    [
+     -344.877,
+     -202.348
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_0",
+   "type": "line",
+   "path": [
+    [
+     -337.154,
+     -199.676
+    ],
+    [
+     -336.86,
+     -199.617
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_1",
+   "type": "line",
+   "path": [
+    [
+     -338.631,
+     -196.044
+    ],
+    [
+     -338.379,
+     -195.881
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_2",
+   "type": "line",
+   "path": [
+    [
+     -341.342,
+     -193.213
+    ],
+    [
+     -341.168,
+     -192.968
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_3",
+   "type": "line",
+   "path": [
+    [
+     -344.905,
+     -191.579
+    ],
+    [
+     -344.833,
+     -191.288
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_4",
+   "type": "line",
+   "path": [
+    [
+     -348.82,
+     -191.373
+    ],
+    [
+     -348.86,
+     -191.076
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_5",
+   "type": "line",
+   "path": [
+    [
+     -352.535,
+     -192.624
+    ],
+    [
+     -352.682,
+     -192.363
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_6",
+   "type": "line",
+   "path": [
+    [
+     -355.527,
+     -195.156
+    ],
+    [
+     -355.761,
+     -194.968
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; drawn to the rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_goal_line_L",
+   "type": "line",
+   "path": [
+    [
+     -357.73,
+     -199.34
+    ],
+    [
+     -357.659,
+     -199.049
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; rule book"
+  },
+  {
+   "name": "Lax_W_8m_hash_S_goal_line_R",
+   "type": "line",
+   "path": [
+    [
+     -337.144,
+     -204.404
+    ],
+    [
+     -337.072,
+     -204.113
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; rule book"
+  },
+  {
+   "name": "Lax_M_crease_S",
+   "type": "line",
+   "path": [
+    [
+     -345.665,
+     -189.912,
+     2.733
+    ],
+    [
+     -347.609,
+     -191.089,
+     2.733
+    ],
+    [
+     -348.152,
+     -193.295,
+     2.733
+    ],
+    [
+     -346.976,
+     -195.24,
+     2.733
+    ],
+    [
+     -344.769,
+     -195.782,
+     2.733
+    ],
+    [
+     -342.825,
+     -194.606,
+     2.733
+    ],
+    [
+     -342.282,
+     -192.399,
+     2.733
+    ],
+    [
+     -343.458,
+     -190.455,
+     2.733
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "closed": true,
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_goal_line_S",
+   "type": "line",
+   "path": [
+    [
+     -346.105,
+     -192.629
+    ],
+    [
+     -344.329,
+     -193.066
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "drawn to the rule book; not resolved in the photos"
+  },
+  {
+   "name": "Lax_M_end_line_S",
+   "type": "line",
+   "path": [
+    [
+     -375.131,
+     -199.613
+    ],
+    [
+     -321.856,
+     -212.719
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_box_line_S_W",
+   "type": "line",
+   "path": [
+    [
+     -358.607,
+     -170.72
+    ],
+    [
+     -366.252,
+     -201.798
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_box_line_S_E",
+   "type": "line",
+   "path": [
+    [
+     -323.09,
+     -179.457
+    ],
+    [
+     -330.735,
+     -210.535
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "FH_circle_S",
+   "type": "line",
+   "path": [
+    [
+     -363.384,
+     -197.795
+    ],
+    [
+     -361.936,
+     -191.91,
+     14.62
+    ],
+    [
+     -351.567,
+     -185.635,
+     14.62
+    ],
+    [
+     -336.246,
+     -189.404,
+     14.62
+    ],
+    [
+     -329.971,
+     -199.773,
+     14.62
+    ],
+    [
+     -331.419,
+     -205.658
+    ]
+   ],
+   "width": 0.075,
+   "colour": "red",
+   "evidence": "NCAA field hockey rule 1 (100 x 60 yd, circle 16 yd (14.63 m) from the inside of posts 4 yd (3.66 m) apart); 2025 photos 0151, 0163 (red pitch outline on the football goal lines, red circles wider than the white lacrosse fans); not seen in ortho2020",
+   "unverified": "line width 75 mm (FIH); drawn to the rule book"
+  },
+  {
+   "name": "Lax_M_wing_line_W",
+   "type": "line",
+   "path": [
+    [
+     -356.423,
+     -161.841
+    ],
+    [
+     -352.054,
+     -144.082
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_M_wing_line_E",
+   "type": "line",
+   "path": [
+    [
+     -320.906,
+     -170.578
+    ],
+    [
+     -316.537,
+     -152.819
+    ]
+   ],
+   "width": 0.1016,
+   "colour": "#1e1e1e",
+   "evidence": "NCAA men's lacrosse rule 1 (110 x 60 yd, goals 80 yd apart, crease radius 9 ft, wing and box lines 10 yd in from the sidelines, restraining lines 20 yd from the centre line); ortho2020 (creases fitted at u +36.4 and -36.7, r 2.7); 2025 photos 0151, 0163 (black)",
+   "unverified": "line width; black tone from the photos"
+  },
+  {
+   "name": "Lax_W_centre_circle",
+   "type": "line",
+   "path": [
+    [
+     -337.95,
+     -147.7,
+     8.99
+    ],
+    [
+     -344.329,
+     -151.56,
+     8.99
+    ],
+    [
+     -346.11,
+     -158.8,
+     8.99
+    ],
+    [
+     -342.25,
+     -165.179,
+     8.99
+    ],
+    [
+     -335.01,
+     -166.96,
+     8.99
+    ],
+    [
+     -328.631,
+     -163.1,
+     8.99
+    ],
+    [
+     -326.85,
+     -155.86,
+     8.99
+    ],
+    [
+     -330.71,
+     -149.481,
+     8.99
+    ]
+   ],
+   "width": 0.05,
+   "colour": "white",
+   "closed": true,
+   "evidence": "NFHS girls lacrosse rules 2025, rule 1 (8 m arc 10.6 m and fan 14.6 m from the centre of the goal line); Savard, SFMANJ 2013, after the NCAA rule book (goal circle 2.6 m, sector lines at 45 deg, centre circle 9 m); ortho2020 (goal circles fitted at u +-45.7 r 2.55, fans r 14.6 centred there, centre circle r 9.1: the 100 yd goal lines of the football field); 2025 photos 0151, 0163 (thin white lines)",
+   "unverified": "line width; the 3 m centre line lies on the football 50 yd line; the hawk logo inside the circle is not drawn (the university's artwork)"
+  },
+  {
+   "name": "FH_pitch_outline",
+   "type": "line",
+   "path": [
+    [
+     -352.197,
+     -106.381
+    ],
+    [
+     -374.039,
+     -195.174
+    ],
+    [
+     -320.763,
+     -208.279
+    ],
+    [
+     -298.921,
+     -119.486
+    ]
+   ],
+   "width": 0.075,
+   "colour": "red",
+   "closed": true,
+   "evidence": "NCAA field hockey rule 1 (100 x 60 yd, circle 16 yd (14.63 m) from the inside of posts 4 yd (3.66 m) apart); 2025 photos 0151, 0163 (red pitch outline on the football goal lines, red circles wider than the white lacrosse fans); not seen in ortho2020",
+   "unverified": "line width 75 mm (FIH); the back lines lie on the football goal lines, which cover them between the sidelines; the 23 m and centre lines lie on football lines and are not drawn; penalty spots and corner marks not drawn"
   }
  ],
  "points": [

@@ -58,7 +58,9 @@ def stands(lay, terrain):
         z = terrain.at(at[0], at[1])
         name = _name(s["zone"], s)
         rows = int(s.get("rows") or max(3, round(depth / 0.7)))
-        if s.get("elevated", depth > 12):
+        if s.get("style") == "bowl":  # solid concrete bowl, absolute levels (stand.bowl)
+            out += stand.bowl(name, at, angle, length, depth, s)
+        elif s.get("elevated", depth > 12):
             first, rise = s.get("first_row_height", 1.2), s.get("rise", 0.2)
             out += stand.grandstand(
                 name,

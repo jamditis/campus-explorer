@@ -131,3 +131,24 @@ Not verified (UNVERIFIED):
 - Reduced-motion behaviour of the tour and labels (coded, not exercised in a browser).
 
 Lessons are in [lessons.md](lessons.md).
+
+## Phase 3: fix-ups, format extensions, water, viewer (Joe, 2026-11-20: "all of the above")
+
+Order: the engine first (plan agents need the new format), then the plans, then one export per PR.
+
+One PR, not two: a PR with new plans and old tiles would leave `main` inconsistent, and only one branch can be pushed.
+
+- [x] Building format: `wells` (sunken roof areas, second roof colour), garage ramp bays; Overlook tower, wing and garage; CarParc Diem
+- [x] Surface kind `water` and a water material in the viewer; the Village basin pond and pool
+- [x] Marking types `arrow` (with a measured `length`), `crosswalk`, `text`; paint on a deck's roof
+- [x] Stand style `bowl`; Yogi Berra Stadium's concrete seating
+- [x] `free_edges`: the footprint may run under another model's building
+- [x] Fix-up pass, one agent per area; an independent code review (5 defects, fixed) and a cross-area plan review (6 defects, fixed)
+- [x] West footprint widened: Webster Road beyond its mouth, the Feliciano loop, the lot by University Hall
+- [x] Viewer: Pittser Field turf tone; pines with an opaque leaf material count as crowns
+- [x] Export: tree instances for groups of 2 to 4, packed rotations, half-size far images, `REPACK=1`
+- [ ] Export `sw10`, before/after screenshots, PR
+
+Blocked: the corridor to the communication school needs Joe's photos (the 2020 ortho shows a construction site there).
+
+Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per area.

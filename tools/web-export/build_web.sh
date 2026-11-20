@@ -7,6 +7,8 @@
 #   ends by taking the other sources' ground out of their tiles inside every area's footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
+#   REPACK=1 = run this version's compact and far-version steps on the other sources' published tiles too
+#   TREE_INSTANCE=0 leaves trees used 2 to 4 times in a tile to optimize (joined into one plain mesh), as before
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
 #   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
 # Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
@@ -66,17 +68,22 @@ for f in $B/raw/*.glb; do
   C=$(basename $f .glb); [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
   echo "$(date +%T) optimize $C"
   node $W/tint_leaves.mjs $f || fail "tint $C"
+  # optimize instances a mesh only from 5 uses and joins the rest: make trees used 2 to 4 times instances first
+  # (tree_instance.mjs: Tree_* meshes only; fixtures stay joined, with collision)
+  if [ "${TREE_INSTANCE:-1}" != 0 ]; then
+    cp $W/tree_instance.mjs $W/pack.mjs ./; node tree_instance.mjs $f || fail "tree instances $C"
+  fi
   # no palette: materials keep their names and the 'cat' extras the viewer textures by
   npx gltf-transform optimize $f $S/$C.glb --compress meshopt --texture-compress webp --texture-size ${TEX:-1024} \
      --simplify false --palette false --join true --instance true --flatten true 2>&1 | grep -iE "error|warn" | head -3
   [ "${PIPESTATUS[0]}" -eq 0 ] || fail "optimize $C"
   # optimize leaves an unused second copy of every instance transform in the file: drop it
-  cp $W/compact.mjs ./compact.mjs; node compact.mjs $S/$C.glb || fail "compact $C"
+  cp $W/compact.mjs $W/pack.mjs ./; node compact.mjs $S/$C.glb || fail "compact $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
   # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
   # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
   if [[ $C == t_* || $C == n_t_* || $C == sw_t_* ]]; then
-    mkdir -p $S/lod; cp $W/lod.mjs ./lod.mjs  # run from here so it resolves this folder's node_modules
+    mkdir -p $S/lod; cp $W/lod.mjs $W/pack.mjs ./  # run from here so it resolves this folder's node_modules
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
   fi
 done
@@ -97,13 +104,23 @@ fi
 # there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
 if ls $S/sw_*.glb >/dev/null 2>&1; then
   python3 $W/../../blender/scripted/supersede.py $WORK/supersede.json ${SW_AREAS:+--areas $SW_AREAS} || fail "supersede rules"
-  cp $W/supersede.mjs $W/lod.mjs ./
+  cp $W/supersede.mjs $W/lod.mjs $W/pack.mjs ./
   node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
   [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"
   CHANGED=$(sed -n 's/^CHANGED //p' $WORK/supersede.out)
   for f in $CHANGED; do
     C=${f%.glb}; [[ $C == t_* || $C == n_t_* ]] || continue
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
+  done
+fi
+# REPACK=1: the other sources' published tiles get this version's compact and far-version steps too (packed
+# instance rotations, half-size far images) without their .blend: both steps work on a published tile.
+if [ "${REPACK:-0}" = 1 ]; then
+  cp $W/compact.mjs $W/lod.mjs $W/pack.mjs ./
+  for f in $S/*.glb; do
+    C=$(basename $f .glb); [ -n "$PREFIX" ] && [[ $C == ${PREFIX}* ]] && continue
+    node compact.mjs $f || fail "repack compact $C"
+    if [[ $C == t_* || $C == n_t_* ]]; then RATIO=0.1 ERR_M=0.5 node lod.mjs $f $S/lod/$C.glb >/dev/null || fail "repack lod $C"; fi
   done
 fi
 OUT=$S python3 $W/manifest.py || fail "manifest"

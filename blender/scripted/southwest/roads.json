@@ -1,6 +1,6 @@
 {
  "zone": "roads",
- "notes": "Zone roads: Normal Avenue from x -560 (west edge of the ortho and LiDAR) to a straight cut at x -300, and Carlisle Road from Normal Avenue north to y -58, plus the two-track grade crossing at x -447..-437.\nFrame: Normal Ave was read in a straightened frame along the axis through (-544.9, -200.5) at -13.84 deg (u along, v left/north). Carriageway edges are straight runs in that frame; the plan stores model x, y.\nNormal Ave: south curb v -5.0 over the whole length (clear 0.1-0.15 m step in the LiDAR ground, lidar2017, and the asphalt/grass edge in ortho2020). North curb v +5.6 west of Carlisle (ortho: concrete walk 5.7-7.2 directly behind the curb; LiDAR step), so 10.6 m curb to curb. East of Carlisle the north curb is at v 8.8 (right-turn lane, 13.8 m wide) and tapers to v 5.3 between u 178 and 214 (x -372 to -337), then v 5.1 at x -300 (10.1 m). The taper is straight runs with 40 m arcs.\nRaised concrete medians (LiDAR +0.16 m, light in the ortho, island visible in subwaynut_montclair_heights20.jpg) at v -1.2..+0.3 from x -481 to -447.5 (west of the tracks) and x -436 to -420.6 (east); beyond -420.6 the ortho shows only paint.\nGrade crossing: track centres from OSM (-445.2,-225.5) and (-440.1,-226.8); rails and panels are not resolved in the 0.15 m ortho, so the 2.6 m concrete panels are UNVERIFIED. Masts from isolated vertical LiDAR columns: NE (6.7 m) and SW (5.1 m) gate masts with flashers and crossbucks (photo); SE 5.7 m exit gate (photo, direction of view unknown); NW 5.8 m gate guessed from height; 3.0-3.3 m posts on both median noses are signs (photo).\nCarlisle Road: centre double yellow read from the ortho (yellowness profile) and checked against msu_sprague_DJI_20250530101718_0163_D.jpg, which shows a double yellow, one northbound lane by the hedge and two southbound lanes with white dashes. Curb to curb about 11.7 m at y -125 (west curb -414.8, east curb at the hedge, CL + 3.9 m), about 11 m at the junction (west curb -412.6, east curb CL + 3.9). East curb follows the centre line +3.9 m the whole way (bright curb line in the ortho, LiDAR step). West curb north of y -110 is under tree cover and is UNVERIFIED; north of y -88 the lot entrance opens on the east side and the ring is cut straight at y -58.\nJunction corners: NW radius 7 m, NE radius 8 m, from the LiDAR slope map and the ortho walks.\nMarkings from ortho2020: Normal Ave double yellow (faint west of the medians), westbound right-turn lane line at v 4.2, westbound stop bar before Carlisle (x -391), westbound stop bar before the tracks (x -432), two crosswalks across Normal Ave (slanted pair east of Carlisle at x -403..-395, pair at x -420.3 and -417.2 west of it), Carlisle stop bar at y -221.5 and one line across its mouth. Not drawn: turn arrows, the RXR symbol east of Carlisle, the Upper Mountain Ave stop bar just west of x -560, and an eastbound stop bar west of the tracks (not visible).\nPoints: utility poles and lamps are isolated vertical LiDAR columns; heights are the highest return above ground. Lamp kinds are guessed from height.\nStation lot entrance (x -414..-402 south side) and the lot entrance at x -315..-307 north side: the ring edge runs straight across; curbs stop there.\nSidewalks: north walk 1.5 m directly behind the curb west of Carlisle and 1.7 m east of it; a short station-side walk south of the road east of the tracks; Carlisle east walk (tapered, y -158..-196) between the curb and the stand.",
+ "notes": "Zone roads: Normal Avenue from x -560 (west edge of the ortho and LiDAR) to a straight cut at x -300, and Carlisle Road from Normal Avenue north to y -58, plus the two-track grade crossing at x -447..-437.\nFrame: Normal Ave was read in a straightened frame along the axis through (-544.9, -200.5) at -13.84 deg (u along, v left/north). Carriageway edges are straight runs in that frame; the plan stores model x, y.\nNormal Ave: south curb v -5.0 over the whole length (clear 0.1-0.15 m step in the LiDAR ground, lidar2017, and the asphalt/grass edge in ortho2020). North curb v +5.6 west of Carlisle (ortho: concrete walk 5.7-7.2 directly behind the curb; LiDAR step), so 10.6 m curb to curb. East of Carlisle the north curb is at v 8.8 (right-turn lane, 13.8 m wide) and tapers to v 5.3 between u 178 and 214 (x -372 to -337), then v 5.1 at x -300 (10.1 m). The taper is straight runs with 40 m arcs.\nRaised concrete medians (LiDAR +0.16 m, light in the ortho, island visible in subwaynut_montclair_heights20.jpg) at v -1.2..+0.3 from x -481 to -447.5 (west of the tracks) and x -436 to -420.6 (east); beyond -420.6 the ortho shows only paint.\nGrade crossing: track centres from OSM (-445.2,-225.5) and (-440.1,-226.8); rails and panels are not resolved in the 0.15 m ortho, so the 2.6 m concrete panels are UNVERIFIED. Masts from isolated vertical LiDAR columns: NE (6.7 m) and SW (5.1 m) gate masts with flashers and crossbucks (photo); SE 5.7 m exit gate (photo, direction of view unknown); NW 5.8 m gate guessed from height; 3.0-3.3 m posts on both median noses are signs (photo).\nCarlisle Road: centre double yellow read from the ortho (yellowness profile) and checked against msu_sprague_DJI_20250530101718_0163_D.jpg, which shows a double yellow, one northbound lane by the hedge and two southbound lanes with white dashes. Curb to curb about 11.7 m at y -125 (west curb -414.8, east curb at the hedge, CL + 3.9 m), about 11 m at the junction (west curb -412.6, east curb CL + 3.9). East curb follows the centre line +3.9 m the whole way (bright curb line in the ortho, LiDAR step). West curb north of y -110 is under tree cover and is UNVERIFIED; north of y -88 the lot entrance opens on the east side and the ring is cut straight at y -58.\nJunction corners: NW radius 7 m, NE radius 8 m, from the LiDAR slope map and the ortho walks.\nMarkings from ortho2020: Normal Ave double yellow (faint west of the medians), westbound right-turn lane line at v 4.2, westbound stop bar before Carlisle (x -391), westbound stop bar before the tracks (x -432), two crosswalks across Normal Ave (slanted pair east of Carlisle at x -403..-395, pair at x -420.3 and -417.2 west of it), Carlisle stop bar at y -221.5 and one line across its mouth. Added later, read in frames along each road: two westbound left-turn arrows at the west end, two right-turn arrows in the westbound turn lane east of Carlisle, the RXR symbol (X, R letters, a 0.6 m transverse bar) in the westbound through lane, the solid lane line between Carlisle's two southbound lanes and their arrows (left turn in the east lane, through-and-right in the west lane). Arrows are drawn at the FHWA sizes. Not drawn: box-shaped marks 4.5 m before the Carlisle left arrows (perhaps ONLY; not legible), the Upper Mountain Ave stop bar just west of x -560, and an eastbound stop bar west of the tracks (not visible).\nPoints: utility poles and lamps are isolated vertical LiDAR columns; heights are the highest return above ground. Lamp kinds are guessed from height.\nStation lot entrance (x -414..-402 south side) and the lot entrance at x -315..-307 north side: the ring edge runs straight across; curbs stop there.\nSidewalks: north walk 1.5 m directly behind the curb west of Carlisle and 1.7 m east of it; a short station-side walk south of the road east of the tracks; Carlisle east walk (tapered, y -158..-196) between the curb and the stand.",
  "surfaces": [
   {
    "name": "Normal_Ave",
@@ -735,7 +735,7 @@
    "width": 0.1,
    "colour": "white",
    "evidence": "ortho2020",
-   "unverified": "edge line or lane line; arrows suggest two southbound lanes east of it"
+   "unverified": "edge line of the west southbound lane (profiles: v -3.1 from the lane line at v +0.25, a 3.35 m lane)"
   },
   {
    "name": "Normal_Ave_WB_turn_lane_line_W",
@@ -967,6 +967,238 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "line positions under a parked car partly guessed"
+  },
+  {
+   "name": "Normal_Ave_WB_left_arrow_1",
+   "type": "arrow",
+   "at": [
+    -555.39,
+    -196.89
+   ],
+   "angle": 166.16,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "drawn at the FHWA size; the 2020 marks read about 2.5 m long, position +-0.5 m"
+  },
+  {
+   "name": "Normal_Ave_WB_left_arrow_2",
+   "type": "arrow",
+   "at": [
+    -538.2,
+    -201.12
+   ],
+   "angle": 166.16,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "drawn at the FHWA size; the 2020 marks read about 2.5 m long, position +-0.5 m"
+  },
+  {
+   "name": "Normal_Ave_WB_right_arrow_1",
+   "type": "arrow",
+   "at": [
+    -385.63,
+    -234.59
+   ],
+   "angle": 166.16,
+   "shape": "right",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "the 2020 marks read 4-4.5 m long, longer than the FHWA turn arrow drawn here; shape read as a right turn (head bends north)"
+  },
+  {
+   "name": "Normal_Ave_WB_right_arrow_2",
+   "type": "arrow",
+   "at": [
+    -374.17,
+    -237.41
+   ],
+   "angle": 166.16,
+   "shape": "right",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "the 2020 marks read 4-4.5 m long, longer than the FHWA turn arrow drawn here; shape read as a right turn (head bends north)"
+  },
+  {
+   "name": "Normal_Ave_RXR_X_1",
+   "type": "line",
+   "path": [
+    [
+     -387.83,
+     -237.86
+    ],
+    [
+     -381.42,
+     -237.38
+    ]
+   ],
+   "width": 0.41,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels); MUTCD 2009 figure 8B-7 (X 20 ft long, lines 16 in, R 6 ft)",
+   "unverified": "X 6.6 m long and 2 m wide in the ortho; drawn at the MUTCD length"
+  },
+  {
+   "name": "Normal_Ave_RXR_X_2",
+   "type": "line",
+   "path": [
+    [
+     -387.35,
+     -235.92
+    ],
+    [
+     -381.9,
+     -239.32
+    ]
+   ],
+   "width": 0.41,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels); MUTCD 2009 figure 8B-7 (X 20 ft long, lines 16 in, R 6 ft)",
+   "unverified": "X 6.6 m long and 2 m wide in the ortho; drawn at the MUTCD length"
+  },
+  {
+   "name": "Normal_Ave_RXR_R_1",
+   "type": "text",
+   "text": "R",
+   "at": [
+    -385.0,
+    -239.12
+   ],
+   "angle": 166.16,
+   "height": 1.83,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels); MUTCD 2009 figure 8B-7 (X 20 ft long, lines 16 in, R 6 ft)",
+   "unverified": "the letters are not resolved in the ortho; placed beside the X's crossing as the MUTCD draws them; letter width 0.5 m",
+   "width": 0.5
+  },
+  {
+   "name": "Normal_Ave_RXR_R_2",
+   "type": "text",
+   "text": "R",
+   "at": [
+    -384.25,
+    -236.11
+   ],
+   "angle": 166.16,
+   "height": 1.83,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels); MUTCD 2009 figure 8B-7 (X 20 ft long, lines 16 in, R 6 ft)",
+   "unverified": "the letters are not resolved in the ortho; placed beside the X's crossing as the MUTCD draws them; letter width 0.5 m",
+   "width": 0.5
+  },
+  {
+   "name": "Normal_Ave_RXR_transverse_line",
+   "type": "line",
+   "path": [
+    [
+     -378.54,
+     -241.74
+    ],
+    [
+     -377.48,
+     -237.47
+    ]
+   ],
+   "width": 0.6,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels) (0.6 m bar 7 m east of the X, v 1.0 to 4.2; MUTCD 24 in)",
+   "unverified": "south end in shade; drawn across the lane"
+  },
+  {
+   "name": "Carlisle_Rd_SB_lane_line",
+   "type": "line",
+   "path": [
+    [
+     -410.21,
+     -189.07
+    ],
+    [
+     -406.03,
+     -221.8
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels) (profiles every 2 m: v 0.15 to 0.45, solid from y -189 to the stop bar, where the dashes end)",
+   "unverified": "straight run through readings that scatter 0.15 m"
+  },
+  {
+   "name": "Carlisle_Rd_SB_left_arrow_1",
+   "type": "arrow",
+   "at": [
+    -409.76,
+    -185.03
+   ],
+   "angle": -82.9,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "position +-0.5 m; a box-shaped mark 4.5 m before each of the first two (perhaps ONLY) is not drawn"
+  },
+  {
+   "name": "Carlisle_Rd_SB_left_arrow_2",
+   "type": "arrow",
+   "at": [
+    -407.4,
+    -203.98
+   ],
+   "angle": -82.9,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "position +-0.5 m; a box-shaped mark 4.5 m before each of the first two (perhaps ONLY) is not drawn"
+  },
+  {
+   "name": "Carlisle_Rd_SB_left_arrow_3",
+   "type": "arrow",
+   "at": [
+    -405.37,
+    -220.26
+   ],
+   "angle": -82.9,
+   "shape": "left",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "position +-0.5 m; a box-shaped mark 4.5 m before each of the first two (perhaps ONLY) is not drawn"
+  },
+  {
+   "name": "Carlisle_Rd_SB_through_right_arrow_1",
+   "type": "arrow",
+   "at": [
+    -412.16,
+    -185.98
+   ],
+   "angle": -82.9,
+   "shape": "straight_right",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "shape read from blurred marks (a through head and a branch to the west); position +-0.5 m"
+  },
+  {
+   "name": "Carlisle_Rd_SB_through_right_arrow_2",
+   "type": "arrow",
+   "at": [
+    -409.89,
+    -204.14
+   ],
+   "angle": -82.9,
+   "shape": "straight_right",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "shape read from blurred marks (a through head and a branch to the west); position +-0.5 m"
+  },
+  {
+   "name": "Carlisle_Rd_SB_through_right_arrow_3",
+   "type": "arrow",
+   "at": [
+    -408.68,
+    -213.87
+   ],
+   "angle": -82.9,
+   "shape": "straight_right",
+   "colour": "white",
+   "evidence": "ortho2020 (read in a frame along the road, 0.15 m pixels)",
+   "unverified": "shape read from blurred marks (a through head and a branch to the west); position +-0.5 m"
   }
  ],
  "points": [

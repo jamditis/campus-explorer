@@ -1,6 +1,6 @@
 {
  "zone": "w_roads",
- "notes": "Zone w_roads: Carlisle Road from the south-west area's cut (y -58) to the north end of the evidence, the roadside parking (Lot 30S, Lot 30), the hatched gore and the mouth of Webster Road, and the junction of College Avenue and Carlisle Road beside the Red Hawk Deck (Lot 33, the drive into the deck).\nFrame: Carlisle Road's centre line (double yellow, tracked in the ortho every 2 m) is one circular arc, radius 1745.1 m, centre (1315.98, -379.66), rms 0.12 m over y -10..345. Every Carlisle edge and line is an offset of that arc (v metres east of the centre line), drawn as tangent runs with true arcs. West edge v -4.3 (asphalt/grass edge; edge line v -3.9; the LiDAR ground falls away beyond), north-bound edge line v 3.7.\nLot 30 (y 255..345): a 1.3 m raised divider at v 5.3..6.6 (LiDAR +0.13 m), aisle, 46.5 deg stalls at 3.55 m pitch fitted to the painted lines (brightness search over pitch, angle and phase), curb v 16.1 and a 2 m walk. Lot 30S (y 16..150): square parking (lines too faint) then 32.8 deg stalls at 5.25 m pitch, curb v 14.0 and a 1.8 m walk. Hatched gore and chevrons between the end of Lot 30S and Webster Road from the ortho (corners to about 0.5 m).\nJunction: lanes, islands, stop bars and crosswalk bars read from the ortho at 0.15 m; the paved edge west of the junction from the LiDAR ground (a 1.4 m drop to the ditch by the railway). College Avenue east of x -303 and the cogeneration plant's lot are the main model's (KY_college_ave_asphalt, WS74_cogen_lot_asphalt) and are not redrawn.\nAt the shared edge with the south-west area (y -58): their Carlisle Road was corrected to the evidence north of y -72 (paved west edge x -404.8, no curb; centre line on this arc, x -399.26, heading 79 deg); this plan starts on those positions with no step or kink. Their east curb (x -396.1) is unchanged.\nNot drawn: turn arrows and lane words, the RHD stalls along the deck's south face (hidden by the roof in the ortho), the planted island with a tree in Lot 33 and the one at x -330..-301 (mostly in the main model), fences along the railway (none seen in the evidence).",
+ "notes": "Zone w_roads: Carlisle Road from the south-west area's cut (y -58) to the north end of the evidence, the roadside parking (Lot 30S, Lot 30), the hatched gore and the mouth of Webster Road, and the junction of College Avenue and Carlisle Road beside the Red Hawk Deck (Lot 33, the drive into the deck).\nFrame: Carlisle Road's centre line (double yellow, tracked in the ortho every 2 m) is one circular arc, radius 1745.1 m, centre (1315.98, -379.66), rms 0.12 m over y -10..345. Every Carlisle edge and line is an offset of that arc (v metres east of the centre line), drawn as tangent runs with true arcs. West edge v -4.3 (asphalt/grass edge; edge line v -3.9; the LiDAR ground falls away beyond), north-bound edge line v 3.7.\nLot 30 (y 255..345): a 1.3 m raised divider at v 5.3..6.6 (LiDAR +0.13 m), aisle, 46.5 deg stalls at 3.55 m pitch fitted to the painted lines (brightness search over pitch, angle and phase), curb v 16.1 and a 2 m walk. Lot 30S (y 16..150): square parking (lines too faint) then 32.8 deg stalls at 5.25 m pitch, curb v 14.0 and a 1.8 m walk. Hatched gore and chevrons between the end of Lot 30S and Webster Road from the ortho (corners to about 0.5 m).\nJunction: lanes, islands, stop bars and crosswalk bars read from the ortho at 0.15 m; the paved edge west of the junction from the LiDAR ground (a 1.4 m drop to the ditch by the railway). College Avenue east of x -303 and the cogeneration plant's lot are the main model's (KY_college_ave_asphalt, WS74_cogen_lot_asphalt) and are not redrawn.\nAt the shared edge with the south-west area (y -58): their Carlisle Road was corrected to the evidence north of y -72 (paved west edge x -404.8, no curb; centre line on this arc, x -399.26, heading 79 deg); this plan starts on those positions with no step or kink. Their east curb (x -396.1) is unchanged.\nEdited by hand in the fix-up pass (contrast-stretched ortho at 0.15 m): the north-bound approach to the junction has a through arrow in its left lane and a right-turn arrow in its right lane (the line once drawn across both lanes at y -44.6 is the foot of a four-letter word under each arrow, not a line); the island between Carlisle and Webster Road is refitted to its curb from y 234 to its nose (west side up to 0.8 m further west, nose foot about 1 m further south at y 204.7; rms 0.22 m over 27 points read across the asphalt-grass edge), and a strip of asphalt (W_road_Carlisle_island_shoulder) now fills the 0.8 to 1.5 m between the road's v 4.3 edge and that curb, where the build showed lawn.\nNot drawn: the two pavement words under the north-bound arrows (four letters each, not legible: ONLY or THRU), marks on the College Avenue west-bound approach east of its stop bar and two hook-shaped marks at x -340 and -327 (shapes not legible), the hatched aisle in Lot 33 at x -351..-343 (its outline does not fit the stall row), the RHD stalls along the deck's south face (hidden by the roof in the ortho), the planted island with a tree in Lot 33 and the one at x -330..-301 (mostly in the main model), fences along the railway (none seen in the evidence).",
  "surfaces": [
   {
    "name": "W_road_Carlisle",
@@ -289,6 +289,15 @@
    "unverified": "Webster Road is cut 1 m beyond its crosswalk, where this area ends; its north-west edge at the island nose is in tree shade"
   },
   {
+   "name": "W_road_Carlisle_island_shoulder",
+   "kind": "asphalt",
+   "layer": 2.9,
+   "ring": [[-301.946, 257.15], [-310.945, 234.287], [-319.5, 212.9], [-319.25, 209.0],
+    [-323.4, 207.6], [-308.36, 247.3], [-304.4, 257.55]],
+   "evidence": "ortho2020",
+   "unverified": "the asphalt between the road's v 4.3 edge and the island curb (0.8 to 1.5 m wide) read from the ortho; it runs 0.4 m under the road and 0.5 m under the island"
+  },
+  {
    "name": "W_road_Carlisle_island",
    "kind": "lawn",
    "ring": [
@@ -303,18 +312,18 @@
      1478.4
     ],
     [
-     -320.265,
-     209.96,
-     2.5
+     -320.0,
+     213.0,
+     1.0
     ],
     [
-     -318.022,
-     207.036,
-     2.5
+     -319.7,
+     205.3,
+     4.5
     ],
     [
-     -313.115,
-     205.907,
+     -311.5,
+     204.4,
      2.0
     ],
     [
@@ -455,16 +464,16 @@
      -58.7
     ],
     [
-     -373.75,
-     -47.0
+     -373.6,
+     -46.22
     ],
     [
-     -376.9,
-     -46.1
+     -376.2,
+     -45.8
     ],
     [
-     -376.1,
-     -41.3
+     -374.63,
+     -40.78
     ],
     [
      -387.0,
@@ -476,7 +485,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm",
-   "unverified": "one paved area for College Avenue west of the main model's carriageway, the Carlisle Road junction and Lot 33; the strip along the deck's south face is drawn as paving to the main model's College Avenue"
+   "unverified": "one paved area for College Avenue west of the main model's carriageway, the Carlisle Road junction and Lot 33; the strip along the deck's south face is drawn as paving to the main model's College Avenue; at the Maintenance Building's north-west corner the outline follows the footprint (trimmed in the fix-up pass)"
   },
   {
    "name": "W_road_junction_island_tri",
@@ -851,18 +860,18 @@
      1478.4
     ],
     [
-     -320.265,
-     209.96,
-     2.5
+     -320.0,
+     213.0,
+     1.0
     ],
     [
-     -318.022,
-     207.036,
-     2.5
+     -319.7,
+     205.3,
+     4.5
     ],
     [
-     -313.115,
-     205.907,
+     -311.5,
+     204.4,
      2.0
     ],
     [
@@ -1835,18 +1844,18 @@
      311.834
     ],
     [
-     -265.767,
-     331.192
+     -267.193,
+     327.966
     ]
    ],
-   "count": 6,
+   "count": 5,
    "depth": 6.62,
    "side": "right",
    "angle": 46.5,
    "colour": "white",
    "width": 0.1,
    "evidence": "ortho2020, lidar2017",
-   "unverified": "fitted to the painted lines: pitch 3.55 m along the road, 46.5 deg; the row continues north of this area's edge"
+   "unverified": "fitted to the painted lines: pitch 3.55 m along the road, 46.5 deg; the row continues north of this area's edge (the sixth stall, whose divider reached 1.1 m past the footprint, is left out in the fix-up pass)"
   },
   {
    "name": "W_lot_30S_angled_1",
@@ -2058,22 +2067,24 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "W_road_Carlisle_NB_lane_end_line",
-   "type": "line",
-   "path": [
-    [
-     -396.4,
-     -44.6
-    ],
-    [
-     -390.2,
-     -45.0
-    ]
-   ],
-   "width": 0.1,
+   "name": "W_road_Carlisle_NB_arrow_through",
+   "type": "arrow",
+   "at": [-394.4, -37.95],
+   "angle": 84.6,
+   "shape": "straight",
    "colour": "white",
    "evidence": "ortho2020",
-   "unverified": "a line across both lanes; role unclear"
+   "unverified": "head and tail read at 0.15 m (y -36.3 to -39.6); FHWA 3.0 m arrow drawn"
+  },
+  {
+   "name": "W_road_Carlisle_NB_arrow_right",
+   "type": "arrow",
+   "at": [-391.95, -38.4],
+   "angle": 84.6,
+   "shape": "right",
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "shaft and head read at 0.15 m; FHWA 2.5 m turn arrow drawn"
   },
   {
    "name": "W_road_College_Ave_WB_stop_bar",
@@ -2212,40 +2223,14 @@
    "unverified": "row read from a few lines between parked cars; pitch 3.58 m and count assumed"
   },
   {
-   "name": "W_road_Webster_crosswalk_1",
-   "type": "line",
-   "path": [
-    [
-     -308.2,
-     206.72
-    ],
-    [
-     -302.04,
-     202.98
-    ]
-   ],
-   "width": 0.3,
+   "name": "W_road_Webster_crosswalk",
+   "type": "crosswalk",
+   "line": [[-307.42, 208.0], [-301.26, 204.265]],
+   "width": 3.3,
+   "style": "ladder",
    "colour": "white",
    "evidence": "ortho2020, osm",
-   "unverified": "marking style not resolved"
-  },
-  {
-   "name": "W_road_Webster_crosswalk_2",
-   "type": "line",
-   "path": [
-    [
-     -306.64,
-     209.28
-    ],
-    [
-     -300.48,
-     205.55
-    ]
-   ],
-   "width": 0.3,
-   "colour": "white",
-   "evidence": "ortho2020, osm",
-   "unverified": "marking style not resolved"
+   "unverified": "edge lines read from the ortho; ladder style from OSM (crossing:markings=ladder, node 13773972358), bars at the default 0.6 m by 1.2 m: tree shade hides them in the ortho"
   }
  ],
  "points": [

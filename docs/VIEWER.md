@@ -135,11 +135,13 @@ The scripted build (`blender/scripted/`) ships as `sw_` tiles. It has one folder
 
 Material categories come from the export as the `cat` extra on each material. Two rules were added for the southwest build and apply to every source: `turf` (artificial turf: the grass texture at a finer scale, no lawn tint, no grass tufts), and a see-through material whose category is not `glass` (chain-link, netting) stays see-through instead of becoming window glass.
 
+`water` is the scripted build's ponds and pools (material `SW_water_*`; `cat.js` files that name as water whatever the export said). It loads no texture: `look.js` gives it a fixed dark blue-green, roughness 0.06 and a stronger sky reflection than other surfaces, and bends its normal with four fixed wave trains in world space. The ripple has no clock, so a still view is not redrawn; it fades out where a pixel spans a large part of the shortest wave. Water reflects the sky only, not buildings or trees.
+
 Other manifest fields the viewer uses:
 
 | Field | Use |
 |---|---|
-| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. |
+| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. Their images are half size per side (`lod.mjs`): from 260 m a half-size paint texel is still under a screen pixel. Trees used twice or more in a tile are instances (`tree_instance.mjs`), so they are not in the far versions; the tree stand-ins of `trees.js` show them at distance. |
 | `landcover` | An image draped over the 4 km skirt (`scenery.js`). |
 | `far_trees` | Positions and sizes of far-field trees, drawn as simple crowns (`trees.js`). |
 | `paint` | Lot markings painted into asphalt (`look.js`), up to 8 layers. |

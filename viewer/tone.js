@@ -17,6 +17,8 @@ const AUTHORED = {
   'io_amphi_stage_concrete': [0.25, 0.218, 0.178],
 };
 
+const TURF = [0.03, 0.12, 0.04]; // COLOUR["turf"] in blender/scripted/ground.py (UNVERIFIED tone)
+
 function setColor(color, rgb) {
   if (typeof color.setRGB === 'function') color.setRGB(rgb[0], rgb[1], rgb[2]);
   else { color.r = rgb[0]; color.g = rgb[1]; color.b = rgb[2]; }
@@ -27,6 +29,13 @@ export function fixTone(name, color, hasMap) {
   if (/granite/i.test(name) && /curb/i.test(name)) {
     const l = lum(color);
     if (l > 0.5) color.multiplyScalar(0.44); // Granite002A mean ~0.44 linear
+    return color;
+  }
+  // synthetic turf whose shader the export collapsed to a neutral grey (fs_turf, Pittser Field): use the
+  // scripted builds' turf tone (blender/scripted/ground.py), not a grey or a lawn green
+  if (/turf/i.test(name) && !/lawn|grass|paint|line|stripe|marking/i.test(name)) {
+    const hi = Math.max(color.r, color.g, color.b), lo = Math.min(color.r, color.g, color.b);
+    if (hi - lo < 0.1 * hi) setColor(color, TURF);
     return color;
   }
   const authored = AUTHORED[name];

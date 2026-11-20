@@ -213,6 +213,44 @@ class Southwest(unittest.TestCase):
         width = max(abs(to_local(*p)[1]) for m in lines for p in m["line"])
         self.assertAlmostEqual(width, 80 * 0.3048, places=3)  # 53 1/3 yd wide
 
+    def test_lacrosse_and_hockey_lines_follow_the_rule_book(self):
+        plan = json.loads((PLAN / "field.json").read_text())
+        ff = plan["field_frame"]
+        to_local = geom.frame(ff["centre"], ff["angle"])[0]
+        marks = {m["name"]: m for m in plan["markings"] if "name" in m}
+        yd, ft = 0.9144, 0.3048
+
+        def local(name, closed=False):
+            return [to_local(*p) for p in geom.expand(marks[name]["path"], closed)]
+
+        def assert_circle(name, cu, r):
+            for u, v in local(name, True):
+                self.assertAlmostEqual(math.hypot(u - cu, v), r, delta=0.02, msg=name)
+
+        assert_circle("Lax_W_centre_circle", 0.0, 9.0)  # women: 9 m centre circle
+        for end, s in (("N", 1), ("S", -1)):
+            g = s * 50 * yd  # women's goals and the hockey back lines: on the football goal lines
+            assert_circle(f"Lax_W_goal_circle_{end}", g, 2.6)
+            assert_circle(f"Lax_M_crease_{end}", s * 40 * yd, 9 * ft)  # men: goals 80 yd apart
+            for u, v in local(f"Lax_W_12m_fan_{end}"):  # 14.6 m semicircle, flat on the goal line
+                on_line = abs(u - g) < 0.02 and 2.59 < abs(v) < 14.61
+                self.assertTrue(on_line or abs(math.hypot(u - g, v) - 14.6) < 0.02, (u, v))
+            for u, v in local(f"FH_circle_{end}"):  # 16 yd from the inside of the posts
+                d = math.hypot(u - g, abs(v) - 2 * yd) if abs(v) > 2 * yd else abs(u - g)
+                self.assertAlmostEqual(d, 16 * yd, delta=0.02)
+            self.assertAlmostEqual(abs(local(f"Lax_M_end_line_{end}")[0][0]), 55 * yd, places=2)
+        pitch = local("FH_pitch_outline", True)  # 100 x 60 yd
+        self.assertAlmostEqual(max(u for u, _ in pitch), 50 * yd, places=2)
+        self.assertAlmostEqual(max(v for _, v in pitch), 30 * yd, places=2)
+
+
+class FreeEdges(unittest.TestCase):
+    def test_a_sample_inside_a_free_edge_ring_does_not_count(self):
+        lay = dict(free_edges=[[(0, 0), (4, 0), (4, 4), (0, 4)]])
+        self.assertFalse(layout.meets_neighbour(lay, 2, 2))
+        self.assertTrue(layout.meets_neighbour(lay, 6, 2))
+        self.assertTrue(layout.meets_neighbour(dict(free_edges=[]), 2, 2))
+
 
 if __name__ == "__main__":
     unittest.main()

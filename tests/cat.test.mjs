@@ -16,6 +16,19 @@ test('known misfilings are corrected', () => {
   assert.equal(fixCat('Roof_barrel_tile_course', ''), 'rooftile');
 });
 
+test('synthetic turf the exporter filed as lawn is turf', () => {
+  // Pittser Field (north model) and a strip of Sprague turf in the main model: the exporter's
+  // grass rule matches "turf", and only SW_ names get the turf category
+  assert.equal(fixCat('fs_turf', 'grass'), 'turf');
+  assert.equal(fixCat('WS186_Sprague_artificial_turf_ortho2020_UNVERIFIEDtone', 'grass'), 'turf');
+  // lawns stay lawn, field paint stays paint, fieldstone stays stone
+  assert.equal(fixCat('CCOM_lawn_grass', 'grass'), 'grass');
+  assert.equal(fixCat('BD_farfield_ortho_haze', 'grass'), 'grass');
+  assert.equal(fixCat('turfgrass_lawn', 'grass'), 'grass');
+  assert.equal(fixCat('fs_turf_line_paint', 'grass'), '');
+  assert.equal(fixCat('hn_amphi_base_fieldstone', 'grass'), 'stone');
+});
+
 test('fence fabric and netting exported as glass are see-through metal', () => {
   assert.equal(fixCat('MH_chainlink_galv', 'glass'), 'metal');
   assert.equal(fixCat('fs_goal_net', 'glass'), 'metal');
@@ -27,4 +40,11 @@ test('window and lamp glass, and see-through materials without a category, stay 
   assert.equal(isSeeThroughSolid('CELS_win_glass_thin', 'glass'), false);
   assert.equal(isSeeThroughSolid('Glass_Lamp_Frosted', 'glass'), false);
   assert.equal(isSeeThroughSolid('some_unnamed_clear_thing', ''), false);
+});
+
+test('water of the scripted build is water, and nothing else that mentions water is', () => {
+  assert.equal(fixCat('SW_water_base', 'water'), 'water');
+  assert.equal(fixCat('SW_water_base', ''), 'water'); // an export without the water category
+  assert.equal(fixCat('NA_water_bottle_clear_UNVERIFIED', 'glass'), 'glass');
+  assert.equal(fixCat('CCM office water bottles (na)', ''), '');
 });

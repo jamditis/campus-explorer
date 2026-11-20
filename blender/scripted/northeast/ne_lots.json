@@ -1,6 +1,6 @@
 {
  "zone": "ne_lots",
- "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines. Lot 19 (south of the Student Recreation Center): four double rows of square stalls on painted centre lines at 22.6 to 24.1 deg, with painted hatched end caps; single rows along the west curb, the north walk (accessible stalls with 1.5 m blue access aisles) and the east curb. The south part runs past the footprint edge (y 497) and is clipped there. Divider lines found as the long bright lines on transects; stall pitch 2.59 to 2.61 m. Lot 24 (north of CarParc Diem): two aisles either side of a wooded strip (a hole in the paving), joined at the north (mouth on the drive to Carlisle Road) and at the south along the deck. The deck's roof leans about 18 m north in the ortho and hides the lot south of y 667; the paving is run to the deck wall read from the LiDAR, and the hidden stalls are not drawn. Rows follow the curving west curb as straight runs of 5 to 9 stalls. The east terrace has a double row on a painted centre line (lines at 88.5 deg to it). No lamp poles were found in the LiDAR or as shadows in this lot. Lot 23 (east of Yogi Berra Drive, north of Dinallo Heights): rows along the west curb (three straight runs on a slightly convex curb), a double row on a painted centre line in the south that turns into a planted island in the north (west-side stalls only along it), the east row along the east curb, and a short south row facing north. Mouths: south-east to the road past the deck and north-west to the Carlisle Road drive. One lamp at the island's north end from a single LiDAR return and its shadow. Lot 23N (between Yogi Berra Drive and the wood, north of Lot 23): south part only, the lot runs on north past the footprint edge (y 826). West row on the walk curb, east row on the wood curb, a grass island with a row on its east side that becomes a double row on a centre line north of it. South edge: the mouth on the drive from Lot 23, taken on the OSM line. Lot 21 (north-east corner, by Machuga Heights): only its south end is inside the footprint (x up to 300, y up to 826). Rows re-read on the stadium ortho and lined up with ST_lot_21 north of the seam (lines 7.1 deg west of north): row A (DC) and row C on painted centre lines, row B (DB) on a planted median; end islands at the south, the west island ends row C. The south edge is the OSM line against the Machuga Heights drive; the dorm roof leans over the south-west corner in the ortho.",
+ "notes": "Frame: model metres, +X east, +Y north. Lots read from the NJ 2020 ortho (0.15 m/px) on gridded sheets; stall rows fitted to brightness profiles of the painted lines (pitch and skew by least squares, line ends from profiles along each line), checked with overlay --plan. Names from OSM parking areas (Lot 19, 21, 23, 23N, 24, 25). Lamp positions from isolated thin LiDAR returns (lidar2017 points) that sit on the pole shadows in the ortho; the 2017 cloud hits poles sparsely, so a height is the highest return on the pole, a lower bound, and is marked so. Lot 25 (east of Yogi Berra Drive, north of the District Energy Plant road): a one-way loop round a single pull-through centre row; mouths on Yogi Berra Drive (crosswalk bars across it) and on the drive north to the dorms. The south curb is one long curve, fitted as two fillets (r 21.8 and 3.2, within 0.25 m of the curb read at eight points); stalls on it fan out, so the straight part is a stalls row and the wedge lines are single lines. Lot 19 (south of the Student Recreation Center): four double rows of square stalls on painted centre lines at 22.6 to 24.1 deg, with painted hatched end caps; single rows along the west curb, the north walk (accessible stalls with 1.5 m blue access aisles) and the east curb. The south part runs past the footprint edge (y 497) and is clipped there. Divider lines found as the long bright lines on transects; stall pitch 2.59 to 2.61 m. Lot 24 (north of CarParc Diem): two aisles either side of a wooded strip (a hole in the paving), joined at the north (mouth on the drive to Carlisle Road) and at the south along the deck. The deck's roof leans about 18 m north in the ortho and hides the lot south of y 667; the paving is run to the deck wall read from the LiDAR, and the hidden stalls are not drawn. Rows follow the curving west curb as straight runs of 5 to 9 stalls. The east terrace has a double row on a painted centre line (lines at 88.5 deg to it). No lamp poles were found in the LiDAR or as shadows in this lot. Lot 23 (east of Yogi Berra Drive, north of Dinallo Heights): rows along the west curb (three straight runs on a slightly convex curb), a double row on a painted centre line in the south that turns into a planted island in the north (west-side stalls only along it), the east row along the east curb, and a short south row facing north. Mouths: south-east to the road past the deck and north-west to the Carlisle Road drive. One lamp at the island's north end from a single LiDAR return and its shadow. Lot 23N (between Yogi Berra Drive and the wood, north of Lot 23): south part only, the lot runs on north past the footprint edge (y 826). West row on the walk curb, east row on the wood curb, a grass island with a row on its east side that becomes a double row on a centre line north of it. South edge: the mouth on the drive from Lot 23, taken on the OSM line. Lot 21 (north-east corner, by Machuga Heights): only its south end is inside the footprint (x up to 300, y up to 826). Rows re-read on the stadium ortho and lined up with ST_lot_21 north of the seam (lines 7.1 deg west of north): row A (DC) and row C on painted centre lines, row B (DB) on a planted median; end islands at the south, the west island ends row C. The south edge is the OSM line against the Machuga Heights drive; the dorm roof leans over the south-west corner in the ortho. Edited by hand (fix-up pass): aisle arrows, the Lot 25 exit stop bar and word, and the hatched wedge at the east end of Lot 25's north row, read on the 2020 ortho fetched again at 0.075 m/px (sharper than the 0.15 m sheet). Arrows: every paint blob 2.0-2.7 m long and about 1 m wide on lot asphalt; it points to its wider end where that is clear, otherwise by keep-right in two-way aisles (side-by-side pairs). Each carries the length of its blob (2.0-2.7 m), or the median of its lot where the blob was too short to tell. The Lot 23 planted strip's north end was re-read (it ends at y 757.9). Left out: a blob on Lot 21's end island DB at (267.7, 807.0) that reads as an arrow (the island outline there is a guess; one of the two is wrong).",
  "surfaces": [
   {
    "name": "NE_lot_25_asphalt",
@@ -618,20 +618,8 @@
      143.3,
      750.0
     ],
-    [
-     146.8,
-     758.5,
-     1.0
-    ],
-    [
-     144.4,
-     762.0,
-     1.0
-    ],
-    [
-     141.5,
-     759.0
-    ],
+    [144.6, 757.6, 0.8],
+    [140.6, 757.9, 0.8],
     [
      139.2,
      750.0
@@ -643,7 +631,7 @@
    ],
    "evidence": "ortho2020",
    "layer": 3.5,
-   "unverified": "planted strip (shrubs, bare ground in the ortho): kind mulch guessed; north half outline under shade"
+   "unverified": "planted strip (shrubs, bare ground in the ortho): kind mulch guessed; north half outline under shade; north end re-read on the 0.075 m fetch (the strip ends at y 757.9, 4 m short of the first outline; aisle arrows lie past it)"
   },
   {
    "name": "NE_lot_23N_asphalt",
@@ -827,20 +815,12 @@
      805.0,
      1.5
     ],
-    [
-     296.8,
-     799.0,
-     2.0
-    ],
-    [
-     285.5,
-     798.5,
-     2.0
-    ]
+    [296.8, 799.9, 2.0],
+    [285.5, 799.6, 2.0]
    ],
    "evidence": "ortho2020",
    "layer": 3.5,
-   "unverified": "curbed end island read from its rim; outline and fill guessed"
+   "unverified": "curbed end island read from its rim; outline and fill guessed; south edge moved 0.9-1.1 m north onto the rim seen on the 0.075 m fetch (an aisle arrow lies just south of it)"
   },
   {
    "name": "NE_lot_21_island_W",
@@ -1533,20 +1513,8 @@
      143.3,
      750.0
     ],
-    [
-     146.8,
-     758.5,
-     1.0
-    ],
-    [
-     144.4,
-     762.0,
-     1.0
-    ],
-    [
-     141.5,
-     759.0
-    ],
+    [144.6, 757.6, 0.8],
+    [140.6, 757.9, 0.8],
     [
      139.2,
      750.0
@@ -1557,7 +1525,7 @@
     ]
    ],
    "closed": true,
-   "evidence": "ortho2020"
+   "evidence": "ortho2020 (north end re-read on the 0.075 m fetch)"
   },
   {
    "name": "NE_lot_23N_curb_W",
@@ -1723,19 +1691,11 @@
      805.0,
      1.5
     ],
-    [
-     296.8,
-     799.0,
-     2.0
-    ],
-    [
-     285.5,
-     798.5,
-     2.0
-    ]
+    [296.8, 799.9, 2.0],
+    [285.5, 799.6, 2.0]
    ],
    "closed": true,
-   "evidence": "ortho2020"
+   "evidence": "ortho2020 (south edge re-read on the 0.075 m fetch)"
   },
   {
    "name": "NE_lot_21_island_W_curb",
@@ -5725,231 +5685,18 @@
    "colour": "white",
    "evidence": "ortho2020"
   },
-  {
-   "name": "NE_lot_24_ED_cap_N_outline",
-   "type": "line",
-   "path": [
-    [
-     76.32,
-     747.51
-    ],
-    [
-     76.74,
-     748.95
-    ],
-    [
-     87.01,
-     745.98
-    ],
-    [
-     86.6,
-     744.54
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "closed": true,
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_1",
-   "type": "line",
-   "path": [
-    [
-     86.62,
-     745.0
-    ],
-    [
-     85.98,
-     746.16
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_2",
-   "type": "line",
-   "path": [
-    [
-     85.91,
-     744.84
-    ],
-    [
-     85.03,
-     746.44
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_3",
-   "type": "line",
-   "path": [
-    [
-     84.96,
-     745.12
-    ],
-    [
-     84.08,
-     746.72
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_4",
-   "type": "line",
-   "path": [
-    [
-     84.01,
-     745.4
-    ],
-    [
-     83.13,
-     746.99
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_5",
-   "type": "line",
-   "path": [
-    [
-     83.06,
-     745.67
-    ],
-    [
-     82.18,
-     747.27
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_6",
-   "type": "line",
-   "path": [
-    [
-     82.11,
-     745.95
-    ],
-    [
-     81.23,
-     747.54
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_7",
-   "type": "line",
-   "path": [
-    [
-     81.16,
-     746.22
-    ],
-    [
-     80.28,
-     747.82
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_8",
-   "type": "line",
-   "path": [
-    [
-     80.2,
-     746.5
-    ],
-    [
-     79.33,
-     748.09
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_9",
-   "type": "line",
-   "path": [
-    [
-     79.25,
-     746.77
-    ],
-    [
-     78.37,
-     748.37
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_10",
-   "type": "line",
-   "path": [
-    [
-     78.3,
-     747.05
-    ],
-    [
-     77.42,
-     748.64
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
-  {
-   "name": "NE_lot_24_ED_cap_N_11",
-   "type": "line",
-   "path": [
-    [
-     77.35,
-     747.32
-    ],
-    [
-     76.71,
-     748.48
-    ]
-   ],
-   "width": 0.1,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "painted hatched end cap; could be a low raised island"
-  },
+  {"name": "NE_lot_24_ED_cap_N_outline", "type": "line", "path": [[75.94, 746.21], [76.36, 747.65], [86.64, 744.68], [86.22, 743.24]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "closed": true, "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_1", "type": "line", "path": [[86.25, 743.7], [85.61, 744.86]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_2", "type": "line", "path": [[85.53, 743.54], [84.66, 745.14]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_3", "type": "line", "path": [[84.58, 743.82], [83.7, 745.42]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_4", "type": "line", "path": [[83.64, 744.1], [82.75, 745.69]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_5", "type": "line", "path": [[82.69, 744.37], [81.81, 745.97]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_6", "type": "line", "path": [[81.73, 744.65], [80.86, 746.24]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_7", "type": "line", "path": [[80.78, 744.92], [79.91, 746.52]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_8", "type": "line", "path": [[79.83, 745.2], [78.95, 746.79]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_9", "type": "line", "path": [[78.88, 745.47], [78.0, 747.07]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_10", "type": "line", "path": [[77.92, 745.75], [77.05, 747.34]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
+  {"name": "NE_lot_24_ED_cap_N_11", "type": "line", "path": [[76.97, 746.02], [76.33, 747.18]], "width": 0.1, "colour": "white", "evidence": "ortho2020", "unverified": "painted hatched end cap; could be a low raised island; moved 1.35 m south-south-west onto the cap in the 0.075 m fetch (both long edges found on profiles)"},
   {
    "name": "NE_lot_24_ED_zone_S_outline",
    "type": "line",
@@ -6772,7 +6519,42 @@
    "width": 0.1,
    "colour": "white",
    "evidence": "ortho2020"
-  }
+  },
+  {"name": "NE_lot_24_ED_bar_N", "type": "line", "path": [[76.95, 748.9], [78.65, 754.9]], "width": 0.4, "colour": "white", "evidence": "ortho2020 (0.075 m fetch: bright bar 6.2 m long, fitted on 30 profiles, rms 0.05 m)", "unverified": "width (0.66 m at half height in a soft image, taken as 0.4 m); what it marks (an end or edge bar of the row)"},
+  {"name": "NE_lot_25_mouth_stop_bar", "type": "line", "path": [[29.65, 511.4], [30.05, 507.4]], "width": 0.45, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (bar across the exit lane at the mouth on Yogi Berra Drive)", "unverified": "width (0.4-0.6 m in a soft image)"},
+  {"name": "NE_lot_25_mouth_stop_word", "type": "text", "at": [31.25, 509.15], "angle": 172.0, "text": "STOP", "height": 1.9, "width": 2.6, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (a block of paint about 1.9 x 2.7 m just behind the stop bar)", "unverified": "the letters cannot be read; taken as STOP from its place behind a stop bar"},
+  {"name": "NE_lot_25_cap_E_outline", "type": "line", "path": [[58.7, 520.2], [62.79, 518.46], [64.69, 522.26]], "closed": true, "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch) (hatched wedge at the east end of the north row, against the curb)", "unverified": "corners read to about 0.3 m; east side kept 0.35 m inside the curb line (fix-up pass)"},
+  {"name": "NE_lot_25_cap_E_1", "type": "line", "path": [[60.02, 519.63], [60.68, 520.83]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
+  {"name": "NE_lot_25_cap_E_2", "type": "line", "path": [[60.9, 519.25], [62.0, 521.25]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
+  {"name": "NE_lot_25_cap_E_3", "type": "line", "path": [[61.78, 518.87], [63.32, 521.67]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
+  {"name": "NE_lot_25_cap_E_4", "type": "line", "path": [[62.66, 518.49], [64.64, 522.09]], "width": 0.1, "colour": "white", "evidence": "ortho2020 (0.075 m fetch)", "unverified": "hatching: stripe count and spacing approximate"},
+  {"name": "NE_lot_25_arrow_1", "type": "arrow", "at": [31.78, 505.17], "angle": -19.5, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.7},
+  {"name": "NE_lot_25_arrow_2", "type": "arrow", "at": [33.87, 508.2], "angle": 161.2, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.4},
+  {"name": "NE_lot_24_arrow_1", "type": "arrow", "at": [73.66, 694.0], "angle": 72.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.7},
+  {"name": "NE_lot_24_arrow_2", "type": "arrow", "at": [88.99, 738.27], "angle": 74.2, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.7},
+  {"name": "NE_lot_24_arrow_3", "type": "arrow", "at": [83.17, 748.69], "angle": 162.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.7},
+  {"name": "NE_lot_23_arrow_1", "type": "arrow", "at": [128.54, 692.03], "angle": -109.1, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.0},
+  {"name": "NE_lot_23_arrow_2", "type": "arrow", "at": [131.5, 690.5], "angle": 70.2, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.4},
+  {"name": "NE_lot_23_arrow_3", "type": "arrow", "at": [112.44, 699.3], "angle": -110.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.2},
+  {"name": "NE_lot_23_arrow_4", "type": "arrow", "at": [115.36, 697.61], "angle": 77.5, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length: the blob gave no clear length (shaft faint), so the median of the lot arrows; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.3},
+  {"name": "NE_lot_23_arrow_5", "type": "arrow", "at": [130.58, 742.45], "angle": -109.3, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.5},
+  {"name": "NE_lot_23_arrow_6", "type": "arrow", "at": [133.51, 740.58], "angle": 71.7, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.3},
+  {"name": "NE_lot_23_arrow_7", "type": "arrow", "at": [143.39, 738.34], "angle": -97.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.2},
+  {"name": "NE_lot_23_arrow_8", "type": "arrow", "at": [146.62, 736.71], "angle": 74.0, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.5},
+  {"name": "NE_lot_23_arrow_9", "type": "arrow", "at": [144.13, 762.91], "angle": 163.2, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length: the blob gave no clear length (shaft faint), so the median of the lot arrows; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.3},
+  {"name": "NE_lot_23_arrow_10", "type": "arrow", "at": [142.98, 759.8], "angle": -10.8, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length: the blob gave no clear length (shaft faint), so the median of the lot arrows; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.3},
+  {"name": "NE_lot_23N_arrow_1", "type": "arrow", "at": [154.03, 784.81], "angle": -50.5, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.2},
+  {"name": "NE_lot_23N_arrow_2", "type": "arrow", "at": [156.59, 786.75], "angle": 137.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.6},
+  {"name": "NE_lot_23N_arrow_3", "type": "arrow", "at": [173.16, 793.21], "angle": 56.0, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.5},
+  {"name": "NE_lot_23N_arrow_4", "type": "arrow", "at": [170.99, 795.74], "angle": -129.2, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.4},
+  {"name": "NE_lot_23N_arrow_5", "type": "arrow", "at": [168.06, 815.73], "angle": 56.4, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.2},
+  {"name": "NE_lot_23N_arrow_6", "type": "arrow", "at": [165.72, 818.2], "angle": -122.6, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.4},
+  {"name": "NE_lot_21_arrow_1", "type": "arrow", "at": [286.47, 795.47], "angle": -22.5, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.3},
+  {"name": "NE_lot_21_arrow_2", "type": "arrow", "at": [288.02, 798.46], "angle": 155.9, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.3},
+  {"name": "NE_lot_21_arrow_3", "type": "arrow", "at": [265.98, 804.1], "angle": -32.0, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.4},
+  {"name": "NE_lot_21_arrow_4", "type": "arrow", "at": [297.29, 811.33], "angle": -82.3, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction toward the wider end of the blob (the head)", "length": 2.5},
+  {"name": "NE_lot_21_arrow_5", "type": "arrow", "at": [241.85, 823.76], "angle": -80.5, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.1},
+  {"name": "NE_lot_21_arrow_6", "type": "arrow", "at": [245.22, 824.2], "angle": 98.7, "shape": "straight", "colour": "white", "evidence": "ortho2020 (0.075 m fetch: arrow-shaped paint 2.0-2.7 m long; centre and axis from the bright blob)", "unverified": "length from the blob; through or turn not legible; direction from the keep-right rule (head and tail cannot be told apart)", "length": 2.4}
  ],
  "points": [
   {

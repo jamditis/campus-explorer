@@ -1,0 +1,49 @@
+{
+ "zone": "v_water",
+ "notes": "Frame: model metres, +X east, +Y grid north. Standing water in the Village, read from the NJ 2020 ortho (0.15 m/px) on gridded sheets at zoom 14 to 25 and checked against the LiDAR ground. Water levels come from the build (terrain.shore_level: the 10th percentile of the ground every metre along the traced shore) unless a surface gives `level`. The stormwater basin's pond: its west half holds water in the ortho (dark blue-green, with a few bright specks of floating growth); the shore was found by casting rays from inside the water to the first metre of grass colour, then drawn as straight runs with true-arc corners. The LiDAR returns over it are classed ground and flat (98.90 to 99.11 m, 10th to 90th percentile 98.93 to 99.11); the traced shore reads 99.04 m. The basin's grass floor (V_road_Basin_floor, v_roads) stays under it. The pool by the Abbott and Costello Center: a rectangle 18.3 x 11.1 m turned 53.6 deg, fitted to the corners of the teal water in the ortho (its four corners agree to about 0.3 m); a light concrete deck surrounds it inside a fence. The LiDAR has ground returns on the pool level with the deck (112.6 to 112.8 m), so the pool's water is drawn flush with the deck.",
+ "surfaces": [
+  {
+   "name": "V_water_Basin_pond",
+   "kind": "water",
+   "ring": [
+    [-363.0, 1183.0, 2.0],
+    [-359.5, 1176.0, 3.0],
+    [-350.0, 1173.6, 12.0],
+    [-339.0, 1175.5, 3.0],
+    [-332.5, 1182.0],
+    [-329.5, 1190.5, 2.0],
+    [-334.0, 1199.0, 1.5],
+    [-338.5, 1201.0, 1.5],
+    [-344.5, 1197.5],
+    [-357.5, 1190.0, 3.0]
+   ],
+   "evidence": "ortho2020 (water colour, rays from inside the water to grass), lidar (flat ground returns 98.9 to 99.1 m)",
+   "unverified": "a detention basin's waterline moves with the weather: this is the extent on the 2020 ortho; the east lobe (x -334 to -329, y 1186 to 1196) is water mixed with wet growth"
+  },
+  {
+   "name": "V_water_Village_pool_deck",
+   "kind": "concrete",
+   "ring": [
+    [-160.59, 1141.72],
+    [-144.69, 1163.29],
+    [-160.87, 1175.22],
+    [-176.77, 1153.65]
+   ],
+   "evidence": "ortho2020 (light paving round the pool)",
+   "unverified": "deck edges read from the ortho to about 0.5 m: the fence round it and shrubs blur them; drawn as a rectangle 4 to 4.5 m out from the pool, parallel to it; the fence is not modelled"
+  },
+  {
+   "name": "V_water_Village_pool",
+   "kind": "water",
+   "layer": 5.5,
+   "ring": [
+    [-161.54, 1148.01],
+    [-150.68, 1162.74],
+    [-159.62, 1169.33],
+    [-170.48, 1154.6]
+   ],
+   "evidence": "ortho2020 (rectangle fitted to the corners of the teal water), lidar (returns on the pool at deck level)",
+   "unverified": "the water is drawn flush with the deck: the step down from the coping (usually about 0.15 m) is not modelled; layer 5.5 puts the pool over its concrete deck"
+  }
+ ]
+}

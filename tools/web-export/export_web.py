@@ -341,6 +341,7 @@ PAINT = set()
 SW_CAT = {
     "asphalt": "asphalt", "concrete": "concrete", "brick": "brick", "turf": "turf", "lawn": "grass", "mulch": "mulch",
     "gravel": "gravel", "metal": "metal", "wood": "wood", "stone": "stone", "stucco": "plaster", "glass": "glass",
+    "water": "water",
 }
 
 

@@ -1,6 +1,6 @@
 {
  "zone": "ov_paving",
- "notes": "Zone ov_paving: roads, drives, lots, walks and the quarry ground of the Overlook Corporate Center block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The tower drive (OSM 770562283) runs west from the loop along the tower's south face (drop-off at x 120..160), past the tower's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the tower's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the tower's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
+ "notes": "Zone ov_paving: roads, drives, lots, walks and the quarry ground of the Overlook Corporate Center block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The tower drive (OSM 770562283) runs west from the loop along the tower's south face (drop-off at x 120..160), past the tower's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the tower's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the tower's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof. Edited by hand since the first generator run (2026-11-20): the loop road's west edge along the deck follows the deck's east wall, turned 0.9 deg with it. East lot, second look (2026-11-20): the paint is still not readable in a contrast-stretched and high-passed 2020 ortho, and USGS NAIP 2023-08-09 (0.3 m, registered to the 2020 ortho within 0.6 m, used as reference only) does not resolve dividers either. Parked cars in NAIP 2023 show where rows are in use: the south part's west row and its east double row (DS2) agree with the drawn rows within about 1 m; the middle double row (DS1) has its car band centred 1-1.5 m west of the drawn centre line, and in the north part only the easternmost double row (DR3) has cars, centred about 2-3 m west of the drawn centre line (its end cap N3 lies between the two); DR1, DR2 and R1_E had no cars. All east lot rows stay unverified and unchanged. Lamps, second look: the tall isolated LiDAR returns along the loop road east of the deck are facade returns of the deck (they lie on the corrected wall line within 0.1 m) or the edges of tree crowns; no pole or head is found over paving, and the 2020 ortho shows no further pole shadows outside the deck's shadow, so no lamp is added. Road paint, second look: the 2020 ortho shows no arrows, stop bars or crosswalks on the loop road, the junction or the tower drive besides the zebra crossing and the yellow walkway already drawn (much of the loop lies in the deck's shadow or under trees).",
  "surfaces": [
   {
    "name": "OV_road_access_N",
@@ -158,20 +158,20 @@
      3
     ],
     [
-     272.5,
-     1290.5
+     273.27,
+     1290.41
     ],
     [
-     271.4,
-     1281.0
+     272.0,
+     1280.93
     ],
     [
-     268.4,
-     1250.0
+     267.88,
+     1250.06
     ],
     [
-     262.3,
-     1200.0
+     261.22,
+     1200.13
     ],
     [
      262.0,
@@ -259,7 +259,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm 313431644",
-   "unverified": "the side next to the deck is drawn to the deck's wall line (OSM, checked on the LiDAR); the loop's inner and outer curbs are read as true circles about (242, 1180)"
+   "unverified": "the side next to the deck is drawn to the deck's wall line (OSM, checked on the LiDAR; moved on 2026-11-20 with the deck walls, turned 0.9 deg); the loop's inner and outer curbs are read as true circles about (242, 1180)"
   },
   {
    "name": "OV_road_tower_S",

@@ -18,7 +18,7 @@ import kit
 import numpy as np
 from mathutils import Vector
 from mathutils.geometry import delaunay_2d_cdt
-from terrain import Terrain, _edge_distance, _inside  # noqa: F401
+from terrain import Terrain, _edge_distance, _inside, flood  # noqa: F401
 
 GRID = 2.0  # spacing of the points that make the ground follow the terrain, metres
 # the web export files an object under the tile that holds its centre: one object per tile
@@ -39,6 +39,7 @@ COLOUR = {
     "turf": (0.03, 0.12, 0.04),
     "concrete": (0.44, 0.43, 0.40),
     "brick": (0.32, 0.11, 0.07),
+    "water": (0.02, 0.045, 0.045),  # dark blue-green; the viewer sets its own (look.js, water)
 }
 ROUGH = {
     "lawn": 1.0,
@@ -48,6 +49,7 @@ ROUGH = {
     "turf": 0.9,
     "concrete": 0.85,
     "brick": 0.88,
+    "water": 0.06,
 }
 PAVED = {"asphalt", "turf", "concrete", "brick"}
 
@@ -126,7 +128,14 @@ def heights(lay, terrain, xy, tris, owner):
         [o >= 0 and lay["surfaces"][o].get("grade", True) for o in owner]
     )  # a pad on a bank follows the bank
     paved[np.unique(tris[np.isin(kinds, list(PAVED)) & graded])] = True
-    return terrain.surface(xy[:, 0], xy[:, 1], paved)
+    z = terrain.surface(xy[:, 0], xy[:, 1], paved)
+    # water is one level sheet; the ground round it meets it at the shore vertices it shares
+    levels = {}
+    for i, s in enumerate(lay["surfaces"]):
+        if s["kind"] == "water" and (owner == i).any():
+            levels[i] = s["level"] if "level" in s else terrain.water_level(s["ring"])
+            print(f"SW water {s['name']}: level {levels[i]:.2f} m")
+    return flood(z, tris, owner, levels)
 
 
 def build(lay, terrain, image_dir=None):

@@ -1,5 +1,6 @@
 """Roof shapes and window bays of building parts (blender/scripted/massing.py)."""
 
+import json
 import math
 import sys
 import unittest
@@ -8,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "blender" / "scripted"))
 
+import geom  # noqa: E402
 import massing  # noqa: E402
 
 RECT = [(0, 0), (30, 0), (30, 10), (0, 10)]
@@ -77,6 +79,98 @@ class Roofs(unittest.TestCase):
     def test_pitched_roof_without_an_eave_is_an_error(self):
         with self.assertRaises(ValueError):
             massing.roof(RECT, "gable", 54.0)
+
+
+def tri_area(pts, tri):
+    a, b, c = (pts[i] for i in tri)
+    return ((b[0] - a[0]) * (c[1] - a[1]) - (c[0] - a[0]) * (b[1] - a[1])) / 2
+
+
+def ring_area(ring):
+    return normal_z(ring) / 2
+
+
+class Wells(unittest.TestCase):
+    def check_cover(self, outer, holes):
+        tris = massing.deck_triangles(outer, holes)
+        pts = list(outer) + [p for h in holes for p in h]
+        for t in tris:
+            self.assertGreater(tri_area(pts, t), 1e-6, "every triangle looks up, none is flat")
+        want = ring_area(outer) - sum(abs(ring_area(h)) for h in holes)
+        self.assertAlmostEqual(sum(tri_area(pts, t) for t in tris), want, places=6)
+        return tris, pts
+
+    def test_deck_without_holes_is_the_outline(self):
+        tris, _pts = self.check_cover(RECT, [])
+        self.assertEqual(len(tris), 2)
+
+    def test_deck_with_a_well_leaves_the_well_open(self):
+        hole = [(5, 3), (12, 3), (12, 7), (5, 7)]
+        tris, pts = self.check_cover(RECT, [hole])
+        self.assertEqual(len(tris), 4 + 4 + 2 - 2)  # n + h + 2 per hole - 2
+        for t in tris:  # no triangle covers the middle of the well
+            cx = sum(pts[i][0] for i in t) / 3
+            cy = sum(pts[i][1] for i in t) / 3
+            self.assertFalse(5 < cx < 12 and 3 < cy < 7)
+
+    def test_deck_takes_a_concave_outline_and_two_wells_of_either_sense(self):
+        ell = [(0, 0), (30, 0), (30, 10), (12, 10), (12, 24), (0, 24)]
+        a = [(2, 2), (8, 2), (8, 8), (2, 8)]
+        b = [(3, 20), (9, 20), (9, 14), (3, 14)]  # clockwise
+        self.check_cover(ell, [a, b])
+
+    def test_a_cut_to_one_well_does_not_pass_through_another(self):
+        # the corners nearest the east well are in the west, behind the west well
+        long = [(0, 0), (200, 5), (0, 10)]
+        east = [(20, 4.5), (24, 4.5), (24, 5.5), (20, 5.5)]
+        west = [(5, 2), (15, 2), (15, 8), (5, 8)]
+        self.check_cover(long, [east, west])
+
+    def test_a_mansard_cap_with_a_rim_keeps_a_thin_deck(self):
+        octagon = [(10, 0), (20, 0), (30, 10), (30, 20), (20, 30), (10, 30), (0, 20), (0, 10)]
+        cap = massing.mansard(octagon, 3.0)
+        well = massing.mansard(octagon, 3.5)
+        massing.check_wells(cap, [well])
+        self.check_cover(cap, [well])
+
+    def test_wells_must_lie_inside_the_part_and_apart(self):
+        inside = [(2, 2), (8, 2), (8, 8), (2, 8)]
+        massing.check_wells(RECT, [inside])
+        for bad in (
+            [[(25, 2), (35, 2), (35, 8), (25, 8)]],  # crosses the outline
+            [[(40, 2), (45, 2), (45, 8), (40, 8)]],  # outside
+            [[(0, 2), (8, 2), (8, 8), (0, 8)]],  # on the outline: no deck left between
+            [inside, [(6, 4), (12, 4), (12, 6), (6, 6)]],  # wells overlap
+            [inside, [(3, 3), (4, 3), (4, 4), (3, 4)]],  # one well inside another
+        ):
+            with self.assertRaises(ValueError):
+                massing.check_wells(RECT, bad)
+
+    def test_a_well_round_a_concave_corner_is_refused(self):
+        ell = [(0, 0), (40, 0), (40, 10), (10, 10), (10, 40), (0, 40)]
+        with self.assertRaises(ValueError):
+            massing.check_wells(ell, [[(8, 8), (12, 9.6), (9.6, 12)]])
+
+    def test_every_plan_well_lies_inside_its_deck(self):
+        for path in sorted((ROOT / "blender" / "scripted").glob("*/*.json")):
+            plan = json.loads(path.read_text())
+            for p in plan.get("buildings", []):
+                if not p.get("wells"):
+                    continue
+                ring = geom.expand(p["ring"], True)
+                ring = ring if geom.area(ring) > 0 else ring[::-1]
+                deck = massing.well_deck(
+                    ring, p.get("roof", "flat"), p["top"], p.get("eave"), p.get("ridge_angle")
+                )
+                with self.subTest(part=p["name"]):
+                    self.assertIsNotNone(deck, "wells need a flat roof or a mansard top")
+                    wells = [geom.expand(w["ring"], True) for w in p["wells"]]
+                    massing.check_wells(deck, wells)
+                    # the same limit as building._deck: under the roof deck, which lies a
+                    # parapet below the top on a flat roof
+                    flat = p.get("roof", "flat") == "flat"
+                    drop = massing.PARAPET.get(p.get("style", "shed"), 0.4) if flat else 0.0
+                    self.assertTrue(all(w["floor"] < p["top"] - drop - 0.05 for w in p["wells"]))
 
 
 class Facade(unittest.TestCase):

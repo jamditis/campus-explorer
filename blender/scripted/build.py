@@ -48,6 +48,7 @@ def build_area(plan_dir, data, assets, built):
     # the other areas of this build (an area left out with --areas is not a neighbour here)
     others = [layout.load(d) for d in built if d.name != plan_dir.name]
     if edge:
+        edge = [e for e in edge if layout.meets_neighbour(lay, e[0], e[1])]
         # along an edge shared with another scripted area there is no other model to meet: both
         # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
         edge = [e for e in edge if not any(_near(o["footprint"], e[0], e[1], 2.0) for o in others)]
@@ -66,10 +67,14 @@ def build_area(plan_dir, data, assets, built):
     for st in lay["stands"]:
         ring = geom.expand(st["ring"], True)
         voids.append(geom.offset(ring, -1.5 if geom.area(ring) > 0 else 1.5, True))
+        if st.get("style") == "bowl":  # the filled gap rises above a bowl's rows: sink it, hidden
+            inner = geom.offset(ring, 1.5 if geom.area(ring) > 0 else -1.5, True)
+            lay["lifts"].append(dict(ring=inner, dz=-1.2, feather=1.5))
     lidar = data / plan_dir.name / "lidar.npz"
     terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids)
     authored = data / "authored"
-    objects = ground.build(lay, terrain, str(authored) if authored.exists() else None)
+    lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
+    objects = ground.build(lay, terrain, lay["image_dir"])
     try:
         import place  # object builders; optional while the ground is being worked on
     except ImportError:

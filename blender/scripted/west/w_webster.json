@@ -1,0 +1,1021 @@
+{
+ "zone": "w_webster",
+ "notes": "Zone w_webster: Webster Road from the end of w_roads' mouth (its crosswalk) to the area's cut at University Hall's north-west corner, the Feliciano School of Business drop-off loop, the drive from Webster Road, the lot by University Hall and the small lot and plaza north of it. Added in the fix-up pass when the footprint was widened; edited by hand, written once by a scratch script.\nWebster Road: its centre line (tracked across 17 stations in the ortho) is one arc, radius 212.27 m, centre (-107.50, 121.17), rms 0.18 m; every Webster edge is an offset v of it (v metres outward, to the north-west). South-west part (to the drive): asphalt v -3.3 to +4.3, a 1.8 m walk on the south-east side (centre v -4.0, continuing w_roads' W_road_Carlisle_E_walk). North-east part: asphalt v -4.4 to +4.3, white edge lines at v -4.05 and on an arc of 165.1 m (fitted to 10 stations, rms 0.10 m) that closes from v +3.5 to +2.9, a 1.8 m walk that bends from the crossing up to the curb and away again (v -4.7 to -7.1). East of x -221 the ground north of the road is paved (the north model's forecourt), so the asphalt runs to the footprint.\nLoop: outer curb a circle of 13.45 m about (-246.85, 232.81), rms 0.10 m over 13 points read radially, leaving it on a straight run to Feliciano; the keyhole island (planted) and its mulch tail with a stall row on each side, 2.72 and 2.67 m pitch fitted to 5 and 6 lines. Lot by University Hall: north row of 6 stalls, 2.76 m pitch and 6.0 m deep, fitted to 6 lines (7th hidden by a car). The south half of the lot lies in Feliciano's shadow: no paint reads there.\nStructures from the LiDAR points (the gridded dsm has a hole there; the raw class-1 returns give outline and height): the generator enclosure north of the loop (4.7 m) and two small buildings in the planted bed (3.8 m with roof units, 3.0 m).\nNot drawn: the three low units (2.2-2.6 m) north of the small building, markings in the lot's shadowed half, Feliciano's west entrance apron (outside the footprint), lamps (no pole returns found).",
+ "surfaces": [
+  {
+   "name": "W_webster_road",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -298.399,
+     206.165
+    ],
+    [
+     -292.207,
+     220.072,
+     208.76
+    ],
+    [
+     -275.923,
+     245.798,
+     208.76
+    ],
+    [
+     -256.082,
+     268.892,
+     208.76
+    ],
+    [
+     -244.593,
+     278.879
+    ],
+    [
+     -243.871,
+     278.049
+    ],
+    [
+     -233.19,
+     287.334,
+     207.66
+    ],
+    [
+     -209.508,
+     302.837,
+     207.66
+    ],
+    [
+     -196.725,
+     308.912
+    ],
+    [
+     -200.889,
+     317.673
+    ],
+    [
+     -211.669,
+     312.55,
+     217.35
+    ],
+    [
+     -221.824,
+     306.278
+    ],
+    [
+     -221.298,
+     305.428
+    ],
+    [
+     -239.743,
+     294.035,
+     216.35
+    ],
+    [
+     -271.386,
+     264.391,
+     216.35
+    ],
+    [
+     -296.524,
+     229.062,
+     216.35
+    ],
+    [
+     -305.342,
+     209.256
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "edges in tree shade between x -300 and -255 read as the mean of 15 profiles (sd 0.4 m)"
+  },
+  {
+   "name": "W_webster_loop_lots",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -255.43,
+     221.65
+    ],
+    [
+     -254.0,
+     221.7
+    ],
+    [
+     -232.0,
+     221.0
+    ],
+    [
+     -209.0,
+     219.4
+    ],
+    [
+     -206.0,
+     219.4
+    ],
+    [
+     -206.0,
+     223.2
+    ],
+    [
+     -187.06,
+     223.2
+    ],
+    [
+     -186.96,
+     229.0
+    ],
+    [
+     -186.53,
+     234.0
+    ],
+    [
+     -186.1,
+     238.0
+    ],
+    [
+     -185.9,
+     241.0
+    ],
+    [
+     -185.9,
+     244.33
+    ],
+    [
+     -223.3,
+     246.08,
+     0.6
+    ],
+    [
+     -223.3,
+     262.0,
+     0.8
+    ],
+    [
+     -214.0,
+     262.0
+    ],
+    [
+     -214.0,
+     278.5
+    ],
+    [
+     -220.5,
+     277.2
+    ],
+    [
+     -226.6,
+     276.6,
+     2.5
+    ],
+    [
+     -231.4,
+     279.6
+    ],
+    [
+     -235.629,
+     285.485
+    ],
+    [
+     -248.201,
+     276.344
+    ],
+    [
+     -247.86,
+     273.812
+    ],
+    [
+     -244.6,
+     275.6,
+     1.0
+    ],
+    [
+     -235.9,
+     267.5,
+     4.0
+    ],
+    [
+     -235.9,
+     246.252,
+     1.2
+    ],
+    [
+     -251.982,
+     246.252,
+     13.43
+    ],
+    [
+     -259.636,
+     239.417,
+     13.43
+    ],
+    [
+     -260.791,
+     229.222,
+     13.43
+    ],
+    [
+     -257.827,
+     225.035
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "south edge is the footprint (1 m off Feliciano's wall, under its shadow); the drive's west curb (a sharp corner at the walk's end, a straight run and a 4 m arc into x -235.9) read from a shaded curve"
+  },
+  {
+   "name": "W_webster_loop_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -253.15,
+     227.5,
+     3.5
+    ],
+    [
+     -245.0,
+     227.5,
+     3.5
+    ],
+    [
+     -245.0,
+     239.6,
+     3.5
+    ],
+    [
+     -253.15,
+     239.6,
+     3.5
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "an oval in the ortho, drawn as a rounded rectangle (r 3.5)"
+  },
+  {
+   "name": "W_webster_loop_tail",
+   "kind": "mulch",
+   "layer": 3.4,
+   "ring": [
+    [
+     -246.6,
+     232.1
+    ],
+    [
+     -230.9,
+     232.1,
+     0.6
+    ],
+    [
+     -230.9,
+     233.4,
+     0.6
+    ],
+    [
+     -246.6,
+     233.4
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "shrub row; kind guessed"
+  },
+  {
+   "name": "W_webster_plaza",
+   "kind": "concrete",
+   "ring": [
+    [
+     -214.2,
+     261.8
+    ],
+    [
+     -197.862,
+     261.8
+    ],
+    [
+     -197.74,
+     266.0
+    ],
+    [
+     -197.84,
+     271.0
+    ],
+    [
+     -198.7,
+     273.0
+    ],
+    [
+     -198.7,
+     277.5
+    ],
+    [
+     -199.15,
+     279.0
+    ],
+    [
+     -199.0,
+     281.3
+    ],
+    [
+     -214.2,
+     281.3
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "light paving by University Hall; it runs on 0.5 m under the wall (the footprint)"
+  }
+ ],
+ "strips": [
+  {
+   "name": "W_webster_SE_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -297.313,
+     206.875
+    ],
+    [
+     -288.324,
+     226.784,
+     208.06
+    ],
+    [
+     -262.476,
+     262.004,
+     208.06
+    ],
+    [
+     -246.179,
+     276.549
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_SE_walk_NE",
+   "kind": "concrete",
+   "centre": [
+    [
+     -233.4,
+     281.4
+    ],
+    [
+     -225.25,
+     291.861,
+     8.0
+    ],
+    [
+     -215.643,
+     298.339,
+     12.0
+    ],
+    [
+     -207.111,
+     300.875,
+     12.0
+    ],
+    [
+     -201.098,
+     304.079
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020",
+   "unverified": "centre read at 6 stations (v -7.9, -4.7, -4.3, -6.2, -7.1, -6.2); bends fitted with 8 and 12 m arcs"
+  },
+  {
+   "name": "W_webster_bed_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -232.6,
+     281.8
+    ],
+    [
+     -228.6,
+     277.6,
+     2.5
+    ],
+    [
+     -220.5,
+     278.0
+    ],
+    [
+     -213.6,
+     280.0
+    ]
+   ],
+   "width": 1.6,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_bed_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -222.3,
+     246.6
+    ],
+    [
+     -222.3,
+     262.4
+    ]
+   ],
+   "width": 1.4,
+   "evidence": "ortho2020",
+   "unverified": "joins the two marked crossings; width read at 0.15 m"
+  },
+  {
+   "name": "W_webster_lot_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -222.6,
+     246.98
+    ],
+    [
+     -186.6,
+     245.28
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "W_webster_road_SE_curb_W",
+   "path": [
+    [
+     -298.399,
+     206.165
+    ],
+    [
+     -292.393,
+     219.653,
+     208.76
+    ],
+    [
+     -276.708,
+     244.674,
+     208.76
+    ],
+    [
+     -257.661,
+     267.24,
+     208.76
+    ],
+    [
+     -246.645,
+     277.071
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_road_SE_curb_E",
+   "path": [
+    [
+     -233.463,
+     286.523
+    ],
+    [
+     -216.259,
+     299.629,
+     207.66
+    ],
+    [
+     -196.725,
+     308.912
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_drive_W_curb",
+   "path": [
+    [
+     -247.86,
+     273.812
+    ],
+    [
+     -244.6,
+     275.6,
+     1.0
+    ],
+    [
+     -235.9,
+     267.5,
+     4.0
+    ],
+    [
+     -235.9,
+     246.252,
+     1.2
+    ],
+    [
+     -246.852,
+     246.252
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_loop_curb",
+   "path": [
+    [
+     -246.852,
+     246.252
+    ],
+    [
+     -251.982,
+     246.252,
+     13.43
+    ],
+    [
+     -259.636,
+     239.417,
+     13.43
+    ],
+    [
+     -260.791,
+     229.222,
+     13.43
+    ],
+    [
+     -257.827,
+     225.035
+    ],
+    [
+     -255.43,
+     221.65
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_island_curb",
+   "path": [
+    [
+     -253.15,
+     227.5,
+     3.5
+    ],
+    [
+     -245.0,
+     227.5,
+     3.5
+    ],
+    [
+     -245.0,
+     239.6,
+     3.5
+    ],
+    [
+     -253.15,
+     239.6,
+     3.5
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_tail_curb",
+   "path": [
+    [
+     -245.2,
+     232.1
+    ],
+    [
+     -230.9,
+     232.1,
+     0.6
+    ],
+    [
+     -230.9,
+     233.4,
+     0.6
+    ],
+    [
+     -245.2,
+     233.4
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_lot_N_curb",
+   "path": [
+    [
+     -223.3,
+     246.08
+    ],
+    [
+     -186.4,
+     244.36
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_bed_W_curb",
+   "path": [
+    [
+     -223.3,
+     246.1
+    ],
+    [
+     -223.3,
+     262.0,
+     0.8
+    ],
+    [
+     -214.0,
+     262.0
+    ]
+   ],
+   "evidence": "ortho2020"
+  }
+ ],
+ "lifts": [
+  {
+   "name": "W_webster_UH_wall_foot",
+   "ring": [
+    [
+     -189.5,
+     223.2
+    ],
+    [
+     -187.06,
+     223.2
+    ],
+    [
+     -186.96,
+     229.0
+    ],
+    [
+     -186.53,
+     234.0
+    ],
+    [
+     -186.1,
+     238.0
+    ],
+    [
+     -185.9,
+     241.0
+    ],
+    [
+     -185.9,
+     244.4
+    ],
+    [
+     -188.3,
+     244.4
+    ],
+    [
+     -188.3,
+     241.0
+    ],
+    [
+     -189.5,
+     229.0
+    ]
+   ],
+   "dz": 0.12,
+   "feather": 6.0,
+   "evidence": "published tiles (north model): University Hall's west wall base 134.51 m; this build's graded lot 0.25 m from the wall 134.35-134.45 m before the lift",
+   "unverified": "the lot is graded from the LiDAR and stops 6 to 15 cm short of the wall base of the north model's University Hall; it is raised 0.12 m along the wall, eased out over 6 m, so the paving meets the wall. Remove it if the wall is lowered."
+  }
+ ],
+ "markings": [
+  {
+   "name": "W_webster_CL",
+   "type": "line",
+   "path": [
+    [
+     -298.997,
+     212.511
+    ],
+    [
+     -291.19,
+     228.877,
+     211.95
+    ],
+    [
+     -270.249,
+     258.486,
+     211.95
+    ],
+    [
+     -244.587,
+     284.113,
+     211.95
+    ],
+    [
+     -214.949,
+     305.012,
+     211.95
+    ],
+    [
+     -198.571,
+     312.796
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "a light line 0.4-0.6 m wide read as a double line; colour taken from Carlisle Road (the ortho's tones cannot tell yellow from white here)"
+  },
+  {
+   "name": "W_webster_CL",
+   "type": "line",
+   "path": [
+    [
+     -299.177,
+     212.597
+    ],
+    [
+     -291.363,
+     228.979,
+     212.15
+    ],
+    [
+     -270.402,
+     258.616,
+     212.15
+    ],
+    [
+     -244.716,
+     284.266,
+     212.15
+    ],
+    [
+     -215.05,
+     305.186,
+     212.15
+    ],
+    [
+     -198.657,
+     312.977
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "a light line 0.4-0.6 m wide read as a double line; colour taken from Carlisle Road (the ortho's tones cannot tell yellow from white here)"
+  },
+  {
+   "name": "W_webster_SE_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -214.114,
+     300.02
+    ],
+    [
+     -205.711,
+     305.029,
+     208.01
+    ],
+    [
+     -196.876,
+     309.228
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "starts where the walk leaves the curb: west of there the walk meets the road and no line reads"
+  },
+  {
+   "name": "W_webster_NW_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -238.518,
+     292.569
+    ],
+    [
+     -229.69,
+     299.612,
+     164.94
+    ],
+    [
+     -210.282,
+     311.162,
+     164.94
+    ],
+    [
+     -199.883,
+     315.562
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_drive_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     -243.7,
+     276.3
+    ],
+    [
+     -233.4,
+     281.0
+    ]
+   ],
+   "width": 1.8,
+   "bar": 0.5,
+   "spacing": 1.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bar count and spacing approximate; its west end (read 0.6 m past the walk's edge) starts at the walk"
+  },
+  {
+   "name": "W_webster_north_lot_walkway",
+   "type": "crosswalk",
+   "line": [
+    [
+     -222.0,
+     262.2
+    ],
+    [
+     -222.0,
+     276.6
+    ]
+   ],
+   "width": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bar spacing approximate"
+  },
+  {
+   "name": "W_webster_lot_crosswalk",
+   "type": "crosswalk",
+   "line": [
+    [
+     -222.2,
+     245.9
+    ],
+    [
+     -217.6,
+     234.4
+    ]
+   ],
+   "width": 1.7,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "its south end is in Feliciano's shadow: drawn to where it can be read"
+  },
+  {
+   "name": "W_webster_lot_N_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -208.35,
+     245.4
+    ],
+    [
+     -191.79,
+     244.62
+    ]
+   ],
+   "count": 6,
+   "depth": 6.0,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the last divider (x -191.8) is hidden by a parked car"
+  },
+  {
+   "name": "W_webster_tail_N_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -243.95,
+     233.4
+    ],
+    [
+     -233.07,
+     233.4
+    ]
+   ],
+   "count": 4,
+   "depth": 5.2,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_webster_tail_S_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -244.25,
+     232.1
+    ],
+    [
+     -230.9,
+     232.1
+    ]
+   ],
+   "count": 5,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "depth: the south ends are in Feliciano's shadow"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "W_webster_generator_enclosure",
+   "ring": [
+    [
+     -254.5,
+     255.4
+    ],
+    [
+     -243.5,
+     255.4
+    ],
+    [
+     -243.5,
+     259.9
+    ],
+    [
+     -254.5,
+     259.9
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.7,
+   "style": "plant",
+   "wall": "#b8b6ae",
+   "evidence": "lidar2017 points (class 1 returns 138.0-139.9 m, median 138.74; ground round it 134.0 m); ortho2020 (white equipment)",
+   "unverified": "outline from the returns' extent; what it is (generators, read from the ortho) and colour guessed"
+  },
+  {
+   "name": "W_webster_bed_building_W",
+   "ring": [
+    [
+     -218.3,
+     251.6
+    ],
+    [
+     -210.0,
+     251.6
+    ],
+    [
+     -210.0,
+     255.3
+    ],
+    [
+     -218.3,
+     255.3
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.8,
+   "style": "plant",
+   "wall": "#b8b6ae",
+   "evidence": "lidar2017 points (roof 138.8 m, units to 140.0; ground 135.0 m); ortho2020 (white roof)",
+   "unverified": "roof units not modelled; colour guessed"
+  },
+  {
+   "name": "W_webster_bed_building_E",
+   "ring": [
+    [
+     -207.0,
+     250.1
+    ],
+    [
+     -204.3,
+     250.1
+    ],
+    [
+     -204.3,
+     252.5
+    ],
+    [
+     -207.0,
+     252.5
+    ]
+   ],
+   "roof": "flat",
+   "top": 138.0,
+   "style": "plant",
+   "wall": "#6f8f86",
+   "evidence": "lidar2017 points (138.0 m; ground 135.0 m); ortho2020 (green-grey box)",
+   "unverified": "colour from the ortho, approximate"
+  }
+ ]
+}

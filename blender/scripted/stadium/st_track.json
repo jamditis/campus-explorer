@@ -1,6 +1,6 @@
 {
  "zone": "st_track",
- "notes": "Zone st_track: Dioguardi Field (osm 233324742, track osm 233324748) and the north part of the MSU Softball Stadium. Track fit (tracks.py-style generator in /tmp/claude-0/st/st_track/py): the eight lane lines were found as brightness peaks on profiles every 1 m round the oval (3049 peaks) and fitted as offsets of one stadium shape: centre (17.649, 933.706), long axis 80.179 deg, straights 99.741 m (half 49.871), inner edge of lane 1 radius 31.623 m, lane width 1.0637 m (42 in lanes, 8 lanes), rms 0.05 m, no bias by side or by line. Lap at 0.30 m from the inner edge = 400.06 m. Red surface to 8.88 m outside the inner edge; white kerb band 0.3 m inside it; turf to 0.33 m inside. Chute: the eight straight lanes run on to u -80.9 m south of the east straight. Finish line at u 49.93 (north end of the east straight), 100 m start at u -49.97, 110 m hurdles start at u -59.97 (line peaks). Track frame: u along the axis from the centre, v to its left (west). Soccer: frame fitted on line peaks (touch lines v -30.31/+30.38, goal lines u -49.95/+50.27, halfway 0.15, penalty lines -33.57/+33.88; all parallel to the track axis within 0.4 deg): centre u 0.1595, v 0.035 in the track frame, field 100.34 x 60.81 m to the outer line edges, lines 0.12 m; penalty areas 40.32 x 16.5, goal areas 18.32 x 5.5, marks 11 m, arcs and centre circle R 9.15, corner arcs 1 m, measured to outer edges (the measured goal-to-penalty line spacing, 16.38 m between centres, confirms this). Not drawn: the fainter men's lacrosse lines (sidelines v +-27.5, restraining lines u +-18.3, end lines with the soccer goal lines), the women's lacrosse/field hockey arcs and fans at both ends (yellowish, faint), the portable goals, the red hawk logo south of centre, lane numbers at u 39.4, staggered starts and relay marks. Red D (north): arcs R 15.04 m centred u 68.91 and R 27.88 m centred u 39.98 on the axis, tab 4.4 m wide to u 72.05. South strips: two long/triple jump runways (1.55 m, -11.7 deg) with a sand pit at the east end of the north runway and at the west end of the south one. Fence, apron, benches and the small north bleacher are read from shadows and white shapes in the 2020 ortho (no fence returns in the sparse 2017 LiDAR). Light poles: four isolated 20-21 m LiDAR columns (west at u -34.4, east at u -34.6, 0.8, 36.3); no columns where the other west poles would be. Softball (north of y 826): frame from ne_fields (home plate apex (-39.505, 817.623)); the building and the home seats are square to the centre-field axis (20.95 deg). Building walls from LiDAR returns (the ortho roof leans 2-3 m north-west). NE_field_stand_3B already reaches the backstop corner (-44.812, 826.343) as a rectangle, and NE_field_dugout_1B is drawn whole, so neither is continued here.",
+ "notes": "Zone st_track: Dioguardi Field (osm 233324742, track osm 233324748) and the north part of the MSU Softball Stadium. Track fit (tracks.py-style generator in /tmp/claude-0/st/st_track/py): the eight lane lines were found as brightness peaks on profiles every 1 m round the oval (3049 peaks) and fitted as offsets of one stadium shape: centre (17.649, 933.706), long axis 80.179 deg, straights 99.741 m (half 49.871), inner edge of lane 1 radius 31.623 m, lane width 1.0637 m (42 in lanes, 8 lanes), rms 0.05 m, no bias by side or by line. Lap at 0.30 m from the inner edge = 400.06 m. Red surface to 8.88 m outside the inner edge; white kerb band 0.3 m inside it; turf to 0.33 m inside. Chute: the eight straight lanes run on to u -80.9 m south of the east straight. Finish line at u 49.93 (north end of the east straight), 100 m start at u -49.97, 110 m hurdles start at u -59.97 (line peaks). Track frame: u along the axis from the centre, v to its left (west). Soccer: frame fitted on line peaks (touch lines v -30.31/+30.38, goal lines u -49.95/+50.27, halfway 0.15, penalty lines -33.57/+33.88; all parallel to the track axis within 0.4 deg): centre u 0.1595, v 0.035 in the track frame, field 100.34 x 60.81 m to the outer line edges, lines 0.12 m; penalty areas 40.32 x 16.5, goal areas 18.32 x 5.5, marks 11 m, arcs and centre circle R 9.15, corner arcs 1 m, measured to outer edges (the measured goal-to-penalty line spacing, 16.38 m between centres, confirms this). Fix-up pass (edited by hand with /tmp/claude-0/p3/fx_st/py/gen_track.py): the lacrosse lines are now drawn, fitted on a high-pass of the ortho: men's lacrosse from the NCAA rule book in the soccer frame (sidelines 60 yd apart, measured v +27.55/-27.35; box and wing lines 10 yd in, measured +18.4/-18.2, wing lines u -9.3 to +9.5 = 20 yd; restraining lines 20 yd from the centre, measured -17.9/+18.45; creases R 9 ft 15 yd from the end lines, measured u -36.1/+36.45), women's lacrosse as measured (goal circles R 2.6 m at u -40.75/+41.10, 12 m fans R 14.6 about them with their base lines, and two 45 deg lines from each circle whose purpose is not known). Their tone in the ortho is a pale neutral, fainter than the soccer lines: white 4 in assumed. No field hockey lines are seen (no 25 yd lines, no shooting circles on the goal lines). Lane numbers 1-8: a row of pale marks at u 39.0-40.2, 10.3 m before the finish line, drawn 0.9 m tall reading toward the finish (orientation UNVERIFIED). A second row of marks at u -76.9 in the chute and part rows at u -68.8 (lanes 1-3) and -69.8 (lanes 5-8) are not drawn: what they are cannot be read at 0.15 m. Not drawn: the portable goals, the red hawk logo south of centre (the university's artwork), staggered starts and relay marks. Red D (north): arcs R 15.04 m centred u 68.91 and R 27.88 m centred u 39.98 on the axis, tab 4.4 m wide to u 72.05. South strips: two long/triple jump runways (1.55 m, -11.7 deg) with a sand pit at the east end of the north runway and at the west end of the south one. Fence, apron, benches and the small north bleacher are read from shadows and white shapes in the 2020 ortho (no fence returns in the sparse 2017 LiDAR). Light poles: four isolated 20-21 m LiDAR columns (west at u -34.4, east at u -34.6, 0.8, 36.3); no columns where the other west poles would be. Softball (north of y 826): frame from ne_fields (home plate apex (-39.505, 817.623)); the building and the home seats are square to the centre-field axis (20.95 deg). Building walls from LiDAR returns (the ortho roof leans 2-3 m north-west). NE_field_stand_3B already reaches the backstop corner (-44.812, 826.343) as a rectangle, and NE_field_dugout_1B is drawn whole, so neither is continued here.",
  "surfaces": [
   {
    "name": "ST_track_oval",
@@ -1565,6 +1565,594 @@
    "colour": "#cfd0c3",
    "evidence": "ortho2020 (pale pit surface)",
    "unverified": "pale tone read as sand or a cover"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_1",
+   "text": "1",
+   "at": [
+    56.087,
+    967.241
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_2",
+   "text": "2",
+   "at": [
+    57.135,
+    967.06
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_3",
+   "text": "3",
+   "at": [
+    58.183,
+    966.878
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_4",
+   "text": "4",
+   "at": [
+    59.232,
+    966.697
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_5",
+   "text": "5",
+   "at": [
+    60.28,
+    966.515
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_6",
+   "text": "6",
+   "at": [
+    61.328,
+    966.334
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_7",
+   "text": "7",
+   "at": [
+    62.376,
+    966.152
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "text",
+   "name": "ST_track_lane_number_8",
+   "text": "8",
+   "at": [
+    63.424,
+    965.971
+   ],
+   "angle": 80.179,
+   "height": 0.9,
+   "width": 0.5,
+   "colour": "white",
+   "evidence": "ortho2020 (a row of pale marks, one per lane, at u 39.0-40.2, 10.3 m before the finish line); IAAF facilities manual 2008: lane numbers at least 0.5 m high immediately before the finish line",
+   "unverified": "which way round (read by runners facing the finish, the usual practice) and the numerals' size cannot be read at 0.15 m; 0.9 x 0.5 m from the blurred marks"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_sideline_W",
+   "path": [
+    [
+     -17.935,
+     889.173
+    ],
+    [
+     -0.841,
+     987.924
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +27.55 / -27.35 over the whole length)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_box_W_S",
+   "path": [
+    [
+     -8.925,
+     887.613
+    ],
+    [
+     -3.498,
+     918.969
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +18.4 / -18.2 from the end lines to the restraining lines)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_box_W_N",
+   "path": [
+    [
+     2.741,
+     955.009
+    ],
+    [
+     8.169,
+     986.365
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +18.4 / -18.2 from the end lines to the restraining lines)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_wing_W",
+   "path": [
+    [
+     -1.938,
+     927.979
+    ],
+    [
+     1.181,
+     945.999
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: u -9.3 to +9.5)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_sideline_E",
+   "path": [
+    [
+     36.125,
+     879.815
+    ],
+    [
+     53.219,
+     978.566
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +27.55 / -27.35 over the whole length)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_box_E_S",
+   "path": [
+    [
+     27.115,
+     881.375
+    ],
+    [
+     32.542,
+     912.73
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +18.4 / -18.2 from the end lines to the restraining lines)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_box_E_N",
+   "path": [
+    [
+     38.781,
+     948.77
+    ],
+    [
+     44.209,
+     980.126
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: v +18.4 / -18.2 from the end lines to the restraining lines)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_wing_E",
+   "path": [
+    [
+     34.102,
+     921.74
+    ],
+    [
+     37.221,
+     939.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: u -9.3 to +9.5)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_restraining_S",
+   "path": [
+    [
+     41.552,
+     911.17
+    ],
+    [
+     -12.508,
+     920.528
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: u -17.9 and +18.45 across the width)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_crease_S",
+   "path": [
+    [
+     9.199,
+     901.18,
+     2.74
+    ],
+    [
+     8.263,
+     895.774,
+     2.74
+    ],
+    [
+     13.669,
+     894.838,
+     2.74
+    ],
+    [
+     14.605,
+     900.244,
+     2.74
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: circles fitted at u -36.1 and +36.45, radius 2.64-2.74)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_restraining_N",
+   "path": [
+    [
+     47.791,
+     947.21
+    ],
+    [
+     -6.269,
+     956.568
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: u -17.9 and +18.45 across the width)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_lax_crease_N",
+   "path": [
+    [
+     21.614,
+     972.901,
+     2.74
+    ],
+    [
+     20.679,
+     967.495,
+     2.74
+    ],
+    [
+     26.085,
+     966.559,
+     2.74
+    ],
+    [
+     27.02,
+     971.965,
+     2.74
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "NCAA men's lacrosse rule 1 (field 110 x 60 yd: restraining lines 20 yd from the centre line, box and wing lines 10 yd in from the sidelines, wing lines 20 yd long, goal 15 yd from the end line, crease radius 9 ft); ortho2020 (faint lines on high-pass profiles: circles fitted at u -36.1 and +36.45, radius 2.64-2.74)",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_circle_S",
+   "path": [
+    [
+     8.553,
+     896.553,
+     2.587
+    ],
+    [
+     7.67,
+     891.449,
+     2.587
+    ],
+    [
+     12.774,
+     890.565,
+     2.587
+    ],
+    [
+     13.658,
+     895.669,
+     2.587
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_fan_S",
+   "path": [
+    [
+     -3.722,
+     896.049
+    ],
+    [
+     -1.232,
+     910.436,
+     14.597
+    ],
+    [
+     27.54,
+     905.455,
+     14.597
+    ],
+    [
+     25.05,
+     891.069
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_fan_base_S",
+   "path": [
+    [
+     -3.722,
+     896.049
+    ],
+    [
+     25.05,
+     891.069
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_diag_SW",
+   "path": [
+    [
+     8.112,
+     894.001
+    ],
+    [
+     2.816,
+     901.514
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed; what these lines are for is not known; they end about 0.8 m short of the soccer penalty line"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_diag_SE",
+   "path": [
+    [
+     13.216,
+     893.117
+    ],
+    [
+     20.729,
+     898.413
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed; what these lines are for is not known; they end about 0.8 m short of the soccer penalty line"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_circle_N",
+   "path": [
+    [
+     22.515,
+     977.203,
+     2.587
+    ],
+    [
+     21.631,
+     972.099,
+     2.587
+    ],
+    [
+     26.735,
+     971.216,
+     2.587
+    ],
+    [
+     27.619,
+     976.32,
+     2.587
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed",
+   "closed": true
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_fan_N",
+   "path": [
+    [
+     10.239,
+     976.7
+    ],
+    [
+     7.749,
+     962.314,
+     14.597
+    ],
+    [
+     36.521,
+     957.333,
+     14.597
+    ],
+    [
+     39.011,
+     971.719
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_fan_base_N",
+   "path": [
+    [
+     10.239,
+     976.7
+    ],
+    [
+     39.011,
+     971.719
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_diag_NW",
+   "path": [
+    [
+     22.073,
+     974.651
+    ],
+    [
+     14.559,
+     969.355
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed; what these lines are for is not known; they end about 0.8 m short of the soccer penalty line"
+  },
+  {
+   "type": "line",
+   "name": "ST_track_wlax_diag_NE",
+   "path": [
+    [
+     27.177,
+     973.768
+    ],
+    [
+     32.473,
+     966.254
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (fitted on high-pass ortho: goal circles at u -40.75 / +41.10 radius 2.55-2.60 (8.5 ft), fans centred on them radius 14.5-14.7 (12 m beyond the circle), base lines at u -40.75 / +41.2, 45 deg lines from the circle edge, rms 0.14-0.35 m); read as women's lacrosse",
+   "unverified": "colour: the ortho shows them fainter than the soccer lines, a pale neutral tone; white and 4 in assumed; what these lines are for is not known; they end about 0.8 m short of the soccer penalty line"
   }
  ],
  "points": [

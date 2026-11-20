@@ -1,10 +1,13 @@
 {
  "zone": "ne_power",
- "notes": "Two lattice transmission towers of the line that crosses the campus south of the Student Recreation Center lot. Centres, heights (about 54 m), body widths and arm spans are from the LiDAR points (2017): body about 7.5 m wide 17 m above the ground and 2.3 m wide at 35 m, arms about 5.5 m long between 36 and 50 m. The two towers stand 21 m apart across the line, so the line direction is taken at right angles to the line between them (23.6 degrees). The conductors are not modelled.",
+ "notes": "Two lattice transmission towers of the line that crosses the campus south of the Student Recreation Center lot. Centres, heights (about 54 m), body widths and arm spans are from the LiDAR points (2017): body about 7.5 m wide 17 m above the ground and 2.3 m wide at 35 m, arms about 5.5 m long between 36 and 50 m. The two towers stand 21 m apart across the line, so the line direction is taken at right angles to the line between them (23.6 degrees). The conductors are not modelled. A third tower stands 168 m north-east of the west tower, at the edge of the wood east of Lot 19 (edited by hand in the fix-up pass): 39 m high, wider and of another type. The 2017 cloud has no returns on the wires between the towers (no returns more than 8 m above the ground from 8 to 160 m along the line, in any class); the 2014 cloud does not cover this ground.",
  "points": [
   {"name": "NE_power_tower_west", "kind": "pylon", "at": [101.6, 506.7], "angle": 23.6, "height": 53.9,
    "evidence": "lidar2017 points", "unverified": "lattice pattern, member sizes, arm heights"},
   {"name": "NE_power_tower_east", "kind": "pylon", "at": [110.4, 487.2], "angle": 23.6, "height": 54.0,
-   "evidence": "lidar2017 points", "unverified": "lattice pattern, member sizes, arm heights"}
+   "evidence": "lidar2017 points", "unverified": "lattice pattern, member sizes, arm heights"},
+  {"name": "NE_power_tower_north_east", "kind": "pylon", "at": [254.4, 575.8], "angle": 15.0, "height": 39.3,
+   "evidence": "lidar2017 points (centre of the returns between 150 and 170 m; top 174.5 m over ground 135.2 m; long axis of the body at 105 deg); ortho2020 (lattice square at the edge of the wood east of Lot 19)",
+   "unverified": "a wider, lower tower than the other two (body about 6.5 x 11.5 m at 155 m, frames at 155.1, 161.5 and 167 m): drawn with the same lattice kit scaled to its height; line direction taken square to the body's long axis"}
  ]
 }

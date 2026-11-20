@@ -26,6 +26,7 @@ from PIL import Image, ImageDraw
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "blender" / "scripted"))
 import geom  # noqa: E402
+import layout  # noqa: E402
 
 KIND = {
     "asphalt": (60, 160, 255),
@@ -36,6 +37,7 @@ KIND = {
     "mulch": (190, 120, 60),
     "ballast": (200, 200, 120),
     "gravel": (200, 200, 120),
+    "water": (0, 255, 255),
 }
 
 
@@ -179,6 +181,11 @@ def main():
             elif m["type"] == "stalls":
                 for seg in geom.stalls(m):
                     poly(seg, col, False, 1)
+            else:  # arrow, crosswalk, text: as the paint draws them
+                for prim in layout.primitives(m):
+                    ring = prim.get("ring") or prim.get("box")
+                    if ring:
+                        poly(ring, col, True, 1)
         for key, colour in (("buildings", (255, 80, 255)), ("stands", (255, 80, 255))):
             for b in plan.get(key, []):
                 ring = geom.expand(b["ring"], True)
