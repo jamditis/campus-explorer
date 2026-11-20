@@ -750,13 +750,13 @@
    "evidence": "ortho2020"
   },
   {
-   "name": "F_lot_arena_W_plaza_beds",
+   "name": "F_lot_arena_W_plaza",
    "kind": "mulch",
    "layer": 3.5,
    "ring": [
     [
      58.6,
-     1226.4
+     1224.3
     ],
     [
      58.6,
@@ -765,24 +765,24 @@
     ],
     [
      62.5,
-     1253.6
+     1253.9
     ],
     [
      75.5,
-     1253.4
+     1253.9
     ],
     [
-     87.0,
+     87.4,
      1227.5,
      1.0
     ],
     [
-     86.0,
-     1225.8
+     87.4,
+     1224.3
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "planting beds with trees between the walks"
+   "unverified": "planting beds with trees between the walks; the walks are drawn on it"
   },
   {
    "name": "F_lot_arena_W_island_SW",
@@ -1305,6 +1305,477 @@
    ],
    "evidence": "ortho2020",
    "unverified": "under trees on the south-west quarter"
+  },
+  {
+   "name": "F_lot_E_curb_W",
+   "path": [
+    [
+     283.0,
+     1176.0
+    ],
+    [
+     282.5,
+     1190.0
+    ],
+    [
+     285.0,
+     1210.0
+    ],
+    [
+     287.5,
+     1250.0
+    ],
+    [
+     290.0,
+     1255.5
+    ],
+    [
+     300.0,
+     1255.5
+    ],
+    [
+     304.0,
+     1263.0
+    ],
+    [
+     317.3,
+     1290.9
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "F_lot_E_curb_N",
+   "path": [
+    [
+     318.0,
+     1297.4
+    ],
+    [
+     340.8,
+     1288.4
+    ],
+    [
+     341.6,
+     1287.2
+    ],
+    [
+     345.6,
+     1297.6
+    ],
+    [
+     350.5,
+     1306.0
+    ],
+    [
+     362.0,
+     1311.4
+    ],
+    [
+     388.6,
+     1300.3
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "east of x 350 the edge is a grass bank; curb assumed"
+  },
+  {
+   "name": "F_road_junction_curb_wedge",
+   "path": [
+    [
+     290.0,
+     1313.6
+    ],
+    [
+     297.0,
+     1308.8
+    ],
+    [
+     303.5,
+     1304.3,
+     3
+    ],
+    [
+     329.9,
+     1322.0
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_road_junction_curb_lawn",
+   "path": [
+    [
+     341.0,
+     1320.2
+    ],
+    [
+     319.6,
+     1302.6,
+     3
+    ],
+    [
+     340.8,
+     1288.4
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_road_loop_curb_oval",
+   "path": [
+    [
+     288.0,
+     1309.6
+    ],
+    [
+     292.5,
+     1300.0,
+     3
+    ],
+    [
+     289.0,
+     1289.6,
+     3
+    ],
+    [
+     276.0,
+     1290.4
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_road_arena_S_curb_lawn",
+   "path": [
+    [
+     158.0,
+     1207.2
+    ],
+    [
+     185.0,
+     1203.4
+    ],
+    [
+     200.0,
+     1201.6,
+     5
+    ],
+    [
+     207.6,
+     1206.0
+    ],
+    [
+     208.3,
+     1214.0
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_arena_W_curb_N",
+   "path": [
+    [
+     44.5,
+     1262.5
+    ],
+    [
+     56.0,
+     1264.7,
+     8
+    ],
+    [
+     72.0,
+     1263.0
+    ],
+    [
+     84.5,
+     1257.0,
+     5
+    ],
+    [
+     88.6,
+     1251.5
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_N1_curb",
+   "path": [
+    [
+     340.39,
+     1280.42,
+     1.42
+    ],
+    [
+     330.18,
+     1286.73,
+     1.42
+    ],
+    [
+     328.61,
+     1284.18,
+     1.42
+    ],
+    [
+     338.82,
+     1277.87,
+     1.42
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_N2_curb",
+   "path": [
+    [
+     371.68,
+     1293.25,
+     1.42
+    ],
+    [
+     361.9,
+     1299.3,
+     1.42
+    ],
+    [
+     360.32,
+     1296.75,
+     1.42
+    ],
+    [
+     370.1,
+     1290.7,
+     1.42
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_N3_curb",
+   "path": [
+    [
+     388.68,
+     1282.85,
+     1.42
+    ],
+    [
+     378.9,
+     1288.9,
+     1.42
+    ],
+    [
+     377.32,
+     1286.35,
+     1.42
+    ],
+    [
+     387.1,
+     1280.3,
+     1.42
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_T1_curb",
+   "path": [
+    [
+     302.7,
+     1240.9
+    ],
+    [
+     311.9,
+     1258.0,
+     1.0
+    ],
+    [
+     322.3,
+     1251.1,
+     1.0
+    ],
+    [
+     316.0,
+     1240.3
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_T2_curb",
+   "path": [
+    [
+     321.8,
+     1234.6
+    ],
+    [
+     328.8,
+     1247.2,
+     1.0
+    ],
+    [
+     338.8,
+     1240.5,
+     1.0
+    ],
+    [
+     334.8,
+     1234.2
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_S1_curb",
+   "path": [
+    [
+     295.0,
+     1177.4,
+     1.0
+    ],
+    [
+     307.4,
+     1177.6,
+     1.0
+    ],
+    [
+     307.3,
+     1174.0,
+     1.0
+    ],
+    [
+     295.2,
+     1174.0,
+     1.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_E_cap_S2_curb",
+   "path": [
+    [
+     315.0,
+     1179.6,
+     1.0
+    ],
+    [
+     319.6,
+     1180.2,
+     1.0
+    ],
+    [
+     320.0,
+     1173.3,
+     1.0
+    ],
+    [
+     315.2,
+     1173.2,
+     1.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_arena_W_plaza_curb",
+   "path": [
+    [
+     58.6,
+     1224.3
+    ],
+    [
+     58.6,
+     1250.5,
+     1.5
+    ],
+    [
+     62.5,
+     1253.9
+    ],
+    [
+     75.5,
+     1253.9
+    ],
+    [
+     87.4,
+     1227.5,
+     1.0
+    ],
+    [
+     87.4,
+     1224.3
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_arena_W_island_SW_curb",
+   "path": [
+    [
+     51.5,
+     1226.5,
+     2.0
+    ],
+    [
+     54.5,
+     1229.2,
+     1.0
+    ],
+    [
+     58.6,
+     1228.2,
+     1.0
+    ],
+    [
+     58.6,
+     1219.0,
+     1.5
+    ],
+    [
+     52.6,
+     1218.4,
+     2.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "F_lot_arena_W_island_E_curb",
+   "path": [
+    [
+     88.5,
+     1219.5,
+     2.0
+    ],
+    [
+     92.5,
+     1223.6,
+     2.0
+    ],
+    [
+     98.8,
+     1218.4,
+     2.0
+    ],
+    [
+     94.6,
+     1212.6,
+     2.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
   }
  ],
  "markings": [
@@ -1607,11 +2078,11 @@
    "type": "stalls",
    "line": [
     [
-     281.6,
+     282.4,
      1268.5
     ],
     [
-     278.4,
+     279.2,
      1241.0
     ]
    ],
@@ -1647,5 +2118,26 @@
    "unverified": "zebra bars at the deck's north-east drive; bar count from the ortho spacing"
   }
  ],
- "points": []
+ "points": [
+  {
+   "name": "F_lot_E_lamp_S",
+   "kind": "lamp",
+   "at": [
+    302.8,
+    1199.0
+   ],
+   "evidence": "ortho2020 (two lamp heads and their shadow)",
+   "unverified": "base from the start of the pole shadow; height not in the LiDAR (no returns)"
+  },
+  {
+   "name": "F_lot_E_lamp_N",
+   "kind": "lamp",
+   "at": [
+    346.8,
+    1266.0
+   ],
+   "evidence": "ortho2020 (small head and shadow)",
+   "unverified": "could be a sign post; height not in the LiDAR"
+  }
+ ]
 }
