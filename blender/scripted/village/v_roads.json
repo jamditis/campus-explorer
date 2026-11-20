@@ -1,6 +1,6 @@
 {
  "zone": "v_roads",
- "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars), most stop bars and the junction crosswalks other than two (positions not resolved), lane arrows, the chevron gore at the Lot 61 junction, the pool deck in the Village court. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins.",
+ "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars), most stop bars and the junction crosswalks other than two (positions not resolved), lane arrows, the chevron gore at the Lot 61 junction, the pool deck in the Village court. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins. The stall lines of the two Village Road parking bays were taken out of this zone after the first build: the north lots zone (v_lots_n) has those rows fitted to the paint, and two sets would have painted double lines.",
  "surfaces": [
   {
    "name": "V_road_Clove_S",
@@ -4285,48 +4285,6 @@
    "width": 0.1,
    "colour": "yellow",
    "evidence": "ortho2020"
-  },
-  {
-   "name": "V_road_Village_Rd_stalls_SW_lines",
-   "type": "stalls",
-   "line": [
-    [
-     -206.73,
-     1053.76
-    ],
-    [
-     -246.58,
-     1093.09
-    ]
-   ],
-   "count": 20,
-   "depth": 5.5,
-   "side": "left",
-   "angle": 90,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "stall count from the bay length at 2.7 m; the stall angle (drawn square) is not resolved"
-  },
-  {
-   "name": "V_road_Village_Rd_stalls_NW_lines",
-   "type": "stalls",
-   "line": [
-    [
-     -183.08,
-     1201.93
-    ],
-    [
-     -162.92,
-     1244.38
-    ]
-   ],
-   "count": 17,
-   "depth": 5.5,
-   "side": "left",
-   "angle": 90,
-   "colour": "white",
-   "evidence": "ortho2020",
-   "unverified": "stall count from the bay length at 2.7 m; the stall angle (drawn square) is not resolved"
   },
   {
    "name": "V_road_Clove_S_crosswalk",

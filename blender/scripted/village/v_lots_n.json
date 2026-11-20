@@ -1,6 +1,6 @@
 {
  "zone": "v_lots_n",
- "notes": "Frame: model metres, +X east, +Y grid north. Parking lots of the Village district north of y 1050, read from the NJ 2020 ortho (0.15 m/px, leaf-off) on gridded sheets at zoom 10 to 40; stall rows fitted to brightness profiles of the painted lines (a ridge filter, line minus the brighter of its two sides 0.3 m away, picks thin lines and rejects car edges; pitch by least squares, skew by maximising the line response, line ends from profiles along each divider); hidden dividers inferred from the pitch. Names from OSM parking areas.",
+ "notes": "Frame: model metres, +X east, +Y grid north. Parking lots of the Village district north of y 1050, read from the NJ 2020 ortho (0.15 m/px, leaf-off) on gridded sheets at zoom 8 to 40 and checked with overlay --plan. Stall rows fitted to brightness profiles of the painted lines: a ridge filter (line minus the brighter of its two sides 0.3 m away) picks thin bright lines and rejects car edges; pitch by least squares (residuals mostly under 0.1 m), skew by maximising the line response, line ends from profiles along each divider; curved rows are straight chords of two or three stalls sharing their end dividers. Dividers under cars, shadow or the solar canopies are inferred from the pitch and marked so. Names from OSM parking areas. Lot 48 (OSM 313032035): U-shaped lot west of Fenwick Hall; west end a curb arc (r 17.5, fitted to the curb) with a fan of radial lines; a V of curbed islands (south arm, strip along Village Road, NE cap with a dumpster pad); rows on the NW and N curbs and both sides of the strip; bays off Village Road south-east of the strip. Lot 45 (OSM 233913161): three parts. West: curved, two curved curbs, a curved double row on a painted centre line, a row on the NW curb and on the SE curb, and the SW edge. Middle (turned 9 deg): north row, an upper double row (centre line, north half shorter), a lower double row with continuous dividers, end islands with hatched boxes, the south curved row and the west column. East: the loop with a curved east row and the north-east arm with rows on both sides. Lot 46 (OSM 313032753): hairpin aisle round a planted triangular island, radial stalls round the hairpin (curb arc r 16.3), rows on three sides of the island. Lot 61 (OSM 313032754): three solar canopies (outlines and roof planes from the LiDAR dsm, shed roofs high on the north-west side; clear height in each part's notes), the visible south and north-east rows, inferred rows under the canopies. Station-side parking (OSM 287712281): a painted island between the two loop drives with a double row of 35 deg echelon stalls sharing 14.8 m dividers. Roadside stalls along Village Road: west leg (24), north of Fenwick (3), south-east leg (10, mostly under cars), by Abbott and Costello (3), north leg south of Lot 46 (11), west side north of Paul Hall (18) and south side by Count Basie (11). Lamps: the 2017 LiDAR has no pole returns inside these lots (it is sparse); lamp positions come from pole shadows in the ortho (Lot 45 and the Lot 48 strip) and carry no height. Not drawn: accessible stalls (no blue paint readable at 0.15 m/px; OSM marks one by Abbott and Costello), stop bars (none visible), arrows and text, the hatched triangle west of the Lot 61 south row (outline unreadable), canopy posts and lighting. Paving next to roads (mouths) is cut square where the lot aisle meets the drive; the drives themselves are digitised elsewhere.",
  "surfaces": [
   {
    "name": "V_lot_48_asphalt",
@@ -589,102 +589,6 @@
    "unverified": "planted bed (dark: mulch or shrubs, leaf-off); outline read at zoom 15-18, about 0.3 m"
   },
   {
-   "name": "V_lot_45_pad_1",
-   "kind": "concrete",
-   "ring": [
-    [
-     -289.4,
-     1238.0
-    ],
-    [
-     -286.6,
-     1238.0
-    ],
-    [
-     -286.6,
-     1240.8
-    ],
-    [
-     -289.4,
-     1240.8
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "bright flat box at an island end (no LiDAR height): read as a concrete pad, could be paint"
-  },
-  {
-   "name": "V_lot_45_pad_2",
-   "kind": "concrete",
-   "ring": [
-    [
-     -286.0,
-     1219.0
-    ],
-    [
-     -282.3,
-     1219.0
-    ],
-    [
-     -282.3,
-     1222.0
-    ],
-    [
-     -286.0,
-     1222.0
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "bright flat box at an island end (no LiDAR height): read as a concrete pad, could be paint"
-  },
-  {
-   "name": "V_lot_45_pad_3",
-   "kind": "concrete",
-   "ring": [
-    [
-     -233.3,
-     1240.7
-    ],
-    [
-     -230.3,
-     1240.7
-    ],
-    [
-     -230.3,
-     1245.0
-    ],
-    [
-     -233.3,
-     1245.0
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "bright flat box at an island end (no LiDAR height): read as a concrete pad, could be paint"
-  },
-  {
-   "name": "V_lot_45_pad_4",
-   "kind": "concrete",
-   "ring": [
-    [
-     -233.3,
-     1225.7
-    ],
-    [
-     -230.0,
-     1225.7
-    ],
-    [
-     -230.0,
-     1229.3
-    ],
-    [
-     -233.3,
-     1229.3
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "bright flat box at an island end (no LiDAR height): read as a concrete pad, could be paint"
-  },
-  {
    "name": "V_lot_46_asphalt",
    "kind": "asphalt",
    "ring": [
@@ -882,6 +786,30 @@
    ],
    "evidence": "ortho2020; osm 313032754",
    "unverified": "west and north edges run to the area outline (the lot continues as the drive north of the canopies); south edge at the stall ends of the south row (OSM puts it 3 m north); mouths: south-west to the drive from Lot 45 (x -147 to -141), east to the drive at the crosswalk; east end (x -88 to -73) between asphalt and lawn read at zoom 9"
+  },
+  {
+   "name": "V_lot_station_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -38.42,
+     1117.37
+    ],
+    [
+     -30.66,
+     1162.24
+    ],
+    [
+     -35.87,
+     1185.72
+    ],
+    [
+     -43.63,
+     1140.84
+    ]
+   ],
+   "evidence": "ortho2020; osm 287712281",
+   "unverified": "the painted island between the two loop drives; paving shared with the drives (digitised elsewhere)"
   }
  ],
  "curbs": [
@@ -1972,6 +1900,330 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "curb ends of the first two lines faint"
+  },
+  {
+   "name": "V_lot_45_hatch_1_outline",
+   "type": "line",
+   "path": [
+    [
+     -289.4,
+     1238.0
+    ],
+    [
+     -286.6,
+     1238.0
+    ],
+    [
+     -286.6,
+     1240.8
+    ],
+    [
+     -289.4,
+     1240.8
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_1_1",
+   "type": "line",
+   "path": [
+    [
+     -289.4,
+     1238.7
+    ],
+    [
+     -286.6,
+     1238.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_1_2",
+   "type": "line",
+   "path": [
+    [
+     -289.4,
+     1239.4
+    ],
+    [
+     -286.6,
+     1239.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_1_3",
+   "type": "line",
+   "path": [
+    [
+     -289.4,
+     1240.1
+    ],
+    [
+     -286.6,
+     1240.1
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_2_outline",
+   "type": "line",
+   "path": [
+    [
+     -286.0,
+     1219.0
+    ],
+    [
+     -282.3,
+     1219.0
+    ],
+    [
+     -282.3,
+     1222.0
+    ],
+    [
+     -286.0,
+     1222.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_2_1",
+   "type": "line",
+   "path": [
+    [
+     -286.0,
+     1219.75
+    ],
+    [
+     -282.3,
+     1219.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_2_2",
+   "type": "line",
+   "path": [
+    [
+     -286.0,
+     1220.5
+    ],
+    [
+     -282.3,
+     1220.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_2_3",
+   "type": "line",
+   "path": [
+    [
+     -286.0,
+     1221.25
+    ],
+    [
+     -282.3,
+     1221.25
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_3_outline",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1240.7
+    ],
+    [
+     -230.3,
+     1240.7
+    ],
+    [
+     -230.3,
+     1245.0
+    ],
+    [
+     -233.3,
+     1245.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_3_1",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1241.78
+    ],
+    [
+     -230.3,
+     1241.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_3_2",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1242.85
+    ],
+    [
+     -230.3,
+     1242.85
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_3_3",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1243.92
+    ],
+    [
+     -230.3,
+     1243.92
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_4_outline",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1225.7
+    ],
+    [
+     -230.0,
+     1225.7
+    ],
+    [
+     -230.0,
+     1229.3
+    ],
+    [
+     -233.3,
+     1229.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_4_1",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1226.6
+    ],
+    [
+     -230.0,
+     1226.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_4_2",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1227.5
+    ],
+    [
+     -230.0,
+     1227.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
+  },
+  {
+   "name": "V_lot_45_hatch_4_3",
+   "type": "line",
+   "path": [
+    [
+     -233.3,
+     1228.4
+    ],
+    [
+     -230.0,
+     1228.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright striped box at an island end (no LiDAR height): read as a hatched no-parking area; stripe count guessed"
   },
   {
    "name": "V_lot_45_W_N_1",
@@ -3749,9 +4001,233 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "hidden under the solar canopy: north half inferred only where the canopy is 12 m deep, pitch 2.59 m"
+  },
+  {
+   "name": "V_lot_station_W",
+   "type": "stalls",
+   "line": [
+    [
+     -40.26,
+     1133.51
+    ],
+    [
+     -33.26,
+     1173.98
+    ]
+   ],
+   "count": 9,
+   "depth": 7.4,
+   "side": "left",
+   "angle": 34.8,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "first divider (south) 5.8 m long in the ortho; drawn full length"
+  },
+  {
+   "name": "V_lot_station_E",
+   "type": "stalls",
+   "line": [
+    [
+     -41.02,
+     1129.11
+    ],
+    [
+     -34.8,
+     1165.09
+    ]
+   ],
+   "count": 8,
+   "depth": 7.4,
+   "side": "right",
+   "angle": 145.2,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_station_axis",
+   "type": "line",
+   "path": [
+    [
+     -41.02,
+     1129.11
+    ],
+    [
+     -33.26,
+     1173.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "drawn as one line along the island axis; in the ortho short bars between neighbouring dividers"
+  },
+  {
+   "name": "V_lot_VR_W",
+   "type": "stalls",
+   "line": [
+    [
+     -252.25,
+     1093.72
+    ],
+    [
+     -205.99,
+     1047.01
+    ]
+   ],
+   "count": 24,
+   "depth": 4.9,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "row continues south of y 1047 (outside this zone); heads at the south-west curb tilt by 1 m along the row"
+  },
+  {
+   "name": "V_lot_VR_Sinatra",
+   "type": "stalls",
+   "line": [
+    [
+     -181.5,
+     1169.6
+    ],
+    [
+     -177.6,
+     1177.15
+    ]
+   ],
+   "count": 3,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 86.3,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "east side of Village Road north of Fenwick Hall: four dividers from brightness profiles; a fifth line at the north end faint (not drawn)"
+  },
+  {
+   "name": "V_lot_VR_SE",
+   "type": "stalls",
+   "line": [
+    [
+     -160.7,
+     1051.42
+    ],
+    [
+     -145.24,
+     1072.33
+    ]
+   ],
+   "count": 10,
+   "depth": 4.8,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "south-east leg of Village Road: cars in most stalls; pitch 2.6 m from the visible lines, row position about 0.5 m, curb line guessed"
+  },
+  {
+   "name": "V_lot_VR_Abbott",
+   "type": "stalls",
+   "line": [
+    [
+     -115.4,
+     1151.2
+    ],
+    [
+     -106.0,
+     1152.3
+    ]
+   ],
+   "count": 3,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "three-stall bay on the north side of Village Road by the Abbott and Costello Center: cars in all stalls, dividers inferred; OSM marks an accessible space here (node 11390764127) but no blue paint is readable"
   }
  ],
- "points": [],
+ "points": [
+  {
+   "name": "V_lot_45_W1_lamp",
+   "kind": "lamp",
+   "at": [
+    -355.4,
+    1222.6
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type; shadow faint"
+  },
+  {
+   "name": "V_lot_45_W2_lamp",
+   "kind": "lamp",
+   "at": [
+    -332.0,
+    1234.9
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_45_W3_lamp",
+   "kind": "lamp",
+   "at": [
+    -305.4,
+    1243.6
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_45_U1_lamp",
+   "kind": "lamp",
+   "at": [
+    -272.3,
+    1229.8
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_45_U2_lamp",
+   "kind": "lamp",
+   "at": [
+    -242.6,
+    1235.5
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_45_L1_lamp",
+   "kind": "lamp",
+   "at": [
+    -268.4,
+    1212.4
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_45_L2_lamp",
+   "kind": "lamp",
+   "at": [
+    -240.4,
+    1216.9
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type"
+  },
+  {
+   "name": "V_lot_48_strip_lamp",
+   "kind": "lamp",
+   "at": [
+    -261.8,
+    1123.5
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the shadow, about 0.5 m; height not measured (shadow 5 m long suggests about 8 m with the sun angle from the canopy shadows); head type; shadow faint"
+  }
+ ],
  "buildings": [
   {
    "name": "V_lot_61_canopy_N_UNVERIFIED",
