@@ -244,5 +244,13 @@ class Southwest(unittest.TestCase):
         self.assertAlmostEqual(max(v for _, v in pitch), 30 * yd, places=2)
 
 
+class FreeEdges(unittest.TestCase):
+    def test_a_sample_inside_a_free_edge_ring_does_not_count(self):
+        lay = dict(free_edges=[[(0, 0), (4, 0), (4, 4), (0, 4)]])
+        self.assertFalse(layout.meets_neighbour(lay, 2, 2))
+        self.assertTrue(layout.meets_neighbour(lay, 6, 2))
+        self.assertTrue(layout.meets_neighbour(dict(free_edges=[]), 2, 2))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -54,6 +54,8 @@ python3 blender/scripted/edge.py southwest /workspace/data/southwest/tiles
 - **Trees.** Trees of the other models are not touched. Far-field scatter trees and far-field houses inside the footprint are removed.
 - **Track level.** The north model's track and platforms stand about 0.65 m above the LiDAR ground. `southwest/station.json` carries a `lifts` entry that raises this build's ground to them along the corridor, eased out over 10 m, so the road meets the rails at the crossing. Remove it when the north track is lowered. Things that stand on a platform carry `base`, the platform top read from the published tiles.
 
+Where the footprint runs under another model's building (to take all the ground up to its wall), `footprint.json` may list `free_edges`: `[{"ring": [...], "why": "..."}]`. Edge samples inside such a ring are ignored, because the other model's ground there is hidden inside the building and may be far off the LiDAR; the edge then follows this area's own grade. Give the reason every time.
+
 ## When several people digitise one area
 
 Zones digitised at the same time do not see each other. Before the first build, check them against each other: lots that do not reach road asphalt at their mouths, stall rows that fall on lawn or on an island, paint under a walk, a walk lying along a carriageway, an island of one zone over another zone's road, items more than 1 m past the outline, walk ends inside buildings. In the Village a first pass found all of these; a second pass after the fixes found only small leftovers. Where a row and an island disagree, read the ortho again before flipping a side: twice the island's outline was wrong, not the row.

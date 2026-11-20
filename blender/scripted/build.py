@@ -48,6 +48,7 @@ def build_area(plan_dir, data, assets, built):
     # the other areas of this build (an area left out with --areas is not a neighbour here)
     others = [layout.load(d) for d in built if d.name != plan_dir.name]
     if edge:
+        edge = [e for e in edge if layout.meets_neighbour(lay, e[0], e[1])]
         # along an edge shared with another scripted area there is no other model to meet: both
         # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
         edge = [e for e in edge if not any(_near(o["footprint"], e[0], e[1], 2.0) for o in others)]

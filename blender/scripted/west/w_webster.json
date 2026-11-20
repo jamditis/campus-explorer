@@ -116,12 +116,20 @@
      223.2
     ],
     [
-     -188.6,
+     -187.8,
      223.2
     ],
     [
-     -188.6,
-     244.47
+     -187.8,
+     229.0
+    ],
+    [
+     -186.6,
+     241.0
+    ],
+    [
+     -186.6,
+     244.38
     ],
     [
      -223.3,
@@ -264,11 +272,19 @@
      261.8
     ],
     [
-     -200.3,
+     -198.763,
      261.8
     ],
     [
-     -200.3,
+     -198.45,
+     268.0
+    ],
+    [
+     -199.45,
+     274.5
+    ],
+    [
+     -199.005,
      281.3
     ],
     [
@@ -390,8 +406,8 @@
      246.98
     ],
     [
-     -188.6,
-     245.37
+     -186.6,
+     245.28
     ]
    ],
    "width": 1.8,
@@ -563,8 +579,8 @@
      246.08
     ],
     [
-     -188.6,
-     244.47
+     -186.6,
+     244.38
     ]
    ],
    "evidence": "ortho2020"
@@ -587,6 +603,49 @@
     ]
    ],
    "evidence": "ortho2020"
+  }
+ ],
+ "lifts": [
+  {
+   "name": "W_webster_UH_wall_foot",
+   "ring": [
+    [
+     -189.5,
+     223.2
+    ],
+    [
+     -187.8,
+     223.2
+    ],
+    [
+     -187.8,
+     229.0
+    ],
+    [
+     -186.6,
+     241.0
+    ],
+    [
+     -186.6,
+     244.4
+    ],
+    [
+     -188.3,
+     244.4
+    ],
+    [
+     -188.3,
+     241.0
+    ],
+    [
+     -189.5,
+     229.0
+    ]
+   ],
+   "dz": 0.12,
+   "feather": 6.0,
+   "evidence": "published tiles (north model): University Hall's west wall base 134.51 m; this build's graded lot 0.25 m from the wall 134.35-134.45 m before the lift",
+   "unverified": "the lot is graded from the LiDAR and stops 6 to 15 cm short of the wall base of the north model's University Hall; it is raised 0.12 m along the wall, eased out over 6 m, so the paving meets the wall. Remove it if the wall is lowered."
   }
  ],
  "markings": [

@@ -46,6 +46,7 @@ def load(plan_dir):
     """Merge every *.json of one area folder (sorted by name) into one layout dict."""
     out = dict(
         footprint=None,
+        free_edges=[],
         surfaces=[],
         curbs=[],
         markings=[],
@@ -64,6 +65,8 @@ def load(plan_dir):
         zone = plan.get("zone", f.stem)
         if plan.get("footprint"):
             out["footprint"] = geom.expand(plan["footprint"], True)
+        for e in plan.get("free_edges", []):
+            out["free_edges"].append(geom.expand(e["ring"], True))
         if plan.get("field_frame"):
             out["field_frame"] = plan["field_frame"]
         for s in plan.get("surfaces", []):
@@ -286,3 +289,11 @@ def football(ff):
     for side in (-1, 1):  # extra point marks at the 3 yd lines
         line(side * 47 * YD, -1 * 0.3048, side * 47 * YD, 1 * 0.3048)
     return out
+
+
+def meets_neighbour(lay, x, y):
+    """Does an edge sample at (x, y) count? Not inside a `free_edges` ring: there the footprint
+    runs under another model's building, the ground "beside" it is hidden inside that building,
+    and the edge follows this area's own grade (footprint.json gives the ring and the reason).
+    """
+    return not any(geom.inside(r, x, y) for r in lay["free_edges"])
