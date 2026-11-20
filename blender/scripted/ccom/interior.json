@@ -1,6 +1,6 @@
 {
  "zone": "ccom_interior",
- "notes": "College of Communication and Media (CCOM) interior, floors 1 and 2, from Joe's two evacuation floor plans (2026-11-20). Only what the main model does not already have: every part of the main model's interior is a keep_out ring here (walls are cut out of it, nothing else may enter it), and each ring names the objects and any conflict with the signs. Exterior walls, windows and the roof are the main model's shell (not built). Levels from the main model: floor 1 slabs 137.40 (south) and 137.70 (north), floor 2 slabs 141.85 with soffits at 141.45, floor 2 ceilings 144.86. Wall runs start at 137.30 so they meet both floor 1 levels. The sign plans are diagrams: positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign. The room 1000 block (south-west connector, two lifts, a stair) lies inside Morehead Hall's shell in the main model and is not built. The double-height lobby (Joe's photos 1000102886 and 1000102887) is the main model's atrium behind the west doors: its window wall, doors, wood panel wall, stair, glass balustrade, walk-off mat and cube seats exist there (turned 13.7 deg off the shell), so nothing of it is built here; its video wall is missing. Written by a scratch script from pixel positions; edit by hand from here.",
+ "notes": "Interior of the College of Communication and Media, rebuilt as a scripted area with the main model's sound interior adopted (adopt.json): keep-outs only for what is adopted (the newsroom with its back offices and mezzanine, the south corridor furniture, the atrium group moved square to the shell by T1). Floor 1 slabs reach the walls (the volume rule takes the other sources' ground out of the building). Open questions for Joe: the newsroom office stack (the sign has it about 2.5 m east), the east lounge level (left out: its floor 134.85 and ceiling 138.95 cross floor 1), the lab room (not modelled). College of Communication and Media (CCOM) interior, floors 1 and 2, from Joe's two evacuation floor plans (2026-11-20). Exterior walls, windows and roof: ccom_shell.json. Levels from the main model: floor 1 slabs 137.40 (south) and 137.70 (north), floor 2 slabs 141.85 with soffits at 141.45, floor 2 ceilings 144.86. Wall runs start at 137.30 so they meet both floor 1 levels. The sign plans are diagrams: positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign. The room 1000 block (south-west connector, two lifts, a stair) lies inside Morehead Hall's shell in the main model and is not built. The double-height lobby (Joe's photos 1000102886 and 1000102887) is the main model's atrium behind the west doors: its window wall, doors, wood panel wall, stair, glass balustrade, walk-off mat and cube seats exist there (turned 13.7 deg off the shell), so nothing of it is built here; its video wall is missing. Written by a scratch script from pixel positions; edit by hand from here.",
  "interiors": [
   {
    "name": "CCOM_F1",
@@ -203,165 +203,73 @@
    ],
    "keep_out": [
     {
-     "name": "atrium_hallway",
-     "ring": [
-      [
-       -21.5,
-       3.3
-      ],
-      [
-       12.3,
-       3.3
-      ],
-      [
-       12.3,
-       16.7
-      ],
-      [
-       -21.5,
-       16.7
-      ]
-     ],
-     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections",
-     "why": "the main model's atrium, hallway, S office and east double-height space (square to the model axes, 13.7 deg off the shell: listed for a correction, not built over)"
-    },
-    {
-     "name": "connector",
-     "ring": [
-      [
-       9.4,
-       -13.7
-      ],
-      [
-       14.7,
-       -13.7
-      ],
-      [
-       14.7,
-       7.1
-      ],
-      [
-       9.4,
-       7.1
-      ]
-     ],
-     "objects": "NG connector W wall, NG connector E wall, NG connector ceiling",
-     "why": "main model corridor; crosses rooms 1011, 1023, 1020 on the sign (conflict)"
-    },
-    {
-     "name": "link",
-     "ring": [
-      [
-       14.5,
-       -17.0
-      ],
-      [
-       21.1,
-       -17.0
-      ],
-      [
-       21.1,
-       -13.5
-      ],
-      [
-       14.5,
-       -13.5
-      ]
-     ],
-     "objects": "NG link N wall, NG link E wall, NG link ceiling",
-     "why": "main model corridor to the east windows; crosses the south wall of 1020"
-    },
-    {
      "name": "newsroom",
      "ring": [
       [
-       -24.81,
-       -13.1
+       -24.64,
+       -12.42
       ],
       [
-       -10.04,
-       -16.7
+       -9.95,
+       -16.0
       ],
       [
-       -5.02,
-       3.9
+       -5.22,
+       3.43
       ],
       [
-       -19.79,
-       7.5
+       -19.91,
+       7.01
       ]
      ],
-     "objects": "MS_CCOM_newsroom_studio_* (mw..nd), MS_CCOM_back_rooms_furnish_20261030na",
-     "why": "room 1002 and its back offices exist in the main model; the back offices lie about 2.5 m west of the sign's 1002A..1002B3 (conflict)"
+     "objects": "MS_CCOM_newsroom_studio_*, MS_CCOM_back_rooms_furnish_20261030na, CCOM newsroom back offices (mw), adopted as is",
+     "why": "room 1002 with its back offices as the main model has them; the sign puts the office stack about 2.5 m further east (open question for Joe)"
     },
     {
      "name": "south_corridor",
      "ring": [
       [
-       -12.5,
-       -18.36
+       -11.34,
+       -18.65
       ],
       [
-       14.7,
-       -24.99
+       14.21,
+       -24.87
       ],
       [
-       15.76,
-       -20.62
+       15.28,
+       -20.5
       ],
       [
-       -11.44,
-       -13.99
+       -10.27,
+       -14.27
       ]
      ],
-     "objects": "CCOM_1f_interior_full_dd (dd_SOUTH0_*)",
-     "why": "main model corridor along the south wall; its back wall cuts rooms 1005 and 1005B"
+     "objects": "CCOM_1f_interior_full_dd (dd_SOUTH0_*), adopted without its back wall",
+     "why": "furniture along the south wall in 1005 and 1005B"
     },
     {
-     "name": "east_lounge",
+     "name": "atrium_T1",
      "ring": [
       [
-       14.7,
-       -24.99
+       -19.18,
+       8.28
       ],
       [
-       19.07,
-       -26.06
+       13.46,
+       0.32
       ],
       [
-       21.01,
-       -18.09
+       16.25,
+       11.79
       ],
       [
-       16.64,
-       -17.03
+       -16.39,
+       19.74
       ]
      ],
-     "objects": "CCOM_east_interior_joe_20261020dc, CCOM_long_tables_fa",
-     "why": "main model lounge from Joe's photos of 2026-10-20 (east end of 1005B)"
-    },
-    {
-     "name": "computer_lab",
-     "ring": [
-      [
-       18.66,
-       -1.56
-      ],
-      [
-       32.26,
-       -4.88
-      ],
-      [
-       34.54,
-       4.45
-      ],
-      [
-       20.93,
-       7.76
-      ]
-     ],
-     "objects": "CCOM_computer_lab_20261014y",
-     "why": "main model lab, z 134.55..142.92: rises through floor 2 (conflict)"
+     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
+     "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
     }
    ],
    "walls": [
@@ -655,7 +563,147 @@
      ]
     }
    ],
-   "slabs": [],
+   "slabs": [
+    {
+     "name": "SW_CCOM_F1_slab_south_UNVERIFIED",
+     "ring": [
+      [
+       -9.53,
+       -14.4
+      ],
+      [
+       15.34,
+       -20.47
+      ],
+      [
+       14.34,
+       -24.57
+      ],
+      [
+       18.91,
+       -25.69
+      ],
+      [
+       20.78,
+       -18.03
+      ],
+      [
+       24.8,
+       -19.02
+      ],
+      [
+       28.5,
+       -3.86
+      ],
+      [
+       31.87,
+       -4.68
+      ],
+      [
+       31.97,
+       -4.24
+      ],
+      [
+       -18.95,
+       8.17
+      ],
+      [
+       -19.26,
+       6.91
+      ],
+      [
+       -5.17,
+       3.47
+      ]
+     ],
+     "z0": 137.0,
+     "z1": 137.4,
+     "unverified": "level 137.40 from the main model's newsroom and corridor floors"
+    },
+    {
+     "name": "SW_CCOM_F1_slab_notch_UNVERIFIED",
+     "ring": [
+      [
+       -12.29,
+       -18.08
+      ],
+      [
+       -11.28,
+       -18.33
+      ],
+      [
+       -10.68,
+       -15.87
+      ],
+      [
+       -11.69,
+       -15.63
+      ]
+     ],
+     "z0": 137.0,
+     "z1": 137.4,
+     "unverified": "fills the gap between the corridor floor and the south-west notch wall"
+    },
+    {
+     "name": "SW_CCOM_F1_slab_north_UNVERIFIED",
+     "ring": [
+      [
+       -20.73,
+       8.6
+      ],
+      [
+       31.97,
+       -4.24
+      ],
+      [
+       34.41,
+       5.61
+      ],
+      [
+       12.5,
+       10.66
+      ],
+      [
+       17.45,
+       31.92
+      ],
+      [
+       12.5,
+       33.0
+      ],
+      [
+       12.89,
+       34.94
+      ],
+      [
+       -0.29,
+       39.28
+      ],
+      [
+       -10.67,
+       41.51
+      ],
+      [
+       -14.62,
+       24.05
+      ],
+      [
+       -16.34,
+       17.11
+      ],
+      [
+       -18.59,
+       17.45
+      ]
+     ],
+     "z0": 137.3,
+     "z1": 137.7,
+     "under": [
+      "atrium_T1"
+     ],
+     "unverified": "level 137.70 from the main model's atrium terrazzo (dropped: this slab replaces it)"
+    }
+   ],
    "blocks": [
     {
      "name": "SW_CCOM_NE_lift_UNVERIFIED",
@@ -678,9 +726,9 @@
        -1.71
       ]
      ],
-     "unverified": "a closed block for the core, not a stair: plan size from the sign, held south of the main model's lab (b 2.9) and under its east roof (143.1), so the top stops at 142.7",
+     "unverified": "a closed block for the core, not a stair: plan size from the sign, full height to the floor 2 ceiling",
      "z0": 137.54,
-     "z1": 142.7
+     "z1": 144.86
     },
     {
      "name": "SW_CCOM_NE_stair_UNVERIFIED",
@@ -695,17 +743,17 @@
        -6.83
       ],
       [
-       28.17,
-       -3.93
+       28.35,
+       -3.18
       ],
       [
-       20.56,
-       -2.08
+       20.75,
+       -1.33
       ]
      ],
-     "unverified": "a closed block for the core, not a stair: plan size from the sign, held south of the main model's lab (b 2.9) and under its east roof (143.1), so the top stops at 142.7",
+     "unverified": "a closed block for the core, not a stair: plan size from the sign, full height to the floor 2 ceiling",
      "z0": 137.54,
-     "z1": 142.7
+     "z1": 144.86
     }
    ],
    "solids": [
@@ -727,6 +775,27 @@
       [
        7.02,
        -6.3
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_1_UNVERIFIED",
+     "ring": [
+      [
+       13.31,
+       -8.41
+      ],
+      [
+       13.89,
+       -8.55
+      ],
+      [
+       14.03,
+       -7.97
+      ],
+      [
+       13.45,
+       -7.82
       ]
      ]
     },
@@ -813,6 +882,164 @@
        0.09
       ]
      ]
+    }
+   ],
+   "items": [
+    {
+     "name": "SW_CCOM_lobby_video_wall_UNVERIFIED",
+     "ring": [
+      [
+       -10.84,
+       16.74
+      ],
+      [
+       -5.99,
+       15.56
+      ],
+      [
+       -5.96,
+       15.68
+      ],
+      [
+       -10.81,
+       16.86
+      ]
+     ],
+     "z0": 140.6,
+     "z1": 143.1,
+     "kind": "paint",
+     "colour": "#111316",
+     "unverified": "about 5 x 2.5 m by eye from Joe's photo 1000102886; centre a -12 +- 2 m along the wood wall"
+    },
+    {
+     "name": "SW_CCOM_lobby_light_shelf_UNVERIFIED",
+     "ring": [
+      [
+       -11.24,
+       16.38
+      ],
+      [
+       -5.8,
+       15.05
+      ],
+      [
+       -5.67,
+       15.61
+      ],
+      [
+       -11.11,
+       16.93
+      ]
+     ],
+     "z0": 143.5,
+     "z1": 143.56,
+     "kind": "metal",
+     "colour": "#d8d8d4",
+     "unverified": "above the video wall, by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_studio_door_glass_UNVERIFIED",
+     "ring": [
+      [
+       -14.19,
+       17.58
+      ],
+      [
+       -12.54,
+       17.18
+      ],
+      [
+       -12.52,
+       17.26
+      ],
+      [
+       -14.17,
+       17.66
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 140.9,
+     "kind": "glass",
+     "colour": "#9fb3bd",
+     "unverified": "glazed double door with a glazed band over it at the west end of the north wall (photo 1000102887); a panel on the wall, not an opening; width by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_studio_door_frame_UNVERIFIED",
+     "ring": [
+      [
+       -14.27,
+       17.68
+      ],
+      [
+       -12.42,
+       17.23
+      ],
+      [
+       -12.41,
+       17.27
+      ],
+      [
+       -14.26,
+       17.72
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 141.0,
+     "kind": "paint",
+     "colour": "#592d28",
+     "unverified": "maroon frame, by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_south_wall_white_UNVERIFIED",
+     "ring": [
+      [
+       -13.93,
+       7.05
+      ],
+      [
+       -0.62,
+       3.8
+      ],
+      [
+       -0.6,
+       3.88
+      ],
+      [
+       -13.91,
+       7.13
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 141.4,
+     "kind": "plaster",
+     "colour": "#f2f1ec",
+     "unverified": "white plaster in place of the main model's red panel (Joe's photo shows white walls left of the entrance)"
+    },
+    {
+     "name": "SW_CCOM_lobby_walkoff_mat_UNVERIFIED",
+     "ring": [
+      [
+       -20.49,
+       9.68
+      ],
+      [
+       -17.87,
+       9.04
+      ],
+      [
+       -16.84,
+       13.27
+      ],
+      [
+       -19.46,
+       13.9
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 137.72,
+     "kind": "rubber",
+     "colour": "#2a2b2d",
+     "unverified": "dark mat inside the four doors, about 4.4 x 2.7 m by eye"
     }
    ],
    "rooms": [
@@ -1138,99 +1365,159 @@
    ],
    "keep_out": [
     {
-     "name": "atrium_hallway_2f",
-     "ring": [
-      [
-       -21.5,
-       6.1
-      ],
-      [
-       12.3,
-       6.1
-      ],
-      [
-       12.3,
-       16.7
-      ],
-      [
-       -21.5,
-       16.7
-      ]
-     ],
-     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections, OA_CCOM_2F_student_area_*, OB_CCOM_2F_stools_*",
-     "why": "atrium void, bridge, stair landing, 2F hallway slab and lounge of the main model"
-    },
-    {
      "name": "newsroom_mezzanine",
      "ring": [
       [
-       -24.81,
-       -13.1
+       -24.64,
+       -12.42
       ],
       [
-       -10.04,
-       -16.7
+       -9.95,
+       -16.0
       ],
       [
-       -5.02,
-       3.9
+       -5.24,
+       3.34
       ],
       [
-       -19.79,
-       7.5
+       -19.93,
+       6.92
       ]
      ],
-     "objects": "CCOM newsroom back mezzanine slab + fascia (mw), MS_CCM_office_interior_na",
-     "why": "void over 1002 and the mezzanine offices of the main model (sign: 2002..2012, about 2.5 m east: conflict)"
+     "objects": "MS_CCOM_newsroom_studio_* (double height), CCOM newsroom back mezzanine slab + fascia (mw), MS_CCM_office_interior_20261030na",
+     "why": "void over 1002 and the mezzanine offices as the main model has them (the sign's 2002..2012 lie about 2.5 m east: open question)"
     },
     {
-     "name": "computer_lab",
+     "name": "atrium_T1",
      "ring": [
       [
-       18.66,
-       -1.56
+       -19.18,
+       8.28
       ],
       [
-       32.26,
-       -4.88
+       13.46,
+       0.32
       ],
       [
-       34.54,
-       4.45
+       16.25,
+       11.79
       ],
       [
-       20.93,
-       7.76
+       -16.39,
+       19.74
       ]
      ],
-     "objects": "CCOM_computer_lab_20261014y",
-     "why": "main model lab, z 134.55..142.92: rises through floor 2 (conflict)"
-    },
-    {
-     "name": "east_low_roof",
-     "ring": [
-      [
-       14.07,
-       -25.04
-      ],
-      [
-       27.09,
-       -28.22
-      ],
-      [
-       35.38,
-       5.79
-      ],
-      [
-       22.36,
-       8.96
-      ]
-     ],
-     "objects": "School of Communication and Media roof (LiDAR), School of Communication and Media hip + ridge cap tiles, CCOM_east_flat_roof_clean_20261014z, CCOM_east_roof_plate_z2_20261014z, CCOM_east_junction_fill_z2_20261014z",
-     "why": "the main model's roof is at 143.1 over this band (one storey), but the LiDAR DSM has 147.5 to 150.7 there and the floor 2 sign has rooms 2025..2035 and the stair: floor 2 here would stand out through that roof (conflict, for a correction)"
+     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
+     "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
     }
    ],
    "walls": [
+    {
+     "name": "SW_CCOM_F2_N_band_1_UNVERIFIED",
+     "path": [
+      [
+       30.19,
+       1.73
+      ],
+      [
+       26.53,
+       2.59
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_2_UNVERIFIED",
+     "path": [
+      [
+       27.14,
+       2.44
+      ],
+      [
+       27.98,
+       5.63
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_3_UNVERIFIED",
+     "path": [
+      [
+       24.09,
+       3.16
+      ],
+      [
+       24.94,
+       6.34
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_4_UNVERIFIED",
+     "path": [
+      [
+       22.26,
+       3.58
+      ],
+      [
+       23.11,
+       6.77
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_5_UNVERIFIED",
+     "path": [
+      [
+       20.03,
+       4.11
+      ],
+      [
+       20.87,
+       7.29
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_6_UNVERIFIED",
+     "path": [
+      [
+       16.98,
+       4.82
+      ],
+      [
+       17.83,
+       8.01
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_7_UNVERIFIED",
+     "path": [
+      [
+       12.34,
+       9.29
+      ],
+      [
+       11.5,
+       6.1
+      ],
+      [
+       6.21,
+       7.33
+      ],
+      [
+       6.78,
+       9.47
+      ]
+     ],
+     "thickness": 0.3
+    },
     {
      "name": "SW_CCOM_F2_2025_2023_UNVERIFIED",
      "path": [
@@ -1805,36 +2092,44 @@
      "name": "SW_CCOM_F2_slab_UNVERIFIED",
      "ring": [
       [
-       -10.32,
-       -18.28
+       -10.53,
+       -18.51
       ],
       [
-       14.06,
-       -24.22
+       18.91,
+       -25.69
       ],
       [
-       19.51,
-       -1.87
+       20.78,
+       -18.03
       ],
       [
-       18.54,
-       -1.64
+       24.8,
+       -19.02
       ],
       [
-       20.96,
-       8.27
+       31.0,
+       6.39
       ],
       [
-       12.45,
-       10.34
+       15.84,
+       9.88
       ],
       [
-       12.31,
-       5.95
+       13.5,
+       0.26
       ],
       [
-       -4.44,
-       5.87
+       -18.95,
+       8.17
+      ],
+      [
+       -19.26,
+       6.91
+      ],
+      [
+       -5.17,
+       3.47
       ]
      ],
      "z0": 141.45,

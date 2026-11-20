@@ -35,6 +35,7 @@ KINDS = {
     "plastic": "plastic",
     "rubber": "rubber",
     "sign": "sign",
+    "rooftile": "rooftile",
     "water": "water",
 }
 COLLECTION = "SW_southwest"

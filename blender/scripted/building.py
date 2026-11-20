@@ -94,20 +94,28 @@ def _flat_roof(b, ring, top, drop, cap, deck, wells=()):
         b.faces(v[2 * n :], [tuple(range(n))], deck)
 
 
-def _windows(b, part, ring, wall_top, ground, glass):
-    """Rows of windows on every wall long enough for a bay, counted down from the wall top."""
+def _windows(b, part, ring, wall_top, ground, glass, holes=None):
+    """Rows of windows on every wall long enough for a bay: counted down from the wall top, or on
+    the floors given in `windows.levels`. No window on an edge in `no_windows` or across an
+    opening (`holes`: {edge: [(s0, s1, z0, z1)]})."""
     w = part["windows"]
     floors = part.get("floors", 1)
     low = min(ground(*p) for p in ring)
     h = massing.storey(wall_top, low, floors)
     sill, tall, wide = w.get("sill", 0.9), w["height"], w["width"]
-    for _i, a, _b, length, u, nrm in _edges(ring):
+    skip = set(part.get("no_windows", ()))
+    for i, a, _b, length, u, nrm in _edges(ring):
+        if i in skip:
+            continue
         for s in massing.bays(length, w["spacing"]):
+            cut = (holes or {}).get(i, ())
+            if any(s0 - wide / 2 < s < s1 + wide / 2 for s0, s1, _z0, _z1 in cut):
+                continue
             g = ground(a[0] + u[0] * s, a[1] + u[1] * s)
-            for f in range(floors):
-                z0 = wall_top - (f + 1) * h + sill
-                if z0 < g + 0.4:
-                    break  # this storey is below ground on this side
+            rows = massing.window_rows(
+                wall_top, g, tall, sill, w.get("levels"), floors=floors, storey_h=h
+            )
+            for z0 in rows:
                 _panel(
                     b, a, u, nrm, s - wide / 2, s + wide / 2, z0, min(z0 + tall, wall_top), glass
                 )
@@ -213,7 +221,14 @@ def part(lay_part, name, ground, image_dir=None):
     ]
     # a deck's ramp is a slab in the well of its deck: walls of its own would lie in the faces of
     # the well's walls
-    if not (kind == "shed" and style == "deck"):
+    holes = massing.edge_openings(ring, p["openings"]) if p.get("openings") else {}
+    if holes:  # walls cut round the openings (a flat-topped part: one top per edge)
+        for i, a, _e, length, u, _nrm in _edges(ring):
+            for s0, s1, za, zb in massing.wall_pieces(length, base, tops[i], holes.get(i, [])):
+                corners = ((s0, za), (s1, za), (s1, zb), (s0, zb))
+                q = [(a[0] + u[0] * s, a[1] + u[1] * s, z) for s, z in corners]
+                b.faces(q, [(0, 1, 2, 3)], wall)
+    elif not (kind == "shed" and style == "deck"):
         b.faces(v, [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)], wall)
     for face in gables:
         b.faces(face, [tuple(range(len(face)))], wall)
@@ -222,7 +237,15 @@ def part(lay_part, name, ground, image_dir=None):
         if p.get("sheets"):  # the plan paints this roof (layout.roof_paint, paint.py)
             deck = sheet_material("concrete", p["sheets"][0], image_dir)
         wells = _wells(p, hexes["roof"])
-        _flat_roof(b, ring, p["top"], PARAPET.get(style, 0.4), trim, deck, wells)
+        _flat_roof(b, ring, p["top"], p.get("parapet", PARAPET.get(style, 0.4)), trim, deck, wells)
+        if p.get("ring_roof"):  # a tiled band round the flat roof (a mansard ring)
+            r = p["ring_roof"]
+            tile = kit.mat("rooftile", "roof_" + r["colour"][1:], kit.srgb(r["colour"]), 0.75)
+            for face in massing.ring_roof(
+                ring, p["top"], r["crest"], r["crest_in"], r["inner_in"],
+                p["top"] - p.get("parapet", PARAPET.get(style, 0.4)), r.get("flat_edges", ()),
+            ):  # fmt: skip
+                b.faces(face, [tuple(range(len(face)))], tile)
     else:
         # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
         look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)
@@ -237,7 +260,7 @@ def part(lay_part, name, ground, image_dir=None):
             _deck(b, [q[:2] for q in cap], p["top"], wells, sheet, trim)
         for face in slopes:
             b.faces(face, [tuple(range(len(face)))], sheet)
-    wall_top = min(tops) - (PARAPET.get(style, 0.4) if kind == "flat" else 0.0)
+    wall_top = min(tops) - (p.get("parapet", PARAPET.get(style, 0.4)) if kind == "flat" else 0.0)
 
     def local(x, y):  # a part on a roof has that roof as its ground
         return p["base"] if "base" in p else ground(x, y)
@@ -247,7 +270,7 @@ def part(lay_part, name, ground, image_dir=None):
         _deck_levels(b, p, ring, p["top"], local, wall, void)
     elif p.get("windows"):
         glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
-        _windows(b, p, ring, wall_top, local, glass)
+        _windows(b, p, ring, wall_top, local, glass, holes)
     if p.get("sheets"):
         _sheet_uvs(b, deck, p["sheets"][0])
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads

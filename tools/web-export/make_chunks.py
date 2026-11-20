@@ -5,12 +5,10 @@ import math
 import os
 import re
 
+from export_skip import EXCL  # one list for the exporter and blender/scripted/adopt.py
+
 WORK = os.environ.get("WORK", "/workspace/nj-scenes/web/build/main")
 d = json.load(open(WORK + "/objects.json"))
-EXCL = re.compile(
-    r"(grass_points|grass_fill|Lawn_grass|_grass_|cx_grass|GN instances|people placeholders|task chairs|Context_ground_beyond|_CAM_|^CAM_|WALK_\d|RETIRED|_bak_|walk_joints_auto|slab_joints_GN|panel_tone_chips)",
-    re.I,
-)
 TILE = 160.0
 PREFIX = os.environ.get("PREFIX", "")
 # Unified campus: a secondary scene (north) merged into the main world. Same Blender origin, so no

@@ -1,0 +1,164 @@
+"""Building options for the College of Communication and Media shell (massing.py): a tiled ring
+roof with a crest set in from the walls and no slope on listed edges, wall openings, window rows at
+given floor levels."""
+
+import math
+import sys
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "blender" / "scripted"))
+
+import geom  # noqa: E402
+import massing  # noqa: E402
+
+SQ = [(0, 0), (20, 0), (20, 20), (0, 20)]
+
+
+def _normal(face):
+    """Newell normal of a face (x, y, z) list: outward for anticlockwise-from-outside winding."""
+    nx = ny = nz = 0.0
+    for (x0, y0, z0), (x1, y1, z1) in zip(face, face[1:] + face[:1], strict=True):
+        nx += (y0 - y1) * (z0 + z1)
+        ny += (z0 - z1) * (x0 + x1)
+        nz += (x0 - x1) * (y0 + y1)
+    return nx, ny, nz
+
+
+class RingRoof(unittest.TestCase):
+    def test_inset_rings_follow_each_edge_and_stay_on_flat_edges(self):
+        crest = massing.inset(SQ, [7.0, 7.0, 0.0, 7.0])  # edge 2 (the north wall) is shared
+        self.assertEqual(len(crest), 4)
+        self.assertAlmostEqual(crest[0][0], 7.0)
+        self.assertAlmostEqual(crest[0][1], 7.0)
+        self.assertAlmostEqual(crest[2][1], 20.0)  # on the north wall: no slope there
+        self.assertAlmostEqual(crest[3][0], 7.0)
+
+    def test_slopes_rise_from_the_eave_to_the_crest_and_look_outward(self):
+        faces = massing.ring_roof(SQ, 147.7, 151.1, 7.0, 8.0, 147.5)
+        slopes = [f for f in faces if {round(p[2], 2) for p in f} == {147.7, 151.1}]
+        self.assertEqual(len(slopes), 4)
+        for f in slopes:
+            n = _normal(f)
+            self.assertGreater(n[2], 0)  # faces up
+        # the south slope looks south
+        south = [f for f in slopes if min(p[1] for p in f) == 0][0]
+        self.assertLess(_normal(south)[1], 0)
+        # the crest band and the drop to the flat roof inside
+        crest = [f for f in faces if {round(p[2], 2) for p in f} == {151.1}]
+        drops = [f for f in faces if {round(p[2], 2) for p in f} == {151.1, 147.5}]
+        self.assertEqual(len(crest), 4)
+        self.assertEqual(len(drops), 4)
+
+    def test_a_flat_edge_gets_no_slope_and_closes_the_ring_ends(self):
+        faces = massing.ring_roof(SQ, 147.7, 151.1, 7.0, 8.0, 147.5, flat_edges=[2])
+        north = [f for f in faces if all(abs(p[1] - 20) < 1e-6 for p in f)]
+        # only end caps lie in the north wall plane, and they are vertical
+        for f in north:
+            self.assertAlmostEqual(_normal(f)[2], 0.0, places=6)
+            self.assertGreater(_normal(f)[1], 0)  # looking north, out of the building
+        self.assertEqual(len(north), 2)
+        sloped = [f for f in faces if {round(p[2], 2) for p in f} == {147.7, 151.1}]
+        self.assertEqual(len(sloped), 3)
+
+    def test_nearly_straight_corners_do_not_run_off(self):
+        # a free edge that carries on almost straight from a flat one: the moved corner stays at
+        # the free edge's own start, not where the two nearly parallel lines meet far away
+        ring = [(0, 0), (20, 0), (20, 20), (10, 20.5), (0, 20)]
+        c = massing.inset(ring, [5.0, 5.0, 0.0, 5.0, 5.0])
+        for x, y in c:
+            self.assertTrue(-1 <= x <= 21 and -1 <= y <= 21, (x, y))
+
+    def test_each_edge_may_set_its_own_crest_distance(self):
+        faces = massing.ring_roof(SQ, 10.0, 13.0, [3.0, 3.0, 5.0, 3.0], [4.0, 4.0, 6.0, 4.0], 9.8)
+        north = [f for f in faces if {round(p[2], 2) for p in f} == {10.0, 13.0}
+                 and all(p[1] == 20 for p in f if p[2] == 10.0)]  # fmt: skip
+        self.assertEqual(min(p[1] for p in north[0]), 15.0)
+
+    def test_rings_must_nest(self):
+        with self.assertRaises(ValueError):
+            massing.ring_roof(SQ, 147.7, 151.1, 9.0, 8.0, 147.5)  # inner band outside the crest
+
+
+class Openings(unittest.TestCase):
+    def test_a_wall_with_an_opening_is_cut_round_it(self):
+        pieces = massing.wall_pieces(10.0, 100.0, 110.0, [(3.0, 5.0, 100.0, 104.0)])
+        area = sum((s1 - s0) * (z1 - z0) for s0, s1, z0, z1 in pieces)
+        self.assertAlmostEqual(area, 100.0 - 8.0)
+        for s0, s1, z0, z1 in pieces:  # nothing inside the opening
+            self.assertFalse(s0 < 4.0 < s1 and z0 < 102.0 < z1)
+
+    def test_no_openings_is_one_piece(self):
+        self.assertEqual(massing.wall_pieces(10.0, 0.0, 3.0, []), [(0.0, 10.0, 0.0, 3.0)])
+
+    def test_openings_are_found_on_the_ring_edge_they_lie_on(self):
+        ops = massing.edge_openings(SQ, [dict(at=[0, 15], to=[0, 5], z0=1.0, z1=4.0)])
+        self.assertEqual(list(ops), [3])
+        (s0, s1, z0, z1), = ops[3]
+        self.assertAlmostEqual(s0, 5.0)  # edge 3 runs from (0, 20) to (0, 0)
+        self.assertAlmostEqual(s1, 15.0)
+        with self.assertRaises(ValueError):
+            massing.edge_openings(SQ, [dict(at=[5, 5], to=[6, 6], z0=0, z1=1)])
+
+
+class WindowLevels(unittest.TestCase):
+    def test_rows_stand_on_the_given_floors_and_skip_rows_below_ground(self):
+        rows = massing.window_rows(147.7, 137.2, 2.6, 0.9, levels=[134.85, 137.40, 141.85])
+        self.assertEqual(rows, [137.40 + 0.9, 141.85 + 0.9])
+        rows = massing.window_rows(147.7, 134.6, 2.6, 0.9, levels=[134.85, 137.40, 141.85])
+        self.assertEqual(len(rows), 3)
+
+    def test_without_levels_rows_count_down_from_the_wall_top(self):
+        h = massing.storey(12.0, 0.0, 3)
+        self.assertEqual(
+            massing.window_rows(12.0, 0.0, 1.5, 0.9, floors=3, storey_h=h),
+            [12.0 - (f + 1) * h + 0.9 for f in range(3)],
+        )
+
+    def test_a_row_whose_head_passes_the_wall_top_is_left_out(self):
+        self.assertEqual(massing.window_rows(10.0, 0.0, 2.6, 0.9, levels=[0.0, 7.0]), [0.9])
+
+
+class PlanRings(unittest.TestCase):
+    def test_inset_keeps_the_outline_sense(self):
+        crest = massing.inset(SQ, [2.0] * 4)
+        self.assertGreater(geom.area(crest), 0)
+        self.assertAlmostEqual(geom.area(crest), 16 * 16)
+        self.assertTrue(math.isfinite(crest[0][0]))
+
+
+class CcomShellPlan(unittest.TestCase):
+    """The shell part of blender/scripted/ccom: openings on edges, a ring roof that nests."""
+
+    @classmethod
+    def setUpClass(cls):
+        import layout
+
+        cls.part = [
+            b
+            for b in layout.load(Path(massing.__file__).parent / "ccom")["buildings"]
+            if b["name"] == "CCOM_main"
+        ][0]
+
+    def test_outline_runs_anticlockwise_and_every_opening_lies_on_an_edge(self):
+        ring = [tuple(p) for p in self.part["ring"]]
+        self.assertGreater(geom.area(ring), 2000)
+        ops = massing.edge_openings(ring, self.part["openings"])
+        self.assertEqual(sorted(ops), [0, 2, 15, 17, 19])
+
+    def test_the_ring_roof_stays_inside_the_walls_and_below_the_crest(self):
+        ring = [tuple(p) for p in self.part["ring"]]
+        r = self.part["ring_roof"]
+        faces = massing.ring_roof(
+            ring, self.part["top"], r["crest"], r["crest_in"], r["inner_in"],
+            self.part["top"] - self.part["parapet"], r["flat_edges"],
+        )  # fmt: skip
+        grown = geom.offset(ring, -0.01, True)
+        for f in faces:
+            for x, y, z in f:
+                self.assertTrue(geom.inside(grown, x, y), (x, y))
+                self.assertTrue(147.4 <= z <= r["crest"] + 1e-9)
+
+
+if __name__ == "__main__":
+    unittest.main()

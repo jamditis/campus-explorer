@@ -49,6 +49,11 @@ def floor(f):
         b = kit.Builder(s["name"])
         _add(b, *rooms.prism(s["ring"], s["z0"], s["z1"]), _mat(BLOCK[s["kind"]]))
         out.append(b.finish(recalc=False))
+    for s in f.get("items", []):  # finishes and fittings: a box of their own colour
+        b = kit.Builder(s["name"])
+        spec = (s.get("kind", "plaster"), "interior_" + s["colour"][1:], s["colour"], 0.6)
+        _add(b, *rooms.prism(s["ring"], s["z0"], s["z1"]), _mat(spec))
+        out.append(b.finish(recalc=False))
     if f["solids"]:
         b = kit.Builder(f"SW_{f['name']}_piers_UNVERIFIED")
         for s in f["solids"]:

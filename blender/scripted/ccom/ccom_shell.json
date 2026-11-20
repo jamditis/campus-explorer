@@ -1,0 +1,265 @@
+{
+ "zone": "ccom_shell",
+ "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom.",
+ "buildings": [
+  {
+   "name": "CCOM_main",
+   "ring": [
+    [
+     -24.058,
+     -12.683
+    ],
+    [
+     -11.771,
+     -15.689
+    ],
+    [
+     -12.379,
+     -18.186
+    ],
+    [
+     18.987,
+     -25.811
+    ],
+    [
+     20.853,
+     -18.155
+    ],
+    [
+     24.876,
+     -19.136
+    ],
+    [
+     28.573,
+     -3.97
+    ],
+    [
+     31.944,
+     -4.792
+    ],
+    [
+     34.565,
+     5.706
+    ],
+    [
+     12.622,
+     10.736
+    ],
+    [
+     17.571,
+     32.009
+    ],
+    [
+     12.624,
+     33.081
+    ],
+    [
+     13.018,
+     35.034
+    ],
+    [
+     -0.258,
+     39.392
+    ],
+    [
+     -10.761,
+     41.654
+    ],
+    [
+     -14.704,
+     24.129
+    ],
+    [
+     -16.462,
+     17.044
+    ],
+    [
+     -18.682,
+     17.564
+    ],
+    [
+     -20.926,
+     8.148
+    ],
+    [
+     -19.115,
+     7.593
+    ]
+   ],
+   "roof": "flat",
+   "top": 147.7,
+   "parapet": 0.2,
+   "style": "civic",
+   "wall": "#f3efe7",
+   "trim": "#592d28",
+   "roof_colour": "#e9eae4",
+   "floors": 3,
+   "windows": {
+    "width": 2.6,
+    "height": 2.6,
+    "spacing": 3.4,
+    "sill": 0.9,
+    "levels": [
+     134.85,
+     137.4,
+     141.85
+    ]
+   },
+   "no_windows": [
+    0,
+    1,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    17,
+    18,
+    19
+   ],
+   "openings": [
+    {
+     "at": [
+      -20.775,
+      8.893
+     ],
+     "to": [
+      -19.366,
+      14.674
+     ],
+     "z0": 136.0,
+     "z1": 146.2,
+     "why": "the adopted entrance window wall (CCOM atrium glass, arch frame, doors)"
+    },
+    {
+     "at": [
+      -24.054,
+      -12.663
+     ],
+     "to": [
+      -19.12,
+      7.574
+     ],
+     "z0": 134.0,
+     "z1": 147.61,
+     "why": "the adopted CCOM newsroom bay wall (mw)"
+    },
+    {
+     "at": [
+      -24.059,
+      -12.688
+     ],
+     "to": [
+      -15.006,
+      -14.9
+     ],
+     "z0": 134.0,
+     "z1": 147.61,
+     "why": "the adopted CCOM newsroom south wall (mx)"
+    },
+    {
+     "at": [
+      -14.708,
+      24.109
+     ],
+     "to": [
+      -16.457,
+      17.063
+     ],
+     "z0": 134.0,
+     "z1": 147.7,
+     "why": "the adopted tower's east face"
+    },
+    {
+     "at": [
+      4.79,
+      -22.361
+     ],
+     "to": [
+      7.899,
+      -23.119
+     ],
+     "z0": 137.55,
+     "z1": 141.0,
+     "why": "the adopted loading dock roll-up door and its hood (jf3)"
+    },
+    {
+     "at": [
+      8.91,
+      -23.365
+     ],
+     "to": [
+      9.998,
+      -23.63
+     ],
+     "z0": 137.55,
+     "z1": 139.75,
+     "why": "the adopted loading dock door (jf3)"
+    }
+   ],
+   "ring_roof": {
+    "crest": 151.1,
+    "crest_in": [
+     6.0,
+     6.0,
+     6.0,
+     6.8,
+     6.0,
+     7.0,
+     6.0,
+     10.5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     7.0,
+     7.0,
+     0,
+     0,
+     0,
+     0,
+     7.3
+    ],
+    "inner_in": [
+     6.5,
+     6.5,
+     6.5,
+     7.3,
+     6.5,
+     7.5,
+     6.5,
+     11.0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     8.0,
+     7.8,
+     0,
+     0,
+     0,
+     0,
+     8.0
+    ],
+    "colour": "#8a5a45",
+    "flat_edges": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "evidence": "osm way 1188721159; lidar2017 raw points; ortho2020; main model materials",
+   "unverified": "window grid and floor levels; crest shape (one plane 147.7 -> 151.1 over 6.8 m where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands"
+  }
+ ]
+}

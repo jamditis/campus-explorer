@@ -62,6 +62,8 @@ def load(plan_dir):
         interiors=[],
         lifts=[],
         field_frame=None,
+        adopt=[],  # adopt.json: objects taken from a main-model release (adopt.py)
+        volumes=[],  # footprint.json supersede.volumes: what supersede.mjs takes out of other tiles
     )
     out["area"] = Path(plan_dir).name
     for f in sorted(Path(plan_dir).glob("*.json")):
@@ -103,6 +105,9 @@ def load(plan_dir):
             check_point(q)
         for key in ("points", "stands", "fences", "buildings", "interiors"):
             out[key].extend(dict(p, zone=zone) for p in plan.get(key, []))
+        if plan.get("adopt"):
+            out["adopt"].append(dict(plan["adopt"], zone=zone))
+        out["volumes"].extend((plan.get("supersede") or {}).get("volumes", []))
     for i, s in enumerate(out["surfaces"]):
         s["layer"] = (s.get("layer", LAYER[s["kind"]]), i)
         if geom.area(s["ring"]) < 0:

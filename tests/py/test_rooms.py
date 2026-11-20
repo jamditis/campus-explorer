@@ -113,15 +113,23 @@ class CcomPlan(unittest.TestCase):
                     mid = ((p["p"][0] + p["q"][0]) / 2, (p["p"][1] + p["q"][1]) / 2)
                     self.assertTrue(geom.inside(f["inside"], *mid), run["name"])
                     self.assertFalse(any(geom.inside(k, *mid) for k in keep), run["name"])
-            for item in f["slabs"] + f["blocks"] + f["solids"]:
+            for item in f["blocks"] + f["solids"]:
                 self.assertFalse(rooms.overlaps(item["ring"], keep), item["name"])
                 for x, y in item["ring"]:
                     self.assertTrue(geom.inside(f["inside"], x, y), item["name"])
+            # slabs reach the walls (the other sources' ground is taken out of the building), so
+            # they only have to stay inside the outline; lobby items stand inside it too
+            for item in f["slabs"] + f.get("items", []):
+                for x, y in item["ring"]:
+                    self.assertTrue(geom.inside(f["outline"], x, y), item["name"])
+            for item in f["slabs"]:  # `under`: keep-outs whose adopted objects stand on the slab
+                rest = [k["ring"] for k in f["keep_out"] if k["name"] not in item.get("under", ())]
+                self.assertFalse(rooms.overlaps(item["ring"], rest), item["name"])
 
     def test_every_object_says_its_source_and_what_is_a_guess(self):
         for f in self.floors:
-            for group in ("walls", "slabs", "blocks", "solids"):
-                for item in f[group]:
+            for group in ("walls", "slabs", "blocks", "solids", "items"):
+                for item in f.get(group, []):
                     self.assertTrue(item["name"].endswith("_UNVERIFIED"), item["name"])
             for k in f["keep_out"]:
                 self.assertTrue(k.get("why") and k.get("objects"), k["name"])
