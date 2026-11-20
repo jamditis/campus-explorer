@@ -2223,40 +2223,14 @@
    "unverified": "row read from a few lines between parked cars; pitch 3.58 m and count assumed"
   },
   {
-   "name": "W_road_Webster_crosswalk_1",
-   "type": "line",
-   "path": [
-    [
-     -308.2,
-     206.72
-    ],
-    [
-     -302.04,
-     202.98
-    ]
-   ],
-   "width": 0.3,
+   "name": "W_road_Webster_crosswalk",
+   "type": "crosswalk",
+   "line": [[-307.42, 208.0], [-301.26, 204.265]],
+   "width": 3.3,
+   "style": "ladder",
    "colour": "white",
    "evidence": "ortho2020, osm",
-   "unverified": "marking style not resolved"
-  },
-  {
-   "name": "W_road_Webster_crosswalk_2",
-   "type": "line",
-   "path": [
-    [
-     -306.64,
-     209.28
-    ],
-    [
-     -300.48,
-     205.55
-    ]
-   ],
-   "width": 0.3,
-   "colour": "white",
-   "evidence": "ortho2020, osm",
-   "unverified": "marking style not resolved"
+   "unverified": "edge lines read from the ortho; ladder style from OSM (crossing:markings=ladder, node 13773972358), bars at the default 0.6 m by 1.2 m: tree shade hides them in the ortho"
   }
  ],
  "points": [
