@@ -4,7 +4,8 @@ For every HTML file outside vendor/: src/href attributes and import-map targets
 that point at local files must exist. Relative imports in the viewer's JavaScript
 (static and dynamic) and files it fetches by a literal relative path must exist.
 Every tile a model manifest lists must exist, including the campus manifest that
-joins the scenes. External URLs are ignored.
+joins the scenes, and so must every file a listed tile names by URI (the shared
+images in models/main/tex/). External URLs are ignored.
 """
 
 import glob
@@ -14,6 +15,9 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "web-export"))
+from glb_refs import image_files  # noqa: E402
+
 ATTR = re.compile(r"""(?:src|href)\s*=\s*["']([^"'#?]+)""", re.I)
 IMPORTMAP = re.compile(r"<script[^>]*type=[\"']importmap[\"'][^>]*>(.*?)</script>", re.S | re.I)
 JS_IMPORT = re.compile(r"""(?:\bfrom\s*|\bimport\s*\(?\s*)["'](\.{1,2}/[^"']+)["']""")
@@ -22,6 +26,18 @@ JS_FETCH = re.compile(r"""\bfetch\(\s*["'](\.{1,2}/[^"'$]+)["']""")
 
 def is_local(ref):
     return not re.match(r"^(?:[a-z]+:|//|#|data:|mailto:)", ref, re.I) and ref.strip() != ""
+
+
+def missing_images(base, files):
+    """Files that the GLBs `files` (relative to `base`) name by URI but that do not exist."""
+    out = []
+    for f in files:
+        if not f or not f.endswith(".glb") or not os.path.exists(os.path.join(base, f)):
+            continue
+        for ref in image_files(base, f):
+            if not os.path.exists(os.path.join(base, ref)):
+                out.append(f"{base}/{f}: names missing image {ref}")
+    return out
 
 
 def main():
@@ -80,6 +96,7 @@ def main():
             lod = t.get("lod") if isinstance(t, dict) else None
             if lod and not os.path.exists(os.path.join(os.path.dirname(manifest), lod)):
                 problems.append(f"{manifest}: lists missing far version {lod}")
+            problems += missing_images(os.path.dirname(manifest), [name, lod])
     for p in problems:
         print(f"::error::{p}")
     print(f"viewer refs: {len(html)} page(s), {len(scripts)} script(s), {len(problems)} problem(s)")

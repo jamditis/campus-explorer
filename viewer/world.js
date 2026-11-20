@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
 import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
+import { dirOf, resolveUri, imageUri, textureKey, createTextureShare, sharedBytes, newBytes } from './texshare.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -34,6 +35,9 @@ export function createWorld(app, prepare, release = () => {}) {
   const tilesAt = (x, z) => tiles.filter(t => t.center && squareDistance(t, x, z) === 0);
   const urgent = new Set();
   const progress = { loaded: 0, total: 1, tiles: 0, count: 0 };
+  // images several tiles share (models/main/tex/): one texture for all of them, and their bytes counted once
+  const textures = createTextureShare();
+  let texSizes = {}, texSeen = new Set();
 
   function free(root) {
     const mats = new Set();
@@ -42,11 +46,12 @@ export function createWorld(app, prepare, release = () => {}) {
       o.geometry.boundsTree = null; o.geometry.dispose();
       for (const m of [].concat(o.material)) if (m) mats.add(m);
     });
-    for (const m of mats) { for (const k of MATERIAL_MAPS) m[k]?.dispose(); m.dispose(); }
+    for (const m of mats) { for (const k of MATERIAL_MAPS) if (!textures.has(m[k])) m[k]?.dispose(); m.dispose(); }
+    textures.release(root); // a shared texture goes with the last tile that uses it
   }
   function dispose() {
     abort?.abort(); abort = null; clearInterval(watch);
-    free(group);
+    free(group); textures.clear(); texSeen = new Set();
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
     tiles = []; colliders = []; lods = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
     Object.assign(progress, { loaded: 0, total: 1, tiles: 0, count: 0 });
@@ -121,9 +126,11 @@ export function createWorld(app, prepare, release = () => {}) {
     tile.state = 'loading'; tile.got = 0;
     try {
       const buf = await download(tile, abort.signal);
-      const gltf = await loader.parseAsync(buf, base);
+      const path = base + dirOf(tile.file); // image URIs are relative to the tile's own folder
+      const gltf = await loader.parseAsync(buf, path);
       if (my !== token) return;
       const root = gltf.scene; root.name = tile.file.replace('.glb', '').split('/').pop();
+      shareTextures(gltf, root, path);
       strip(root); dropUnmaterialled(gltf);
       prepare(root, tile, { far: false });
       root.updateMatrixWorld(true);
@@ -134,11 +141,11 @@ export function createWorld(app, prepare, release = () => {}) {
       if (tile.center) app.bounds.expandByObject(root);
       addColliders(root, tile);
       warmIdle(); // collision near the view gets ready in idle time, so picks and the elevation readout do not wait
-      progress.tiles++;
+      progress.tiles++; progress.loaded += newBytes(tile, texSeen, texSizes);
       app.emit('tile', { tile }); app.emit('progress', progress); app.invalidate(true); // lazy: see app.invalidate
     } catch (e) {
       if (my !== token || e.name === 'AbortError') return;
-      progress.loaded += tile.bytes - tile.got; // keep the bar honest when a tile fails
+      progress.loaded += tile.bytes - tile.got + newBytes(tile, texSeen, texSizes); // keep the bar honest when a tile fails
       tile.state = 'error'; tile.error = e;
       console.error(e);
       app.emit('tile:error', { tile, error: e });
@@ -165,6 +172,23 @@ export function createWorld(app, prepare, release = () => {}) {
     for (const o of drop) { o.removeFromParent(); o.geometry.dispose(); }
   }
 
+  // A shared image (tex/, tools/web-export/share_tex.mjs) arrives as a new texture in every tile that names it.
+  // Swap it for the texture an earlier tile already has, so the GPU holds one copy; the browser's cache serves
+  // the file itself. Materials stay per tile; look.js sets only anisotropy on a texture, the same for every user.
+  function shareTextures(gltf, root, path) {
+    const { json, associations } = gltf.parser;
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      for (const m of [].concat(o.material)) {
+        if (!m) continue;
+        for (const k of MATERIAL_MAPS) {
+          const t = m[k], i = t ? associations.get(t)?.textures : undefined, uri = i === undefined ? null : imageUri(json, i);
+          if (uri) m[k] = textures.acquire(root, textureKey(resolveUri(path, uri), t), t);
+        }
+      }
+    });
+  }
+
   // ---- far versions of tiles (LOD) ----
   // A tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances, small parts or
   // interiors, about 0.5 m error). Past a distance set by the quality level, the full tile's plain meshes move
@@ -181,7 +205,9 @@ export function createWorld(app, prepare, release = () => {}) {
       try {
         const res = await fetch(base + tile.lod, { signal: abort.signal });
         if (!res.ok) throw new Error(`${tile.lod}: HTTP ${res.status}`);
-        const g = await loader.parseAsync(await res.arrayBuffer(), base); dropUnmaterialled(g); root = g.scene;
+        const path = base + dirOf(tile.lod);
+        const g = await loader.parseAsync(await res.arrayBuffer(), path); dropUnmaterialled(g); root = g.scene;
+        shareTextures(g, root, path);
       } catch (e) { if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; }
       if (my !== token || tile.state !== 'ready') { free(root); return; }
       root.name = `lod_${tile.root.name}`;
@@ -272,14 +298,14 @@ export function createWorld(app, prepare, release = () => {}) {
       const keep = new Set(orderTiles(list.filter(t => t.center), at).slice(0, limit));
       list = list.filter(t => !t.center || keep.has(t));
     }
-    tiles = list; budget = cap; hide = new Set(man.hide || []);
+    tiles = list; budget = cap; hide = new Set(man.hide || []); texSizes = man.tex || {};
     app.bounds.makeEmpty();
     if (b) app.bounds.set(new THREE.Vector3(b.minX, Infinity, b.minZ), new THREE.Vector3(b.maxX, -Infinity, b.maxZ));
-    Object.assign(progress, { loaded: 0, total: tiles.reduce((s, t) => s + t.bytes, 0), tiles: 0, count: tiles.length });
+    Object.assign(progress, { loaded: 0, total: tiles.reduce((s, t) => s + t.bytes, 0) + sharedBytes(tiles, texSizes), tiles: 0, count: tiles.length });
     app.emit('scene:start', { manifest: man, focus: at, base });
 
     const first = firstBatch(tiles, at, FIRST_TILES);
-    progress.first = first.reduce((s, t) => s + t.bytes, 0);
+    progress.first = first.reduce((s, t) => s + t.bytes, 0) + sharedBytes(first, texSizes);
     await Promise.all(first.map(t => loadTile(t, my)));
     if (my !== token) return;
     if (first.length && first.every(t => t.state === 'error')) throw first[0].error;

@@ -3,10 +3,14 @@
 // blender/scripted/supersede.py (per area: footprint outline, and which meshes are ground there).
 //   node supersede.mjs RULES.json MODELS_DIR
 // For every area and every tile that is not a scripted-build tile:
-//   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge is cut
-//         into small pieces first (`cut` metres), and the last straddlers have their inside corners lowered by
-//         `tuck` metres, so the old ground ends at the new ground's edge and dips under it
+//   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge (or holds
+//         one of its corners) is cut into small pieces first (`cut` metres), and each last piece is cut exactly
+//         where the outline crosses it (cut.mjs): the old ground ends at the footprint at its own height, a
+//         quantisation step (at least 2 cm) under the new ground's edge, so no crack opens and nothing dips
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
+// Tiles done by the earlier version (straddlers kept whole, their inside corners lowered by `tuck` metres, which
+// left a trench of 0 to `tuck` metres along the outside of the edge) are mended: those corners are raised back
+// and the pieces cut as above. A primitive cut this way carries the rules' hash in its extras `cut` too.
 // Far-field trees (far_trees.bin) inside the footprint are removed too: they are a scatter, not real trees.
 // A primitive is marked in its extras once done (with a hash of each area's rules), so a second run leaves it
 // alone, and a run with a changed footprint stops instead of leaving old holes or old ground. Geometry stays in its
@@ -16,6 +20,7 @@ import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extension
 import { compactPrimitive } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { crossings, cornersIn, outsidePart } from './cut.mjs';
 
 const [rulesFile, dir] = process.argv.slice(2);
 if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MODELS_DIR'); process.exit(2); }
@@ -55,23 +60,31 @@ const touches = f => {
 
 for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith('sw_') && touches(f)).sort()) {
   const doc = await io.read(`${dir}/${f}`);
-  let removed = 0, tucked = 0, removedAll = 0;
+  let removed = 0, cutN = 0, mended = 0, removedAll = 0;
   for (const node of doc.getRoot().listNodes()) {
     const mesh = node.getMesh();
     if (!mesh || node.getExtension('EXT_mesh_gpu_instancing')) continue;
     const w = node.getWorldMatrix();
-    // lowering by TUCK along world up (viewer +Y), written in the mesh's own space: inverse(rotation * scale) * (0, -TUCK, 0)
+    // raising by TUCK along world up (viewer +Y), written in the mesh's own space: inverse(rotation * scale) * (0, TUCK, 0)
+    // (undoes the earlier version's lowering)
     const s2 = k => (w[k] * w[k] + w[k + 1] * w[k + 1] + w[k + 2] * w[k + 2]) || 1;
-    const down = [-TUCK * w[1] / s2(0), -TUCK * w[5] / s2(4), -TUCK * w[9] / s2(8)];
+    const up = [TUCK * w[1] / s2(0), TUCK * w[5] / s2(4), TUCK * w[9] / s2(8)];
     for (const prim of mesh.listPrimitives()) {
       const label = `${mesh.getName()} ${prim.getMaterial()?.getName() ?? ''}`;
       const mode = DROP.some(r => r.test(label)) ? 'drop' : CLIP.some(r => r.test(label)) ? 'clip' : null;
       if (!mode || prim.getMode() !== 4) continue;
       const done = (prim.getExtras().superseded ?? '').split(' ').filter(Boolean);
       if (done.some(m => !KNOWN.has(m))) { stale.add(f); continue; }
-      if (done.includes(RULES)) continue;
+      const cutDone = (prim.getExtras().cut ?? '').split(' ').filter(Boolean);
+      // done by the earlier version: its trench is mended below; done by this one: nothing to do
+      const mend = done.includes(RULES) && mode === 'clip' && !cutDone.includes(RULES);
+      if (done.includes(RULES) && !mend) continue;
       const src = prim.getAttribute('POSITION'), idx = prim.getIndices();
       if (!src || !idx) continue;
+      // a cut corner is a new vertex, rounded to the mesh's quantisation grid: pull it under the new ground by
+      // at least one step so rounding cannot open a crack (and a T-junction with the new edge cannot show)
+      const DIV = { 5120: 127, 5121: 255, 5122: 32767, 5123: 65535 }[src.getComponentType()];
+      const OVER = Math.min(0.15, Math.max(0.02, DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0));
       const n = src.getCount(), p = [0, 0, 0];
       // model-frame position of every corner (viewer z is minus model y), and whether it is inside
       const wx = new Float64Array(n), wy = new Float64Array(n), isIn = Array.from({ length: n }, () => 0);
@@ -82,72 +95,101 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         if (within(wx[i], wy[i])) { isIn[i] = 1; any = true; }
       }
       if (!any) continue;
-      // corners added by cutting: [parent a, parent b], numbered after the original ones
-      const added = [], ax = [], ay = [], mids = new Map();
+      // corners added by cutting, numbered after the original ones: each a weighted mean of earlier corners,
+      // [[corner, weight], ...] (an edge's midpoint, a point where the outline crosses an edge, an outline corner)
+      const added = [], ax = [], ay = [], memo = new Map();
       const X = i => (i < n ? wx[i] : ax[i - n]), Y = i => (i < n ? wy[i] : ay[i - n]);
-      const mid = (a, b) => {
-        const key = a < b ? a * 4294967296 + b : b * 4294967296 + a;
-        let m = mids.get(key);
+      const add = (key, parents, inside) => {
+        let m = key === null ? undefined : memo.get(key);
         if (m === undefined) {
-          m = n + added.length; mids.set(key, m); added.push([a, b]);
-          ax.push((X(a) + X(b)) / 2); ay.push((Y(a) + Y(b)) / 2); isIn[m] = within(ax[m - n], ay[m - n]) ? 1 : 0;
+          m = n + added.length; added.push(parents);
+          ax.push(parents.reduce((s, [i, k]) => s + X(i) * k, 0)); ay.push(parents.reduce((s, [i, k]) => s + Y(i) * k, 0));
+          isIn[m] = inside ? 1 : 0;
+          if (key !== null) memo.set(key, m);
         }
         return m;
       };
-      const I = idx.getArray(), keep = [], lower = new Set();
-      // A triangle wholly inside goes. One that straddles the edge is cut into four, again and again, until
-      // its pieces are small (CUT metres); then the pieces inside go and the last straddlers are tucked.
+      const pair = (a, b) => (a < b ? a * 4294967296 + b : b * 4294967296 + a);
+      const mid = (a, b) => add('m' + pair(a, b), [[a, 0.5], [b, 0.5]], within((X(a) + X(b)) / 2, (Y(a) + Y(b)) / 2));
+      // the crossing on an edge is found from its inside corner, so the two triangles on the edge share it
+      const cross = (i, o, t) => add('x' + i * 4294967296 + o, [[i, 1 - t], [o, t]], false);
+      const I = idx.getArray(), keep = [];
+      const P = i => [X(i), Y(i)];
+      // straddling edges crossed once, other edges not at all: the piece can be cut with one run of the outline
+      const plain = (a, b, c) => [[a, b], [b, c], [c, a]].every(([u, v]) => crossings(X(u), Y(u), X(v), Y(v), ring).length === (isIn[u] !== isIn[v] ? 1 : 0));
+      // A triangle wholly inside goes. One that straddles the edge, or holds an outline corner, is cut into four,
+      // again and again, until its pieces are small (CUT metres) and simple; then the pieces inside go and each
+      // last straddler keeps exactly its part outside the outline.
       const visit = (a, b, c, depth) => {
         const k = isIn[a] + isIn[b] + isIn[c];
-        if (k === 3) { removed++; return; }
-        if (k === 0) { keep.push(a, b, c); return; }
+        const away = Math.max(X(a), X(b), X(c)) < bx[0] || Math.min(X(a), X(b), X(c)) > bx[2] ||
+          Math.max(Y(a), Y(b), Y(c)) < bx[1] || Math.min(Y(a), Y(b), Y(c)) > bx[3];
+        const corners = mode === 'clip' && !away ? cornersIn(ring, P(a), P(b), P(c)) : [];
+        if (!corners.length && k === 3) { removed++; return; }
+        if (!corners.length && k === 0) { keep.push(a, b, c); return; }
+        if (mode === 'drop') { if (k === 3) removed++; else keep.push(a, b, c); return; }
         const longest = Math.max(Math.hypot(X(a) - X(b), Y(a) - Y(b)), Math.hypot(X(b) - X(c), Y(b) - Y(c)), Math.hypot(X(c) - X(a), Y(c) - Y(a)));
-        if (mode === 'clip' && depth < 8 && longest > CUT) {
+        const simple = k > 0 && k < 3 && corners.length <= 1 && plain(a, b, c);
+        if (depth < 12 && (longest > CUT || !simple)) {
           const ab = mid(a, b), bc = mid(b, c), ca = mid(c, a);
           visit(a, ab, ca, depth + 1); visit(ab, b, bc, depth + 1); visit(ca, bc, c, depth + 1); visit(ab, bc, ca, depth + 1);
           return;
         }
-        keep.push(a, b, c);
-        if (mode === 'clip') for (const v of [a, b, c]) if (isIn[v]) lower.add(v);
+        if (!simple) { if (k === 3) removed++; else keep.push(a, b, c); return; } // a few centimetres across by now
+        const ids = [a, b, c], tri = ids.map(P);
+        const at = corners.length ? { index: corners[0], at: ring[corners[0]] } : null;
+        const part = outsidePart(ring, tri, ids.map(i => isIn[i] === 1), at, OVER);
+        const vs = part.map(q => {
+          if (q.kind === 'corner') return ids[q.i];
+          if (q.kind === 'cross') return cross(ids[q.edge[0]], ids[q.edge[1]], q.t);
+          // the outline corner: barycentric weights of the piece's corners
+          const [[x1, y1], [x2, y2], [x3, y3]] = tri, d = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3);
+          const l1 = ((y2 - y3) * (q.x - x3) + (x3 - x2) * (q.y - y3)) / d, l2 = ((y3 - y1) * (q.x - x3) + (x1 - x3) * (q.y - y3)) / d;
+          return add(null, [[a, l1], [b, l2], [c, 1 - l1 - l2]], false);
+        });
+        // a fan from the outline corner (the part is star-shaped round it) or from any corner of a convex part
+        const s0 = Math.max(0, part.findIndex(q => q.kind === 'ring'));
+        for (let j = 1; j < vs.length - 1; j++) keep.push(vs[s0], vs[(s0 + j) % vs.length], vs[(s0 + j + 1) % vs.length]);
+        cutN++;
       };
       for (let t = 0; t < I.length; t += 3) visit(I[t], I[t + 1], I[t + 2], 0);
       if (!keep.length) { mesh.removePrimitive(prim); prim.dispose(); removedAll++; continue; }
       // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more.
-      // Every attribute gets the added corners, each the mean of its two parents (parents come first).
+      // Every attribute gets the added corners, each the weighted mean of its parents (parents come first).
       const total = n + added.length, olds = [idx];
       for (const sem of prim.listSemantics()) {
         const old = prim.getAttribute(sem), copy = old.clone(), size = old.getElementSize();
         if (added.length) {
           const arr = new (old.getArray().constructor)(total * size); arr.set(old.getArray()); copy.setArray(arr);
-          const ea = [], eb = [];
-          for (let k = 0; k < added.length; k++) {
-            copy.getElement(added[k][0], ea); copy.getElement(added[k][1], eb);
-            copy.setElement(n + k, ea.map((v, q) => (v + eb[q]) / 2));
-          }
+        }
+        if (sem === 'POSITION' && mend) {
+          // the earlier version lowered every inside corner it kept by TUCK: put them back first
+          for (let i = 0; i < n; i++) if (isIn[i]) { copy.getElement(i, p); copy.setElement(i, [p[0] + up[0], p[1] + up[1], p[2] + up[2]]); mended++; }
+        }
+        const e = [], sum = new Array(size);
+        for (let k = 0; k < added.length; k++) {
+          sum.fill(0);
+          for (const [i, wgt] of added[k]) { copy.getElement(i, e); for (let q = 0; q < size; q++) sum[q] += e[q] * wgt; }
+          copy.setElement(n + k, sum);
         }
         prim.setAttribute(sem, copy); olds.push(old);
-      }
-      const pos = prim.getAttribute('POSITION'), q = [0, 0, 0];
-      for (const i of lower) {
-        pos.getElement(i, p); pos.setElement(i, [p[0] + down[0], p[1] + down[1], p[2] + down[2]]); pos.getElement(i, q);
-        // positions are quantized to the mesh's own box: a corner already at the bottom of it cannot go lower
-        if (Math.abs(q[1] - p[1] - down[1]) > Math.abs(down[1]) * 0.2) pos.setElement(i, p); else tucked++;
       }
       prim.setIndices(idx.clone().setArray(total > 65535 ? new Uint32Array(keep) : new Uint16Array(keep)));
       for (const old of olds) if (!old.listParents().some(x => x.propertyType !== 'Root')) old.dispose();
       compactPrimitive(prim); // drops the corners no triangle uses any more; the index buffer compresses badly with gaps
-      prim.setExtras({ ...prim.getExtras(), superseded: [...done, RULES].join(' ') });
+      const marks = done.includes(RULES) ? done : [...done, RULES];
+      prim.setExtras({ ...prim.getExtras(), superseded: marks.join(' '), ...(mode === 'clip' ? { cut: [...cutDone, RULES].join(' ') } : {}) });
     }
     if (!mesh.listPrimitives().length) node.setMesh(null);
   }
-  if (!removed && !tucked) continue;
+  if (!removed && !cutN && !mended) continue;
   for (const m of doc.getRoot().listMeshes()) if (!m.listPrimitives().length) m.dispose();
   for (const a of doc.getRoot().listAccessors()) if (!a.listParents().some(x => x.propertyType !== 'Root')) a.dispose();
   // same encoding as `gltf-transform optimize --compress meshopt` wrote
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
   await io.write(`${dir}/${f}`, doc);
   changedTiles.add(f);
-  console.log(`supersede ${rules.name ?? ''} ${f}: removed ${removed} triangles (${removedAll} whole primitives), tucked ${tucked} corners`);
+  console.log(`supersede ${rules.name ?? ''} ${f}: removed ${removed} triangles (${removedAll} whole primitives), cut ${cutN} at the outline, mended ${mended} corners`);
 }
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
