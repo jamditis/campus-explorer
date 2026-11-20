@@ -88,3 +88,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: brick dorm walls looked near black in one eye-level picture. I assumed the viewer multiplies the wall colour into a red brick texture and added a correcting tint. The walls then came out white. The viewer's textures are normalised to a mid-grey mean (`look.js`, `t *= 2.7`), so a material's colour passes through; the dark wall was the shaded side of a dark brick.
 - Rule: before changing how a colour is written, read the code that shows it, and look at a sunlit and a shaded view. One picture of one side is not evidence of a wrong colour.
+
+## Check a place's name against the data before naming an area (2026-11-20)
+
+- What happened: I called the block north of the stadium district the "Floyd Hall Arena block" in my reports, in the plan, and in the question I put to Joe, and he chose it as the next area under that name. It is the Overlook Corporate Center, a private office tower and its garage at 150 Clove Road. Floyd Hall Arena is the university's Ice Arena, which the north model already has. Both names were in data I had already listed (OpenStreetMap: "Overlook Corporate Center, office" at that position; "Montclair State University Ice Arena" in the north-east district). I took the name from an early gap list of my own and never checked it.
+- Rule: before an area gets a name in a plan, a report or a question, read the names of its buildings from OpenStreetMap at those coordinates and say whether the ground is campus or not. A choice made on a wrong label is not a choice: put the question again with the right facts.
