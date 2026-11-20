@@ -28,3 +28,10 @@ test('window and lamp glass, and see-through materials without a category, stay 
   assert.equal(isSeeThroughSolid('Glass_Lamp_Frosted', 'glass'), false);
   assert.equal(isSeeThroughSolid('some_unnamed_clear_thing', ''), false);
 });
+
+test('water of the scripted build is water, and nothing else that mentions water is', () => {
+  assert.equal(fixCat('SW_water_base', 'water'), 'water');
+  assert.equal(fixCat('SW_water_base', ''), 'water'); // an export without the water category
+  assert.equal(fixCat('NA_water_bottle_clear_UNVERIFIED', 'glass'), 'glass');
+  assert.equal(fixCat('CCM office water bottles (na)', ''), '');
+});

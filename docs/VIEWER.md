@@ -135,6 +135,8 @@ The scripted build (`blender/scripted/`) ships as `sw_` tiles. It has one folder
 
 Material categories come from the export as the `cat` extra on each material. Two rules were added for the southwest build and apply to every source: `turf` (artificial turf: the grass texture at a finer scale, no lawn tint, no grass tufts), and a see-through material whose category is not `glass` (chain-link, netting) stays see-through instead of becoming window glass.
 
+`water` is the scripted build's ponds and pools (material `SW_water_*`; `cat.js` files that name as water whatever the export said). It loads no texture: `look.js` gives it a fixed dark blue-green, roughness 0.06 and a stronger sky reflection than other surfaces, and bends its normal with four fixed wave trains in world space. The ripple has no clock, so a still view is not redrawn; it fades out where a pixel spans a large part of the shortest wave. Water reflects the sky only, not buildings or trees.
+
 Other manifest fields the viewer uses:
 
 | Field | Use |

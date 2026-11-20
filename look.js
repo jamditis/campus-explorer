@@ -305,6 +305,46 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     m.needsUpdate = true;
   }
 
+  // --- water (the scripted build's ponds and pools): no texture to load. A dark blue-green, smooth
+  // surface that mirrors the sky, with a ripple in the normal from four fixed wave trains. The ripple
+  // has no clock, so a still view needs no redraw. The colour is set here, not taken from the export ---
+  const WATER = new THREE.Color(0.012, 0.03, 0.03); // linear: deep water reflects little of its own
+  function water(m) {
+    if (m.userData.tp) return;
+    m.userData.tp = 'water';
+    m.map = null; m.color.copy(WATER); m.roughness = 0.06; m.metalness = 0;
+    m.onBeforeCompile = sh => {
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vWaPos; varying vec3 vWaNrm;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vWaPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+          vWaNrm = normalize(mat3(modelMatrix) * objectNormal);`);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          varying vec3 vWaPos; varying vec3 vWaNrm;
+          // slope of one wave train: direction d, wavelength l and height a in metres
+          vec2 waSlope(vec2 p, vec2 d, float l, float a) { float k = 6.2831853 / l; return d * (a * k * cos(k * dot(d, p))); }`)
+        .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+          if (normalize(vWaNrm).y > 0.9) { // the level surface; the skirt along the footprint edge keeps its normal
+            vec2 p = vWaPos.xz;
+            p += 0.8 * vec2(sin(p.y * 0.23), sin(p.x * 0.19)); // bend the trains so they do not read as a grid
+            vec2 g = waSlope(p, vec2(0.866, 0.5), 3.1, 0.012) + waSlope(p, vec2(-0.342, 0.94), 2.3, 0.009)
+                   + waSlope(p, vec2(0.985, -0.174), 1.6, 0.006) + waSlope(p, vec2(-0.643, -0.766), 1.1, 0.004);
+            // fade out once a pixel spans a good part of the shortest wave (far off, grazing): no shimmer
+            g *= clamp(1.0 - (length(fwidth(vWaPos.xz)) - 0.1) / 0.3, 0.0, 1.0);
+            normal = normalize(mat3(viewMatrix) * normalize(vec3(-g.x, 1.0, -g.y)));
+          }`)
+        // three.js r170 drives scene.environment by scene.environmentIntensity (0.22 here), not by the
+        // material: give water its sky reflection back
+        .replace('#include <lights_fragment_maps>', `#include <lights_fragment_maps>
+          #ifdef RE_IndirectSpecular
+            radiance *= 3.5;
+          #endif`);
+    };
+    m.customProgramCacheKey = () => 'water';
+    m.needsUpdate = true;
+  }
+
   // --- per-mesh screen-size culling ---
   let items = [];
   const tmpS = new THREE.Sphere();
@@ -527,6 +567,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           m.color.lerp(new THREE.Color('#1c262e'), 0.8);
           if (o.isInstancedMesh || m.side === THREE.BackSide) { m.opacity = Math.max(m.opacity, 0.82); continue; }
           m.transparent = false; m.opacity = 1; m.depthWrite = true; glassInterior(m);
+        } else if (cat === 'water') {
+          water(m);
         } else if (cat && CATS[cat]) {
           // lawn/terrain colours averaged from aerial-draped materials come out grey: give them a lawn tone
           if (cat === 'grass') { const hsl = {}; m.color.getHSL(hsl); if (hsl.s < 0.18 || hsl.l > 0.45) m.color.setHSL(0.21, 0.32, Math.min(0.32, Math.max(0.2, hsl.l * 0.6))); }

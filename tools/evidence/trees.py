@@ -29,7 +29,7 @@ import geom  # noqa: E402
 import layout  # noqa: E402
 
 DECIDUOUS = ["red_maple", "pin_oak", "sugar_maple", "tulip_poplar", "american_beech", "sweetgum"]
-PAVED = {"asphalt", "concrete", "brick", "turf"}
+PAVED = {"asphalt", "concrete", "brick", "turf", "water"}  # no tree stands on these
 
 
 def fill(grid):

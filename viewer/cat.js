@@ -1,5 +1,7 @@
 // fix-ups for materials the export categorised by name only
 export function fixCat(name, cat) {
+  // water of the scripted build (blender/scripted, kind "water"), whatever an older export filed it as
+  if (/^SW_water_/.test(name)) return 'water';
   if (cat === 'glass' && /lawn|grass|turf/i.test(name)) return 'grass';
   // fence fabric and netting exported as glass (anything see-through was): they are metal you can see through
   if (cat === 'glass' && /chain.?link|netting|goal_net/i.test(name)) return 'metal';

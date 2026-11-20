@@ -69,7 +69,8 @@ def build_area(plan_dir, data, assets, built):
     lidar = data / plan_dir.name / "lidar.npz"
     terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids)
     authored = data / "authored"
-    objects = ground.build(lay, terrain, str(authored) if authored.exists() else None)
+    lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
+    objects = ground.build(lay, terrain, lay["image_dir"])
     try:
         import place  # object builders; optional while the ground is being worked on
     except ImportError:

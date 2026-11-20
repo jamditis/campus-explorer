@@ -5,11 +5,23 @@ layout.
 """
 
 import json
+import math
 from pathlib import Path
 
 import geom
+import marks
 
-LAYER = {"lawn": 0, "mulch": 1, "gravel": 2, "asphalt": 3, "turf": 4, "concrete": 5, "brick": 6}
+# water lies over soft ground (a pond in a gravel yard) and under paving (a walk across it wins)
+LAYER = {
+    "lawn": 0,
+    "mulch": 1,
+    "gravel": 2,
+    "water": 2.5,
+    "asphalt": 3,
+    "turf": 4,
+    "concrete": 5,
+    "brick": 6,
+}
 YD = 0.9144
 PAINTABLE = {"asphalt", "turf", "gravel"}  # gravel: chalk lines on a clay infield
 # texture sheet resolution, pixels per metre: 4 in lines are 2 to 3 pixels wide
@@ -57,6 +69,7 @@ def load(plan_dir):
         for s in plan.get("surfaces", []):
             if s.get("reference"):
                 continue  # drawn for checking only: the thing itself is in another source model
+            check_surface(s)
             out["surfaces"].append(
                 dict(
                     s,
@@ -97,17 +110,66 @@ def load(plan_dir):
             if i in painted
             else None
         )
+    for j, b in enumerate(out["buildings"]):
+        if "markings" in b:
+            roof_paint(b, f"{out['area']}_d{j:03d}")
     return out
+
+
+def roof_paint(part, name):
+    """Paint on a flat roof (the top level of a parking deck): the part's `markings` as primitives
+    in `paint`, and one sheet over the whole roof in `sheets`, since the roof deck is one face."""
+    if part.get("roof", "flat") != "flat" or part.get("open"):
+        raise ValueError(f"{part.get('name')}: markings need a flat roof")
+    part["paint"] = [p for m in part["markings"] for p in primitives(m)]
+    ring = geom.expand(part["ring"], True)
+    part["sheets"] = geom.sheets(name, ring, max_len=1e9, ppm=PPM["asphalt"])
+
+
+def sheet_uv(sheet, x, y):
+    """Texture coordinates of model point (x, y) on a paint sheet (0..1 over the sheet)."""
+    u, v = geom.frame((0.0, 0.0), sheet["angle"])[0](x, y)
+    return (
+        (u - sheet["u0"]) / (sheet["u1"] - sheet["u0"]),
+        (v - sheet["v0"]) / (sheet["v1"] - sheet["v0"]),
+    )
 
 
 def primitives(m):
     """
-    A marking as paint primitives: {"line": dense polyline, "width", "colour"} or {"ring": outline,
-    "colour"}.
+    A marking as paint primitives: {"line": dense polyline, "width", "colour"}, {"ring": outline,
+    "colour"} or {"text", "at", "right_angle", "height", "width", "colour", "box": outline}.
     """
     colour = m.get("colour", "white")
     if m["type"] == "area":
         return [dict(ring=geom.expand(m["ring"], True), colour=colour)]
+    if m["type"] == "arrow":
+        return [dict(ring=r, colour=colour) for r in marks.arrow(m["at"], m["angle"], m["shape"])]
+    if m["type"] == "crosswalk":
+        rings = marks.crosswalk(
+            m["line"],
+            m.get("width", 3.0),
+            m.get("style", "continental"),
+            m.get("bar", 0.6),
+            m.get("spacing", 1.2),
+        )
+        return [dict(ring=r, colour=colour) for r in rings]
+    if m["type"] == "text":
+        h = m.get("height", 2.4)
+        w = m.get("width") or marks.word_width(m["text"], h)
+        box = marks.word_box(m["at"], m["angle"], h, w)
+        right = m["angle"] - 90  # read by someone facing `angle`: left to right is 90 deg less
+        return [
+            dict(
+                text=m["text"],
+                at=tuple(m["at"]),
+                right_angle=right,
+                height=h,
+                width=w,
+                colour=colour,
+                box=box,
+            )
+        ]
     if m["type"] == "stalls":
         return [dict(line=seg, width=m.get("width", 0.1), colour=colour) for seg in geom.stalls(m)]
     line = geom.expand(m["path"], m.get("closed", False))
@@ -115,6 +177,20 @@ def primitives(m):
         line = line + line[:1]
     parts = geom.dashes(line, *m["dash"]) if m.get("dash") else [line]
     return [dict(line=p, width=m.get("width", 0.1), colour=colour) for p in parts]
+
+
+def check_surface(s):
+    """Refuse what the builders cannot honour for water: a water surface is one level sheet with
+    no paint; `level` (metres, NAVD88) is for water only and must be a number."""
+    name = s.get("name")
+    if "level" in s:
+        lv = s["level"]
+        if s["kind"] != "water":
+            raise ValueError(f"{name}: only water takes a level")
+        if isinstance(lv, bool) or not isinstance(lv, (int, float)) or not math.isfinite(lv):
+            raise ValueError(f"{name}: level must be a height in metres, not {lv!r}")
+    if s["kind"] == "water" and s.get("paint"):
+        raise ValueError(f"{name}: water takes no paint")
 
 
 def paintable(surface):
@@ -138,7 +214,7 @@ def painted_surfaces(surfaces, markings):
     boxes = [geom.bounds(s["ring"]) for s in surfaces]
     out = set()
     for m in markings:
-        pts = m.get("line") or m["ring"]
+        pts = m.get("line") or m.get("ring") or m["box"]
         if len(pts) == 2:  # a long straight line: test along it, not only its ends
             pts = [(p[0], p[1]) for p in geom.resample(pts, 3.0)]
         for x, y in pts:

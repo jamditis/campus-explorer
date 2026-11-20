@@ -9,7 +9,9 @@ import math
 
 import geom
 import kit
+import layout
 import massing
+from ground import sheet_material
 
 WALL_KIND = {"dorm": "brick", "hall": "brick", "plant": "brick", "deck": "concrete"}
 PARAPET = {"deck": 1.1}  # height of the parapet above the roof deck; 0.4 for everything else
@@ -42,12 +44,38 @@ def _panel(b, a, u, nrm, s0, s1, z0, z1, material, off=PROUD):
     b.faces(p, [(0, 1, 2, 3)], material)
 
 
-def _flat_roof(b, ring, top, drop, cap, deck):
+def _wells(p, roof_hex):
+    """The part's `wells` as (anticlockwise ring, floor height, floor colour)."""
+    out = []
+    for w in p.get("wells", ()):
+        r = geom.expand(w["ring"], True)
+        out.append((r if geom.area(r) > 0 else r[::-1], w["floor"], w.get("colour", roof_hex)))
+    return out
+
+
+def _deck(b, outline, z, wells, deck, side):
+    """A flat deck at `z` on an anticlockwise outline, open over each well. A well has inner walls
+    from the deck down to its floor (`side`) and a floor of its own colour.
+    """
+    rings = [w[0] for w in wells]
+    massing.check_wells(outline, rings)
+    pts = [(q[0], q[1], z) for q in outline] + [(q[0], q[1], z) for r in rings for q in r]
+    b.faces(pts, massing.deck_triangles(outline, rings), deck)
+    for r, floor, hexc in wells:
+        if not floor < z - 0.05:
+            raise ValueError(f"a well floor ({floor}) must lie below its deck ({z:.2f})")
+        m = len(r)
+        v = [(q[0], q[1], z) for q in r] + [(q[0], q[1], floor) for q in r]
+        # inner walls look into the well (to the left of the anticlockwise ring)
+        b.faces(v, [(i, (i + 1) % m, m + (i + 1) % m, m + i) for i in range(m)], side)
+        mat = kit.mat("concrete", "roof_" + hexc[1:], kit.srgb(hexc), 0.85)
+        b.faces(v[m:], [tuple(range(m))], mat)  # anticlockwise from above: looks up
+
+
+def _flat_roof(b, ring, top, drop, cap, deck, wells=()):
     """Parapet and roof deck of a flat roof: the deck lies `drop` below the parapet top."""
     n = len(ring)
-    inner = geom.offset(ring, 0.3, True)
-    if not 0 < geom.area(inner) < geom.area(ring):
-        inner = list(ring)  # too narrow for a parapet: a plain cap
+    inner = massing.parapet_inner(ring)  # the outline itself when too narrow: a plain cap
     v = (
         [(p[0], p[1], top) for p in ring]
         + [(p[0], p[1], top) for p in inner]
@@ -57,7 +85,10 @@ def _flat_roof(b, ring, top, drop, cap, deck):
     # the parapet's inner face looks in over the roof deck
     f += [(2 * n + (i + 1) % n, 2 * n + i, n + i, n + (i + 1) % n) for i in range(n)]
     b.faces(v, f, cap)
-    b.faces(v[2 * n :], [tuple(range(n))], deck)
+    if wells:
+        _deck(b, inner, top - drop, wells, deck, cap)
+    else:
+        b.faces(v[2 * n :], [tuple(range(n))], deck)
 
 
 def _windows(b, part, ring, wall_top, ground, glass):
@@ -151,8 +182,9 @@ def _canopy(name, p, ring, kind, tops, slopes, ground, roof_hex):
     return b.finish(recalc=False)
 
 
-def part(lay_part, name, ground):
-    """One building part as an object. `ground(x, y)` gives the terrain height."""
+def part(lay_part, name, ground, image_dir=None):
+    """One building part as an object. `ground(x, y)` gives the terrain height; `image_dir` holds
+    the paint sheets (paint.py) of a painted roof."""
     p = lay_part
     ring = geom.expand(p["ring"], True)
     if geom.area(ring) < 0:
@@ -181,9 +213,20 @@ def part(lay_part, name, ground):
         b.faces(face, [tuple(range(len(face)))], wall)
     if kind == "flat":
         deck = kit.mat("concrete", "roof_" + hexes["roof"][1:], kit.srgb(hexes["roof"]), 0.85)
-        _flat_roof(b, ring, p["top"], PARAPET.get(style, 0.4), trim, deck)
+        if p.get("sheets"):  # the plan paints this roof (layout.roof_paint, paint.py)
+            deck = sheet_material("concrete", p["sheets"][0], image_dir)
+        wells = _wells(p, hexes["roof"])
+        _flat_roof(b, ring, p["top"], PARAPET.get(style, 0.4), trim, deck, wells)
     else:
-        sheet = kit.mat("metal", "roof_" + hexes["roof"][1:], kit.srgb(hexes["roof"]), 0.55, 0.2)
+        # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
+        look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)
+        sheet = kit.mat(look[0], "roof_" + hexes["roof"][1:], kit.srgb(hexes["roof"]), *look[1:])
+        wells = _wells(p, hexes["roof"])
+        if wells:  # wells sink into the flat top of a mansard, the last face of `slopes`
+            if kind not in ("gable", "hip") or n == 4:
+                raise ValueError(f"{name}: wells need a flat roof or a mansard top")
+            cap = slopes.pop()
+            _deck(b, [q[:2] for q in cap], p["top"], wells, sheet, trim)
         for face in slopes:
             b.faces(face, [tuple(range(len(face)))], sheet)
     wall_top = min(tops) - (PARAPET.get(style, 0.4) if kind == "flat" else 0.0)
@@ -197,7 +240,19 @@ def part(lay_part, name, ground):
     elif p.get("windows"):
         glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
         _windows(b, p, ring, wall_top, local, glass)
+    if p.get("sheets"):
+        _sheet_uvs(b, deck, p["sheets"][0])
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
+
+
+def _sheet_uvs(b, material, sheet):
+    """Map the faces of `material` onto a paint sheet: plan metres to the sheet's 0..1."""
+    uv = b.bm.loops.layers.uv.get("UVMap") or b.bm.loops.layers.uv.new("UVMap")
+    k = b.slot(material)
+    for f in b.bm.faces:
+        if f.material_index == k:
+            for loop in f.loops:
+                loop[uv].uv = layout.sheet_uv(sheet, loop.vert.co.x, loop.vert.co.y)
 
 
 def build(lay, terrain, name_of):
@@ -205,5 +260,5 @@ def build(lay, terrain, name_of):
     out = []
     for p in lay["buildings"]:
         if "top" in p:
-            out.append(part(p, name_of(p) + "_UNVERIFIED", terrain.at))
+            out.append(part(p, name_of(p) + "_UNVERIFIED", terrain.at, lay.get("image_dir")))
     return out

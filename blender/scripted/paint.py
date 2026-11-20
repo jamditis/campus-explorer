@@ -7,8 +7,9 @@ which and where), drawn here from the plan's markings and nothing else. No aeria
 are used.
 
 usage: python3 blender/scripted/paint.py DATA_DIR [--areas NAME,NAME]     (system Python, Pillow)
-Writes DATA_DIR/authored/authored_<area>_<surface>_<n>.png for every area. DATA_DIR must be outside
-the repository.
+Writes DATA_DIR/authored/authored_<area>_<surface>_<n>.png for every area (p<surface number>, or
+d<building part number> for the paint on a deck's roof level). DATA_DIR must be outside the
+repository.
 """
 
 import sys
@@ -39,17 +40,18 @@ PAINT = {
     "blue": (40, 80, 170),
 }
 YD, FT = 0.9144, 0.3048
+ROOF = "#8f9194"  # a flat roof's colour when the part gives none (building.py, `roof_colour`)
 
 
 class Sheet:
     """One texture sheet: maps model metres to pixels and draws paint primitives."""
 
-    def __init__(self, sheet, kind):
+    def __init__(self, sheet, kind, base=None):
         self.s = sheet
         self.k = sheet["w"] / (sheet["u1"] - sheet["u0"]) * SS
         self.to_local = geom.frame((0.0, 0.0), sheet["angle"])[0]
         self.im = Image.new(
-            "RGB", (sheet["w"] * SS, sheet["h"] * SS), BASE.get(kind, (128, 128, 128))
+            "RGB", (sheet["w"] * SS, sheet["h"] * SS), base or BASE.get(kind, (128, 128, 128))
         )
         self.dr = ImageDraw.Draw(self.im)
 
@@ -168,6 +170,23 @@ def football_extras(sheet, ff):
     )
 
 
+def draw(sheet, marks):
+    """Paint primitives onto one sheet: areas first, then lines, then words on top."""
+    for m in marks:
+        if "ring" in m:
+            sheet.area(m["ring"], m["colour"])
+    for m in marks:
+        if "line" in m:
+            sheet.line(m["line"], m["width"], m["colour"])
+    for m in marks:
+        if "text" in m:
+            sheet.text(m["text"], m["at"], m["right_angle"], m["height"], m["width"], m["colour"])
+
+
+def hex_rgb(h):
+    return tuple(int(h.lstrip("#")[i : i + 2], 16) for i in (0, 2, 4))
+
+
 def main():
     args = sys.argv[1:]
     data = Path(args[0]).resolve()
@@ -184,18 +203,15 @@ def main():
             for sh in s["sheets"] or []:
                 sheet = Sheet(sh, s["kind"])
                 on_field = s["kind"] == "turf"
-                for m in lay["markings"]:
-                    if m.get("field") and not on_field:
-                        continue
-                    if "ring" in m:
-                        sheet.area(m["ring"], m["colour"])
-                for m in lay["markings"]:
-                    if m.get("field") and not on_field:
-                        continue
-                    if "line" in m:
-                        sheet.line(m["line"], m["width"], m["colour"])
+                draw(sheet, [m for m in lay["markings"] if on_field or not m.get("field")])
                 if on_field and lay["field_frame"]:
                     football_extras(sheet, lay["field_frame"])
+                print(sh["name"], sheet.save(out), f"{sheet.k / SS:.1f} px/m")
+                n += 1
+        for b in lay["buildings"]:  # paint on a deck's roof level (layout.roof_paint)
+            for sh in b.get("sheets") or []:
+                sheet = Sheet(sh, "concrete", hex_rgb(b.get("roof_colour", ROOF)))
+                draw(sheet, b["paint"])
                 print(sh["name"], sheet.save(out), f"{sheet.k / SS:.1f} px/m")
                 n += 1
     print("sheets", n, "in", out)

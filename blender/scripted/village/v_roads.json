@@ -1128,7 +1128,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017 (hillshade: berms on the south and east, the lot bank on the north, flat floor)",
-   "unverified": "built detention basin: grass floor with standing water or wetland in its west half (x -362..-335, y 1175..1203); water is not in the plan format, so the whole floor is lawn; outline follows the toe of the banks read from the hillshade (about 1 m)"
+   "unverified": "built detention basin: grass floor with standing water or wetland in its west half (x -362..-335, y 1175..1203); the pond is drawn over it (V_water_Basin_pond, v_water); outline follows the toe of the banks read from the hillshade (about 1 m)"
   },
   {
    "name": "V_road_Lot41_mouth",

@@ -1,6 +1,6 @@
 {
  "zone": "ov_buildings",
- "notes": "Buildings of the Floyd block outline. NAME: the large octagonal building with the green roof is NOT Floyd Hall Arena: OSM names it (way 313431637) the Overlook Corporate Center, a 1988 Class A office building at 150 Clove Road (415,000 sq ft, listings give a ground floor and floors 1-11), and the LiDAR gives a 41-48 m wall (12 storeys of about 4.0 m above a ground floor at about 112 m) under a 12 m high mansard roof. Floyd Hall Arena, now the Montclair State University Ice Arena, is OSM way 233324743 at about x -133..-29, y 600..696 (northeast district), outside this outline. The office complex is: the octagonal tower (sides 13.5-15.5 m on the axis and 29-31 m on the diagonals, axis -7.5 deg), three stepped tiers wrapping its south-west, south and south-east sides at storey levels 5, 7 and 9 (flat brown roofs at 132.0, 140.1 and 148.2 m, 1 m rims), the 4-storey east wing (chamfered plan, green mansard border round a white roof, screened roof plant), the glazed link between tower and wing, the link block to the parking deck, and the 6-level L-shaped parking deck (OSM way 313431636). Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest lower return beyond it, at most 0.4 m past the roof return), angles snapped to the building axis (-7.5 deg office, -6.7 deg deck) where the fit agreed within 3 deg, corners by intersection; lower tiers are drawn as whole outlines closed inside the higher parts, and walls shared with a higher part are set 0.3 m inside it. Heights NAVD88 from the LiDAR: flat tops are the rim (parapet) tops, the deck median being about 1 m lower on the tiers (0.4 m on the link, 1.2 m on the deck). Tower roof: wall top 160.4 m, a 2 m ledge, then about 36 deg up to a ridge ring at 172.3 m about 13.5 m in, then a flat well at 169.2 m in the centre that opens east through a slot (169.9 m rim) to the east wall; the single 45 deg mansard part (eave 160.4, top 172.3) stays within about 1 m of the measured slope; the well is not modelled. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): tower 112.0..119.8 m (low on the north); tier 9 118.4..119.7; tier 7 118.5..119.0; tier 5 116.7..118.9; east wing 108.9..117.2; glazed link 113.4..115.1; deck link 108.8..110.2 (south side); parking deck 101.2..111.8 (low to the north-east); bus shelter 109.8..111.4; gate booth 104.9..105.4. Not modelled: the quarry yard (x 150..200, y 1110..1150) has nothing over 1.5 m in the 2017 LiDAR but a 2 m box at (173..176, 1141..1146) and a 2.4 m box at (160..163, 1113..1118), read as movable containers (the 2020 ortho shows vans, trailers and containers in other places); west of the tower (x 67..90, y 1271..1293) three 2.2-2.8 m objects (a teal container under trees at (67..73, 1271..1275), a 9 x 3 m diagonal box at (75..84, 1287..1293) and two separate boxes at (84..90, 1285..1292)) read as containers, a trailer and dumpsters/compactor, not structures; no shed or booth elsewhere in the outline; solar panels on the east wing's south roof, light poles and rooftop plant on the tower are left out. Wall colours, trims, window sizes are estimates (no public photo found); roof colours are from the 2020 ortho.",
+ "notes": "Buildings of the Floyd block outline. NAME: the large octagonal building with the green roof is NOT Floyd Hall Arena: OSM names it (way 313431637) the Overlook Corporate Center, a 1988 Class A office building at 150 Clove Road (415,000 sq ft, listings give a ground floor and floors 1-11), and the LiDAR gives a 41-48 m wall (12 storeys of about 4.0 m above a ground floor at about 112 m) under a 12 m high mansard roof. Floyd Hall Arena, now the Montclair State University Ice Arena, is OSM way 233324743 at about x -133..-29, y 600..696 (northeast district), outside this outline. The office complex is: the octagonal tower (sides 13.5-15.5 m on the axis and 29-31 m on the diagonals, axis -7.5 deg), three stepped tiers wrapping its south-west, south and south-east sides at storey levels 5, 7 and 9 (flat brown roofs at 132.0, 140.1 and 148.2 m, 1 m rims), the 4-storey east wing (chamfered plan, green mansard border round a white roof, screened roof plant), the glazed link between tower and wing, the link block to the parking deck, and the 6-level L-shaped parking deck (OSM way 313431636). Outlines: wall lines fitted to the 2017 LiDAR roof-edge returns (midway between the outermost roof return and the nearest lower return beyond it, at most 0.4 m past the roof return), angles snapped to the building axis (-7.5 deg office, -6.7 deg deck) where the fit agreed within 3 deg, corners by intersection; lower tiers are drawn as whole outlines closed inside the higher parts, and walls shared with a higher part are set 0.3 m inside it. Heights NAVD88 from the LiDAR: flat tops are the rim (parapet) tops, the deck median being about 1 m lower on the tiers (0.4 m on the link, 1.2 m on the deck). Tower roof: wall top 160.4 m, a 2 m ledge, then about 36 deg up to a ridge ring at 172.3 m about 13.5 m in, then a flat well at 169.2 m in the centre that opens east through a slot (169.9 m rim) to the east wall; the single 45 deg mansard part (eave 160.4, top 172.3) stays within about 1 m of the measured slope; the well is not modelled. Ground round each building (2nd-98th percentile of ground returns 1-3 m outside): tower 112.0..119.8 m (low on the north); tier 9 118.4..119.7; tier 7 118.5..119.0; tier 5 116.7..118.9; east wing 108.9..117.2; glazed link 113.4..115.1; deck link 108.8..110.2 (south side); parking deck 101.2..111.8 (low to the north-east); bus shelter 109.8..111.4; gate booth 104.9..105.4. Not modelled: the quarry yard (x 150..200, y 1110..1150) has nothing over 1.5 m in the 2017 LiDAR but a 2 m box at (173..176, 1141..1146) and a 2.4 m box at (160..163, 1113..1118), read as movable containers (the 2020 ortho shows vans, trailers and containers in other places); west of the tower (x 67..90, y 1271..1293) three 2.2-2.8 m objects (a teal container under trees at (67..73, 1271..1275), a 9 x 3 m diagonal box at (75..84, 1287..1293) and two separate boxes at (84..90, 1285..1292)) read as containers, a trailer and dumpsters/compactor, not structures; no shed or booth elsewhere in the outline; solar panels on the east wing's south roof, light poles and rooftop plant on the tower are left out. Wall colours, trims, window sizes are estimates (no public photo found); roof colours are from the 2020 ortho. Hand edits after the generator (do not regenerate over them): the tower's roof well and the east wing's white roof inside its green rim are `wells` (a hole in the flat top with walls down to a floor; the wing's white roof is a wide, shallow well), the wing's lower south end is its own flat part, and the deck's middle bay is a sloped `shed` slab in a well of the roof deck; the LiDAR shows the 172.3 m ridge band continuous between the tower well and the east roof slot, so the well does not open into the slot.",
  "buildings": [
   {
    "name": "OV_bldg_OCC_tower",
@@ -51,8 +51,32 @@
     "height": 1.8,
     "spacing": 1.9
    },
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, axis -7.5 deg, octagon sides intersected) and heights; ortho2020 (roof colours); osm (way 313431637 'Overlook Corporate Center', building=office); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (150 Clove Road, built 1988, 415,000 sq ft, floors listed up to 11); https://www.commercialsearch.com/commercial-property/us/nj/little-falls/overlook-at-great-notch (ground floor and floors 1-11)",
-   "unverified": "roof given as one mansard (45 deg from the 160.4 m wall top to a flat top at the 172.3 m ridge): the measured roof has a 2 m ledge at 160.4, then rises at about 36 deg from about 164 to the ridge 13 m in, and the centre is a 3 m lower flat well (169.2 m) that is not modelled; floors from the 4.0 m storey grid (ground floor at about 112 m on the low north side, roof at 160.4 m = 12 storeys); wall colour, trim and windows guessed"
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, axis -7.5 deg, octagon sides intersected) and heights; ortho2020 (roof colours); osm (way 313431637 'Overlook Corporate Center', building=office); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (150 Clove Road, built 1988, 415,000 sq ft, floors listed up to 11); https://www.commercialsearch.com/commercial-property/us/nj/little-falls/overlook-at-great-notch (ground floor and floors 1-11); lidar2017 (roof well: a 17.2 x 16.9 m opening on the building axis, flat floor 169.15 m (10th-90th percentile 169.03-169.19), walls dropping straight from the 172.3 m ridge band, edges read from height profiles across all four sides); ortho2020 (square light-grey well floor with plant inside the green roof, shifted by the ortho's lean)",
+   "unverified": "roof given as one mansard (45 deg from the 160.4 m wall top to a flat top at the 172.3 m ridge): the measured roof has a 2 m ledge at 160.4 on the axis sides, rises at about 30-33 deg, and its 172.3 m ridge band is 1.5-2 m wide, 10-12 m from the centre, so the flat green top is drawn up to 6 m too wide on the axis sides; the well is drawn as a square with straight walls; the plant in the well (a 3 x 3 m block at 170.9 m and smaller items) and the spikes on the ridge band (up to 176 m: rails or masts) are left out; well floor colour guessed; floors from the 4.0 m storey grid (ground floor at about 112 m on the low north side, roof at 160.4 m = 12 storeys); wall colour, trim and windows guessed",
+   "wells": [
+    {
+     "ring": [
+      [
+       107.25,
+       1262.51
+      ],
+      [
+       124.26,
+       1260.27
+      ],
+      [
+       126.46,
+       1277.03
+      ],
+      [
+       109.46,
+       1279.27
+      ]
+     ],
+     "floor": 169.15,
+     "colour": "#c9c9c3"
+    }
+   ]
   },
   {
    "name": "OV_bldg_OCC_tower_roof_slot",
@@ -217,24 +241,20 @@
    "name": "OV_bldg_OCC_east_wing",
    "ring": [
     [
-     161.9,
-     1217.71
+     160.25,
+     1244.38
     ],
     [
-     167.28,
-     1217.0
+     165.71,
+     1237.27
     ],
     [
-     184.57,
-     1230.27
+     182.96,
+     1235.0
     ],
     [
-     185.54,
-     1237.61
-    ],
-    [
-     190.2,
-     1241.19
+     190.11,
+     1240.48
     ],
     [
      195.21,
@@ -251,18 +271,6 @@
     [
      165.38,
      1283.33
-    ],
-    [
-     163.65,
-     1270.19
-    ],
-    [
-     163.65,
-     1242.66
-    ],
-    [
-     161.9,
-     1242.89
     ]
    ],
    "roof": "hip",
@@ -278,8 +286,87 @@
     "height": 1.8,
     "spacing": 1.9
    },
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns, chamfered plan, axis -7.5 deg) and heights; ortho2020 (roof colours); osm (way 313431637 'Overlook Corporate Center', building=office); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (150 Clove Road, built 1988, 415,000 sq ft, floors listed up to 11); https://www.commercialsearch.com/commercial-property/us/nj/little-falls/overlook-at-great-notch (ground floor and floors 1-11); ortho2020 (white flat roof inside a green sloped border, solar panels on the south part)",
-   "unverified": "function not found in public sources (joined to the tower, part of the same OSM outline); the green border is a 3 m mansard from the 128.1 m wall top to 131.1 m (measured slope about 45 deg) round a white roof deck at 129.1 m, modelled as one mansard whose flat top sits at 131.1 m, so the white deck is drawn 2 m high and green; west face hidden under the 132 m tier and the link; floors on the 4.0 m grid from 112 m (the north side ground is about 109 m); solar panels not modelled; colours and windows guessed"
+   "evidence": "lidar2017 outline (north, east and north-west walls fitted to roof-edge returns, axis -7.5 deg; west wall and south chamfers from the rim width, see unverified) and heights (green rim: eave 127.3-128.1 m, crest 131.0-131.15 m, a straight drop on its inner side to the white roof at 129.1 m (10th-90th percentile 129.0-129.2); inner edge of the rim read from height scans every 2 m across the roof: west and east sides 13.7 and 8.9 m either side of (180, 1260) on the axis, north 24.1 m, south 21.1 m, 45 deg chamfers at the corners); rim width 3.7-4.0 m on the west, east and north; ortho2020 (white flat roof inside a green sloped border, green-screened roof plant); osm (way 313431637 'Overlook Corporate Center', building=office)",
+   "unverified": "function not found in public sources (joined to the tower, part of the same OSM outline); the green rim is drawn as a 45 deg mansard (3 m rise, measured about 38 deg over 3.8 m) with a flat crest 0.3-0.8 m wide before the drop; the west wall continues the line measured north of the glazed link (it runs under the link and the 132 m tier), the south wall and the south-west and south-east chamfers are set 3.3-3.8 m outside the measured inner edge (rim width); floors on the 4.0 m grid from 112 m (the north side ground is about 109 m); colours and windows guessed",
+   "wells": [
+    {
+     "ring": [
+      [
+       164.26,
+       1245.38
+      ],
+      [
+       168.17,
+       1240.27
+      ],
+      [
+       181.36,
+       1238.54
+      ],
+      [
+       186.69,
+       1242.63
+      ],
+      [
+       191.4,
+       1278.37
+      ],
+      [
+       187.61,
+       1283.31
+      ],
+      [
+       173.83,
+       1285.12
+      ],
+      [
+       169.0,
+       1281.42
+      ]
+     ],
+     "floor": 129.1,
+     "colour": "#dcdcd6"
+    }
+   ]
+  },
+  {
+   "name": "OV_bldg_OCC_east_wing_south",
+   "ring": [
+    [
+     161.9,
+     1217.71
+    ],
+    [
+     167.28,
+     1217.0
+    ],
+    [
+     184.57,
+     1230.27
+    ],
+    [
+     185.19,
+     1235.01
+    ],
+    [
+     161.9,
+     1238.07
+    ]
+   ],
+   "roof": "flat",
+   "top": 128.7,
+   "style": "hall",
+   "floors": 4,
+   "wall": "#b9ae9c",
+   "trim": "#3f5b50",
+   "roof_colour": "#dcdcd6",
+   "windows": {
+    "width": 1.6,
+    "height": 1.8,
+    "spacing": 1.9
+   },
+   "evidence": "lidar2017 outline (south chamfer and east wall fitted to roof-edge returns, axis -7.5 deg; north edge 0.3 m inside the wing's green rim) and heights (roof 128.0-128.2 m, 10th-50th percentile with the solar panels; parapet 128.7 m); ortho2020 (white flat roof with solar panels, no green rim)",
+   "unverified": "the lower south end of the wing, split from it because the LiDAR and the ortho show no green rim there; deck drawn at 128.3 m (0.4 m under the parapet), about 0.2 m high; west side hidden under the 132 m tier, kept on the old line; solar panels not modelled; colours and windows guessed"
   },
   {
    "name": "OV_bldg_OCC_east_wing_plant",
@@ -477,7 +564,61 @@
    "trim": "#d8d4ca",
    "roof_colour": "#8f8f8b",
    "evidence": "lidar2017 outline (wall lines fitted to the roof-edge returns, axis -6.7 deg) and heights (roof deck 119.7 m, parapet 120.9 m); ortho2020 (L plan, concrete roof level, light poles); osm (way 313431636, amenity=parking, parking=multi-storey); https://loopnet.com/Listing/150-Clove-Rd-Little-Falls-NJ/32000903 (search listing summary: 6 level parking deck, about 1,214 covered spaces); https://www.commercialcafe.com/commercial-property/us/nj/little-falls/overlook-at-great-notch/ (1,660 spaces in all)",
-   "unverified": "6 levels from a listing summary (the page itself could not be read), consistent with the height: about 105 m on the low east side to the 119.7 m roof deck = 5 decks of about 2.9 m plus the roof; the roof level's central ramp bay (about x 230..252, y 1225..1285) lies 0.7-2 m lower than the rest and cannot be modelled yet; no stair towers stand above the roof (stairs are probably in the link block at its north-west corner); the north-west part under the link block is assumed to continue at the deck level; colours guessed"
+   "unverified": "6 levels from a listing summary (the page itself could not be read), consistent with the height: about 105 m on the low east side to the 119.7 m roof deck = 5 decks of about 2.9 m plus the roof; the roof level's ramp bay is its own part (OV_bldg_OCC_parking_deck_ramp), cut out of the roof deck as a well whose floor lies under the ramp slab; no stair towers stand above the roof (stairs are probably in the link block at its north-west corner); the north-west part under the link block is assumed to continue at the deck level; colours guessed",
+   "wells": [
+    {
+     "ring": [
+      [
+       228.85,
+       1240.3
+      ],
+      [
+       247.23,
+       1238.14
+      ],
+      [
+       252.59,
+       1283.82
+      ],
+      [
+       234.22,
+       1285.98
+      ]
+     ],
+     "floor": 116.56
+    }
+   ]
+  },
+  {
+   "name": "OV_bldg_OCC_parking_deck_ramp",
+   "ring": [
+    [
+     228.85,
+     1240.3
+    ],
+    [
+     247.23,
+     1238.14
+    ],
+    [
+     252.59,
+     1283.82
+    ],
+    [
+     234.22,
+     1285.98
+    ]
+   ],
+   "roof": "shed",
+   "top": 119.34,
+   "eave": 116.56,
+   "ridge_angle": 173.3,
+   "style": "deck",
+   "wall": "#c9c4b8",
+   "trim": "#d8d4ca",
+   "roof_colour": "#8f8f8b",
+   "evidence": "lidar2017 (the roof level's middle bay is one sloped slab: 119.34 m at its south end, falling 6.1 cm per metre (median of each metre along the bay, fitted) to 116.56 m at its north end, where the flat roof stands 2.9 m higher; straight edges 18.5 m apart across it, axis -6.7 deg; the rest of the roof deck lies at 119.4-120.0 m); ortho2020 (stalls and arrows on the slab, dark lines along both long edges ending at about y 1231 and y 1285)",
+   "unverified": "read as the top of a sloped parking floor (a ramped bay of a split-level garage) that runs on under the north part of the roof; the opening at its low end into the level below and the rails or curbs along its edges are not modelled; colours guessed"
   },
   {
    "name": "OV_bldg_bus_shelter",

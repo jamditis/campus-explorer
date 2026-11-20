@@ -9,12 +9,14 @@ few
 LiDAR returns per square metre shows as lumps in roads and walks.
 """
 
+import geom
 import numpy as np
 
 BLEND = 4.0  # width of the band along the footprint edge that blends into the neighbours' ground
 GRADE = 5.0  # smoothing length of paved ground, metres
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
+LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
 EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
 )
@@ -88,6 +90,31 @@ def _sample(a, x, y, x0, y1, cell):
     return top * (1 - ty) + bottom * ty
 
 
+def shore_level(samples):
+    """Water level from the ground read along a shore traced on the ortho.
+
+    Where the trace lies on the water the LiDAR ground is the water surface (or, where water gave
+    no return, the fill from the lowest ground round it); where it drifts onto the bank it is
+    higher, never lower except by noise. So a low percentile reads the waterline: the median would
+    climb the bank wherever half the trace drifts landward, the minimum would take one stray low
+    return. With one sample a metre, a shore of 30 m or more has three or more samples under it.
+    """
+    return float(np.percentile(np.asarray(samples, float), LEVEL_PCT))
+
+
+def flood(z, tris, owner, levels):
+    """Vertex heights with every vertex of a water triangle set to its water body's level.
+
+    `levels` maps a surface index (as in `owner`) to its level. The shore vertices are shared with
+    the ground round the water, so that ground comes down (or up) to the waterline in the same
+    mesh: no crack and no wall.
+    """
+    out = np.array(z, float)
+    for i, lv in levels.items():
+        out[np.unique(tris[owner == i])] = lv
+    return out
+
+
 class Terrain:
     """Ground height for soft ground (`rough`) and for paving (`graded`), with lifts and the edge
     blend.
@@ -123,6 +150,7 @@ class Terrain:
         np.add.at(s, (row, col), g[:, 2])
         np.add.at(n, (row, col), 1)
         base = _fill(np.where(n > 0, s / np.maximum(n, 1), np.nan))
+        self.base = base  # unsmoothed 1 m ground: water levels are read from it
         self.rough = _blur(base, 1.0)
         self.graded = _blur(base, 2.5)
         if paved:
@@ -207,6 +235,12 @@ class Terrain:
                 d[np.arange(len(near)), near] <= REACH**2, self.edge[near, 2], np.nan
             )
         return out
+
+    def water_level(self, ring):
+        """Level of a water body traced along its shore: `shore_level` of the unsmoothed ground
+        read every metre along the outline."""
+        pts = np.array([(p[0], p[1]) for p in geom.resample(list(ring), 1.0, True)])
+        return shore_level(_sample(self.base, pts[:, 0], pts[:, 1], self.x0, self.y1, self.cell))
 
     def at(self, x, y):
         """Finished height of one point on paving (used to seat objects and curbs)."""
