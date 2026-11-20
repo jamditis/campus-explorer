@@ -820,6 +820,60 @@
    "evidence": "ortho2020",
    "layer": 3.5,
    "unverified": "lawn with trees (leaf-off); the three caps read at zoom 12, about 0.3 m"
+  },
+  {
+   "name": "V_lot_61_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -154.4,
+     1307.0
+    ],
+    [
+     -142.4,
+     1308.2
+    ],
+    [
+     -122.1,
+     1314.9
+    ],
+    [
+     -72.5,
+     1336.6,
+     2.0
+    ],
+    [
+     -65.6,
+     1344.6
+    ],
+    [
+     -70.2,
+     1348.6
+    ],
+    [
+     -88.0,
+     1361.8
+    ],
+    [
+     -112.0,
+     1372.6,
+     3.0
+    ],
+    [
+     -113.6,
+     1378.8
+    ],
+    [
+     -138.0,
+     1378.8
+    ],
+    [
+     -160.6,
+     1356.0
+    ]
+   ],
+   "evidence": "ortho2020; osm 313032754",
+   "unverified": "west and north edges run to the area outline (the lot continues as the drive north of the canopies); mouths: south-west to the Lot 45 / 46 drive, east to the drive at the crosswalk"
   }
  ],
  "curbs": [
@@ -1514,6 +1568,67 @@
    ],
    "closed": true,
    "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_61_curb_S",
+   "path": [
+    [
+     -122.1,
+     1314.9
+    ],
+    [
+     -72.5,
+     1336.6,
+     2.0
+    ],
+    [
+     -65.6,
+     1344.6
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_61_curb_NE",
+   "path": [
+    [
+     -70.2,
+     1348.6
+    ],
+    [
+     -88.0,
+     1361.8
+    ],
+    [
+     -112.0,
+     1372.6,
+     3.0
+    ],
+    [
+     -113.6,
+     1378.8
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb between the lot and the drive north of it"
+  },
+  {
+   "name": "V_lot_61_curb_W",
+   "path": [
+    [
+     -160.6,
+     1356.0
+    ],
+    [
+     -154.4,
+     1307.0
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "west curb at the area outline"
   }
  ],
  "markings": [
@@ -3349,7 +3464,356 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "stalls on the west side of Village Road; seven dividers under cars, from the 2.59 m pitch (residuals to 0.4 m)"
+  },
+  {
+   "name": "V_lot_VR_CB",
+   "type": "stalls",
+   "line": [
+    [
+     -96.41,
+     1250.87
+    ],
+    [
+     -69.26,
+     1237.52
+    ]
+   ],
+   "count": 11,
+   "depth": 4.8,
+   "side": "right",
+   "angle": 87.3,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stalls on the south side of Village Road by Count Basie Hall; ends in the building shadow; divider 4 not seen (a curb nose there)"
+  },
+  {
+   "name": "V_lot_61_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     -123.67,
+     1310.87
+    ],
+    [
+     -88.38,
+     1327.04
+    ]
+   ],
+   "count": 15,
+   "depth": 5.22,
+   "side": "left",
+   "angle": 90.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "west four stalls of the row replaced by a hatched triangle (not drawn: outline not readable)"
+  },
+  {
+   "name": "V_lot_61_stalls_NE",
+   "type": "stalls",
+   "line": [
+    [
+     -102.08,
+     1369.24
+    ],
+    [
+     -90.85,
+     1362.73
+    ]
+   ],
+   "count": 5,
+   "depth": 4.54,
+   "side": "right",
+   "angle": 90.7,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "row continues west under the north canopy shadow: not drawn there"
+  },
+  {
+   "name": "V_lot_61_hatch_NE_outline",
+   "type": "line",
+   "path": [
+    [
+     -91.6,
+     1361.0
+    ],
+    [
+     -81.0,
+     1356.2
+    ],
+    [
+     -84.0,
+     1352.6
+    ],
+    [
+     -91.6,
+     1354.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "hatched no-parking area: outline and stripes approximate (read at zoom 35)"
+  },
+  {
+   "name": "V_lot_61_hatch_NE_1",
+   "type": "line",
+   "path": [
+    [
+     -91.4,
+     1359.6
+    ],
+    [
+     -89.4,
+     1354.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stripe positions approximate"
+  },
+  {
+   "name": "V_lot_61_hatch_NE_2",
+   "type": "line",
+   "path": [
+    [
+     -88.8,
+     1359.8
+    ],
+    [
+     -87.2,
+     1353.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stripe positions approximate"
+  },
+  {
+   "name": "V_lot_61_hatch_NE_3",
+   "type": "line",
+   "path": [
+    [
+     -86.2,
+     1358.6
+    ],
+    [
+     -85.2,
+     1353.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stripe positions approximate"
+  },
+  {
+   "name": "V_lot_61_hatch_NE_4",
+   "type": "line",
+   "path": [
+    [
+     -83.6,
+     1357.4
+    ],
+    [
+     -82.6,
+     1354.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "stripe positions approximate"
+  },
+  {
+   "name": "V_lot_61_stalls_canopy_S",
+   "type": "stalls",
+   "line": [
+    [
+     -142.85,
+     1317.81
+    ],
+    [
+     -86.18,
+     1343.34
+    ]
+   ],
+   "count": 24,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "three dividers seen west of the canopy (u 411-416); the rest hidden under the solar canopy: inferred from the 2.59 m pitch to the canopy end"
+  },
+  {
+   "name": "V_lot_61_stalls_canopy_M",
+   "type": "stalls",
+   "line": [
+    [
+     -142.21,
+     1335.37
+    ],
+    [
+     -104.43,
+     1352.39
+    ]
+   ],
+   "count": 16,
+   "depth": 11.0,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hidden under the solar canopy: a double row centred under it inferred (continuous dividers), pitch 2.59 m"
+  },
+  {
+   "name": "V_lot_61_stalls_canopy_N_S",
+   "type": "stalls",
+   "line": [
+    [
+     -148.96,
+     1351.58
+    ],
+    [
+     -106.46,
+     1370.73
+    ]
+   ],
+   "count": 18,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hidden under the solar canopy: south half of a double row inferred, pitch 2.59 m"
+  },
+  {
+   "name": "V_lot_61_stalls_canopy_N_N",
+   "type": "stalls",
+   "line": [
+    [
+     -134.81,
+     1363.99
+    ],
+    [
+     -108.83,
+     1375.69
+    ]
+   ],
+   "count": 11,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hidden under the solar canopy: north half inferred only where the canopy is 12 m deep, pitch 2.59 m"
   }
  ],
- "points": []
+ "points": [],
+ "buildings": [
+  {
+   "name": "V_lot_61_canopy_N_UNVERIFIED",
+   "ring": [
+    [
+     -149.01,
+     1351.09
+    ],
+    [
+     -106.07,
+     1370.43
+    ],
+    [
+     -110.97,
+     1381.3
+    ],
+    [
+     -138.46,
+     1368.91
+    ],
+    [
+     -136.53,
+     1364.64
+    ],
+    [
+     -151.97,
+     1357.68
+    ]
+   ],
+   "roof": "shed",
+   "top": 105.24,
+   "eave": 103.48,
+   "ridge_angle": 24.25,
+   "style": "shed",
+   "open": true,
+   "roof_colour": "#3d4652",
+   "evidence": "lidar2017 (outline: dsm 2 m above the ground; heights: plane fitted to the dsm); ortho2020",
+   "notes": "solar canopy; clear height under the low (SE) edge about 4.1 m and under the high (NW) edge about 5.9 m (dsm minus the ground interpolated under the roof, roof depth not deducted); stepped: the west 17 m is 7.2 m deep, the east 30 m 11.9 m",
+   "unverified": "posts and the roof depth not measured; roof colour from the ortho (dark panels); the 2017 outline assumed unchanged in 2020"
+  },
+  {
+   "name": "V_lot_61_canopy_M_UNVERIFIED",
+   "ring": [
+    [
+     -141.91,
+     1334.95
+    ],
+    [
+     -104.35,
+     1351.87
+    ],
+    [
+     -109.29,
+     1362.84
+    ],
+    [
+     -146.85,
+     1345.92
+    ]
+   ],
+   "roof": "shed",
+   "top": 105.37,
+   "eave": 103.31,
+   "ridge_angle": 24.25,
+   "style": "shed",
+   "open": true,
+   "roof_colour": "#3d4652",
+   "evidence": "lidar2017 (outline: dsm 2 m above the ground; heights: plane fitted to the dsm); ortho2020",
+   "notes": "solar canopy; clear height under the low (SE) edge about 4.1 m and under the high (NW) edge about 6.1 m (dsm minus the ground interpolated under the roof, roof depth not deducted)",
+   "unverified": "posts and the roof depth not measured; roof colour from the ortho (dark panels); the 2017 outline assumed unchanged in 2020"
+  },
+  {
+   "name": "V_lot_61_canopy_S_UNVERIFIED",
+   "ring": [
+    [
+     -134.95,
+     1320.88
+    ],
+    [
+     -85.99,
+     1342.93
+    ],
+    [
+     -89.3,
+     1350.27
+    ],
+    [
+     -138.25,
+     1328.22
+    ]
+   ],
+   "roof": "shed",
+   "top": 104.82,
+   "eave": 103.55,
+   "ridge_angle": 24.25,
+   "style": "shed",
+   "open": true,
+   "roof_colour": "#3d4652",
+   "evidence": "lidar2017 (outline: dsm 2 m above the ground; heights: plane fitted to the dsm); ortho2020",
+   "notes": "solar canopy; clear height under the low (SE) edge about 4.4 m and under the high (NW) edge about 5.6 m (dsm minus the ground interpolated under the roof, roof depth not deducted)",
+   "unverified": "posts and the roof depth not measured; roof colour from the ortho (dark panels); the 2017 outline assumed unchanged in 2020"
+  }
+ ]
 }
