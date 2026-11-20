@@ -66,6 +66,9 @@ def build_area(plan_dir, data, assets, built):
     for st in lay["stands"]:
         ring = geom.expand(st["ring"], True)
         voids.append(geom.offset(ring, -1.5 if geom.area(ring) > 0 else 1.5, True))
+        if st.get("style") == "bowl":  # the filled gap rises above a bowl's rows: sink it, hidden
+            inner = geom.offset(ring, 1.5 if geom.area(ring) > 0 else -1.5, True)
+            lay["lifts"].append(dict(ring=inner, dz=-1.2, feather=1.5))
     lidar = data / plan_dir.name / "lidar.npz"
     terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids)
     authored = data / "authored"

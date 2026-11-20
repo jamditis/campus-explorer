@@ -1,0 +1,11 @@
+{
+ "zone": "v_fixtures",
+ "notes": "Frame: model metres, +X east, +Y grid north. Fixtures of the Village area added by hand in the fix-up pass. Pool fence: the 2017 LiDAR has a line of non-ground returns 1.0 to 1.4 m above the ground (median 1.27 m) along the north-west side of the pool deck (32 returns, rms 0.44 m about a straight fit) and along the south-west side (13 returns); the two fits meet at a right angle (89.5 deg) at the west corner. The south-west run lies 4.6 m outside the deck outline of v_water: that side of the deck is in a building's shadow in the ortho. No returns line up on the north-east and south-east sides (benches, railings and the Abbott and Costello Center's walls are there), so those sides are not drawn. Lamps: the 2017 LiDAR has almost no pole returns here (a search for isolated returns 2.5 to 14 m above the ground with nothing else within 3 m found two, one an umbrella); lamps are placed only where the 2020 ortho shows a pole's shadow or a lamp globe and, for one, a LiDAR return confirms it. Many more lamps stand in the Village (heads and shadows too faint or ambiguous at 0.15 m/px to place); they are not drawn.",
+ "fences": [
+  {"name": "V_fix_pool_fence", "path": [[-161.4, 1175.88], [-179.97, 1150.18], [-164.32, 1138.68]], "height": 1.4, "kind": "chain_link_black", "evidence": "lidar2017 (two straight fits to the returns 1.0 to 1.4 m high, meeting at a right angle)", "unverified": "fence type and colour (a pool fence: drawn as the black fence kit); height from the returns' top (about 1.4 m); north-east and south-east sides not seen"}
+ ],
+ "points": [
+  {"name": "V_fix_lot_28_lamp", "kind": "lamp", "at": [-119.6, 911.0], "evidence": "ortho2020 (pole shadow 3.9 m long ending in the head's shadow, on the middle double row's centre line)", "unverified": "base at the south-west end of the shadow; height not measured (the shadow is shorter than those of the Lot 45 lamps); head type"},
+  {"name": "V_fix_lot_29_lamp", "kind": "lamp", "at": [-272.72, 659.63], "height": 3.7, "evidence": "ortho2020 (white lamp globe), lidar2017 (returns 2.5 and 3.6 m above the ground on it)", "unverified": "height from two returns; a post-top globe drawn with the lot lamp kit; base under the globe (a 4 m post leans less than 0.5 m in the ortho)"}
+ ]
+}
