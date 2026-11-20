@@ -1,0 +1,2286 @@
+{
+ "zone": "w_roads",
+ "notes": "Zone w_roads: Carlisle Road from the south-west area's cut (y -58) to the north end of the evidence, the roadside parking (Lot 30S, Lot 30), the hatched gore and the mouth of Webster Road, and the junction of College Avenue and Carlisle Road beside the Red Hawk Deck (Lot 33, the drive into the deck).\nFrame: Carlisle Road's centre line (double yellow, tracked in the ortho every 2 m) is one circular arc, radius 1745.1 m, centre (1315.98, -379.66), rms 0.12 m over y -10..345. Every Carlisle edge and line is an offset of that arc (v metres east of the centre line), drawn as tangent runs with true arcs. West edge v -4.3 (asphalt/grass edge; edge line v -3.9; the LiDAR ground falls away beyond), north-bound edge line v 3.7.\nLot 30 (y 255..345): a 1.3 m raised divider at v 5.3..6.6 (LiDAR +0.13 m), aisle, 46.5 deg stalls at 3.55 m pitch fitted to the painted lines (brightness search over pitch, angle and phase), curb v 16.1 and a 2 m walk. Lot 30S (y 16..150): square parking (lines too faint) then 32.8 deg stalls at 5.25 m pitch, curb v 14.0 and a 1.8 m walk. Hatched gore and chevrons between the end of Lot 30S and Webster Road from the ortho (corners to about 0.5 m).\nJunction: lanes, islands, stop bars and crosswalk bars read from the ortho at 0.15 m; the paved edge west of the junction from the LiDAR ground (a 1.4 m drop to the ditch by the railway). College Avenue east of x -303 and the cogeneration plant's lot are the main model's (KY_college_ave_asphalt, WS74_cogen_lot_asphalt) and are not redrawn.\nAt the shared edge with the south-west area (y -58): their Carlisle Road was corrected to the evidence north of y -72 (paved west edge x -404.8, no curb; centre line on this arc, x -399.26, heading 79 deg); this plan starts on those positions with no step or kink. Their east curb (x -396.1) is unchanged.\nNot drawn: turn arrows and lane words, the RHD stalls along the deck's south face (hidden by the roof in the ortho), the planted island with a tree in Lot 33 and the one at x -330..-301 (mostly in the main model), fences along the railway (none seen in the evidence).",
+ "surfaces": [
+  {
+   "name": "W_road_Carlisle",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -404.84,
+     -58.3
+    ],
+    [
+     -400.442,
+     -41.386
+    ],
+    [
+     -392.649,
+     -1.84,
+     1714.4
+    ],
+    [
+     -383.042,
+     37.304
+    ],
+    [
+     -373.435,
+     76.449,
+     1714.4
+    ],
+    [
+     -362.036,
+     115.11
+    ],
+    [
+     -350.637,
+     153.77,
+     1714.4
+    ],
+    [
+     -337.469,
+     191.865
+    ],
+    [
+     -324.301,
+     229.96,
+     1714.4
+    ],
+    [
+     -309.393,
+     267.407
+    ],
+    [
+     -294.485,
+     304.855,
+     1714.4
+    ],
+    [
+     -277.868,
+     341.576
+    ],
+    [
+     -269.942,
+     337.99
+    ],
+    [
+     -290.252,
+     293.107,
+     1705.9
+    ],
+    [
+     -307.991,
+     247.148
+    ],
+    [
+     -325.73,
+     201.189,
+     1705.9
+    ],
+    [
+     -340.841,
+     154.301
+    ],
+    [
+     -355.952,
+     107.412,
+     1705.9
+    ],
+    [
+     -368.388,
+     59.744
+    ],
+    [
+     -380.823,
+     12.075,
+     1705.9
+    ],
+    [
+     -390.543,
+     -36.22
+    ],
+    [
+     -388.0,
+     -38.4
+    ],
+    [
+     -391.9,
+     -55.8
+    ],
+    [
+     -392.5,
+     -58.3
+    ],
+    [
+     -396.1,
+     -58.3
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "south of the arc the west edge is the paved edge in the LiDAR, a straight run to x -404.8 at the cut, shared with the south-west area's corrected edge; north end cut at the edge of the evidence"
+  },
+  {
+   "name": "W_lot_30S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -379.295,
+     16.458
+    ],
+    [
+     -370.101,
+     55.808,
+     1706.1
+    ],
+    [
+     -359.09,
+     94.688
+    ],
+    [
+     -348.08,
+     133.569,
+     1706.1
+    ],
+    [
+     -335.277,
+     171.897
+    ],
+    [
+     -325.698,
+     168.698
+    ],
+    [
+     -338.426,
+     130.592,
+     1696.2
+    ],
+    [
+     -349.372,
+     91.936
+    ],
+    [
+     -360.319,
+     53.281,
+     1696.2
+    ],
+    [
+     -369.46,
+     14.16
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "W_lot_30",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -302.055,
+     256.872
+    ],
+    [
+     -286.094,
+     297.444,
+     1704.0
+    ],
+    [
+     -268.12,
+     337.165
+    ],
+    [
+     -259.282,
+     333.166
+    ],
+    [
+     -277.156,
+     293.667,
+     1694.5
+    ],
+    [
+     -293.028,
+     253.321
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "north end continues beyond the evidence (OSM Lot 30 ends near y 359)"
+  },
+  {
+   "name": "W_road_Carlisle_Lot30_median",
+   "kind": "concrete",
+   "ring": [
+    [
+     -302.823,
+     257.924
+    ],
+    [
+     -286.964,
+     298.191,
+     1705.0
+    ],
+    [
+     -269.122,
+     337.619
+    ],
+    [
+     -267.937,
+     337.083
+    ],
+    [
+     -285.766,
+     297.684,
+     1703.8
+    ],
+    [
+     -301.613,
+     257.448
+    ]
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "surface of the 1.3 m divider (LiDAR +0.13 m, light edges in the ortho) guessed as concrete"
+  },
+  {
+   "name": "W_road_Webster_mouth",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -335.908,
+     170.005
+    ],
+    [
+     -326.325,
+     166.816
+    ],
+    [
+     -323.799,
+     174.407,
+     20.0
+    ],
+    [
+     -310.77,
+     186.28,
+     20.0
+    ],
+    [
+     -297.8,
+     207.66
+    ],
+    [
+     -305.19,
+     211.68
+    ],
+    [
+     -307.05,
+     208.6
+    ],
+    [
+     -310.427,
+     207.468
+    ],
+    [
+     -319.833,
+     210.863
+    ],
+    [
+     -322.202,
+     209.597
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "Webster Road is cut 1 m beyond its crosswalk, where this area ends; its north-west edge at the island nose is in tree shade"
+  },
+  {
+   "name": "W_road_Carlisle_island",
+   "kind": "lawn",
+   "ring": [
+    [
+     -302.411,
+     257.333,
+     0.5
+    ],
+    [
+     -311.409,
+     234.472,
+     1478.4
+    ],
+    [
+     -320.265,
+     209.96,
+     2.5
+    ],
+    [
+     -318.022,
+     207.036,
+     2.5
+    ],
+    [
+     -313.115,
+     205.907,
+     2.0
+    ],
+    [
+     -306.88,
+     208.49
+    ],
+    [
+     -305.12,
+     211.4
+    ],
+    [
+     -308.88,
+     216.399
+    ],
+    [
+     -301.912,
+     235.393,
+     1471.1
+    ],
+    [
+     -294.501,
+     254.22,
+     0.5
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "the nose south of the walk is in tree shade",
+   "layer": 3.5
+  },
+  {
+   "name": "W_road_College_Ave_junction",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -390.739,
+     -36.181
+    ],
+    [
+     -379.295,
+     16.458
+    ],
+    [
+     -369.46,
+     14.16
+    ],
+    [
+     -376.081,
+     4.716
+    ],
+    [
+     -384.324,
+     1.812,
+     13.37
+    ],
+    [
+     -385.132,
+     -6.89
+    ],
+    [
+     -385.939,
+     -15.593,
+     13.37
+    ],
+    [
+     -378.37,
+     -19.963
+    ],
+    [
+     -358.5,
+     -21.4
+    ],
+    [
+     -335.5,
+     -26.9
+    ],
+    [
+     -333.0,
+     -24.9
+    ],
+    [
+     -331.4,
+     -26.45
+    ],
+    [
+     -273.89,
+     -40.83
+    ],
+    [
+     -275.81,
+     -48.44
+    ],
+    [
+     -278.77,
+     -47.7
+    ],
+    [
+     -279.1,
+     -46.94
+    ],
+    [
+     -293.37,
+     -43.32
+    ],
+    [
+     -293.7,
+     -44.17
+    ],
+    [
+     -301.31,
+     -42.26
+    ],
+    [
+     -302.81,
+     -48.2
+    ],
+    [
+     -304.2,
+     -48.2
+    ],
+    [
+     -304.2,
+     -47.7
+    ],
+    [
+     -320.85,
+     -47.7
+    ],
+    [
+     -322.3,
+     -48.43
+    ],
+    [
+     -322.3,
+     -58.4
+    ],
+    [
+     -327.1,
+     -58.7
+    ],
+    [
+     -373.75,
+     -47.0
+    ],
+    [
+     -376.9,
+     -46.1
+    ],
+    [
+     -376.1,
+     -41.3
+    ],
+    [
+     -387.0,
+     -38.6
+    ],
+    [
+     -388.2,
+     -38.2
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "one paved area for College Avenue west of the main model's carriageway, the Carlisle Road junction and Lot 33; the strip along the deck's south face is drawn as paving to the main model's College Avenue"
+  },
+  {
+   "name": "W_road_junction_island_tri",
+   "kind": "concrete",
+   "ring": [
+    [
+     -389.8,
+     -26.7,
+     0.6
+    ],
+    [
+     -384.4,
+     -28.4,
+     0.6
+    ],
+    [
+     -392.0,
+     -34.6,
+     0.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "raised island assumed (a post stands on it); could be painted"
+  },
+  {
+   "name": "W_road_junction_island_long",
+   "kind": "concrete",
+   "ring": [
+    [
+     -388.9,
+     -36.1,
+     0.6
+    ],
+    [
+     -381.5,
+     -31.9,
+     6.0
+    ],
+    [
+     -371.7,
+     -31.0,
+     0.9
+    ],
+    [
+     -371.6,
+     -33.4,
+     0.9
+    ],
+    [
+     -381.4,
+     -34.0,
+     4.0
+    ],
+    [
+     -387.9,
+     -37.6,
+     0.6
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "ends and width read at 0.15 m; light surface taken for concrete"
+  },
+  {
+   "name": "W_road_RHD_drive",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -331.2,
+     -26.8
+    ],
+    [
+     -319.6,
+     -29.8
+    ],
+    [
+     -321.4,
+     -36.6
+    ],
+    [
+     -330.8,
+     -34.4
+    ]
+   ],
+   "evidence": "osm, ortho2020",
+   "unverified": "entrance width from OSM; the deck roof hides it in the ortho"
+  },
+  {
+   "name": "W_road_RHD_W_plaza",
+   "kind": "concrete",
+   "ring": [
+    [
+     -358.3,
+     -19.6
+    ],
+    [
+     -338.5,
+     -19.4
+    ],
+    [
+     -330.95,
+     -25.9
+    ],
+    [
+     -335.5,
+     -26.9
+    ],
+    [
+     -358.3,
+     -21.45
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "light paving south of the police terrace and up to the deck's west stair tower, behind the College Avenue curb; extent read at 0.15 m, the footprint cuts it"
+  }
+ ],
+ "strips": [
+  {
+   "name": "W_road_Carlisle_E_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -368.876,
+     14.023
+    ],
+    [
+     -359.851,
+     52.648,
+     1695.6
+    ],
+    [
+     -349.065,
+     90.819
+    ],
+    [
+     -338.279,
+     128.99,
+     1695.6
+    ],
+    [
+     -325.756,
+     166.626
+    ],
+    [
+     -323.23,
+     174.217,
+     20.0
+    ],
+    [
+     -310.26,
+     185.97,
+     20.0
+    ],
+    [
+     -297.28,
+     207.35
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "width 1.6 to 2.0 in the ortho; 1.8 used"
+  },
+  {
+   "name": "W_road_Lot30_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -307.93,
+     208.31
+    ],
+    [
+     -311.521,
+     212.082
+    ],
+    [
+     -303.891,
+     233.067,
+     1697.1
+    ],
+    [
+     -295.723,
+     253.848
+    ],
+    [
+     -291.194,
+     255.792
+    ],
+    [
+     -275.806,
+     294.709,
+     1693.7
+    ],
+    [
+     -258.553,
+     332.836
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "width read as 2.0; dog-leg at the end of the island"
+  },
+  {
+   "name": "W_road_RHD_S_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -319.3,
+     -30.98
+    ],
+    [
+     -275.3,
+     -41.98
+    ]
+   ],
+   "width": 3.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width guessed from the light band south of the deck; the deck roof overhangs it in the ortho"
+  },
+  {
+   "name": "W_road_College_Ave_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -378.3,
+     -19.6
+    ],
+    [
+     -358.3,
+     -20.4
+    ],
+    [
+     -335.0,
+     -25.9
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, osm"
+  },
+  {
+   "name": "W_road_police_lawn_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -369.6,
+     14.0
+    ],
+    [
+     -376.6,
+     0.0,
+     12.0
+    ],
+    [
+     -376.8,
+     -11.0,
+     6.0
+    ],
+    [
+     -373.0,
+     -19.6
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020, osm",
+   "unverified": "curve read from the ortho; partly under tree shade"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "W_road_Carlisle_Lot30_median_curb",
+   "path": [
+    [
+     -302.823,
+     257.924
+    ],
+    [
+     -286.964,
+     298.191,
+     1705.0
+    ],
+    [
+     -269.122,
+     337.619
+    ],
+    [
+     -267.937,
+     337.083
+    ],
+    [
+     -285.766,
+     297.684,
+     1703.8
+    ],
+    [
+     -301.613,
+     257.448
+    ]
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "closed": true
+  },
+  {
+   "name": "W_lot_30_E_curb",
+   "path": [
+    [
+     -292.302,
+     255.165
+    ],
+    [
+     -276.748,
+     294.57,
+     1694.5
+    ],
+    [
+     -259.282,
+     333.166
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30S_E_curb_Webster_SE_curb",
+   "path": [
+    [
+     -369.752,
+     14.228
+    ],
+    [
+     -360.722,
+     52.873,
+     1696.5
+    ],
+    [
+     -349.931,
+     91.064
+    ],
+    [
+     -339.14,
+     129.254,
+     1696.5
+    ],
+    [
+     -326.61,
+     166.91
+    ],
+    [
+     -324.084,
+     174.501,
+     20.0
+    ],
+    [
+     -311.03,
+     186.44,
+     20.0
+    ],
+    [
+     -298.05,
+     207.81
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "turn into Webster Road read from the walk edge in the ortho"
+  },
+  {
+   "name": "W_road_Carlisle_island_curb",
+   "path": [
+    [
+     -302.411,
+     257.333
+    ],
+    [
+     -311.409,
+     234.472,
+     1478.4
+    ],
+    [
+     -320.265,
+     209.96,
+     2.5
+    ],
+    [
+     -318.022,
+     207.036,
+     2.5
+    ],
+    [
+     -313.115,
+     205.907,
+     2.0
+    ],
+    [
+     -306.88,
+     208.49
+    ],
+    [
+     -305.12,
+     211.4
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_police_lawn_curb",
+   "path": [
+    [
+     -369.46,
+     14.16
+    ],
+    [
+     -376.081,
+     4.716
+    ],
+    [
+     -384.324,
+     1.812,
+     13.37
+    ],
+    [
+     -385.132,
+     -6.89
+    ],
+    [
+     -385.939,
+     -15.593,
+     13.37
+    ],
+    [
+     -378.37,
+     -19.963
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "circle fitted to the lawn edge (6 points, 0.55 m); north end where Lot 30S begins"
+  },
+  {
+   "name": "W_road_College_Ave_N_curb",
+   "path": [
+    [
+     -378.37,
+     -19.963
+    ],
+    [
+     -358.5,
+     -21.4
+    ],
+    [
+     -335.5,
+     -26.9
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "curb line read from the brightness edge between walk and asphalt"
+  },
+  {
+   "name": "W_road_junction_island_tri_curb",
+   "path": [
+    [
+     -389.8,
+     -26.7,
+     0.6
+    ],
+    [
+     -384.4,
+     -28.4,
+     0.6
+    ],
+    [
+     -392.0,
+     -34.6,
+     0.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "raised island assumed"
+  },
+  {
+   "name": "W_road_junction_island_long_curb",
+   "path": [
+    [
+     -388.9,
+     -36.1,
+     0.6
+    ],
+    [
+     -381.5,
+     -31.9,
+     6.0
+    ],
+    [
+     -371.7,
+     -31.0,
+     0.9
+    ],
+    [
+     -371.6,
+     -33.4,
+     0.9
+    ],
+    [
+     -381.4,
+     -34.0,
+     4.0
+    ],
+    [
+     -387.9,
+     -37.6,
+     0.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "closed": true
+  }
+ ],
+ "markings": [
+  {
+   "name": "W_road_Carlisle_CL",
+   "type": "line",
+   "path": [
+    [
+     -399.394,
+     -58.182
+    ],
+    [
+     -392.108,
+     -19.303,
+     1710.3
+    ],
+    [
+     -383.068,
+     19.205
+    ],
+    [
+     -374.028,
+     57.713,
+     1710.3
+    ],
+    [
+     -363.252,
+     95.772
+    ],
+    [
+     -352.477,
+     133.831,
+     1710.3
+    ],
+    [
+     -339.988,
+     171.362
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "at the junction (y -58..-40) the double line is faint; the arc is carried through to the south-west area, whose line now ends on it"
+  },
+  {
+   "name": "W_road_Carlisle_CL",
+   "type": "line",
+   "path": [
+    [
+     -399.198,
+     -58.218
+    ],
+    [
+     -391.912,
+     -19.345,
+     1710.1
+    ],
+    [
+     -382.873,
+     19.159
+    ],
+    [
+     -373.834,
+     57.663,
+     1710.1
+    ],
+    [
+     -363.06,
+     95.717
+    ],
+    [
+     -352.286,
+     133.772,
+     1710.1
+    ],
+    [
+     -339.799,
+     171.299
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "at the junction (y -58..-40) the double line is faint; the arc is carried through to the south-west area, whose line now ends on it"
+  },
+  {
+   "name": "W_road_Carlisle_CL_N",
+   "type": "line",
+   "path": [
+    [
+     -331.925,
+     195.028
+    ],
+    [
+     -319.08,
+     231.861,
+     1710.3
+    ],
+    [
+     -304.602,
+     268.083
+    ],
+    [
+     -290.124,
+     304.306,
+     1710.3
+    ],
+    [
+     -274.041,
+     339.845
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_CL_N",
+   "type": "line",
+   "path": [
+    [
+     -331.736,
+     194.962
+    ],
+    [
+     -318.892,
+     231.791,
+     1710.1
+    ],
+    [
+     -304.416,
+     268.009
+    ],
+    [
+     -289.94,
+     304.227,
+     1710.1
+    ],
+    [
+     -273.859,
+     339.763
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_W_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -401.96,
+     -51.302
+    ],
+    [
+     -394.206,
+     -10.736,
+     1714.1
+    ],
+    [
+     -384.547,
+     29.418
+    ],
+    [
+     -374.887,
+     69.572,
+     1714.1
+    ],
+    [
+     -363.343,
+     109.226
+    ],
+    [
+     -351.799,
+     148.879,
+     1714.1
+    ],
+    [
+     -338.396,
+     187.944
+    ],
+    [
+     -324.993,
+     227.008,
+     1714.1
+    ],
+    [
+     -309.762,
+     265.397
+    ],
+    [
+     -294.53,
+     303.785,
+     1714.1
+    ],
+    [
+     -277.504,
+     341.412
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_NB_edge_line_N",
+   "type": "line",
+   "path": [
+    [
+     -328.008,
+     194.718
+    ],
+    [
+     -315.252,
+     231.228,
+     1706.6
+    ],
+    [
+     -300.888,
+     267.136
+    ],
+    [
+     -286.524,
+     303.044,
+     1706.6
+    ],
+    [
+     -270.579,
+     338.278
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_NB_edge_line_S",
+   "type": "line",
+   "path": [
+    [
+     -368.905,
+     60.136
+    ],
+    [
+     -358.697,
+     99.245,
+     1706.5
+    ],
+    [
+     -346.685,
+     137.838
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "faint in the ortho"
+  },
+  {
+   "name": "W_road_Carlisle_gore_W_line",
+   "type": "line",
+   "path": [
+    [
+     -344.914,
+     137.809
+    ],
+    [
+     -338.983,
+     156.844,
+     1704.8
+    ],
+    [
+     -332.807,
+     175.802
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_NB_stop_bar_Webster",
+   "type": "area",
+   "ring": [
+    [
+     -333.53,
+     189.47
+    ],
+    [
+     -328.62,
+     187.78
+    ],
+    [
+     -328.77,
+     187.35
+    ],
+    [
+     -333.68,
+     189.05
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_outline",
+   "type": "line",
+   "path": [
+    [
+     -341.69,
+     136.388
+    ],
+    [
+     -344.914,
+     137.809
+    ],
+    [
+     -333.969,
+     159.924
+    ],
+    [
+     -331.383,
+     167.451
+    ],
+    [
+     -320.872,
+     185.393
+    ],
+    [
+     -317.803,
+     181.715
+    ],
+    [
+     -323.394,
+     172.108
+    ],
+    [
+     -326.515,
+     166.879
+    ],
+    [
+     -334.72,
+     141.906
+    ],
+    [
+     -341.69,
+     136.388
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "outline read at 0.15 m; corners about 0.5 m"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -336.369,
+     140.606
+    ],
+    [
+     -334.402,
+     142.897
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -340.329,
+     137.47
+    ],
+    [
+     -333.636,
+     145.279
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -342.301,
+     136.657
+    ],
+    [
+     -332.866,
+     147.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -343.231,
+     137.067
+    ],
+    [
+     -332.093,
+     150.04
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     -344.162,
+     137.477
+    ],
+    [
+     -331.317,
+     152.418
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     -344.585,
+     138.485
+    ],
+    [
+     -330.537,
+     154.796
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     -342.868,
+     142.004
+    ],
+    [
+     -329.754,
+     157.172
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     -341.143,
+     145.518
+    ],
+    [
+     -328.967,
+     159.548
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_9",
+   "type": "line",
+   "path": [
+    [
+     -339.411,
+     149.026
+    ],
+    [
+     -328.177,
+     161.922
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_10",
+   "type": "line",
+   "path": [
+    [
+     -337.672,
+     152.53
+    ],
+    [
+     -327.383,
+     164.295
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_11",
+   "type": "line",
+   "path": [
+    [
+     -335.925,
+     156.029
+    ],
+    [
+     -326.586,
+     166.666
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_12",
+   "type": "line",
+   "path": [
+    [
+     -334.171,
+     159.522
+    ],
+    [
+     -324.093,
+     170.939
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_13",
+   "type": "line",
+   "path": [
+    [
+     -333.235,
+     162.07
+    ],
+    [
+     -321.625,
+     175.164
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_14",
+   "type": "line",
+   "path": [
+    [
+     -332.403,
+     164.493
+    ],
+    [
+     -319.217,
+     179.298
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_15",
+   "type": "line",
+   "path": [
+    [
+     -331.568,
+     166.916
+    ],
+    [
+     -318.064,
+     182.028
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_16",
+   "type": "line",
+   "path": [
+    [
+     -329.464,
+     170.764
+    ],
+    [
+     -318.695,
+     182.783
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_17",
+   "type": "line",
+   "path": [
+    [
+     -326.991,
+     175.009
+    ],
+    [
+     -319.325,
+     183.537
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_18",
+   "type": "line",
+   "path": [
+    [
+     -324.508,
+     179.244
+    ],
+    [
+     -319.955,
+     184.293
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_gore_hatch_19",
+   "type": "line",
+   "path": [
+    [
+     -322.013,
+     183.47
+    ],
+    [
+     -320.585,
+     185.049
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "stripes every 2.5 m along the road at 23 deg to it; spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_chevron_outline",
+   "type": "line",
+   "path": [
+    [
+     -332.807,
+     175.802
+    ],
+    [
+     -328.363,
+     188.823
+    ],
+    [
+     -324.384,
+     188.395
+    ],
+    [
+     -321.215,
+     185.932
+    ],
+    [
+     -327.56,
+     174.035
+    ],
+    [
+     -332.807,
+     175.802
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "outline of the chevron area read at 0.15 m"
+  },
+  {
+   "name": "W_road_Carlisle_chevron_1",
+   "type": "line",
+   "path": [
+    [
+     -331.278,
+     179.389
+    ],
+    [
+     -330.538,
+     176.404
+    ],
+    [
+     -325.846,
+     177.546
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "three chevrons; count and spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_chevron_2",
+   "type": "line",
+   "path": [
+    [
+     -330.056,
+     182.975
+    ],
+    [
+     -328.955,
+     179.863
+    ],
+    [
+     -323.892,
+     180.868
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "three chevrons; count and spacing approximate"
+  },
+  {
+   "name": "W_road_Carlisle_chevron_3",
+   "type": "line",
+   "path": [
+    [
+     -328.827,
+     186.558
+    ],
+    [
+     -327.364,
+     183.317
+    ],
+    [
+     -321.932,
+     184.184
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "three chevrons; count and spacing approximate"
+  },
+  {
+   "name": "W_lot_30_stalls_1",
+   "type": "stalls",
+   "line": [
+    [
+     -295.985,
+     259.717
+    ],
+    [
+     -285.367,
+     285.864
+    ]
+   ],
+   "count": 8,
+   "depth": 6.62,
+   "side": "right",
+   "angle": 46.5,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30_stalls_2",
+   "type": "stalls",
+   "line": [
+    [
+     -285.367,
+     285.864
+    ],
+    [
+     -274.325,
+     311.834
+    ]
+   ],
+   "count": 8,
+   "depth": 6.62,
+   "side": "right",
+   "angle": 46.5,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30_stalls_3",
+   "type": "stalls",
+   "line": [
+    [
+     -274.325,
+     311.834
+    ],
+    [
+     -265.767,
+     331.192
+    ]
+   ],
+   "count": 6,
+   "depth": 6.62,
+   "side": "right",
+   "angle": 46.5,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "fitted to the painted lines: pitch 3.55 m along the road, 46.5 deg; the row continues north of this area's edge"
+  },
+  {
+   "name": "W_lot_30S_angled_1",
+   "type": "stalls",
+   "line": [
+    [
+     -363.295,
+     61.037
+    ],
+    [
+     -357.87,
+     81.212
+    ]
+   ],
+   "count": 4,
+   "depth": 8.31,
+   "side": "right",
+   "angle": 32.8,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30S_angled_2",
+   "type": "stalls",
+   "line": [
+    [
+     -357.87,
+     81.212
+    ],
+    [
+     -350.749,
+     106.336
+    ]
+   ],
+   "count": 5,
+   "depth": 8.31,
+   "side": "right",
+   "angle": 32.8,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30S_angled_3",
+   "type": "stalls",
+   "line": [
+    [
+     -350.749,
+     106.336
+    ],
+    [
+     -341.705,
+     136.34
+    ]
+   ],
+   "count": 6,
+   "depth": 8.31,
+   "side": "right",
+   "angle": 32.8,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30S_perpendicular",
+   "type": "stalls",
+   "line": [
+    [
+     -373.745,
+     18.225
+    ],
+    [
+     -365.821,
+     50.49
+    ]
+   ],
+   "count": 12,
+   "depth": 4.8,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "cars park square to the curb here; the divider lines are too faint to count, 12 stalls of 2.8 m assumed"
+  },
+  {
+   "name": "W_lot_30S_end_hatch_outline",
+   "type": "line",
+   "path": [
+    [
+     -366.157,
+     51.192
+    ],
+    [
+     -364.064,
+     59.284
+    ],
+    [
+     -360.595,
+     53.148
+    ],
+    [
+     -361.41,
+     49.976
+    ],
+    [
+     -366.157,
+     51.192
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "W_lot_30S_end_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -365.786,
+     52.638
+    ],
+    [
+     -364.704,
+     50.82
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "hatch stripes approximate"
+  },
+  {
+   "name": "W_lot_30S_end_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -365.04,
+     55.528
+    ],
+    [
+     -361.798,
+     50.076
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "hatch stripes approximate"
+  },
+  {
+   "name": "W_lot_30S_end_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -364.29,
+     58.417
+    ],
+    [
+     -360.912,
+     52.717
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "hatch stripes approximate"
+  },
+  {
+   "name": "W_road_Carlisle_NB_stop_bar_junction",
+   "type": "area",
+   "ring": [
+    [
+     -395.89,
+     -34.53
+    ],
+    [
+     -392.59,
+     -34.73
+    ],
+    [
+     -392.61,
+     -35.17
+    ],
+    [
+     -395.91,
+     -34.97
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_road_Carlisle_NB_lane_line",
+   "type": "line",
+   "path": [
+    [
+     -392.6,
+     -35.0
+    ],
+    [
+     -393.6,
+     -44.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_road_Carlisle_NB_lane_end_line",
+   "type": "line",
+   "path": [
+    [
+     -396.4,
+     -44.6
+    ],
+    [
+     -390.2,
+     -45.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "a line across both lanes; role unclear"
+  },
+  {
+   "name": "W_road_College_Ave_WB_stop_bar",
+   "type": "area",
+   "ring": [
+    [
+     -380.78,
+     -16.85
+    ],
+    [
+     -381.78,
+     -21.35
+    ],
+    [
+     -382.22,
+     -21.25
+    ],
+    [
+     -381.22,
+     -16.75
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "W_road_College_Ave_divider",
+   "type": "line",
+   "path": [
+    [
+     -380.0,
+     -24.6
+    ],
+    [
+     -358.0,
+     -29.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "solid white line; east of x -358 it is under tree shade"
+  },
+  {
+   "name": "W_road_College_Ave_crosswalk_bar_1",
+   "type": "area",
+   "ring": [
+    [
+     -376.22,
+     -21.56
+    ],
+    [
+     -373.42,
+     -22.06
+    ],
+    [
+     -373.58,
+     -22.94
+    ],
+    [
+     -376.38,
+     -22.44
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two bars seen; others may be hidden"
+  },
+  {
+   "name": "W_road_College_Ave_crosswalk_bar_2",
+   "type": "area",
+   "ring": [
+    [
+     -376.22,
+     -24.56
+    ],
+    [
+     -373.42,
+     -25.06
+    ],
+    [
+     -373.58,
+     -25.94
+    ],
+    [
+     -376.38,
+     -25.44
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two bars seen; others may be hidden"
+  },
+  {
+   "name": "W_road_College_Ave_N_parallel_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -358.56,
+     -23.85
+    ],
+    [
+     -334.56,
+     -29.59
+    ]
+   ],
+   "count": 4,
+   "depth": 2.4,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "two painted stall outlines seen (x -358..-351, -347..-339); four 6 m stalls assumed, the last one at the deck corner"
+  },
+  {
+   "name": "W_lot_33_stalls_bldg",
+   "type": "stalls",
+   "line": [
+    [
+     -364.46,
+     -42.84
+    ],
+    [
+     -329.74,
+     -51.57
+    ]
+   ],
+   "count": 10,
+   "depth": 7.95,
+   "side": "right",
+   "angle": 131,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020, osm",
+   "unverified": "row read from a few lines between parked cars; pitch 3.58 m and count assumed"
+  },
+  {
+   "name": "W_road_Webster_crosswalk_1",
+   "type": "line",
+   "path": [
+    [
+     -308.2,
+     206.72
+    ],
+    [
+     -302.04,
+     202.98
+    ]
+   ],
+   "width": 0.3,
+   "colour": "white",
+   "evidence": "ortho2020, osm",
+   "unverified": "marking style not resolved"
+  },
+  {
+   "name": "W_road_Webster_crosswalk_2",
+   "type": "line",
+   "path": [
+    [
+     -306.64,
+     209.28
+    ],
+    [
+     -300.48,
+     205.55
+    ]
+   ],
+   "width": 0.3,
+   "colour": "white",
+   "evidence": "ortho2020, osm",
+   "unverified": "marking style not resolved"
+  }
+ ],
+ "points": [
+  {
+   "name": "W_road_lamp_Lot30S_N",
+   "kind": "lamp",
+   "at": [
+    -330.2,
+    149.8
+   ],
+   "height": 6.3,
+   "evidence": "lidar2017",
+   "unverified": "kind guessed from height; single LiDAR return"
+  },
+  {
+   "name": "W_road_lamp_police_walk",
+   "kind": "lamp",
+   "at": [
+    -379.8,
+    -11.0
+   ],
+   "height": 6.8,
+   "evidence": "lidar2017",
+   "unverified": "kind guessed from height; two LiDAR returns 2.6 m apart"
+  },
+  {
+   "name": "W_road_lamp_field_walk",
+   "kind": "lamp",
+   "at": [
+    -318.8,
+    169.2
+   ],
+   "height": 6.4,
+   "evidence": "lidar2017",
+   "unverified": "kind guessed from height; single LiDAR return"
+  }
+ ]
+}

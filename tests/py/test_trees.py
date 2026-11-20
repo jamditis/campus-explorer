@@ -58,5 +58,14 @@ class Peaks(unittest.TestCase):
         self.assertTrue(np.allclose(trees.fill(g), 100.0))
 
 
+@unittest.skipIf(np is None, "numpy and Pillow are not installed")
+class Existing(unittest.TestCase):
+    def test_a_street_is_not_a_tree(self):
+        for name in ("Tree_RedMaple_LOD1_v2Oct", "ShrubLeafCard", "Context tree crowns", "tree_12"):
+            self.assertTrue(trees.is_vegetation(name), name)
+        for name in ("MID_streets_20261015ae_me", "MID_streets_far_20261015ag_me", "Roads_asphalt"):
+            self.assertFalse(trees.is_vegetation(name), name)
+
+
 if __name__ == "__main__":
     unittest.main()

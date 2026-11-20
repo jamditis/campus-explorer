@@ -71,13 +71,13 @@
      56.1
     ],
     [
-     -399.93,
-     -95.5,
+     -402.88,
+     -122.88,
      76.1
     ],
     [
-     -396.41,
-     -72.34,
+     -396.66,
+     -83.94,
      43.9
     ],
     [
@@ -85,8 +85,13 @@
      -58.08
     ],
     [
-     -408.4,
+     -404.76,
      -58.0
+    ],
+    [
+     -408.4,
+     -72.0,
+     20.0
     ],
     [
      -408.6,
@@ -114,7 +119,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "west curb north of y -110 hidden by tree cover; north end cut at y -58 where the lot entrance joins"
+   "unverified": "west curb north of y -110 hidden by tree cover; north of y -72 the west edge follows the paved edge in the LiDAR (no curb), bending to x -404.8 at the cut; north end cut at y -58 where the lot entrance joins"
   },
   {
    "name": "Normal_Ave_median_W",
@@ -377,12 +382,12 @@
      30
     ],
     [
-     -408.4,
-     -58.0
+     -408.45,
+     -74.0
     ]
    ],
    "evidence": "lidar2017, ortho2020",
-   "unverified": "Carlisle west curb north of y -110"
+   "unverified": "Carlisle west curb north of y -110; ends at y -74: north of there the LiDAR shows a soft paved edge falling to the ditch, no curb"
   },
   {
    "name": "Carlisle_E_curb_Normal_N_curb_E",
@@ -392,13 +397,13 @@
      -58.08
     ],
     [
-     -396.41,
-     -72.34,
+     -396.66,
+     -83.94,
      43.9
     ],
     [
-     -399.93,
-     -95.5,
+     -402.88,
+     -122.88,
      76.1
     ],
     [
@@ -426,7 +431,7 @@
      -255.58
     ]
    ],
-   "evidence": "lidar2017, ortho2020"
+   "evidence": "lidar2017, ortho2020; y -84..-123 refitted to the asphalt/hedge edge (ortho brightness and LiDAR hedge face, profiles every 2 m, rms 0.3 m)"
   },
   {
    "name": "Normal_Ave_S_curb_W",
@@ -611,18 +616,23 @@
    "type": "line",
    "path": [
     [
-     -399.9,
+     -399.16,
      -58.0
     ],
     [
-     -400.2,
-     -72.01,
-     40.1
+     -400.0,
+     -62.47,
+     40.0
     ],
     [
-     -403.7,
-     -95.01,
-     79.9
+     -400.47,
+     -84.66,
+     100.0
+    ],
+    [
+     -406.75,
+     -123.28,
+     150.0
     ],
     [
      -410.5,
@@ -636,25 +646,31 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg"
+   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); y -66..-117 refitted to the paint (profiles every 2 m; the ortho shows the line in 1 m steps every 10 m, the fit runs through their middles, rms 0.3 m); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_CL",
    "type": "line",
    "path": [
     [
-     -400.1,
+     -399.36,
      -58.0
     ],
     [
-     -400.4,
-     -71.99,
-     39.9
+     -400.2,
+     -62.45,
+     40.0
     ],
     [
-     -403.9,
-     -94.99,
-     80.1
+     -400.67,
+     -84.65,
+     100.0
+    ],
+    [
+     -406.95,
+     -123.25,
+     150.0
     ],
     [
      -410.7,
@@ -668,26 +684,29 @@
    ],
    "width": 0.1,
    "colour": "yellow",
-   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg"
+   "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
+   "unverified": "north of y -66 bent onto the centre arc measured in the west area (heading 79 deg at y -58); y -66..-117 refitted to the paint (profiles every 2 m; the ortho shows the line in 1 m steps every 10 m, the fit runs through their middles, rms 0.3 m); the double line there is faint"
   },
   {
    "name": "Carlisle_Rd_lane_dash",
    "type": "line",
    "path": [
     [
-     -406.8,
-     -100.0
+     -406.56,
+     -101.5
     ],
     [
-     -410.8,
-     -126.0
+     -411.91,
+     -136.16,
+     60.0
     ],
     [
-     -412.3,
-     -145.0
+     -414.27,
+     -158.03,
+     56.2
     ],
     [
-     -412.3,
+     -411.53,
      -180.0
     ]
    ],
@@ -698,7 +717,7 @@
     9.0
    ],
    "evidence": "ortho2020, msu_sprague_DJI_20250530101718_0163_D.jpg",
-   "unverified": "dash phase; south of y -150 the dashes are faint"
+   "unverified": "dashes located on the paint at y -103, -114.5, -126, -138, -150, -161, -174 (0.1 m); dash length 3 m and gap 9 m kept"
   },
   {
    "name": "Carlisle_Rd_W_edge_line",
