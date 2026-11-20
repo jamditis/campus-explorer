@@ -6,7 +6,7 @@ export const KIND_WEIGHT = { building: 4, station: 4, landmark: 4, sports: 2, pa
 
 /** Stops of the guided tour, in visiting order. Names match viewer/places.json. */
 export const TOUR_NAMES = [
-  'Red Hawk Deck', 'Alexander Kasser Theater', 'Susan A. Cole Hall', 'School of Communication and Media',
+  'Red Hawk Deck', 'Alexander Kasser Theater', 'Susan A. Cole Hall', 'College of Communication and Media',
   'Life Hall', 'Memorial Auditorium', 'Schmitt Hall', 'Dickson Hall', 'Feliciano School of Business',
   'Student Center', 'University Hall', 'Center for Environmental and Life Sciences', 'Blanton Hall',
   'Montclair State University Ice Arena', 'NJ Transit Deck',
