@@ -1,6 +1,6 @@
 {
  "zone": "v_roads",
- "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars), most stop bars and the junction crosswalks other than two (positions not resolved), lane arrows, the chevron gore at the Lot 61 junction, the pool deck in the Village court. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins. The stall lines of the two Village Road parking bays were taken out of this zone after the first build: the north lots zone (v_lots_n) has those rows fitted to the paint, and two sets would have painted double lines.",
+ "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars), most stop bars and the junction crosswalks other than two (positions not resolved), lane arrows, the chevron gore at the Lot 61 junction, the pool deck in the Village court. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins.\nFollow-up after the cross-zone review: mouth drives from the road edge into the rings of Lots 41, 27 (both), 29 (exit taper), the Children's Center strip (south drive and the service road north to Lot 28 and the T), 45 (the paved apron at the loop's north-west corner) and 46 (mouth extended), and the station-side drives on both sides of the painted island; asphalt bays under the lots zone's roadside stall rows; holes for the Lot 47 and Lot 48 islands; the east drive at the T left to the lots zone's deck-front asphalt except its west end; walks cut at curbs, lot paving, walls and the footprint, sharp turns rounded or split; the Clove south east curb north of y 700 moved onto the sidewalk band edge, the Clove north west curb and the Lot 61 entrance edge moved onto the measured sidewalk, the Sinatra service drive refitted.",
  "surfaces": [
   {
    "name": "V_road_Clove_S",
@@ -25,8 +25,13 @@
      885.58
     ],
     [
-     -179.84,
-     884.35
+     -179.83,
+     884.97
+    ],
+    [
+     -228.79,
+     733.6,
+     400.0
     ],
     [
      -266.54,
@@ -356,8 +361,12 @@
      1124.5
     ],
     [
-     -131.5,
-     1131.0
+     -129.0,
+     1129.8
+    ],
+    [
+     -121.4,
+     1140.2
     ],
     [
      -117.0,
@@ -440,25 +449,25 @@
      2.5
     ],
     [
-     -71.0,
+     -80.3,
      1253.4
     ],
     [
-     -71.0,
+     -77.2,
      1263.4
     ],
     [
-     -56.6,
-     1263.6,
-     4.0
+     -53.8,
+     1263.5,
+     3.0
     ],
     [
-     -55.3,
-     1270.0
+     -53.3,
+     1272.0
     ],
     [
-     -54.6,
-     1279.0
+     -52.8,
+     1280.0
     ],
     [
      -52.3,
@@ -474,13 +483,13 @@
      1333.0
     ],
     [
-     -55.5,
-     1337.5,
+     -54.9,
+     1339.6,
      3.0
     ],
     [
      -64.5,
-     1335.5
+     1351.9
     ],
     [
      -64.5,
@@ -488,16 +497,20 @@
      2.0
     ],
     [
-     -116.0,
+     -115.3,
      1378.5
     ],
     [
-     -43.5,
+     -45.5,
      1378.5
+    ],
+    [
+     -45.5,
+     1371.4
     ],
     [
      -43.3,
-     1371.0
+     1371.4
     ],
     [
      -38.0,
@@ -672,7 +685,85 @@
     ]
    ],
    "evidence": "osm 313032021 (centre line), ortho2020 (width: colour profiles every 15 m put the inner curb 4.3 m right and the outer edge 4.1 m left of the OSM line)",
-   "unverified": "centre line from OpenStreetMap, checked against the inner curb (0.5 m); width taken as constant"
+   "unverified": "centre line from OpenStreetMap, checked against the inner curb (0.5 m); width taken as constant; hole for the lots zone island V_lot_47_island",
+   "holes": [
+    [
+     [
+      -195.31,
+      1020.9
+     ],
+     [
+      -198.09,
+      1010.15,
+      9.6
+     ],
+     [
+      -179.5,
+      1005.34,
+      8.0
+     ],
+     [
+      -177.44,
+      1013.28
+     ],
+     [
+      -183.35,
+      1014.81
+     ],
+     [
+      -176.74,
+      1040.37
+     ],
+     [
+      -171.9,
+      1039.12,
+      1.5
+     ],
+     [
+      -170.77,
+      1043.47,
+      1.5
+     ],
+     [
+      -173.35,
+      1045.48
+     ],
+     [
+      -176.22,
+      1045.19
+     ],
+     [
+      -179.98,
+      1042.24
+     ],
+     [
+      -182.47,
+      1042.16
+     ],
+     [
+      -184.79,
+      1041.21
+     ],
+     [
+      -190.21,
+      1042.61,
+      1.5
+     ],
+     [
+      -191.01,
+      1039.51,
+      1.5
+     ],
+     [
+      -185.68,
+      1038.14
+     ],
+     [
+      -190.47,
+      1019.65
+     ]
+    ]
+   ]
   },
   {
    "name": "V_road_Village_Rd_W",
@@ -786,7 +877,41 @@
     ]
    ],
    "evidence": "osm 313032021 (centre line), ortho2020 (width: colour profiles every 15 m put the inner curb 4.3 m right and the outer edge 4.1 m left of the OSM line)",
-   "unverified": "centre line from OpenStreetMap, checked against the inner curb (0.5 m); width taken as constant"
+   "unverified": "centre line from OpenStreetMap, checked against the inner curb (0.5 m); width taken as constant; hole for the lots zone island V_lot_48_island_NE",
+   "holes": [
+    [
+     [
+      -247.6,
+      1144.7
+     ],
+     [
+      -246.6,
+      1147.5
+     ],
+     [
+      -230.0,
+      1147.6,
+      2.6
+     ],
+     [
+      -230.6,
+      1142.2,
+      1.5
+     ],
+     [
+      -236.6,
+      1138.2
+     ],
+     [
+      -240.94,
+      1140.08
+     ],
+     [
+      -244.97,
+      1140.05
+     ]
+    ]
+   ]
   },
   {
    "name": "V_road_Village_Rd_N",
@@ -965,40 +1090,6 @@
    "unverified": "on-street parking bay along the outer edge, 5.5 m deep (colour profiles); may belong to a lot"
   },
   {
-   "name": "V_road_Drive_station_side",
-   "kind": "asphalt",
-   "ring": [
-    [
-     -44.0,
-     1224.8
-    ],
-    [
-     -44.0,
-     1235.0
-    ],
-    [
-     -19.8,
-     1234.8,
-     19.0
-    ],
-    [
-     -19.8,
-     1188.0
-    ],
-    [
-     -27.2,
-     1188.0
-    ],
-    [
-     -27.0,
-     1225.0,
-     3.0
-    ]
-   ],
-   "evidence": "ortho2020 (colour scans at x -35, -25 and y 1192-1232), osm 233913179",
-   "unverified": "ends at y 1188 where the station-side parking begins; outer corner radius fitted to one scan point"
-  },
-  {
    "name": "V_road_Basin_floor",
    "kind": "lawn",
    "ring": [
@@ -1038,41 +1129,543 @@
    ],
    "evidence": "ortho2020, lidar2017 (hillshade: berms on the south and east, the lot bank on the north, flat floor)",
    "unverified": "built detention basin: grass floor with standing water or wetland in its west half (x -362..-335, y 1175..1203); water is not in the plan format, so the whole floor is lawn; outline follows the toe of the banks read from the hillshade (about 1 m)"
+  },
+  {
+   "name": "V_road_Lot41_mouth",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -305.7,
+     540.47
+    ],
+    [
+     -301.73,
+     539.66
+    ],
+    [
+     -300.77,
+     542.37
+    ],
+    [
+     -305.13,
+     543.26
+    ]
+   ],
+   "evidence": "ortho2020 (colour scans at y 539-543: asphalt-grey 85-100 from the lot to a joint at x -302.4, no bright concrete band)",
+   "unverified": "drawn as asphalt: the apron reads like the lot paving, not like the sidewalks (140+)"
+  },
+  {
+   "name": "V_road_Lot27_S_mouth",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -255.59,
+     650.48
+    ],
+    [
+     -254.82,
+     650.24
+    ],
+    [
+     -252.35,
+     657.85
+    ],
+    [
+     -253.12,
+     658.09
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "sides square to the lot edge"
+  },
+  {
+   "name": "V_road_Lot27_N_mouth",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -235.22,
+     709.91
+    ],
+    [
+     -236.41,
+     710.29
+    ],
+    [
+     -234.44,
+     716.69
+    ],
+    [
+     -233.15,
+     716.28
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "sides square to the lot edge"
+  },
+  {
+   "name": "V_road_Lot29_exit_taper",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -217.56,
+     801.5
+    ],
+    [
+     -213.2,
+     801.5
+    ],
+    [
+     -217.2,
+     793.0
+    ]
+   ],
+   "evidence": "ortho2020 (the exit lane runs south along Clove and merges near y 794)",
+   "unverified": "merge point read off the ortho (about 1 m)"
+  },
+  {
+   "name": "V_road_CC_drive_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -206.97,
+     766.38
+    ],
+    [
+     -196.83,
+     763.28
+    ],
+    [
+     -197.2,
+     746.0
+    ],
+    [
+     -194.5,
+     739.5,
+     4.0
+    ],
+    [
+     -188.5,
+     731.5
+    ],
+    [
+     -192.5,
+     725.8
+    ],
+    [
+     -201.5,
+     729.5,
+     5.0
+    ],
+    [
+     -206.3,
+     742.0
+    ]
+   ],
+   "evidence": "ortho2020 (colour scans across at y 764, 755, 745, 735 and 728)",
+   "unverified": "the bend south of y 740 is in shade and cut at the footprint; radii estimated"
+  },
+  {
+   "name": "V_road_CC_service_road",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -171.05,
+     873.56
+    ],
+    [
+     -168.6,
+     880.0
+    ],
+    [
+     -165.3,
+     887.0
+    ],
+    [
+     -162.8,
+     895.0
+    ],
+    [
+     -156.8,
+     905.0
+    ],
+    [
+     -155.3,
+     920.0
+    ],
+    [
+     -148.2,
+     935.0
+    ],
+    [
+     -147.4,
+     944.0
+    ],
+    [
+     -147.5,
+     948.5
+    ],
+    [
+     -143.98,
+     947.69
+    ],
+    [
+     -160.52,
+     886.28
+    ],
+    [
+     -160.3,
+     880.0
+    ],
+    [
+     -162.92,
+     871.08
+    ]
+   ],
+   "evidence": "ortho2020 (west edge: the grass island edge on colour scans at y 873-944; east edge: Lot 28 ring overlapped by 0.5 m)",
+   "unverified": "the island edge between scans is straight-lined"
+  },
+  {
+   "name": "V_road_Village_Rd_NW_apron",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -162.1,
+     1277.2
+    ],
+    [
+     -163.5,
+     1294.2
+    ],
+    [
+     -145.0,
+     1294.3
+    ],
+    [
+     -137.6,
+     1296.4
+    ],
+    [
+     -138.1,
+     1283.0
+    ],
+    [
+     -129.6,
+     1276.4
+    ],
+    [
+     -143.0,
+     1268.0
+    ],
+    [
+     -153.5,
+     1262.0
+    ]
+   ],
+   "evidence": "ortho2020 (colour scans at x -160..-140 and y 1276, 1288: asphalt from Lot 45 east to Lot 46, north edge at y 1291.5-1294.5)",
+   "unverified": "north edge between scans straight-lined"
+  },
+  {
+   "name": "V_road_Village_Rd_NW_apron_island",
+   "kind": "lawn",
+   "ring": [
+    [
+     -157.0,
+     1275.2,
+     0.8
+    ],
+    [
+     -152.0,
+     1275.2,
+     0.8
+    ],
+    [
+     -149.5,
+     1281.0,
+     1.0
+    ],
+    [
+     -157.0,
+     1281.5,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020 (grass on the scans at x -155, -150 and y 1276)",
+   "layer": 3.5,
+   "unverified": "outline estimated (about 1 m); the walk crosses its north edge"
+  },
+  {
+   "name": "V_road_Drive_station_side",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -44.0,
+     1224.8
+    ],
+    [
+     -44.0,
+     1235.0
+    ],
+    [
+     -19.8,
+     1234.8,
+     19.0
+    ],
+    [
+     -22.0,
+     1205.0
+    ],
+    [
+     -24.6,
+     1190.0
+    ],
+    [
+     -24.7,
+     1182.0
+    ],
+    [
+     -25.2,
+     1170.0
+    ],
+    [
+     -26.7,
+     1155.0
+    ],
+    [
+     -30.2,
+     1140.0
+    ],
+    [
+     -31.3,
+     1124.6
+    ],
+    [
+     -51.0,
+     1126.8
+    ],
+    [
+     -50.6,
+     1140.0
+    ],
+    [
+     -47.9,
+     1155.0
+    ],
+    [
+     -45.5,
+     1170.0
+    ],
+    [
+     -44.2,
+     1182.0
+    ],
+    [
+     -43.0,
+     1191.5
+    ],
+    [
+     -37.0,
+     1193.5,
+     3.0
+    ],
+    [
+     -27.6,
+     1193.0,
+     3.0
+    ],
+    [
+     -27.0,
+     1225.0,
+     3.0
+    ]
+   ],
+   "evidence": "ortho2020 (colour scans across at y 1128-1232 and x -35, -25), osm 233913179",
+   "unverified": "the island at y 1193-1225 is lawn; the hatched island south of it is the lots zone; outer corner radius fitted to one scan point"
+  },
+  {
+   "name": "V_road_Drive_E_of_T_W",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -148.5,
+     946.0
+    ],
+    [
+     -143.97,
+     946.0
+    ],
+    [
+     -142.13,
+     960.36
+    ],
+    [
+     -148.5,
+     960.4
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "meets the lots zone deck-front asphalt (overlap 0.5 m)"
+  },
+  {
+   "name": "V_road_Bay_VR_46_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -130.52,
+     1261.62
+    ],
+    [
+     -103.04,
+     1249.13
+    ],
+    [
+     -100.93,
+     1253.77
+    ],
+    [
+     -128.41,
+     1266.26
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_46_S of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Bay_VR_CB",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -98.41,
+     1246.29
+    ],
+    [
+     -71.26,
+     1232.94
+    ],
+    [
+     -68.92,
+     1237.7
+    ],
+    [
+     -96.07,
+     1251.05
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_CB of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Bay_VR_Sinatra",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -185.96,
+     1172.27
+    ],
+    [
+     -182.06,
+     1179.82
+    ],
+    [
+     -177.17,
+     1177.3
+    ],
+    [
+     -181.07,
+     1169.75
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_Sinatra of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Bay_VR_SE",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -164.72,
+     1054.39
+    ],
+    [
+     -149.26,
+     1075.3
+    ],
+    [
+     -145.0,
+     1072.15
+    ],
+    [
+     -160.46,
+     1051.24
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_SE of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Bay_VR_45_E",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -174.64,
+     1218.02
+    ],
+    [
+     -154.32,
+     1259.98
+    ],
+    [
+     -159.27,
+     1262.38
+    ],
+    [
+     -179.59,
+     1220.42
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_45_E of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
+  },
+  {
+   "name": "V_road_Bay_VR_Abbott",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -114.97,
+     1147.53
+    ],
+    [
+     -105.97,
+     1152.0
+    ],
+    [
+     -106.62,
+     1157.56
+    ],
+    [
+     -116.02,
+     1156.46
+    ]
+   ],
+   "evidence": "ortho2020; stall row V_lot_VR_Abbott of the lots zone",
+   "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
   }
  ],
  "strips": [
-  {
-   "name": "V_road_Drive_E_of_T",
-   "kind": "asphalt",
-   "centre": [
-    [
-     -149.0,
-     954.4
-    ],
-    [
-     -64.0,
-     940.7
-    ]
-   ],
-   "width": 12.0,
-   "evidence": "ortho2020 (north curb from colour scans at x -145 and -140), osm 313031569",
-   "unverified": "south edge runs into Lot 28; width 12 m with three lanes from the lane lines; may be counted as the lot aisle"
-  },
   {
    "name": "V_road_Drive_Sinatra_service",
    "kind": "asphalt",
    "centre": [
     [
-     -182.6,
-     945.0
+     -181.4,
+     944.0
     ],
     [
-     -173.4,
-     982.0,
+     -173.8,
+     979.0,
      6.0
     ],
     [
-     -175.4,
+     -175.9,
      990.0,
      6.0
     ],
@@ -1082,42 +1675,30 @@
     ]
    ],
    "width": 3.6,
-   "evidence": "ortho2020 (colour scans at y 955-970: 3.5 m of asphalt), osm 1149815808",
-   "unverified": "north part to Lot 47 under trees; follows OSM"
+   "evidence": "ortho2020 (colour scans across at y 940, 960, 975 and 990: asphalt 3.5-3.9 m wide between the walk and the grass strip), osm 1149815808",
+   "unverified": "north end to Lot 47 under trees; follows OSM there"
   },
   {
-   "name": "V_road_Drive_Lot47_mouth",
-   "kind": "asphalt",
+   "name": "V_road_Walk_deck_front",
+   "kind": "concrete",
    "centre": [
     [
-     -191.0,
-     1044.0
+     -142.59,
+     960.61
     ],
     [
-     -193.8,
-     1035.0
-    ]
-   ],
-   "width": 7.0,
-   "evidence": "osm 313032022, ortho2020",
-   "unverified": "mouth of Lot 47 off Village Road; width and length estimated"
-  },
-  {
-   "name": "V_road_Drive_Lot48_mouth",
-   "kind": "asphalt",
-   "centre": [
-    [
-     -224.5,
-     1147.5
+     -127.84,
+     958.21,
+     1.0
     ],
     [
-     -231.0,
-     1142.5
+     -125.53,
+     972.37
     ]
    ],
-   "width": 7.0,
-   "evidence": "osm 313032034, ortho2020",
-   "unverified": "mouth of Lot 48 off Village Road; width and length estimated"
+   "width": 1.5,
+   "evidence": "ortho2020 (cross-zone review)",
+   "unverified": "width 1.5 m as given by the review"
   },
   {
    "name": "V_road_Walk_233913123_0",
@@ -1134,10 +1715,10 @@
    ],
    "width": 2.0,
    "evidence": "osm 233913123 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_233913133_0",
+   "name": "V_road_Walk_233913133_0_a",
    "kind": "concrete",
    "centre": [
     [
@@ -1145,61 +1726,105 @@
      1250.88
     ],
     [
-     -56.93,
-     1263.16,
-     29.23
-    ],
-    [
-     -54.09,
-     1271.9,
-     34.88
-    ],
-    [
-     -53.05,
-     1289.15,
-     393.96
-    ],
-    [
-     -51.42,
-     1327.3,
-     19.82
-    ],
-    [
-     -52.02,
-     1332.25,
-     16.61
-    ],
-    [
-     -55.88,
-     1338.99,
-     33.27
-    ],
-    [
-     -62.19,
-     1347.03,
-     67.94
-    ],
-    [
-     -73.28,
-     1358.8,
-     29.35
-    ],
-    [
-     -91.84,
-     1364.51,
-     63.4
-    ],
-    [
-     -104.78,
-     1374.27
+     -57.24,
+     1253.59
     ]
    ],
    "width": 2.0,
    "evidence": "osm 233913133 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_233913169_0",
+   "name": "V_road_Walk_233913133_0_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -51.47,
+     1326.13
+    ],
+    [
+     -51.52,
+     1329.06,
+     16.58
+    ],
+    [
+     -52.55,
+     1333.03,
+     15.47
+    ],
+    [
+     -55.52,
+     1338.53,
+     37.74
+    ],
+    [
+     -62.15,
+     1346.99,
+     68.01
+    ],
+    [
+     -70.09,
+     1355.41,
+     31.01
+    ],
+    [
+     -74.57,
+     1358.47,
+     22.67
+    ],
+    [
+     -78.23,
+     1360.23,
+     22.27
+    ],
+    [
+     -86.43,
+     1363.02,
+     60.17
+    ],
+    [
+     -95.27,
+     1367.19,
+     60.9
+    ],
+    [
+     -103.63,
+     1373.39
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm 233913133 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_233913133_0_c",
+   "kind": "concrete",
+   "centre": [
+    [
+     -56.68,
+     1263.25
+    ],
+    [
+     -54.04,
+     1272.83,
+     33.47
+    ],
+    [
+     -53.08,
+     1288.48,
+     524.55
+    ],
+    [
+     -51.47,
+     1326.13
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm 233913133 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_233913169_0_a",
    "kind": "concrete",
    "centre": [
     [
@@ -1207,13 +1832,13 @@
      1129.03
     ],
     [
-     -49.89,
-     1152.08
+     -50.11,
+     1150.61
     ]
    ],
    "width": 1.7,
    "evidence": "osm 233913169 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_233913169_1",
@@ -1240,7 +1865,7 @@
    ],
    "width": 1.7,
    "evidence": "osm 233913169 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_233913171_0",
@@ -1257,46 +1882,24 @@
    ],
    "width": 1.3,
    "evidence": "osm 233913171 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_233913172_0",
+   "name": "V_road_Walk_233913185_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -224.02,
-     1207.63
+     -41.12,
+     1237.39
     ],
     [
-     -220.67,
-     1202.48
-    ]
-   ],
-   "width": 3.5,
-   "evidence": "osm 233913172 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_233913185_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -41.01,
-     1237.44
-    ],
-    [
-     -40.83,
-     1233.97,
-     4.26
-    ],
-    [
-     -34.93,
-     1233.02
+     -39.99,
+     1234.65
     ]
    ],
    "width": 1.5,
    "evidence": "osm 233913185 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_233913185_1",
@@ -1318,7 +1921,7 @@
    ],
    "width": 1.5,
    "evidence": "osm 233913185 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_233913185_2",
@@ -1335,136 +1938,116 @@
    ],
    "width": 1.5,
    "evidence": "osm 233913185 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_233913200_0",
+   "name": "V_road_Walk_233913220_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -203.21,
-     736.62
+     -17.93,
+     1358.03
     ],
     [
-     -199.72,
-     732.62
-    ]
-   ],
-   "width": 1.4,
-   "evidence": "osm 233913200 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_233913218_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -161.93,
-     1282.37
+     -25.64,
+     1351.31,
+     37.67
     ],
     [
-     -148.94,
-     1283.3,
-     5.27
+     -30.01,
+     1345.98,
+     36.34
     ],
     [
-     -147.16,
-     1281.01
-    ]
-   ],
-   "width": 1.4,
-   "evidence": "osm 233913218 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_233913220_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -17.0,
-     1358.83
-    ],
-    [
-     -28.25,
-     1349.06,
-     40.11
-    ],
-    [
-     -33.83,
+     -33.8,
      1339.32,
-     39.09
+     38.57
     ],
     [
-     -36.81,
-     1330.53,
-     32.63
+     -36.21,
+     1332.3,
+     28.29
     ],
     [
-     -38.84,
-     1291.36,
-     1010.43
+     -37.13,
+     1326.32,
+     63.41
     ],
     [
-     -41.19,
+     -41.25,
      1238.8
     ]
    ],
    "width": 1.2,
    "evidence": "osm 233913220 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_287527902_0",
+   "name": "V_road_Walk_287527902_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -135.23,
-     1277.79
+     -88.21,
+     1253.01
     ],
     [
-     -131.83,
-     1272.29,
-     17.64
+     -85.88,
+     1256.83
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "osm 287527902 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_287527902_0_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -133.12,
+     1274.39
     ],
     [
-     -127.44,
-     1268.7,
-     18.78
+     -131.17,
+     1271.79,
+     12.62
     ],
     [
-     -95.54,
-     1253.07,
-     15.62
+     -127.36,
+     1268.67,
+     16.67
     ],
     [
-     -89.39,
-     1251.1,
-     3.24
+     -95.47,
+     1253.03,
+     22.7
     ],
     [
-     -84.8,
-     1258.58,
-     1.93
+     -91.54,
+     1251.78,
+     4.89
     ],
     [
-     -73.63,
-     1254.64,
-     71.42
+     -89.61,
+     1251.7,
+     2.93
     ],
     [
-     -60.64,
-     1253.83,
-     5.17
-    ],
-    [
-     -57.07,
-     1250.7,
-     6.68
-    ],
+     -88.21,
+     1253.01
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "osm 287527902 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_287527902_0_c",
+   "kind": "concrete",
+   "centre": [
     [
      -55.38,
-     1246.13,
-     8.83
+     1244.96
     ],
     [
      -55.43,
@@ -1473,7 +2056,34 @@
    ],
    "width": 1.5,
    "evidence": "osm 287527902 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_287527902_0_d",
+   "kind": "concrete",
+   "centre": [
+    [
+     -61.03,
+     1253.73
+    ],
+    [
+     -57.47,
+     1251.49,
+     7.26
+    ],
+    [
+     -55.7,
+     1247.12,
+     9.18
+    ],
+    [
+     -55.38,
+     1244.96
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "osm 287527902 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_287527905_0",
@@ -1490,7 +2100,7 @@
    ],
    "width": 2.0,
    "evidence": "osm 287527905 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_287712274_0",
@@ -1527,7 +2137,7 @@
    ],
    "width": 1.2,
    "evidence": "osm 287712274 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_287712278_0",
@@ -1547,71 +2157,110 @@
      1104.79
     ]
    ],
-   "width": 3.1,
+   "width": 2.0,
    "evidence": "osm 287712278 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_287712279_0",
+   "name": "V_road_Walk_287712279_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -88.29,
-     1112.48
+     -147.31,
+     962.3
     ],
     [
-     -108.23,
-     1092.19,
-     116.78
+     -144.08,
+     960.7,
+     13.3
     ],
     [
-     -120.4,
-     1074.82,
-     128.6
-    ],
-    [
-     -131.39,
-     1053.73,
-     116.53
-    ],
-    [
-     -137.33,
-     1034.56,
-     269.36
-    ],
-    [
-     -150.94,
-     978.64,
-     144.28
-    ],
-    [
-     -152.55,
-     969.51,
-     8.23
-    ],
-    [
-     -151.28,
-     965.11,
-     7.44
-    ],
-    [
-     -145.11,
-     960.88,
-     13.41
-    ],
-    [
-     -131.61,
-     958.49,
-     14.41
+     -131.86,
+     958.53,
+     14.57
     ],
     [
      -128.45,
-     959.12
+     959.11
     ]
    ],
    "width": 1.2,
    "evidence": "osm 287712279 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_287712279_0_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -152.44,
+     970.3
+    ],
+    [
+     -152.1,
+     967.47,
+     7.36
+    ],
+    [
+     -150.59,
+     964.77,
+     6.94
+    ],
+    [
+     -147.31,
+     962.3
+    ]
+   ],
+   "width": 1.2,
+   "evidence": "osm 287712279 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_287712279_0_c",
+   "kind": "concrete",
+   "centre": [
+    [
+     -99.89,
+     1100.7
+    ],
+    [
+     -108.9,
+     1091.23,
+     112.89
+    ],
+    [
+     -119.09,
+     1076.63,
+     101.83
+    ],
+    [
+     -124.41,
+     1067.23,
+     123.05
+    ],
+    [
+     -131.81,
+     1052.52,
+     108.46
+    ],
+    [
+     -137.67,
+     1033.16,
+     213.54
+    ],
+    [
+     -150.68,
+     979.71,
+     104.14
+    ],
+    [
+     -152.44,
+     970.3
+    ]
+   ],
+   "width": 1.2,
+   "evidence": "osm 287712279 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_287713120_0",
@@ -1638,25 +2287,20 @@
    ],
    "width": 1.7,
    "evidence": "osm 287713120 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_287713121_0",
+   "name": "V_road_Walk_287713121_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -203.29,
-     738.96
+     -204.04,
+     736.47
     ],
     [
-     -204.0,
-     736.32,
-     0.37
-    ],
-    [
-     -205.87,
-     737.21,
-     0.44
+     -205.91,
+     737.14,
+     0.9
     ],
     [
      -207.57,
@@ -1665,24 +2309,7 @@
    ],
    "width": 1.5,
    "evidence": "osm 287713121 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313030644_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -321.71,
-     567.6
-    ],
-    [
-     -317.07,
-     565.72
-    ]
-   ],
-   "width": 1.2,
-   "evidence": "osm 313030644 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030645_0",
@@ -1699,7 +2326,7 @@
    ],
    "width": 1.2,
    "evidence": "osm 313030645 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030874_0",
@@ -1716,10 +2343,10 @@
    ],
    "width": 1.4,
    "evidence": "osm 313030874 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313030874_1",
+   "name": "V_road_Walk_313030874_1_a",
    "kind": "concrete",
    "centre": [
     [
@@ -1727,13 +2354,13 @@
      616.11
     ],
     [
-     -314.97,
-     621.03
+     -315.51,
+     618.45
     ]
    ],
    "width": 1.4,
    "evidence": "osm 313030874 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030874_2",
@@ -1755,7 +2382,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 313030874 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030874_3",
@@ -1777,7 +2404,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 313030874 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030876_0",
@@ -1794,10 +2421,10 @@
    ],
    "width": 2.5,
    "evidence": "osm 313030876 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313030876_1",
+   "name": "V_road_Walk_313030876_1_a",
    "kind": "concrete",
    "centre": [
     [
@@ -1805,31 +2432,53 @@
      637.15
     ],
     [
-     -281.74,
-     629.63,
-     16.62
+     -281.42,
+     631.85,
+     16.07
+    ],
+    [
+     -280.79,
+     627.42,
+     16.59
     ],
     [
      -278.21,
      621.36,
-     2.72
+     3.25
     ],
     [
-     -275.35,
-     617.76,
-     3.11
+     -275.43,
+     617.87,
+     3.07
     ],
     [
-     -266.82,
-     615.26
+     -274.17,
+     617.41
     ]
    ],
    "width": 2.5,
    "evidence": "osm 313030876 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030878_0",
+   "kind": "concrete",
+   "centre": [
+    [
+     -287.09,
+     667.83
+    ],
+    [
+     -287.04,
+     662.3
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "osm 313030878 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313030878_0_b",
    "kind": "concrete",
    "centre": [
     [
@@ -1843,30 +2492,25 @@
     ],
     [
      -287.09,
-     667.83,
-     2.98
-    ],
-    [
-     -287.04,
-     662.3
+     667.83
     ]
    ],
    "width": 1.8,
    "evidence": "osm 313030878 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313030879_0",
+   "name": "V_road_Walk_313030879_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -299.61,
-     673.68
+     -298.89,
+     673.73
     ],
     [
      -294.58,
      674.06,
-     0.18
+     0.95
     ],
     [
      -294.74,
@@ -1875,7 +2519,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313030879 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030884_0",
@@ -1893,7 +2537,7 @@
     [
      -281.39,
      714.52,
-     0.11
+     0.85
     ],
     [
      -276.13,
@@ -1902,7 +2546,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 313030884 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030884_1",
@@ -1939,25 +2583,25 @@
    ],
    "width": 1.4,
    "evidence": "osm 313030884 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313030886_0",
+   "name": "V_road_Walk_313030886_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -282.98,
-     714.25
+     -282.59,
+     714.54
     ],
     [
-     -276.26,
-     719.31,
-     33.17
+     -276.73,
+     719.01,
+     32.96
     ],
     [
-     -270.96,
-     726.86,
-     22.78
+     -270.58,
+     727.11,
+     22.94
     ],
     [
      -263.97,
@@ -1966,7 +2610,7 @@
    ],
    "width": 1.5,
    "evidence": "osm 313030886 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030887_0",
@@ -1988,7 +2632,7 @@
    ],
    "width": 1.5,
    "evidence": "osm 313030887 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030891_0",
@@ -2025,10 +2669,10 @@
    ],
    "width": 1.6,
    "evidence": "osm 313030891 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313030891_1",
+   "name": "V_road_Walk_313030891_1_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2037,17 +2681,29 @@
     ],
     [
      -245.07,
-     838.04,
-     2.71
-    ],
-    [
-     -238.15,
-     855.35
+     838.04
     ]
    ],
    "width": 1.6,
    "evidence": "osm 313030891 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313030891_1_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -244.35,
+     839.84
+    ],
+    [
+     -238.98,
+     853.27
+    ]
+   ],
+   "width": 1.6,
+   "evidence": "osm 313030891 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030892_0",
@@ -2064,7 +2720,7 @@
    ],
    "width": 1.2,
    "evidence": "osm 313030892 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030894_0",
@@ -2081,24 +2737,7 @@
    ],
    "width": 3.5,
    "evidence": "osm 313030894 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313030896_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -253.35,
-     824.46
-    ],
-    [
-     -249.58,
-     822.53
-    ]
-   ],
-   "width": 1.2,
-   "evidence": "osm 313030896 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313030897_0",
@@ -2115,7 +2754,7 @@
    ],
    "width": 2.9,
    "evidence": "osm 313030897 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313031566_0",
@@ -2132,7 +2771,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 313031566 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313031567_0",
@@ -2145,7 +2784,7 @@
     [
      -229.3,
      722.82,
-     0.81
+     1.05
     ],
     [
      -229.21,
@@ -2154,10 +2793,10 @@
    ],
    "width": 1.8,
    "evidence": "osm 313031567 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313031582_0",
+   "name": "V_road_Walk_313031582_0_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2165,21 +2804,38 @@
      572.58
     ],
     [
-     -263.66,
-     617.71,
-     889.18
+     -275.02,
+     587.43
+    ]
+   ],
+   "width": 2.2,
+   "evidence": "osm 313031582 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313031582_0_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -270.43,
+     599.76
     ],
     [
-     -254.02,
+     -263.11,
+     619.77,
+     802.06
+    ],
+    [
+     -254.01,
      648.32
     ]
    ],
    "width": 2.2,
    "evidence": "osm 313031582 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313031582_1",
+   "name": "V_road_Walk_313031582_1_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2187,45 +2843,45 @@
      658.54
     ],
     [
-     -235.38,
-     706.85,
-     31.75
+     -235.49,
+     706.51,
+     32.19
     ],
     [
-     -235.09,
-     710.54
+     -235.14,
+     710.03
     ]
    ],
    "width": 2.2,
    "evidence": "osm 313031582 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313031582_2",
+   "name": "V_road_Walk_313031582_2_a",
    "kind": "concrete",
    "centre": [
     [
-     -234.5,
-     714.2
+     -233.23,
+     716.21
     ],
     [
-     -230.58,
-     720.49,
-     25.28
+     -230.85,
+     720.14,
+     23.9
     ],
     [
-     -227.74,
-     733.26,
-     178.04
+     -227.08,
+     735.36,
+     332.17
     ],
     [
-     -185.55,
+     -185.54,
      863.7
     ]
    ],
    "width": 2.2,
    "evidence": "osm 313031582 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313031582_3",
@@ -2252,20 +2908,15 @@
    ],
    "width": 2.2,
    "evidence": "osm 313031582 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313031585_0",
    "kind": "concrete",
    "centre": [
     [
-     -154.93,
-     945.75
-    ],
-    [
      -157.48,
-     943.42,
-     0.09
+     943.42
     ],
     [
      -158.04,
@@ -2274,10 +2925,27 @@
    ],
    "width": 2.4,
    "evidence": "osm 313031585 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032024_0",
+   "name": "V_road_Walk_313031585_0_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -154.93,
+     945.75
+    ],
+    [
+     -157.48,
+     943.42
+    ]
+   ],
+   "width": 2.4,
+   "evidence": "osm 313031585 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313032024_0_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2285,40 +2953,23 @@
      966.01
     ],
     [
-     -203.0,
-     997.71,
-     12.05
+     -203.3,
+     996.45,
+     17.44
     ],
     [
-     -199.23,
-     1002.99,
-     3.93
+     -201.51,
+     1000.37,
+     6.95
     ],
     [
-     -196.1,
-     1001.33
+     -199.69,
+     1001.49
     ]
    ],
    "width": 1.4,
    "evidence": "osm 313032024 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313032025_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -188.61,
-     1008.3
-    ],
-    [
-     -181.0,
-     1041.7
-    ]
-   ],
-   "width": 1.6,
-   "evidence": "osm 313032025 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032026_0",
@@ -2340,37 +2991,10 @@
    ],
    "width": 1.7,
    "evidence": "osm 313032026 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032027_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -185.8,
-     935.23
-    ],
-    [
-     -176.13,
-     941.08,
-     7.14
-    ],
-    [
-     -174.35,
-     946.16,
-     0.75
-    ],
-    [
-     -174.44,
-     949.2
-    ]
-   ],
-   "width": 1.9,
-   "evidence": "osm 313032027 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313032031_0",
+   "name": "V_road_Walk_313032031_0_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2378,26 +3002,21 @@
      945.27
     ],
     [
-     -152.57,
-     946.42,
-     0.46
-    ],
-    [
-     -153.74,
-     948.04
+     -153.34,
+     946.11
     ]
    ],
    "width": 1.2,
    "evidence": "osm 313032031 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032031_1",
+   "name": "V_road_Walk_313032031_1_a",
    "kind": "concrete",
    "centre": [
     [
-     -151.71,
-     954.9
+     -151.4,
+     961.05
     ],
     [
      -151.2,
@@ -2406,7 +3025,7 @@
    ],
    "width": 1.2,
    "evidence": "osm 313032031 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032740_0",
@@ -2423,7 +3042,7 @@
    ],
    "width": 4.5,
    "evidence": "osm 313032740 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032740_1",
@@ -2440,7 +3059,7 @@
    ],
    "width": 4.5,
    "evidence": "osm 313032740 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032740_2",
@@ -2457,7 +3076,7 @@
    ],
    "width": 4.5,
    "evidence": "osm 313032740 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032740_3",
@@ -2484,7 +3103,7 @@
    ],
    "width": 4.5,
    "evidence": "osm 313032740 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032740_4",
@@ -2501,20 +3120,20 @@
    ],
    "width": 4.5,
    "evidence": "osm 313032740 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032741_0",
+   "name": "V_road_Walk_313032741_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -196.23,
-     1162.05
+     -200.77,
+     1166.48
     ],
     [
-     -201.75,
-     1167.23,
-     5.0
+     -201.71,
+     1168.06,
+     5.02
     ],
     [
      -201.42,
@@ -2523,37 +3142,10 @@
    ],
    "width": 2.1,
    "evidence": "osm 313032741 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032742_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -89.29,
-     1113.75
-    ],
-    [
-     -88.24,
-     1116.33,
-     0.08
-    ],
-    [
-     -90.25,
-     1115.82,
-     1.21
-    ],
-    [
-     -93.1,
-     1118.55
-    ]
-   ],
-   "width": 2.3,
-   "evidence": "osm 313032742 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313032742_1",
+   "name": "V_road_Walk_313032742_1_a",
    "kind": "concrete",
    "centre": [
     [
@@ -2561,26 +3153,48 @@
      1124.37
     ],
     [
-     -111.5,
-     1128.77,
-     12.78
+     -106.48,
+     1126.67,
+     19.69
     ],
     [
-     -114.19,
-     1136.24,
-     5.85
+     -110.2,
+     1128.76,
+     10.26
     ],
     [
-     -120.48,
-     1140.71
+     -112.3,
+     1131.79,
+     16.23
+    ],
+    [
+     -114.66,
+     1136.59
     ]
    ],
    "width": 2.3,
    "evidence": "osm 313032742 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032743_0",
+   "kind": "concrete",
+   "centre": [
+    [
+     -120.62,
+     1144.08
+    ],
+    [
+     -122.39,
+     1147.4
+    ]
+   ],
+   "width": 2.6,
+   "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313032743_0_b",
    "kind": "concrete",
    "centre": [
     [
@@ -2599,40 +3213,20 @@
     ],
     [
      -120.62,
-     1144.08,
-     2.76
-    ],
-    [
-     -122.39,
-     1147.4
+     1144.08
     ]
    ],
-   "width": 4.2,
+   "width": 2.6,
    "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032743_1",
    "kind": "concrete",
    "centre": [
     [
-     -120.68,
-     1153.81
-    ],
-    [
-     -118.66,
-     1154.65,
-     1.29
-    ],
-    [
-     -119.45,
-     1156.74,
-     3.86
-    ],
-    [
      -129.04,
-     1171.13,
-     12.3
+     1171.13
     ],
     [
      -130.65,
@@ -2646,7 +3240,46 @@
    ],
    "width": 4.2,
    "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313032743_1_b",
+   "kind": "concrete",
+   "centre": [
+    [
+     -119.45,
+     1156.74
+    ],
+    [
+     -129.04,
+     1171.13
+    ]
+   ],
+   "width": 4.2,
+   "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
+  },
+  {
+   "name": "V_road_Walk_313032743_1_c",
+   "kind": "concrete",
+   "centre": [
+    [
+     -120.68,
+     1153.81
+    ],
+    [
+     -118.66,
+     1154.65,
+     2.25
+    ],
+    [
+     -119.45,
+     1156.74
+    ]
+   ],
+   "width": 4.2,
+   "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032743_2",
@@ -2668,7 +3301,7 @@
    ],
    "width": 4.2,
    "evidence": "osm 313032743 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032744_0",
@@ -2685,7 +3318,7 @@
    ],
    "width": 2.0,
    "evidence": "osm 313032744 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032744_1",
@@ -2707,35 +3340,40 @@
    ],
    "width": 2.0,
    "evidence": "osm 313032744 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032745_0",
+   "name": "V_road_Walk_313032745_0_a",
    "kind": "concrete",
    "centre": [
     [
-     -137.16,
-     1222.46
+     -136.39,
+     1221.96
     ],
     [
-     -134.6,
-     1220.81,
-     4.32
+     -134.65,
+     1220.95,
+     7.28
     ],
     [
-     -129.65,
-     1214.32,
-     19.84
+     -129.78,
+     1214.37,
+     18.63
     ],
     [
-     -127.27,
-     1203.66,
-     13.35
+     -128.14,
+     1207.73,
+     15.7
     ],
     [
-     -129.15,
-     1199.48,
-     22.22
+     -127.77,
+     1203.6,
+     11.71
+    ],
+    [
+     -128.87,
+     1200.1,
+     21.14
     ],
     [
      -139.09,
@@ -2744,7 +3382,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 313032745 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032746_0",
@@ -2766,7 +3404,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032746 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032746_1",
@@ -2803,7 +3441,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032746 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032746_2",
@@ -2820,7 +3458,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032746 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032746_3",
@@ -2837,7 +3475,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032746 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032747_0",
@@ -2854,7 +3492,7 @@
    ],
    "width": 2.2,
    "evidence": "osm 313032747 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032748_0",
@@ -2871,7 +3509,7 @@
    ],
    "width": 2.4,
    "evidence": "osm 313032748 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_313032749_0",
@@ -2943,20 +3581,20 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032749 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
-   "name": "V_road_Walk_313032749_1",
+   "name": "V_road_Walk_313032749_1_a",
    "kind": "concrete",
    "centre": [
     [
-     -236.4,
-     1126.7
+     -233.17,
+     1128.86
     ],
     [
-     -231.26,
-     1130.22,
-     8.17
+     -230.81,
+     1130.03,
+     7.7
     ],
     [
      -227.81,
@@ -2965,24 +3603,7 @@
    ],
    "width": 1.6,
    "evidence": "osm 313032749 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
-  },
-  {
-   "name": "V_road_Walk_313032751_0",
-   "kind": "concrete",
-   "centre": [
-    [
-     -76.56,
-     1191.38
-    ],
-    [
-     -72.01,
-     1191.66
-    ]
-   ],
-   "width": 1.2,
-   "evidence": "osm 313032751 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_600253618_0",
@@ -2995,7 +3616,7 @@
     [
      -298.28,
      664.2,
-     0.58
+     0.9
     ],
     [
      -297.91,
@@ -3004,7 +3625,7 @@
    ],
    "width": 1.5,
    "evidence": "osm 600253618 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_600253619_0",
@@ -3021,7 +3642,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 600253619 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_600253619_1",
@@ -3039,7 +3660,7 @@
     [
      -296.23,
      672.81,
-     0.3
+     0.85
     ],
     [
      -294.69,
@@ -3048,7 +3669,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 600253619 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_600253619_2",
@@ -3065,7 +3686,7 @@
    ],
    "width": 1.4,
    "evidence": "osm 600253619 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   },
   {
    "name": "V_road_Walk_600253620_0",
@@ -3092,7 +3713,7 @@
    ],
    "width": 1.7,
    "evidence": "osm 600253620 (route), ortho2020 (centre and width from the concrete band across the walk every 1 m)",
-   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged"
+   "unverified": "steps; width is the median of the measured band; parts in shadow or under trees are bridged; ends cut at curbs, lot paving and walls"
   }
  ],
  "curbs": [
@@ -3109,8 +3730,13 @@
      356.81
     ],
     [
-     -179.84,
-     884.35
+     -228.79,
+     733.6,
+     400.0
+    ],
+    [
+     -179.83,
+     884.97
     ]
    ],
    "evidence": "ortho2020, lidar2017",
@@ -3237,17 +3863,21 @@
    "name": "V_road_Clove_N_W_curb",
    "path": [
     [
-     -56.6,
-     1263.6,
-     4.0
+     -60.0,
+     1263.5
     ],
     [
-     -55.3,
-     1270.0
+     -53.8,
+     1263.5,
+     3.0
     ],
     [
-     -54.6,
-     1279.0
+     -53.3,
+     1272.0
+    ],
+    [
+     -52.8,
+     1280.0
     ],
     [
      -52.3,
@@ -3261,9 +3891,18 @@
     [
      -51.8,
      1333.0
+    ],
+    [
+     -54.9,
+     1339.6,
+     3.0
+    ],
+    [
+     -61.3,
+     1347.7
     ]
    ],
-   "evidence": "ortho2020 (traced edge of the west sidewalk)"
+   "evidence": "ortho2020 (edge of the west sidewalk, colour scans at y 1272, 1280, 1290 and across the Lot 61 entrance)"
   },
   {
    "name": "V_road_Village_Rd_S_inner_curb",
@@ -3481,21 +4120,6 @@
    "unverified": "curb at the back of the bay assumed"
   },
   {
-   "name": "V_road_Drive_E_of_T_N_curb",
-   "path": [
-    [
-     -149.0,
-     960.4
-    ],
-    [
-     -64.0,
-     946.7
-    ]
-   ],
-   "evidence": "ortho2020",
-   "unverified": "curb line read at x -145 and -140, carried east in the OSM direction"
-  },
-  {
    "name": "V_road_Drive_station_side_curb",
    "path": [
     [
@@ -3508,8 +4132,32 @@
      19.0
     ],
     [
-     -19.8,
-     1188.0
+     -22.0,
+     1205.0
+    ],
+    [
+     -24.6,
+     1190.0
+    ],
+    [
+     -24.7,
+     1182.0
+    ],
+    [
+     -25.2,
+     1170.0
+    ],
+    [
+     -26.7,
+     1155.0
+    ],
+    [
+     -30.2,
+     1140.0
+    ],
+    [
+     -31.3,
+     1124.6
     ]
    ],
    "evidence": "ortho2020"
@@ -3518,8 +4166,18 @@
    "name": "V_road_Drive_station_side_island_curb",
    "path": [
     [
-     -27.2,
-     1188.0
+     -43.0,
+     1191.5
+    ],
+    [
+     -37.0,
+     1193.5,
+     3.0
+    ],
+    [
+     -27.6,
+     1193.0,
+     3.0
     ],
     [
      -27.0,
@@ -3532,6 +4190,110 @@
     ]
    ],
    "evidence": "ortho2020"
+  },
+  {
+   "name": "V_road_Drive_E_of_T_N_curb",
+   "path": [
+    [
+     -149.0,
+     960.4
+    ],
+    [
+     -142.6,
+     960.36
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_road_Bay_VR_46_S_curb",
+   "path": [
+    [
+     -128.41,
+     1266.26
+    ],
+    [
+     -100.93,
+     1253.77
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
+  },
+  {
+   "name": "V_road_Bay_VR_CB_curb",
+   "path": [
+    [
+     -96.07,
+     1251.05
+    ],
+    [
+     -68.92,
+     1237.7
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
+  },
+  {
+   "name": "V_road_Bay_VR_Sinatra_curb",
+   "path": [
+    [
+     -181.07,
+     1169.75
+    ],
+    [
+     -177.17,
+     1177.3
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
+  },
+  {
+   "name": "V_road_Bay_VR_SE_curb",
+   "path": [
+    [
+     -160.46,
+     1051.24
+    ],
+    [
+     -145.0,
+     1072.15
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
+  },
+  {
+   "name": "V_road_Bay_VR_45_E_curb",
+   "path": [
+    [
+     -179.59,
+     1220.42
+    ],
+    [
+     -159.27,
+     1262.38
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
+  },
+  {
+   "name": "V_road_Bay_VR_Abbott_curb",
+   "path": [
+    [
+     -116.02,
+     1156.46
+    ],
+    [
+     -106.62,
+     1157.56
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb behind the stalls assumed"
   }
  ],
  "markings": [
