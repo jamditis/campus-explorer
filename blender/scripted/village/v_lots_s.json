@@ -45,6 +45,85 @@
    ],
    "evidence": "ortho2020; osm 233913130",
    "unverified": "drive to Clove Road (t -17 to -34 in the lot frame) run to just short of the road; its last metres belong to the road"
+  },
+  {
+   "name": "V_lot_27_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -265.52,
+     608.08,
+     0.5
+    ],
+    [
+     -252.49,
+     649.48
+    ],
+    [
+     -255.11,
+     650.33
+    ],
+    [
+     -252.64,
+     657.94
+    ],
+    [
+     -250.07,
+     657.11
+    ],
+    [
+     -233.42,
+     709.32
+    ],
+    [
+     -235.7,
+     710.06
+    ],
+    [
+     -233.63,
+     716.43
+    ],
+    [
+     -231.35,
+     715.69
+    ],
+    [
+     -226.06,
+     714.81,
+     1.0
+    ],
+    [
+     -224.47,
+     688.01
+    ],
+    [
+     -235.76,
+     650.35
+    ],
+    [
+     -236.19,
+     649.02
+    ],
+    [
+     -233.62,
+     648.19
+    ],
+    [
+     -247.71,
+     604.82
+    ],
+    [
+     -253.04,
+     606.55
+    ],
+    [
+     -255.68,
+     604.89,
+     0.5
+    ]
+   ],
+   "evidence": "ortho2020; osm 313030648",
+   "unverified": "the two mouths (s 50..58 and 112.8..119.5 along the lot) are run to the Clove Road curb line; the east edge north of the stalls (s 56..120) is under tree shade"
   }
  ],
  "curbs": [
@@ -91,6 +170,88 @@
    "closed": false,
    "evidence": "ortho2020",
    "unverified": "curb or flush edge against the grass not readable"
+  },
+  {
+   "name": "V_lot_27_curb_W_S",
+   "path": [
+    [
+     -265.52,
+     608.08
+    ],
+    [
+     -252.49,
+     649.48
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb between the lot and the Clove Road sidewalk"
+  },
+  {
+   "name": "V_lot_27_curb_W_N",
+   "path": [
+    [
+     -250.07,
+     657.11
+    ],
+    [
+     -233.42,
+     709.32
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb between the lot and the Clove Road sidewalk"
+  },
+  {
+   "name": "V_lot_27_curb_E",
+   "path": [
+    [
+     -231.35,
+     715.69
+    ],
+    [
+     -226.06,
+     714.81,
+     1.0
+    ],
+    [
+     -224.47,
+     688.01
+    ],
+    [
+     -235.76,
+     650.35
+    ],
+    [
+     -236.19,
+     649.02
+    ],
+    [
+     -233.62,
+     648.19
+    ],
+    [
+     -247.71,
+     604.82
+    ],
+    [
+     -253.04,
+     606.55
+    ],
+    [
+     -255.68,
+     604.89,
+     0.5
+    ],
+    [
+     -265.52,
+     608.08
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "east edge is a bank down to the wood; curb or flush edge not readable, south end under shade"
   }
  ],
  "markings": [
@@ -291,12 +452,12 @@
    "type": "line",
    "path": [
     [
-     -321.8,
-     567.45
+     -321.84,
+     567.1
     ],
     [
-     -321.29,
-     568.94
+     -320.78,
+     568.64
     ]
    ],
    "width": 0.1,
@@ -309,12 +470,12 @@
    "type": "line",
    "path": [
     [
-     -320.54,
-     567.5
+     -320.83,
+     566.69
     ],
     [
-     -320.04,
-     568.91
+     -319.71,
+     568.27
     ]
    ],
    "width": 0.1,
@@ -327,12 +488,12 @@
    "type": "line",
    "path": [
     [
-     -319.27,
-     567.55
+     -319.82,
+     566.28
     ],
     [
-     -318.8,
-     568.89
+     -318.64,
+     567.9
     ]
    ],
    "width": 0.1,
@@ -345,12 +506,12 @@
    "type": "line",
    "path": [
     [
-     -318.01,
-     567.6
+     -318.81,
+     565.87
     ],
     [
-     -317.55,
-     568.86
+     -317.57,
+     567.53
     ]
    ],
    "width": 0.1,
@@ -374,7 +535,285 @@
    "width": 0.1,
    "colour": "white",
    "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_stalls_W_S",
+   "type": "stalls",
+   "line": [
+    [
+     -259.47,
+     609.73
+    ],
+    [
+     -247.78,
+     646.82
+    ]
+   ],
+   "count": 15,
+   "depth": 4.95,
+   "side": "left",
+   "angle": 89.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_stalls_W_N",
+   "type": "stalls",
+   "line": [
+    [
+     -244.75,
+     656.36
+    ],
+    [
+     -230.6,
+     700.86
+    ]
+   ],
+   "count": 18,
+   "depth": 4.9,
+   "side": "left",
+   "angle": 89.5,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "last divider is the straight leg of the painted V at the north end"
+  },
+  {
+   "name": "V_lot_27_stalls_E_S",
+   "type": "stalls",
+   "line": [
+    [
+     -252.43,
+     606.82
+    ],
+    [
+     -246.2,
+     627.86
+    ]
+   ],
+   "count": 8,
+   "depth": 5.25,
+   "side": "right",
+   "angle": 90.9,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "first divider in shade"
+  },
+  {
+   "name": "V_lot_27_stalls_E_N",
+   "type": "stalls",
+   "line": [
+    [
+     -245.44,
+     629.62
+    ],
+    [
+     -239.43,
+     649.44
+    ]
+   ],
+   "count": 8,
+   "depth": 4.75,
+   "side": "right",
+   "angle": 91.3,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_cap_NW_1",
+   "type": "line",
+   "path": [
+    [
+     -230.64,
+     700.74
+    ],
+    [
+     -234.14,
+     704.19
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_cap_NW_2",
+   "type": "line",
+   "path": [
+    [
+     -229.74,
+     703.5
+    ],
+    [
+     -233.06,
+     707.52
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_cap_NW_3",
+   "type": "line",
+   "path": [
+    [
+     -231.56,
+     705.35
+    ],
+    [
+     -232.84,
+     708.18
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "second stroke of the hatched cap, faint"
+  },
+  {
+   "name": "V_lot_27_cap_NW_4",
+   "type": "line",
+   "path": [
+    [
+     -233.27,
+     706.85
+    ],
+    [
+     -232.69,
+     708.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "short bar along the curb, faint"
+  },
+  {
+   "name": "V_lot_27_cap_E_edge",
+   "type": "line",
+   "path": [
+    [
+     -224.75,
+     688.1
+    ],
+    [
+     -227.13,
+     688.87
+    ],
+    [
+     -225.12,
+     695.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_27_cap_E_1",
+   "type": "line",
+   "path": [
+    [
+     -226.6,
+     689.44
+    ],
+    [
+     -224.44,
+     690.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes inside the triangle: count and slant approximate"
+  },
+  {
+   "name": "V_lot_27_cap_E_2",
+   "type": "line",
+   "path": [
+    [
+     -226.29,
+     690.81
+    ],
+    [
+     -224.51,
+     691.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes inside the triangle: count and slant approximate"
+  },
+  {
+   "name": "V_lot_27_cap_E_3",
+   "type": "line",
+   "path": [
+    [
+     -225.98,
+     692.18
+    ],
+    [
+     -224.58,
+     693.49
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes inside the triangle: count and slant approximate"
   }
  ],
- "points": []
+ "points": [
+  {
+   "name": "V_lot_27_lamp_1",
+   "kind": "lamp",
+   "at": [
+    -246.09,
+    628.9
+   ],
+   "evidence": "ortho2020 (lamp head and leaning pole)",
+   "unverified": "no LiDAR return on the pole (lidar2017 may predate it): height unknown; base read from the leaning pole in the ortho; head type"
+  },
+  {
+   "name": "V_lot_27_sign_E_1",
+   "kind": "sign",
+   "at": [
+    -234.62,
+    655.45
+   ],
+   "evidence": "ortho2020",
+   "unverified": "small post with a plate along the east edge; what it says is unknown"
+  },
+  {
+   "name": "V_lot_27_sign_E_2",
+   "kind": "sign",
+   "at": [
+    -229.99,
+    669.72
+   ],
+   "evidence": "ortho2020",
+   "unverified": "small post with a plate along the east edge; what it says is unknown"
+  },
+  {
+   "name": "V_lot_27_sign_E_3",
+   "kind": "sign",
+   "at": [
+    -227.58,
+    677.14
+   ],
+   "evidence": "ortho2020",
+   "unverified": "small post with a plate along the east edge; what it says is unknown"
+  },
+  {
+   "name": "V_lot_27_sign_E_4",
+   "kind": "sign",
+   "at": [
+    -225.97,
+    682.08
+   ],
+   "evidence": "ortho2020",
+   "unverified": "small post with a plate along the east edge; what it says is unknown"
+  }
+ ]
 }
