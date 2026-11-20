@@ -1,6 +1,6 @@
 {
  "zone": "ov_paving",
- "notes": "Zone f_paving: roads, drives, lots, walks and the quarry ground of the Overlook Corporate Center block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The tower drive (OSM 770562283) runs west from the loop along the tower's south face (drop-off at x 120..160), past the tower's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the tower's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the tower's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
+ "notes": "Zone ov_paving: roads, drives, lots, walks and the quarry ground of the Overlook Corporate Center block. Frame: model metres, +X east, +Y grid north.\nSources: NJ 2020 ortho (0.15 m, read on gridded and high-pass sheets and brightness profiles), USGS 3DEP LiDAR 2017 ground model (curb steps, walls, road flats under shadow), OpenStreetMap for names and the aisle layout.\nRoads: the access road from the highway (OSM 737164710, 5 mph, two lanes) runs along the north, its south edge under the deck's shadow (LiDAR flat). At the junction east of the deck one arm leaves north-east for Oak Hill Road (cut at the area edge), the lot entry goes east, and the loop (OSM 313431644, private) runs down the deck's east side, round its south end (inner curb a 20 m circle, outer 29 m, centre (242, 1180)) and up its west side into the deck's south-west drive. The tower drive (OSM 770562283) runs west from the loop along the tower's south face (drop-off at x 120..160), past the tower's west lot and up the west leg to the entrance road from the west and the service yard drive.\nDeck drives: north-east (gate and booth island, zebra crossing) and south-west (end of the loop's west side at the deck wall y 1216.6).\nEast lot: two layouts. North part: rows along 58.3 deg (head-to-head double rows centred on n = 388.5, 368.1, 347.7 where n = -0.851 x + 0.525 y, a single row on the west island), between hedge end caps at the north and two triangular caps at the bend. South part: rows along about 82 deg between the bend caps and the south caps. Dividers are not resolved in the 2020 ortho (old, faded paint): all stall rows are inferred and marked unverified.\nWest lot: south row (8 stalls, 2.94 m) and west row (7 stalls, 3.19 m) fitted to brightness profiles of the visible lines. Angled marks along the tower's west drive are too faint to count and are not drawn.\nQuarry ground: in 2020 bare graded ground, stockpiles and a gravel yard (x 146..206, y 1105..1151, continues into the stadium area); drawn as gravel, unverified for later years. The low wet ground at the south-west corner and the wooded banks stay default lawn.\nLamps: the 2017 LiDAR has no pole returns in the lots (sparse cloud); two lamps placed from heads and pole shadows in the ortho, heights left to the default. Not drawn: the faint angled marks along the tower's west drive, centre lines (none visible on the access road or the loop), buildings (other zone), stalls on the deck roof.",
  "surfaces": [
   {
    "name": "OV_road_access_N",
@@ -270,12 +270,16 @@
      1219.8
     ],
     [
-     118.0,
-     1214.0
+     111.0,
+     1219.8
     ],
     [
-     148.0,
-     1209.6
+     115.24,
+     1210.62
+    ],
+    [
+     146.95,
+     1208.85
     ],
     [
      158.0,
@@ -336,7 +340,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm 770562283",
-   "unverified": "south edge from the LiDAR (the ortho shows tree crowns over it); the wider paving at x 120..160 in front of the tower's south face is read as the drop-off"
+   "unverified": "south edge from the LiDAR (the ortho shows tree crowns over it); north edge 0.2 m off the tower's tier-5 wall (LiDAR outline; the ortho roof is displaced south-west by lean, and the LiDAR ground ends at the wall, so no drive runs under the building); the wider paving at x 120..160 in front of the tower's south face is read as the drop-off"
   },
   {
    "name": "OV_road_tower_W_leg",
@@ -421,11 +425,23 @@
      1251.5
     ],
     [
-     112.0,
-     1220.6
+     88.57,
+     1249.65
     ],
     [
-     112.0,
+     109.25,
+     1222.34
+    ],
+    [
+     111.55,
+     1219.83
+    ],
+    [
+     113.0,
+     1216.2
+    ],
+    [
+     113.0,
      1204.2
     ],
     [
@@ -446,7 +462,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm 770562283/770562284",
-   "unverified": "south edge from the LiDAR level (tree crowns hide it in the ortho); north-east edge along the tower wall line"
+   "unverified": "south edge from the LiDAR level (tree crowns hide it in the ortho); north-east edge 0.2 m off the walls of the tower's tiers 9, 7 and 5 (LiDAR outlines), not the leaning roof edge in the ortho"
   },
   {
    "name": "OV_lot_E",
@@ -866,7 +882,11 @@
      1259.5
     ],
     [
-     88.6,
+     87.4,
+     1266.0
+    ],
+    [
+     88.7,
      1276.0
     ],
     [
@@ -879,7 +899,7 @@
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "light paving with tree pits between the lot and the yard drive; read as the tower's north-west entrance plaza"
+   "unverified": "light paving with tree pits between the lot and the yard drive; read as the tower's north-west entrance plaza; east edge 0.2 m off the tower wall (LiDAR outline)"
   },
   {
    "name": "OV_road_quarry_yard",
@@ -1018,24 +1038,28 @@
    "kind": "concrete",
    "ring": [
     [
-     282.6,
-     1270.6
+     282.3,
+     1270.0
     ],
     [
-     287.0,
-     1270.6
+     288.4,
+     1269.4
     ],
     [
-     287.6,
+     290.0,
+     1274.0
+    ],
+    [
+     288.2,
      1276.4
     ],
     [
-     283.2,
+     282.6,
      1276.4
     ]
    ],
    "evidence": "ortho2020",
-   "unverified": "booth island at the deck's north-east drive (lift gate in OSM 3194092017)"
+   "unverified": "booth island at the deck's north-east drive (lift gate in OSM 3194092017), placed where the 2020 ortho shows the light island and the dark booth roof (booth roof at about x 283.3..287.5, y 1271..1275.5, centre about (285.4, 1273.2), about 2.6 m north of the 2017 LiDAR returns: moved since 2017 or an ortho offset); outline about 0.6 m round the booth"
   }
  ],
  "strips": [
@@ -1058,13 +1082,13 @@
      10
     ],
     [
-     85.5,
-     1283.2
+     88.8,
+     1283.5
     ]
    ],
    "width": 7.5,
    "evidence": "ortho2020, lidar2017, osm 770562283",
-   "unverified": "east end at the service yard by the tower's north-west corner"
+   "unverified": "east end 0.2 m off the tower's west wall (LiDAR ground flat at 115.2..115.4 m up to the wall; the ortho shows paving under the leaning roof)"
   },
   {
    "name": "OV_lot_E_cap_T1_band",
