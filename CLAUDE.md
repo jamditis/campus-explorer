@@ -36,7 +36,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 
 ## Scripted builds index
 
-`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`, `overlook/`); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|

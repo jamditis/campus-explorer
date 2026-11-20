@@ -7,6 +7,7 @@ Parts of the campus built whole by script from plan files: one folder per area, 
 | `southwest/` | Montclair Heights station surroundings, Normal Avenue, Carlisle Road, Sprague Field |
 | `west/` | Carlisle Road north of the south-west area, its roadside parking (Lots 30 and 30S), Lot 33 and the College Avenue junction beside the Red Hawk Deck: a strip between the railway and the buildings of the main and north models |
 | `village/` | West of the railway: Clove Road, Hawk Crossings, Sinatra Hall, The Village (Williams, Fenwick, Paul and Count Basie halls, the Abbott and Costello Center), Lots 27, 28, 29, 41, 45, 46, 47, 48 and 61 with its solar canopies |
+| `overlook/` | The Overlook Corporate Center block north of the stadium district (150 Clove Road): the 12-storey office tower, where many university administrative offices are, its garage, lots and loop road, and the quarry ground between it and the stadium |
 | `stadium/` | Yogi Berra Stadium and the museum, the running track and soccer field, the north part of the softball stadium, the lots and roads north of the north-east area |
 | `northeast/` | CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts, and the lots and roads between them |
 

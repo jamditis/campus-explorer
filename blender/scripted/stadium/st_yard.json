@@ -1,0 +1,86 @@
+{
+ "zone": "st_yard",
+ "notes": "Zone st_yard: the south part of the gravel yard of the quarry ground north of Yogi Berra Stadium, and the track along the outside of the stadium's left-field wall. Frame: model metres, +X east, +Y grid north.\nThe yard continues the overlook area's OV_road_quarry_yard across the shared edge y 1105 (same x positions there, 146.1 and 203.6, drawn to y 1105.4 for a 0.4 m overlap). Sources: NJ 2020 ortho (dark gravel, parked vehicles, a lighter pad at x 175..195, y 1093..1103) and the 2017 LiDAR ground (a flat floor at 108.3..108.7 m bounded by the bank on the west and the wooded rise on the east).\nSouth end: the yard runs down to the stadium's sheds (ST_yogi_storage_CF, container and shed, kept 0.3..0.6 m clear) and to about 4 m short of the outfield wall; the strip between the wall and the yard stays lawn.\nTrack: a flat terrace 9 m wide in the LiDAR (108.6..108.9 m) along the outside of the left-field wall, grey and worn in the ortho; drawn 7 m wide, its south-east side 1.5 m clear of the wall, from the yard to where it disappears under trees at about (100, 1044).",
+ "surfaces": [
+  {
+   "name": "ST_yard_gravel",
+   "kind": "gravel",
+   "ring": [
+    [
+     146.1,
+     1105.4
+    ],
+    [
+     203.6,
+     1105.4
+    ],
+    [
+     202.0,
+     1092.0
+    ],
+    [
+     197.5,
+     1081.2
+    ],
+    [
+     186.2,
+     1081.2
+    ],
+    [
+     186.2,
+     1088.4
+    ],
+    [
+     159.4,
+     1088.4
+    ],
+    [
+     159.4,
+     1081.2
+    ],
+    [
+     139.5,
+     1081.2
+    ],
+    [
+     131.5,
+     1089.0
+    ],
+    [
+     141.0,
+     1098.0
+    ],
+    [
+     146.06,
+     1105.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "state after 2020 unknown (the quarry ground north of the stadium was being worked); the east edge is under tree crowns (from the LiDAR floor)"
+  }
+ ],
+ "strips": [
+  {
+   "name": "ST_yard_track_LF",
+   "kind": "gravel",
+   "centre": [
+    [
+     100.5,
+     1044.8
+    ],
+    [
+     138.1,
+     1080.5,
+     6
+    ],
+    [
+     145.0,
+     1086.0
+    ]
+   ],
+   "width": 7.0,
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "state after 2020 unknown (the quarry ground north of the stadium was being worked); south end under trees, where it goes beyond (100, 1044) is unknown"
+  }
+ ]
+}

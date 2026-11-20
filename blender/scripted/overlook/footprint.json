@@ -1,0 +1,47 @@
+{
+ "zone": "ov_footprint",
+ "notes": "The ground this area owns: the Overlook Corporate Center block north of the stadium district, at 150 Clove Road (OpenStreetMap way 313431637): the 12-storey octagonal office tower with its stepped tiers and east wing, its parking garage, the lot east of the garage, the loop road and drives, the tower's west lot, and the quarry ground between the tower and the stadium. It is a private office property; many of the university's administrative offices are in it (Joe, 2026-11-20). This is not Floyd Hall Arena, which is the university's Ice Arena in the north model; an early plan of this work used that name for this block by mistake. South: the north edge of the stadium area (y 1105), shared with it from x 22 to x 345. West: x 22, the edge of the fetched evidence, east of the railway and the station. North: south of the businesses along the highway, along the back of the access road. East: the wood east of the lot.",
+ "footprint": [
+  [
+   22,
+   1105
+  ],
+  [
+   345,
+   1105
+  ],
+  [
+   388,
+   1170
+  ],
+  [
+   388,
+   1312
+  ],
+  [
+   290,
+   1328
+  ],
+  [
+   60,
+   1328
+  ],
+  [
+   22,
+   1290
+  ]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles.",
+  "clip": [
+   "Context_skirt",
+   "BD_farfield_3DEP",
+   "North_ground_ortho2020",
+   "MH_ground_ortho2020"
+  ],
+  "drop": [
+   "far_houses"
+  ],
+  "tuck": 0.5
+ }
+}
