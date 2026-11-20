@@ -94,6 +94,33 @@ class Grading(unittest.TestCase):
         self.assertAlmostEqual(got[1], 0.325, places=3)  # half way through the feather
         self.assertEqual(got[2], 0.0)
 
+    def test_a_cap_holds_the_ground_under_a_bowl_and_leaves_the_rest(self):
+        # a stepped top over x 90..110: 98.0 m west of x = 100, 99.5 m east of it; ground ~98 m
+        ring = [(90, 20), (110, 20), (110, 80), (90, 80)]
+
+        def top(x, y):
+            return np.where(np.asarray(x) < 100, 98.0, 99.5)
+
+        with tempfile.TemporaryDirectory() as d:
+            plain = terrain.Terrain(lidar_file(d))
+            capped = terrain.Terrain(lidar_file(d), caps=[dict(ring=ring, top=top)])
+        x = np.array([95.0, 105.0, 90.0, 110.0, 85.0, 100.0])
+        y = np.array([50.0, 50.0, 50.0, 50.0, 50.0, 85.0])
+        free = plain.surface(x, y, np.zeros(6, bool))
+        got = capped.surface(x, y, np.zeros(6, bool))
+        # inside and on the ring: never above the top less the gap, otherwise as it was
+        self.assertLessEqual(got[0], 98.0 - terrain.CAP_GAP + 1e-9)
+        self.assertAlmostEqual(got[1], min(free[1], 99.5 - terrain.CAP_GAP))
+        self.assertLessEqual(got[2], 98.0 - terrain.CAP_GAP + 1e-9)  # on the west side
+        self.assertLessEqual(got[3], 99.5 - terrain.CAP_GAP + 1e-9)  # on the east side
+        # outside the ring nothing changes: no feather lowers the concourse round a bowl
+        np.testing.assert_allclose(got[4:], free[4:])
+        # the ground outside keeps its own height on the outline too: the uncapped heights, and
+        # which triangles (by their centres) take the capped ones
+        np.testing.assert_allclose(capped.surface(x, y, np.zeros(6, bool), capped=False), free)
+        inside = capped.under_caps(np.array([95.0, 89.0, 100.0]), np.array([50.0, 50.0, 81.0]))
+        self.assertEqual(inside.tolist(), [True, False, False])
+
 
 if __name__ == "__main__":
     unittest.main()

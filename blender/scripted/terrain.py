@@ -17,6 +17,8 @@ GRADE = 5.0  # smoothing length of paved ground, metres
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
 LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
+CAP_GAP = 0.03  # ground held this far below a cap's top (the rows of a seating bowl)
+CAP_EDGE = 0.05  # a point this close to a cap's outline is held by it too
 EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
 )
@@ -128,9 +130,9 @@ class Terrain:
     """
 
     def __init__(
-        self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), voids=(), cell=1.0
+        self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), voids=(), cell=1.0, caps=()
     ):
-        self.lifts, self.footprint = list(lifts), footprint
+        self.lifts, self.footprint, self.caps = list(lifts), footprint, list(caps)
         z = np.load(lidar_npz)
         self.x0, self.y0, self.x1, self.y1 = (float(v) for v in z["box"][:4])
         self.cell = cell
@@ -190,14 +192,38 @@ class Terrain:
         a = self.graded if smooth else self.rough
         return _sample(a, x, y, self.x0, self.y1, self.cell) + self.lift(x, y)
 
-    def surface(self, x, y, paved):
+    def surface(self, x, y, paved, capped=True):
         """Finished height of points: `paved` (bool per point) picks graded ground; blended at the
-        edge.
+        edge; held under the caps unless `capped` is False (the ground outside a bowl, which meets
+        the bowl's outline at its own height).
         """
         x, y = np.asarray(x, float), np.asarray(y, float)
         z = np.where(paved, self.z(x, y, True), self.z(x, y, False))
-        if self.footprint is None or self.edge is None:
-            return z
+        if self.footprint is not None and self.edge is not None:
+            z = self._blend(x, y, z, paved)
+        return self.cap(x, y, z) if capped else z
+
+    def under_caps(self, x, y):
+        """Whether points (triangle centres) lie inside a cap's outline."""
+        hit = np.zeros(len(x), bool)
+        for c in self.caps:
+            hit |= _inside(c["ring"], np.asarray(x, float), np.asarray(y, float))
+        return hit
+
+    def cap(self, x, y, z):
+        """Heights held below the caps: inside a cap's ring, or on it (within CAP_EDGE: two
+        sections' outlines that nearly meet leave ground vertices just off each), never above its
+        top less CAP_GAP. Elsewhere nothing changes. A cap is {"ring", "top"}, `top` a function of
+        x and y (stand.bowl_top): a seating bowl's rows and walkways."""
+        z = np.array(z, float)
+        for c in self.caps:
+            m = _inside(c["ring"], x, y) | (_edge_distance(c["ring"], x, y) < CAP_EDGE)
+            if m.any():
+                z[m] = np.minimum(z[m], np.asarray(c["top"](x[m], y[m]), float) - CAP_GAP)
+        return z
+
+    def _blend(self, x, y, z, paved):
+        """The edge blend: soft ground (and nearly level paving) bends to the neighbours' ground."""
         d = _edge_distance(self.footprint, x, y)
         band = d < BLEND
         nb = np.full(len(x), np.nan)

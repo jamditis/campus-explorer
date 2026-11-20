@@ -383,6 +383,67 @@ def seat_for(seats, row, section):
     return None
 
 
+def bowl_top(spec, at, angle, length, depth, reach=0.05):
+    """The height of a bowl's top (walkway, rows, aisles, back) over model points, as a function of
+    x and y (sequences): the lowest level of the flats whose bands, measured back from the front
+    line in the front frame (`at`, `angle` as in `bowl`), come within `reach` of the point. So a
+    point on a riser takes the lower step. Before the first flat it is the first flat's level,
+    behind the last the last's. The ground under a bowl is held below it (terrain.Terrain caps).
+    The function's `steps` are the v of every riser."""
+    inset = spec.get("inset", 0.0)
+    flats = bowl_profile(
+        spec["walk"],
+        spec["tiers"],
+        spec.get("aisles", []),
+        spec["back"],
+        depth - inset,
+        spec.get("tread", BOWL_TREAD),
+    )
+    bands = [(f["v"][0] + inset, f["v"][1] + inset, f["level"]) for f in flats]
+    bands[0] = (-math.inf, bands[0][1], bands[0][2])
+    bands[-1] = (bands[-1][0], math.inf, bands[-1][2])
+    c, s = math.cos(math.radians(angle)), math.sin(math.radians(angle))
+
+    def top(xs, ys):
+        out = []
+        for x, y in zip(xs, ys, strict=True):
+            v = (y - at[1]) * c - (x - at[0]) * s
+            out.append(min(lv for v0, v1, lv in bands if v0 <= v + reach and v1 >= v - reach))
+        return out
+
+    top.steps = [bands[k][1] for k in range(len(bands) - 1) if bands[k][2] != bands[k + 1][2]]
+    return top
+
+
+def bowl_outline(spec, at, angle, length, depth):
+    """Plan outline of a bowl's block (as `bowl` builds it): from `inset` behind the front line to
+    `depth`, its ends slanted along the section's sides. [(x, y)] x 4, anticlockwise when the body
+    lies to the left of the front edge."""
+    sl, sr = side_slopes(spec["ring"], at, angle, length) if "ring" in spec else (0.0, 0.0)
+    v0 = spec.get("inset", 0.0)
+    c, s = math.cos(math.radians(angle)), math.sin(math.radians(angle))
+    loc = [(sl * v0, v0), (length + sr * v0, v0), (length + sr * depth, depth), (sl * depth, depth)]
+    return [(at[0] + u * c - v * s, at[1] + u * s + v * c) for u, v in loc]
+
+
+def step_lines(ring, at, angle, steps):
+    """The risers of a bowl as lines across its outline `ring`: for each v in `steps`, the segment
+    of the line v = const (front frame `at`, `angle`) between its first and last crossing of the
+    outline. Returns [[(x, y), (x, y)], ...]; a line that misses the outline is left out."""
+    c, s = math.cos(math.radians(angle)), math.sin(math.radians(angle))
+    loc = [((p[0] - at[0]) * c + (p[1] - at[1]) * s, (p[1] - at[1]) * c - (p[0] - at[0]) * s)
+           for p in ring]
+    out = []
+    for v in steps:
+        us = []
+        for (u0, v0), (u1, v1) in zip(loc, loc[1:] + loc[:1], strict=True):
+            if (v0 - v) * (v1 - v) <= 0 and v0 != v1:
+                us.append(u0 + (u1 - u0) * (v - v0) / (v1 - v0))
+        if len(us) >= 2:
+            out.append([(at[0] + u * c - v * s, at[1] + u * s + v * c) for u in (min(us), max(us))])
+    return out
+
+
 def bowl(name, at, angle, length, depth, spec, unverified=True):
     """A solid concrete seating bowl from a plan stand with `"style": "bowl"`: `at` = (x, y) of
     the front-left corner, `angle` the front edge's direction. `spec` carries `walk`, `tiers`,

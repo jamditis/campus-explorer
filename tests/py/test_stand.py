@@ -145,5 +145,56 @@ class SeatRows(unittest.TestCase):
         self.assertIsNone(stand.seat_for([], 0, 0))
 
 
+class BowlTop(unittest.TestCase):
+    def test_level_of_the_flat_over_a_point(self):
+        spec = dict(walk=WALK, tiers=TIERS, aisles=AISLES, back=115.5, base=109.0, tread=0.85)
+        # front edge along +x from (0, 0); the body lies to its left (+y)
+        top = stand.bowl_top(spec, (0.0, 0.0), 0.0, 20.0, 17.0)
+        ys = [0.3, 0.6 + 0.4, 0.6 + 4 * 0.85 + 0.4, 0.6 + 5 * 0.85 + 1.0, 16.9, -0.5, 18.0]
+        got = top([5.0] * len(ys), ys)
+        want = [110.8, 111.0, 111.8, 112.2, 115.5, 110.8, 115.5]
+        for g, w in zip(got, want, strict=True):
+            self.assertAlmostEqual(g, w)
+
+    def test_an_inset_moves_the_flats_back(self):
+        spec = dict(walk=WALK, tiers=TIERS, aisles=AISLES, back=115.5, base=109.0, inset=0.13)
+        top = stand.bowl_top(spec, (0.0, 0.0), 90.0, 20.0, 17.0)  # front along +y: body at -x
+        self.assertAlmostEqual(top([-0.65], [3.0])[0], 110.8)  # 0.52 m behind the block's front
+        self.assertAlmostEqual(top([-0.8], [3.0])[0], 111.0)
+
+    def test_a_point_on_a_riser_takes_the_lower_step(self):
+        spec = dict(walk=WALK, tiers=TIERS, aisles=AISLES, back=115.5, base=109.0)
+        top = stand.bowl_top(spec, (0.0, 0.0), 0.0, 20.0, 17.0)
+        self.assertAlmostEqual(top([5.0], [0.6 + 0.85])[0], 111.0)  # between rows 0 and 1
+        self.assertAlmostEqual(top([5.0], [0.6 + 0.85 - 0.04])[0], 111.0)
+        self.assertAlmostEqual(top([5.0], [0.6 + 0.85 + 0.04])[0], 111.0)
+        self.assertAlmostEqual(top([5.0], [0.6 + 0.85 + 0.1])[0], 111.2)
+        # one riser after each flat but the last
+        self.assertEqual(len(top.steps), 1 + 5 + 1 + 10)
+        self.assertAlmostEqual(top.steps[0], 0.6)
+
+    def test_block_outline_follows_the_slanted_ends_and_the_inset(self):
+        # front edge along +x from (0, 0), 10 m; sides slanting out 0.25 m a metre on each end
+        ring = [(0, 0), (10, 0), (12, 8), (-2, 8)]
+        spec = dict(walk=WALK, tiers=TIERS, aisles=AISLES, back=115.5, base=109.0, ring=ring,
+                    inset=0.2)
+        out = stand.bowl_outline(spec, (0.0, 0.0), 0.0, 10.0, 8.0)
+        want = [(-0.05, 0.2), (10.05, 0.2), (12.0, 8.0), (-2.0, 8.0)]
+        for (x, y), (wx, wy) in zip(out, want, strict=True):
+            self.assertAlmostEqual(x, wx)
+            self.assertAlmostEqual(y, wy)
+
+    def test_riser_lines_run_across_the_outline(self):
+        # a section fanned out: front from (0, 0) to (10, 0), back corners at (-2, 8) and (12, 8)
+        ring = [(0, 0), (10, 0), (12, 8), (-2, 8)]
+        lines = stand.step_lines(ring, (0.0, 0.0), 0.0, [4.0, 9.0])
+        self.assertEqual(len(lines), 1)  # v = 9 is past the back
+        (x0, y0), (x1, y1) = lines[0]
+        self.assertAlmostEqual(y0, 4.0)
+        self.assertAlmostEqual(y1, 4.0)
+        self.assertAlmostEqual(x0, -1.0)
+        self.assertAlmostEqual(x1, 11.0)
+
+
 if __name__ == "__main__":
     unittest.main()

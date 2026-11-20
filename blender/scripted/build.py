@@ -71,15 +71,26 @@ def build_area(plan_dir, data, assets, built):
     ]
     # a solid stand reads as ground in the LiDAR: its outline, grown by 1.5 m, is left out of the
     # ground
-    voids = []
+    voids, caps = [], []
     for st in lay["stands"]:
         ring = geom.expand(st["ring"], True)
         voids.append(geom.offset(ring, -1.5 if geom.area(ring) > 0 else 1.5, True))
-        if st.get("style") == "bowl":  # the filled gap rises above a bowl's rows: sink it, hidden
-            inner = geom.offset(ring, 1.5 if geom.area(ring) > 0 else -1.5, True)
-            lay["lifts"].append(dict(ring=inner, dz=-1.2, feather=1.5))
+        if st.get("style") == "bowl":
+            # the filled gap would rise above a bowl's rows: under the bowl's block (and on its
+            # outline) the ground is held below the block's top, hidden; outside nothing changes
+            import place  # noqa: PLC0415 (bpy only: imported where a bowl needs its frame)
+            import stand  # noqa: PLC0415
+
+            at, angle, length, depth = place._front_frame(ring, st["front"])
+            top = stand.bowl_top(st, at, angle, length, depth)
+            block = stand.bowl_outline(st, at, angle, length, depth)  # may reach past the ring
+            lines = stand.step_lines(block, at, angle, top.steps)
+            caps.append(dict(ring=block, top=top, lines=lines))
+    # ground.triangulate puts edges on these outlines and risers: no ground triangle spans a step
+    lay["caps"] = [c["ring"] for c in caps]
+    lay["cap_lines"] = [ln for c in caps for ln in c["lines"]]
     lidar = data / plan_dir.name / "lidar.npz"
-    terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids)
+    terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps)
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
     objects = ground.build(lay, terrain, lay["image_dir"])
