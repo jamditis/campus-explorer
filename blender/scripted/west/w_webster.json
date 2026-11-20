@@ -758,12 +758,12 @@
    "type": "line",
    "path": [
     [
-     -222.421,
-     294.799
+     -214.114,
+     300.02
     ],
     [
-     -210.158,
-     302.916,
+     -205.711,
+     305.029,
      208.01
     ],
     [
@@ -773,7 +773,8 @@
    ],
    "width": 0.1,
    "colour": "white",
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "starts where the walk leaves the curb: west of there the walk meets the road and no line reads"
   },
   {
    "name": "W_webster_NW_edge_line",
@@ -807,8 +808,8 @@
    "type": "crosswalk",
    "line": [
     [
-     -244.6,
-     275.9
+     -243.7,
+     276.3
     ],
     [
      -233.4,
@@ -820,7 +821,7 @@
    "spacing": 1.0,
    "colour": "white",
    "evidence": "ortho2020",
-   "unverified": "bar count and spacing approximate"
+   "unverified": "bar count and spacing approximate; its west end (read 0.6 m past the walk's edge) starts at the walk"
   },
   {
    "name": "W_webster_north_lot_walkway",
@@ -845,8 +846,8 @@
    "type": "crosswalk",
    "line": [
     [
-     -222.6,
-     247.0
+     -222.2,
+     245.9
     ],
     [
      -217.6,

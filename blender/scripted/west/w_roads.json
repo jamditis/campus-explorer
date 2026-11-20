@@ -464,16 +464,16 @@
      -58.7
     ],
     [
-     -373.75,
-     -47.0
+     -373.6,
+     -46.22
     ],
     [
-     -376.9,
-     -46.1
+     -376.2,
+     -45.8
     ],
     [
-     -376.1,
-     -41.3
+     -374.63,
+     -40.78
     ],
     [
      -387.0,
@@ -485,7 +485,7 @@
     ]
    ],
    "evidence": "ortho2020, lidar2017, osm",
-   "unverified": "one paved area for College Avenue west of the main model's carriageway, the Carlisle Road junction and Lot 33; the strip along the deck's south face is drawn as paving to the main model's College Avenue"
+   "unverified": "one paved area for College Avenue west of the main model's carriageway, the Carlisle Road junction and Lot 33; the strip along the deck's south face is drawn as paving to the main model's College Avenue; at the Maintenance Building's north-west corner the outline follows the footprint (trimmed in the fix-up pass)"
   },
   {
    "name": "W_road_junction_island_tri",

@@ -47,7 +47,7 @@
     ]
    ],
    "roof": "flat",
-   "top": 143.6,
+   "top": 143.45,
    "style": "deck",
    "floors": 7,
    "levels": 8,
@@ -198,7 +198,7 @@
      "unverified": "ortho lean taken out with the same 3.36 m shift across the deck as the stalls; width taken as 1.0 m"}
    ],
    "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; osm (CarParc Diem); https://clarkecatonhintz.com/project/montclair-state-university-carparc-diem/ (precast, Spanish mission style); https://www.pci.org/ProjectProfile?ID=276848 (7.5 levels, precast arches, tile accents)",
-   "unverified": "top is the roof-level parapet (slab 142.31 m, parapet 143.6 m); the roof level's middle bay is its own part (NE_bldg_CarParc_Diem_ramp), cut out of the roof deck as a well whose floor lies under the ramp slab; levels 8 read from university notices of levels 7 and 8 and the 26 m drop to the north-east ground; colours guessed",
+   "unverified": "top set 1.1 m above the LiDAR roof slab (median 142.35 m of all roof returns, 142.34-142.39 m along the deck; fix-up pass) so the modelled floor lies on it, not the parapet returns; earlier reading: (slab 142.31 m, parapet 143.6 m); the roof level's middle bay is its own part (NE_bldg_CarParc_Diem_ramp), cut out of the roof deck as a well whose floor lies under the ramp slab; levels 8 read from university notices of levels 7 and 8 and the 26 m drop to the north-east ground; colours guessed",
    "wells": [
     {
      "ring": [
@@ -244,7 +244,7 @@
     ]
    ],
    "roof": "shed",
-   "top": 142.16,
+   "top": 142.35,
    "eave": 139.01,
    "ridge_angle": 158.4,
    "style": "deck",
@@ -291,7 +291,7 @@
     }
    ],
    "evidence": "lidar2017 (the roof level's middle bay is one sloped slab 17.5 x 65.8 m between two walls: 142.16 m at its south-west end, falling 4.8 cm per metre (median of each metre along the bay, fitted) to 139.01 m at its north-east end, where the flat roof stands 3.3 m higher; axis 68.4 deg; the roof slab beside it lies at 142.3-142.4 m); ortho2020 (stalls on the slab, walls with light poles along both long edges)",
-   "unverified": "read as the top of a sloped parking floor (a ramped bay) that runs on under the north-east part of the roof; the opening at its low end is not modelled; colours guessed"
+   "unverified": "top set to the roof slab, 142.35 m (fix-up pass): the LiDAR shows no step where the ramp meets the roof (the roof eases to 142.20 m in its last 3 m, the ramp reads 142.14 m in its first metre), and a flat roof cannot grade, so the slab starts at the floor level and falls 5.1 cm per metre (measured 4.8), up to 0.2 m high near its upper end; read as the top of a sloped parking floor (a ramped bay) that runs on under the north-east part of the roof; the opening at its low end is not modelled; colours guessed"
   },
   {
    "name": "NE_bldg_CarParc_Diem_ramp_wall_W",
@@ -315,11 +315,11 @@
    ],
    "roof": "flat",
    "top": 143.4,
-   "base": 142.5,
+   "base": 142.35,
    "wall": "#e4ddcd",
    "trim": "#e4ddcd",
    "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles)",
-   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the modelled roof deck (142.5 m; measured slab 142.3 m); colour guessed"
+   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed"
   },
   {
    "name": "NE_bldg_CarParc_Diem_ramp_wall_E",
@@ -343,11 +343,11 @@
    ],
    "roof": "flat",
    "top": 143.4,
-   "base": 142.5,
+   "base": 142.35,
    "wall": "#e4ddcd",
    "trim": "#e4ddcd",
    "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles)",
-   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the modelled roof deck (142.5 m; measured slab 142.3 m); colour guessed"
+   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed"
   },
   {
    "name": "NE_bldg_CarParc_Diem_stair_tower_SW",

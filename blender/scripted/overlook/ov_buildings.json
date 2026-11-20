@@ -569,12 +569,12 @@
     {
      "ring": [
       [
-       228.51,
-       1240.49
+       227.51,
+       1232.96
       ],
       [
-       246.85,
-       1238.04
+       245.85,
+       1230.51
       ],
       [
        252.93,
@@ -664,44 +664,6 @@
      "side": "right",
      "colour": "white",
      "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 18 dividers, rms 0.033 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
-    },
-    {
-     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row2_W_half_N_flat",
-     "type": "stalls",
-     "line": [
-      [
-       245.95,
-       1233.03
-      ],
-      [
-       246.7,
-       1238.5
-      ]
-     ],
-     "count": 2,
-     "depth": 5.4,
-     "side": "left",
-     "colour": "white",
-     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.044 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
-    },
-    {
-     "name": "OV_bldg_OCC_parking_deck_roof_stalls_row3_E_half_flat",
-     "type": "stalls",
-     "line": [
-      [
-       228.05,
-       1235.64
-      ],
-      [
-       228.79,
-       1241.09
-      ]
-     ],
-     "count": 2,
-     "depth": 5.0,
-     "side": "right",
-     "colour": "white",
-     "evidence": "ortho2020 (divider positions fitted as one straight run by least squares, 19 dividers, rms 0.029 m; paint ends from divider contrast); mapped from the ortho to the LiDAR outline by an affine fit to the parapet edges (lean)"
     },
     {
      "name": "OV_bldg_OCC_parking_deck_roof_stalls_row3_W_half",
@@ -909,23 +871,6 @@
      "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
     },
     {
-     "name": "OV_bldg_OCC_parking_deck_roof_line_ramp_aisle_flat",
-     "type": "line",
-     "path": [
-      [
-       236.67,
-       1232.54
-      ],
-      [
-       237.62,
-       1239.66
-      ]
-     ],
-     "width": 0.1,
-     "colour": "white",
-     "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
-    },
-    {
      "name": "OV_bldg_OCC_parking_deck_roof_arrow_SW_aisle",
      "type": "arrow",
      "at": [
@@ -972,30 +917,6 @@
      "shape": "straight",
      "colour": "white",
      "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
-    },
-    {
-     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_N",
-     "type": "arrow",
-     "at": [
-      238.88,
-      1233.99
-     ],
-     "angle": 83.1,
-     "shape": "straight",
-     "colour": "white",
-     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
-    },
-    {
-     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_turn",
-     "type": "arrow",
-     "at": [
-      236.0,
-      1234.34
-     ],
-     "angle": -96.8,
-     "shape": "right",
-     "colour": "white",
-     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow); turn arrow: shaft and bent head read at 0.15 m, shape unverified"
     },
     {
      "name": "OV_bldg_OCC_parking_deck_roof_arrow_W_aisle_S",
@@ -2268,12 +2189,12 @@
    "name": "OV_bldg_OCC_parking_deck_ramp",
    "ring": [
     [
-     228.51,
-     1240.49
+     227.51,
+     1232.96
     ],
     [
-     246.85,
-     1238.04
+     245.85,
+     1230.51
     ],
     [
      252.93,
@@ -2285,14 +2206,14 @@
     ]
    ],
    "roof": "shed",
-   "top": 119.34,
+   "top": 119.8,
    "eave": 116.56,
    "ridge_angle": 173.3,
    "style": "deck",
    "wall": "#c9c4b8",
    "trim": "#d8d4ca",
    "roof_colour": "#8f8f8b",
-   "evidence": "lidar2017 (the roof level's middle bay is one sloped slab: 119.34 m at its south end, falling 6.1 cm per metre (median of each metre along the bay, fitted) to 116.56 m at its north end, where the flat roof stands 2.9 m higher; straight edges 18.5 m apart across it, axis -7.6 deg (edges turned with the deck walls; the slab edge returns lie straight at -7.6 deg); the rest of the roof deck lies at 119.4-120.0 m); ortho2020 (stalls and arrows on the slab, dark lines along both long edges ending at about y 1231 and y 1285)",
+   "evidence": "lidar2017 (the roof level's middle bay is one sloped slab: 119.80 m at its south end (re-measured 2026-11-20 on the raw returns, medians of 1 m bins along the axis: the roof deck peaks at 119.86 m 52 m north of the deck's south-east corner and falls from there, 6.2 cm per metre, to 116.57 m; the deck floor beside the bay is 119.7 m), falling to 116.56 m at its north end; the south edge is set where the fall starts, which is also where the bay walls start in the 2020 ortho, where the flat roof stands 2.9 m higher; straight edges 18.5 m apart across it, axis -7.6 deg (edges turned with the deck walls; the slab edge returns lie straight at -7.6 deg); the rest of the roof deck lies at 119.4-120.0 m); ortho2020 (stalls and arrows on the slab, dark lines along both long edges ending at about y 1231 and y 1285)",
    "unverified": "read as the top of a sloped parking floor (a ramped bay of a split-level garage) that runs on under the north part of the roof; the opening at its low end into the level below and the rails or curbs along its edges are not modelled; colours guessed",
    "markings": [
     {
@@ -2300,15 +2221,15 @@
      "type": "stalls",
      "line": [
       [
-       246.7,
-       1238.5
+       245.95,
+       1233.03
       ],
       [
        252.67,
        1282.29
       ]
      ],
-     "count": 16,
+     "count": 18,
      "depth": 5.4,
      "side": "left",
      "colour": "white",
@@ -2319,15 +2240,15 @@
      "type": "stalls",
      "line": [
       [
-       228.79,
-       1241.09
+       228.05,
+       1235.64
       ],
       [
        234.75,
        1284.65
       ]
      ],
-     "count": 16,
+     "count": 18,
      "depth": 5.0,
      "side": "right",
      "colour": "white",
@@ -2338,8 +2259,8 @@
      "type": "line",
      "path": [
       [
-       237.62,
-       1239.66
+       236.67,
+       1232.54
       ],
       [
        241.8,
@@ -2349,6 +2270,30 @@
      "width": 0.1,
      "colour": "white",
      "evidence": "ortho2020 (bright line traced by brightness profiles across it, fitted straight)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_N",
+     "type": "arrow",
+     "at": [
+      238.88,
+      1233.99
+     ],
+     "angle": 83.1,
+     "shape": "straight",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow)"
+    },
+    {
+     "name": "OV_bldg_OCC_parking_deck_roof_arrow_ramp_foot_turn",
+     "type": "arrow",
+     "at": [
+      236.0,
+      1234.34
+     ],
+     "angle": -96.8,
+     "shape": "right",
+     "colour": "white",
+     "evidence": "ortho2020 (arrow centre and direction read from the paint; length 3.0 m in the ortho, as the standard through arrow); turn arrow: shaft and bent head read at 0.15 m, shape unverified"
     }
    ]
   },

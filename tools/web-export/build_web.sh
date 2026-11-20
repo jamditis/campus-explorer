@@ -7,6 +7,7 @@
 #   ends by taking the other sources' ground out of their tiles inside every area's footprint (supersede.mjs).
 #   SITE   = viewer checkout to publish into (default: this repo); tiles land in $SITE/models/$SCENE
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
+#   REPACK=1 = run this version's compact and far-version steps on the other sources' published tiles too
 #   TREE_INSTANCE=0 leaves trees used 2 to 4 times in a tile to optimize (joined into one plain mesh), as before
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
 #   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
@@ -110,6 +111,16 @@ if ls $S/sw_*.glb >/dev/null 2>&1; then
   for f in $CHANGED; do
     C=${f%.glb}; [[ $C == t_* || $C == n_t_* ]] || continue
     RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
+  done
+fi
+# REPACK=1: the other sources' published tiles get this version's compact and far-version steps too (packed
+# instance rotations, half-size far images) without their .blend: both steps work on a published tile.
+if [ "${REPACK:-0}" = 1 ]; then
+  cp $W/compact.mjs $W/lod.mjs $W/pack.mjs ./
+  for f in $S/*.glb; do
+    C=$(basename $f .glb); [ -n "$PREFIX" ] && [[ $C == ${PREFIX}* ]] && continue
+    node compact.mjs $f || fail "repack compact $C"
+    if [[ $C == t_* || $C == n_t_* ]]; then RATIO=0.1 ERR_M=0.5 node lod.mjs $f $S/lod/$C.glb >/dev/null || fail "repack lod $C"; fi
   done
 fi
 OUT=$S python3 $W/manifest.py || fail "manifest"
