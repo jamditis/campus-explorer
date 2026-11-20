@@ -8,6 +8,8 @@ import math
 
 import geom
 
+PARAPET = {"deck": 1.1}  # height of the parapet above the roof deck; 0.4 for everything else
+
 
 def _mid(a, b):
     return ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
@@ -141,6 +143,11 @@ def check_wells(ring, wells, clear=0.05):
             raise ValueError(f"well {k} needs at least three corners")
         if not all(geom.inside(ring, *p) for p in w):
             raise ValueError(f"well {k} does not lie inside the part")
+        # a well round a concave corner of the part has all its corners inside and still leaves it
+        if any(geom.inside(w, *p) for p in ring) or any(
+            _crosses(a, b, c, d) for a, b in _edges_of(w) for c, d in _edges_of(ring)
+        ):
+            raise ValueError(f"well {k} crosses the part's outline")
         near = min(min(_seg_dist(p, a, b) for a, b in _edges_of(ring)) for p in w)
         near = min(near, min(min(_seg_dist(p, a, b) for a, b in _edges_of(w)) for p in ring))
         if near < clear:

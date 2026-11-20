@@ -213,7 +213,7 @@ def check_surface(s):
         lv = s["level"]
         if s["kind"] != "water":
             raise ValueError(f"{name}: only water takes a level")
-        if isinstance(lv, bool) or not isinstance(lv, (int, float)) or not math.isfinite(lv):
+        if isinstance(lv, bool) or not isinstance(lv, int | float) or not math.isfinite(lv):
             raise ValueError(f"{name}: level must be a height in metres, not {lv!r}")
     if s["kind"] == "water" and s.get("paint"):
         raise ValueError(f"{name}: water takes no paint")

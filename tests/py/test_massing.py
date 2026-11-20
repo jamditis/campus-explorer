@@ -146,6 +146,11 @@ class Wells(unittest.TestCase):
             with self.assertRaises(ValueError):
                 massing.check_wells(RECT, bad)
 
+    def test_a_well_round_a_concave_corner_is_refused(self):
+        ell = [(0, 0), (40, 0), (40, 10), (10, 10), (10, 40), (0, 40)]
+        with self.assertRaises(ValueError):
+            massing.check_wells(ell, [[(8, 8), (12, 9.6), (9.6, 12)]])
+
     def test_every_plan_well_lies_inside_its_deck(self):
         for path in sorted((ROOT / "blender" / "scripted").glob("*/*.json")):
             plan = json.loads(path.read_text())
@@ -161,7 +166,11 @@ class Wells(unittest.TestCase):
                     self.assertIsNotNone(deck, "wells need a flat roof or a mansard top")
                     wells = [geom.expand(w["ring"], True) for w in p["wells"]]
                     massing.check_wells(deck, wells)
-                    self.assertTrue(all(w["floor"] < p["top"] - 0.5 for w in p["wells"]))
+                    # the same limit as building._deck: under the roof deck, which lies a
+                    # parapet below the top on a flat roof
+                    flat = p.get("roof", "flat") == "flat"
+                    drop = massing.PARAPET.get(p.get("style", "shed"), 0.4) if flat else 0.0
+                    self.assertTrue(all(w["floor"] < p["top"] - drop - 0.05 for w in p["wells"]))
 
 
 class Facade(unittest.TestCase):

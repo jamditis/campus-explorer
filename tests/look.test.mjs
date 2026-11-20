@@ -81,6 +81,10 @@ test('fixTone gives turf that lost its colour in the export the scripted turf to
   const mapped = color(1, 1, 1);
   fixTone('SW_turf_painted_stadium_p037_0', mapped, true);
   assert.equal(mapped.r, 1);
+  // white line paint on turf stays white
+  const paint = color(1, 1, 1);
+  fixTone('fs_turf_line_paint', paint, false);
+  assert.equal(paint.g, 1);
 });
 
 import { fixCat } from '../viewer/cat.js';

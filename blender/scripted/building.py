@@ -14,7 +14,7 @@ import massing
 from ground import sheet_material
 
 WALL_KIND = {"dorm": "brick", "hall": "brick", "plant": "brick", "deck": "concrete"}
-PARAPET = {"deck": 1.1}  # height of the parapet above the roof deck; 0.4 for everything else
+PARAPET = massing.PARAPET
 PROUD = 0.06  # how far windows and bands stand off the wall: enough not to flicker far away
 
 
@@ -211,7 +211,10 @@ def part(lay_part, name, ground, image_dir=None):
     v = [(q[0], q[1], base) for q in ring] + [
         (q[0], q[1], z) for q, z in zip(ring, tops, strict=True)
     ]
-    b.faces(v, [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)], wall)
+    # a deck's ramp is a slab in the well of its deck: walls of its own would lie in the faces of
+    # the well's walls
+    if not (kind == "shed" and style == "deck"):
+        b.faces(v, [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)], wall)
     for face in gables:
         b.faces(face, [tuple(range(len(face)))], wall)
     if kind == "flat":

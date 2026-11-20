@@ -33,7 +33,7 @@ export function fixTone(name, color, hasMap) {
   }
   // synthetic turf whose shader the export collapsed to a neutral grey (fs_turf, Pittser Field): use the
   // scripted builds' turf tone (blender/scripted/ground.py), not a grey or a lawn green
-  if (/turf/i.test(name) && !/lawn|grass/i.test(name)) {
+  if (/turf/i.test(name) && !/lawn|grass|paint|line|stripe|marking/i.test(name)) {
     const hi = Math.max(color.r, color.g, color.b), lo = Math.min(color.r, color.g, color.b);
     if (hi - lo < 0.1 * hi) setColor(color, TURF);
     return color;

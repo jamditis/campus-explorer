@@ -141,7 +141,7 @@ Other manifest fields the viewer uses:
 
 | Field | Use |
 |---|---|
-| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. |
+| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. Their images are half size per side (`lod.mjs`): from 260 m a half-size paint texel is still under a screen pixel. Trees used twice or more in a tile are instances (`tree_instance.mjs`), so they are not in the far versions; the tree stand-ins of `trees.js` show them at distance. |
 | `landcover` | An image draped over the 4 km skirt (`scenery.js`). |
 | `far_trees` | Positions and sizes of far-field trees, drawn as simple crowns (`trees.js`). |
 | `paint` | Lot markings painted into asphalt (`look.js`), up to 8 layers. |
