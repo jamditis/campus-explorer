@@ -1,0 +1,793 @@
+{
+ "zone": "v_lots_n",
+ "notes": "Frame: model metres, +X east, +Y grid north. Parking lots of the Village district north of y 1050, read from the NJ 2020 ortho (0.15 m/px, leaf-off) on gridded sheets at zoom 10 to 40; stall rows fitted to brightness profiles of the painted lines (a ridge filter, line minus the brighter of its two sides 0.3 m away, picks thin lines and rejects car edges; pitch by least squares, skew by maximising the line response, line ends from profiles along each divider); hidden dividers inferred from the pitch. Names from OSM parking areas.",
+ "surfaces": [
+  {
+   "name": "V_lot_48_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -255.2,
+     1101.0
+    ],
+    [
+     -260.5,
+     1101.4
+    ],
+    [
+     -289.6,
+     1108.7
+    ],
+    [
+     -294.94,
+     1111.37
+    ],
+    [
+     -297.54,
+     1116.96,
+     16.71
+    ],
+    [
+     -294.28,
+     1128.86,
+     16.71
+    ],
+    [
+     -284.1,
+     1135.81,
+     16.71
+    ],
+    [
+     -277.96,
+     1135.17
+    ],
+    [
+     -274.0,
+     1138.0,
+     0.8
+    ],
+    [
+     -256.6,
+     1156.6,
+     8.0
+    ],
+    [
+     -224.4,
+     1160.6,
+     3.5
+    ],
+    [
+     -224.4,
+     1152.6
+    ],
+    [
+     -235.43,
+     1137.74
+    ],
+    [
+     -259.89,
+     1112.0
+    ],
+    [
+     -256.0,
+     1106.0
+    ]
+   ],
+   "evidence": "ortho2020; osm 313032035",
+   "unverified": "south edge (y 1101-1109) under tree shadow, between the ortho and OSM; mouths on Village Road cut where the lot aisle meets the road (x -255 and -224)"
+  },
+  {
+   "name": "V_lot_48_island_NW",
+   "kind": "lawn",
+   "ring": [
+    [
+     -275.3,
+     1135.6
+    ],
+    [
+     -275.3,
+     1129.3,
+     1.2
+    ],
+    [
+     -270.3,
+     1132.5,
+     1.2
+    ],
+    [
+     -273.4,
+     1137.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "fill (lawn or bare)"
+  },
+  {
+   "name": "V_lot_48_island_S",
+   "kind": "lawn",
+   "ring": [
+    [
+     -279.4,
+     1121.6
+    ],
+    [
+     -282.9,
+     1121.0,
+     1.4
+    ],
+    [
+     -282.7,
+     1115.0,
+     1.4
+    ],
+    [
+     -280.0,
+     1115.1
+    ],
+    [
+     -279.4,
+     1119.7
+    ],
+    [
+     -262.5,
+     1113.6
+    ],
+    [
+     -261.6,
+     1107.8,
+     1.6
+    ],
+    [
+     -256.2,
+     1107.8,
+     1.6
+    ],
+    [
+     -256.0,
+     1111.8
+    ],
+    [
+     -262.57,
+     1117.31
+    ],
+    [
+     -263.99,
+     1120.04
+    ],
+    [
+     -264.8,
+     1120.3
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "west cap and SE cap outlines read from the curb paint; join with the strip guessed"
+  },
+  {
+   "name": "V_lot_48_island_strip",
+   "kind": "lawn",
+   "ring": [
+    [
+     -264.12,
+     1119.89
+    ],
+    [
+     -244.7,
+     1140.34
+    ],
+    [
+     -240.8,
+     1140.22
+    ],
+    [
+     -262.71,
+     1117.17
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5
+  },
+  {
+   "name": "V_lot_48_island_NE",
+   "kind": "lawn",
+   "ring": [
+    [
+     -247.6,
+     1144.7
+    ],
+    [
+     -246.6,
+     1147.5
+    ],
+    [
+     -229.0,
+     1147.5,
+     2.6
+    ],
+    [
+     -229.6,
+     1142.6,
+     2.0
+    ],
+    [
+     -236.6,
+     1137.3
+    ],
+    [
+     -240.94,
+     1140.08
+    ],
+    [
+     -244.97,
+     1140.05
+    ]
+   ],
+   "evidence": "ortho2020",
+   "layer": 3.5,
+   "unverified": "west edge of the cap (behind the last strip stall) guessed"
+  },
+  {
+   "name": "V_lot_48_dumpster_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -240.3,
+     1141.0
+    ],
+    [
+     -236.7,
+     1144.3
+    ],
+    [
+     -233.4,
+     1141.1
+    ],
+    [
+     -237.0,
+     1137.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "enclosure pad with walls round a dumpster (walls not modelled); outline approximate"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "V_lot_48_curb_S",
+   "path": [
+    [
+     -260.5,
+     1101.4
+    ],
+    [
+     -289.6,
+     1108.7
+    ],
+    [
+     -294.94,
+     1111.37
+    ],
+    [
+     -297.54,
+     1116.96,
+     16.71
+    ],
+    [
+     -294.28,
+     1128.86,
+     16.71
+    ],
+    [
+     -284.1,
+     1135.81,
+     16.71
+    ],
+    [
+     -277.96,
+     1135.17
+    ],
+    [
+     -277.9,
+     1135.4
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "south part under tree shadow"
+  },
+  {
+   "name": "V_lot_48_curb_N",
+   "path": [
+    [
+     -274.0,
+     1138.0,
+     0.8
+    ],
+    [
+     -256.6,
+     1156.6,
+     8.0
+    ],
+    [
+     -224.4,
+     1160.6,
+     3.5
+    ],
+    [
+     -224.4,
+     1152.6
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_island_NW_curb",
+   "path": [
+    [
+     -275.3,
+     1135.6
+    ],
+    [
+     -275.3,
+     1129.3,
+     1.2
+    ],
+    [
+     -270.3,
+     1132.5,
+     1.2
+    ],
+    [
+     -273.4,
+     1137.6
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_island_S_curb",
+   "path": [
+    [
+     -279.4,
+     1121.6
+    ],
+    [
+     -282.9,
+     1121.0,
+     1.4
+    ],
+    [
+     -282.7,
+     1115.0,
+     1.4
+    ],
+    [
+     -280.0,
+     1115.1
+    ],
+    [
+     -279.4,
+     1119.7
+    ],
+    [
+     -262.5,
+     1113.6
+    ],
+    [
+     -261.6,
+     1107.8,
+     1.6
+    ],
+    [
+     -256.2,
+     1107.8,
+     1.6
+    ],
+    [
+     -256.0,
+     1111.8
+    ],
+    [
+     -262.57,
+     1117.31
+    ],
+    [
+     -263.99,
+     1120.04
+    ],
+    [
+     -264.8,
+     1120.3
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_island_strip_curb_NW",
+   "path": [
+    [
+     -263.99,
+     1120.04
+    ],
+    [
+     -244.7,
+     1140.34
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_island_strip_curb_SE",
+   "path": [
+    [
+     -262.57,
+     1117.31
+    ],
+    [
+     -240.8,
+     1140.22
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_island_NE_curb",
+   "path": [
+    [
+     -247.6,
+     1144.7
+    ],
+    [
+     -246.6,
+     1147.5
+    ],
+    [
+     -229.0,
+     1147.5,
+     2.6
+    ],
+    [
+     -229.6,
+     1142.6,
+     2.0
+    ],
+    [
+     -236.6,
+     1137.3
+    ],
+    [
+     -240.94,
+     1140.08
+    ],
+    [
+     -244.97,
+     1140.05
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  }
+ ],
+ "markings": [
+  {
+   "name": "V_lot_48_stalls_NW",
+   "type": "stalls",
+   "line": [
+    [
+     -271.58,
+     1138.26
+    ],
+    [
+     -256.4,
+     1153.97
+    ]
+   ],
+   "count": 8,
+   "depth": 3.95,
+   "side": "right",
+   "angle": 90.7,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines 1.8-4.2 m read; depth is the median visible length"
+  },
+  {
+   "name": "V_lot_48_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     -242.84,
+     1160.0
+    ],
+    [
+     -228.7,
+     1160.0
+    ]
+   ],
+   "count": 5,
+   "depth": 4.6,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "three of six dividers under cars: pitch 2.83 m from the visible ones"
+  },
+  {
+   "name": "V_lot_48_stalls_strip_NW",
+   "type": "stalls",
+   "line": [
+    [
+     -261.92,
+     1122.21
+    ],
+    [
+     -246.86,
+     1138.06
+    ]
+   ],
+   "count": 8,
+   "depth": 5.25,
+   "side": "left",
+   "angle": 88.9,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "dividers 2, 3, 6 and 7 under cars: inferred from the 2.76 m pitch"
+  },
+  {
+   "name": "V_lot_48_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     -275.36,
+     1118.4
+    ],
+    [
+     -262.52,
+     1113.62
+    ]
+   ],
+   "count": 5,
+   "depth": 5.12,
+   "side": "right",
+   "angle": 89.9,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_stalls_SE_road",
+   "type": "stalls",
+   "line": [
+    [
+     -261.4,
+     1118.55
+    ],
+    [
+     -242.29,
+     1138.65
+    ]
+   ],
+   "count": 10,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 80.0,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bays off Village Road, every car parked: dividers read only past the car ends; pitch 2.77 m, depth guessed"
+  },
+  {
+   "name": "V_lot_48_fan_1",
+   "type": "line",
+   "path": [
+    [
+     -278.05,
+     1132.87
+    ],
+    [
+     -278.63,
+     1127.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_2",
+   "type": "line",
+   "path": [
+    [
+     -281.94,
+     1132.8
+    ],
+    [
+     -281.17,
+     1127.86
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_3",
+   "type": "line",
+   "path": [
+    [
+     -285.62,
+     1131.72
+    ],
+    [
+     -283.58,
+     1127.15
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_4",
+   "type": "line",
+   "path": [
+    [
+     -289.04,
+     1129.58
+    ],
+    [
+     -285.83,
+     1125.75
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_5",
+   "type": "line",
+   "path": [
+    [
+     -292.08,
+     1126.05
+    ],
+    [
+     -287.82,
+     1123.43
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_6",
+   "type": "line",
+   "path": [
+    [
+     -293.56,
+     1122.81
+    ],
+    [
+     -288.79,
+     1121.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_7",
+   "type": "line",
+   "path": [
+    [
+     -294.21,
+     1118.95
+    ],
+    [
+     -289.21,
+     1118.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_48_fan_8",
+   "type": "line",
+   "path": [
+    [
+     -293.79,
+     1114.96
+    ],
+    [
+     -288.94,
+     1116.17
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines 194 and 210 deg in tree shadow"
+  },
+  {
+   "name": "V_lot_48_fan_9",
+   "type": "line",
+   "path": [
+    [
+     -292.21,
+     1111.11
+    ],
+    [
+     -287.91,
+     1113.65
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines 194 and 210 deg in tree shadow"
+  },
+  {
+   "name": "V_lot_48_corner_N_1",
+   "type": "line",
+   "path": [
+    [
+     -251.51,
+     1153.42
+    ],
+    [
+     -253.84,
+     1156.1
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "curb ends of the first two lines faint"
+  },
+  {
+   "name": "V_lot_48_corner_N_2",
+   "type": "line",
+   "path": [
+    [
+     -248.08,
+     1153.31
+    ],
+    [
+     -249.92,
+     1156.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "curb ends of the first two lines faint"
+  },
+  {
+   "name": "V_lot_48_corner_N_3",
+   "type": "line",
+   "path": [
+    [
+     -245.68,
+     1154.86
+    ],
+    [
+     -247.09,
+     1159.45
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "curb ends of the first two lines faint"
+  }
+ ],
+ "points": []
+}
