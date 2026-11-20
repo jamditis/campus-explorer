@@ -143,6 +143,9 @@ class PlanFiles(unittest.TestCase):
 
     def test_footprint_and_surfaces_are_usable_outlines(self):
         for _plan, lay in self.each():
+            if lay["footprint"] is None:
+                self.assertTrue(lay["interiors"], "an area without ground holds interiors")
+                continue
             self.assertGreater(abs(geom.area(lay["footprint"])), 10000)
             names = set()
             for s in lay["surfaces"]:

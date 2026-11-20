@@ -29,6 +29,12 @@ export function cornersIn(ring, a, b, c) {
   return out;
 }
 
+/** Whether the outline crosses any edge of the triangle a, b, c (a band of footprint can cross a triangle with no
+ * corner of either inside the other). */
+export function edgesCross(ring, [a, b, c]) {
+  return [[a, b], [b, c], [c, a]].some(([p, q]) => crossings(p[0], p[1], q[0], q[1], ring).length > 0);
+}
+
 /**
  * The part of triangle `tri` ([[x, y] x3]) that lies outside the footprint `ring`, as a polygon in the triangle's own
  * winding, for a small triangle the outline crosses once: `isIn` says which corners are inside; `corner`

@@ -30,6 +30,7 @@ look.js             Sky, sun, shadows, fog, world-space textures, paint, screen-
 viewer/geo.js       Pure. Local metres <-> EPSG:6527 <-> WGS84 latitude/longitude, grid convergence, formatting
 viewer/sun.js       Pure. Solar azimuth and elevation for an instant and a place (NOAA equations)
 viewer/schedule.js  Pure. Tile load order for a focus point and view direction
+viewer/texshare.js  Pure. Shared tile images: URI resolution, one texture per image across tiles, their bytes
 viewer/permalink.js Pure. View state <-> URL hash
 viewer/places.js    Pure. Search and nearest-place lookups over places.json
 viewer/cat.js       Pure. Material category corrections, and which see-through materials are not glass
@@ -142,10 +143,20 @@ Other manifest fields the viewer uses:
 | Field | Use |
 |---|---|
 | `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. Their images are half size per side (`lod.mjs`): from 260 m a half-size paint texel is still under a screen pixel. Trees used twice or more in a tile are instances (`tree_instance.mjs`), so they are not in the far versions; the tree stand-ins of `trees.js` show them at distance. |
+| `tiles[].tex`, `tiles[].lod_tex`, `tex` | Shared images (see "Shared images" below): the files in `tex/` a tile and its far version name, and the size of each. `world.js` adds each file's bytes once to the download total and to the progress when the first tile naming it is in. `total_bytes` is the full tiles plus, once each, the shared images they name. |
 | `landcover` | An image draped over the 4 km skirt (`scenery.js`). |
 | `far_trees` | Positions and sizes of far-field trees, drawn as simple crowns (`trees.js`). |
 | `paint` | Lot markings painted into asphalt (`look.js`), up to 8 layers. |
 | `source_saved`, `source_version`, `exported`, `sources` | Shown under "About this model". |
+
+### Shared images
+
+An image that two or more published files carry (the leaf textures are in almost every tile, a paint sheet is in its tile and its neighbours) is stored once as `models/main/tex/<hash>.webp`: the first 20 hex digits of the SHA-256 of its bytes. The tiles refer to it by a `uri` relative to their own folder (`tex/...` from a tile, `../tex/...` from a far version), as the glTF spec says; an image only one file carries stays inside it. The export does this as its last step, on the published tiles, so it needs no `.blend` (`tools/web-export/share_tex.mjs`, pure parts in `tex.mjs`; `SHARE_TEX=0` puts every image back inside its tile). It also deletes files in `tex/` that no tile names, and puts an image that is no longer shared back into its tile.
+
+- Loading: `world.js` parses a tile with its own folder as the base (`base + dirOf(file)`), so GLTFLoader fetches `tex/` files from the right place; EXT_texture_webp reads a URI image as it reads an embedded one. A missing image fails that texture only (GLTFLoader logs it and leaves the map empty), not the tile; `check_viewer_refs.py` fails CI when a listed tile names a file that is not there.
+- Memory: GLTFLoader makes a new texture per tile. `world.js` swaps it for the texture an earlier tile already has for the same file, sampler, colour space and UV transform (`viewer/texshare.js`), so the GPU holds one copy. Materials stay per tile. `free()` does not dispose a shared texture; the share disposes it with the last tile that uses it (the lite profile evicts tiles one by one). `look.js` sets only `anisotropy` on a texture, the same for every tile.
+- Network: each tile still asks for the file; the browser's HTTP cache answers after the first download (GitHub Pages sends `max-age=600`, then revalidates).
+- Tools that read published tiles (`supersede.mjs`, `compact.mjs`, `lod.mjs`, `tools/evidence/dump_tiles.mjs`) read the images through gltf-transform's NodeIO, which resolves the URI against the tile's folder. gltf-transform writes every image into a GLB, so `compact.mjs` and `lod.mjs` write through `keepShared` (tex.mjs), which points the unchanged shared images back at their files; the export's last step catches anything else.
 
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
 

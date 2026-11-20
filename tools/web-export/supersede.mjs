@@ -3,10 +3,11 @@
 // blender/scripted/supersede.py (per area: footprint outline, and which meshes are ground there).
 //   node supersede.mjs RULES.json MODELS_DIR
 // For every area and every tile that is not a scripted-build tile:
-//   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge (or holds
-//         one of its corners) is cut into small pieces first (`cut` metres), and each last piece is cut exactly
-//         where the outline crosses it (cut.mjs): the old ground ends at the footprint at its own height, a
-//         quantisation step (at least 2 cm) under the new ground's edge, so no crack opens and nothing dips
+//   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge, holds one
+//         of its corners or is crossed by it is cut exactly where the outline crosses it (cut.mjs), split into four
+//         first only where the outline turns inside it: the old ground ends at the footprint at its own height, a
+//         quantisation step (at least 2 cm) under the new ground's edge, so no crack opens and nothing dips.
+//         (`cut`, the piece size of the earlier version, stays in the rules' hash only.)
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
 // Tiles done by the earlier version (straddlers kept whole, their inside corners lowered by `tuck` metres, which
 // left a trench of 0 to `tuck` metres along the outside of the edge) are mended: those corners are raised back
@@ -20,11 +21,11 @@ import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extension
 import { compactPrimitive } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { crossings, cornersIn, outsidePart } from './cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart } from './cut.mjs';
 
 const [rulesFile, dir] = process.argv.slice(2);
 if (!rulesFile || !dir) { console.error('usage: node supersede.mjs RULES.json MODELS_DIR'); process.exit(2); }
-const file = JSON.parse(readFileSync(rulesFile, 'utf8')), TILE = 160;
+const file = JSON.parse(readFileSync(rulesFile, 'utf8'));
 const AREAS = file.areas ?? [file]; // one set of rules per area (a file with a single footprint is one area)
 /** Even-odd test in the model frame (x east, y north). */
 function inside(ring, x, y) {
@@ -42,24 +43,27 @@ const stale = new Set(), changedTiles = new Set(), KNOWN = new Set();
 // Every area's hash first: a mark that is none of them is from rules that no longer exist.
 const hashOf = rules => { let h = 2166136261; for (const c of JSON.stringify([rules.footprint, rules.clip, rules.drop ?? [], rules.tuck ?? 0.5, rules.cut ?? 0.6])) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return 'r' + h.toString(16); };
 for (const rules of AREAS) KNOWN.add(hashOf(rules));
-for (const rules of AREAS) {
-if (rules.skip) continue; // its marks stay known, its ground is not taken out in this run
-const ring = rules.footprint, TUCK = rules.tuck ?? 0.5, CUT = rules.cut ?? 0.6;
-const CLIP = rules.clip.map(r => new RegExp(r)), DROP = (rules.drop ?? []).map(r => new RegExp(r));
-// What a done primitive is marked with: a short hash of each area's rules it was done with. Removed triangles
-// cannot be put back, so a tile that was done with other rules (another footprint) must be exported again.
-const RULES = hashOf(rules);
-const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
-const within = (x, y) => x >= bx[0] && x <= bx[2] && y >= bx[1] && y <= bx[3] && inside(ring, x, y);
-const touches = f => {
-  const m = /^(?:n_)?t_(-?\d+)_(-?\d+)\.glb$/.exec(f);
-  if (!m) return true; // context, skirt, far houses
-  const tx = +m[1] * TILE, ty = +m[2] * TILE, pad = 200; // objects are filed by their centre and can reach past the tile
-  return tx - pad < bx[2] && tx + TILE + pad > bx[0] && ty - pad < bx[3] && ty + TILE + pad > bx[1];
-};
+const areas = AREAS.filter(rules => !rules.skip).map(rules => { // a skipped area's marks stay known, its ground stays
+  // moved by a fraction of a millimetre, so that no corner of a ground mesh drawn on a round-metre grid lies exactly
+  // on the outline (where the inside test and the edge crossings could disagree)
+  const ring = rules.footprint.map(([x, y]) => [x + 1.37e-4, y + 2.71e-4]);
+  const bx = [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
+  return {
+    name: rules.name ?? '', ring, bx, TUCK: rules.tuck ?? 0.5,
+    CLIP: rules.clip.map(r => new RegExp(r)), DROP: (rules.drop ?? []).map(r => new RegExp(r)),
+    // What a done primitive is marked with: a short hash of each area's rules it was done with. Removed triangles
+    // cannot be put back, so a tile that was done with other rules (another footprint) must be exported again.
+    RULES: hashOf(rules),
+    within: (x, y) => x >= bx[0] && x <= bx[2] && y >= bx[1] && y <= bx[3] && inside(ring, x, y),
+  };
+});
 
-for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith('sw_') && touches(f)).sort()) {
+// Every tile, read once: an object is filed under the tile that holds its centre, and a far-field ground filed under
+// one tile reaches a kilometre and more past it, so no tile can be left out by its name.
+for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith('sw_')).sort()) {
   const doc = await io.read(`${dir}/${f}`);
+  let dirty = false;
+  for (const { name, ring, bx, TUCK, CLIP, DROP, RULES, within } of areas) {
   let removed = 0, cutN = 0, mended = 0, removedAll = 0;
   for (const node of doc.getRoot().listNodes()) {
     const mesh = node.getMesh();
@@ -94,7 +98,13 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         wx[i] = w[0] * p[0] + w[4] * p[1] + w[8] * p[2] + w[12]; wy[i] = -(w[2] * p[0] + w[6] * p[1] + w[10] * p[2] + w[14]);
         if (within(wx[i], wy[i])) { isIn[i] = 1; any = true; }
       }
-      if (!any) continue;
+      // no corner inside: its triangles can still cover the footprint, if any of them reaches its box
+      if (!any) {
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        for (let i = 0; i < n; i++) { x0 = Math.min(x0, wx[i]); x1 = Math.max(x1, wx[i]); y0 = Math.min(y0, wy[i]); y1 = Math.max(y1, wy[i]); }
+        if (x1 < bx[0] || x0 > bx[2] || y1 < bx[1] || y0 > bx[3]) continue;
+      }
+      const before = removed + cutN;
       // corners added by cutting, numbered after the original ones: each a weighted mean of earlier corners,
       // [[corner, weight], ...] (an edge's midpoint, a point where the outline crosses an edge, an outline corner)
       const added = [], ax = [], ay = [], memo = new Map();
@@ -117,20 +127,23 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const P = i => [X(i), Y(i)];
       // straddling edges crossed once, other edges not at all: the piece can be cut with one run of the outline
       const plain = (a, b, c) => [[a, b], [b, c], [c, a]].every(([u, v]) => crossings(X(u), Y(u), X(v), Y(v), ring).length === (isIn[u] !== isIn[v] ? 1 : 0));
-      // A triangle wholly inside goes. One that straddles the edge, or holds an outline corner, is cut into four,
-      // again and again, until its pieces are small (CUT metres) and simple; then the pieces inside go and each
-      // last straddler keeps exactly its part outside the outline.
+      // A triangle wholly inside goes. One that the outline crosses keeps exactly its part outside the outline; where
+      // the outline turns inside it (or crosses one edge twice) it is cut into four first, again and again.
       const visit = (a, b, c, depth) => {
         const k = isIn[a] + isIn[b] + isIn[c];
         const away = Math.max(X(a), X(b), X(c)) < bx[0] || Math.min(X(a), X(b), X(c)) > bx[2] ||
           Math.max(Y(a), Y(b), Y(c)) < bx[1] || Math.min(Y(a), Y(b), Y(c)) > bx[3];
         const corners = mode === 'clip' && !away ? cornersIn(ring, P(a), P(b), P(c)) : [];
         if (!corners.length && k === 3) { removed++; return; }
-        if (!corners.length && k === 0) { keep.push(a, b, c); return; }
+        // all corners outside and no outline corner inside: a band of footprint can still cross it
+        if (!corners.length && k === 0 && (away || mode !== 'clip' || !edgesCross(ring, [P(a), P(b), P(c)]))) { keep.push(a, b, c); return; }
         if (mode === 'drop') { if (k === 3) removed++; else keep.push(a, b, c); return; }
-        const longest = Math.max(Math.hypot(X(a) - X(b), Y(a) - Y(b)), Math.hypot(X(b) - X(c), Y(b) - Y(c)), Math.hypot(X(c) - X(a), Y(c) - Y(a)));
         const simple = k > 0 && k < 3 && corners.length <= 1 && plain(a, b, c);
-        if (depth < 12 && (longest > CUT || !simple)) {
+        // An exact cut needs no small pieces: split only where the outline turns inside a piece or crosses an edge
+        // twice, down to 5 cm (round an outline corner that lies on an edge or a corner of the ground's own mesh,
+        // pieces never become simple)
+        const longest = Math.max(Math.hypot(X(a) - X(b), Y(a) - Y(b)), Math.hypot(X(b) - X(c), Y(b) - Y(c)), Math.hypot(X(c) - X(a), Y(c) - Y(a)));
+        if (depth < 16 && longest > 0.05 && !simple) {
           const ab = mid(a, b), bc = mid(b, c), ca = mid(c, a);
           visit(a, ab, ca, depth + 1); visit(ab, b, bc, depth + 1); visit(ca, bc, c, depth + 1); visit(ab, bc, ca, depth + 1);
           return;
@@ -153,6 +166,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         cutN++;
       };
       for (let t = 0; t < I.length; t += 3) visit(I[t], I[t + 1], I[t + 2], 0);
+      if (removed + cutN === before && !mend) continue; // it only came near
       if (!keep.length) { mesh.removePrimitive(prim); prim.dispose(); removedAll++; continue; }
       // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more.
       // Every attribute gets the added corners, each the weighted mean of its parents (parents come first).
@@ -183,22 +197,24 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
     if (!mesh.listPrimitives().length) node.setMesh(null);
   }
   if (!removed && !cutN && !mended) continue;
+  dirty = true;
+  console.log(`supersede ${name} ${f}: removed ${removed} triangles (${removedAll} whole primitives), cut ${cutN} at the outline, mended ${mended} corners`);
+  }
+  if (!dirty) continue;
   for (const m of doc.getRoot().listMeshes()) if (!m.listPrimitives().length) m.dispose();
   for (const a of doc.getRoot().listAccessors()) if (!a.listParents().some(x => x.propertyType !== 'Root')) a.dispose();
   // same encoding as `gltf-transform optimize --compress meshopt` wrote
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
   await io.write(`${dir}/${f}`, doc);
   changedTiles.add(f);
-  console.log(`supersede ${rules.name ?? ''} ${f}: removed ${removed} triangles (${removedAll} whole primitives), cut ${cutN} at the outline, mended ${mended} corners`);
 }
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
-if (existsSync(ft)) {
+for (const { within } of areas) if (existsSync(ft)) {
   const raw = readFileSync(ft); // a small file's Buffer is a view into a shared pool: copy exactly its bytes
   const a = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length - (raw.length % 4))), keep = [];
   for (let i = 0; i + 4 < a.length; i += 5) if (!within(a[i], -a[i + 2])) keep.push(a[i], a[i + 1], a[i + 2], a[i + 3], a[i + 4]);
   if (keep.length !== a.length) { writeFileSync(ft, Buffer.from(new Float32Array(keep).buffer)); console.log(`supersede far_trees.bin: removed ${(a.length - keep.length) / 5} trees`); }
-}
 }
 if (stale.size) {
   console.error(`supersede: ${[...stale].join(' ')} were done with other rules (the footprint or the patterns changed). ` +

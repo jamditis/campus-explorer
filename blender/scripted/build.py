@@ -39,7 +39,11 @@ def build_area(plan_dir, data, assets, built):
     """Ground and objects of one area. `data` holds <area>/lidar.npz and authored/*.png."""
     lay = layout.load(plan_dir)
     if not lay["footprint"]:
-        sys.exit(f"{plan_dir.name}: no plan file defines the footprint")
+        if not lay["interiors"]:
+            sys.exit(f"{plan_dir.name}: no plan file defines the footprint")
+        import place  # an area of interiors only: no ground, no terrain
+
+        return lay, None, place.build(lay, None, assets)
     edge = (
         json.loads(Path(plan_dir / "edge_heights.json").read_text())["samples"]
         if (plan_dir / "edge_heights.json").exists()
@@ -51,7 +55,11 @@ def build_area(plan_dir, data, assets, built):
         edge = [e for e in edge if layout.meets_neighbour(lay, e[0], e[1])]
         # along an edge shared with another scripted area there is no other model to meet: both
         # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
-        edge = [e for e in edge if not any(_near(o["footprint"], e[0], e[1], 2.0) for o in others)]
+        edge = [
+            e
+            for e in edge
+            if not any(o["footprint"] and _near(o["footprint"], e[0], e[1], 2.0) for o in others)
+        ]
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the
     # grade would be cut off at the shared edge and the two areas would meet with a step.
@@ -111,24 +119,26 @@ def main():
     print("SW saved", out)
     if preview:
         preview.mkdir(parents=True, exist_ok=True)
+        ring = lay["footprint"] or lay["interiors"][0]["outline"]  # interiors only: no ground
         b = [
-            min(p[0] for p in lay["footprint"]),
-            min(p[1] for p in lay["footprint"]),
-            max(p[0] for p in lay["footprint"]),
-            max(p[1] for p in lay["footprint"]),
+            min(p[0] for p in ring),
+            min(p[1] for p in ring),
+            max(p[0] for p in ring),
+            max(p[1] for p in ring),
         ]
         cx, cy = (b[0] + b[2]) / 2, (b[1] + b[3]) / 2
         span = max(b[2] - b[0], b[3] - b[1])
+        cz = terrain.at(cx, cy) if terrain else lay["interiors"][0]["floor"]
         kit.preview(
             str(preview / f"{lay['area']}_sw.png"),
-            (cx, cy, terrain.at(cx, cy)),
+            (cx, cy, cz),
             span * 1.1,
             215,
             40,
         )
         kit.preview(
             str(preview / f"{lay['area']}_top.png"),
-            (cx, cy, terrain.at(cx, cy)),
+            (cx, cy, cz),
             span * 1.3,
             180,
             89,

@@ -11,6 +11,7 @@ import re
 import building
 import fixtures
 import geom
+import interior
 import kit
 import stand
 
@@ -390,4 +391,5 @@ def build(lay, terrain, assets=None):
         + fences(lay, terrain)
         + points(lay, terrain)
         + buildings(lay, terrain)
+        + interior.build(lay)
     )

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { crossings, cornersIn, outsidePart } from '../tools/web-export/cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart } from '../tools/web-export/cut.mjs';
 
 // a square footprint 0..10 x 0..10, anticlockwise
 const SQ = [[0, 0], [10, 0], [10, 10], [0, 10]];
@@ -72,4 +72,14 @@ test('a crossing can be pulled back along its edge toward the inside corner by a
     near(Math.hypot(p.x - 10, p.y - 5 + (p.y < 5 ? 0.5 : -0.5)), 0.1, 1e-9);
     assert.ok(p.x < 10);
   }
+});
+
+test('a big triangle with no corner inside a footprint still meets it where the outline crosses it', () => {
+  // a 100 m triangle over a 10 m square (the far-field ground over a scripted area): no corner inside
+  assert.equal(cornersIn(SQ, [-50, -50], [60, -50], [5, 60]).length, 4);
+  // a band of footprint across a triangle: no corner of either inside the other, two edges crossed
+  const band = [[-10, 4], [20, 4], [20, 6], [-10, 6]];
+  assert.ok(edgesCross(band, [[0, 0], [10, 0], [5, 10]]));
+  assert.ok(!edgesCross(SQ, [[20, 20], [30, 20], [25, 30]]));
+  assert.ok(!edgesCross(SQ, [[1, 1], [2, 1], [1, 2]])); // wholly inside: no crossing
 });

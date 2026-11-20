@@ -29,10 +29,15 @@ PPM = {"asphalt": 20.0, "turf": 24.0, "gravel": 24.0, "lawn": 20.0}
 
 
 def areas(args=()):
-    """The plan folders to work on: every folder beside this file that holds a footprint.json, or
-    only those named after `--areas` (comma separated) in `args`."""
+    """The plan folders to work on: every folder beside this file that holds a footprint.json (an
+    area that owns ground) or an interior.json (interiors only: no ground, no supersede rules),
+    or only those named after `--areas` (comma separated) in `args`."""
     here = Path(__file__).resolve().parent
-    found = sorted(d for d in here.iterdir() if (d / "footprint.json").exists())
+    found = sorted(
+        d
+        for d in here.iterdir()
+        if (d / "footprint.json").exists() or (d / "interior.json").exists()
+    )
     if "--areas" in args:
         want = args[args.index("--areas") + 1].split(",")
         missing = set(want) - {d.name for d in found}
@@ -54,6 +59,7 @@ def load(plan_dir):
         stands=[],
         fences=[],
         buildings=[],
+        interiors=[],
         lifts=[],
         field_frame=None,
     )
@@ -95,7 +101,7 @@ def load(plan_dir):
             out["lifts"].append(dict(lift, zone=zone, ring=geom.expand(lift["ring"], True)))
         for q in plan.get("points", []):
             check_point(q)
-        for key in ("points", "stands", "fences", "buildings"):
+        for key in ("points", "stands", "fences", "buildings", "interiors"):
             out[key].extend(dict(p, zone=zone) for p in plan.get(key, []))
     for i, s in enumerate(out["surfaces"]):
         s["layer"] = (s.get("layer", LAYER[s["kind"]]), i)

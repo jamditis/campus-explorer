@@ -20,6 +20,8 @@ def main():
     out = []
     chosen = {d.name for d in layout.areas(args)}
     for plan_dir in layout.areas():
+        if not (plan_dir / "footprint.json").exists():
+            continue  # interiors only: the area owns no ground
         rules = json.loads(Path(plan_dir / "footprint.json").read_text())["supersede"]
         ring = [[round(x, 3), round(y, 3)] for x, y in layout.load(plan_dir)["footprint"]]
         out.append(
