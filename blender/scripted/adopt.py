@@ -27,7 +27,9 @@ from export_skip import EXCL  # noqa: E402
 PREFIX = "SW_adopt_"
 MAX_NAME = 63  # bytes: Blender cuts longer names
 TRANSFORM_KEYS = {"rotate_z_deg", "about", "translate"}
-GROUP_KEYS = {"name", "objects", "transform", "text", "why"}
+GROUP_KEYS = {
+    "name", "objects", "transform", "text", "clip", "swap_instances", "place", "materials", "why",
+}  # fmt: skip
 
 
 def export_skips(name):
@@ -80,6 +82,50 @@ def group_matrix(transform):
     ]
 
 
+def _inside(ring, x, y):
+    hit = False
+    for (ax, ay), (bx, by) in zip(ring, ring[-1:] + ring[:-1], strict=True):
+        if (ay > y) != (by > y) and x < ax + (y - ay) * (bx - ax) / (by - ay):
+            hit = not hit
+    return hit
+
+
+def clip_drop(ring, keep, centroids):
+    """For each face centroid (x, y): does a group `clip` with this ring and `keep` side drop it?"""
+    return [_inside(ring, x, y) == (keep == "outside") for x, y, *_ in centroids]
+
+
+def place_matrix(m):
+    """A `place` entry's world matrix: 16 numbers, row-major, affine. Returns 4 rows."""
+    if len(m) != 16 or not all(isinstance(v, int | float) and math.isfinite(v) for v in m):
+        raise ValueError("a placed matrix is 16 numbers, row-major")
+    rows = [list(m[i : i + 4]) for i in range(0, 16, 4)]
+    if rows[3] != [0, 0, 0, 1]:
+        raise ValueError(f"a placed matrix must end with the row 0 0 0 1, not {rows[3]}")
+    return rows
+
+
+def _check_extras(g, names):
+    """clip, swap_instances, place and materials of a group (all optional)."""
+    who = f"group {g['name']!r}"
+    for c in g.get("clip", []):
+        if c.get("keep") not in ("outside", "inside") or len(c.get("ring", [])) < 3:
+            raise ValueError(f"{who}: a clip needs a ring and keep 'outside' or 'inside'")
+    for a, b in (g.get("swap_instances") or {}).items():
+        if not (isinstance(a, str) and isinstance(b, str) and a and b):
+            raise ValueError(f"{who}: swap_instances maps collection names to collection names")
+    for q in g.get("place", []):
+        if not q.get("collection") or not q.get("name") or q["name"] in names:
+            raise ValueError(f"{who}: a place needs a collection and a name of its own")
+        names.add(q["name"])
+        place_matrix(q.get("matrix", []))
+    for m, new in (g.get("materials") or {}).items():
+        if "name" in new and not new["name"]:
+            raise ValueError(f"{who}: material {m!r}: an empty new name")
+        if "colour" in new and not re.fullmatch(r"#[0-9a-fA-F]{6}", str(new["colour"])):
+            raise ValueError(f"{who}: material {m!r}: colour must be '#rrggbb'")
+
+
 def check(plan):
     """Check an `adopt` block. Returns [(object name, group)] in plan order."""
     f = plan.get("file", "")
@@ -105,6 +151,9 @@ def check(plan):
         for n, body in (g.get("text") or {}).items():
             if n not in g["objects"] or not isinstance(body, str):
                 raise ValueError(f"group {g['name']!r}: text for {n!r}, not one of its objects")
+    names = set(seen)
+    for g in plan["groups"]:
+        _check_extras(g, names)
     return rows
 
 
@@ -182,6 +231,51 @@ def _bake(ob):
     ob.select_set(False)
 
 
+def _clip(ob, clips):
+    """Delete the faces a group's `clip` rings drop (world centroids). A collection instance goes
+    or stays by its origin. Returns False when nothing of `ob` is left."""
+    import bmesh
+
+    if ob.type == "EMPTY":
+        o = ob.matrix_world.translation
+        return not any(clip_drop(c["ring"], c["keep"], [(o.x, o.y)])[0] for c in clips)
+    if ob.type != "MESH" or len(ob.modifiers):
+        _bake(ob)  # the faces the export would see
+    if ob.data.users > 1:
+        ob.data = ob.data.copy()
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    mw = ob.matrix_world
+    cs = [(mw @ f.calc_center_median()).to_tuple() for f in bm.faces]
+    drop = [False] * len(cs)
+    for c in clips:
+        drop = [a or b for a, b in zip(drop, clip_drop(c["ring"], c["keep"], cs), strict=True)]
+    kill = [f for f, d in zip(bm.faces, drop, strict=True) if d]
+    bmesh.ops.delete(bm, geom=kill, context="FACES")
+    left = len(bm.faces)
+    bm.to_mesh(ob.data)
+    bm.free()
+    return left > 0
+
+
+def _recolour(m, new):
+    """A group's `materials` entry: new name and flat colour of an adopted material."""
+    if new.get("colour"):
+        import kit  # noqa: PLC0415 (bpy)
+
+        rgb = kit.srgb(new["colour"])
+        m.diffuse_color = (*rgb, 1)
+        if m.use_nodes and m.node_tree:
+            for n in m.node_tree.nodes:
+                if n.type == "BSDF_PRINCIPLED":
+                    sock = n.inputs["Base Color"]
+                    for link in list(sock.links):
+                        m.node_tree.links.remove(link)
+                    sock.default_value = (*rgb, 1)
+    if new.get("name"):
+        m.name = new["name"]
+
+
 def build(plan, path, coll):
     """Append, move and link the objects of one `adopt` block from release file `path` into
     collection `coll`. Returns the new objects."""
@@ -193,18 +287,24 @@ def build(plan, path, coll):
     for n in skip:
         print("SW adopt: left out (the web export leaves it out of every tile):", n)
     rows = [(n, g) for n, g in rows if n not in skip]
+    colls = sorted(
+        {c for g in plan["groups"] for c in (g.get("swap_instances") or {}).values()}
+        | {q["collection"] for g in plan["groups"] for q in g.get("place", [])}
+    )
     with bpy.data.libraries.load(str(path), link=False) as (src, dst):
         have = set(src.objects)
         missing = [n for n, _g in rows if n not in have]
+        missing += [f"collection {c}" for c in colls if c not in set(src.collections)]
         if missing:
-            raise SystemExit(f"adopt: {len(missing)} objects not in {path.name}: {missing[:20]}")
+            raise SystemExit(f"adopt: {len(missing)} not in {path.name}: {missing[:20]}")
         dst.objects = [n for n, _g in rows]
+        dst.collections = list(colls)  # Blender fills the list it is given with the data
+    loaded = dict(zip(colls, dst.collections, strict=True))
     taken = {o.name for o in bpy.data.objects}
     out = []
     for (name, g), ob in zip(rows, dst.objects, strict=True):
         if ob.hide_render or ob.hide_viewport:
             raise SystemExit(f"adopt: {name!r} is hidden in {path.name}: not in the main tiles")
-        world = ob.matrix_world.copy()  # as saved: parents and constraints already applied
         coll.objects.link(ob)
         body = (g.get("text") or {}).get(name)
         if body is not None:
@@ -217,8 +317,10 @@ def build(plan, path, coll):
                 if not Path(bpy.path.abspath(f.filepath, library=f.library)).exists():
                     raise SystemExit(f"adopt: {name!r}: font file {f.filepath} not found")
             ob.data.body = body  # same font, size, extrude and material: the export converts it
-        out.append((ob, name, g, world))
+        out.append((ob, name, g))
+    # world transforms as the main export sees them: evaluated in this scene (parents, constraints)
     bpy.context.view_layer.update()
+    out = [(ob, name, g, ob.matrix_world.copy()) for ob, name, g in out]
     for ob, _name, g, _world in out:
         if g.get("transform") and _reads_other_object(ob):
             _bake(ob)  # before the move, while the cutter or input object is where it was
@@ -233,6 +335,37 @@ def build(plan, path, coll):
         ob["adopt_source"] = name
         ob["adopt_group"] = g["name"]
         ob["adopt_file"] = path.name
+        swap = (g.get("swap_instances") or {}).get(
+            ob.instance_collection.name if ob.instance_collection else None
+        )
+        if ob.instance_type == "COLLECTION" and swap:
+            ob.instance_collection = loaded[swap]
+    for g in plan["groups"]:
+        for q in g.get("place", []):  # new instances of a release collection, at a world matrix
+            ob = bpy.data.objects.new(adopt_name(q["name"], taken), None)
+            taken.add(ob.name)
+            ob.instance_type = "COLLECTION"
+            ob.instance_collection = loaded[q["collection"]]
+            ob.matrix_world = Matrix(place_matrix(q["matrix"]))
+            ob["adopt_source"] = "placed " + q["collection"]
+            ob["adopt_group"] = g["name"]
+            ob["adopt_file"] = path.name
+            coll.objects.link(ob)
+            out.append((ob, q["name"], g, None))
+    bpy.context.view_layer.update()
+    gone = set()
+    for ob, name, g, _world in out:
+        if g.get("clip") and not _clip(ob, g["clip"]):
+            print("SW adopt: nothing left after the clip:", name)
+            gone.add(ob.name)
+    for ob, _name, g, _world in out:
+        for s in getattr(ob, "material_slots", []):
+            new = (g.get("materials") or {}).get(s.material.name if s.material else None)
+            if new:
+                _recolour(s.material, new)
+    out = [r for r in out if r[0].name not in gone]
+    for n in gone:
+        bpy.data.objects.remove(bpy.data.objects[n])
     bpy.context.view_layer.update()
     # data the listed objects do not use (a parent, a cutter of a baked object) is not kept
     bpy.data.orphans_purge(do_local_ids=True, do_linked_ids=True, do_recursive=True)

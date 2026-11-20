@@ -3,13 +3,14 @@
 // first view is up, so a problem in one of them cannot stop the viewer.
 import * as THREE from 'three';
 import { searchPlaces } from './places.js';
+import { searchPool } from './rooms-math.js';
 import { decodeView, encodeView } from './permalink.js';
 import { compassPoint } from './geo.js';
 import { zonedDate, zonedParts } from './sun.js';
 
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2, '0');
-const KIND = { building: 'Building', parking: 'Parking', sports: 'Sports', station: 'Station', landmark: 'Landmark' };
+const KIND = { building: 'Building', parking: 'Parking', sports: 'Sports', station: 'Station', landmark: 'Landmark', room: 'Room' };
 const HELP = {
   orbit: { keyboard: 'Drag to orbit · Scroll to zoom · Right-drag to pan', touch: 'Drag to orbit · Pinch to zoom · Two fingers to pan', gamepad: 'Drag to orbit · Scroll to zoom · Right-drag to pan' },
   fly: { keyboard: 'Click the view to look (Esc to release) · W A S D move · Q and E down and up · Shift faster · Scroll changes speed', touch: 'Left thumb moves · Right thumb looks · Up and Down buttons', gamepad: 'Left stick moves · Right stick looks · Bumpers down and up' },
@@ -150,7 +151,7 @@ export function createUI(app) {
     if (!tools.labels?.visible) toast(r.place.name);
     app.goToPlace(r.place);
   }
-  box.oninput = () => { results = searchPlaces(app.places, box.value, 8); cursor = results.length ? 0 : -1; renderResults(); };
+  box.oninput = () => { results = searchPlaces(searchPool(app.places, app.roomPlaces ?? [], box.value), box.value, 8); cursor = results.length ? 0 : -1; renderResults(); };
   box.onkeydown = e => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { if (results.length) { cursor = (cursor + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length; renderResults(); } e.preventDefault(); }
     else if (e.key === 'Enter') { choose(Math.max(0, cursor)); e.preventDefault(); }

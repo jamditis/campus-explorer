@@ -37,3 +37,12 @@ export function isSeeThroughSolid(name, cat) {
   const c = fixCat(name, cat);
   return c !== '' && c !== 'glass';
 }
+
+/**
+ * True for clear glazing (windows, glass doors and partitions, a clear bottle). False for glass that
+ * is not looked through: screens, lenses, frosted, dark or opal glass, fibreglass. Inside a building
+ * with a real interior only clear glazing is drawn see-through (look.js).
+ */
+export function isClearGlass(name) {
+  return !/screen|monitor|lens|frost|opal|dark|fibreglass|fiberglass|mirror|led\b|_tv_|tvm/i.test(name);
+}

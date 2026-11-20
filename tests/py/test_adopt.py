@@ -130,6 +130,58 @@ class Check(unittest.TestCase):
             adopt.check(plan(file="/workspace/dl/main.blend"))
 
 
+class Extras(unittest.TestCase):
+    """clip, swap_instances, place and materials of a group (the facade rebuild)."""
+
+    SQ = [[0, 0], [10, 0], [10, 10], [0, 10]]
+
+    def group(self, **kw):
+        p = plan()
+        p["groups"][0].update(kw)
+        return p
+
+    def test_a_clip_keeps_the_faces_on_its_side(self):
+        cs = [(5, 5), (15, 5), (-1, 3)]
+        self.assertEqual(adopt.clip_drop(self.SQ, "outside", cs), [True, False, False])
+        self.assertEqual(adopt.clip_drop(self.SQ, "inside", cs), [False, True, True])
+
+    def test_a_placed_matrix_is_sixteen_numbers_row_major(self):
+        m = adopt.place_matrix([1, 0, 0, 5, 0, 1, 0, 6, 0, 0, 1, 7, 0, 0, 0, 1])
+        self.assertEqual(m[0][3], 5)
+        self.assertEqual(m[2], [0, 0, 1, 7])
+        with self.assertRaises(ValueError):
+            adopt.place_matrix([1, 0, 0])
+        with self.assertRaises(ValueError):
+            adopt.place_matrix([1, 0, 0, 5, 0, 1, 0, 6, 0, 0, 1, 7, 0, 0, 1, 1])  # not affine
+
+    def test_good_extras_pass(self):
+        adopt.check(
+            self.group(
+                clip=[dict(ring=self.SQ, keep="outside")],
+                swap_instances={"Win_A": "Win_A_lit"},
+                place=[dict(collection="Win_A_lit", name="win_000_UNVERIFIED",
+                            matrix=[1, 0, 0, 5, 0, 1, 0, 6, 0, 0, 1, 7, 0, 0, 0, 1])],
+                materials={"OE_wall_panel_wood": dict(name="SW_wood_lobby_panel",
+                                                      colour="#8a5a3c")},
+            )
+        )  # fmt: skip
+
+    def test_bad_extras_are_errors(self):
+        bad = [
+            dict(clip=[dict(ring=self.SQ, keep="above")]),
+            dict(clip=[dict(ring=[[0, 0], [1, 1]], keep="inside")]),
+            dict(swap_instances={"Win_A": 3}),
+            dict(place=[dict(collection="C", name="x", matrix=[1, 2])]),
+            dict(place=[dict(collection="C", name="Desk", matrix=[1, 0, 0, 0, 0, 1, 0, 0,
+                                                                  0, 0, 1, 0, 0, 0, 0, 1])]),
+            dict(materials={"M": dict(colour="red")}),
+            dict(materials={"M": dict(name="")}),
+        ]  # fmt: skip
+        for kw in bad:
+            with self.assertRaises(ValueError, msg=kw):
+                adopt.check(self.group(**kw))
+
+
 class Source(unittest.TestCase):
     def test_the_file_is_found_beside_the_assets_or_where_adopt_from_says(self):
         with tempfile.TemporaryDirectory() as d:

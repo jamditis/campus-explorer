@@ -287,14 +287,18 @@ def inset(ring, dists):
     return out
 
 
-def ring_roof(ring, eave, crest_z, crest_in, inner_in, base, flat_edges=(), crest=None, inner=None):
+def ring_roof(
+    ring, eave, crest_z, crest_in, inner_in, base, flat_edges=(), crest=None, inner=None,
+    overhang=None,
+):  # fmt: skip
     """A tiled ring round a flat roof (a mansard band): from the wall line at `eave` up to a crest
     line `crest_in` metres in at `crest_z`, a flat crest band to `inner_in` metres in (each a
     number, or one per edge), then a drop to the flat roof at `base`. Edges in `flat_edges` (walls
     shared with another building, or a side another roof covers) get no slope: the band ends
     there with a vertical cap in the wall's plane. `crest` and `inner` may give the two inner
     outlines explicitly (one corner per ring corner) where a plain inset would fold over itself.
-    Returns faces of (x, y, z), each anticlockwise seen from outside."""
+    `overhang` (a number, or one per edge) carries each slope on past the wall line, down at the
+    same pitch. Returns faces of (x, y, z), each anticlockwise seen from outside."""
     ring = [tuple(p[:2]) for p in ring]
     n = len(ring)
     ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
@@ -304,6 +308,9 @@ def ring_roof(ring, eave, crest_z, crest_in, inner_in, base, flat_edges=(), cres
         raise ValueError("the crest must lie between the wall line and the inner edge")
     c = crest or inset(ring, [0.0 if i in flat else ci[i] for i in range(n)])
     m = inner or inset(ring, [0.0 if i in flat else ii[i] for i in range(n)])
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    outer = inset(ring, [-v for v in ov]) if any(ov) else ring
     faces = []
 
     def add(face):
@@ -318,8 +325,9 @@ def ring_roof(ring, eave, crest_z, crest_in, inner_in, base, flat_edges=(), cres
         j = (i + 1) % n
         if i in flat:
             continue
-        o0, o1 = ring[i], ring[j]
-        add([(*o0, eave), (*o1, eave), (*c[j], crest_z), (*c[i], crest_z)])
+        o0, o1 = outer[i], outer[j]
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        add([(*o0, low), (*o1, low), (*c[j], crest_z), (*c[i], crest_z)])
         add([(*c[i], crest_z), (*c[j], crest_z), (*m[j], crest_z), (*m[i], crest_z)])
         add([(*m[i], crest_z), (*m[j], crest_z), (*m[j], base), (*m[i], base)])
     for i in range(n):  # caps where a sloped edge meets a flat one, in the flat edge's wall plane
@@ -405,4 +413,65 @@ def window_rows(wall_top, ground, tall, sill, levels=None, floors=1, storey_h=No
         if z0 < ground + 0.4:
             break
         out.append(z0)
+    return out
+
+
+def _beam(p, q, width, height):
+    """A box of `width` on top of the segment p -> q (3D points), `height` tall: (verts, faces)."""
+    dx, dy = q[0] - p[0], q[1] - p[1]
+    d = math.hypot(dx, dy) or 1.0
+    nx, ny = -dy / d * width / 2, dx / d * width / 2
+    b = [(p[0] - nx, p[1] - ny, p[2]), (q[0] - nx, q[1] - ny, q[2]),
+         (q[0] + nx, q[1] + ny, q[2]), (p[0] + nx, p[1] + ny, p[2])]  # fmt: skip
+    verts = b + [(x, y, z + height) for x, y, z in b]
+    faces = [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
+    return verts, faces
+
+
+def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.15, overhang=None):
+    """Ridge and hip caps of a ring roof (ring_roof's arguments): a cap along the crest line of
+    every sloped edge, and one up each convex corner where two sloped edges meet."""
+    ring = [tuple(p[:2]) for p in ring]
+    n = len(ring)
+    flat = set(flat_edges)
+    ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    c = inset(ring, [0.0 if i in flat else ci[i] for i in range(n)])
+    outer = inset(ring, [-v for v in ov]) if any(ov) else ring
+    out = []
+    for i in range(n):
+        j = (i + 1) % n
+        if i in flat or math.dist(c[i], c[j]) < 1e-6:
+            continue
+        out.append(_beam((*c[i], crest_z), (*c[j], crest_z), width, height))
+    for i in range(n):  # corner i between edge i-1 and edge i
+        k = (i - 1) % n
+        if i in flat or k in flat:
+            continue
+        a, o, b = ring[k], ring[i], ring[(i + 1) % n]
+        turn = (o[0] - a[0]) * (b[1] - o[1]) - (o[1] - a[1]) * (b[0] - o[0])
+        if turn <= 0:
+            continue  # a concave corner takes a valley, not a hip
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        out.append(_beam((*outer[i], low), (*c[i], crest_z), width, height))
+    return out
+
+
+def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, edges):
+    """Window openings on the listed edges of an anticlockwise outline: one per bay and floor
+    level (massing.bays, massing.window_rows), as {edge, s0, s1, z0, z1, a, u, n}: the edge's start
+    point, its direction and outward normal, and the opening along it."""
+    out = []
+    n = len(ring)
+    for i in edges:
+        a, b = ring[i][:2], ring[(i + 1) % n][:2]
+        length = math.dist(a, b)
+        u = ((b[0] - a[0]) / length, (b[1] - a[1]) / length)
+        nrm = (u[1], -u[0])
+        for s in bays(length, spacing):
+            g = ground(a[0] + u[0] * s, a[1] + u[1] * s)
+            for z0 in window_rows(wall_top, g, height, sill, levels):
+                out.append(dict(edge=i, s0=s - width / 2, s1=s + width / 2, z0=z0, z1=z0 + height,
+                                a=a, u=u, n=nrm))  # fmt: skip
     return out

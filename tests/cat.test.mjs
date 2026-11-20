@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fixCat, isSeeThroughSolid } from '../viewer/cat.js';
+import { fixCat, isSeeThroughSolid, isClearGlass } from '../viewer/cat.js';
 
 test('a category from the export is kept when nothing is known against it', () => {
   assert.equal(fixCat('WS27_curb_concrete_UNVERIFIED', 'concrete'), 'concrete');
@@ -47,4 +47,10 @@ test('water of the scripted build is water, and nothing else that mentions water
   assert.equal(fixCat('SW_water_base', ''), 'water'); // an export without the water category
   assert.equal(fixCat('NA_water_bottle_clear_UNVERIFIED', 'glass'), 'glass');
   assert.equal(fixCat('CCM office water bottles (na)', ''), '');
+});
+
+test('clear glazing is told apart from screens, lenses and dark or frosted glass', () => {
+  // inside a building with a real interior, clear glazing is drawn see-through (look.js)
+  for (const n of ['SW_glass_window', 'SW_glass_interior_partition', 'NJ_entrance_glass_inside_low_r', 'CCOM_atrium_glass_interior', 'NA_water_bottle_clear_UNVERIFIED']) assert.equal(isClearGlass(n), true, n);
+  for (const n of ['Dark_glass', 'NG_room_glass_dark', 'NG_frosted_glass', 'SW_glass_tvm_screen', 'NZ_projector_lens_glass_UNVERIFIED', 'OB_planter_charcoal_fibreglass', 'MW_monitor_glass', 'SW_glass_flood_lens']) assert.equal(isClearGlass(n), false, n);
 });

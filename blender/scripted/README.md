@@ -57,6 +57,49 @@ python3 blender/scripted/edge.py southwest /workspace/data/southwest/tiles
 
 Where the footprint runs under another model's building (to take all the ground up to its wall), `footprint.json` may list `free_edges`: `[{"ring": [...], "why": "..."}]`. Edge samples inside such a ring are ignored, because the other model's ground there is hidden inside the building and may be far off the LiDAR; the edge then follows this area's own grade. Give the reason every time.
 
+### A building rebuilt on another model's site: no ground, volumes
+
+An area may own no ground at all: a building the main model already has, rebuilt here (`ccom/`). Its `footprint.json` then has no `footprint`, only `supersede.volumes`, and the build makes no ground mesh: building parts, points and fittings stand on the raw LiDAR ground of `DATA/<area>/lidar.npz` (no edge blend, no grading; the build stops when that file is missing and the area has building parts).
+
+The volumes say what of the other sources' tiles (main, north, context, skirt, far houses) the area replaces. `supersede.mjs` applies them in order:
+
+```json
+"supersede": {"volumes": [
+  {"name": "inside", "ring": [[x, y], ...], "drop": "all", "why": "the building"},
+  {"name": "band", "ring": [[x, y], ...], "drop": "all", "keep": ["(?i)terrain|lawn|walk|shrub"], "why": "eaves, gutters"},
+  {"name": "shared_north", "ring": [[x, y], ...], "drop": "all", "above": 146.8, "why": "over the neighbour's roof"},
+  {"name": "sign", "meshes": ["SCMSIGN"], "drop": "all", "why": "old lettering"}
+]}
+```
+
+- A `ring` volume takes out every triangle inside the ring, at any height, or with `above` (NAVD88 metres) only what lies above that level. A triangle that a wall of the ring or the level crosses is cut exactly there (`tools/web-export/volume.mjs`, on `cut.mjs`), so a wall or an eave that runs on into a neighbouring building ends clean on the ring. `keep` patterns (on "mesh name material name"; a leading `(?i)` ignores case) leave whole primitives alone. Instanced nodes (shrubs, repeated fittings) lose the instances whose origin lies inside, unless their mesh or material matches `keep`. Far-field trees inside a ring with no `keep` and no `above` go too.
+- A `meshes` volume drops meshes of exactly those names wherever they are. Mind that the exporter joins meshes by material, so a tile's mesh can carry more than its name says.
+- `supersede.py` refuses a ring that crosses itself or has a corner sharper than 10 degrees (the miter spike an offset ring gets at the end of a shared wall).
+- Marks work as for footprints: a done primitive, node and tile scene carry the area's hash (of all its volumes), a second run changes nothing, and a changed volume stops the run until the tiles are exported again.
+- Walls shared with a neighbour: the tiles join this building's and the neighbour's eave courses into one mesh (same material, same heights), so neither a ring nor a pattern can part them. A band past the shared wall with `above` set just over the neighbour's roof at the band's outer edge takes this building's eave and leaves the neighbour's roof whole; set the level from a section of the published tiles, not from the LiDAR roof top. Read `supersede.mjs`'s output (`VOLUME_STATS=FILE` writes what each volume took, per mesh and material) and look at a section after the first export.
+
+### Adopting objects of the main model
+
+An area's `adopt.json` takes hand-made objects of a main-model release into this build (`adopt.py`), so they are exported in `sw_` tiles while the volumes take the main model's copies out of its tiles:
+
+```json
+{"zone": "ccom_adopt", "notes": "...",
+ "adopt": {"file": "montclair_state_20261118i.blend", "sha256": "<64 hex>",
+  "groups": [
+   {"name": "as_is", "objects": ["exact object name", ...]},
+   {"name": "atrium", "objects": [...], "transform": {"rotate_z_deg": -13.7, "about": [0, 0], "translate": [0.15, -2.764, 0]}},
+   {"name": "sign", "objects": [...], "text": {"Campus sign lettering": "COLLEGE OF\nCOMMUNICATION AND MEDIA"}}
+  ]}}
+```
+
+- The file is found with `--adopt-from PATH` (the file or its folder), else beside `--assets`; a wrong sha256 or a missing object stops the build. Objects hidden in the release (render or viewport), and objects whose names the web export skips everywhere (`tools/web-export/export_skip.py`: GN instancers, task chairs, people placeholders), are not adopted.
+- Only the listed objects are linked into the build, with what they need (meshes, materials and their packed images, node groups, modifier targets); data nothing uses afterwards is purged.
+- Objects keep their modifiers, instancing (collection instances, geometry nodes, linked duplicates), custom properties and material names, so the export applies the same modifiers and gives the materials the same categories (`cat`) and far-version treatment as in the main tiles. They are placed by the main export's own rule (bounding-box centre, 160 m tiles) in `sw_t_*` tiles.
+- A group `transform` turns the objects about the vertical through `about` and then moves them, in world space. Parents are cleared with the world transform kept, so a parent and its child are each moved once. A moved object whose modifiers read another object (a boolean cutter, a geometry-nodes object input) is made a plain mesh first, since the other object stays where it was.
+- `text` sets the body of a text object; its font, size, extrude and material stay, and the export converts it as the main export does.
+- `clip` (`[{"ring", "keep": "outside" | "inside"}]`, after the transform) deletes the faces whose world centroid lies on the other side; an object with modifiers is made a plain mesh first, a collection instance stays or goes by its origin, an object left with nothing is dropped. `swap_instances` (`{"collection": "other collection"}`) makes the group's collection instances show another collection of the release file. `place` (`[{"collection", "name", "matrix"}]`, 16 numbers row-major, a world matrix the group transform does not touch) adds new instances of a release collection. `materials` (`{"material": {"name", "colour": "#rrggbb"}}`) renames a material and gives it a flat colour; a name `SW_<kind>_...` fixes its category as for the scripted materials.
+- Names become `SW_adopt_<source name>`; a name over Blender's 63 bytes is cut and ends with a short hash of the source name (and `_UNVERIFIED` when the source carried that label). `adopt_source`, `adopt_group` and `adopt_file` custom properties name where each object came from.
+
 ## When several people digitise one area
 
 Zones digitised at the same time do not see each other. Before the first build, check them against each other: lots that do not reach road asphalt at their mouths, stall rows that fall on lawn or on an island, paint under a walk, a walk lying along a carriageway, an island of one zone over another zone's road, items more than 1 m past the outline, walk ends inside buildings. In the Village a first pass found all of these; a second pass after the fixes found only small leftovers. Where a row and an island disagree, read the ortho again before flipping a side: twice the island's outline was wrong, not the row.
@@ -83,10 +126,11 @@ Model metres, the same frame as every other source: +X east, +Y grid north, Z NA
 | `building.py` | Buildings from measured parts: walls, roofs, window rows, parking deck levels |
 | `place.py` | Puts stands, fences, hedges, fixtures, trees and buildings where the plan says |
 | `edge.py` | Samples the neighbours' ground along the footprint into `<area>/edge_heights.json` |
-| `supersede.py` | Writes the rules for `tools/web-export/supersede.mjs` from `<area>/footprint.json` |
+| `supersede.py` | Writes the rules for `tools/web-export/supersede.mjs` from `<area>/footprint.json`: footprint and patterns, or volumes |
+| `adopt.py` | Appends, moves and links the objects an area's `adopt.json` takes from a main-model release |
 | `rooms.py` | Pure interior geometry: wall runs with door openings as boxes, cut out of `keep_out` rings and kept inside the shell; prisms; room labels. No bpy |
 | `interior.py` | Builds a plan's `interiors`: partitions, glazed partitions, slabs, stair and lift blocks, piers |
-| `build.py` | Entry point: `blender -b --python blender/scripted/build.py -- DATA_DIR OUT.blend` |
+| `build.py` | Entry point: `blender -b --python blender/scripted/build.py -- DATA_DIR OUT.blend [--assets MAIN.blend] [--adopt-from RELEASE.blend]` |
 
 Evidence is fetched with `tools/evidence/fetch.py` into a data folder outside the repository. `tools/evidence/overlay.py` draws it with a metre grid and draws plan files over it.
 

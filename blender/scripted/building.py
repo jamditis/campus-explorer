@@ -121,6 +121,59 @@ def _windows(b, part, ring, wall_top, ground, glass, holes=None):
                 )
 
 
+def _recessed_cells(p, ring, tops, ground):
+    """Window openings of a part whose `windows.style` is `recessed`, on its windowed edges."""
+    w = p.get("windows") or {}
+    if w.get("style") != "recessed":
+        return []
+    skip = set(p.get("no_windows", ()))
+    edges = [i for i in range(len(ring)) if i not in skip]
+    wall_top = min(tops) - p.get("parapet", PARAPET.get(p.get("style", "shed"), 0.4))
+    return massing.window_cells(
+        ring, ground, wall_top, w["width"], w["height"], w["spacing"], w.get("sill", 0.9),
+        w.get("levels"), edges,
+    )  # fmt: skip
+
+
+def _recessed(b, part, cells, hexes):
+    """A recessed window in each opening: reveals, a frame with a mullion and a transom, glass set
+    back, and a sill proud of the wall (the main model's window type, CCOM_Win_Wing_A)."""
+    w = part["windows"]
+    depth, back = w.get("reveal", 0.3), w.get("glass_back", 0.12)
+    reveal = kit.mat("plaster", "reveal_" + hexes["wall"][1:], kit.srgb(hexes["wall"]), 0.9)
+    fhex, shex = w.get("frame", "#2e3033"), w.get("sill_colour", "#cdc4b2")
+    frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    sill = kit.mat("stone", "sill_" + shex[1:], kit.srgb(shex), 0.8)
+    glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
+    for c in cells:
+        a, u, n = c["a"], c["u"], c["n"]
+
+        def pt(s, z, off, a=a, u=u, n=n):  # along the wall, height, out (+) or in (-)
+            return (a[0] + u[0] * s + n[0] * off, a[1] + u[1] * s + n[1] * off, z)
+
+        s0, s1, z0, z1 = c["s0"], c["s1"], c["z0"], c["z1"]
+        for q in (  # reveals look into the opening
+            [pt(s0, z0, 0), pt(s0, z0, -depth), pt(s0, z1, -depth), pt(s0, z1, 0)],
+            [pt(s1, z0, -depth), pt(s1, z0, 0), pt(s1, z1, 0), pt(s1, z1, -depth)],
+            [pt(s0, z1, 0), pt(s0, z1, -depth), pt(s1, z1, -depth), pt(s1, z1, 0)],
+            [pt(s1, z0, 0), pt(s1, z0, -depth), pt(s0, z0, -depth), pt(s0, z0, 0)],
+        ):
+            b.faces(q, [(0, 1, 2, 3)], reveal)
+        b.faces([pt(s0, z0, -back), pt(s1, z0, -back), pt(s1, z1, -back), pt(s0, z1, -back)],
+                [(0, 1, 2, 3)], glass)  # fmt: skip
+        f, mid, tz = 0.06, (s0 + s1) / 2, z0 + (z1 - z0) * 2 / 3
+        for bs0, bs1, bz0, bz1 in ((s0, s0 + f, z0, z1), (s1 - f, s1, z0, z1), (s0, s1, z1 - f, z1),
+                                   (s0, s1, z0, z0 + f), (mid - f / 2, mid + f / 2, z0, z1),
+                                   (s0, s1, tz - f / 2, tz + f / 2)):  # fmt: skip
+            off = -back + 0.02
+            b.faces([pt(bs0, bz0, off), pt(bs1, bz0, off), pt(bs1, bz1, off), pt(bs0, bz1, off)],
+                    [(0, 1, 2, 3)], frame)  # fmt: skip
+        sv = [pt(s, z, o) for s, z, o in ((s0 - 0.1, z0 - 0.09, 0.19), (s1 + 0.1, z0 - 0.09, 0.19),
+                                          (s1 + 0.1, z0, 0.19), (s0 - 0.1, z0, 0.19),
+                                          (s0 - 0.1, z0, 0.0), (s1 + 0.1, z0, 0.0))]  # fmt: skip
+        b.faces(sv, [(0, 1, 2, 3), (3, 2, 5, 4)], sill)
+
+
 def _deck_levels(b, part, ring, top, ground, band, void):
     """Open parking levels: a dark opening between spandrel bands, columns every 9 m."""
     levels = part.get("levels", 4)
@@ -222,6 +275,9 @@ def part(lay_part, name, ground, image_dir=None):
     # a deck's ramp is a slab in the well of its deck: walls of its own would lie in the faces of
     # the well's walls
     holes = massing.edge_openings(ring, p["openings"]) if p.get("openings") else {}
+    cells = _recessed_cells(p, ring, tops, ground)
+    for c in cells:  # recessed windows are openings too
+        holes.setdefault(c["edge"], []).append((c["s0"], c["s1"], c["z0"], c["z1"]))
     if holes:  # walls cut round the openings (a flat-topped part: one top per edge)
         for i, a, _e, length, u, _nrm in _edges(ring):
             for s0, s1, za, zb in massing.wall_pieces(length, base, tops[i], holes.get(i, [])):
@@ -244,8 +300,16 @@ def part(lay_part, name, ground, image_dir=None):
             for face in massing.ring_roof(
                 ring, p["top"], r["crest"], r["crest_in"], r["inner_in"],
                 p["top"] - p.get("parapet", PARAPET.get(style, 0.4)), r.get("flat_edges", ()),
+                overhang=r.get("overhang"),
             ):  # fmt: skip
                 b.faces(face, [tuple(range(len(face)))], tile)
+            if r.get("caps"):  # ridge and hip caps, a darker tile
+                cap = kit.mat("rooftile", "cap_" + r["caps"][1:], kit.srgb(r["caps"]), 0.75)
+                for verts, faces in massing.ring_caps(
+                    ring, p["top"], r["crest"], r["crest_in"], r.get("flat_edges", ()),
+                    overhang=r.get("overhang"),
+                ):  # fmt: skip
+                    b.faces(verts, [tuple(f) for f in faces], cap)
     else:
         # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
         look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)
@@ -268,6 +332,8 @@ def part(lay_part, name, ground, image_dir=None):
     if style == "deck" and kind == "flat":
         void = kit.mat("paint", "deck_opening", kit.srgb("#1b1c1e"), 0.95)
         _deck_levels(b, p, ring, p["top"], local, wall, void)
+    elif cells:
+        _recessed(b, p, cells, hexes)
     elif p.get("windows"):
         glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
         _windows(b, p, ring, wall_top, local, glass, holes)

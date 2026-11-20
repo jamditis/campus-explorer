@@ -75,6 +75,21 @@ class RingRoof(unittest.TestCase):
                  and all(p[1] == 20 for p in f if p[2] == 10.0)]  # fmt: skip
         self.assertEqual(min(p[1] for p in north[0]), 15.0)
 
+    def test_an_overhang_carries_the_slope_past_the_wall(self):
+        faces = massing.ring_roof(SQ, 10.0, 13.0, 3.0, 4.0, 9.8, overhang=[1.0, 0.0, 0.0, 0.0])
+        south = [f for f in faces if min(p[1] for p in f) < -0.5]
+        self.assertTrue(south)
+        low = min(p[2] for f in south for p in f)
+        self.assertAlmostEqual(low, 9.0)  # 1 m out at the slope of 1 m per metre
+        self.assertAlmostEqual(min(p[1] for f in south for p in f), -1.0)
+
+    def test_caps_run_along_the_crest_and_up_the_hips(self):
+        caps = massing.ring_caps(SQ, 10.0, 13.0, 3.0, width=0.3, height=0.15)
+        self.assertEqual(len(caps), 8)  # four crest runs, four hips
+        for verts, _faces in caps:
+            self.assertEqual(len(verts), 8)
+            self.assertTrue(all(z >= 10.0 - 1e-9 for _x, _y, z in verts))
+
     def test_rings_must_nest(self):
         with self.assertRaises(ValueError):
             massing.ring_roof(SQ, 147.7, 151.1, 9.0, 8.0, 147.5)  # inner band outside the crest
@@ -99,6 +114,19 @@ class Openings(unittest.TestCase):
         self.assertAlmostEqual(s1, 15.0)
         with self.assertRaises(ValueError):
             massing.edge_openings(SQ, [dict(at=[5, 5], to=[6, 6], z0=0, z1=1)])
+
+
+class WindowCells(unittest.TestCase):
+    def test_cells_sit_on_bays_and_floor_levels_of_the_listed_edges(self):
+        cells = massing.window_cells(
+            SQ, lambda x, y: 0.0, wall_top=10.0, width=2.0, height=2.0, spacing=4.0, sill=0.9,
+            levels=[0.0, 4.0], edges=[0],
+        )  # fmt: skip
+        self.assertEqual({c["edge"] for c in cells}, {0})
+        self.assertEqual(sorted({c["z0"] for c in cells}), [0.9, 4.9])
+        self.assertEqual(len(cells), 2 * len(massing.bays(20.0, 4.0)))
+        for c in cells:
+            self.assertAlmostEqual(c["s1"] - c["s0"], 2.0)
 
 
 class WindowLevels(unittest.TestCase):
