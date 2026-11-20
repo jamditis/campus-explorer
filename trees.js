@@ -3,6 +3,7 @@
 // original matrices; each update writes only the instances that are near and in view, and the
 // rest become one shared low-poly crown impostor (per-instance size and colour) out to FAR.
 import * as THREE from 'three';
+import { farCells } from './viewer/trees-math.js';
 
 const DIST = { low: 220, medium: 420, high: 700 };
 const FAR = 2600;
@@ -107,24 +108,31 @@ export function createTrees(scene, camera) {
     imp.count = ni; trunks.count = nt;
     imp.instanceMatrix.needsUpdate = true; if (imp.instanceColor) imp.instanceColor.needsUpdate = true; trunks.instanceMatrix.needsUpdate = true;
   }
-  // far-field trees from land cover: [x, y, z, crown radius, height] in three.js axes, always impostors
+  // far-field trees from land cover: [x, y, z, crown radius, height] in three.js axes, always impostors.
+  // One instanced mesh per FAR_CELL ground cell (trees-math.js), each with its own bounding sphere, so the
+  // frustum skips the cells out of view in the view and in the shadow map (one mesh for all drew them all).
   const farGeo = new THREE.IcosahedronGeometry(1, 0); farGeo.translate(0, 0.1, 0);
+  const farMat = new THREE.MeshStandardMaterial({ roughness: 1, envMapIntensity: 0.2 });
   let far = null;
   function addFar(a) {
-    if (far) { scene.remove(far); far.dispose(); }
-    const n = Math.floor(a.length / 5);
-    far = new THREE.InstancedMesh(farGeo, new THREE.MeshStandardMaterial({ roughness: 1, envMapIntensity: 0.2 }), n);
-    far.name = 'far_trees'; far.castShadow = true; far.receiveShadow = true;
+    if (far) { scene.remove(far); for (const o of far.children) o.dispose(); }
+    far = new THREE.Group(); far.name = 'far_trees_cells';
     const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color();
+    const up = new THREE.Vector3(0, 1, 0);
     const tones = ['#3f5530', '#4a603a', '#556a36', '#3d4b33', '#5a6e3e', '#64753f'].map(h => new THREE.Color(h));
-    for (let i = 0; i < n; i++) {
-      const x = a[i * 5], y = a[i * 5 + 1], z = a[i * 5 + 2], r = a[i * 5 + 3], h = a[i * 5 + 4];
-      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (i * 2.399) % 6.283);
-      p.set(x, y + h - r * 1.1, z); s.set(r, r * 1.15, r);
-      m4.compose(p, q, s); far.setMatrixAt(i, m4);
-      c.copy(tones[i % tones.length]).multiplyScalar(0.85 + ((i * 7919) % 100) / 330); far.setColorAt(i, c);
+    for (const [key, ids] of farCells(a)) {
+      const mesh = new THREE.InstancedMesh(farGeo, farMat, ids.length);
+      mesh.name = 'far_trees'; mesh.userData.cell = key; mesh.castShadow = true; mesh.receiveShadow = true;
+      ids.forEach((i, k) => {
+        const x = a[i * 5], y = a[i * 5 + 1], z = a[i * 5 + 2], r = a[i * 5 + 3], h = a[i * 5 + 4];
+        q.setFromAxisAngle(up, (i * 2.399) % 6.283);
+        p.set(x, y + h - r * 1.1, z); s.set(r, r * 1.15, r);
+        m4.compose(p, q, s); mesh.setMatrixAt(k, m4);
+        c.copy(tones[i % tones.length]).multiplyScalar(0.85 + ((i * 7919) % 100) / 330); mesh.setColorAt(k, c);
+      });
+      mesh.computeBoundingSphere();
+      far.add(mesh);
     }
-    far.computeBoundingSphere();
     scene.add(far);
   }
   /** Draw every tree in full, whatever the camera sees (for a picture from another camera). `update(true)` undoes it. */
