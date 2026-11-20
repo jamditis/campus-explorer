@@ -56,6 +56,15 @@ for o in objs:
             m.show_render = m.show_viewport = False
         else:
             m.show_viewport = m.show_render
+    # The skirt's skirt_under patches each subdivide the whole skirt again: 5.3 M of its 7.0 M
+    # triangles have an edge shorter than the 16-bit position step over its 4 km box (about 6 cm)
+    # and collapse to zero area once optimize quantizes them. Weld at that step, after the patches
+    # and before the web decimation below. SKIRT_WELD=0 leaves it out.
+    if CH == "skirt" and o.type == "MESH" and os.environ.get("SKIRT_WELD", "1") != "0":
+        dims = o.dimensions
+        weld = o.modifiers.new("web_weld_quant_step", "WELD")
+        weld.merge_threshold = max(dims.x, dims.y, dims.z) / 65535
+        print("WEB skirt weld", o.name, round(weld.merge_threshold, 4), "m", flush=True)
 print("WEB appended", len(objs), flush=True)
 
 # ---------- unified campus: trim a merged scene's terrain where the main scene has ground ----------
