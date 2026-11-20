@@ -2,9 +2,8 @@
 field.
 
 Markings are paint, never geometry: every painted surface gets one or more texture sheets (layout.py
-decides
-which and where), drawn here from the plan's markings and nothing else. No aerial or photo pixels
-are used.
+decides which and where), drawn here from the plan's markings and nothing else. No aerial or
+photo pixels are used.
 
 usage: python3 blender/scripted/paint.py DATA_DIR [--areas NAME,NAME]     (system Python, Pillow)
 Writes DATA_DIR/authored/authored_<area>_<surface>_<n>.png for every area (p<surface number>, or

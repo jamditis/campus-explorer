@@ -141,9 +141,7 @@ def check_wells(ring, wells, clear=0.05):
             raise ValueError(f"well {k} needs at least three corners")
         if not all(geom.inside(ring, *p) for p in w):
             raise ValueError(f"well {k} does not lie inside the part")
-        near = min(
-            min(_seg_dist(p, a, b) for a, b in _edges_of(ring)) for p in w
-        )
+        near = min(min(_seg_dist(p, a, b) for a, b in _edges_of(ring)) for p in w)
         near = min(near, min(min(_seg_dist(p, a, b) for a, b in _edges_of(w)) for p in ring))
         if near < clear:
             raise ValueError(f"well {k} comes within {near:.2f} m of the part's outline")
@@ -156,14 +154,17 @@ def check_wells(ring, wells, clear=0.05):
                 raise ValueError(f"wells {j} and {k} overlap")
 
 
-def _bridge(poly, hole, pts):
+def _bridge(poly, hole, pts, others=()):
     """Join a hole (clockwise, as indices) to the polygon (anticlockwise, as indices) by a cut from
-    the hole's east-most corner to the nearest polygon corner it can see. Returns the new loop.
+    the hole's east-most corner to the nearest polygon corner it can see past the holes still to
+    be joined (`others`). Returns the new loop.
     """
     m = max(range(len(hole)), key=lambda i: (pts[hole[i]][0], -pts[hole[i]][1]))
     mp = pts[hole[m]]
     loop_edges = [(pts[a], pts[b]) for a, b in zip(poly, poly[1:] + poly[:1], strict=True)]
-    hole_edges = [(pts[a], pts[b]) for a, b in zip(hole, hole[1:] + hole[:1], strict=True)]
+    hole_edges = [
+        (pts[a], pts[b]) for h in (hole, *others) for a, b in zip(h, h[1:] + h[:1], strict=True)
+    ]
     order = sorted(range(len(poly)), key=lambda i: math.dist(pts[poly[i]], mp))
     for i in order:
         q = pts[poly[i]]
@@ -199,8 +200,9 @@ def deck_triangles(outer, holes=()):
         pts += [tuple(p[:2]) for p in h]
         idx = list(range(base, len(pts)))
         loops.append(idx if geom.area([pts[i] for i in idx]) < 0 else idx[::-1])
-    for hole in sorted(loops, key=lambda h: -max(pts[i][0] for i in h)):
-        poly = _bridge(poly, hole, pts)
+    loops.sort(key=lambda h: -max(pts[i][0] for i in h))
+    for k, hole in enumerate(loops):
+        poly = _bridge(poly, hole, pts, loops[k + 1 :])
     tris = []
     guard = 0
     while len(poly) > 3 and guard < 10 * len(pts) ** 2:

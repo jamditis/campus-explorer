@@ -75,7 +75,10 @@ def _deck(b, outline, z, wells, deck, side):
 def _flat_roof(b, ring, top, drop, cap, deck, wells=()):
     """Parapet and roof deck of a flat roof: the deck lies `drop` below the parapet top."""
     n = len(ring)
-    inner = massing.parapet_inner(ring)  # the outline itself when too narrow: a plain cap
+    inner = massing.parapet_inner(ring)  # the outline itself when too narrow for a parapet
+    if inner == list(ring):  # a plain cap at the top (a thin wall), not a pit `drop` deep
+        b.faces([(p[0], p[1], top) for p in ring], [tuple(range(n))], cap)
+        return
     v = (
         [(p[0], p[1], top) for p in ring]
         + [(p[0], p[1], top) for p in inner]

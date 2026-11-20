@@ -119,6 +119,13 @@ class Wells(unittest.TestCase):
         b = [(3, 20), (9, 20), (9, 14), (3, 14)]  # clockwise
         self.check_cover(ell, [a, b])
 
+    def test_a_cut_to_one_well_does_not_pass_through_another(self):
+        # the corners nearest the east well are in the west, behind the west well
+        long = [(0, 0), (200, 5), (0, 10)]
+        east = [(20, 4.5), (24, 4.5), (24, 5.5), (20, 5.5)]
+        west = [(5, 2), (15, 2), (15, 8), (5, 8)]
+        self.check_cover(long, [east, west])
+
     def test_a_mansard_cap_with_a_rim_keeps_a_thin_deck(self):
         octagon = [(10, 0), (20, 0), (30, 10), (30, 20), (20, 30), (10, 30), (0, 20), (0, 10)]
         cap = massing.mansard(octagon, 3.0)
