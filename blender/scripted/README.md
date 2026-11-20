@@ -6,6 +6,7 @@ Parts of the campus built whole by script from plan files: one folder per area, 
 |---|---|
 | `southwest/` | Montclair Heights station surroundings, Normal Avenue, Carlisle Road, Sprague Field |
 | `west/` | Carlisle Road north of the south-west area, its roadside parking (Lots 30 and 30S), Lot 33 and the College Avenue junction beside the Red Hawk Deck: a strip between the railway and the buildings of the main and north models |
+| `village/` | West of the railway: Clove Road, Hawk Crossings, Sinatra Hall, The Village (Williams, Fenwick, Paul and Count Basie halls, the Abbott and Costello Center), Lots 27, 28, 29, 41, 45, 46, 47, 48 and 61 with its solar canopies |
 | `stadium/` | Yogi Berra Stadium and the museum, the running track and soccer field, the north part of the softball stadium, the lots and roads north of the north-east area |
 | `northeast/` | CarParc Diem, Dinallo Heights, Machuga Heights, the Student Recreation Center, the District Energy Plant, the softball stadium, the tennis courts, and the lots and roads between them |
 
@@ -51,6 +52,10 @@ python3 blender/scripted/edge.py southwest /workspace/data/southwest/tiles
 - **Paving is graded, soft ground is not.** A road is a built surface: its height is the LiDAR ground smoothed over 5 m using paved cells only, so a bank beside it does not pull it up. Soft ground bends to meet the neighbour's ground along the footprint; paving meets it only where the two are already within 0.15 m (a road that runs on into the next model). Where the neighbour stands higher, a bank face closes the step. A surface with `"grade": false` (a pad on a bank) follows the raw ground.
 - **Trees.** Trees of the other models are not touched. Far-field scatter trees and far-field houses inside the footprint are removed.
 - **Track level.** The north model's track and platforms stand about 0.65 m above the LiDAR ground. `southwest/station.json` carries a `lifts` entry that raises this build's ground to them along the corridor, eased out over 10 m, so the road meets the rails at the crossing. Remove it when the north track is lowered. Things that stand on a platform carry `base`, the platform top read from the published tiles.
+
+## When several people digitise one area
+
+Zones digitised at the same time do not see each other. Before the first build, check them against each other: lots that do not reach road asphalt at their mouths, stall rows that fall on lawn or on an island, paint under a walk, a walk lying along a carriageway, an island of one zone over another zone's road, items more than 1 m past the outline, walk ends inside buildings. In the Village a first pass found all of these; a second pass after the fixes found only small leftovers. Where a row and an island disagree, read the ortho again before flipping a side: twice the island's outline was wrong, not the row.
 
 ## Frame
 

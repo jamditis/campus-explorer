@@ -30,7 +30,7 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [x] North-east district (`northeast/`, PR #53, merged 2026-11-19): CarParc Diem, Dinallo Heights, Machuga Heights, Student Recreation Center, District Energy Plant, softball stadium, tennis courts, lots and roads
 - [x] Stadium district (`stadium/`, y 826 to 1105; PR #54, merged 2026-11-19): Yogi Berra Stadium, the soccer field, the Village residences, Clove Road and its lots
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
-- [ ] The Village west of the railway (Hawk Crossings, Sinatra, Williams, Fenwick, Paul and Count Basie halls, Lots 27 to 48): evidence is fetched (`village`), not started
+- [x] The Village west of the railway (`village/`): Clove Road, Hawk Crossings, Sinatra Hall, the four Village halls, nine lots
 - [ ] Floyd Hall Arena block and the quarry ground north of the stadium district
 - [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the communication school are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
 - [ ] Red Hawk Deck to Cole Hall, and the communication school (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
