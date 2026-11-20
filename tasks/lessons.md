@@ -93,3 +93,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: I called the block north of the stadium district the "Floyd Hall Arena block" in my reports, in the plan, and in the question I put to Joe, and he chose it as the next area under that name. It is the Overlook Corporate Center, a private office tower and its garage at 150 Clove Road. Floyd Hall Arena is the university's Ice Arena, which the north model already has. Both names were in data I had already listed (OpenStreetMap: "Overlook Corporate Center, office" at that position; "Montclair State University Ice Arena" in the north-east district). I took the name from an early gap list of my own and never checked it.
 - Rule: before an area gets a name in a plan, a report or a question, read the names of its buildings from OpenStreetMap at those coordinates and say whether the ground is campus or not. A choice made on a wrong label is not a choice: put the question again with the right facts.
+
+## Stack pull requests and merge the stack from the top (2026-11-20)
+
+- What happened: after PR #58 went up I stopped and waited for the merge, with work still listed. Joe asked why I was not working on and stacking further PRs, and told me to merge from the top of the stack so CI does not run again after every merge.
+- Rule: while a PR waits, start the next one on a branch based on it (base = the branch below, not `main`). Merge top-down: the top PR into the one below it, and so on, then the bottom PR into `main` once. Never merge the bottom first: every PR above it then needs a new base and a new CI run. Merge only on Joe's word (he gave merge and deploy authority for that session; it does not carry over).
