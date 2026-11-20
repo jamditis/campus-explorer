@@ -1,0 +1,380 @@
+{
+ "zone": "v_lots_s",
+ "notes": "Placeholder notes.",
+ "surfaces": [
+  {
+   "name": "V_lot_41_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -339.15,
+     545.13,
+     1.0
+    ],
+    [
+     -326.06,
+     608.39,
+     0.5
+    ],
+    [
+     -310.68,
+     605.24
+    ],
+    [
+     -311.15,
+     602.98
+    ],
+    [
+     -306.44,
+     602.02,
+     0.5
+    ],
+    [
+     -320.61,
+     549.9,
+     2.0
+    ],
+    [
+     -304.64,
+     543.16
+    ],
+    [
+     -305.69,
+     538.06
+    ]
+   ],
+   "evidence": "ortho2020; osm 233913130",
+   "unverified": "drive to Clove Road (t -17 to -34 in the lot frame) run to just short of the road; its last metres belong to the road"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "V_lot_41_curb",
+   "path": [
+    [
+     -306.67,
+     538.26
+    ],
+    [
+     -339.15,
+     545.13,
+     1.0
+    ],
+    [
+     -326.06,
+     608.39,
+     0.5
+    ],
+    [
+     -310.68,
+     605.24
+    ],
+    [
+     -311.15,
+     602.98
+    ],
+    [
+     -306.44,
+     602.02,
+     0.5
+    ],
+    [
+     -320.61,
+     549.9,
+     2.0
+    ],
+    [
+     -305.62,
+     543.36
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb or flush edge against the grass not readable"
+  }
+ ],
+ "markings": [
+  {
+   "name": "V_lot_41_stalls_W_S",
+   "type": "stalls",
+   "line": [
+    [
+     -335.89,
+     560.83
+    ],
+    [
+     -332.4,
+     567.79
+    ]
+   ],
+   "count": 3,
+   "depth": 4.6,
+   "side": "right",
+   "angle": 89.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "second divider beside a parked car"
+  },
+  {
+   "name": "V_lot_41_stalls_W_N",
+   "type": "stalls",
+   "line": [
+    [
+     -333.53,
+     570.66
+    ],
+    [
+     -325.18,
+     605.27
+    ]
+   ],
+   "count": 13,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 97.5,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "last divider (north end) faint"
+  },
+  {
+   "name": "V_lot_41_stalls_E_S",
+   "type": "stalls",
+   "line": [
+    [
+     -326.31,
+     552.58
+    ],
+    [
+     -321.97,
+     567.69
+    ]
+   ],
+   "count": 6,
+   "depth": 5.15,
+   "side": "right",
+   "angle": 96.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "first divider doubled in the ortho (two lines 0.5 m apart), drawn as one"
+  },
+  {
+   "name": "V_lot_41_stalls_E_N",
+   "type": "stalls",
+   "line": [
+    [
+     -321.76,
+     568.86
+    ],
+    [
+     -311.29,
+     600.1
+    ]
+   ],
+   "count": 12,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 93.2,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_41_hatch_SW_edge",
+   "type": "line",
+   "path": [
+    [
+     -337.08,
+     554.2
+    ],
+    [
+     -332.33,
+     559.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_41_hatch_SW_1",
+   "type": "line",
+   "path": [
+    [
+     -336.71,
+     556.01
+    ],
+    [
+     -335.29,
+     556.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_41_hatch_SW_2",
+   "type": "line",
+   "path": [
+    [
+     -336.37,
+     557.68
+    ],
+    [
+     -334.34,
+     557.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_41_hatch_SW_3",
+   "type": "line",
+   "path": [
+    [
+     -336.03,
+     559.35
+    ],
+    [
+     -333.39,
+     558.93
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "V_lot_41_corner_bar",
+   "type": "line",
+   "path": [
+    [
+     -336.53,
+     546.94
+    ],
+    [
+     -335.53,
+     551.84
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faded corner marking, shape approximate"
+  },
+  {
+   "name": "V_lot_41_corner_edge",
+   "type": "line",
+   "path": [
+    [
+     -332.98,
+     550.81
+    ],
+    [
+     -333.22,
+     546.16,
+     3.0
+    ],
+    [
+     -329.27,
+     544.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faded corner marking, curve approximate"
+  },
+  {
+   "name": "V_lot_41_access_aisle_E_1",
+   "type": "line",
+   "path": [
+    [
+     -321.8,
+     567.45
+    ],
+    [
+     -321.29,
+     568.94
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white hatching between two stalls: an access aisle, no blue readable; stall signs not modelled"
+  },
+  {
+   "name": "V_lot_41_access_aisle_E_2",
+   "type": "line",
+   "path": [
+    [
+     -320.54,
+     567.5
+    ],
+    [
+     -320.04,
+     568.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white hatching between two stalls: an access aisle, no blue readable; stall signs not modelled"
+  },
+  {
+   "name": "V_lot_41_access_aisle_E_3",
+   "type": "line",
+   "path": [
+    [
+     -319.27,
+     567.55
+    ],
+    [
+     -318.8,
+     568.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white hatching between two stalls: an access aisle, no blue readable; stall signs not modelled"
+  },
+  {
+   "name": "V_lot_41_access_aisle_E_4",
+   "type": "line",
+   "path": [
+    [
+     -318.01,
+     567.6
+    ],
+    [
+     -317.55,
+     568.86
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white hatching between two stalls: an access aisle, no blue readable; stall signs not modelled"
+  },
+  {
+   "name": "V_lot_41_access_aisle_E_end",
+   "type": "line",
+   "path": [
+    [
+     -322.54,
+     567.35
+    ],
+    [
+     -321.99,
+     569.07
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  }
+ ],
+ "points": []
+}
