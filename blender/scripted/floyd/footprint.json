@@ -1,0 +1,13 @@
+{
+ "zone": "f_footprint",
+ "notes": "The ground this area owns: the Floyd Hall Arena block north of the stadium district (the arena and the building joined to it, the parking deck, the lot east of it, the loop road and drives, the arena's west lot, and the quarry ground between the arena and the stadium). South: the north edge of the stadium area (y 1105), shared with it from x 22 to x 345. West: x 22, the edge of the fetched evidence, east of the railway and the station. North: south of the businesses along the highway (off campus), along the back of the arena's access road. East: the wood east of the lot.",
+ "footprint": [
+  [22, 1105], [345, 1105], [388, 1170], [388, 1312], [290, 1328], [60, 1328], [22, 1290]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles.",
+  "clip": ["Context_skirt", "BD_farfield_3DEP", "North_ground_ortho2020", "MH_ground_ortho2020"],
+  "drop": ["far_houses"],
+  "tuck": 0.5
+ }
+}
