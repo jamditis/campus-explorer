@@ -701,6 +701,8 @@
      "under": [
       "atrium_T1"
      ],
+     "kind": "stone",
+     "colour": "#d8d6d0",
      "unverified": "level 137.70 from the main model's atrium terrazzo (dropped: this slab replaces it)"
     }
    ],
@@ -1038,7 +1040,7 @@
      "z0": 137.7,
      "z1": 137.72,
      "kind": "rubber",
-     "colour": "#2a2b2d",
+     "colour": "#3a3b3d",
      "unverified": "dark mat inside the four doors, about 4.4 x 2.7 m by eye"
     }
    ],

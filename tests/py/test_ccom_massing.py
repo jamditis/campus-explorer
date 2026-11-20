@@ -90,6 +90,13 @@ class RingRoof(unittest.TestCase):
             self.assertEqual(len(verts), 8)
             self.assertTrue(all(z >= 10.0 - 1e-9 for _x, _y, z in verts))
 
+    def test_an_eave_course_runs_along_the_listed_walls_only(self):
+        beams = massing.eave_course(SQ, [1, 2], 10.0, width=0.45, height=0.2)
+        self.assertEqual(len(beams), 2)
+        for verts, _f in beams:  # edges 1 and 2: the east and north walls, nothing elsewhere
+            for x, y, _z in verts:
+                self.assertTrue(x > 19.7 or y > 19.7, (x, y))
+
     def test_rings_must_nest(self):
         with self.assertRaises(ValueError):
             massing.ring_roof(SQ, 147.7, 151.1, 9.0, 8.0, 147.5)  # inner band outside the crest
@@ -172,20 +179,20 @@ class CcomShellPlan(unittest.TestCase):
         ring = [tuple(p) for p in self.part["ring"]]
         self.assertGreater(geom.area(ring), 2000)
         ops = massing.edge_openings(ring, self.part["openings"])
-        self.assertEqual(sorted(ops), [0, 2, 15, 17, 19])
+        self.assertEqual(sorted(ops), list(range(0, 3)) + list(range(8, 20)))
 
     def test_the_ring_roof_stays_inside_the_walls_and_below_the_crest(self):
         ring = [tuple(p) for p in self.part["ring"]]
         r = self.part["ring_roof"]
         faces = massing.ring_roof(
             ring, self.part["top"], r["crest"], r["crest_in"], r["inner_in"],
-            self.part["top"] - self.part["parapet"], r["flat_edges"],
+            self.part["top"] - self.part["parapet"], r["flat_edges"], overhang=r.get("overhang"),
         )  # fmt: skip
-        grown = geom.offset(ring, -0.01, True)
+        grown = geom.offset(ring, -max(r.get("overhang") or [0]) - 0.01, True)
         for f in faces:
             for x, y, z in f:
                 self.assertTrue(geom.inside(grown, x, y), (x, y))
-                self.assertTrue(147.4 <= z <= r["crest"] + 1e-9)
+                self.assertTrue(147.0 <= z <= r["crest"] + 1e-9)
 
 
 if __name__ == "__main__":

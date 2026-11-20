@@ -1,6 +1,6 @@
 {
  "zone": "l60_north",
- "notes": "Zone l60_north of the lot60 area: the buildings and everything north-east of them. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_north/gen.py, scratch, not kept); this file is the source: edit it by hand and say so here. Digitised in a frame along the buildings' axis (t along 136 deg, s along 46 deg). Sources: the NJ 2020 ortho at 0.15 and 0.075 m (positions, paint), the 2017 LiDAR (building outlines from roof-edge returns, roof and ground heights), OSM (names, what a thing is; outlines only as a guide). Names: University Facilities and the Center for Clinical Services (montclair.edu), Lot 60N (OSM 287527901). Buildings: University Facilities and the Center for Clinical Services are one long red-roofed block joined at t 1127.7; both have low gables (rise 0.4 and 0.7 m); the Clinical building's white annex is a flat part 3 m higher. The LiDAR outlines lie up to 1 m from the OSM ones (the B/C border): the Clinical south-east end 1.0 m south-east of OSM's corner, Facilities' north-west wall 0.9 m inside the border (l60_lot's asphalt reaches t 1234.85, 0.7 m under that wall). North of Facilities: a white shed (2017 LiDAR and 2020 ortho), a white structure (2020 ortho only), two tanks (ortho): none is in OSM, all UNVERIFIED. Left out: a 15 by 13 m, 3.9 m high structure at (-145, 1515) in the 2017 LiDAR that is gone by 2020 (hatched paving there), a blue container and an orange container, vehicles, the rooftop units on the annex, the Great Notch Yard House, the substation and the NJT service road (outside the footprint). Ground: one asphalt surface from the walls to the footprint (the yard wall line), starting at y 1378.3 on the Village edge and running 0.2 m past the B/C border at the two open cuts; the walks along the south-west walls and the forecourts from the walls to 0.2 m past l60_lot's apron curb; no walk on the north-east sides (the LiDAR ground is flat to the walls; the dark band there is the buildings' shadow). Stalls: rows fitted by least squares through divider positions found as brightness ridges along the row (pitch 2.745 m, 9 ft): fits in each marking's evidence. The north-east side of Facilities has a row of parked cars with only short irregular marks between them: no stall lines drawn there. Lamps: no pole returns in the 2017 LiDAR in this zone; none placed. Trees come from tools/evidence/trees.py.",
+ "notes": "Zone l60_north of the lot60 area: the buildings and everything north-east of them. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_north/gen.py, scratch, not kept); this file is the source: edit it by hand and say so here. Digitised in a frame along the buildings' axis (t along 136 deg, s along 46 deg). Sources: the NJ 2020 ortho at 0.15 and 0.075 m (positions, paint), the 2017 LiDAR (building outlines from roof-edge returns, roof and ground heights), OSM (names, what a thing is; outlines only as a guide). Names: University Facilities and the Center for Clinical Services (montclair.edu), Lot 60N (OSM 287527901). Buildings: University Facilities and the Center for Clinical Services are one long red-roofed block joined at t 1127.7; both have low gables (rise 0.4 and 0.7 m); the Clinical building's white annex is a flat part 3 m higher. The LiDAR outlines lie up to 1 m from the OSM ones (the B/C border): the Clinical south-east end 1.0 m south-east of OSM's corner, Facilities' north-west wall 0.9 m inside the border: a 0.9 m asphalt strip fills the gap to l60_lot's asphalt there. The walk round the Clinical building's south-east end runs about 3 m past the junction border to join the south-west walk (3 m2 over l60_lot's asphalt; concrete wins). North of Facilities: a white shed (2017 LiDAR and 2020 ortho), a white structure (2020 ortho only), two tanks (ortho): none is in OSM, all UNVERIFIED. Left out: a 15 by 13 m, 3.9 m high structure at (-145, 1515) in the 2017 LiDAR that is gone by 2020 (hatched paving there), a blue container and an orange container, vehicles, the rooftop units on the annex, the Great Notch Yard House, the substation and the NJT service road (outside the footprint). Ground: one asphalt surface from the walls to the footprint (the yard wall line), starting at y 1378.3 on the Village edge and running 0.2 m past the B/C border at the two open cuts; the walks along the south-west walls and the forecourts from the walls to 0.2 m past l60_lot's apron curb; no walk on the north-east sides (the LiDAR ground is flat to the walls; the dark band there is the buildings' shadow). Stalls: rows fitted by least squares through divider positions found as brightness ridges along the row (pitch 2.745 m, 9 ft): fits in each marking's evidence. The north-east side of Facilities has a row of parked cars with only short irregular marks between them: no stall lines drawn there. Lamps: no pole returns in the 2017 LiDAR in this zone; none placed. Trees come from tools/evidence/trees.py.",
  "surfaces": [
   {
    "name": "L6N_asphalt",
@@ -93,6 +93,30 @@
    ],
    "evidence": "ortho2020 (paving), lidar2017 (yard wall line, building walls); osm 287527901 (Lot 60N), 233913165 and 1105425302 (drives)",
    "unverified": "one surface for Lot 60N, the access road from the Village cut and the north drive between the buildings and the NJ Transit wall; its outer edge is the footprint (the wall line), its inner edge the building walls; it starts at y 1378.3 on the Village edge and runs 0.2 m past the B/C border at the junction and at the north-west cut"
+  },
+  {
+   "name": "L6N_Facilities_NW_strip",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -211.27,
+     1557.9
+    ],
+    [
+     -211.89,
+     1558.5
+    ],
+    [
+     -226.72,
+     1543.14
+    ],
+    [
+     -226.1,
+     1542.54
+    ]
+   ],
+   "evidence": "lidar2017 (the north-west wall stands 0.9 m inside the OSM outline that the B/C border follows)",
+   "unverified": "fills the gap between the wall and l60_lot's asphalt (t 1234.85), 0.2 m past it"
   },
   {
    "name": "L6N_SW_walks_and_plazas",
@@ -328,8 +352,12 @@
      1379.01
     ],
     [
-     -81.67,
-     1377.01
+     -88.32,
+     1379.0
+    ],
+    [
+     -80.39,
+     1379.0
     ]
    ],
    "evidence": "ortho2020 (dark planted wedge between the access road and the walk)",
@@ -409,12 +437,8 @@
    "name": "L6N_access_road_W_curb",
    "path": [
     [
-     -88.36,
-     1379.01
-    ],
-    [
-     -81.67,
-     1377.01
+     -80.39,
+     1379.0
     ],
     [
      -68.52,
@@ -575,17 +599,17 @@
      1536.2
     ],
     [
-     -188.98,
-     1560.98
+     -177.14,
+     1549.54
     ]
    ],
-   "count": 13,
+   "count": 7,
    "depth": 5.7,
    "side": "right",
    "angle": 90,
    "colour": "white",
    "evidence": "ortho2020 0.075 m (same fit)",
-   "unverified": "lines beyond 993 m hidden under the parked cars: drawn as deep as the south half"
+   "unverified": "lines beyond 993 m hidden under the parked cars: drawn as deep as the south half; north-west of 1204 the white structure stands on this half"
   },
   {
    "name": "L6N_F_centre_line",
@@ -2012,7 +2036,7 @@
    "unverified": "wall colour, doors and windows guessed (walls not seen in the ortho); one storey from the 5.6 m height; roof drawn as one low gable (rise 0.4 m)"
   },
   {
-   "name": "L6N_Center_for_Clinical_Services",
+   "name": "L6N_Clinical_Services",
    "ring": [
     [
      -64.68,
@@ -2049,7 +2073,7 @@
    "unverified": "wall colour, doors and window grid guessed; one storey from the height"
   },
   {
-   "name": "L6N_Center_for_Clinical_Services_annex",
+   "name": "L6N_Clinical_Services_annex",
    "ring": [
     [
      -126.32,
@@ -2084,7 +2108,7 @@
    "unverified": "a taller part of the Center for Clinical Services (white roof, 8.7 m high); rooftop units not modelled; wall colour, floors and windows guessed"
   },
   {
-   "name": "L6N_Center_for_Clinical_Services_NE_strip",
+   "name": "L6N_Clinical_Services_NE_strip",
    "ring": [
     [
      -123.03,
@@ -2121,7 +2145,7 @@
    "unverified": "drawn as a shed roof; walls and windows as the main part"
   },
   {
-   "name": "L6N_Center_for_Clinical_Services_entrance",
+   "name": "L6N_Clinical_Services_entrance",
    "ring": [
     [
      -153.93,
@@ -2151,7 +2175,7 @@
    "unverified": "an entrance vestibule or porch: outline from few returns, open or closed not known"
   },
   {
-   "name": "L6N_white_shed_UNVERIFIED",
+   "name": "L6N_white_shed",
    "ring": [
     [
      -127.49,
@@ -2182,7 +2206,7 @@
    "unverified": "not in OSM, no name in any source; a storage shed or a fabric shelter (white roof on a dark frame); a lower 2.5 m part on its south-west side in the 2017 LiDAR is not seen in the 2020 ortho and is left out"
   },
   {
-   "name": "L6N_white_structure_UNVERIFIED",
+   "name": "L6N_white_structure",
    "ring": [
     [
      -168.9,
@@ -2212,7 +2236,7 @@
    "unverified": "height 2.7 m guessed (newer than the LiDAR); what it is (trailers, containers or a shelter) is not known; outline from the ortho, which leans tall things north-east"
   },
   {
-   "name": "L6N_tank_1_UNVERIFIED",
+   "name": "L6N_tank_1",
    "ring": [
     [
      -114.27,
@@ -2246,7 +2270,7 @@
    "unverified": "an upright tank; height 3 m guessed (the 2017 LiDAR shows another structure here, gone by 2020)"
   },
   {
-   "name": "L6N_tank_2_UNVERIFIED",
+   "name": "L6N_tank_2",
    "ring": [
     [
      -120.1,

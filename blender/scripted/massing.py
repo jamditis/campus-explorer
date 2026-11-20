@@ -475,3 +475,12 @@ def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, e
                 out.append(dict(edge=i, s0=s - width / 2, s1=s + width / 2, z0=z0, z1=z0 + height,
                                 a=a, u=u, n=nrm))  # fmt: skip
     return out
+
+
+def eave_course(ring, edges, z, width=0.45, height=0.22):
+    """A tile course along the wall top of the listed edges, centred on the wall line, from `z`
+    up: where a roof has no overhang (the main model's barrel tile eave course, scripted)."""
+    n = len(ring)
+    return [
+        _beam((*ring[i][:2], z), (*ring[(i + 1) % n][:2], z), width, height) for i in edges
+    ]

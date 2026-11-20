@@ -1,6 +1,6 @@
 {
  "zone": "ccom_adopt",
- "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; patches of the main model's cut wall round the dock doors: the scripted wall has openings there: 6 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20).",
+ "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20).",
  "adopt": {
   "file": "montclair_state_20261118i.blend",
   "sha256": "4e6abcb4df8507be13677fc653e7643827a1dceac2ed8ebb8513902837aef67b",
@@ -180,6 +180,12 @@
      "CCOM_equip_rolldoor_slat7_20261014jf3",
      "CCOM_equip_rolldoor_slat8_20261014jf3",
      "CCOM_equip_rolldoor_slat9_20261014jf3",
+     "CCOM_equip_wallback_CCOM_win_062_r0_-14.5_20261014jf3",
+     "CCOM_equip_wallback_CCOM_win_064_r0_-18.8_20261014jf3",
+     "CCOM_equip_wallhead_CCOM_win_062_r0_-14.5_20261014jf3",
+     "CCOM_equip_wallpatch_CCOM_win_062_r0_0_20261014jf3",
+     "CCOM_equip_wallpatch_CCOM_win_062_r0_1_20261014jf3",
+     "CCOM_equip_wallpatch_CCOM_win_066_r0_0_20261014jf3",
      "Campus building ID sign panel (UNVERIFIED)",
      "Campus sign posts (UNVERIFIED position)",
      "NH door leaf 0 bottom rail (maroon)",
@@ -956,7 +962,437 @@
       -2.764,
       0.0
      ]
+    },
+    "materials": {
+     "OE_wall_panel_wood_veneer_UNVERIFIED": {
+      "name": "SW_wood_lobby_veneer_UNVERIFIED",
+      "colour": "#8a5a34"
+     },
+     "OD_stair_rail_satin_stainless_UNVERIFIED": {
+      "name": "SW_metal_stair_rail_stainless_UNVERIFIED",
+      "colour": "#cfd1d3"
+     },
+     "OD_stair_nosing_aluminium_UNVERIFIED": {
+      "name": "SW_metal_stair_nosing_UNVERIFIED",
+      "colour": "#9a9c9e"
+     },
+     "NG_ottoman_orange": {
+      "name": "NG_ottoman_red_2",
+      "colour": "#9e2a2b"
+     },
+     "NG_ottoman_yellow": {
+      "name": "NG_ottoman_yellow_orange",
+      "colour": "#d99a2b"
+     }
     }
+   },
+   {
+    "name": "walls",
+    "objects": [
+     "School of Communication and Media walls"
+    ],
+    "clip": [
+     {
+      "ring": [
+       [
+        17.9,
+        -35.0
+       ],
+       [
+        45.0,
+        -35.0
+       ],
+       [
+        45.0,
+        12.1
+       ],
+       [
+        17.9,
+        12.1
+       ]
+      ],
+      "keep": "outside"
+     }
+    ],
+    "why": "the main model's facade, carried over where its heights agree with the LiDAR (west, south and north walls follow the OSM ring; eaves within about 0.3 m at the wall line); east of model x 17.9 the walls were lowered a storey (session 20261014y): scripted there"
+   },
+   {
+    "name": "windows",
+    "objects": [
+     "CCOM_win_000_r0",
+     "CCOM_win_001_r0",
+     "CCOM_win_002_r0",
+     "CCOM_win_003_r0",
+     "CCOM_win_004_r1",
+     "CCOM_win_005_r0",
+     "CCOM_win_006_r1",
+     "CCOM_win_007_r0",
+     "CCOM_win_008_r1",
+     "CCOM_win_009_r0",
+     "CCOM_win_010_r1",
+     "CCOM_win_011_r0",
+     "CCOM_win_012_r1",
+     "CCOM_win_013_r0",
+     "CCOM_win_014_r1",
+     "CCOM_win_015_r0",
+     "CCOM_win_016_r1",
+     "CCOM_win_017_r0",
+     "CCOM_win_018_r1",
+     "CCOM_win_019_r0",
+     "CCOM_win_020_r1",
+     "CCOM_win_021_r0",
+     "CCOM_win_022_r1",
+     "CCOM_win_058_r0",
+     "CCOM_win_059_r1",
+     "CCOM_win_060_r0",
+     "CCOM_win_061_r1",
+     "CCOM_win_063_r1",
+     "CCOM_win_065_r1",
+     "CCOM_win_067_r1",
+     "CCOM_win_068_r0",
+     "CCOM_win_069_r1",
+     "CCOM_win_070_r0",
+     "CCOM_win_071_r1",
+     "CCOM_win_072_r0",
+     "CCOM_win_073_r1",
+     "CCOM_win_074_r0",
+     "CCOM_win_075_r1",
+     "CCOM_win_076_r0",
+     "CCOM_win_077_r1",
+     "CCOM_win_092_r0",
+     "CCOM_win_093_r1",
+     "CCOM_win_094_r0",
+     "CCOM_win_095_r1",
+     "CCOM_win_096_r0",
+     "CCOM_win_097_r1",
+     "CCOM_win_098_r0"
+    ],
+    "swap_instances": {
+     "CCOM_Win_Wing_A": "CCOM_Win_Wing_A_lit_dd",
+     "CCOM_Win_Wing_A_corner_dT": "CCOM_Win_Wing_A_lit_dd"
+    },
+    "why": "window units of the west, south and north faces (reveal, sill, frame, glass) without their 3 m fake-room boxes"
+   },
+   {
+    "name": "eave_course",
+    "objects": [
+     "School of Communication and Media barrel tile eave course"
+    ],
+    "clip": [
+     {
+      "ring": [
+       [
+        17.9,
+        -35.0
+       ],
+       [
+        45.0,
+        -35.0
+       ],
+       [
+        45.0,
+        12.1
+       ],
+       [
+        17.9,
+        12.1
+       ]
+      ],
+      "keep": "outside"
+     }
+    ],
+    "transform": {
+     "rotate_z_deg": 0.0,
+     "about": [
+      0.0,
+      0.0
+     ],
+     "translate": [
+      0.0,
+      0.0,
+      0.4
+     ]
+    },
+    "why": "tile eave course, raised 0.4 m to sit on the scripted roof edge (the LiDAR edge is 0.2 to 0.9 m above the main model's)"
+   },
+   {
+    "name": "soffit",
+    "objects": [
+     "School of Communication and Media eave soffit + fascia + rafter"
+    ],
+    "clip": [
+     {
+      "ring": [
+       [
+        17.9,
+        -35.0
+       ],
+       [
+        45.0,
+        -35.0
+       ],
+       [
+        45.0,
+        12.1
+       ],
+       [
+        17.9,
+        12.1
+       ]
+      ],
+      "keep": "outside"
+     },
+     {
+      "ring": [
+       [
+        -25.52,
+        -12.33
+       ],
+       [
+        -24.06,
+        -12.68
+       ],
+       [
+        -11.77,
+        -15.69
+       ],
+       [
+        -12.38,
+        -18.19
+       ],
+       [
+        -12.73,
+        -19.64
+       ],
+       [
+        18.62,
+        -27.27
+       ],
+       [
+        24.1,
+        -28.63
+       ],
+       [
+        29.67,
+        -5.78
+       ],
+       [
+        33.04,
+        -6.6
+       ],
+       [
+        36.02,
+        5.34
+       ],
+       [
+        34.56,
+        5.71
+       ],
+       [
+        12.62,
+        10.74
+       ],
+       [
+        17.57,
+        32.01
+       ],
+       [
+        12.62,
+        33.08
+       ],
+       [
+        13.02,
+        35.03
+       ],
+       [
+        -0.26,
+        39.39
+       ],
+       [
+        0.06,
+        40.86
+       ],
+       [
+        -11.9,
+        43.43
+       ],
+       [
+        -15.83,
+        25.96
+       ],
+       [
+        -19.39,
+        26.86
+       ],
+       [
+        -21.74,
+        17.62
+       ],
+       [
+        -20.4,
+        16.83
+       ],
+       [
+        -22.71,
+        7.13
+       ],
+       [
+        -20.91,
+        6.57
+       ]
+      ],
+      "keep": "outside",
+      "below": 146.6
+     }
+    ],
+    "transform": {
+     "rotate_z_deg": 0.0,
+     "about": [
+      0.0,
+      0.0
+     ],
+     "translate": [
+      0.0,
+      0.0,
+      0.64
+     ]
+    },
+    "why": "soffit, fascia and rafter tails, raised 0.64 m under the scripted overhang"
+   },
+   {
+    "name": "downspouts",
+    "objects": [
+     "Downspouts (3f)",
+     "Downspout boots + drain grates (3g, CCOM)",
+     "Downspout cleanout plugs brass (3h, CCOM)",
+     "Downspout splash blocks (3f)",
+     "Eave drip / moss streaks on stucco (3g)"
+    ],
+    "clip": [
+     {
+      "ring": [
+       [
+        -25.52,
+        -12.33
+       ],
+       [
+        -24.06,
+        -12.68
+       ],
+       [
+        -11.77,
+        -15.69
+       ],
+       [
+        -12.38,
+        -18.19
+       ],
+       [
+        -12.73,
+        -19.64
+       ],
+       [
+        18.62,
+        -27.27
+       ],
+       [
+        24.1,
+        -28.63
+       ],
+       [
+        29.67,
+        -5.78
+       ],
+       [
+        33.04,
+        -6.6
+       ],
+       [
+        36.02,
+        5.34
+       ],
+       [
+        34.56,
+        5.71
+       ],
+       [
+        12.62,
+        10.74
+       ],
+       [
+        17.57,
+        32.01
+       ],
+       [
+        12.62,
+        33.08
+       ],
+       [
+        13.02,
+        35.03
+       ],
+       [
+        -0.26,
+        39.39
+       ],
+       [
+        0.06,
+        40.86
+       ],
+       [
+        -11.9,
+        43.43
+       ],
+       [
+        -15.83,
+        25.96
+       ],
+       [
+        -19.39,
+        26.86
+       ],
+       [
+        -21.74,
+        17.62
+       ],
+       [
+        -20.4,
+        16.83
+       ],
+       [
+        -22.71,
+        7.13
+       ],
+       [
+        -20.91,
+        6.57
+       ]
+      ],
+      "keep": "inside"
+     },
+     {
+      "ring": [
+       [
+        17.9,
+        -35.0
+       ],
+       [
+        45.0,
+        -35.0
+       ],
+       [
+        45.0,
+        12.1
+       ],
+       [
+        17.9,
+        12.1
+       ]
+      ],
+      "keep": "outside"
+     }
+    ],
+    "why": "downspouts, boots, plugs, splash blocks and drip streaks on the adopted faces (campus-wide objects: only the part round CCOM)"
    },
    {
     "name": "sign",
@@ -987,14 +1423,6 @@
    "dV_sill_outlet_plate",
    "dV_sill_outlet_recept_0",
    "dV_sill_outlet_recept_1"
-  ],
-  "patches of the main model's cut wall round the dock doors: the scripted wall has openings there": [
-   "CCOM_equip_wallback_CCOM_win_062_r0_-14.5_20261014jf3",
-   "CCOM_equip_wallback_CCOM_win_064_r0_-18.8_20261014jf3",
-   "CCOM_equip_wallhead_CCOM_win_062_r0_-14.5_20261014jf3",
-   "CCOM_equip_wallpatch_CCOM_win_062_r0_0_20261014jf3",
-   "CCOM_equip_wallpatch_CCOM_win_062_r0_1_20261014jf3",
-   "CCOM_equip_wallpatch_CCOM_win_066_r0_0_20261014jf3"
   ],
   "east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe)": [
    "dc_base_S",
@@ -1216,6 +1644,32 @@
    "NS walk-off mat edge trim E (alu, UNVERIFIED)",
    "NS walk-off mat edge trim N (alu, UNVERIFIED)",
    "NS walk-off mat edge trim S (alu, UNVERIFIED)"
+  ],
+  "window units of the east band (placed for the false one-storey grid; the scripted east walls carry recessed windows)": [
+   "CCOM_win_023_r0",
+   "CCOM_win_024_r1",
+   "CCOM_win_025_r0",
+   "CCOM_win_026_r1",
+   "CCOM_win_028_r0",
+   "CCOM_win_029_r1",
+   "CCOM_win_031_r0",
+   "CCOM_win_032_r1",
+   "CCOM_win_034_r0",
+   "CCOM_win_035_r1",
+   "CCOM_win_043_r0",
+   "CCOM_win_044_r1",
+   "CCOM_win_046_r0",
+   "CCOM_win_047_r1",
+   "CCOM_win_049_r0",
+   "CCOM_win_050_r1",
+   "CCOM_win_052_r0",
+   "CCOM_win_053_r1"
+  ],
+  "main model roof surface, hip and ridge caps, coping, gutters: the roof surface and caps are 0.2 to 1.8 m off the LiDAR (crest 149.3 against 151.1, inner flat 149.3 against 147.5); the scripted ring roof and caps replace them; gutters would hang 0.6 m low": [
+   "School of Communication and Media roof (LiDAR)",
+   "School of Communication and Media hip + ridge cap tiles",
+   "el coping strips School of Communication and Media (generic, UN",
+   "Gutters half-round (3f, Life/CCOM UNVERIFIED)"
   ]
  }
 }

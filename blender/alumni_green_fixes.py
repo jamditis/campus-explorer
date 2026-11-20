@@ -30,7 +30,7 @@ ANG = -13.5  # gable axis (degrees anticlockwise from east): u along the face, v
 # Band (photo 2, ground mapped from a camera fitted to the Cole Hall gable; Esri 2025 band
 # about 9.2 m tip to tip). UNVERIFIED, 0.5 m.
 BAND_IN, BAND_OUT, BAND_TIP = 3.45, 4.0, 4.9
-TIP_HALF = 12.0  # degrees: where a tip's straight flanks meet the outer circle
+TIP_HALF = 8.0  # degrees: where a tip's straight flanks meet the outer circle
 ARC_STEP = 360 / 256  # the arc resolution ws5 used (shapely resolution 64)
 
 # Inlay: four light stone tiles with black letters, about 3.6 x 0.45 m (photo 1: each tile is
@@ -51,9 +51,12 @@ LATER = [
     "Move the plaza about 5 m toward the doors, to about (-104.4, -56.0) +-1.5 m, radius about "
     "7.8 m +-0.7 (photo 2: inlay at the edge 7.3 to 7.8 m from the band centre), and run the "
     "north-west and north-east walks (WS3_Cole_plaza_paving_20261109) on to the new edge; lawn "
-    "where the old north cap was. Photo 1 does not agree: its view of Sprague Library is square "
-    "to the south face, which puts the camera about 10 m east of where photos 2 and 3 put it. "
-    "Pace doors to band and doors to inlay on site before moving it.",
+    "where the old north cap was. Photo 1 agrees within its error (the library's arched bay "
+    "seen about 20 degrees east of north from about 40 m). The move rests on one photo and an "
+    "image with 8 m stated accuracy: pace doors to band and doors to inlay on site first.",
+    "Sprague Library south face (photo 1): the model's walls are dark red brick; the photo shows "
+    "buff brick on the arched bay and the east block, red brick only on the west end. A row of "
+    "about nine young conifers and six benches stands along its foot (model: none).",
     "Cole Hall north addition (TZ_Cole_north_addition_UNVERIFIED, WS6, WS7): photo 2 shows the "
     "arched window over the doors about 6 m wide (model 3.5 m), the eave about 2 m higher than "
     "142.9, a tall window either side, two black lanterns beside the doors and the name "
@@ -131,6 +134,19 @@ def arc_strip(r0, depth, th0, length, step):
     return rows
 
 
+def bilinear(corner, x, y):
+    """Height at (x, y) from the heights corner(ix, iy) at the whole-metre grid corners round it:
+    every new vertex in a 1 m cell then lies on one smooth patch, so thin triangles shade evenly."""
+    ix, iy = math.floor(x), math.floor(y)
+    fx, fy = x - ix, y - iy
+    return (
+        corner(ix, iy) * (1 - fx) * (1 - fy)
+        + corner(ix + 1, iy) * fx * (1 - fy)
+        + corner(ix, iy + 1) * (1 - fx) * fy
+        + corner(ix + 1, iy + 1) * fx * fy
+    )
+
+
 def places():
     """name -> (x, y, heading in degrees): inlay centre, hatch centre, lamp foot."""
     ax = ANG + 90  # the gable axis, out of the face
@@ -150,6 +166,9 @@ PLAZA = "WS5_Cole_plaza_circle_quatrefoil_20261109"
 LAMP_SRC = "Lamp_acorn_017"
 COLL = "GRN_alumni_green_20261120"
 PAVERS = "GRN_Plaza_pavers_herringbone_redbrown_JOEphoto_20261120"
+# Inlay and hatch stand this much proud of the graded plaza top, so the brick course under them
+# (cut in 1 m pieces at their own heights) does not show through.
+LIFT = 0.02
 EVIDENCE = "Joe's photos 1000102881..83 (2026-11-20); Esri World Imagery 2025-05-11"
 
 
@@ -234,9 +253,16 @@ def rebuild_plaza(bpy, plaza):
     for gy in range(y0 + 1, y1):
         r = bmesh.ops.bisect_plane(bm, geom=geom, plane_co=(0, gy, 0), plane_no=(0, 1, 0))
         geom = list({*geom, *r["geom"]})
+    corners = {}
+
+    def corner(ix, iy):
+        if (ix, iy) not in corners:
+            corners[ix, iy] = z(ix, iy)
+        return corners[ix, iy]
+
     for v in {g for g in geom if isinstance(g, bmesh.types.BMVert) and g.is_valid}:
         w = v.co.copy()
-        v.co = inv @ Vector((w.x, w.y, z(w.x, w.y)))
+        v.co = inv @ Vector((w.x, w.y, bilinear(corner, w.x, w.y)))
     bm.to_mesh(me)
     bm.free()
     me.update()
@@ -259,7 +285,7 @@ def add_inlay(bpy, coll, z):
     th0 = math.radians(ANG + 90)
     pts = arc_strip(INLAY_R, INLAY_DEPTH, th0, INLAY_LEN, 0.1)
     n = len(pts) // 2
-    verts = [(x, y, z(x, y) + 0.004) for x, y in pts]
+    verts = [(x, y, z(x, y) + LIFT) for x, y in pts]
     faces = [(i, i + 1, n + i + 1, n + i) for i in range(n - 1)]
     stone = _material(bpy, "GRN_inlay_limestone_light", (0.78, 0.76, 0.70), 0.7)
     _mesh_object(bpy, coll, "GRN_AlumniGreen_inlay_tiles_UNVERIFIED", verts, faces, [stone])
@@ -279,7 +305,7 @@ def add_inlay(bpy, coll, z):
     scale = min(1.0, (INLAY_LEN - 0.3) / (max(xs) - min(xs)))
     for v in tm.vertices:
         x, y = bend(v.co.x * scale, v.co.y, INLAY_R, th0)
-        v.co = (x, y, z(x, y) + 0.007)
+        v.co = (x, y, z(x, y) + LIFT + 0.004)
     tm.name = "GRN_AlumniGreen_inlay_letters_UNVERIFIED"
     tm.materials.append(_material(bpy, "GRN_inlay_letters_black", (0.03, 0.03, 0.03), 0.6))
     ob = bpy.data.objects.new(tm.name, tm)
@@ -292,8 +318,8 @@ def add_hatch(bpy, coll, z):
     a = math.radians(hd)
     ca, sa = math.cos(a), math.sin(a)
     verts, faces = [], []
-    for k, (w, d, dz) in enumerate(((HATCH[0], HATCH[1], 0.006), (HATCH[0] - 0.08,
-                                                                  HATCH[1] - 0.08, 0.008))):
+    sizes = ((HATCH[0], HATCH[1], LIFT), (HATCH[0] - 0.08, HATCH[1] - 0.08, LIFT + 0.004))
+    for k, (w, d, dz) in enumerate(sizes):
         for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
             px, py = sx * w / 2, sy * d / 2
             wx, wy = x + px * ca - py * sa, y + px * sa + py * ca

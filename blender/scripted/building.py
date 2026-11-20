@@ -310,6 +310,10 @@ def part(lay_part, name, ground, image_dir=None):
                     overhang=r.get("overhang"),
                 ):  # fmt: skip
                     b.faces(verts, [tuple(f) for f in faces], cap)
+            if r.get("eave_course"):  # walls with no overhang: a tile course on the wall top
+                cap = kit.mat("rooftile", "cap_" + r["caps"][1:], kit.srgb(r["caps"]), 0.75)
+                for verts, faces in massing.eave_course(ring, r["eave_course"], p["top"]):
+                    b.faces(verts, [tuple(f) for f in faces], cap)
     else:
         # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
         look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)

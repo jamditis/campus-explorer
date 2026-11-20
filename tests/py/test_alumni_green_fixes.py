@@ -54,6 +54,19 @@ class Band(unittest.TestCase):
             self.assertLess(dist(p, g.C), g.R - g.RING)
 
 
+class Heights(unittest.TestCase):
+    def test_bilinear_heights_match_the_corners_and_run_straight_along_cell_edges(self):
+        def corner(ix, iy):
+            return 134.0 + 0.1 * ix + 0.03 * iy * iy
+
+        self.assertAlmostEqual(g.bilinear(corner, -107.0, -50.0), corner(-107, -50))
+        mid = g.bilinear(corner, -106.5, -50.0)
+        self.assertAlmostEqual(mid, (corner(-107, -50) + corner(-106, -50)) / 2)
+        self.assertAlmostEqual(
+            g.bilinear(corner, -107.0, -49.25), 0.25 * corner(-107, -50) + 0.75 * corner(-107, -49)
+        )
+
+
 class Inlay(unittest.TestCase):
     def test_bent_text_follows_the_arc_and_reads_clockwise_for_a_reader_facing_out(self):
         th = math.radians(g.ANG + 90)

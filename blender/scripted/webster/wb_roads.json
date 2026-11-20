@@ -1,0 +1,2605 @@
+{
+ "zone": "wb_roads",
+ "notes": "Zone wb_roads: every carriageway, curb, road paint, crossing and walk of the webster area outside the lots and the building aprons, and the road-side points. The JSON is written by a generator (/tmp/claude-0/p4/webster/wb_roads/gen.py with gen_roads.py and gen_walks.py, scratch, not in the repository); edit the generator or edit this file by hand and say so here. Sources: NJ 2020 ortho at 0.15 m and 0.075 m (positions, paint), 3DEP LiDAR 2017 (island and loop heights, pylon height), OpenStreetMap (names, what a way is, footpath lines). Names are the university's: Yogi Berra Drive, Carlisle Road, Webster Road, Quad Road, Stone Street, Blanton Road, Lot 17, Lot 30, Lot 38.\nCentre lines (v metres left of the listed direction; edges are offsets, corners true arcs). Yogi Berra Drive: the shared fit east of x -128 is kept (double yellow, rms 0.21 m); west of x -130 it was refitted to the double yellow: [-188.5, 441.2] [-163.27, 449.05, r 42.49] [-142.52, 439.41, r 42.69] then the shared vertices from [-131.15, 437.05, r 17.6]; 24 stations, rms 0.25 m, max 0.85 m. The shared first fit there followed the white lane line of the left-turn bay, 2 to 3 m north of the centre. North edge: the NE curb line v +4.9 east of x -125; west of it the curb read every 2.5 m and fitted ([-189.71, 450.11, r 6.6] [-174.46, 454.25, r 46.8] [-150.84, 451.65, r 36.8] [-142.56, 446.74, r 21.3], rms 0.06 m to the read points, which are good to about 0.3 m). South edge v -5.0 west of x -125 and v -6.4 from x -110 with a straight taper (tree shadow, UNVERIFIED). The north-east area's footprint edge (-56, 431)-(-22, 440) runs near the centre line, so WB_road_YB_east fills the south half out to v -6.4 up to x -33 and overlaps NE_road_Yogi_Berra_Dr_S by 0.2 to 0.3 m at x -56.3.\nCarlisle Road north: the shared fit (edges +5.42/-5.17) lay up to 1.3 m east of the asphalt and too wide south of the lot mouth; refitted to the asphalt mid-line from runs every 1 m: [-203.59, 457.94] [-200.45, 494.21, r 30.3] [-179.01, 549.92, r 29.4] [-149.6, 617.2], 79 stations, rms 0.37 m (max 2.3 m at the widening). Edges +4.05/-3.75 south of y 546 (8.1 m), +6.0/-5.3 from y 538 to the cut (11.4 m with the roadside parking on the west side). Carlisle Road south: the west area's arc (centre (1315.98, -379.66), R 1745.1) and offsets (west edge v -4.3, east edge v +4.4 to Lot 30's median, double yellow v +-0.1, edge lines v -3.8 and +3.5) carried on from the cut to y 366..372; then the approach west edge as a straight run at 36.6 deg through (-250.2, 395.7) and (-223.8, 415.3), and the south-east edge (the walk's road side) fitted through 15 read points ([-249.5, 371.02] [-240.32, 384.09, r 77.3] [-196.42, 423.43, r 28.6] [-186.5, 433.5], rms 0.39 m, max 1.0 m), which runs on as the slip road's outer edge (one-way, OSM 232853450) into Yogi Berra Drive. Corners of the junction read at 0.075 m (NW r 3.5, NE r 3.0, SW two arcs r 4 and 4.5). The triangular island is concrete with a curb (raised about 0.1 m in the LiDAR).\nWebster Road west: the shared straight run, edges +4.4/-4.4 (the west area's values), then the north branch of the loop round the raised island (OSM 313027440, island +0.2 m in the LiDAR) bent at a vertex of radius 60 to 9.3 deg; the south branch and the island lie in the shadow of University Hall and are drawn from the LiDAR ground (UNVERIFIED, about 0.7 m). Both end 0.2 m under the published WS24 asphalt. Webster Road east: the shared fit, edges +4.72/-4.73, from WS24's north end to Lot 17's south-west mouth. Quad Road: the shared centre; west of x 12 the asphalt is 7.75 m (edges +3.9/-3.85 read at 0.075 m; the shared +5.09/-4.41 lay on the walk and the lawn), east of x 10 the shared edges; the Webster Road junction corners read at 0.075 m. Stone Street: the shared centre and east edge (-4.16, confirmed by runs at 0.075 m: -4.05..-4.3); the west edge is v +2.2 for y 352..394, where the west walk runs beside the curb, and +3.6 north of y 392; the bend west (y 474..497) follows the OSM line through (211.6, 494.0) with a guessed radius of 18 m; cut 0.2 m into the north-east area at y 497.6. Blanton Road outside Lot 17's OSM ring: the drive from Quad Road to the lot (x 47..64, y 358..375) and the drive and hatched area from the lot to Webster Road (NE_road_Webster_Rd_S); the part between is Lot 17's east aisle inside the lot ring (lots zone). The Energy Plant's west yard (asphalt west of NE_road_Plant_W_drive, x -69..-56, y 436..482) read at 0.075 m; its north and west edges are under trees.\nWalks: sidewalks laid out from the road edges (Yogi Berra Drive north 2.2 m, bridge north and the junction corners, Carlisle Road south-east 1.9 m, Lot 30 east walk 2.0 m on the arc, Quad Road north 2.3 m and south 2.0 m, Stone Street west 2.0 m); footpaths across the lawns from OpenStreetMap lines checked against the ortho (within about 1 m), cut 0.2 m into roads and lots and 3 m from the walls of Webster Hall, Irvin D. Reid Hall and the Red Hawk Diner, and kept out of the plaza between Blanton Hall and Webster Hall (buildings zone). Widths estimated from the ortho. Not drawn: OSM 546643369 east of Stone Street (no walk seen in the ortho), 313028561 round the diner's brick plaza (within its apron), the OSM walks inside the plaza.\nPaint: double yellow, lane and edge lines, stop bars, crosswalks and lane arrows only where the ortho shows them; arrow shapes in worn paint are guesses. Carlisle Road north: parallel parking on the west side behind a solid line at v +2.8, 7 stalls between 8 dividers read at y 556.4..604.2, pitch 7.47 m by least squares (residuals under 0.2 m). Points: the lattice pylon north of Webster Road (LiDAR top 39.1 m over the ground). Left out: the second tower (OSM 1104399794, (-160.2, 368.2), 45 m) is a tubular three-level pole (OSM tag, 0.6 m wide in the LiDAR returns); the engine has only a lattice pylon and a wood utility pole. The OSM pond 232853433 is left out: the LiDAR shows no level surface inside it (the ground falls 13 m across it) and the ortho shows no water; the flat ground at 108.9 m east of it is the wetland. Traffic signals at the junction (OSM 2411646084) are not drawn: no point kind for them.",
+ "surfaces": [
+  {
+   "name": "WB_road_YB_Carlisle_junction",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -222.3,
+     451.45
+    ],
+    [
+     -208.38,
+     449.52,
+     3.5
+    ],
+    [
+     -207.56,
+     459.0
+    ],
+    [
+     -199.73,
+     459.0
+    ],
+    [
+     -200.33,
+     452.15,
+     3.0
+    ],
+    [
+     -189.71,
+     450.11,
+     6.6
+    ],
+    [
+     -174.46,
+     454.25,
+     46.8
+    ],
+    [
+     -150.84,
+     451.65,
+     36.8
+    ],
+    [
+     -142.56,
+     446.74,
+     21.3
+    ],
+    [
+     -112.0,
+     434.58
+    ],
+    [
+     -112.0,
+     423.93
+    ],
+    [
+     -132.6,
+     432.25,
+     12.6
+    ],
+    [
+     -144.1,
+     434.63,
+     47.69
+    ],
+    [
+     -163.63,
+     443.7,
+     37.49
+    ],
+    [
+     -182.12,
+     437.95,
+     12.0
+    ],
+    [
+     -196.42,
+     423.43,
+     28.6
+    ],
+    [
+     -240.32,
+     384.09,
+     77.3
+    ],
+    [
+     -249.5,
+     371.02
+    ],
+    [
+     -253.94,
+     372.27
+    ],
+    [
+     -262.28,
+     354.84,
+     1740.7
+    ],
+    [
+     -270.23,
+     337.25
+    ],
+    [
+     -278.16,
+     340.83
+    ],
+    [
+     -272.26,
+     353.88,
+     1749.4
+    ],
+    [
+     -253.25,
+     394.22,
+     45.0
+    ],
+    [
+     -215.87,
+     421.98,
+     4.0
+    ],
+    [
+     -217.5,
+     440.54,
+     4.5
+    ],
+    [
+     -225.7,
+     442.35
+    ],
+    [
+     -222.05,
+     450.1
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "one surface: Yogi Berra Drive west of x -112 with its left-turn bay, the Carlisle Road junction, the one-way slip road and Carlisle Road south from the west area cut; corners and the slip road edge read to about 0.5 m (tree shadow east of x -190)"
+  },
+  {
+   "name": "WB_road_Junction_island",
+   "kind": "concrete",
+   "ring": [
+    [
+     -205.0,
+     428.0,
+     0.8
+    ],
+    [
+     -202.85,
+     434.75,
+     0.8
+    ],
+    [
+     -195.6,
+     434.95,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "raised island guessed from its light curb line and +0.1 m in the LiDAR; fill colour from the ortho"
+  },
+  {
+   "name": "WB_road_YB_east",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -118.0,
+     437.03
+    ],
+    [
+     -101.35,
+     430.31,
+     42.7
+    ],
+    [
+     -83.55,
+     428.1,
+     31.0
+    ],
+    [
+     -65.29,
+     431.62,
+     75.2
+    ],
+    [
+     -56.3,
+     436.01
+    ],
+    [
+     -56.3,
+     431.13
+    ],
+    [
+     -29.81,
+     438.14
+    ],
+    [
+     -58.43,
+     421.43,
+     86.5
+    ],
+    [
+     -83.16,
+     416.66,
+     42.3
+    ],
+    [
+     -103.77,
+     419.23,
+     54.0
+    ],
+    [
+     -110.0,
+     421.63
+    ],
+    [
+     -125.0,
+     429.18
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "south edge v -6.4 from x -110 (measured 5.5 to 6.4 m; tree shadow), straight taper from v -5.0 at x -125; north edge v +4.9 (the north-east area curb line)"
+  },
+  {
+   "name": "WB_road_Carlisle_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -208.14,
+     452.35
+    ],
+    [
+     -204.44,
+     495.13,
+     34.35
+    ],
+    [
+     -184.3,
+     547.46
+    ],
+    [
+     -177.02,
+     544.65
+    ],
+    [
+     -196.76,
+     493.36,
+     26.55
+    ],
+    [
+     -200.37,
+     451.68
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "width 8.1 m from the asphalt runs (tree shadow on the west side)"
+  },
+  {
+   "name": "WB_road_Carlisle_N_parking",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -189.2,
+     540.15
+    ],
+    [
+     -184.56,
+     552.2,
+     35.4
+    ],
+    [
+     -159.93,
+     608.54
+    ],
+    [
+     -149.59,
+     603.99
+    ],
+    [
+     -174.11,
+     547.91,
+     24.1
+    ],
+    [
+     -178.65,
+     536.1
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "11.4 m: travel lanes and the roadside parking on the west side"
+  },
+  {
+   "name": "WB_road_Webster_W",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -200.87,
+     316.77
+    ],
+    [
+     -173.43,
+     326.16
+    ],
+    [
+     -144.03,
+     336.23,
+     64.4
+    ],
+    [
+     -137.6,
+     337.5
+    ],
+    [
+     -137.6,
+     336.7
+    ],
+    [
+     -128.0,
+     335.75
+    ],
+    [
+     -119.85,
+     333.75
+    ],
+    [
+     -114.75,
+     330.2
+    ],
+    [
+     -121.5,
+     331.4
+    ],
+    [
+     -135.0,
+     328.3,
+     25.0
+    ],
+    [
+     -152.0,
+     324.6,
+     25.0
+    ],
+    [
+     -163.5,
+     320.8
+    ],
+    [
+     -170.57,
+     317.84
+    ],
+    [
+     -196.73,
+     308.89
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "north branch of the loop round the island: edges in shadow east of x -165 read from the LiDAR ground (island +0.2 m)"
+  },
+  {
+   "name": "WB_road_Webster_W_loop_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -178.0,
+     315.3
+    ],
+    [
+     -163.5,
+     320.6
+    ],
+    [
+     -158.0,
+     318.4,
+     10.0
+    ],
+    [
+     -150.0,
+     317.4
+    ],
+    [
+     -125.0,
+     316.8
+    ],
+    [
+     -114.4,
+     316.3
+    ],
+    [
+     -112.9,
+     315.9
+    ],
+    [
+     -116.4,
+     311.7
+    ],
+    [
+     -112.9,
+     308.6
+    ],
+    [
+     -174.1,
+     313.0
+    ],
+    [
+     -178.0,
+     313.4
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "south branch (one-way, OSM 313027440) in the shadow of University Hall: edges from the LiDAR ground; its south edge meets the published walk (0.2 m under it)"
+  },
+  {
+   "name": "WB_road_Webster_E",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -102.01,
+     356.6
+    ],
+    [
+     -67.56,
+     391.64,
+     21.82
+    ],
+    [
+     -49.43,
+     405.45,
+     34.02
+    ],
+    [
+     -26.03,
+     417.07
+    ],
+    [
+     -21.83,
+     408.6
+    ],
+    [
+     -44.42,
+     397.38,
+     24.57
+    ],
+    [
+     -61.3,
+     384.53,
+     12.37
+    ],
+    [
+     -95.27,
+     349.98
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "ends 0.2 m under the published WS24 asphalt and at Lot 17's mouth edge"
+  },
+  {
+   "name": "WB_road_Quad_W",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -76.35,
+     365.34
+    ],
+    [
+     -20.99,
+     364.68,
+     11.1
+    ],
+    [
+     13.75,
+     366.92
+    ],
+    [
+     14.25,
+     359.18
+    ],
+    [
+     -20.79,
+     356.93,
+     18.85
+    ],
+    [
+     -76.45,
+     357.59
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "edges +3.9/-3.85 read west of Lot 38 (the shared +5.09/-4.41 lay on the walk and the lawn here)"
+  },
+  {
+   "name": "WB_road_Quad_E",
+   "kind": "asphalt",
+   "ring": [
+    [
+     9.67,
+     367.85
+    ],
+    [
+     18.56,
+     368.42,
+     20.09
+    ],
+    [
+     47.9,
+     364.78,
+     20.09
+    ],
+    [
+     134.2,
+     321.01
+    ],
+    [
+     129.91,
+     312.54
+    ],
+    [
+     45.08,
+     355.56,
+     10.59
+    ],
+    [
+     18.28,
+     358.88,
+     10.59
+    ],
+    [
+     10.28,
+     358.37
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "ends 0.2 m under the published Stone Street (QS_service); south edge in the shadow of the Student Center and Reid Hall"
+  },
+  {
+   "name": "WB_road_Quad_Webster_junction",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -92.6,
+     352.2
+    ],
+    [
+     -87.3,
+     358.25,
+     8.0
+    ],
+    [
+     -66.0,
+     358.25
+    ],
+    [
+     -66.0,
+     366.4
+    ],
+    [
+     -71.0,
+     366.4,
+     3.0
+    ],
+    [
+     -71.0,
+     373.6,
+     4.0
+    ],
+    [
+     -66.9,
+     379.4
+    ],
+    [
+     -83.0,
+     369.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "corner curbs read to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Stone_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     161.21,
+     351.8
+    ],
+    [
+     176.74,
+     387.72,
+     22.2
+    ],
+    [
+     180.15,
+     394.0
+    ],
+    [
+     187.39,
+     394.0
+    ],
+    [
+     182.47,
+     384.94,
+     15.84
+    ],
+    [
+     168.14,
+     351.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "west edge v +2.2 where the west walk runs beside the curb (asphalt runs at 0.075 m); starts 0.2 m under the published Stone Street (y 352)"
+  },
+  {
+   "name": "WB_road_Stone_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     177.47,
+     392.0
+    ],
+    [
+     188.68,
+     412.64,
+     76.4
+    ],
+    [
+     195.58,
+     429.0,
+     43.6
+    ],
+    [
+     217.09,
+     479.72,
+     14.4
+    ],
+    [
+     204.72,
+     497.6
+    ],
+    [
+     214.15,
+     497.6
+    ],
+    [
+     225.91,
+     480.63,
+     22.16
+    ],
+    [
+     202.73,
+     425.98,
+     35.84
+    ],
+    [
+     195.68,
+     409.27,
+     84.16
+    ],
+    [
+     186.3,
+     392.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "west edge v +3.6 from the asphalt runs; the bend west (y 474..497) follows the OSM line, radius guessed"
+  },
+  {
+   "name": "WB_road_Blanton_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     47.5,
+     359.4
+    ],
+    [
+     50.9,
+     361.1
+    ],
+    [
+     51.9,
+     364.6,
+     6.0
+    ],
+    [
+     55.9,
+     374.6
+    ],
+    [
+     63.6,
+     374.0
+    ],
+    [
+     62.8,
+     367.3
+    ],
+    [
+     61.6,
+     361.6
+    ],
+    [
+     62.0,
+     358.5
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "edges read at 0.075 m to about 0.3 m; ends on the OSM edge of Lot 17"
+  },
+  {
+   "name": "WB_road_Blanton_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     62.0,
+     455.5
+    ],
+    [
+     66.5,
+     453.3
+    ],
+    [
+     76.0,
+     448.6
+    ],
+    [
+     79.5,
+     452.5,
+     6.0
+    ],
+    [
+     85.0,
+     457.4
+    ],
+    [
+     74.6,
+     461.9
+    ],
+    [
+     62.3,
+     467.2
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "drive and hatched area between Lot 17's OSM edge and the north-east area (NE_road_Webster_Rd_S); outline read to about 0.5 m"
+  },
+  {
+   "name": "WB_road_Plant_W_yard",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -55.8,
+     436.3
+    ],
+    [
+     -57.6,
+     437.2,
+     2.0
+    ],
+    [
+     -60.8,
+     448.0
+    ],
+    [
+     -60.4,
+     457.3
+    ],
+    [
+     -68.6,
+     458.0
+    ],
+    [
+     -69.0,
+     462.0,
+     8.0
+    ],
+    [
+     -66.5,
+     476.0,
+     10.0
+    ],
+    [
+     -61.0,
+     482.0
+    ],
+    [
+     -55.8,
+     482.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "west yard of the Energy Plant read at 0.075 m; north and west edges under trees, about 1 m"
+  }
+ ],
+ "strips": [
+  {
+   "name": "WB_road_YB_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -198.81,
+     453.76
+    ],
+    [
+     -198.4,
+     452.9,
+     1.84
+    ],
+    [
+     -189.75,
+     451.24,
+     5.33
+    ],
+    [
+     -174.55,
+     455.37,
+     46.46
+    ],
+    [
+     -150.48,
+     452.72,
+     36.76
+    ],
+    [
+     -142.07,
+     447.73,
+     19.59
+    ],
+    [
+     -111.59,
+     435.6
+    ],
+    [
+     -101.07,
+     431.39,
+     40.35
+    ],
+    [
+     -83.58,
+     429.21,
+     29.0
+    ],
+    [
+     -66.11,
+     432.58,
+     71.88
+    ],
+    [
+     -57.6,
+     436.61
+    ]
+   ],
+   "width": 2.2,
+   "evidence": "ortho2020, osm"
+  },
+  {
+   "name": "WB_road_Bridge_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -221.9,
+     452.3
+    ],
+    [
+     -209.28,
+     450.62,
+     2.4
+    ],
+    [
+     -209.28,
+     453.6
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, osm",
+   "unverified": "corner of the walk read to about 0.4 m"
+  },
+  {
+   "name": "WB_road_SW_corner_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -220.49,
+     419.8
+    ],
+    [
+     -216.92,
+     422.45,
+     3.0
+    ],
+    [
+     -218.43,
+     439.72,
+     3.5
+    ],
+    [
+     -225.92,
+     441.37
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "ortho2020, osm",
+   "unverified": "width and corner read to about 0.4 m"
+  },
+  {
+   "name": "WB_road_Carlisle_SE_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -247.59,
+     372.0
+    ],
+    [
+     -239.57,
+     383.42,
+     76.3
+    ],
+    [
+     -199.6,
+     419.24
+    ]
+   ],
+   "width": 1.9,
+   "evidence": "ortho2020, osm"
+  },
+  {
+   "name": "WB_road_Lot30_E_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -258.47,
+     331.71
+    ],
+    [
+     -253.68,
+     342.31,
+     1727.7
+    ],
+    [
+     -245.63,
+     359.52,
+     6.0
+    ],
+    [
+     -247.59,
+     372.0
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, osm",
+   "unverified": "bend round Lot 30's north end read to about 0.5 m"
+  },
+  {
+   "name": "WB_road_Quad_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -45.0,
+     366.35
+    ],
+    [
+     -7.0,
+     366.35
+    ]
+   ],
+   "width": 2.3,
+   "evidence": "ortho2020, osm"
+  },
+  {
+   "name": "WB_road_Quad_diag_crossing",
+   "kind": "concrete",
+   "centre": [
+    [
+     61.6,
+     348.5
+    ],
+    [
+     63.5,
+     352.6
+    ],
+    [
+     66.8,
+     360.0
+    ]
+   ],
+   "width": 2.5,
+   "evidence": "ortho2020, osm",
+   "unverified": "concrete crossing seen as a light band across the road; may be a raised table"
+  },
+  {
+   "name": "WB_road_Quad_S_walk_E",
+   "kind": "concrete",
+   "centre": [
+    [
+     16.0,
+     357.69
+    ],
+    [
+     18.25,
+     357.84,
+     9.55
+    ],
+    [
+     44.77,
+     354.55,
+     9.55
+    ],
+    [
+     60.0,
+     346.83
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, osm",
+   "unverified": "laid along the curb at the light band; OSM 313028556 lies on the carriageway"
+  },
+  {
+   "name": "WB_road_Stone_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     160.04,
+     351.6
+    ],
+    [
+     175.84,
+     388.16,
+     23.2
+    ],
+    [
+     176.84,
+     390.0
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020, osm"
+  },
+  {
+   "name": "WB_road_Lot17_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -22.53,
+     413.41
+    ],
+    [
+     -19.34,
+     420.17
+    ],
+    [
+     -0.81,
+     428.57
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 1257313377"
+  },
+  {
+   "name": "WB_road_Lot17_NW_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -0.48,
+     427.91
+    ],
+    [
+     -1.2,
+     429.38
+    ],
+    [
+     0.34,
+     433.44
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 287540406"
+  },
+  {
+   "name": "WB_road_Lot17_N_steps_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     0.34,
+     433.44
+    ],
+    [
+     6.63,
+     451.06
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 232853443"
+  },
+  {
+   "name": "WB_road_Lot38_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -5.71,
+     358.1
+    ],
+    [
+     -4.35,
+     357.07
+    ],
+    [
+     -1.21,
+     350.03
+    ],
+    [
+     -5.55,
+     338.46
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028550"
+  },
+  {
+   "name": "WB_road_Quad_S_walk_x40_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     -40.7,
+     337.07
+    ],
+    [
+     -39.53,
+     357.35
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028551"
+  },
+  {
+   "name": "WB_road_Quad_S_walk_x40_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     -39.78,
+     364.7
+    ],
+    [
+     -40.01,
+     367.56
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028551"
+  },
+  {
+   "name": "WB_road_Quad_S_diag_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -26.35,
+     342.14
+    ],
+    [
+     -14.87,
+     356.4
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028552"
+  },
+  {
+   "name": "WB_road_Quad_S_V_walk_W",
+   "kind": "concrete",
+   "centre": [
+    [
+     -14.94,
+     357.51
+    ],
+    [
+     -14.87,
+     356.4
+    ],
+    [
+     -11.44,
+     352.01
+    ],
+    [
+     -6.73,
+     347.66
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028553"
+  },
+  {
+   "name": "WB_road_Quad_S_V_walk_E",
+   "kind": "concrete",
+   "centre": [
+    [
+     -6.73,
+     347.66
+    ],
+    [
+     -4.96,
+     349.89
+    ],
+    [
+     -2.14,
+     352.11
+    ]
+   ],
+   "width": 1.8,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313028554"
+  },
+  {
+   "name": "WB_road_Quad_diag_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     64.96,
+     355.9
+    ],
+    [
+     88.07,
+     407.7
+    ],
+    [
+     91.49,
+     416.78
+    ]
+   ],
+   "width": 2.5,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313027428"
+  },
+  {
+   "name": "WB_road_Webster_Hall_SW_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     124.82,
+     354.71
+    ],
+    [
+     114.83,
+     330.61
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029096"
+  },
+  {
+   "name": "WB_road_Webster_Hall_S_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     122.63,
+     349.1
+    ],
+    [
+     154.61,
+     335.44
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029097"
+  },
+  {
+   "name": "WB_road_Webster_Hall_S_stub",
+   "kind": "concrete",
+   "centre": [
+    [
+     130.24,
+     352.4
+    ],
+    [
+     128.07,
+     346.77
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029098"
+  },
+  {
+   "name": "WB_road_Webster_Hall_SE_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     128.07,
+     346.77
+    ],
+    [
+     139.38,
+     319.01
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029101"
+  },
+  {
+   "name": "WB_road_Reid_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     116.24,
+     333.95
+    ],
+    [
+     156.23,
+     349.75
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029102"
+  },
+  {
+   "name": "WB_road_Stone_W_diag_walk_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     156.31,
+     380.2
+    ],
+    [
+     150.08,
+     361.97
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029114"
+  },
+  {
+   "name": "WB_road_Stone_W_diag_walk_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     145.82,
+     349.52
+    ],
+    [
+     144.28,
+     345.03
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029114"
+  },
+  {
+   "name": "WB_road_Stone_W_lawn_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     160.9,
+     380.2
+    ],
+    [
+     164.4,
+     370.95
+    ],
+    [
+     165.37,
+     369.28
+    ],
+    [
+     168.44,
+     368.02
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029112"
+  },
+  {
+   "name": "WB_road_Bohn_walk_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     123.92,
+     417.07
+    ],
+    [
+     130.42,
+     414.8
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029111"
+  },
+  {
+   "name": "WB_road_Bohn_walk_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     174.8,
+     397.12
+    ],
+    [
+     179.58,
+     395.46
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029111"
+  },
+  {
+   "name": "WB_road_Bohn_walk_3",
+   "kind": "concrete",
+   "centre": [
+    [
+     186.47,
+     392.73
+    ],
+    [
+     189.78,
+     391.31
+    ],
+    [
+     208.92,
+     405.95
+    ],
+    [
+     203.56,
+     422.85
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029111"
+  },
+  {
+   "name": "WB_road_Bohn_walk_E",
+   "kind": "concrete",
+   "centre": [
+    [
+     208.92,
+     405.95
+    ],
+    [
+     214.6,
+     403.74
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 1132693523"
+  },
+  {
+   "name": "WB_road_Bohn_N_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     201.5,
+     423.57
+    ],
+    [
+     222.4,
+     416.16
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 600258640"
+  },
+  {
+   "name": "WB_road_Blanton_S_door_walk_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     150.38,
+     430.38
+    ],
+    [
+     151.72,
+     426.57
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029110"
+  },
+  {
+   "name": "WB_road_Blanton_S_door_walk_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     151.77,
+     426.39
+    ],
+    [
+     155.36,
+     414.8
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029110"
+  },
+  {
+   "name": "WB_road_Blanton_SW_walk_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     88.07,
+     407.7
+    ],
+    [
+     95.2,
+     407.68
+    ]
+   ],
+   "width": 2.5,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029109"
+  },
+  {
+   "name": "WB_road_Blanton_SW_walk_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     117.87,
+     414.8
+    ],
+    [
+     151.46,
+     427.4
+    ]
+   ],
+   "width": 2.5,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029109"
+  },
+  {
+   "name": "WB_road_Blanton_W_walk_1",
+   "kind": "concrete",
+   "centre": [
+    [
+     96.43,
+     441.23
+    ],
+    [
+     95.11,
+     444.16
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029910"
+  },
+  {
+   "name": "WB_road_Blanton_W_walk_2",
+   "kind": "concrete",
+   "centre": [
+    [
+     94.84,
+     444.76
+    ],
+    [
+     90.16,
+     455.17
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "osm, ortho2020",
+   "unverified": "width estimated from the ortho; line from OSM way 313029910"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "WB_road_Junction_island_curb",
+   "path": [
+    [
+     -205.0,
+     428.0,
+     0.8
+    ],
+    [
+     -202.85,
+     434.75,
+     0.8
+    ],
+    [
+     -195.6,
+     434.95,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "closed": true,
+   "unverified": "island outline read to about 0.3 m"
+  },
+  {
+   "name": "WB_road_YB_N_curb",
+   "path": [
+    [
+     -199.73,
+     459.0
+    ],
+    [
+     -200.33,
+     452.15,
+     3.0
+    ],
+    [
+     -189.71,
+     450.11,
+     6.6
+    ],
+    [
+     -174.46,
+     454.25,
+     46.8
+    ],
+    [
+     -150.84,
+     451.65,
+     36.8
+    ],
+    [
+     -142.56,
+     446.74,
+     21.3
+    ],
+    [
+     -112.0,
+     434.58
+    ],
+    [
+     -101.35,
+     430.31,
+     42.7
+    ],
+    [
+     -83.55,
+     428.1,
+     31.0
+    ],
+    [
+     -65.29,
+     431.62,
+     75.2
+    ],
+    [
+     -56.3,
+     436.01
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "curb assumed along the whole north edge (concrete walk behind it in the ortho)"
+  },
+  {
+   "name": "WB_road_Webster_W_island_curb",
+   "path": [
+    [
+     -114.75,
+     330.2
+    ],
+    [
+     -121.5,
+     331.4
+    ],
+    [
+     -135.0,
+     328.3,
+     25.0
+    ],
+    [
+     -152.0,
+     324.6,
+     25.0
+    ],
+    [
+     -163.5,
+     320.8,
+     1.0
+    ],
+    [
+     -158.0,
+     318.6,
+     3.0
+    ],
+    [
+     -150.0,
+     317.6
+    ],
+    [
+     -125.0,
+     317.0
+    ],
+    [
+     -114.4,
+     316.5
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "island outline from the LiDAR ground (+0.2 m) under the shadow of University Hall"
+  },
+  {
+   "name": "WB_road_Quad_Webster_SW_curb",
+   "path": [
+    [
+     -95.6,
+     349.9
+    ],
+    [
+     -87.3,
+     358.25,
+     8.0
+    ],
+    [
+     -77.0,
+     358.25
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "curb assumed (light line in the ortho)"
+  },
+  {
+   "name": "WB_road_Quad_Webster_NE_curb",
+   "path": [
+    [
+     -66.0,
+     366.4
+    ],
+    [
+     -71.0,
+     366.4,
+     3.0
+    ],
+    [
+     -71.0,
+     373.6,
+     4.0
+    ],
+    [
+     -66.9,
+     379.4
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "curb assumed (light line in the ortho)"
+  },
+  {
+   "name": "WB_road_SW_corner_curb",
+   "path": [
+    [
+     -226.62,
+     414.0
+    ],
+    [
+     -215.87,
+     421.98,
+     4.0
+    ],
+    [
+     -217.5,
+     440.54,
+     4.5
+    ],
+    [
+     -225.7,
+     442.35
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "WB_road_Carlisle_SE_curb",
+   "path": [
+    [
+     -248.81,
+     372.0
+    ],
+    [
+     -240.32,
+     384.09,
+     77.3
+    ],
+    [
+     -199.6,
+     420.58
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "WB_road_Bridge_N_NW_curb",
+   "path": [
+    [
+     -222.3,
+     451.45
+    ],
+    [
+     -208.38,
+     449.52,
+     3.5
+    ],
+    [
+     -207.56,
+     459.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "WB_road_Quad_N_curb",
+   "path": [
+    [
+     -45.0,
+     364.97
+    ],
+    [
+     -20.99,
+     364.68,
+     11.1
+    ],
+    [
+     -7.0,
+     365.58
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "WB_road_Quad_S_curb_E",
+   "path": [
+    [
+     16.0,
+     358.74
+    ],
+    [
+     18.28,
+     358.88,
+     10.59
+    ],
+    [
+     45.08,
+     355.56,
+     10.59
+    ],
+    [
+     60.0,
+     347.99
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  },
+  {
+   "name": "WB_road_Stone_W_curb",
+   "path": [
+    [
+     161.21,
+     351.8
+    ],
+    [
+     176.74,
+     387.72,
+     22.2
+    ],
+    [
+     177.98,
+     390.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm"
+  }
+ ],
+ "markings": [
+  {
+   "name": "WB_road_YB_CL_a",
+   "type": "line",
+   "path": [
+    [
+     -187.33,
+     441.67
+    ],
+    [
+     -163.26,
+     449.16,
+     42.59
+    ],
+    [
+     -142.49,
+     439.51,
+     42.59
+    ],
+    [
+     -131.12,
+     437.15,
+     17.7
+    ],
+    [
+     -102.56,
+     425.63,
+     47.5
+    ],
+    [
+     -83.38,
+     423.24,
+     35.8
+    ],
+    [
+     -64.89,
+     426.81,
+     80.0
+    ],
+    [
+     -56.24,
+     430.73
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_road_YB_CL_b",
+   "type": "line",
+   "path": [
+    [
+     -187.27,
+     441.48
+    ],
+    [
+     -163.28,
+     448.94,
+     41.12
+    ],
+    [
+     -142.55,
+     439.31,
+     41.51
+    ],
+    [
+     -131.18,
+     436.95,
+     16.97
+    ],
+    [
+     -102.61,
+     425.43,
+     46.27
+    ],
+    [
+     -83.38,
+     423.04,
+     34.92
+    ],
+    [
+     -64.83,
+     426.61,
+     77.79
+    ],
+    [
+     -56.16,
+     430.55
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_road_YB_turn_bay_line",
+   "type": "line",
+   "path": [
+    [
+     -188.6,
+     445.2
+    ],
+    [
+     -163.0,
+     453.17,
+     46.34
+    ],
+    [
+     -146.0,
+     445.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_YB_N_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -146.0,
+     445.11
+    ],
+    [
+     -141.35,
+     442.95,
+     38.99
+    ],
+    [
+     -130.07,
+     440.61,
+     21.3
+    ],
+    [
+     -101.65,
+     429.14,
+     43.9
+    ],
+    [
+     -83.5,
+     426.88,
+     32.2
+    ],
+    [
+     -65.15,
+     430.42,
+     76.4
+    ],
+    [
+     -56.2,
+     434.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faint; v +3.7 at x -110 and -80"
+  },
+  {
+   "name": "WB_road_YB_S_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -150.0,
+     439.02
+    ],
+    [
+     -149.23,
+     438.67,
+     37.82
+    ],
+    [
+     -143.63,
+     436.06,
+     44.8
+    ],
+    [
+     -132.17,
+     433.69,
+     13.68
+    ],
+    [
+     -103.48,
+     422.11,
+     49.57
+    ],
+    [
+     -83.26,
+     419.6,
+     38.22
+    ],
+    [
+     -64.55,
+     423.2,
+     81.09
+    ],
+    [
+     -56.2,
+     426.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faint; v -3.5 at x -110 and -80, hidden by tree shadow in places"
+  },
+  {
+   "name": "WB_road_YB_WB_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     -189.25,
+     448.75
+    ],
+    [
+     -187.05,
+     441.6
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "across the left-turn bay only; none seen across the through lane"
+  },
+  {
+   "name": "WB_road_YB_WB_arrow_left_1",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -182.8,
+    445.3
+   ],
+   "angle": 197,
+   "shape": "left",
+   "unverified": "shape read at 0.075 m: a turn arrow"
+  },
+  {
+   "name": "WB_road_YB_WB_arrow_left_2",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -160.8,
+    446.7
+   ],
+   "angle": 180,
+   "shape": "left",
+   "unverified": "shape read at 0.075 m: a turn arrow"
+  },
+  {
+   "name": "WB_road_YB_WB_arrow_through_1",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -185.5,
+    449.9
+   ],
+   "angle": 197,
+   "shape": "straight_right",
+   "unverified": "shape guessed: worn arrow in the through lane"
+  },
+  {
+   "name": "WB_road_YB_WB_arrow_through_2",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -158.0,
+    450.6
+   ],
+   "angle": 180,
+   "shape": "straight_right",
+   "unverified": "shape guessed: worn arrow in the through lane"
+  },
+  {
+   "name": "WB_road_XW_Carlisle_N",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     -208.34,
+     452.0
+    ],
+    [
+     -200.0,
+     452.0
+    ]
+   ],
+   "width": 2.5,
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_XW_bridge_leg",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     -211.8,
+     442.3
+    ],
+    [
+     -209.46,
+     450.63
+    ]
+   ],
+   "width": 2.5,
+   "unverified": "bars partly hidden by the signal pole shadow; line from OSM 287538786 checked at 0.075 m"
+  },
+  {
+   "name": "WB_road_XW_Carlisle_S",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     -209.6,
+     429.4
+    ],
+    [
+     -201.8,
+     420.7
+    ]
+   ],
+   "width": 2.6,
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Carlisle_N_SB_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     -208.0,
+     455.4
+    ],
+    [
+     -204.2,
+     455.4
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Bridge_EB_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     -215.5,
+     449.5
+    ],
+    [
+     -215.5,
+     444.5
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_stop_bar_1",
+   "type": "line",
+   "path": [
+    [
+     -215.4,
+     421.4
+    ],
+    [
+     -212.3,
+     418.5
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_stop_bar_2",
+   "type": "line",
+   "path": [
+    [
+     -208.6,
+     423.0
+    ],
+    [
+     -205.7,
+     420.0
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_lane_line",
+   "type": "line",
+   "path": [
+    [
+     -244.7,
+     383.5
+    ],
+    [
+     -207.5,
+     414.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "solid white line between the right-turn lane and the through lanes, read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Slip_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -204.0,
+     421.3
+    ],
+    [
+     -189.6,
+     432.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_Carlisle_N_CL",
+   "type": "line",
+   "path": [
+    [
+     -203.9,
+     455.6
+    ],
+    [
+     -203.6,
+     462.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "short centre line north of the stop bar; fades north of y 462"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_arrow_1",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -228.5,
+    404.0
+   ],
+   "angle": 40,
+   "shape": "straight_left",
+   "unverified": "shape read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_arrow_2",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -219.5,
+    415.0
+   ],
+   "angle": 40,
+   "shape": "straight_left",
+   "unverified": "shape read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_arrow_3",
+   "type": "arrow",
+   "evidence": "ortho2020",
+   "at": [
+    -211.0,
+    418.0
+   ],
+   "angle": 40,
+   "shape": "left",
+   "unverified": "shape read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Carlisle_CL_a",
+   "type": "line",
+   "path": [
+    [
+     -274.15,
+     339.01
+    ],
+    [
+     -266.54,
+     355.86,
+     1692.65
+    ],
+    [
+     -258.7,
+     372.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "the west area's offsets carried on; north end at y 372 where the approach widens (lines there not read)"
+  },
+  {
+   "name": "WB_road_Carlisle_CL_b",
+   "type": "line",
+   "path": [
+    [
+     -274.33,
+     339.1
+    ],
+    [
+     -266.74,
+     355.9,
+     1692.84
+    ],
+    [
+     -258.92,
+     372.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "the west area's offsets carried on; north end at y 372 where the approach widens (lines there not read)"
+  },
+  {
+   "name": "WB_road_Carlisle_W_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -277.7,
+     340.62
+    ],
+    [
+     -270.43,
+     356.7,
+     1748.9
+    ],
+    [
+     -263.02,
+     372.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "the west area's offsets carried on; north end at y 372 where the approach widens (lines there not read)"
+  },
+  {
+   "name": "WB_road_Carlisle_NB_edge_line",
+   "type": "line",
+   "path": [
+    [
+     -271.05,
+     337.62
+    ],
+    [
+     -263.17,
+     355.06,
+     1689.35
+    ],
+    [
+     -254.93,
+     372.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "the west area's offsets carried on; north end at y 372 where the approach widens (lines there not read)"
+  },
+  {
+   "name": "WB_road_Quad_W_stop_bar",
+   "type": "line",
+   "path": [
+    [
+     -66.4,
+     358.6
+    ],
+    [
+     -66.4,
+     365.1
+    ]
+   ],
+   "width": 0.45,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_XW_Quad_diner",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     -9.05,
+     357.73
+    ],
+    [
+     -9.05,
+     365.15
+    ]
+   ],
+   "width": 4.5,
+   "style": "lines",
+   "unverified": "two dashed edge lines seen (x -11.3 and -6.8); drawn as solid lines"
+  },
+  {
+   "name": "WB_road_XW_Stone_368",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     168.6,
+     367.9
+    ],
+    [
+     174.02,
+     365.52
+    ]
+   ],
+   "width": 2.5,
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_XW_Stone_391",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     178.53,
+     393.85
+    ],
+    [
+     185.05,
+     389.8
+    ]
+   ],
+   "width": 4.0,
+   "unverified": "read at 0.075 m; position to about 0.3 m"
+  },
+  {
+   "name": "WB_road_XW_Stone_429",
+   "type": "crosswalk",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     201.2,
+     423.4
+    ],
+    [
+     197.22,
+     432.74
+    ]
+   ],
+   "width": 3.0,
+   "unverified": "diagonal crossing (OSM 1132693524), bars read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Carlisle_N_parking_line",
+   "type": "line",
+   "path": [
+    [
+     -181.59,
+     551.0
+    ],
+    [
+     -181.45,
+     551.33,
+     32.2
+    ],
+    [
+     -156.24,
+     609.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "solid line read at 0.075 m"
+  },
+  {
+   "name": "WB_road_Carlisle_N_parking_stalls",
+   "type": "stalls",
+   "evidence": "ortho2020",
+   "line": [
+    [
+     -179.23,
+     556.4
+    ],
+    [
+     -158.34,
+     604.2
+    ]
+   ],
+   "count": 7,
+   "depth": 2.0,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "unverified": "parallel stalls: divider length 2.0 m guessed (ticks worn)"
+  }
+ ],
+ "points": [
+  {
+   "name": "WB_road_Pylon_N",
+   "kind": "pylon",
+   "at": [
+    -161.0,
+    390.75
+   ],
+   "evidence": "lidar2017, osm, ortho2020",
+   "height": 39.1,
+   "angle": 165.4,
+   "unverified": "lattice tower (OSM 1104399703, Cedar Grove - Clifton line); top of the LiDAR returns 39.1 m over the ground"
+  }
+ ]
+}
