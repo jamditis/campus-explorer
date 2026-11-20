@@ -826,21 +826,25 @@
    "kind": "asphalt",
    "ring": [
     [
-     -154.4,
+     -146.6,
      1307.0
     ],
     [
-     -142.4,
-     1308.2
+     -140.6,
+     1307.0
     ],
     [
-     -122.1,
-     1314.9
+     -125.0,
+     1309.84
     ],
     [
-     -72.5,
-     1336.6,
-     2.0
+     -87.07,
+     1326.92,
+     1.5
+    ],
+    [
+     -73.0,
+     1340.4
     ],
     [
      -65.6,
@@ -868,12 +872,16 @@
      1378.8
     ],
     [
-     -160.6,
-     1356.0
+     -159.2,
+     1357.2
+    ],
+    [
+     -148.6,
+     1319.5
     ]
    ],
    "evidence": "ortho2020; osm 313032754",
-   "unverified": "west and north edges run to the area outline (the lot continues as the drive north of the canopies); mouths: south-west to the Lot 45 / 46 drive, east to the drive at the crosswalk"
+   "unverified": "west and north edges run to the area outline (the lot continues as the drive north of the canopies); south edge at the stall ends of the south row (OSM puts it 3 m north); mouths: south-west to the drive from Lot 45 (x -147 to -141), east to the drive at the crosswalk; east end (x -88 to -73) between asphalt and lawn read at zoom 9"
   }
  ],
  "curbs": [
@@ -1573,13 +1581,21 @@
    "name": "V_lot_61_curb_S",
    "path": [
     [
-     -122.1,
-     1314.9
+     -140.6,
+     1307.0
     ],
     [
-     -72.5,
-     1336.6,
-     2.0
+     -125.0,
+     1309.84
+    ],
+    [
+     -87.07,
+     1326.92,
+     1.5
+    ],
+    [
+     -73.0,
+     1340.4
     ],
     [
      -65.6,
@@ -1587,7 +1603,8 @@
     ]
    ],
    "closed": false,
-   "evidence": "ortho2020"
+   "evidence": "ortho2020",
+   "unverified": "curb along the tree belt south of the row (x -140 to -125) guessed"
   },
   {
    "name": "V_lot_61_curb_NE",
@@ -1618,17 +1635,21 @@
    "name": "V_lot_61_curb_W",
    "path": [
     [
-     -160.6,
-     1356.0
+     -159.2,
+     1357.2
     ],
     [
-     -154.4,
+     -148.6,
+     1319.5
+    ],
+    [
+     -146.6,
      1307.0
     ]
    ],
    "closed": false,
    "evidence": "ortho2020",
-   "unverified": "west curb at the area outline"
+   "unverified": "east edge of the walk west of the lot; south of y 1319 (the mouth from Lot 45) guessed"
   }
  ],
  "markings": [
@@ -3527,6 +3548,24 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "row continues west under the north canopy shadow: not drawn there"
+  },
+  {
+   "name": "V_lot_61_line_canopy_S",
+   "type": "line",
+   "path": [
+    [
+     -143.1,
+     1317.15
+    ],
+    [
+     -85.21,
+     1343.23
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "bright line along the south edge of the south canopy: read as paint (stall end line); could be a low curb"
   },
   {
    "name": "V_lot_61_hatch_NE_outline",
