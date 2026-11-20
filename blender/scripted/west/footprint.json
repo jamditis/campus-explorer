@@ -1,6 +1,6 @@
 {
  "zone": "w_footprint",
- "notes": "The ground this area owns: the strip between the railway and the buildings north of the south-west area, with Carlisle Road from the south-west area's cut to the north edge of the evidence, its roadside parking (Lot 30S, Lot 30), the mouth of Webster Road, and the junction of College Avenue and Carlisle Road beside the Red Hawk Deck (with Lot 33). South: the south-west footprint's north edge, from 3.3 m east of the ballast (on its run (-429, -59.5)-(-408.5, -57.5)) to (-396, -57.5); east of that the two areas do not touch: the Maintenance Building stands between them. East: 1 m outside the walls of the Maintenance Building (west wall, north wall and its notch, from the published tiles), then the main model's cogeneration-plant lot (WS74, x -323 and y -47) and College Avenue (KY_college_ave_asphalt: its west and north edges) as far as the drive apron at the deck's south-east corner (KX); then back west 1 m outside the Red Hawk Deck's south face; round the University Police building and its terrace 1 m out (they stay with the north model, and so does the lawn strip along the deck's west side, ge_deckbase); north past the end of the deck base to 1.4 m west of the field's south-west light pole, then 1 m outside the west edge of Pittser Field's turf and fence, and round the north-west light pole. North-east: across the mouth of Webster Road 1 m beyond its crosswalk (Webster Road beyond it and the Feliciano drop-off are not part of this strip; they are unpaved in the published model too), then 1 m outside the walk along the island and along Lot 30. North: straight across the road at right angles 436 m along Carlisle Road's centre arc (y 331..344), just inside the edge of the ortho (y 350): the road and Lot 30 run on north of the evidence, so the cut is where they leave it. West: 3.2 to 4.3 m east of the ballast's east edge (measured from the published tiles), straight runs between points 3.6 m off the edge. No vertex lies inside a building, a stand, the turf or a light pole base.",
+ "notes": "The ground this area owns: the strip between the railway and the buildings north of the south-west area, with Carlisle Road from the south-west area's cut to the north edge of the evidence, its roadside parking (Lot 30S, Lot 30), the mouth of Webster Road, and the junction of College Avenue and Carlisle Road beside the Red Hawk Deck (with Lot 33). South: the south-west footprint's north edge, from 3.3 m east of the ballast (on its run (-429, -59.5)-(-408.5, -57.5)) to (-396, -57.5); east of that the two areas do not touch: the Maintenance Building stands between them. East: 1 m outside the walls of the Maintenance Building (west wall, north wall and its notch, from the published tiles); then along the main model's paving (WS74 cogeneration-plant lot, KY_college_ave_asphalt, the KX drive apron) 0.2 m inside its real edge, traced from the tiles' triangles (WS74 west edge and north-west chamfer, its north edge at y -47.0 with a step round the hole at its first stair, KY's west edge, KY's north edge west part run under its notch, a jog to its east part, its dip at the apron, the apron's west edge), so that their asphalt covers the joint and no strip of old ground is left between; then back west 0.2 m outside the Red Hawk Deck's south face, so the paving runs to its foot; round the University Police building and its terrace 1 m out (they stay with the north model, and so does the lawn strip along the deck's west side, ge_deckbase); north past the end of the deck base to 1.4 m west of the field's south-west light pole, then 1 m outside the west edge of Pittser Field's turf and fence, and round the north-west light pole. North-east: across the mouth of Webster Road 1 m beyond its crosswalk (Webster Road beyond it and the Feliciano drop-off are not part of this strip; they are unpaved in the published model too), then 1 m outside the walk along the island and along Lot 30. North: straight across the road at right angles 436 m along Carlisle Road's centre arc (y 331..344), just inside the edge of the ortho (y 350): the road and Lot 30 run on north of the evidence, so the cut is where they leave it. West: 3.2 to 4.3 m east of the ballast's east edge (measured from the published tiles), straight runs between points 3.6 m off the edge. No vertex lies inside a building, a stand, the turf or a light pole base.",
  "footprint": [
   [
    -410.52,
@@ -39,44 +39,60 @@
    -57.93
   ],
   [
-   -323.1,
+   -322.8,
    -57.93
   ],
   [
-   -323.1,
-   -46.95
+   -322.8,
+   -48.12
   ],
   [
-   -303.22,
-   -46.95
+   -320.97,
+   -47.2
   ],
   [
-   -301.9,
-   -41.45
+   -303.7,
+   -47.2
   ],
   [
-   -296.6,
-   -41.75
+   -303.7,
+   -47.7
   ],
   [
-   -294.1,
-   -42.35
+   -303.2,
+   -47.7
   ],
   [
-   -278.6,
-   -46.3
+   -301.67,
+   -41.65
   ],
   [
-   -276.3,
-   -47.55
+   -294.01,
+   -43.58
   ],
   [
-   -274.78,
-   -41.49
+   -293.68,
+   -42.73
   ],
   [
-   -331.64,
-   -27.27
+   -278.74,
+   -46.52
+  ],
+  [
+   -278.41,
+   -47.27
+  ],
+  [
+   -276.17,
+   -47.83
+  ],
+  [
+   -274.39,
+   -40.76
+  ],
+  [
+   -331.45,
+   -26.49
   ],
   [
    -339.0,
@@ -196,7 +212,7 @@
   ]
  ],
  "supersede": {
-  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area inside the outline, m2: Context_skirt_3DEP_ortho_4km 19191, M3a_north_LiDAR_DTM_1m_ext (North_ground_ortho2020) 13774, PK_Feliciano_west_DTM_fill 3178, WS68_RHD_ground_northDTM 1397, North_terrain_LiDAR_1m (North_ground_ortho2020) 1216, MH_terrain_LiDAR_1m (MH_ground_ortho2020) 388, bz_terrain_1m_ext_rhd_south 439, gb_panzer_footprint_underpatch 179, WS60_terrain_edge_apron 21). BD_farfield_3DEP and far_houses have nothing inside. drop: nothing; KY_college_ave_asphalt (0.1 m2 at the edge) and WS74_cogen_lot_asphalt stay outside the outline and are not redrawn.",
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area inside the outline, m2: Context_skirt_3DEP_ortho_4km 19235, M3a_north_LiDAR_DTM_1m_ext (North_ground_ortho2020) 13774, PK_Feliciano_west_DTM_fill 3178, WS68_RHD_ground_northDTM 1481, North_terrain_LiDAR_1m (North_ground_ortho2020) 1216, MH_terrain_LiDAR_1m (MH_ground_ortho2020) 388, bz_terrain_1m_ext_rhd_south 439, gb_panzer_footprint_underpatch 179, WS60_terrain_edge_apron 28). BD_farfield_3DEP and far_houses have nothing inside. drop: nothing; KY_college_ave_asphalt and WS74_cogen_lot_asphalt are not redrawn: the outline reaches 0.2 m into them (16 and 8 m2) so their asphalt covers the joint.",
   "clip": [
    "Context_skirt",
    "North_ground_ortho2020",
