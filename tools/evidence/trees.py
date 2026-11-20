@@ -111,6 +111,13 @@ def peaks(height, cell, min_height=5.0, coarse=2.0):
 GRID = 3.0  # cell of the map of trees the published model already has, metres
 
 
+def is_vegetation(name):
+    """Is a mesh of the published tiles a tree or a shrub, by its name? "tree" must start a word:
+    the tiles have asphalt meshes named `..._streets_...`.
+    """
+    return bool(re.search(r"(?i)(?<![a-z])tree|crown|shrub", name))
+
+
 def existing(dump):
     """Cells (GRID metres) that hold a tree of the published tiles, from a dump made by
     tools/evidence/dump_tiles.mjs WITH instances (tiles.json, tiles.bin).
@@ -119,7 +126,7 @@ def existing(dump):
     tri = np.fromfile(dump / "tiles.bin", dtype=np.float32).reshape(-1, 9)
     cells = set()
     for e in meta["entries"]:
-        if not re.search(r"(?i)tree|crown|shrub", e["mesh"] + " " + e.get("node", "")):
+        if not is_vegetation(e["mesh"] + " " + e.get("node", "")):
             continue
         t = tri[e["offset"] : e["offset"] + e["tris"]]
         cx = (t[:, [0, 3, 6]].mean(1) // GRID).astype(int)
