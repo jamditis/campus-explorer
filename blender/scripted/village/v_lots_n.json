@@ -189,18 +189,18 @@
      1147.5
     ],
     [
-     -229.0,
-     1147.5,
+     -230.0,
+     1147.6,
      2.6
     ],
     [
-     -229.6,
-     1142.6,
-     2.0
+     -230.6,
+     1142.2,
+     1.5
     ],
     [
      -236.6,
-     1137.3
+     1138.2
     ],
     [
      -240.94,
@@ -213,7 +213,7 @@
    ],
    "evidence": "ortho2020",
    "layer": 3.5,
-   "unverified": "west edge of the cap (behind the last strip stall) guessed"
+   "unverified": "west edge of the cap (behind the last strip stall) guessed; rounded east end read at zoom 40 (x -230.2)"
   },
   {
    "name": "V_lot_48_dumpster_pad",
@@ -792,24 +792,36 @@
    "kind": "asphalt",
    "ring": [
     [
-     -38.42,
-     1117.37
+     -41.11,
+     1128.59
     ],
     [
-     -30.66,
-     1162.24
+     -43.58,
+     1139.79
     ],
     [
-     -35.87,
-     1185.72
+     -36.38,
+     1181.39
     ],
     [
-     -43.63,
-     1140.84
+     -33.17,
+     1174.5
+    ],
+    [
+     -31.48,
+     1158.81
+    ],
+    [
+     -37.12,
+     1126.21
+    ],
+    [
+     -40.24,
+     1126.72
     ]
    ],
    "evidence": "ortho2020; osm 287712281",
-   "unverified": "the painted island between the two loop drives; paving shared with the drives (digitised elsewhere)"
+   "unverified": "only the painted island and its stalls (0.2 m beyond the divider ends), cut at the area outline: the first east-row stall runs past the outline there; the drives either side are digitised elsewhere"
   }
  ],
  "curbs": [
@@ -996,18 +1008,18 @@
      1147.5
     ],
     [
-     -229.0,
-     1147.5,
+     -230.0,
+     1147.6,
      2.6
     ],
     [
-     -229.6,
-     1142.6,
-     2.0
+     -230.6,
+     1142.2,
+     1.5
     ],
     [
      -236.6,
-     1137.3
+     1138.2
     ],
     [
      -240.94,
@@ -3701,18 +3713,18 @@
    "type": "stalls",
    "line": [
     [
-     -128.47,
-     1265.96
+     -130.44,
+     1261.8
     ],
     [
-     -100.99,
-     1253.47
+     -102.96,
+     1249.31
     ]
    ],
    "count": 11,
    "depth": 4.6,
-   "side": "right",
-   "angle": 90.9,
+   "side": "left",
+   "angle": 89.1,
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "stalls on the north side of Village Road, heads at the walk; depth guessed (lines worn at the road end)"
@@ -3722,18 +3734,18 @@
    "type": "stalls",
    "line": [
     [
-     -179.28,
-     1220.37
+     -174.82,
+     1218.11
     ],
     [
-     -158.96,
-     1262.33
+     -154.5,
+     1260.07
     ]
    ],
    "count": 18,
    "depth": 5.0,
-   "side": "right",
-   "angle": 91.0,
+   "side": "left",
+   "angle": 89.0,
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "stalls on the west side of Village Road; seven dividers under cars, from the 2.59 m pitch (residuals to 0.4 m)"
@@ -3743,18 +3755,18 @@
    "type": "stalls",
    "line": [
     [
-     -96.41,
-     1250.87
+     -98.32,
+     1246.47
     ],
     [
-     -69.26,
-     1237.52
+     -71.17,
+     1233.12
     ]
    ],
    "count": 11,
    "depth": 4.8,
-   "side": "right",
-   "angle": 87.3,
+   "side": "left",
+   "angle": 92.7,
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "stalls on the south side of Village Road by Count Basie Hall; ends in the building shadow; divider 4 not seen (a curb nose there)"
@@ -4087,18 +4099,18 @@
    "type": "stalls",
    "line": [
     [
-     -181.5,
-     1169.6
+     -185.78,
+     1172.18
     ],
     [
-     -177.6,
-     1177.15
+     -181.88,
+     1179.73
     ]
    ],
    "count": 3,
    "depth": 5.0,
-   "side": "left",
-   "angle": 86.3,
+   "side": "right",
+   "angle": 93.7,
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "east side of Village Road north of Fenwick Hall: four dividers from brightness profiles; a fifth line at the north end faint (not drawn)"
@@ -4108,17 +4120,17 @@
    "type": "stalls",
    "line": [
     [
-     -160.7,
-     1051.42
+     -164.56,
+     1054.27
     ],
     [
-     -145.24,
-     1072.33
+     -149.1,
+     1075.18
     ]
    ],
    "count": 10,
    "depth": 4.8,
-   "side": "left",
+   "side": "right",
    "angle": 90.0,
    "colour": "white",
    "evidence": "ortho2020",
@@ -4230,7 +4242,7 @@
  ],
  "buildings": [
   {
-   "name": "V_lot_61_canopy_N_UNVERIFIED",
+   "name": "V_lot_61_canopy_N",
    "ring": [
     [
      -149.01,
@@ -4269,7 +4281,7 @@
    "unverified": "posts and the roof depth not measured; roof colour from the ortho (dark panels); the 2017 outline assumed unchanged in 2020"
   },
   {
-   "name": "V_lot_61_canopy_M_UNVERIFIED",
+   "name": "V_lot_61_canopy_M",
    "ring": [
     [
      -141.91,
@@ -4300,7 +4312,7 @@
    "unverified": "posts and the roof depth not measured; roof colour from the ortho (dark panels); the 2017 outline assumed unchanged in 2020"
   },
   {
-   "name": "V_lot_61_canopy_S_UNVERIFIED",
+   "name": "V_lot_61_canopy_S",
    "ring": [
     [
      -134.95,
