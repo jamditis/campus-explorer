@@ -1,0 +1,18 @@
+{
+ "zone": "green_adopt",
+ "notes": "Alumni Green plaza in front of Susan A. Cole Hall. The main model's ws5 plaza and one acorn lamp are taken over and changed by blender/alumni_green_fixes.py (apply), from Joe's photos of 2026-11-20 (1000102881..83): red-brown herringbone pavers, the light band as a ring with four pointed tips, the ALUMNI GREEN stone inlay and the steel hatch at the north edge, and the lamp moved to the lawn just outside that edge. The main tiles keep their own Lamp_acorn_017; the adopted copy is the plaza's lamp. Positions of the new pieces are relations read from the photos, UNVERIFIED to about 1.5 m.",
+ "adopt": {
+  "file": "montclair_state_20261118i.blend",
+  "sha256": "4e6abcb4df8507be13677fc653e7643827a1dceac2ed8ebb8513902837aef67b",
+  "groups": [
+   {
+    "name": "plaza",
+    "objects": [
+     "WS5_Cole_plaza_circle_quatrefoil_20261109",
+     "Lamp_acorn_017"
+    ],
+    "fix": "alumni_green_fixes:apply"
+   }
+  ]
+ }
+}

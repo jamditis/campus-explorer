@@ -3,7 +3,8 @@
 usage: python3 tools/evidence/trees.py NAME AREA_DIR ZONE [--min-height 5] [--existing DUMP_DIR]
 NAME is the evidence folder under DATA (default /workspace/data) with lidar.npz and ortho2020.png
 (tools/evidence/fetch.py). AREA_DIR is the area's plan folder (blender/scripted/<area>): trees are
-kept inside its footprint, outside its buildings, stands and paving, and away from its towers.
+kept inside its footprint, outside its buildings, stands and paving, outside the buildings
+OpenStreetMap maps there (NAME/osm.json), and away from its towers.
 Writes AREA_DIR/ZONE.json. With --existing (a dump of the published tiles made by dump_tiles.mjs
 with instances) a tree is left out where another source model already has one.
 
@@ -135,6 +136,21 @@ def existing(dump):
     return cells
 
 
+def mapped_buildings(osm):
+    """Outlines [(x, y), ...] of the buildings in an OpenStreetMap extract made by fetch.py. A
+    building of another source model inside the area returns like a crown and is not in the plan:
+    no tree stands on a mapped roof.
+    """
+    at = {e["id"]: (e["x"], e["y"]) for e in osm["elements"] if e["type"] == "node" and "x" in e}
+    rings = []
+    for e in osm["elements"]:
+        if e["type"] == "way" and "building" in e.get("tags", {}):
+            ring = [at[n] for n in e["nodes"] if n in at]
+            if len(ring) >= 4 and ring[0] == ring[-1]:
+                rings.append(ring[:-1])
+    return rings
+
+
 def main():
     args = sys.argv[1:]
     name, area, zone = args[0], Path(args[1]), args[2]
@@ -147,6 +163,10 @@ def main():
     keep_out = [geom.offset(_ccw(geom.expand(b["ring"], True)), -2.5, True)
                 for b in lay["buildings"] + lay["stands"]]  # fmt: skip
     keep_out += [s["ring"] for s in lay["surfaces"] if s["kind"] in PAVED]
+    if (data / "osm.json").exists():
+        osm = json.loads((data / "osm.json").read_text())
+        # the same 2.5 m margin as the plan's own buildings: a roof edge leans in the survey
+        keep_out += [geom.offset(_ccw(r), -2.5, True) for r in mapped_buildings(osm)]
     # a lattice tower returns like a tall crown: no trees within 9 m of one
     towers = [q["at"] for q in lay["points"] if q["kind"] == "pylon"]
     taken = existing(Path(args[args.index("--existing") + 1])) if "--existing" in args else set()
@@ -154,7 +174,8 @@ def main():
     ortho = np.asarray(Image.open(data / "ortho2020.png").convert("RGB")).astype(float)
     points = []
     for j, i, z in peaks(height, cell, min_height):
-        x, y = x0 + (i + 0.5) * cell, y1 - (j + 0.5) * cell
+        # test the position that is written: a tree 2 cm outside paving rounded to 4 cm inside it
+        x, y = round(x0 + (i + 0.5) * cell, 1), round(y1 - (j + 0.5) * cell, 1)
         if not geom.inside(lay["footprint"], x, y) or any(geom.inside(r, x, y) for r in keep_out):
             continue
         if any((x - t[0]) ** 2 + (y - t[1]) ** 2 < 81 for t in towers):

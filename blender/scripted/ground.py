@@ -75,6 +75,15 @@ def triangulate(lay):
         add_ring(_densify(s["ring"], GRID))
         for h in s["holes"]:
             add_ring(_densify(h, GRID))
+    # a seating bowl's outline: the ground held under the bowl (terrain caps) ends exactly on it,
+    # so no triangle runs from the concourse over the rows
+    for ring in lay.get("caps", ()):
+        add_ring(_densify(ring, GRID))
+    for line in lay.get("cap_lines", ()):  # and on its risers, so no triangle spans a step
+        dense = [(p[0], p[1]) for p in geom.resample(list(line), GRID, False)] + [tuple(line[-1])]
+        base = len(pts)
+        pts.extend(dense)
+        edges.extend((base + i, base + i + 1) for i in range(len(dense) - 1))
     # terrain-following points on a staggered grid, kept clear of the outlines so no slivers form
     b = geom.bounds(foot)
     cons = np.array(pts)
@@ -128,26 +137,30 @@ def heights(lay, terrain, xy, tris, owner):
         [o >= 0 and lay["surfaces"][o].get("grade", True) for o in owner]
     )  # a pad on a bank follows the bank
     paved[np.unique(tris[np.isin(kinds, list(PAVED)) & graded])] = True
-    z = terrain.surface(xy[:, 0], xy[:, 1], paved)
+    z = terrain.surface(xy[:, 0], xy[:, 1], paved, capped=False)
+    # under a seating bowl the ground is held below the rows (terrain caps); the ground outside
+    # keeps its own height on the bowl's outline, so a vertex there has both
+    zc = terrain.cap(xy[:, 0], xy[:, 1], z)
     # water is one level sheet; the ground round it meets it at the shore vertices it shares
     levels = {}
     for i, s in enumerate(lay["surfaces"]):
         if s["kind"] == "water" and (owner == i).any():
             levels[i] = s["level"] if "level" in s else terrain.water_level(s["ring"])
             print(f"SW water {s['name']}: level {levels[i]:.2f} m")
-    return flood(z, tris, owner, levels)
+    return flood(zc, tris, owner, levels), flood(z, tris, owner, levels)
 
 
 def build(lay, terrain, image_dir=None):
     """Make the ground objects (one per kind, verified and UNVERIFIED apart). Returns them."""
     xy, tris, owner = triangulate(lay)
-    z = heights(lay, terrain, xy, tris, owner)
+    zcap, zfree = heights(lay, terrain, xy, tris, owner)
+    capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl
     groups = {}
-    for t, o in zip(tris, owner, strict=True):
+    for t, o, under in zip(tris, owner, capped, strict=True):
         s = lay["surfaces"][o] if o >= 0 else dict(kind="lawn", name="Ground", sheets=None)
         cx, cy = xy[t].mean(0)
         key = (s["kind"], bool(s.get("unverified")), math.floor(cx / TILE), math.floor(cy / TILE))
-        groups.setdefault(key, []).append((t, s))
+        groups.setdefault(key, []).append((t, s, under))
     # triangles on the footprint edge get a skirt: an edge used by one triangle only
     count = {}
     for t in tris:
@@ -158,12 +171,13 @@ def build(lay, terrain, image_dir=None):
         name = f"SW_ground_{lay['area']}_{kind}_{tx}_{ty}" + ("_UNVERIFIED" if unverified else "")
         bm = bmesh.new()
         uv = bm.loops.layers.uv.new("UVMap")
-        mats, vmap = [], {}
+        mats, vmap, now = [], {}, {}
 
-        def vert(i, bm=bm, vmap=vmap):
-            if i not in vmap:
-                vmap[i] = bm.verts.new((xy[i, 0], xy[i, 1], z[i]))
-            return vmap[i]
+        def vert(i, bm=bm, vmap=vmap, now=now):
+            key = (i, now["under"])
+            if key not in vmap:
+                vmap[key] = bm.verts.new((xy[i, 0], xy[i, 1], now["z"][i]))
+            return vmap[key]
 
         def slot(material, mats=mats):
             if material not in mats:
@@ -171,7 +185,9 @@ def build(lay, terrain, image_dir=None):
             return mats.index(material)
 
         plain = kit.mat(kind, "base", COLOUR[kind], ROUGH[kind])
-        for t, s in items:
+        for t, s, under in items:
+            z = zcap if under else zfree  # read by the skirt below, and by vert() through `now`
+            now.update(z=z, under=under)
             # anticlockwise seen from above, so the face looks up and its skirt looks outward
             (ax, ay), (bx, by), (cx, cy) = xy[t]
             if (bx - ax) * (cy - ay) - (by - ay) * (cx - ax) < 0:

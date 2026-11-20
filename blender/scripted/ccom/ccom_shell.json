@@ -1,0 +1,420 @@
+{
+ "zone": "ccom_shell",
+ "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). REVISED 2026-11-20 (lead): the main model's walls, window units (without their fake-room boxes), eave course, soffit and downspouts are adopted on the west, south and north faces (adopt.json); this part builds walls only on the east band (east of model x 17.9, where the main model had lowered them a storey), with recessed windows of the main model's type (reveal, sill, frame with mullion and transom) on the three floor levels (UNVERIFIED rows until Joe's east photo), a tile eave course flush on the east walls (no overhang there, Joe 2026-10-14), and the ring roof for the whole building (0.86 m overhang on the other free walls, ridge and hip caps). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom.",
+ "buildings": [
+  {
+   "name": "CCOM_main",
+   "ring": [
+    [
+     -24.058,
+     -12.683
+    ],
+    [
+     -11.771,
+     -15.689
+    ],
+    [
+     -12.379,
+     -18.186
+    ],
+    [
+     18.987,
+     -25.811
+    ],
+    [
+     20.853,
+     -18.155
+    ],
+    [
+     24.876,
+     -19.136
+    ],
+    [
+     28.573,
+     -3.97
+    ],
+    [
+     31.944,
+     -4.792
+    ],
+    [
+     34.565,
+     5.706
+    ],
+    [
+     12.622,
+     10.736
+    ],
+    [
+     17.571,
+     32.009
+    ],
+    [
+     12.624,
+     33.081
+    ],
+    [
+     13.018,
+     35.034
+    ],
+    [
+     -0.258,
+     39.392
+    ],
+    [
+     -10.761,
+     41.654
+    ],
+    [
+     -14.704,
+     24.129
+    ],
+    [
+     -16.462,
+     17.044
+    ],
+    [
+     -18.682,
+     17.564
+    ],
+    [
+     -20.926,
+     8.148
+    ],
+    [
+     -19.115,
+     7.593
+    ]
+   ],
+   "roof": "flat",
+   "top": 147.8,
+   "parapet": 0.3,
+   "style": "civic",
+   "wall": "#f3efe7",
+   "trim": "#592d28",
+   "roof_colour": "#e9eae4",
+   "floors": 3,
+   "windows": {
+    "style": "recessed",
+    "width": 2.6,
+    "height": 2.6,
+    "spacing": 3.4,
+    "sill": 0.9,
+    "levels": [
+     134.85,
+     137.4,
+     141.85
+    ],
+    "reveal": 0.3,
+    "glass_back": 0.12,
+    "frame": "#2e3033",
+    "sill_colour": "#cdc4b2"
+   },
+   "no_windows": [
+    0,
+    1,
+    2,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ],
+   "openings": [
+    {
+     "at": [
+      -24.058,
+      -12.683
+     ],
+     "to": [
+      -11.771,
+      -15.689
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -11.771,
+      -15.689
+     ],
+     "to": [
+      -12.379,
+      -18.186
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      12.622,
+      10.736
+     ],
+     "to": [
+      17.571,
+      32.009
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      17.571,
+      32.009
+     ],
+     "to": [
+      12.624,
+      33.081
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      12.624,
+      33.081
+     ],
+     "to": [
+      13.018,
+      35.034
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      13.018,
+      35.034
+     ],
+     "to": [
+      -0.258,
+      39.392
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -0.258,
+      39.392
+     ],
+     "to": [
+      -10.761,
+      41.654
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -10.761,
+      41.654
+     ],
+     "to": [
+      -14.704,
+      24.129
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -16.462,
+      17.044
+     ],
+     "to": [
+      -18.682,
+      17.564
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -18.682,
+      17.564
+     ],
+     "to": [
+      -20.926,
+      8.148
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -20.926,
+      8.148
+     ],
+     "to": [
+      -19.115,
+      7.593
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -19.115,
+      7.593
+     ],
+     "to": [
+      -24.058,
+      -12.683
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "wall adopted from the main model (School of Communication and Media walls)"
+    },
+    {
+     "at": [
+      -12.379,
+      -18.186
+     ],
+     "to": [
+      17.897,
+      -25.556
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "south wall adopted up to x 17.9 (the main model's walls are a storey low east of it)"
+    },
+    {
+     "at": [
+      17.897,
+      9.533
+     ],
+     "to": [
+      12.622,
+      10.736
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "north edge adopted west of x 17.9"
+    },
+    {
+     "at": [
+      -14.708,
+      24.109
+     ],
+     "to": [
+      -16.457,
+      17.063
+     ],
+     "z0": 133.0,
+     "z1": 148.0,
+     "why": "the adopted tower's east face"
+    }
+   ],
+   "ring_roof": {
+    "crest": 151.1,
+    "crest_in": [
+     6.0,
+     6.0,
+     6.0,
+     6.8,
+     6.0,
+     7.0,
+     6.0,
+     10.5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     7.0,
+     7.0,
+     0,
+     0,
+     0,
+     0,
+     7.3
+    ],
+    "inner_in": [
+     6.5,
+     6.5,
+     6.5,
+     7.3,
+     6.5,
+     7.5,
+     6.5,
+     11.0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     8.0,
+     7.8,
+     0,
+     0,
+     0,
+     0,
+     8.0
+    ],
+    "overhang": [
+     0.86,
+     0.86,
+     0.86,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0.86,
+     0.86,
+     0,
+     0,
+     0,
+     0,
+     0.86
+    ],
+    "colour": "#eaccc5",
+    "caps": "#898a86",
+    "eave_course": [
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "flat_edges": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "evidence": "osm way 1188721159; lidar2017 raw points; ortho2020; main model materials",
+   "unverified": "window grid and floor levels; crest shape (one plane 147.7 -> 151.1 over 6.8 m where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands"
+  }
+ ]
+}

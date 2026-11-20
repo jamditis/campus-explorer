@@ -1,0 +1,2865 @@
+{
+ "zone": "l60_lot",
+ "notes": "Zone l60_lot: Lot 60, its west drive, the north-west paving up to the B/C border, the spine drive with its south-west walk, the stall row against the Center for Clinical Services, the Facilities forecourt asphalt and the junction apron north of the Village edge. The JSON was written by a generator (/tmp/claude-0/p4/lot60/l60_lot/gen.py). Since the review of 2026-11-20 this file is edited by hand; it is the source. Frame (t, s): t along 136 deg, s along 46 deg. Sources: NJ 2020 ortho at 0.15 m and 0.075 m (positions, paint), 3DEP 2017 LiDAR (heights, curbs, pads), OSM 233913162 and 233913165 (names, what a thing is). Lot 60's rows and islands run at 136.27 deg (island edges fitted: B north-east edge 35 points rms 0.041 m; A edges 17 and 65 points rms 0.047 and 0.043; R1 island 23 points rms 0.032). Stall rows fitted by least squares through the divider lines (ridge filter on brightness profiles): pitch 2.59 m (8.5 ft) in every Lot 60 row, rms 0.013 to 0.043 m, max 0.19 m; counts R1 39, R2 37, R3 37, R4 37, R5 37, R6 32 (+ 2 accessible bays), R7 31, R8 30; west edge row 12 at 2.54 m (faint); Clinical row 11 + 1 + 8 at 2.75 m (9 ft, rms 0.16 m) with two accessible stalls and a hatched aisle. About 300 marked stalls in this zone, fewer than OSM's 430 for Lot 60. Lot 60's south-east column (t 1121 to 1127) holds accessible bays with hatched aisles (OSM has one accessible space at (-198.2, 1412.5)): their layout is read roughly. The long islands A and B and the R1 island are sunk 0.2 to 0.3 m in the LiDAR (rain gardens?), drawn as lawn; their dark south-east ends as mulch. The spine (s 917.0 to 927.25) has a raised curb only on its south-west side (LiDAR): the north-east 'band' is two painted lines and the Clinical row's stalls run flush to it. Divider: 0.15 to 0.2 m curb on the lot side, flush with the bus lot. The south-east walk has its curb on its south-east side. The spine walk's outer edge is flush with l60_south's lot (no curb). West drive: its south-west curb is the divider's north-east line run on to a 13 m corner; its west edge (t 1244.2) has no curb, buses park on the flat ground 4 to 6 m beyond it at the rock cut's foot (not paved in the ortho). North of the grass island the paving runs out to a curb at t 1258.3 (fitted, rms 0.42 m). Facilities' north-west wall has no walk: the asphalt runs to it (t 1234.9). Left out: the dashed driving-course markings (arcs and lanes) painted over Lot 60's middle rows, four patches of dots on the spine and the junction (unknown purpose), vehicles and containers (a red box at the Facilities' north-west corner is not in the 2017 LiDAR), the equipment on the two north-west pads. Lamps: no LiDAR returns; five placed from pole shadows.",
+ "surfaces": [
+  {
+   "name": "L6L_lot_60_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -212.7,
+     1387.95
+    ],
+    [
+     -168.87,
+     1432.95
+    ],
+    [
+     -159.22,
+     1442.85
+    ],
+    [
+     -174.24,
+     1457.36
+    ],
+    [
+     -164.3,
+     1467.64
+    ],
+    [
+     -168.33,
+     1471.53
+    ],
+    [
+     -163.26,
+     1476.78
+    ],
+    [
+     -169.01,
+     1482.34
+    ],
+    [
+     -166.2,
+     1485.26
+    ],
+    [
+     -226.44,
+     1543.15
+    ],
+    [
+     -211.68,
+     1558.44
+    ],
+    [
+     -191.52,
+     1579.02
+    ],
+    [
+     -213.37,
+     1588.71
+    ],
+    [
+     -219.78,
+     1582.66
+    ],
+    [
+     -221.95,
+     1581.56
+    ],
+    [
+     -254.95,
+     1547.39,
+     6.0
+    ],
+    [
+     -257.36,
+     1535.82,
+     3.0
+    ],
+    [
+     -253.96,
+     1531.42
+    ],
+    [
+     -257.79,
+     1524.14
+    ],
+    [
+     -302.45,
+     1477.9,
+     13.0
+    ],
+    [
+     -274.0,
+     1450.68,
+     1.0
+    ],
+    [
+     -273.0,
+     1448.5,
+     1.0
+    ],
+    [
+     -273.6,
+     1446.2
+    ],
+    [
+     -267.1,
+     1439.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017; osm 233913162",
+   "unverified": "west edge north of the grass island (bus parking, buses hide it) and the edge along the yard wall read by eye; asphalt runs under the divider, the south-east walk and the islands; the grass nose at the bus lot mouth read on the 0.075 m ortho"
+  },
+  {
+   "name": "L6L_spine_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -168.87,
+     1432.95
+    ],
+    [
+     -159.22,
+     1442.85
+    ],
+    [
+     -147.69,
+     1431.72
+    ],
+    [
+     -141.65,
+     1437.98
+    ],
+    [
+     -88.62,
+     1386.77
+    ],
+    [
+     -92.76,
+     1378.05
+    ],
+    [
+     -131.21,
+     1378.05
+    ],
+    [
+     -123.17,
+     1389.91
+    ],
+    [
+     -123.0,
+     1389.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017; osm 233913165",
+   "unverified": "junction apron edges are the zone borders (open cuts, 0.2 m past them) and the Village edge; it runs from y 1378.05 under the Village canopy corner"
+  },
+  {
+   "name": "L6L_divider",
+   "kind": "concrete",
+   "ring": [
+    [
+     -212.7,
+     1387.95
+    ],
+    [
+     -266.95,
+     1439.91
+    ],
+    [
+     -268.01,
+     1440.94,
+     1.45
+    ],
+    [
+     -266.0,
+     1443.02,
+     1.45
+    ],
+    [
+     -264.9,
+     1442.06
+    ],
+    [
+     -210.54,
+     1390.16
+    ]
+   ],
+   "evidence": "ortho2020 (fitted edges), lidar2017",
+   "unverified": "north-west end cap shape (brightness ends at t 1193.5)"
+  },
+  {
+   "name": "L6L_lot_60_SE_walk",
+   "kind": "concrete",
+   "ring": [
+    [
+     -203.3,
+     1397.56
+    ],
+    [
+     -166.4,
+     1435.47
+    ],
+    [
+     -168.82,
+     1437.81
+    ],
+    [
+     -205.34,
+     1399.55
+    ]
+   ],
+   "evidence": "ortho2020 (fitted edges; the concrete ends 10.5 m short of the divider, a crosswalk crosses the rest)"
+  },
+  {
+   "name": "L6L_spine_SW_walk",
+   "kind": "concrete",
+   "ring": [
+    [
+     -168.87,
+     1432.95
+    ],
+    [
+     -166.43,
+     1435.5
+    ],
+    [
+     -135.93,
+     1406.05,
+     2.5
+    ],
+    [
+     -129.11,
+     1404.47,
+     4.0
+    ],
+    [
+     -123.54,
+     1397.28,
+     2.5
+    ],
+    [
+     -124.16,
+     1392.18,
+     1.0
+    ],
+    [
+     -123.0,
+     1389.8
+    ]
+   ],
+   "evidence": "ortho2020 (fitted edges)",
+   "unverified": "bulb outline read by eye; the bulb and its planted teardrop run on 3 to 5 m south-west of the A/B border, which is left to l60_south"
+  },
+  {
+   "name": "L6L_village_walk_link",
+   "kind": "concrete",
+   "ring": [
+    [
+     -109.69,
+     1377.2
+    ],
+    [
+     -108.66,
+     1378.36
+    ],
+    [
+     -113.56,
+     1384.44
+    ],
+    [
+     -114.95,
+     1383.0
+    ]
+   ],
+   "evidence": "ortho2020; village V_road_Walk_233913133_0_b2",
+   "unverified": "hidden under the north solar canopy: continues the Village walk to the crossing"
+  },
+  {
+   "name": "L6L_island_R1",
+   "kind": "lawn",
+   "ring": [
+    [
+     -211.66,
+     1401.69
+    ],
+    [
+     -287.71,
+     1474.45,
+     2.5
+    ],
+    [
+     -281.95,
+     1480.42,
+     1.8
+    ],
+    [
+     -279.09,
+     1477.69,
+     1.0
+    ],
+    [
+     -282.88,
+     1473.76
+    ],
+    [
+     -209.68,
+     1403.73
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "fill read as lawn from tone; sunk 0.2 m; north-west end widens to a dark bulb (mulch?) 4 m across"
+  },
+  {
+   "name": "L6L_island_R1_SE_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -207.72,
+     1397.92
+    ],
+    [
+     -211.66,
+     1401.69
+    ],
+    [
+     -205.06,
+     1408.53
+    ],
+    [
+     -201.12,
+     1404.76,
+     0.8
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark bed: mulch or shrubs"
+  },
+  {
+   "name": "L6L_island_B",
+   "kind": "lawn",
+   "ring": [
+    [
+     -174.44,
+     1442.89
+    ],
+    [
+     -248.58,
+     1513.82,
+     1.3
+    ],
+    [
+     -246.3,
+     1516.18,
+     1.3
+    ],
+    [
+     -172.16,
+     1445.25
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "fill read as lawn from tone; sunk 0.2 m"
+  },
+  {
+   "name": "L6L_island_B_SE_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -172.64,
+     1434.25
+    ],
+    [
+     -177.91,
+     1439.3,
+     0.8
+    ],
+    [
+     -172.16,
+     1445.25
+    ],
+    [
+     -166.89,
+     1440.21
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark bed: mulch or shrubs"
+  },
+  {
+   "name": "L6L_island_A",
+   "kind": "lawn",
+   "ring": [
+    [
+     -183.31,
+     1465.49,
+     2.5
+    ],
+    [
+     -243.37,
+     1522.95
+    ],
+    [
+     -245.17,
+     1527.57,
+     3.0
+    ],
+    [
+     -244.05,
+     1532.32,
+     2.5
+    ],
+    [
+     -240.39,
+     1533.24,
+     2.0
+    ],
+    [
+     -237.56,
+     1530.27,
+     1.0
+    ],
+    [
+     -241.02,
+     1526.68
+    ],
+    [
+     -181.24,
+     1469.49
+    ],
+    [
+     -177.66,
+     1473.17,
+     0.6
+    ],
+    [
+     -176.73,
+     1472.27,
+     0.6
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "fill read as lawn from tone; sunk 0.3 m; north-west hook read by eye; the south-east end and its curbed finger to the north-east read by eye on the 0.075 m ortho; the finger taken as lawn"
+  },
+  {
+   "name": "L6L_island_A_SE_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -175.4,
+     1456.6
+    ],
+    [
+     -176.6,
+     1462.3,
+     1.5
+    ],
+    [
+     -174.6,
+     1464.0,
+     1.5
+    ],
+    [
+     -170.2,
+     1460.6
+    ]
+   ],
+   "evidence": "ortho2020 0.075 m (white curb), lidar2017 (0.1 m above the aisle); its south-east side runs under the walk",
+   "layer": 3.5,
+   "unverified": "dark bed: mulch or shrubs"
+  },
+  {
+   "name": "L6L_end_island_R2R3_NW",
+   "kind": "mulch",
+   "ring": [
+    [
+     -276.22,
+     1485.05,
+     0.45
+    ],
+    [
+     -276.95,
+     1485.74,
+     0.45
+    ],
+    [
+     -270.0,
+     1492.93,
+     0.45
+    ],
+    [
+     -269.28,
+     1492.24,
+     0.45
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark narrow island: mulch or bare"
+  },
+  {
+   "name": "L6L_end_island_R4R5_NW",
+   "kind": "mulch",
+   "ring": [
+    [
+     -263.86,
+     1497.85,
+     0.45
+    ],
+    [
+     -264.58,
+     1498.54,
+     0.45
+    ],
+    [
+     -257.77,
+     1505.59,
+     0.45
+    ],
+    [
+     -257.05,
+     1504.9,
+     0.45
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark narrow island: mulch or bare"
+  },
+  {
+   "name": "L6L_end_island_R2R3_SE",
+   "kind": "mulch",
+   "ring": [
+    [
+     -205.63,
+     1417.51,
+     0.45
+    ],
+    [
+     -206.35,
+     1418.2,
+     0.45
+    ],
+    [
+     -199.4,
+     1425.4,
+     0.45
+    ],
+    [
+     -198.68,
+     1424.7,
+     0.45
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark narrow island: mulch or bare"
+  },
+  {
+   "name": "L6L_end_island_R4R5_SE",
+   "kind": "mulch",
+   "ring": [
+    [
+     -193.26,
+     1430.31,
+     0.45
+    ],
+    [
+     -193.98,
+     1431.01,
+     0.45
+    ],
+    [
+     -187.18,
+     1438.06,
+     0.45
+    ],
+    [
+     -186.45,
+     1437.36,
+     0.45
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "dark narrow island: mulch or bare"
+  },
+  {
+   "name": "L6L_island_west",
+   "kind": "lawn",
+   "ring": [
+    [
+     -254.09,
+     1520.2,
+     1.5
+    ],
+    [
+     -259.3,
+     1525.18
+    ],
+    [
+     -254.17,
+     1531.21
+    ],
+    [
+     -250.83,
+     1527.46,
+     2.0
+    ],
+    [
+     -251.18,
+     1523.22,
+     1.5
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "layer": 3.5,
+   "unverified": "grass island by the west drive; edges read by eye"
+  },
+  {
+   "name": "L6L_NW_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -238.06,
+     1548.32
+    ],
+    [
+     -243.81,
+     1553.88
+    ],
+    [
+     -234.92,
+     1563.09
+    ],
+    [
+     -229.17,
+     1557.53
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "pad edges read by eye; a white unit about 2.8 m high stands on it (2017 LiDAR), not modelled: no source says what it is"
+  },
+  {
+   "name": "L6L_NW_bin_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -211.75,
+     1572.68
+    ],
+    [
+     -216.5,
+     1577.27
+    ],
+    [
+     -208.72,
+     1585.33
+    ],
+    [
+     -203.97,
+     1580.74
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "pad edges read by eye; two dark boxes about 2.6 m high on it (bins or containers, movable) not modelled"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "L6L_island_R1_curb",
+   "path": [
+    [
+     -207.72,
+     1397.92
+    ],
+    [
+     -287.71,
+     1474.45,
+     2.5
+    ],
+    [
+     -281.95,
+     1480.42,
+     1.8
+    ],
+    [
+     -279.09,
+     1477.69,
+     1.0
+    ],
+    [
+     -282.88,
+     1473.76
+    ],
+    [
+     -209.68,
+     1403.73
+    ],
+    [
+     -205.06,
+     1408.53
+    ],
+    [
+     -201.12,
+     1404.76,
+     0.8
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_island_B_curb",
+   "path": [
+    [
+     -172.64,
+     1434.25
+    ],
+    [
+     -177.91,
+     1439.3,
+     0.8
+    ],
+    [
+     -174.44,
+     1442.89
+    ],
+    [
+     -248.58,
+     1513.82,
+     1.3
+    ],
+    [
+     -246.3,
+     1516.18,
+     1.3
+    ],
+    [
+     -166.89,
+     1440.21
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_island_A_curb",
+   "path": [
+    [
+     -183.31,
+     1465.49,
+     2.5
+    ],
+    [
+     -243.37,
+     1522.95
+    ],
+    [
+     -245.17,
+     1527.57,
+     3.0
+    ],
+    [
+     -244.05,
+     1532.32,
+     2.5
+    ],
+    [
+     -240.39,
+     1533.24,
+     2.0
+    ],
+    [
+     -237.56,
+     1530.27,
+     1.0
+    ],
+    [
+     -241.02,
+     1526.68
+    ],
+    [
+     -181.24,
+     1469.49
+    ],
+    [
+     -177.66,
+     1473.17,
+     0.6
+    ],
+    [
+     -176.73,
+     1472.27,
+     0.6
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_island_A_SE_bed_curb",
+   "path": [
+    [
+     -175.4,
+     1456.6
+    ],
+    [
+     -176.6,
+     1462.3,
+     1.5
+    ],
+    [
+     -174.6,
+     1464.0,
+     1.5
+    ],
+    [
+     -170.2,
+     1460.6
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020 (white curb)"
+  },
+  {
+   "name": "L6L_end_island_R2R3_NW_curb",
+   "path": [
+    [
+     -276.22,
+     1485.05,
+     0.45
+    ],
+    [
+     -276.95,
+     1485.74,
+     0.45
+    ],
+    [
+     -270.0,
+     1492.93,
+     0.45
+    ],
+    [
+     -269.28,
+     1492.24,
+     0.45
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_end_island_R4R5_NW_curb",
+   "path": [
+    [
+     -263.86,
+     1497.85,
+     0.45
+    ],
+    [
+     -264.58,
+     1498.54,
+     0.45
+    ],
+    [
+     -257.77,
+     1505.59,
+     0.45
+    ],
+    [
+     -257.05,
+     1504.9,
+     0.45
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_end_island_R2R3_SE_curb",
+   "path": [
+    [
+     -205.63,
+     1417.51,
+     0.45
+    ],
+    [
+     -206.35,
+     1418.2,
+     0.45
+    ],
+    [
+     -199.4,
+     1425.4,
+     0.45
+    ],
+    [
+     -198.68,
+     1424.7,
+     0.45
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_end_island_R4R5_SE_curb",
+   "path": [
+    [
+     -193.26,
+     1430.31,
+     0.45
+    ],
+    [
+     -193.98,
+     1431.01,
+     0.45
+    ],
+    [
+     -187.18,
+     1438.06,
+     0.45
+    ],
+    [
+     -186.45,
+     1437.36,
+     0.45
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "L6L_divider_NE_curb",
+   "path": [
+    [
+     -210.54,
+     1390.16
+    ],
+    [
+     -264.9,
+     1442.06
+    ],
+    [
+     -266.0,
+     1443.02,
+     1.45
+    ],
+    [
+     -268.01,
+     1440.94,
+     1.45
+    ],
+    [
+     -266.95,
+     1439.91
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017 (0.15 to 0.2 m step on the lot side; the bus lot side is flush)"
+  },
+  {
+   "name": "L6L_west_drive_SW_curb",
+   "path": [
+    [
+     -273.59,
+     1446.25
+    ],
+    [
+     -273.0,
+     1448.5,
+     1.0
+    ],
+    [
+     -274.0,
+     1450.68,
+     1.0
+    ],
+    [
+     -302.45,
+     1477.9,
+     13.0
+    ],
+    [
+     -293.28,
+     1487.39
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017 (hillshade)",
+   "unverified": "radius of the corner arc read by eye"
+  },
+  {
+   "name": "L6L_lot_60_SE_walk_curb",
+   "path": [
+    [
+     -203.3,
+     1397.56
+    ],
+    [
+     -168.87,
+     1432.95
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017 (0.13 m step on the south-east side; the lot side is flush)"
+  },
+  {
+   "name": "L6L_spine_SW_curb",
+   "path": [
+    [
+     -166.43,
+     1435.5
+    ],
+    [
+     -135.93,
+     1406.05,
+     2.5
+    ],
+    [
+     -129.11,
+     1404.47,
+     4.0
+    ],
+    [
+     -123.54,
+     1397.28,
+     2.5
+    ],
+    [
+     -124.16,
+     1392.18,
+     1.0
+    ],
+    [
+     -123.0,
+     1389.8
+    ]
+   ],
+   "evidence": "ortho2020 (fitted, rms 0.047 m), lidar2017"
+  },
+  {
+   "name": "L6L_Facilities_apron_curb",
+   "path": [
+    [
+     -226.44,
+     1543.15
+    ],
+    [
+     -166.2,
+     1485.26
+    ],
+    [
+     -169.01,
+     1482.34
+    ],
+    [
+     -163.26,
+     1476.78
+    ],
+    [
+     -168.33,
+     1471.53
+    ],
+    [
+     -164.3,
+     1467.64
+    ],
+    [
+     -174.24,
+     1457.36
+    ],
+    [
+     -147.69,
+     1431.72
+    ],
+    [
+     -141.65,
+     1437.98
+    ],
+    [
+     -88.62,
+     1386.77
+    ]
+   ],
+   "evidence": "ortho2020 (Facilities: fitted, rms 0.065 m), lidar2017 (Clinical: 0.15 m rise at s 936)",
+   "unverified": "forecourt corners read by eye; the walks behind are l60_north's"
+  },
+  {
+   "name": "L6L_NW_edge_curb",
+   "path": [
+    [
+     -221.95,
+     1581.56
+    ],
+    [
+     -254.95,
+     1547.39,
+     6.0
+    ],
+    [
+     -257.36,
+     1535.82,
+     3.0
+    ],
+    [
+     -253.96,
+     1531.42
+    ]
+   ],
+   "evidence": "ortho2020 (edge fitted at t 1258.3, 32 points, rms 0.42 m)",
+   "unverified": "a bright 1.5 m line at the edge read as a curb; the south end by the parked bus read by eye"
+  }
+ ],
+ "markings": [
+  {
+   "name": "L6L_stalls_R1",
+   "type": "stalls",
+   "line": [
+    [
+     -209.72,
+     1403.92
+    ],
+    [
+     -282.69,
+     1473.73
+    ]
+   ],
+   "count": 39,
+   "depth": 5.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R2",
+   "type": "stalls",
+   "line": [
+    [
+     -203.2,
+     1421.9
+    ],
+    [
+     -272.44,
+     1488.14
+    ]
+   ],
+   "count": 37,
+   "depth": 5.45,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R3",
+   "type": "stalls",
+   "line": [
+    [
+     -203.23,
+     1421.93
+    ],
+    [
+     -272.49,
+     1488.19
+    ]
+   ],
+   "count": 37,
+   "depth": 5.55,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R4",
+   "type": "stalls",
+   "line": [
+    [
+     -190.98,
+     1434.71
+    ],
+    [
+     -260.2,
+     1500.92
+    ]
+   ],
+   "count": 37,
+   "depth": 5.35,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R5",
+   "type": "stalls",
+   "line": [
+    [
+     -190.99,
+     1434.71
+    ],
+    [
+     -260.23,
+     1500.96
+    ]
+   ],
+   "count": 37,
+   "depth": 5.35,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R6",
+   "type": "stalls",
+   "line": [
+    [
+     -188.38,
+     1456.09
+    ],
+    [
+     -248.29,
+     1513.41
+    ]
+   ],
+   "count": 32,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R7",
+   "type": "stalls",
+   "line": [
+    [
+     -181.17,
+     1469.6
+    ],
+    [
+     -239.2,
+     1525.12
+    ]
+   ],
+   "count": 31,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_R8",
+   "type": "stalls",
+   "line": [
+    [
+     -169.05,
+     1482.16
+    ],
+    [
+     -225.22,
+     1535.89
+    ]
+   ],
+   "count": 30,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_centre_R2R3",
+   "type": "line",
+   "path": [
+    [
+     -203.2,
+     1421.9
+    ],
+    [
+     -272.57,
+     1488.26
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_centre_R4R5",
+   "type": "line",
+   "path": [
+    [
+     -190.9,
+     1434.63
+    ],
+    [
+     -260.27,
+     1500.99
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_back_R8",
+   "type": "line",
+   "path": [
+    [
+     -169.05,
+     1482.16
+    ],
+    [
+     -225.22,
+     1535.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_west_edge",
+   "type": "stalls",
+   "line": [
+    [
+     -290.4,
+     1489.81
+    ],
+    [
+     -269.24,
+     1511.71
+    ]
+   ],
+   "count": 12,
+   "depth": 4.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "lines faint: 9 of 13 dividers read, pitch 2.54 m; north end uncertain"
+  },
+  {
+   "name": "L6L_stalls_Clinical_1",
+   "type": "stalls",
+   "line": [
+    [
+     -95.97,
+     1384.97
+    ],
+    [
+     -117.7,
+     1405.96
+    ]
+   ],
+   "count": 11,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_stalls_Clinical_1_end",
+   "type": "stalls",
+   "line": [
+    [
+     -117.7,
+     1405.96
+    ],
+    [
+     -119.89,
+     1408.07
+    ]
+   ],
+   "count": 1,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "one wider end stall"
+  },
+  {
+   "name": "L6L_stalls_Clinical_acc_1",
+   "type": "stalls",
+   "line": [
+    [
+     -124.77,
+     1412.78
+    ],
+    [
+     -126.56,
+     1414.52
+    ]
+   ],
+   "count": 1,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible stall (layout read from the line pattern)"
+  },
+  {
+   "name": "L6L_stalls_Clinical_acc_2",
+   "type": "stalls",
+   "line": [
+    [
+     -128.21,
+     1416.11
+    ],
+    [
+     -130.05,
+     1417.89
+    ]
+   ],
+   "count": 1,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible stall (layout read from the line pattern)"
+  },
+  {
+   "name": "L6L_stalls_Clinical_2",
+   "type": "stalls",
+   "line": [
+    [
+     -130.05,
+     1417.89
+    ],
+    [
+     -145.85,
+     1433.14
+    ]
+   ],
+   "count": 8,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_hatch_Clinical_outline",
+   "type": "line",
+   "path": [
+    [
+     -126.5,
+     1414.73
+    ],
+    [
+     -128.0,
+     1416.18
+    ],
+    [
+     -124.25,
+     1420.07
+    ],
+    [
+     -122.75,
+     1418.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "access aisle hatch; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_Clinical_1",
+   "type": "line",
+   "path": [
+    [
+     -127.84,
+     1416.03
+    ],
+    [
+     -125.2,
+     1416.08
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "access aisle hatch; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_Clinical_2",
+   "type": "line",
+   "path": [
+    [
+     -126.85,
+     1417.37
+    ],
+    [
+     -123.9,
+     1417.43
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "access aisle hatch; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_Clinical_3",
+   "type": "line",
+   "path": [
+    [
+     -125.55,
+     1418.72
+    ],
+    [
+     -122.9,
+     1418.77
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "access aisle hatch; stripe count guessed"
+  },
+  {
+   "name": "L6L_Clinical_band_line_a",
+   "type": "line",
+   "path": [
+    [
+     -95.84,
+     1382.06
+    ],
+    [
+     -147.34,
+     1431.8
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two lines 1.65 m apart along the spine (a band in the outline notes; the LiDAR shows no curb there)"
+  },
+  {
+   "name": "L6L_Clinical_band_line_b",
+   "type": "line",
+   "path": [
+    [
+     -94.69,
+     1383.25
+    ],
+    [
+     -146.19,
+     1432.99
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two lines 1.65 m apart along the spine (a band in the outline notes; the LiDAR shows no curb there)"
+  },
+  {
+   "name": "L6L_hatch_R6_1_outline",
+   "type": "line",
+   "path": [
+    [
+     -178.71,
+     1440.2
+    ],
+    [
+     -181.67,
+     1443.03
+    ],
+    [
+     -178.34,
+     1446.49
+    ],
+    [
+     -175.38,
+     1443.65
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_1_1",
+   "type": "line",
+   "path": [
+    [
+     -180.0,
+     1441.43
+    ],
+    [
+     -177.47,
+     1441.48
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_1_2",
+   "type": "line",
+   "path": [
+    [
+     -181.28,
+     1442.66
+    ],
+    [
+     -176.24,
+     1442.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_1_3",
+   "type": "line",
+   "path": [
+    [
+     -180.81,
+     1443.92
+    ],
+    [
+     -175.77,
+     1444.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_1_4",
+   "type": "line",
+   "path": [
+    [
+     -179.58,
+     1445.21
+    ],
+    [
+     -177.05,
+     1445.26
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_2_outline",
+   "type": "line",
+   "path": [
+    [
+     -184.78,
+     1446.01
+    ],
+    [
+     -188.47,
+     1449.53
+    ],
+    [
+     -185.13,
+     1452.98
+    ],
+    [
+     -181.45,
+     1449.46
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_2_1",
+   "type": "line",
+   "path": [
+    [
+     -186.21,
+     1447.37
+    ],
+    [
+     -183.41,
+     1447.43
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_2_2",
+   "type": "line",
+   "path": [
+    [
+     -187.64,
+     1448.74
+    ],
+    [
+     -182.03,
+     1448.85
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_2_3",
+   "type": "line",
+   "path": [
+    [
+     -187.88,
+     1450.14
+    ],
+    [
+     -182.27,
+     1450.25
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_R6_2_4",
+   "type": "line",
+   "path": [
+    [
+     -186.51,
+     1451.56
+    ],
+    [
+     -183.7,
+     1451.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_R6_acc_line_1",
+   "type": "line",
+   "path": [
+    [
+     -178.67,
+     1440.02
+    ],
+    [
+     -175.3,
+     1443.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_R6_acc_line_2",
+   "type": "line",
+   "path": [
+    [
+     -181.82,
+     1443.03
+    ],
+    [
+     -178.45,
+     1446.52
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_R6_acc_line_3",
+   "type": "line",
+   "path": [
+    [
+     -184.78,
+     1445.86
+    ],
+    [
+     -181.41,
+     1449.35
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_R6_acc_line_4",
+   "type": "line",
+   "path": [
+    [
+     -188.61,
+     1449.53
+    ],
+    [
+     -185.24,
+     1453.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_1_outline",
+   "type": "line",
+   "path": [
+    [
+     -175.79,
+     1432.14
+    ],
+    [
+     -179.91,
+     1436.08
+    ],
+    [
+     -177.47,
+     1438.6
+    ],
+    [
+     -173.36,
+     1434.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_1_1",
+   "type": "line",
+   "path": [
+    [
+     -177.12,
+     1433.41
+    ],
+    [
+     -174.51,
+     1433.47
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_1_2",
+   "type": "line",
+   "path": [
+    [
+     -178.45,
+     1434.69
+    ],
+    [
+     -173.49,
+     1434.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_1_3",
+   "type": "line",
+   "path": [
+    [
+     -179.78,
+     1435.96
+    ],
+    [
+     -174.82,
+     1436.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_1_4",
+   "type": "line",
+   "path": [
+    [
+     -178.75,
+     1437.28
+    ],
+    [
+     -176.14,
+     1437.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_2_outline",
+   "type": "line",
+   "path": [
+    [
+     -181.07,
+     1426.68
+    ],
+    [
+     -185.18,
+     1430.62
+    ],
+    [
+     -182.13,
+     1433.78
+    ],
+    [
+     -178.01,
+     1429.84
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_2_1",
+   "type": "line",
+   "path": [
+    [
+     -182.53,
+     1428.07
+    ],
+    [
+     -179.66,
+     1428.13
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_2_2",
+   "type": "line",
+   "path": [
+    [
+     -183.99,
+     1429.47
+    ],
+    [
+     -178.26,
+     1429.58
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_2_3",
+   "type": "line",
+   "path": [
+    [
+     -184.93,
+     1430.87
+    ],
+    [
+     -179.21,
+     1430.99
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_2_4",
+   "type": "line",
+   "path": [
+    [
+     -183.53,
+     1432.33
+    ],
+    [
+     -180.67,
+     1432.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_3_outline",
+   "type": "line",
+   "path": [
+    [
+     -185.79,
+     1421.78
+    ],
+    [
+     -189.91,
+     1425.72
+    ],
+    [
+     -186.99,
+     1428.75
+    ],
+    [
+     -182.87,
+     1424.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_3_1",
+   "type": "line",
+   "path": [
+    [
+     -187.22,
+     1423.15
+    ],
+    [
+     -184.41,
+     1423.21
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_3_2",
+   "type": "line",
+   "path": [
+    [
+     -188.65,
+     1424.52
+    ],
+    [
+     -183.04,
+     1424.63
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_3_3",
+   "type": "line",
+   "path": [
+    [
+     -189.74,
+     1425.9
+    ],
+    [
+     -184.13,
+     1426.01
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_3_4",
+   "type": "line",
+   "path": [
+    [
+     -188.37,
+     1427.32
+    ],
+    [
+     -185.56,
+     1427.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_outline",
+   "type": "line",
+   "path": [
+    [
+     -198.85,
+     1408.26
+    ],
+    [
+     -202.97,
+     1412.2
+    ],
+    [
+     -195.19,
+     1420.26
+    ],
+    [
+     -191.07,
+     1416.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_1",
+   "type": "line",
+   "path": [
+    [
+     -200.21,
+     1409.56
+    ],
+    [
+     -197.54,
+     1409.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_2",
+   "type": "line",
+   "path": [
+    [
+     -201.56,
+     1410.86
+    ],
+    [
+     -196.24,
+     1410.96
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_3",
+   "type": "line",
+   "path": [
+    [
+     -202.92,
+     1412.15
+    ],
+    [
+     -194.94,
+     1412.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_4",
+   "type": "line",
+   "path": [
+    [
+     -201.71,
+     1413.5
+    ],
+    [
+     -193.63,
+     1413.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_5",
+   "type": "line",
+   "path": [
+    [
+     -200.41,
+     1414.85
+    ],
+    [
+     -192.33,
+     1415.01
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_6",
+   "type": "line",
+   "path": [
+    [
+     -199.1,
+     1416.2
+    ],
+    [
+     -191.12,
+     1416.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_7",
+   "type": "line",
+   "path": [
+    [
+     -197.8,
+     1417.56
+    ],
+    [
+     -192.47,
+     1417.66
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_SE_4_8",
+   "type": "line",
+   "path": [
+    [
+     -196.49,
+     1418.91
+    ],
+    [
+     -193.83,
+     1418.96
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_1",
+   "type": "line",
+   "path": [
+    [
+     -192.25,
+     1414.95
+    ],
+    [
+     -196.51,
+     1419.03
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_2",
+   "type": "line",
+   "path": [
+    [
+     -189.05,
+     1418.26
+    ],
+    [
+     -193.32,
+     1422.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_3",
+   "type": "line",
+   "path": [
+    [
+     -185.79,
+     1421.64
+    ],
+    [
+     -190.05,
+     1425.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_4",
+   "type": "line",
+   "path": [
+    [
+     -182.73,
+     1424.81
+    ],
+    [
+     -186.99,
+     1428.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_5",
+   "type": "line",
+   "path": [
+    [
+     -181.06,
+     1426.53
+    ],
+    [
+     -185.33,
+     1430.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_6",
+   "type": "line",
+   "path": [
+    [
+     -177.66,
+     1430.06
+    ],
+    [
+     -181.92,
+     1434.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_7",
+   "type": "line",
+   "path": [
+    [
+     -175.85,
+     1431.93
+    ],
+    [
+     -180.12,
+     1436.01
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_SE_acc_line_8",
+   "type": "line",
+   "path": [
+    [
+     -173.21,
+     1434.66
+    ],
+    [
+     -177.48,
+     1438.74
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "accessible bays with hatched access aisles at the south-east end; layout read roughly"
+  },
+  {
+   "name": "L6L_hatch_west_corner_outline",
+   "type": "line",
+   "path": [
+    [
+     -290.3,
+     1483.29
+    ],
+    [
+     -293.48,
+     1486.33
+    ],
+    [
+     -290.7,
+     1489.21
+    ],
+    [
+     -287.52,
+     1486.17
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "hatched corner; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_west_corner_1",
+   "type": "line",
+   "path": [
+    [
+     -291.51,
+     1484.45
+    ],
+    [
+     -289.13,
+     1484.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched corner; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_west_corner_2",
+   "type": "line",
+   "path": [
+    [
+     -292.72,
+     1485.61
+    ],
+    [
+     -287.96,
+     1485.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched corner; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_west_corner_3",
+   "type": "line",
+   "path": [
+    [
+     -293.03,
+     1486.79
+    ],
+    [
+     -288.27,
+     1486.88
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched corner; stripe count guessed"
+  },
+  {
+   "name": "L6L_hatch_west_corner_4",
+   "type": "line",
+   "path": [
+    [
+     -291.86,
+     1488.0
+    ],
+    [
+     -289.48,
+     1488.05
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched corner; stripe count guessed"
+  },
+  {
+   "name": "L6L_arrow_drive_SE",
+   "type": "arrow",
+   "at": [
+    -249.88,
+    1432.58
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_drive_NW",
+   "type": "arrow",
+   "at": [
+    -248.14,
+    1434.38
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_1_SE",
+   "type": "arrow",
+   "at": [
+    -239.46,
+    1443.37
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_1_NW",
+   "type": "arrow",
+   "at": [
+    -237.65,
+    1445.24
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_2_SE",
+   "type": "arrow",
+   "at": [
+    -226.95,
+    1456.32
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_2_NW",
+   "type": "arrow",
+   "at": [
+    -225.22,
+    1458.12
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_3_SE",
+   "type": "arrow",
+   "at": [
+    -214.66,
+    1469.05
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_3_NW",
+   "type": "arrow",
+   "at": [
+    -212.92,
+    1470.85
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_4_SE",
+   "type": "arrow",
+   "at": [
+    -204.38,
+    1479.7
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_4_NW",
+   "type": "arrow",
+   "at": [
+    -202.57,
+    1481.57
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_5_SE",
+   "type": "arrow",
+   "at": [
+    -192.98,
+    1491.49
+   ],
+   "angle": 316.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_arrow_aisle_5_NW",
+   "type": "arrow",
+   "at": [
+    -191.18,
+    1493.36
+   ],
+   "angle": 136.27,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "blob 1.6 m long at 0.15 m/px: direction taken from right-hand traffic"
+  },
+  {
+   "name": "L6L_crosswalk_spine_SE_walk",
+   "type": "crosswalk",
+   "line": [
+    [
+     -167.8,
+     1436.96
+    ],
+    [
+     -160.78,
+     1444.23
+    ]
+   ],
+   "width": 2.2,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "pattern reads as a grid of short bars; style taken as continental"
+  },
+  {
+   "name": "L6L_crosswalk_SE_walk_divider",
+   "type": "crosswalk",
+   "line": [
+    [
+     -204.07,
+     1398.42
+    ],
+    [
+     -211.4,
+     1390.91
+    ]
+   ],
+   "width": 2.0,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (9 bars at 1.21 m centres from the walk's end to the divider, 2.0 m long, fitted from profiles)"
+  },
+  {
+   "name": "L6L_island_A_SE_bar",
+   "type": "line",
+   "path": [
+    [
+     -182.3,
+     1466.2
+    ],
+    [
+     -179.8,
+     1464.1
+    ]
+   ],
+   "width": 0.3,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "what the bar is for is not known; ends read by eye"
+  },
+  {
+   "name": "L6L_crosswalk_spine_Clinical",
+   "type": "crosswalk",
+   "line": [
+    [
+     -128.82,
+     1404.05
+    ],
+    [
+     -124.17,
+     1408.87
+    ]
+   ],
+   "width": 3.0,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6L_crosswalk_junction",
+   "type": "crosswalk",
+   "line": [
+    [
+     -123.21,
+     1392.44
+    ],
+    [
+     -114.22,
+     1383.76
+    ]
+   ],
+   "width": 2.3,
+   "style": "continental",
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "runs from the Village walk under the canopy to the bulb, across the mouth of the drive west of Lot 61"
+  }
+ ],
+ "points": [
+  {
+   "name": "L6L_lamp_R1_island",
+   "kind": "lamp",
+   "at": [
+    -271.42,
+    1460.8
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the base of the shadow, about 0.5 m; height and head not measured"
+  },
+  {
+   "name": "L6L_lamp_island_B_1",
+   "kind": "lamp",
+   "at": [
+    -190.31,
+    1460.29
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the base of the shadow, about 0.5 m; height and head not measured"
+  },
+  {
+   "name": "L6L_lamp_island_B_2",
+   "kind": "lamp",
+   "at": [
+    -239.16,
+    1507.02
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the base of the shadow, about 0.5 m; height and head not measured"
+  },
+  {
+   "name": "L6L_lamp_island_A",
+   "kind": "lamp",
+   "at": [
+    -216.98,
+    1500.62
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the base of the shadow, about 0.5 m; height and head not measured"
+  },
+  {
+   "name": "L6L_lamp_spine_walk",
+   "kind": "lamp",
+   "at": [
+    -149.55,
+    1416.84
+   ],
+   "evidence": "ortho2020 (pole shadow)",
+   "unverified": "no LiDAR return on the pole (2017): position from the base of the shadow, about 0.5 m; height and head not measured"
+  }
+ ]
+}

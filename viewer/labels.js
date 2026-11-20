@@ -1,8 +1,10 @@
 // Place-name labels drawn over the 3D view. Each label is a button in #overlay anchored 6 m above
-// the top of the model at its place; clicking it flies there. Layout runs only when the camera moved,
-// writes transforms only, and never reads layout in the frame path (sizes are measured once per label).
+// the top of the model at its place; clicking it flies there. Room numbers (viewer/rooms.json) sit at
+// a fixed height above their floor and show only near, on the camera's floor, in walk mode or inside.
+// Layout runs only when the camera moved, writes transforms only, and never reads layout in the frame path (sizes are measured once per label).
 import * as THREE from 'three';
 import { labelPriority, distanceOpacity, inRange, declutter, sourceTitle } from './labels-math.js';
+import { visibleRooms } from './rooms-math.js';
 
 const STORE = 'campus-labels';
 const ABOVE = 6;            // metres above the top of the model
@@ -15,6 +17,8 @@ const RETRY_MS = 1500;      // wait before asking again for a place that missed
 const CONFIRM_MS = 4000;    // wait between confirming lookups for a place that hit
 const CONFIRMS = 3;         // hits needed before a place stops being asked
 const HIGHLIGHT_MS = 6000;
+const ROOM_ABOVE = 2.1;      // room numbers: metres above their floor, about a door head
+const ROOM_TITLE = 'Room number from the floor sign. Position UNVERIFIED: read off an evacuation plan.';
 const BLOCKERS = '#top, #panel'; // fixed interface cards that cover the view
 
 /**
@@ -49,21 +53,25 @@ export function createLabels(app) {
 
   function build() {
     for (const l of labels) l.el.remove();
-    labels = (app.places || []).filter(p => p && Number.isFinite(p.x) && Number.isFinite(p.z) && p.name).map(place => {
+    const rooms = app.roomPlaces || [];
+    labels = (app.places || []).concat(rooms).filter(p => p && Number.isFinite(p.x) && Number.isFinite(p.z) && p.name).map(place => {
+      const room = place.kind === 'room';
       const el = document.createElement('button');
       el.type = 'button';
       el.className = `lbl lbl-${place.kind || 'place'}`;
-      el.title = sourceTitle(place);
+      el.title = room ? ROOM_TITLE : sourceTitle(place);
       const text = document.createElement('span');
       text.className = 'lbl-text';
-      text.textContent = place.name;
+      text.textContent = room ? place.name.split(' ').pop() : place.name; // the number alone: the building is around you
       const stem = document.createElement('span');
       stem.className = 'lbl-stem';
       stem.setAttribute('aria-hidden', 'true');
       el.append(text, stem);
       el.addEventListener('click', () => app.goToPlace(place));
       layer.appendChild(el);
-      return { place, el, w: 0, h: 0, anchor: new THREE.Vector3(place.x, floorY() + ABOVE, place.z), hit: false, checks: CONFIRMS, found: false, nextTry: 0, shown: false, key: '', opacity: -1 };
+      // a room's anchor is given (its floor plus ROOM_ABOVE): no ground lookup
+      const anchor = new THREE.Vector3(place.x, room ? place.y + ROOM_ABOVE : floorY() + ABOVE, place.z);
+      return { place, el, w: 0, h: 0, anchor, room: room ? rooms.indexOf(place) : -1, hit: false, checks: CONFIRMS, found: room, nextTry: 0, shown: false, key: '', opacity: -1 };
     });
     measure();
     dirty = true;
@@ -121,10 +129,12 @@ export function createLabels(app) {
     const moving = app.state.mode !== 'orbit';
     const max = width < 700 ? 12 : 28;
     const items = [], owners = [];
+    const rooms = app.rooms?.rooms.length ? new Set(visibleRooms(app.rooms, camera.position, app.state.mode)) : null;
     for (const l of labels) {
       const isOn = l.place === highlighted;
       const dist = camera.position.distanceTo(l.anchor);
-      const ok = isOn ? !(moving && dist < NEAR_MOVING) : inRange(l.place.kind, dist, { far: FAR, parking: PARKING, minimum: moving ? NEAR_MOVING : 0 });
+      const ok = l.room >= 0 ? !!rooms?.has(l.room)
+        : isOn ? !(moving && dist < NEAR_MOVING) : inRange(l.place.kind, dist, { far: FAR, parking: PARKING, minimum: moving ? NEAR_MOVING : 0 });
       if (!ok) { hide(l); continue; }
       // camera space first: anything at or behind the camera plane has no sensible projection
       v.copy(l.anchor).applyMatrix4(camera.matrixWorldInverse);
@@ -135,7 +145,9 @@ export function createLabels(app) {
       const x = sx - l.w / 2, y = sy - l.h;
       // only whole labels: one cut by the screen edge reads as a different name
       if (x < 0 || x + l.w > width || y < 0 || sy > height) { hide(l); continue; }
-      items.push({ x, y, w: l.w, h: l.h, priority: labelPriority(l.place.kind, l.place.r, dist), forced: isOn, dist });
+      // near room numbers come before place names: inside a building they are what you look for
+      const priority = l.room >= 0 ? 1000 - dist : labelPriority(l.place.kind, l.place.r, dist);
+      items.push({ x, y, w: l.w, h: l.h, priority, forced: isOn && l.room < 0, dist });
       owners.push(l);
     }
     const keep = new Set(declutter(items, { max, pad: 3, blocked }));

@@ -6,11 +6,11 @@ import { CAMPUS, gridToTrueBearing } from './geo.js';
 /** Places from places.json that make up the hunt, in list order. */
 export const TARGET_NAMES = Object.freeze([
   'Red Hawk Deck', 'Alexander Kasser Theater', 'Amphitheater', 'Susan A. Cole Hall',
-  'School of Communication and Media', 'Memorial Auditorium', 'Sprague Library', 'Student Center',
+  'College of Communication and Media', 'Memorial Auditorium', 'Sprague Library', 'Student Center',
 ]);
 
 /** Shorter names for the list and toasts, where the full name is long. */
-const SHORT = { 'Alexander Kasser Theater': 'Kasser Theater', 'School of Communication and Media': 'School of Communication' };
+const SHORT = { 'Alexander Kasser Theater': 'Kasser Theater', 'College of Communication and Media': 'College of Communication' };
 
 /** The bronze Red Hawk statue is not in OpenStreetMap. Position from the model. */
 export const STATUE = Object.freeze({ name: 'Red Hawk statue', kind: 'landmark', x: -175, z: 112, r: 2, source: 'model' });

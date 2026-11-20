@@ -257,3 +257,230 @@ def well_deck(ring, kind, top, eave=None, ridge_angle=None):
     if kind in ("gable", "hip") and len(ring) != 4:
         return [q[:2] for q in roof(ring, kind, top, eave, ridge_angle)[1][-1]]
     return None
+
+
+def inset(ring, dists):
+    """The anticlockwise outline `ring` with each edge i moved in by dists[i] (0 keeps it), as the
+    corners where neighbouring moved edges meet. Corner i lies between edge i-1 and edge i."""
+    n = len(ring)
+    lines = []
+    for i in range(n):
+        (ax, ay), (bx, by) = ring[i][:2], ring[(i + 1) % n][:2]
+        length = math.hypot(bx - ax, by - ay)
+        ux, uy = (bx - ax) / length, (by - ay) / length
+        nx, ny = -uy, ux  # inward normal of an anticlockwise outline
+        lines.append(((ax + nx * dists[i], ay + ny * dists[i]), (ux, uy)))
+    out = []
+    for i in range(n):
+        (p1, d1), (p2, d2) = lines[i - 1], lines[i]
+        den = d1[0] * d2[1] - d1[1] * d2[0]
+        if abs(den) < 0.35:  # (nearly) straight on: the lines meet far off or never
+            # take the start of the edge moved further, square off its own wall
+            k, p = (i - 1, p1) if dists[i - 1] > dists[i] else (i, p2)
+            if k == i - 1:  # the end of the previous moved edge, at this corner
+                (ax, ay), (ux, uy) = ring[i][:2], d1
+                p = (ax - uy * dists[k], ay + ux * dists[k])
+            out.append(p)
+            continue
+        u = ((p2[0] - p1[0]) * d2[1] - (p2[1] - p1[1]) * d2[0]) / den
+        out.append((p1[0] + d1[0] * u, p1[1] + d1[1] * u))
+    return out
+
+
+def ring_roof(
+    ring, eave, crest_z, crest_in, inner_in, base, flat_edges=(), crest=None, inner=None,
+    overhang=None,
+):  # fmt: skip
+    """A tiled ring round a flat roof (a mansard band): from the wall line at `eave` up to a crest
+    line `crest_in` metres in at `crest_z`, a flat crest band to `inner_in` metres in (each a
+    number, or one per edge), then a drop to the flat roof at `base`. Edges in `flat_edges` (walls
+    shared with another building, or a side another roof covers) get no slope: the band ends
+    there with a vertical cap in the wall's plane. `crest` and `inner` may give the two inner
+    outlines explicitly (one corner per ring corner) where a plain inset would fold over itself.
+    `overhang` (a number, or one per edge) carries each slope on past the wall line, down at the
+    same pitch. Returns faces of (x, y, z), each anticlockwise seen from outside."""
+    ring = [tuple(p[:2]) for p in ring]
+    n = len(ring)
+    ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
+    ii = list(inner_in) if isinstance(inner_in, list | tuple) else [inner_in] * n
+    flat = set(flat_edges)
+    if any(not 0 < ci[i] < ii[i] for i in range(n) if i not in flat):
+        raise ValueError("the crest must lie between the wall line and the inner edge")
+    c = crest or inset(ring, [0.0 if i in flat else ci[i] for i in range(n)])
+    m = inner or inset(ring, [0.0 if i in flat else ii[i] for i in range(n)])
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    outer = inset(ring, [-v for v in ov]) if any(ov) else ring
+    faces = []
+
+    def add(face):
+        # leave out faces that have no area (collapsed at a flat edge)
+        pts = [f for k, f in enumerate(face) if k == 0 or math.dist(f, face[k - 1]) > 1e-6]
+        if len(pts) > 2 and math.dist(pts[0], pts[-1]) < 1e-6:
+            pts = pts[:-1]
+        if len(pts) >= 3 and any(abs(v) > 1e-9 for v in _area3(pts)):
+            faces.append(pts)
+
+    for i in range(n):
+        j = (i + 1) % n
+        if i in flat:
+            continue
+        o0, o1 = outer[i], outer[j]
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        add([(*o0, low), (*o1, low), (*c[j], crest_z), (*c[i], crest_z)])
+        add([(*c[i], crest_z), (*c[j], crest_z), (*m[j], crest_z), (*m[i], crest_z)])
+        add([(*m[i], crest_z), (*m[j], crest_z), (*m[j], base), (*m[i], base)])
+    for i in range(n):  # caps where a sloped edge meets a flat one, in the flat edge's wall plane
+        j = (i + 1) % n
+        if i in flat and (i - 1) % n not in flat:  # corner i: band coming from edge i-1
+            o = ring[i]
+            add([(*o, eave), (*o, base), (*m[i], base), (*m[i], crest_z), (*c[i], crest_z)])
+        if i in flat and j not in flat:  # corner j: band going on along edge j
+            o = ring[j]
+            add([(*o, eave), (*c[j], crest_z), (*m[j], crest_z), (*m[j], base), (*o, base)])
+    return faces
+
+
+def _area3(pts):
+    """Twice the vector area of a 3D polygon."""
+    x = y = z = 0.0
+    for (x0, y0, z0), (x1, y1, z1) in zip(pts, pts[1:] + pts[:1], strict=True):
+        x += y0 * z1 - z0 * y1
+        y += z0 * x1 - x0 * z1
+        z += x0 * y1 - y0 * x1
+    return x, y, z
+
+
+def wall_pieces(length, z0, z1, openings):
+    """A wall face `length` long from z0 to z1 as rectangles (s0, s1, za, zb) that leave out the
+    `openings` (s0, s1, za, zb) along it: full-height strips between openings, and the parts below
+    and above each opening."""
+    cuts = sorted({0.0, length, *[max(0.0, min(length, v)) for o in openings for v in o[:2]]})
+    out = []
+    for s0, s1 in zip(cuts, cuts[1:], strict=False):
+        if s1 - s0 < 1e-9:
+            continue
+        mid = (s0 + s1) / 2
+        holes = sorted((o[2], o[3]) for o in openings if o[0] < mid < o[1])
+        z = z0
+        for za, zb in holes:
+            if za > z:
+                out.append((s0, s1, z, min(za, z1)))
+            z = max(z, zb)
+        if z < z1:
+            out.append((s0, s1, z, z1))
+    return out
+
+
+def edge_openings(ring, openings):
+    """{edge index: [(s0, s1, z0, z1), ...]} for openings given by two points `at`, `to` on one
+    edge of the anticlockwise `ring` (within 0.3 m of its line) and their `z0`, `z1`."""
+    out = {}
+    n = len(ring)
+    for o in openings:
+        found = None
+        for i in range(n):
+            a, b = ring[i][:2], ring[(i + 1) % n][:2]
+            length = math.dist(a, b)
+            ux, uy = (b[0] - a[0]) / length, (b[1] - a[1]) / length
+            ss = []
+            for p in (o["at"], o["to"]):
+                s = (p[0] - a[0]) * ux + (p[1] - a[1]) * uy
+                off = abs((p[0] - a[0]) * uy - (p[1] - a[1]) * ux)
+                ss.append(s if (off < 0.3 and -0.01 <= s <= length + 0.01) else None)
+            if None not in ss:
+                found = (i, min(ss), max(ss))
+                break
+        if found is None:
+            raise ValueError(f"opening {o} lies on no edge of the outline")
+        i, s0, s1 = found
+        out.setdefault(i, []).append((s0, s1, o["z0"], o["z1"]))
+    return out
+
+
+def window_rows(wall_top, ground, tall, sill, levels=None, floors=1, storey_h=None):
+    """Sill heights of the window rows on one bay. With `levels` (floor heights), a row stands on
+    each floor that is at least 0.4 m above the ground there and whose head stays under the wall
+    top. Without, rows are counted down from the wall top in storeys of `storey_h`, stopping at the
+    first one below the ground (the old rule)."""
+    if levels is not None:
+        return [
+            lv + sill for lv in levels if lv + sill >= ground + 0.4 and lv + sill + tall <= wall_top
+        ]
+    out = []
+    for f in range(floors):
+        z0 = wall_top - (f + 1) * storey_h + sill
+        if z0 < ground + 0.4:
+            break
+        out.append(z0)
+    return out
+
+
+def _beam(p, q, width, height):
+    """A box of `width` on top of the segment p -> q (3D points), `height` tall: (verts, faces)."""
+    dx, dy = q[0] - p[0], q[1] - p[1]
+    d = math.hypot(dx, dy) or 1.0
+    nx, ny = -dy / d * width / 2, dx / d * width / 2
+    b = [(p[0] - nx, p[1] - ny, p[2]), (q[0] - nx, q[1] - ny, q[2]),
+         (q[0] + nx, q[1] + ny, q[2]), (p[0] + nx, p[1] + ny, p[2])]  # fmt: skip
+    verts = b + [(x, y, z + height) for x, y, z in b]
+    faces = [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
+    return verts, faces
+
+
+def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.15, overhang=None):
+    """Ridge and hip caps of a ring roof (ring_roof's arguments): a cap along the crest line of
+    every sloped edge, and one up each convex corner where two sloped edges meet."""
+    ring = [tuple(p[:2]) for p in ring]
+    n = len(ring)
+    flat = set(flat_edges)
+    ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    c = inset(ring, [0.0 if i in flat else ci[i] for i in range(n)])
+    outer = inset(ring, [-v for v in ov]) if any(ov) else ring
+    out = []
+    for i in range(n):
+        j = (i + 1) % n
+        if i in flat or math.dist(c[i], c[j]) < 1e-6:
+            continue
+        out.append(_beam((*c[i], crest_z), (*c[j], crest_z), width, height))
+    for i in range(n):  # corner i between edge i-1 and edge i
+        k = (i - 1) % n
+        if i in flat or k in flat:
+            continue
+        a, o, b = ring[k], ring[i], ring[(i + 1) % n]
+        turn = (o[0] - a[0]) * (b[1] - o[1]) - (o[1] - a[1]) * (b[0] - o[0])
+        if turn <= 0:
+            continue  # a concave corner takes a valley, not a hip
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        out.append(_beam((*outer[i], low), (*c[i], crest_z), width, height))
+    return out
+
+
+def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, edges):
+    """Window openings on the listed edges of an anticlockwise outline: one per bay and floor
+    level (massing.bays, massing.window_rows), as {edge, s0, s1, z0, z1, a, u, n}: the edge's start
+    point, its direction and outward normal, and the opening along it."""
+    out = []
+    n = len(ring)
+    for i in edges:
+        a, b = ring[i][:2], ring[(i + 1) % n][:2]
+        length = math.dist(a, b)
+        u = ((b[0] - a[0]) / length, (b[1] - a[1]) / length)
+        nrm = (u[1], -u[0])
+        for s in bays(length, spacing):
+            g = ground(a[0] + u[0] * s, a[1] + u[1] * s)
+            for z0 in window_rows(wall_top, g, height, sill, levels):
+                out.append(dict(edge=i, s0=s - width / 2, s1=s + width / 2, z0=z0, z1=z0 + height,
+                                a=a, u=u, n=nrm))  # fmt: skip
+    return out
+
+
+def eave_course(ring, edges, z, width=0.45, height=0.22):
+    """A tile course along the wall top of the listed edges, centred on the wall line, from `z`
+    up: where a roof has no overhang (the main model's barrel tile eave course, scripted)."""
+    n = len(ring)
+    return [
+        _beam((*ring[i][:2], z), (*ring[(i + 1) % n][:2], z), width, height) for i in edges
+    ]

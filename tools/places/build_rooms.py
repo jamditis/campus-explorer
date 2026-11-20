@@ -1,0 +1,124 @@
+"""Build viewer/rooms.json: room numbers and the volumes of the buildings that have a real interior.
+
+Reads every scripted interior plan (blender/scripted/<area>/interior.json) through the plan's own
+label rule (blender/scripted/rooms.py `labels`), so no Blender is needed. Each area with an
+interior gives one volume: the floor outline, from the lowest floor up to the top of the shell
+building that holds it (the highest ceiling when there is none), with the floor levels. The
+building's name is the viewer place (viewer/places.json) that lies inside the outline.
+
+Coordinates are written in the viewer frame: x east, y up, z = -model y, metres.
+
+Usage:
+    python3 tools/places/build_rooms.py            # writes viewer/rooms.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPTED = ROOT / "blender" / "scripted"
+sys.path.insert(0, str(SCRIPTED))
+
+import rooms  # noqa: E402
+
+# The university's own short names (Joe's usage and the building's signs), for search
+SHORT = {"College of Communication and Media": "CCOM"}
+
+
+def inside(ring, x, y):
+    """Is (x, y) inside the closed ring [[x, y], ...]? Even-odd rule."""
+    hit = False
+    for (ax, ay), (bx, by) in zip(ring, ring[1:] + ring[:1], strict=True):
+        if (ay > y) != (by > y) and x < ax + (y - ay) * (bx - ax) / (by - ay):
+            hit = not hit
+    return hit
+
+
+def _view(ring):
+    return [[round(p[0], 2), round(-p[1], 2) + 0.0] for p in ring]
+
+
+def area(name, floors, places, buildings, short=SHORT):
+    """Volume and rooms of one area's interior plan (`floors`: the plan's `interiors` list).
+
+    `places`: viewer places ({name, kind, x, z}); `buildings`: the area's shell buildings
+    ({ring, top}) in model metres. Returns {"volumes": [one], "rooms": [...]}.
+    """
+    floors = sorted(floors, key=lambda f: f["level"])
+    outline = [p[:2] for p in floors[0]["outline"]]
+    building = next(
+        (
+            p["name"]
+            for p in places
+            if p.get("kind") == "building" and inside(outline, p["x"], -p["z"])
+        ),
+        name,
+    )
+    cx = sum(p[0] for p in outline) / len(outline)
+    cy = sum(p[1] for p in outline) / len(outline)
+    tops = [b["top"] for b in buildings if "top" in b and inside(b["ring"], cx, cy)]
+    level_y = {f["level"]: f["floor"] for f in floors}
+    volume = dict(
+        id=name,
+        building=building,
+        short=short.get(building, ""),
+        ring=_view(outline),
+        y0=floors[0]["floor"],
+        y1=max(tops) if tops else max(f["ceiling"] for f in floors),
+        levels=[dict(floor=f["level"], y=f["floor"]) for f in floors],
+        unverified=sorted({f["unverified"] for f in floors if f.get("unverified")}),
+    )
+    out = []
+    for lab in rooms.labels(floors):
+        out.append(
+            dict(
+                name=lab["name"],
+                x=lab["x"],
+                z=round(-lab["y"], 2) + 0.0,
+                y=level_y[lab["floor"]],
+                floor=lab["floor"],
+                building=building,
+                unverified=bool(lab["unverified"]),
+            )
+        )
+    return dict(volumes=[volume], rooms=out)
+
+
+def build(scripted=SCRIPTED, places_file=ROOT / "viewer" / "places.json"):
+    places = json.loads(Path(places_file).read_text())["places"]
+    out = dict(
+        source="blender/scripted/<area>/interior.json: room numbers from the floor signs",
+        builder="tools/places/build_rooms.py",
+        frame="three.js viewer metres: x east, y up, z = -model y (grid north is -z)",
+        volumes=[],
+        rooms=[],
+    )
+    for plan in sorted(Path(scripted).glob("*/interior.json")):
+        floors = json.loads(plan.read_text()).get("interiors", [])
+        if not floors:
+            continue
+        buildings = []
+        for other in sorted(plan.parent.glob("*.json")):
+            buildings += json.loads(other.read_text()).get("buildings", [])
+        one = area(plan.parent.name, floors, places, buildings)
+        out["volumes"] += one["volumes"]
+        out["rooms"] += one["rooms"]
+    return out
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--out", type=Path, default=ROOT / "viewer" / "rooms.json")
+    args = parser.parse_args(argv)
+    out = build()
+    args.out.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+    print(f"{args.out}: {len(out['volumes'])} volumes, {len(out['rooms'])} rooms")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

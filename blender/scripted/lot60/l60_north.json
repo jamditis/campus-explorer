@@ -1,0 +1,2218 @@
+{
+ "zone": "l60_north",
+ "notes": "Zone l60_north of the lot60 area: the buildings and everything north-east of them. The JSON is written by a generator (/tmp/claude-0/p4/lot60/l60_north/gen.py, scratch, not kept); this file is the source. Since the review of 2026-11-20 this file is edited by hand; it is the source. Digitised in a frame along the buildings' axis (t along 136 deg, s along 46 deg). Sources: the NJ 2020 ortho at 0.15 and 0.075 m (positions, paint), the 2017 LiDAR (building outlines from roof-edge returns, roof and ground heights), OSM (names, what a thing is; outlines only as a guide). Names: University Facilities and the Center for Clinical Services (montclair.edu), Lot 60N (OSM 287527901). Buildings: University Facilities and the Center for Clinical Services are one long red-roofed block joined at t 1127.7; both have low gables (rise 0.4 and 0.7 m); the Clinical building's white annex is a flat part 3 m higher. The LiDAR outlines lie up to 1 m from the OSM ones (the B/C border): the Clinical south-east end 1.0 m south-east of OSM's corner, Facilities' north-west wall 0.9 m inside the border: a 0.9 m asphalt strip fills the gap to l60_lot's asphalt there. The walk round the Clinical building's south-east end runs about 3 m past the junction border to join the south-west walk (3 m2 over l60_lot's asphalt; concrete wins). North of Facilities: a white shed (2017 LiDAR and 2020 ortho), a white structure (2020 ortho only), two tanks (ortho): none is in OSM, all UNVERIFIED. Left out: a 15 by 13 m, 3.9 m high structure at (-145, 1515) in the 2017 LiDAR that is gone by 2020 (hatched paving there), a blue container and an orange container, vehicles, the rooftop units on the annex, the Great Notch Yard House, the substation and the NJT service road (outside the footprint). Ground: one asphalt surface from the walls to the footprint (the yard wall line), starting at y 1378.3 on the Village edge and running 0.2 m past the B/C border at the two open cuts; the walks along the south-west walls and the forecourts from the walls to 0.2 m past l60_lot's apron curb; no walk on the north-east sides (the LiDAR ground is flat to the walls; the dark band there is the buildings' shadow). Stalls: rows fitted by least squares through divider positions found as brightness ridges along the row (pitch 2.745 m, 9 ft): fits in each marking's evidence. The north-east side of Facilities has a row of parked cars with only short irregular marks between them: no stall lines drawn there. Lamps: no pole returns in the 2017 LiDAR in this zone; none placed. Trees come from tools/evidence/trees.py.",
+ "surfaces": [
+  {
+   "name": "L6N_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -46.15,
+     1378.3
+    ],
+    [
+     -51.1,
+     1388.0
+    ],
+    [
+     -39.4,
+     1422.5
+    ],
+    [
+     -39.6,
+     1433.0
+    ],
+    [
+     -43.5,
+     1444.0
+    ],
+    [
+     -79.5,
+     1477.4
+    ],
+    [
+     -103.6,
+     1500.4
+    ],
+    [
+     -104.0,
+     1502.0
+    ],
+    [
+     -101.0,
+     1509.0
+    ],
+    [
+     -119.0,
+     1527.4
+    ],
+    [
+     -123.8,
+     1521.6
+    ],
+    [
+     -179.0,
+     1573.6
+    ],
+    [
+     -191.87,
+     1579.51
+    ],
+    [
+     -212.03,
+     1558.63
+    ],
+    [
+     -211.27,
+     1557.9
+    ],
+    [
+     -134.39,
+     1484.16
+    ],
+    [
+     -136.54,
+     1481.94
+    ],
+    [
+     -64.68,
+     1412.69
+    ],
+    [
+     -86.04,
+     1390.56
+    ],
+    [
+     -86.89,
+     1391.37
+    ],
+    [
+     -93.08,
+     1378.3
+    ]
+   ],
+   "evidence": "ortho2020 (paving), lidar2017 (yard wall line, building walls); osm 287527901 (Lot 60N), 233913165 and 1105425302 (drives)",
+   "unverified": "one surface for Lot 60N, the access road from the Village cut and the north drive between the buildings and the NJ Transit wall; its outer edge is the footprint (the wall line), its inner edge the building walls; it starts at y 1378.3 on the Village edge and runs 0.2 m past the B/C border at the junction and at the north-west cut"
+  },
+  {
+   "name": "L6N_Facilities_NW_strip",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -211.27,
+     1557.9
+    ],
+    [
+     -211.89,
+     1558.5
+    ],
+    [
+     -226.72,
+     1543.14
+    ],
+    [
+     -226.1,
+     1542.54
+    ]
+   ],
+   "evidence": "lidar2017 (the north-west wall stands 0.9 m inside the OSM outline that the B/C border follows)",
+   "unverified": "fills the gap between the wall and l60_lot's asphalt (t 1234.85), 0.2 m past it"
+  },
+  {
+   "name": "L6N_SW_walks_and_plazas",
+   "kind": "concrete",
+   "ring": [
+    [
+     -85.35,
+     1389.9
+    ],
+    [
+     -86.04,
+     1390.56
+    ],
+    [
+     -144.58,
+     1446.6
+    ],
+    [
+     -148.82,
+     1442.21
+    ],
+    [
+     -153.93,
+     1447.15
+    ],
+    [
+     -156.06,
+     1444.94
+    ],
+    [
+     -158.93,
+     1447.72
+    ],
+    [
+     -156.81,
+     1449.92
+    ],
+    [
+     -162.32,
+     1455.24
+    ],
+    [
+     -147.6,
+     1470.48
+    ],
+    [
+     -224.4,
+     1544.3
+    ],
+    [
+     -226.1,
+     1542.54
+    ],
+    [
+     -166.62,
+     1485.11
+    ],
+    [
+     -169.3,
+     1482.34
+    ],
+    [
+     -163.54,
+     1476.78
+    ],
+    [
+     -168.61,
+     1471.53
+    ],
+    [
+     -164.59,
+     1467.64
+    ],
+    [
+     -174.52,
+     1457.35
+    ],
+    [
+     -147.69,
+     1431.44
+    ],
+    [
+     -141.64,
+     1437.7
+    ],
+    [
+     -88.63,
+     1386.5
+    ]
+   ],
+   "evidence": "ortho2020 (pale paving between the walls and l60_lot's apron curb), lidar2017 (walk 0.2 to 0.4 m above the stalls south-west of the Center for Clinical Services); osm 1132693522, 287525000, 287525001, 785130903 (footways)",
+   "unverified": "the walks along the south-west walls and the forecourts in front of the annex and between the two buildings, drawn as one concrete surface from the walls to 0.2 m past the apron curb; joints, steps and the details of the forecourts not read"
+  },
+  {
+   "name": "L6N_ramp_Facilities_corner",
+   "kind": "concrete",
+   "ring": [
+    [
+     -147.6,
+     1470.48
+    ],
+    [
+     -150.73,
+     1473.49
+    ],
+    [
+     -161.31,
+     1462.53
+    ],
+    [
+     -158.19,
+     1459.52
+    ]
+   ],
+   "evidence": "lidar2017 (ground rising 1.1 m from s 940 to the Facilities wall, about 8 %, along the annex's north-west wall)",
+   "unverified": "a ramp or loading slope, in the annex's shadow in the ortho; it follows the raw LiDAR ground",
+   "layer": 5.2,
+   "grade": false
+  },
+  {
+   "name": "L6N_plaza_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -151.32,
+     1473.46
+    ],
+    [
+     -157.51,
+     1479.43
+    ],
+    [
+     -162.99,
+     1473.75
+    ],
+    [
+     -156.81,
+     1467.77
+    ]
+   ],
+   "evidence": "ortho2020 (dark planted square between the two buildings)",
+   "unverified": "outline read by eye",
+   "layer": 5.5
+  },
+  {
+   "name": "L6N_forecourt_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -139.34,
+     1441.52
+    ],
+    [
+     -144.4,
+     1446.36
+    ],
+    [
+     -148.44,
+     1442.18
+    ],
+    [
+     -143.41,
+     1437.31
+    ]
+   ],
+   "evidence": "ortho2020 (dark bed against the wall), lidar2017 (raised up to 1.4 m: a planter)",
+   "unverified": "outline read by eye; planter wall not modelled",
+   "layer": 5.5
+  },
+  {
+   "name": "L6N_Clinical_SE_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -79.5,
+     1390.48
+    ],
+    [
+     -70.76,
+     1400.11
+    ],
+    [
+     -65.85,
+     1406.49
+    ],
+    [
+     -63.63,
+     1411.67
+    ],
+    [
+     -64.68,
+     1412.69
+    ],
+    [
+     -86.04,
+     1390.56
+    ],
+    [
+     -85.35,
+     1389.9
+    ],
+    [
+     -88.21,
+     1386.93
+    ],
+    [
+     -85.84,
+     1384.64
+    ]
+   ],
+   "evidence": "ortho2020 (dark planting bed between the walk and the wall, a shrub at its middle)",
+   "unverified": "outline read by eye",
+   "layer": 3.5
+  },
+  {
+   "name": "L6N_Clinical_SE_wedge_bed",
+   "kind": "mulch",
+   "ring": [
+    [
+     -68.52,
+     1397.39
+    ],
+    [
+     -74.74,
+     1392.83
+    ],
+    [
+     -82.11,
+     1386.05
+    ],
+    [
+     -88.36,
+     1379.01
+    ],
+    [
+     -88.32,
+     1379.0
+    ],
+    [
+     -80.39,
+     1379.0
+    ]
+   ],
+   "evidence": "ortho2020 (dark planted wedge between the access road and the walk)",
+   "unverified": "outline read by eye",
+   "layer": 3.5
+  },
+  {
+   "name": "L6N_Clinical_NE_pad",
+   "kind": "concrete",
+   "ring": [
+    [
+     -63.56,
+     1421.24
+    ],
+    [
+     -66.87,
+     1424.44
+    ],
+    [
+     -68.68,
+     1422.57
+    ],
+    [
+     -65.37,
+     1419.37
+    ]
+   ],
+   "evidence": "ortho2020 (pale pad with a dark middle at the end of the walk)",
+   "unverified": "what stands on it (a bench or bins) is not known"
+  }
+ ],
+ "strips": [
+  {
+   "name": "L6N_Clinical_SE_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -92.97,
+     1384.02
+    ],
+    [
+     -86.51,
+     1382.79,
+     3.0
+    ],
+    [
+     -76.77,
+     1392.01
+    ],
+    [
+     -68.68,
+     1402.27,
+     3.0
+    ],
+    [
+     -63.35,
+     1412.83,
+     3.0
+    ],
+    [
+     -62.65,
+     1417.58,
+     2.0
+    ],
+    [
+     -65.03,
+     1420.01
+    ]
+   ],
+   "width": 2.2,
+   "evidence": "ortho2020 (pale walk 1.8 to 2.4 m wide round the building's south-east end); osm 785130903, 785130904",
+   "unverified": "centre line read by eye on the 0.075 m ortho, not fitted; its south-west end joins the walk along the south-west wall at the B/C border"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "L6N_access_road_W_curb",
+   "path": [
+    [
+     -80.39,
+     1379.0
+    ],
+    [
+     -68.52,
+     1397.39
+    ],
+    [
+     -66.68,
+     1401.03,
+     3.0
+    ],
+    [
+     -61.77,
+     1411.72,
+     3.0
+    ],
+    [
+     -61.45,
+     1417.95,
+     2.0
+    ],
+    [
+     -64.26,
+     1420.8
+    ]
+   ],
+   "evidence": "ortho2020 (edge of the planted wedge and of the walk against the access road)",
+   "unverified": "a raised curb is assumed along the planted edge; the LiDAR is too coarse to show it"
+  }
+ ],
+ "markings": [
+  {
+   "name": "L6N_stalls_N1",
+   "type": "stalls",
+   "line": [
+    [
+     -67.8,
+     1423.66
+    ],
+    [
+     -129.0,
+     1482.77
+    ]
+   ],
+   "count": 31,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (29 dividers fitted: pitch 2.745 m, rms 0.029 m, max 0.066 m)",
+   "unverified": "the lines show from 974.0 to 977.0 m out from the axis; their ends near the wall lie in the building's shadow: drawn 5.0 m long"
+  },
+  {
+   "name": "L6N_stalls_N2",
+   "type": "stalls",
+   "line": [
+    [
+     -59.49,
+     1432.32
+    ],
+    [
+     -120.69,
+     1491.42
+    ]
+   ],
+   "count": 31,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (28 dividers fitted: pitch 2.744 m, rms 0.022 m, max 0.068 m; lines 983.7 to 989.0)"
+  },
+  {
+   "name": "L6N_stalls_N3",
+   "type": "stalls",
+   "line": [
+    [
+     -63.42,
+     1436.12
+    ],
+    [
+     -122.69,
+     1493.36
+    ]
+   ],
+   "count": 30,
+   "depth": 5.2,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (24 dividers fitted: pitch 2.747 m, rms 0.017 m, max 0.036 m; lines 989.0 to 994.2)",
+   "unverified": "dividers 1106 to 1123 hidden under cars, counted from the pitch"
+  },
+  {
+   "name": "L6N_N2N3_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -59.37,
+     1432.2
+    ],
+    [
+     -122.69,
+     1493.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6N_stalls_N4",
+   "type": "stalls",
+   "line": [
+    [
+     -49.31,
+     1438.9
+    ],
+    [
+     -88.79,
+     1477.02
+    ]
+   ],
+   "count": 20,
+   "depth": 5.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (21 dividers fitted: pitch 2.744 m, rms 0.018 m, max 0.055 m; lines 1000.8 to 1006.2, the wall at 1007.5)",
+   "unverified": "no dividers seen north-west of 1090 (the Yard House's shadow and cars): the row is drawn to there"
+  },
+  {
+   "name": "L6N_stalls_F_south",
+   "type": "stalls",
+   "line": [
+    [
+     -163.32,
+     1536.2
+    ],
+    [
+     -188.98,
+     1560.98
+    ]
+   ],
+   "count": 13,
+   "depth": 5.7,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (14 dividers fitted over both halves: pitch 2.744 m, rms 0.019 m, max 0.040 m; lines 985.9 to 991.6)",
+   "unverified": "the row's south-east part (1150 to 1175) shows no lines in the 2020 ortho and is left unpainted"
+  },
+  {
+   "name": "L6N_stalls_F_north",
+   "type": "stalls",
+   "line": [
+    [
+     -163.32,
+     1536.2
+    ],
+    [
+     -177.14,
+     1549.54
+    ]
+   ],
+   "count": 7,
+   "depth": 5.7,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (same fit)",
+   "unverified": "lines beyond 993 m hidden under the parked cars: drawn as deep as the south half; north-west of 1204 the white structure stands on this half"
+  },
+  {
+   "name": "L6N_F_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -163.32,
+     1536.2
+    ],
+    [
+     -188.98,
+     1560.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (a long line at 991.6 m)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_outline",
+   "type": "line",
+   "path": [
+    [
+     -57.31,
+     1423.68
+    ],
+    [
+     -52.02,
+     1432.62,
+     12.9
+    ],
+    [
+     -59.65,
+     1439.98
+    ],
+    [
+     -63.4,
+     1436.09
+    ],
+    [
+     -59.37,
+     1432.2
+    ],
+    [
+     -62.63,
+     1428.82
+    ],
+    [
+     -57.31,
+     1423.68
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (outline, arc fitted by eye through its ends and middle)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_1",
+   "type": "line",
+   "path": [
+    [
+     -57.34,
+     1424.37
+    ],
+    [
+     -58.12,
+     1424.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_2",
+   "type": "line",
+   "path": [
+    [
+     -56.85,
+     1425.38
+    ],
+    [
+     -59.11,
+     1425.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_3",
+   "type": "line",
+   "path": [
+    [
+     -56.46,
+     1426.39
+    ],
+    [
+     -60.11,
+     1426.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_4",
+   "type": "line",
+   "path": [
+    [
+     -56.16,
+     1427.39
+    ],
+    [
+     -61.1,
+     1427.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_5",
+   "type": "line",
+   "path": [
+    [
+     -55.95,
+     1428.4
+    ],
+    [
+     -62.09,
+     1428.29
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_6",
+   "type": "line",
+   "path": [
+    [
+     -55.82,
+     1429.4
+    ],
+    [
+     -62.19,
+     1429.29
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_7",
+   "type": "line",
+   "path": [
+    [
+     -55.76,
+     1430.4
+    ],
+    [
+     -61.2,
+     1430.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_8",
+   "type": "line",
+   "path": [
+    [
+     -55.79,
+     1431.4
+    ],
+    [
+     -60.22,
+     1431.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_9",
+   "type": "line",
+   "path": [
+    [
+     -55.89,
+     1432.4
+    ],
+    [
+     -59.51,
+     1432.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_10",
+   "type": "line",
+   "path": [
+    [
+     -56.05,
+     1433.4
+    ],
+    [
+     -60.52,
+     1433.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_11",
+   "type": "line",
+   "path": [
+    [
+     -56.31,
+     1434.39
+    ],
+    [
+     -61.54,
+     1434.3
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_12",
+   "type": "line",
+   "path": [
+    [
+     -56.65,
+     1435.39
+    ],
+    [
+     -62.56,
+     1435.28
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_13",
+   "type": "line",
+   "path": [
+    [
+     -57.08,
+     1436.38
+    ],
+    [
+     -63.23,
+     1436.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_14",
+   "type": "line",
+   "path": [
+    [
+     -57.62,
+     1437.37
+    ],
+    [
+     -62.25,
+     1437.29
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_15",
+   "type": "line",
+   "path": [
+    [
+     -58.27,
+     1438.36
+    ],
+    [
+     -61.26,
+     1438.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_N_SE_16",
+   "type": "line",
+   "path": [
+    [
+     -59.06,
+     1439.34
+    ],
+    [
+     -60.28,
+     1439.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes about 1 m apart)"
+  },
+  {
+   "name": "L6N_hatch_NW_outline",
+   "type": "line",
+   "path": [
+    [
+     -125.88,
+     1490.59
+    ],
+    [
+     -140.41,
+     1504.62
+    ],
+    [
+     -134.02,
+     1511.24
+    ],
+    [
+     -119.49,
+     1497.21
+    ],
+    [
+     -125.88,
+     1490.59
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "corners read by eye"
+  },
+  {
+   "name": "L6N_hatch_NW_1",
+   "type": "line",
+   "path": [
+    [
+     -131.59,
+     1496.1
+    ],
+    [
+     -119.54,
+     1497.16
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_2",
+   "type": "line",
+   "path": [
+    [
+     -130.82,
+     1495.36
+    ],
+    [
+     -120.39,
+     1496.27
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_3",
+   "type": "line",
+   "path": [
+    [
+     -130.05,
+     1494.62
+    ],
+    [
+     -121.24,
+     1495.39
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_4",
+   "type": "line",
+   "path": [
+    [
+     -129.29,
+     1493.88
+    ],
+    [
+     -122.1,
+     1494.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_5",
+   "type": "line",
+   "path": [
+    [
+     -128.52,
+     1493.14
+    ],
+    [
+     -122.95,
+     1493.63
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_6",
+   "type": "line",
+   "path": [
+    [
+     -127.75,
+     1492.4
+    ],
+    [
+     -123.8,
+     1492.74
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_7",
+   "type": "line",
+   "path": [
+    [
+     -126.99,
+     1491.66
+    ],
+    [
+     -124.65,
+     1491.86
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_8",
+   "type": "line",
+   "path": [
+    [
+     -126.22,
+     1490.92
+    ],
+    [
+     -125.5,
+     1490.98
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_9",
+   "type": "line",
+   "path": [
+    [
+     -132.36,
+     1496.84
+    ],
+    [
+     -120.21,
+     1497.91
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_10",
+   "type": "line",
+   "path": [
+    [
+     -133.12,
+     1497.58
+    ],
+    [
+     -120.98,
+     1498.65
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_11",
+   "type": "line",
+   "path": [
+    [
+     -133.89,
+     1498.33
+    ],
+    [
+     -121.75,
+     1499.39
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_12",
+   "type": "line",
+   "path": [
+    [
+     -134.66,
+     1499.07
+    ],
+    [
+     -122.51,
+     1500.13
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_13",
+   "type": "line",
+   "path": [
+    [
+     -135.43,
+     1499.81
+    ],
+    [
+     -123.28,
+     1500.87
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_14",
+   "type": "line",
+   "path": [
+    [
+     -136.19,
+     1500.55
+    ],
+    [
+     -124.05,
+     1501.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_15",
+   "type": "line",
+   "path": [
+    [
+     -136.96,
+     1501.29
+    ],
+    [
+     -124.82,
+     1502.35
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_16",
+   "type": "line",
+   "path": [
+    [
+     -137.73,
+     1502.03
+    ],
+    [
+     -125.58,
+     1503.09
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_17",
+   "type": "line",
+   "path": [
+    [
+     -138.5,
+     1502.77
+    ],
+    [
+     -126.35,
+     1503.83
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_18",
+   "type": "line",
+   "path": [
+    [
+     -139.26,
+     1503.51
+    ],
+    [
+     -127.12,
+     1504.58
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_19",
+   "type": "line",
+   "path": [
+    [
+     -140.03,
+     1504.25
+    ],
+    [
+     -127.88,
+     1505.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_20",
+   "type": "line",
+   "path": [
+    [
+     -134.87,
+     1510.36
+    ],
+    [
+     -133.26,
+     1510.5
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_21",
+   "type": "line",
+   "path": [
+    [
+     -135.72,
+     1509.48
+    ],
+    [
+     -132.49,
+     1509.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_22",
+   "type": "line",
+   "path": [
+    [
+     -136.57,
+     1508.6
+    ],
+    [
+     -131.72,
+     1509.02
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_23",
+   "type": "line",
+   "path": [
+    [
+     -137.42,
+     1507.71
+    ],
+    [
+     -130.95,
+     1508.28
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_24",
+   "type": "line",
+   "path": [
+    [
+     -138.28,
+     1506.83
+    ],
+    [
+     -130.19,
+     1507.54
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_25",
+   "type": "line",
+   "path": [
+    [
+     -139.13,
+     1505.95
+    ],
+    [
+     -129.42,
+     1506.8
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_hatch_NW_26",
+   "type": "line",
+   "path": [
+    [
+     -139.98,
+     1505.07
+    ],
+    [
+     -128.65,
+     1506.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (stripes fitted: 5 deg, 0.805 m apart, clipped to the outline)"
+  },
+  {
+   "name": "L6N_stalls_E1",
+   "type": "stalls",
+   "line": [
+    [
+     -59.49,
+     1382.57
+    ],
+    [
+     -51.22,
+     1399.97
+    ]
+   ],
+   "count": 7,
+   "depth": 5.25,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (8 dividers fitted: pitch 2.753 m, rms 0.018 m, max 0.027 m; base line at 64.6 deg from the line's brightness peak in three pieces; divider length 5.25 m)"
+  },
+  {
+   "name": "L6N_E1_base_line",
+   "type": "line",
+   "path": [
+    [
+     -61.34,
+     1378.69
+    ],
+    [
+     -51.22,
+     1399.97
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "L6N_stall_E_curve_1",
+   "type": "line",
+   "path": [
+    [
+     -45.49,
+     1410.71
+    ],
+    [
+     -49.97,
+     1413.06
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_2",
+   "type": "line",
+   "path": [
+    [
+     -44.15,
+     1413.54
+    ],
+    [
+     -48.81,
+     1415.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_3",
+   "type": "line",
+   "path": [
+    [
+     -43.06,
+     1416.48
+    ],
+    [
+     -47.87,
+     1418.04
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_4",
+   "type": "line",
+   "path": [
+    [
+     -42.22,
+     1419.51
+    ],
+    [
+     -47.15,
+     1420.65
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_5",
+   "type": "line",
+   "path": [
+    [
+     -41.64,
+     1422.59
+    ],
+    [
+     -46.65,
+     1423.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_6",
+   "type": "line",
+   "path": [
+    [
+     -41.33,
+     1425.72
+    ],
+    [
+     -46.38,
+     1426.0
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_7",
+   "type": "line",
+   "path": [
+    [
+     -41.29,
+     1428.85
+    ],
+    [
+     -46.34,
+     1428.71
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_8",
+   "type": "line",
+   "path": [
+    [
+     -41.51,
+     1431.98
+    ],
+    [
+     -46.53,
+     1431.41
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_9",
+   "type": "line",
+   "path": [
+    [
+     -42.0,
+     1435.08
+    ],
+    [
+     -46.96,
+     1434.08
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_stall_E_curve_10",
+   "type": "line",
+   "path": [
+    [
+     -42.75,
+     1438.13
+    ],
+    [
+     -47.61,
+     1436.71
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m (11 dividers read by eye (the 11th lay on row N4's first divider and was dropped on review), a circle fitted through their ends: centre (-78.0, 1427.8), radii 36.7 and 31.7 m; dividers placed at the fitted angle step)"
+  },
+  {
+   "name": "L6N_hatch_E_outline",
+   "type": "line",
+   "path": [
+    [
+     -56.4,
+     1400.6
+    ],
+    [
+     -51.6,
+     1400.1
+    ],
+    [
+     -47.0,
+     1404.0
+    ],
+    [
+     -47.6,
+     1409.8
+    ],
+    [
+     -51.8,
+     1411.2
+    ],
+    [
+     -55.0,
+     1406.0
+    ],
+    [
+     -56.4,
+     1400.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "blurred in the ortho: outline read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_1",
+   "type": "line",
+   "path": [
+    [
+     -56.27,
+     1401.11
+    ],
+    [
+     -55.69,
+     1400.53
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_2",
+   "type": "line",
+   "path": [
+    [
+     -56.01,
+     1402.12
+    ],
+    [
+     -54.27,
+     1400.38
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_3",
+   "type": "line",
+   "path": [
+    [
+     -55.74,
+     1403.13
+    ],
+    [
+     -52.85,
+     1400.23
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_4",
+   "type": "line",
+   "path": [
+    [
+     -55.48,
+     1404.14
+    ],
+    [
+     -51.52,
+     1400.17
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_5",
+   "type": "line",
+   "path": [
+    [
+     -55.22,
+     1405.15
+    ],
+    [
+     -50.83,
+     1400.76
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_6",
+   "type": "line",
+   "path": [
+    [
+     -54.92,
+     1406.12
+    ],
+    [
+     -50.14,
+     1401.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_7",
+   "type": "line",
+   "path": [
+    [
+     -54.44,
+     1406.91
+    ],
+    [
+     -49.45,
+     1401.92
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_8",
+   "type": "line",
+   "path": [
+    [
+     -53.95,
+     1407.7
+    ],
+    [
+     -48.76,
+     1402.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_9",
+   "type": "line",
+   "path": [
+    [
+     -53.47,
+     1408.49
+    ],
+    [
+     -48.07,
+     1403.09
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_10",
+   "type": "line",
+   "path": [
+    [
+     -52.98,
+     1409.28
+    ],
+    [
+     -47.38,
+     1403.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_11",
+   "type": "line",
+   "path": [
+    [
+     -52.5,
+     1410.06
+    ],
+    [
+     -47.07,
+     1404.63
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_12",
+   "type": "line",
+   "path": [
+    [
+     -52.01,
+     1410.85
+    ],
+    [
+     -47.21,
+     1406.05
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_13",
+   "type": "line",
+   "path": [
+    [
+     -50.74,
+     1410.85
+    ],
+    [
+     -47.36,
+     1407.47
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  },
+  {
+   "name": "L6N_hatch_E_14",
+   "type": "line",
+   "path": [
+    [
+     -48.83,
+     1410.21
+    ],
+    [
+     -47.51,
+     1408.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 0.075 m",
+   "unverified": "stripe spacing 0.9 m read by eye"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "L6N_University_Facilities",
+   "ring": [
+    [
+     -134.39,
+     1484.16
+    ],
+    [
+     -211.27,
+     1557.9
+    ],
+    [
+     -224.4,
+     1544.3
+    ],
+    [
+     -147.6,
+     1470.48
+    ]
+   ],
+   "roof": "gable",
+   "top": 105.2,
+   "eave": 104.8,
+   "ridge_angle": 136.0,
+   "style": "plant",
+   "floors": 1,
+   "wall": "#b9ab93",
+   "trim": "#8b6357",
+   "roof_colour": "#8b6357",
+   "windows": {
+    "width": 1.2,
+    "height": 1.2,
+    "spacing": 6.0
+   },
+   "evidence": "lidar2017 outline (walls fitted to roof-edge returns in 1 m slices: north-east 99 slices rms 0.15 m, south-west 97 rms 0.12, north-west 17 rms 0.09) and heights (eaves 104.8 m on both long sides, ridge 105.2 m along the middle); ortho2020 (red-brown roof); osm 785130901 (what it is)",
+   "unverified": "wall colour, doors and windows guessed (walls not seen in the ortho); one storey from the 5.6 m height; roof drawn as one low gable (rise 0.4 m)"
+  },
+  {
+   "name": "L6N_Clinical_Services",
+   "ring": [
+    [
+     -64.68,
+     1412.69
+    ],
+    [
+     -123.03,
+     1468.92
+    ],
+    [
+     -144.58,
+     1446.6
+    ],
+    [
+     -86.04,
+     1390.56
+    ]
+   ],
+   "roof": "gable",
+   "top": 105.57,
+   "eave": 104.88,
+   "ridge_angle": 136.0,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#b9ab93",
+   "trim": "#91695d",
+   "roof_colour": "#91695d",
+   "windows": {
+    "width": 1.5,
+    "height": 1.4,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 outline (north-east wall 73 slices rms 0.16 m, south-west 75 rms 0.11, south-east end 26 rms 0.10) and heights (eaves 104.85 to 104.9 m, ridge 105.57 m along the middle); ortho2020 (red-brown roof); osm 233913261 (name)",
+   "unverified": "wall colour, doors and window grid guessed; one storey from the height"
+  },
+  {
+   "name": "L6N_Clinical_Services_annex",
+   "ring": [
+    [
+     -126.32,
+     1465.52
+    ],
+    [
+     -139.81,
+     1478.55
+    ],
+    [
+     -162.32,
+     1455.24
+    ],
+    [
+     -148.82,
+     1442.21
+    ]
+   ],
+   "roof": "flat",
+   "top": 108.0,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#d9d6cc",
+   "trim": "#f2f6e9",
+   "roof_colour": "#e9ece2",
+   "windows": {
+    "width": 1.5,
+    "height": 1.6,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 (walls: south-west 17 slices rms 0.12 m, north-west 31 rms 0.13, north-east 17 rms 0.13, south-east 31 rms 0.51; roof deck 107.75 to 108.2 m, units on it to 110.6 m); ortho2020 (white roof)",
+   "unverified": "a taller part of the Center for Clinical Services (white roof, 8.7 m high); rooftop units not modelled; wall colour, floors and windows guessed"
+  },
+  {
+   "name": "L6N_Clinical_Services_NE_strip",
+   "ring": [
+    [
+     -123.03,
+     1468.92
+    ],
+    [
+     -136.54,
+     1481.94
+    ],
+    [
+     -139.81,
+     1478.55
+    ],
+    [
+     -126.32,
+     1465.52
+    ]
+   ],
+   "roof": "shed",
+   "top": 105.08,
+   "eave": 104.93,
+   "ridge_angle": 136.0,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#b9ab93",
+   "trim": "#91695d",
+   "roof_colour": "#91695d",
+   "windows": {
+    "width": 1.5,
+    "height": 1.4,
+    "spacing": 4.0
+   },
+   "evidence": "lidar2017 (the main roof's north-east slope runs on beside the annex: 105.08 m at the annex, 104.93 m at the north-east wall)",
+   "unverified": "drawn as a shed roof; walls and windows as the main part"
+  },
+  {
+   "name": "L6N_Clinical_Services_entrance",
+   "ring": [
+    [
+     -153.93,
+     1447.15
+    ],
+    [
+     -156.81,
+     1449.92
+    ],
+    [
+     -158.93,
+     1447.72
+    ],
+    [
+     -156.06,
+     1444.94
+    ]
+   ],
+   "roof": "flat",
+   "top": 104.4,
+   "style": "hall",
+   "floors": 1,
+   "wall": "#b9ab93",
+   "trim": "#91695d",
+   "roof_colour": "#91695d",
+   "evidence": "lidar2017 (28 returns 103.8 to 104.7 m in front of the annex's south-west wall, sides fitted from 3 to 6 slices); ortho2020 (small red roof)",
+   "unverified": "an entrance vestibule or porch: outline from few returns, open or closed not known"
+  },
+  {
+   "name": "L6N_white_shed",
+   "ring": [
+    [
+     -127.49,
+     1518.29
+    ],
+    [
+     -135.76,
+     1526.27
+    ],
+    [
+     -142.43,
+     1519.37
+    ],
+    [
+     -134.16,
+     1511.38
+    ]
+   ],
+   "roof": "gable",
+   "top": 104.2,
+   "eave": 102.7,
+   "ridge_angle": 136.0,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#e7efe4",
+   "roof_colour": "#e7efe4",
+   "evidence": "lidar2017 (11.5 by 9.6 m, ridge 104.2 m at mid-width, 102.5 to 102.9 m at the long sides; ground 98.8 m); ortho2020 (white roof in the same place)",
+   "unverified": "not in OSM, no name in any source; a storage shed or a fabric shelter (white roof on a dark frame); a lower 2.5 m part on its south-west side in the 2017 LiDAR is not seen in the 2020 ortho and is left out"
+  },
+  {
+   "name": "L6N_white_structure",
+   "ring": [
+    [
+     -168.9,
+     1560.63
+    ],
+    [
+     -179.11,
+     1570.5
+    ],
+    [
+     -187.24,
+     1562.08
+    ],
+    [
+     -177.02,
+     1552.22
+    ]
+   ],
+   "roof": "flat",
+   "top": 101.3,
+   "style": "shed",
+   "floors": 1,
+   "parapet": 0.1,
+   "wall": "#dae0cc",
+   "roof_colour": "#dae0cc",
+   "evidence": "ortho2020 (white roofs in three bands, 14.2 by 11.7 m); not in the 2017 LiDAR",
+   "unverified": "height 2.7 m guessed (newer than the LiDAR); what it is (trailers, containers or a shelter) is not known; outline from the ortho, which leans tall things north-east"
+  },
+  {
+   "name": "L6N_tank_1",
+   "ring": [
+    [
+     -114.27,
+     1506.42,
+     1.5
+    ],
+    [
+     -116.5,
+     1508.58,
+     1.5
+    ],
+    [
+     -118.66,
+     1506.35,
+     1.5
+    ],
+    [
+     -116.43,
+     1504.19,
+     1.5
+    ]
+   ],
+   "roof": "flat",
+   "top": 101.8,
+   "style": "shed",
+   "floors": 1,
+   "parapet": 0.05,
+   "wall": "#e9e6b0",
+   "roof_colour": "#f0eea8",
+   "evidence": "ortho2020 (round pale top 3.1 m across)",
+   "unverified": "an upright tank; height 3 m guessed (the 2017 LiDAR shows another structure here, gone by 2020)"
+  },
+  {
+   "name": "L6N_tank_2",
+   "ring": [
+    [
+     -120.1,
+     1512.05,
+     1.5
+    ],
+    [
+     -122.33,
+     1514.2,
+     1.5
+    ],
+    [
+     -124.48,
+     1511.97,
+     1.5
+    ],
+    [
+     -122.25,
+     1509.82,
+     1.5
+    ]
+   ],
+   "roof": "flat",
+   "top": 101.8,
+   "style": "shed",
+   "floors": 1,
+   "parapet": 0.05,
+   "wall": "#e9e6b0",
+   "roof_colour": "#f0eea8",
+   "evidence": "ortho2020 (round pale top 3.1 m across)",
+   "unverified": "an upright tank; height 3 m guessed (the 2017 LiDAR shows another structure here, gone by 2020)"
+  }
+ ]
+}

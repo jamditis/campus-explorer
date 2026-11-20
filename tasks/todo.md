@@ -32,8 +32,8 @@ A survey of OpenStreetMap against the published tiles ranks the gaps: the north 
 - [ ] South-west remainder: Pittser Field, Carlisle Road north, Lot 30, the Maintenance Building
 - [x] The Village west of the railway (`village/`): Clove Road, Hawk Crossings, Sinatra Hall, the four Village halls, nine lots
 - [x] Overlook Corporate Center block and the quarry ground north of the stadium district (`overlook/`; first planned under the wrong name "Floyd Hall Arena block", see lessons)
-- [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the communication school are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
-- [ ] Red Hawk Deck to Cole Hall, and the communication school (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
+- [x] West strip (`west/`): the start of the corridor. A survey showed Kasser Theater, Cole Hall, Morehead Hall and the College of Communication and Media are detailed and sound; the gap was Carlisle Road north and the College Avenue junction, which were bare terrain
+- [ ] Red Hawk Deck to Cole Hall, and the College of Communication and Media (further work needs Joe's photos: the 2020 ortho shows a construction site between Kasser Theater and Cole Hall): scripted additions for what the main model lacks, box scripts (tested on the released `.blend`) for corrections to it
 - [ ] Southwest leftovers: midfield logo (the university's artwork: needs Joe's file or permission), lacrosse and field hockey lines, turn arrows, the east platform's brick band, the east canopy
 
 Each area: evidence, plan files (digitised against the ortho and LiDAR, checked by overlay), build, export, before/after screenshots, an independent review, a PR stacked on the one before.
@@ -149,6 +149,19 @@ One PR, not two: a PR with new plans and old tiles would leave `main` inconsiste
 - [x] Export: tree instances for groups of 2 to 4, packed rotations, half-size far images, `REPACK=1`
 - [ ] Export `sw10`, before/after screenshots, PR
 
-Blocked: the corridor to the communication school needs Joe's photos (the 2020 ortho shows a construction site there).
+Blocked: the corridor to the College of Communication and Media needs Joe's photos (the 2020 ortho shows a construction site there).
 
 Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per area.
+
+## Phase 4: stacked work after PR #58 (Joe, 2026-11-20: keep working, stack PRs, merge from the top)
+
+- [x] Defects of #58: edges cut exactly at the footprint, far-field ground out of the scripted areas, no ground through the stadium rows; edge blend by offset from the LiDAR
+- [x] Shared tile images; tree instancing; far-field cuts (skyline stand-in, lighter far ground, hidden filler dropped); download 198.4 to 180.2 MB
+- [x] College of Communication and Media rebuilt as a scripted area from Joe's floor signs and lobby photos, with the main model's facades carried over
+- [x] Alumni Green plaza corrected from Joe's photos, published through the scripted build
+- [x] Two new areas: the Webster Road band and the Lot 60 complex
+- [x] Viewer: interiors and room labels, arrivals above ground (Joe's bug report), a soft flight limit
+- [ ] Browser checks on the new tiles: floor 2 walking, room labels on screen, the stair
+- [ ] Next areas from the survey: core walks and drives, Lots 1 and 2 with the Normal Avenue houses
+
+Engine features added: `adopt` (carry objects over from the release file, with a fix hook), supersede `volumes`, `interiors`, building options (ring roof, recessed windows, openings), `free_edges`.

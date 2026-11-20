@@ -17,9 +17,13 @@ GRADE = 5.0  # smoothing length of paved ground, metres
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
 LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
+CAP_GAP = 0.03  # ground held this far below a cap's top (the rows of a seating bowl)
+CAP_EDGE = 0.05  # a point this close to a cap's outline is held by it too
 EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
 )
+RUN_STEP = 1.5  # edge samples further apart than this are not one run (edge.py: 1 m apart)
+FOLLOW_TOL = 0.05  # metres: a neighbour this close to following the LiDAR is met as an offset
 
 
 def _blur(a, sigma):
@@ -90,6 +94,45 @@ def _sample(a, x, y, x0, y1, cell):
     return top * (1 - ty) + bottom * ty
 
 
+def _windows(e, kind=None):
+    """Symmetric windows along the run of samples e (in footprint order, wrapping at the ends):
+    for each sample the indices of the k <= EDGE_RUN samples each side, where the run goes on
+    unbroken both ways (no step over RUN_STEP: the old ground had none there, or the edge is
+    shared with another scripted area; and no change of `kind`). A run's end sample has k = 0."""
+    n = len(e)
+    step = np.hypot(*(np.roll(e[:, :2], -1, 0) - e[:, :2]).T)  # i to i + 1
+    joined = step <= RUN_STEP
+    if kind is not None:
+        joined &= np.roll(kind, -1) == kind
+    out = []
+    for i in range(n):
+        k = 0
+        while k < EDGE_RUN and k < (n - 1) // 2 and joined[(i - k - 1) % n] and joined[(i + k) % n]:
+            k += 1
+        out.append(np.arange(i - k, i + k + 1) % n)
+    return out
+
+
+def _follows(e, off, tol=FOLLOW_TOL):
+    """Whether the neighbour follows the LiDAR at each sample: over its window, its offset from
+    the LiDAR varies no more than its height strays from a straight line (plus `tol`)."""
+    out = np.ones(len(e), bool)
+    for i, idx in enumerate(_windows(e)):
+        if len(idx) < 3:
+            continue
+        t = np.arange(len(idx), dtype=float)
+        z = e[idx, 2]
+        line = np.polyval(np.polyfit(t, z, 1), t)
+        out[i] = off[idx].std() <= (z - line).std() + tol
+    return out
+
+
+def _run_mean(e, v, kind):
+    """Mean of v over each sample's symmetric window (`_windows`): a sample at the end of a run
+    keeps its own value; offsets and heights (`kind`) are not averaged together."""
+    return np.array([v[idx].mean() for idx in _windows(e, kind)])
+
+
 def shore_level(samples):
     """Water level from the ground read along a shore traced on the ortho.
 
@@ -128,9 +171,9 @@ class Terrain:
     """
 
     def __init__(
-        self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), voids=(), cell=1.0
+        self, lidar_npz, edge=None, lifts=(), footprint=None, paved=(), voids=(), cell=1.0, caps=()
     ):
-        self.lifts, self.footprint = list(lifts), footprint
+        self.lifts, self.footprint, self.caps = list(lifts), footprint, list(caps)
         z = np.load(lidar_npz)
         self.x0, self.y0, self.x1, self.y1 = (float(v) for v in z["box"][:4])
         self.cell = cell
@@ -149,6 +192,13 @@ class Terrain:
         s, n = np.zeros((ny, nx)), np.zeros((ny, nx))
         np.add.at(s, (row, col), g[:, 2])
         np.add.at(n, (row, col), 1)
+        # cells with ground returns of their own, or next to one (under a roof or a stand there is
+        # none: the filled ground there is a guess, and an edge sample is not read against it)
+        p = np.pad(n > 0, 1)
+        self.measured = np.zeros((ny, nx), bool)
+        for dj in range(3):
+            for di in range(3):
+                self.measured |= p[dj : dj + ny, di : di + nx]
         base = _fill(np.where(n > 0, s / np.maximum(n, 1), np.nan))
         self.base = base  # unsmoothed 1 m ground: water levels are read from it
         self.rough = _blur(base, 1.0)
@@ -170,19 +220,23 @@ class Terrain:
                 mask[idx[_inside(ring, gx[idx], gy[idx])]] = True
             only = _masked_blur(base, mask.reshape(ny, nx), GRADE)
             self.graded = np.where(np.isfinite(only), only, self.graded)
-        self.edge = None
+        self.edge, self.relative = None, None
         if edge:
-            e = np.array(edge, float)
-            if EDGE_RUN > 0 and len(e):
-                # the samples run round the footprint: average along it, wrapping at the ends, but
-                # only over samples that are also near in space (the run has gaps where the old
-                # ground had none, or where the edge is shared with another scripted area)
-                n, lv = len(e), e[:, 2].copy()
-                for i in range(n):
-                    idx = np.arange(i - EDGE_RUN, i + EDGE_RUN + 1) % n
-                    near = np.hypot(e[idx, 0] - e[i, 0], e[idx, 1] - e[i, 1]) <= 1.5 * EDGE_RUN
-                    e[i, 2] = lv[idx[near]].mean()
-            self.edge = e
+            e = np.array(edge, float).reshape(-1, 3)
+            # A sample is kept as the neighbour's offset from the LiDAR ground under it, so the
+            # edge keeps the real relief along it (a bank up to a bridge end, a cross-slope) and a
+            # sample a few metres away round a corner adds only its offset, not its height. Where
+            # the LiDAR has no ground under a sample (a roof, a stand), its height is used as is.
+            i = np.clip(((e[:, 0] - self.x0) / cell).astype(int), 0, nx - 1)
+            j = np.clip(((self.y1 - e[:, 1]) / cell).astype(int), 0, ny - 1)
+            ground = _sample(self.rough, e[:, 0], e[:, 1], self.x0, self.y1, cell)
+            # A neighbour that does not follow the LiDAR (a coarse skirt over a bank) is met as a
+            # height: there its offset swings along the run more than its height strays from a
+            # straight line.
+            rel = self.measured[j, i] & _follows(e, e[:, 2] - ground)
+            v = np.where(rel, e[:, 2] - ground, e[:, 2])
+            e[:, 2] = _run_mean(e, v, rel) if EDGE_RUN > 0 else v
+            self.edge, self.relative = e, rel
 
     def z(self, x, y, smooth=False):
         """Height before the edge blend: graded (`smooth`) or soft ground, plus the lifts."""
@@ -190,14 +244,38 @@ class Terrain:
         a = self.graded if smooth else self.rough
         return _sample(a, x, y, self.x0, self.y1, self.cell) + self.lift(x, y)
 
-    def surface(self, x, y, paved):
+    def surface(self, x, y, paved, capped=True):
         """Finished height of points: `paved` (bool per point) picks graded ground; blended at the
-        edge.
+        edge; held under the caps unless `capped` is False (the ground outside a bowl, which meets
+        the bowl's outline at its own height).
         """
         x, y = np.asarray(x, float), np.asarray(y, float)
         z = np.where(paved, self.z(x, y, True), self.z(x, y, False))
-        if self.footprint is None or self.edge is None:
-            return z
+        if self.footprint is not None and self.edge is not None:
+            z = self._blend(x, y, z, paved)
+        return self.cap(x, y, z) if capped else z
+
+    def under_caps(self, x, y):
+        """Whether points (triangle centres) lie inside a cap's outline."""
+        hit = np.zeros(len(x), bool)
+        for c in self.caps:
+            hit |= _inside(c["ring"], np.asarray(x, float), np.asarray(y, float))
+        return hit
+
+    def cap(self, x, y, z):
+        """Heights held below the caps: inside a cap's ring, or on it (within CAP_EDGE: two
+        sections' outlines that nearly meet leave ground vertices just off each), never above its
+        top less CAP_GAP. Elsewhere nothing changes. A cap is {"ring", "top"}, `top` a function of
+        x and y (stand.bowl_top): a seating bowl's rows and walkways."""
+        z = np.array(z, float)
+        for c in self.caps:
+            m = _inside(c["ring"], x, y) | (_edge_distance(c["ring"], x, y) < CAP_EDGE)
+            if m.any():
+                z[m] = np.minimum(z[m], np.asarray(c["top"](x[m], y[m]), float) - CAP_GAP)
+        return z
+
+    def _blend(self, x, y, z, paved):
+        """The edge blend: soft ground (and nearly level paving) bends to the neighbours' ground."""
         d = _edge_distance(self.footprint, x, y)
         band = d < BLEND
         nb = np.full(len(x), np.nan)
@@ -220,20 +298,31 @@ class Terrain:
         return out
 
     def neighbour_z(self, x, y):
-        """Height of the neighbours' ground at the nearest edge sample, NaN where none is within
-        REACH (an edge with no samples has no neighbour to meet).
+        """Height of the neighbours' ground by the nearest edge sample, NaN where none is within
+        REACH (an edge with no samples has no neighbour to meet): the soft ground here plus that
+        sample's offset from the LiDAR, or the sample's own height where it lies over ground the
+        LiDAR does not see. `_blend` eases it out over BLEND from the footprint edge.
         """
         if self.edge is None or not len(self.edge):
             return np.full(np.shape(x), np.nan)
-        out = np.empty(len(x))
+        x, y = np.asarray(x, float), np.asarray(y, float)
+        near = self._nearest(x, y)
+        ok = near >= 0
+        out = np.full(len(x), np.nan)
+        s = near[ok]
+        here = _sample(self.rough, x[ok], y[ok], self.x0, self.y1, self.cell)
+        out[ok] = np.where(self.relative[s], here + self.edge[s, 2], self.edge[s, 2])
+        return out
+
+    def _nearest(self, x, y):
+        """Index of the nearest edge sample within REACH of each point, -1 where there is none."""
+        out = np.empty(len(x), int)
         for k in range(0, len(x), 4096):  # in blocks, to bound the distance matrix
             d = (np.asarray(x)[k : k + 4096, None] - self.edge[None, :, 0]) ** 2 + (
                 np.asarray(y)[k : k + 4096, None] - self.edge[None, :, 1]
             ) ** 2
             near = d.argmin(1)
-            out[k : k + 4096] = np.where(
-                d[np.arange(len(near)), near] <= REACH**2, self.edge[near, 2], np.nan
-            )
+            out[k : k + 4096] = np.where(d[np.arange(len(near)), near] <= REACH**2, near, -1)
         return out
 
     def water_level(self, ring):

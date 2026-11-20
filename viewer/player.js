@@ -2,6 +2,7 @@
 // Walking: a capsule slides along walls, a ground ray follows the surface, steps up curbs and stairs,
 // and refuses to step where the model has no ground (the model is a work in progress and has gaps).
 import * as THREE from 'three';
+import { limitVelocity } from './flight-math.js';
 
 const EYE = 1.65, RADIUS = 0.3, STEP = 0.5, HEIGHT = 1.75;
 const WALK = 2.8, RUN = 7, GRAVITY = 16, JUMP = 5.6, SUBSTEP = 0.2;
@@ -52,6 +53,8 @@ export function createPlayer(app) {
     _want.multiplyScalar(flySpeed * (intent.run ? 3 : 1));
     flyVel.lerp(_want, 1 - Math.exp(-dt * 8)); // ease in and out instead of stopping dead
     if (flyVel.lengthSq() < 1e-4) flyVel.set(0, 0, 0);
+    // the soft flight limit: the outward part slows over its last stretch; sliding along it and coming back are free
+    if (app.limit) Object.assign(flyVel, limitVelocity(camera.position, flyVel, app.limit));
     camera.position.addScaledVector(flyVel, dt);
     camera.lookAt(_a.copy(camera.position).add(look));
   }

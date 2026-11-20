@@ -232,6 +232,20 @@
       }
     },
     {
+      "name": "College of Communication and Media",
+      "kind": "building",
+      "x": 2.53,
+      "z": -5.48,
+      "lat": 40.8600546,
+      "lon": -74.1971561,
+      "r": 38.5,
+      "osm": "way/1188721159",
+      "tags": {
+        "building": "university",
+        "building:levels": "2"
+      }
+    },
+    {
       "name": "Count Basie Hall",
       "kind": "building",
       "x": -97.57,
@@ -961,20 +975,6 @@
       "osm": "way/313023306",
       "tags": {
         "building": "university"
-      }
-    },
-    {
-      "name": "School of Communication and Media",
-      "kind": "building",
-      "x": 2.53,
-      "z": -5.48,
-      "lat": 40.8600546,
-      "lon": -74.1971561,
-      "r": 38.5,
-      "osm": "way/1188721159",
-      "tags": {
-        "building": "university",
-        "building:levels": "2"
       }
     },
     {

@@ -1,0 +1,3805 @@
+{
+ "zone": "wb_lots",
+ "notes": "Zone wb_lots: the lots of the webster area. The JSON is written by a generator (/tmp/claude-0/p4/webster/wb_lots/gen.py with lib.py there); edit it by hand from now on and say so here. Sources: NJ 2020 ortho fetched at 0.075 m for each lot (WMS crops), read in rectified frames (one per row family); LiDAR 2017 for poles; OSM for names and outlines where the ortho is hidden. Stall rows: divider positions from brightness peaks along each row, then a least-squares fit of position = a + pitch * k; divider ends from brightness profiles along the dividers, and the row line fitted through them. Lot 17 (147 stalls drawn): north row on 24.5 deg, the rest on -16 deg; the three double rows end in painted islands (yellow outline and hatching, drawn as paint); the east block is blue-tinted accessible stalls in pairs with a 1.3 m hatched aisle between pairs (only the white dividers are drawn); a painted ladder walkway crosses the lot from the north walk to the south curb. Lot 38: one row of faint angled stalls; the roll-off containers (published) stand on the lot and get no stall. Lot 30 north end: continues the west area's W_lot_30 as offsets of Carlisle Road's arc (median v 5.26..6.56, lot 6.36..16.06, stall line v 10.97 at 46.5 deg, depth 6.62). The lot south of the Ice Arena (OSM 313030643, no name or number in OSM): two blocks on 66.2 deg with 9 ft (2.74 m) stalls, a planted median between them, planted islands at the north ends of the west double rows and a planted strip along the drive from Carlisle Road. Lamps: none. At 2 returns per m2 the 2017 LiDAR shows no isolated pole return inside any of these lots (the dark spots with shadows in Lot 17 have none). Borders: mouths run 0.2 m into the roads zone's carriageways (Webster Road's fitted end, WB_road_Quad_W's south edge, WB_road_Carlisle_N_parking's east edge, the junction ring's Carlisle edge at Lot 30); Lot 17 runs 0.2 m under WB_road_Blanton_N and WB_road_Blanton_S, which end on the OSM edge of the lot. The lane east of Lot 17's east block and the hook in front of Blanton Hall (Blanton Road in OSM 313029103, inside the OSM outline of Lot 17) are drawn here as lot paving, with the accessible stalls along Blanton Hall's south walk; the lane's east edge is in tree shade. The unnamed lot's north edge is the footprint (under the published Ice Arena drive aisle and walk); its east edge is the north-east area's edge x -56. Lot 30's two stalls across the west area's cut are drawn by neither area. Not drawn: the blue tint and hatching of the accessible stalls, the hatched gore at the east end of Lot 17's north row (inside WB_road_Blanton_N), the painted end shapes of the unnamed lot's south-east double row, three short stalls at Lot 17's west end (their angle could not be read), wheel stops, and the hatched concrete band on Lot 38's east side. Stalls drawn: Lot 17 147, Lot 38 6, Lot 30 north end 5, the lot south of the Ice Arena 184. Fits: WB_lot_17_N_stalls_W: 6 stalls, pitch 2.593 m, rms 0.017 m (max 0.031); WB_lot_17_N_stalls_E: 25 stalls, pitch 2.591 m, rms 0.026 m (max 0.051); WB_lot_17_S_stalls_1: 9 stalls, pitch 2.6 m, rms 0.032 m (max 0.048); WB_lot_17_S_stalls_2: 12 stalls, pitch 2.617 m, rms 0.062 m (max 0.12); WB_lot_17_D_stalls_S: 19 stalls, pitch 2.607 m, rms 0.118 m (max 0.253); WB_lot_17_D_stalls_N: 15 stalls, pitch 2.595 m, rms 0.053 m (max 0.159); WB_lot_17_E_stalls_S: 11 stalls, pitch 2.592 m, rms 0.05 m (max 0.091); WB_lot_17_E_stalls_N: 10 stalls, pitch 2.585 m, rms 0.073 m (max 0.139); WB_lot_17_F_stalls_S: 4 stalls, pitch 2.618 m, rms 0.05 m (max 0.084); WB_lot_17_F_stalls_N: 2 stalls, pitch 2.6 m, rms 0.024 m (max 0.033); WB_lot_17_east_W: 12 stalls, pair pitch 6.407 m, rms 0.031 m; WB_lot_17_east_E: 14 stalls, pair pitch 6.439 m, rms 0.057 m; WB_lot_17_Blanton_stalls: 5 stalls, pitch 2.484 m, rms 0.084 m (max 0.118); WB_lot_38_N_stalls: 6 stalls, pitch 2.738 m, rms 0.031 m (max 0.047); WB_lot_30_N_stalls: 5 stalls, pitch 3.52 m, rms 0.078 m (max 0.113); WB_lot_ice_arena_S_R1: 18 stalls, pitch 2.729 m, rms 0.071 m (max 0.209); WB_lot_ice_arena_S_DR1_W: 16 stalls, pitch 2.744 m, rms 0.039 m (max 0.075); WB_lot_ice_arena_S_DR1_E: 16 stalls, pitch 2.738 m, rms 0.03 m (max 0.068); WB_lot_ice_arena_S_DR2_W: 18 stalls, pitch 2.743 m, rms 0.084 m (max 0.221); WB_lot_ice_arena_S_DR2_E: 20 stalls, pitch 2.747 m, rms 0.069 m (max 0.258); WB_lot_ice_arena_S_R7_W: 9 stalls, pitch 2.752 m, rms 0.054 m (max 0.132); WB_lot_ice_arena_S_R7_E: 7 stalls, pitch 2.766 m, rms 0.102 m (max 0.21); WB_lot_ice_arena_S_R7_E2: 2 stalls, pitch 2.795 m, rms 0.007 m (max 0.01); WB_lot_ice_arena_S_DR3_W: 17 stalls, pitch 2.741 m, rms 0.021 m (max 0.049); WB_lot_ice_arena_S_DR3_E: 18 stalls, pitch 2.744 m, rms 0.035 m (max 0.101); WB_lot_ice_arena_S_R10: 21 stalls, pitch 2.745 m, rms 0.057 m (max 0.194); WB_lot_ice_arena_S_R6: 7 stalls, pitch 2.759 m, rms 0.109 m (max 0.245); WB_lot_ice_arena_S_R11: 8 stalls, pitch 2.743 m, rms 0.072 m (max 0.181); WB_lot_ice_arena_S_R12: 7 stalls, pitch 2.739 m, rms 0.022 m (max 0.046). Edited by hand in the fix-up pass of 2026-11-20: WB_lot_19_S (the south part of Lot 19 east of Stone Street's bend, with its painted island and two stall dividers), Lot 30's cut vertices moved 0.2 m past the west area's cut and its east edge 0.6 m east to the walk, the Lot 17 painted walkway drawn as two runs.",
+ "surfaces": [
+  {
+   "name": "WB_lot_17",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -22.006,
+     408.515
+    ],
+    [
+     -25.254,
+     415.057
+    ],
+    [
+     1.757,
+     427.366
+    ],
+    [
+     2.459,
+     429.686
+    ],
+    [
+     61.333,
+     456.517
+    ],
+    [
+     62.088,
+     455.68
+    ],
+    [
+     66.588,
+     453.48
+    ],
+    [
+     76.088,
+     448.78
+    ],
+    [
+     77.645,
+     444.405
+    ],
+    [
+     93.609,
+     438.277
+    ],
+    [
+     93.37,
+     437.68
+    ],
+    [
+     92.45,
+     435.63
+    ],
+    [
+     93.72,
+     435.06
+    ],
+    [
+     93.53,
+     434.35
+    ],
+    [
+     86.67,
+     419.51
+    ],
+    [
+     82.572,
+     416.995
+    ],
+    [
+     73.698,
+     395.884
+    ],
+    [
+     63.5,
+     373.8
+    ],
+    [
+     55.88,
+     374.4
+    ],
+    [
+     51.845,
+     376.983
+    ],
+    [
+     52.242,
+     378.367
+    ],
+    [
+     -13.233,
+     397.454
+    ],
+    [
+     -19.46,
+     404.4
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m WMS crops), osm 313029107, lidar2017",
+   "unverified": "north edge east of the crosswalk taken at the boulder line (no curb seen); the lane east of the east block (Blanton Road in OSM) and the hook in front of Blanton Hall are drawn as part of the lot; its east edge is in tree shade (rms 1.2 m); south-east corner under tree canopy"
+  },
+  {
+   "name": "WB_lot_17_S_island",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     44.863,
+     380.206
+    ],
+    [
+     46.497,
+     385.903,
+     1.0
+    ],
+    [
+     53.802,
+     383.808,
+     1.0
+    ],
+    [
+     51.845,
+     376.983
+    ]
+   ],
+   "evidence": "osm 313029107, ortho2020",
+   "unverified": "under a tree canopy: outline from the OSM notch, surface guessed"
+  },
+  {
+   "name": "WB_lot_38",
+   "kind": "asphalt",
+   "ring": [
+    [
+     16.096,
+     359.499
+    ],
+    [
+     15.546,
+     355.017
+    ],
+    [
+     35.397,
+     352.58,
+     2.5
+    ],
+    [
+     32.782,
+     346.05
+    ],
+    [
+     23.929,
+     333.032
+    ],
+    [
+     21.16,
+     328.68
+    ],
+    [
+     -3.9,
+     339.23
+    ],
+    [
+     -2.978,
+     340.366
+    ],
+    [
+     -0.766,
+     350.169
+    ],
+    [
+     2.721,
+     354.779
+    ],
+    [
+     3.199,
+     358.671
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m WMS crop), osm 313028558",
+   "unverified": "south edge on the footprint by the Student Center Annex (in the building shadow); east edge at the hatched concrete band; west edge at the walk"
+  },
+  {
+   "name": "WB_lot_30_N",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -268.616,
+     336.076
+    ],
+    [
+     -259.777,
+     332.082
+    ],
+    [
+     -254.356,
+     342.518,
+     100.0
+    ],
+    [
+     -249.25,
+     352.3,
+     3.0
+    ],
+    [
+     -248.6,
+     358.0
+    ],
+    [
+     -250.34,
+     362.049
+    ],
+    [
+     -257.553,
+     365.234
+    ],
+    [
+     -261.795,
+     356.204
+    ],
+    [
+     -259.674,
+     355.545
+    ],
+    [
+     -264.027,
+     346.141,
+     1738.7
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m WMS crop), lidar2017, osm; west area W_lot_30",
+   "unverified": "the lot continues the west area's W_lot_30 (v 6.36..16.06 east of Carlisle Road's arc); the north end runs into the road at its mouth (u 20..30) as read in the ortho, corners to about 0.5 m"
+  },
+  {
+   "name": "WB_lot_30_N_median",
+   "kind": "concrete",
+   "ring": [
+    [
+     -269.618,
+     336.528
+    ],
+    [
+     -265.027,
+     346.6,
+     1739.8
+    ],
+    [
+     -260.797,
+     355.739,
+     0.6
+    ],
+    [
+     -259.619,
+     355.189,
+     0.6
+    ],
+    [
+     -263.845,
+     346.057,
+     1738.5
+    ],
+    [
+     -268.433,
+     335.993
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "continues the west area's 1.3 m divider (concrete guessed); its north nose at about u 20 is faint in the ortho"
+  },
+  {
+   "name": "WB_lot_ice_arena_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -179.428,
+     534.637
+    ],
+    [
+     -134.653,
+     514.889,
+     4.0
+    ],
+    [
+     -121.014,
+     545.815
+    ],
+    [
+     -115.044,
+     545.968
+    ],
+    [
+     -82.938,
+     525.96
+    ],
+    [
+     -56.0,
+     587.037
+    ],
+    [
+     -56.0,
+     598.99
+    ],
+    [
+     -83.34,
+     611.28
+    ],
+    [
+     -86.72,
+     603.73
+    ],
+    [
+     -87.8,
+     604.22
+    ],
+    [
+     -92.47,
+     596.25
+    ],
+    [
+     -99.76,
+     596.42
+    ],
+    [
+     -105.43,
+     595.1
+    ],
+    [
+     -106.3,
+     599.19
+    ],
+    [
+     -106.79,
+     600.19
+    ],
+    [
+     -113.48,
+     603.05
+    ],
+    [
+     -126.38,
+     607.26
+    ],
+    [
+     -141.0,
+     600.2
+    ],
+    [
+     -146.914,
+     602.814
+    ],
+    [
+     -174.436,
+     540.414
+    ],
+    [
+     -176.804,
+     541.459
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m WMS crop), osm 313030643",
+   "unverified": "north edge on the footprint, under the published Ice Arena drive aisle and walk; the south edge of the aisle west of the median (v -19.6) and the median itself are under a tree canopy"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_W",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -174.436,
+     540.414
+    ],
+    [
+     -136.282,
+     523.586,
+     3.1
+    ],
+    [
+     -133.74,
+     529.35,
+     3.1
+    ],
+    [
+     -171.894,
+     546.178
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted strip with trees at its south end; its north end merges with the planting along Carlisle Road"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_median",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -121.014,
+     545.815
+    ],
+    [
+     -105.881,
+     580.126,
+     2.0
+    ],
+    [
+     -100.94,
+     577.947,
+     2.0
+    ],
+    [
+     -115.044,
+     545.968
+    ]
+   ],
+   "evidence": "ortho2020, osm 313030643",
+   "unverified": "planted median under a tree canopy; edges from the aisle and the stall row ends, its east end guessed"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_DR1",
+   "kind": "mulch",
+   "layer": 3.5,
+   "ring": [
+    [
+     -124.732,
+     596.856,
+     1.9999999999999971
+    ],
+    [
+     -123.078,
+     600.608,
+     1.9999999999999971
+    ],
+    [
+     -131.861,
+     604.482,
+     1.9999999999999971
+    ],
+    [
+     -133.516,
+     600.73,
+     1.9999999999999971
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted end island: surface guessed"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_DR2",
+   "kind": "mulch",
+   "layer": 3.5,
+   "ring": [
+    [
+     -108.425,
+     589.226,
+     2.0
+    ],
+    [
+     -106.73,
+     593.069,
+     2.0
+    ],
+    [
+     -115.513,
+     596.943,
+     2.0
+    ],
+    [
+     -117.208,
+     593.1,
+     2.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "planted end island: surface guessed"
+  },
+  {
+   "name": "WB_lot_19_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     220.6,
+     473.4
+    ],
+    [
+     232.75,
+     476.1
+    ],
+    [
+     232.2,
+     497.2
+    ],
+    [
+     212.0,
+     497.2
+    ],
+    [
+     219.5,
+     482.0
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m), lidar2017 (bank on its south side)",
+   "unverified": "south edge under a tree crown, read from the hillshade bank and the brightness columns to about 0.5 m; east edge is the footprint (0.2 m past); named after the north-east area's Lot 19, which it continues"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "WB_lot_17_N_curb",
+   "path": [
+    [
+     -25.254,
+     415.057
+    ],
+    [
+     1.757,
+     427.366
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "the walk edge read as a curb"
+  },
+  {
+   "name": "WB_lot_17_Blanton_walk_curb",
+   "path": [
+    [
+     77.645,
+     444.405
+    ],
+    [
+     93.609,
+     438.277
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_lane_E_curb",
+   "path": [
+    [
+     82.572,
+     416.995
+    ],
+    [
+     73.698,
+     395.884
+    ],
+    [
+     63.5,
+     373.8
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "edge of the asphalt against the trees, in shade"
+  },
+  {
+   "name": "WB_lot_17_S_island_curb",
+   "path": [
+    [
+     44.863,
+     380.206
+    ],
+    [
+     46.497,
+     385.903,
+     1.0
+    ],
+    [
+     53.802,
+     383.808,
+     1.0
+    ],
+    [
+     51.845,
+     376.983
+    ]
+   ],
+   "evidence": "osm, ortho2020",
+   "unverified": "raised island assumed"
+  },
+  {
+   "name": "WB_lot_38_N_curb",
+   "path": [
+    [
+     15.546,
+     355.017
+    ],
+    [
+     35.397,
+     352.58,
+     2.5
+    ],
+    [
+     32.782,
+     346.05
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_38_W_curb",
+   "path": [
+    [
+     -2.978,
+     340.366
+    ],
+    [
+     -0.766,
+     350.169
+    ],
+    [
+     2.721,
+     354.779
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "walk edge read as a curb"
+  },
+  {
+   "name": "WB_lot_30_N_median_curb",
+   "path": [
+    [
+     -269.618,
+     336.528
+    ],
+    [
+     -265.027,
+     346.6,
+     1739.8
+    ],
+    [
+     -260.797,
+     355.739,
+     0.6
+    ],
+    [
+     -259.619,
+     355.189,
+     0.6
+    ],
+    [
+     -263.845,
+     346.057,
+     1738.5
+    ],
+    [
+     -268.433,
+     335.993
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020, lidar2017"
+  },
+  {
+   "name": "WB_lot_30_N_E_curb",
+   "path": [
+    [
+     -259.777,
+     332.082
+    ],
+    [
+     -254.356,
+     342.518,
+     100.0
+    ],
+    [
+     -249.25,
+     352.3,
+     3.0
+    ],
+    [
+     -248.6,
+     358.0
+    ],
+    [
+     -250.34,
+     362.049
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "the turn of the curb with the walk read at 0.075 m"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_W_curb",
+   "path": [
+    [
+     -174.436,
+     540.414
+    ],
+    [
+     -136.282,
+     523.586,
+     3.1
+    ],
+    [
+     -133.74,
+     529.35,
+     3.1
+    ],
+    [
+     -171.894,
+     546.178
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_median_curb",
+   "path": [
+    [
+     -121.014,
+     545.815
+    ],
+    [
+     -105.881,
+     580.126,
+     2.0
+    ],
+    [
+     -100.94,
+     577.947,
+     2.0
+    ],
+    [
+     -115.044,
+     545.968
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_DR1_curb",
+   "path": [
+    [
+     -124.732,
+     596.856,
+     1.9999999999999971
+    ],
+    [
+     -123.078,
+     600.608,
+     1.9999999999999971
+    ],
+    [
+     -131.861,
+     604.482,
+     1.9999999999999971
+    ],
+    [
+     -133.516,
+     600.73,
+     1.9999999999999971
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_island_DR2_curb",
+   "path": [
+    [
+     -108.425,
+     589.226,
+     2.0
+    ],
+    [
+     -106.73,
+     593.069,
+     2.0
+    ],
+    [
+     -115.513,
+     596.943,
+     2.0
+    ],
+    [
+     -117.208,
+     593.1,
+     2.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_W_curb",
+   "path": [
+    [
+     -171.894,
+     546.178
+    ],
+    [
+     -146.914,
+     602.814
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "a planting strip lies behind it"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_drive_curb",
+   "path": [
+    [
+     -179.428,
+     534.637
+    ],
+    [
+     -134.653,
+     514.889,
+     4.0
+    ],
+    [
+     -121.014,
+     545.815
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "corner radius read at 0.15 m"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_E_block_curb",
+   "path": [
+    [
+     -115.044,
+     545.968
+    ],
+    [
+     -82.938,
+     525.96
+    ],
+    [
+     -56.0,
+     587.037
+    ]
+   ],
+   "evidence": "ortho2020"
+  }
+ ],
+ "markings": [
+  {
+   "name": "WB_lot_17_N_stalls_W",
+   "type": "stalls",
+   "line": [
+    [
+     -17.737,
+     418.482
+    ],
+    [
+     -3.583,
+     424.933
+    ]
+   ],
+   "count": 6,
+   "depth": 5.48,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_N_stalls_E",
+   "type": "stalls",
+   "line": [
+    [
+     2.776,
+     428.158
+    ],
+    [
+     62.097,
+     454.169
+    ]
+   ],
+   "count": 25,
+   "depth": 5.4,
+   "side": "right",
+   "angle": 89.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020 (0.075 m WMS crops), osm 313029107"
+  },
+  {
+   "name": "WB_lot_17_S_stalls_1",
+   "type": "stalls",
+   "line": [
+    [
+     -10.323,
+     396.755
+    ],
+    [
+     12.168,
+     390.306
+    ]
+   ],
+   "count": 9,
+   "depth": 5.13,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_S_stalls_2",
+   "type": "stalls",
+   "line": [
+    [
+     14.18,
+     389.604
+    ],
+    [
+     44.366,
+     380.948
+    ]
+   ],
+   "count": 12,
+   "depth": 5.25,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "u 52..62 under the tree canopy: dividers seen through gaps; the last stall assumed"
+  },
+  {
+   "name": "WB_lot_17_S_stalls_3",
+   "type": "stalls",
+   "line": [
+    [
+     52.27,
+     378.463
+    ],
+    [
+     59.854,
+     376.252
+    ]
+   ],
+   "count": 3,
+   "depth": 5.2,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "three stalls between the island and the east end; a parked car hides one divider"
+  },
+  {
+   "name": "WB_lot_17_D_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     -1.514,
+     412.049
+    ],
+    [
+     46.108,
+     398.394
+    ]
+   ],
+   "count": 19,
+   "depth": 5.18,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "u 17..24 under the crosswalk: dividers from the pitch"
+  },
+  {
+   "name": "WB_lot_17_D_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     8.73,
+     409.112
+    ],
+    [
+     46.152,
+     398.382
+    ]
+   ],
+   "count": 15,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "last divider beside the painted island taken from the pitch"
+  },
+  {
+   "name": "WB_lot_17_E_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     23.614,
+     422.737
+    ],
+    [
+     51.022,
+     414.878
+    ]
+   ],
+   "count": 11,
+   "depth": 5.05,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_E_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     26.19,
+     421.999
+    ],
+    [
+     51.034,
+     414.875
+    ]
+   ],
+   "count": 10,
+   "depth": 5.15,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_F_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     47.881,
+     433.984
+    ],
+    [
+     57.948,
+     431.098
+    ]
+   ],
+   "count": 4,
+   "depth": 5.25,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_F_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     52.917,
+     432.54
+    ],
+    [
+     57.915,
+     431.107
+    ]
+   ],
+   "count": 2,
+   "depth": 5.0,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_D_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -4.15,
+     412.805
+    ],
+    [
+     48.335,
+     397.756
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_E_centre_line",
+   "type": "line",
+   "path": [
+    [
+     21.066,
+     423.468
+    ],
+    [
+     53.268,
+     414.234
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_F_centre_line",
+   "type": "line",
+   "path": [
+    [
+     46.172,
+     434.474
+    ],
+    [
+     60.014,
+     430.505
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_island_D_W",
+   "type": "line",
+   "path": [
+    [
+     -2.925,
+     407.065
+    ],
+    [
+     -5.866,
+     407.909,
+     1.4
+    ],
+    [
+     -4.438,
+     412.888
+    ],
+    [
+     -1.497,
+     412.045
+    ],
+    [
+     -2.925,
+     407.065
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -3.67,
+     407.39
+    ],
+    [
+     -2.839,
+     407.851
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -4.762,
+     407.814
+    ],
+    [
+     -2.488,
+     409.074
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -5.33,
+     408.528
+    ],
+    [
+     -2.137,
+     410.298
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -5.241,
+     409.606
+    ],
+    [
+     -1.786,
+     411.521
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     -4.89,
+     410.83
+    ],
+    [
+     -2.441,
+     412.187
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_W_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     -4.539,
+     412.053
+    ],
+    [
+     -3.665,
+     412.538
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW",
+   "type": "line",
+   "path": [
+    [
+     -1.497,
+     412.045
+    ],
+    [
+     8.769,
+     409.101
+    ],
+    [
+     10.148,
+     413.907
+    ],
+    [
+     4.534,
+     415.517,
+     1.5
+    ],
+    [
+     -1.139,
+     413.294
+    ],
+    [
+     -1.497,
+     412.045
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     8.143,
+     409.421
+    ],
+    [
+     8.843,
+     409.809
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     6.919,
+     409.772
+    ],
+    [
+     9.193,
+     411.032
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     5.696,
+     410.122
+    ],
+    [
+     9.544,
+     412.256
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     4.472,
+     410.473
+    ],
+    [
+     9.895,
+     413.479
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     3.249,
+     410.824
+    ],
+    [
+     9.109,
+     414.072
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     2.025,
+     411.175
+    ],
+    [
+     7.885,
+     414.423
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     0.802,
+     411.526
+    ],
+    [
+     6.662,
+     414.774
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     -0.422,
+     411.877
+    ],
+    [
+     5.438,
+     415.125
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_NW_hatch_9",
+   "type": "line",
+   "path": [
+    [
+     -1.251,
+     412.446
+    ],
+    [
+     3.559,
+     415.112
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E",
+   "type": "line",
+   "path": [
+    [
+     44.696,
+     393.41
+    ],
+    [
+     47.195,
+     392.694,
+     1.2
+    ],
+    [
+     50.001,
+     402.479,
+     1.2
+    ],
+    [
+     47.502,
+     403.196
+    ],
+    [
+     44.696,
+     393.41
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     45.642,
+     393.271
+    ],
+    [
+     47.523,
+     394.314
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     44.987,
+     393.937
+    ],
+    [
+     47.874,
+     395.537
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     45.338,
+     395.161
+    ],
+    [
+     48.224,
+     396.761
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     45.689,
+     396.384
+    ],
+    [
+     48.575,
+     397.984
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     46.04,
+     397.608
+    ],
+    [
+     48.926,
+     399.208
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     46.391,
+     398.831
+    ],
+    [
+     49.277,
+     400.431
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     46.742,
+     400.055
+    ],
+    [
+     49.54,
+     401.606
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     47.092,
+     401.278
+    ],
+    [
+     49.191,
+     402.442
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_D_E_hatch_9",
+   "type": "line",
+   "path": [
+    [
+     47.443,
+     402.502
+    ],
+    [
+     48.143,
+     402.89
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W",
+   "type": "line",
+   "path": [
+    [
+     22.221,
+     417.883
+    ],
+    [
+     19.385,
+     418.696,
+     1.3
+    ],
+    [
+     20.777,
+     423.551
+    ],
+    [
+     23.613,
+     422.738
+    ],
+    [
+     22.221,
+     417.883
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     21.472,
+     418.226
+    ],
+    [
+     22.347,
+     418.711
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     20.38,
+     418.65
+    ],
+    [
+     22.698,
+     419.935
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     19.9,
+     419.413
+    ],
+    [
+     23.048,
+     421.158
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     20.032,
+     420.515
+    ],
+    [
+     23.399,
+     422.382
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     20.383,
+     421.739
+    ],
+    [
+     22.526,
+     422.927
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_W_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     20.734,
+     422.962
+    ],
+    [
+     21.302,
+     423.277
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_NW",
+   "type": "line",
+   "path": [
+    [
+     23.613,
+     422.738
+    ],
+    [
+     26.189,
+     421.999
+    ],
+    [
+     27.609,
+     426.949
+    ],
+    [
+     23.613,
+     422.738
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_E_NW_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     25.128,
+     422.438
+    ],
+    [
+     26.396,
+     423.141
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_NW_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     23.905,
+     422.789
+    ],
+    [
+     26.747,
+     424.364
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_NW_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     25.611,
+     424.763
+    ],
+    [
+     27.098,
+     425.588
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E",
+   "type": "line",
+   "path": [
+    [
+     49.627,
+     410.025
+    ],
+    [
+     52.164,
+     409.297,
+     1.2
+    ],
+    [
+     54.976,
+     419.102,
+     1.2
+    ],
+    [
+     52.438,
+     419.83
+    ],
+    [
+     49.627,
+     410.025
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     50.601,
+     409.856
+    ],
+    [
+     52.482,
+     410.898
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     49.903,
+     410.497
+    ],
+    [
+     52.833,
+     412.122
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     50.254,
+     411.721
+    ],
+    [
+     53.184,
+     413.345
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     50.604,
+     412.944
+    ],
+    [
+     53.534,
+     414.569
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     50.955,
+     414.168
+    ],
+    [
+     53.885,
+     415.792
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     51.306,
+     415.391
+    ],
+    [
+     54.236,
+     417.016
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     51.657,
+     416.615
+    ],
+    [
+     54.543,
+     418.215
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     52.008,
+     417.838
+    ],
+    [
+     54.194,
+     419.05
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_E_E_hatch_9",
+   "type": "line",
+   "path": [
+    [
+     52.359,
+     419.062
+    ],
+    [
+     53.146,
+     419.498
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W",
+   "type": "line",
+   "path": [
+    [
+     46.455,
+     428.931
+    ],
+    [
+     44.437,
+     429.51,
+     1.0
+    ],
+    [
+     45.884,
+     434.557
+    ],
+    [
+     47.902,
+     433.978
+    ],
+    [
+     46.455,
+     428.931
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     46.118,
+     429.151
+    ],
+    [
+     46.425,
+     429.32
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     45.07,
+     429.599
+    ],
+    [
+     46.775,
+     430.544
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     44.852,
+     430.507
+    ],
+    [
+     47.126,
+     431.767
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     45.203,
+     431.73
+    ],
+    [
+     47.477,
+     432.991
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     45.554,
+     432.954
+    ],
+    [
+     47.434,
+     433.996
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_W_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     45.905,
+     434.177
+    ],
+    [
+     46.211,
+     434.347
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_NW",
+   "type": "line",
+   "path": [
+    [
+     47.902,
+     433.978
+    ],
+    [
+     52.901,
+     432.545
+    ],
+    [
+     54.279,
+     437.351
+    ],
+    [
+     47.902,
+     433.978
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_F_NW_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     52.694,
+     432.724
+    ],
+    [
+     52.869,
+     432.821
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_NW_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     51.47,
+     433.075
+    ],
+    [
+     53.22,
+     434.045
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_NW_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     50.247,
+     433.426
+    ],
+    [
+     53.57,
+     435.268
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_NW_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     49.023,
+     433.777
+    ],
+    [
+     53.921,
+     436.492
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E",
+   "type": "line",
+   "path": [
+    [
+     56.491,
+     426.054
+    ],
+    [
+     58.856,
+     425.376,
+     1.2
+    ],
+    [
+     61.681,
+     435.229,
+     1.2
+    ],
+    [
+     59.316,
+     435.907
+    ],
+    [
+     56.491,
+     426.054
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "painted island read as a yellow outline with yellow hatching; outline to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     57.288,
+     425.971
+    ],
+    [
+     59.212,
+     427.038
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     56.808,
+     426.734
+    ],
+    [
+     59.563,
+     428.261
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     57.158,
+     427.958
+    ],
+    [
+     59.913,
+     429.485
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     57.509,
+     429.181
+    ],
+    [
+     60.264,
+     430.708
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     57.86,
+     430.405
+    ],
+    [
+     60.615,
+     431.932
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     58.211,
+     431.628
+    ],
+    [
+     60.966,
+     433.155
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     58.562,
+     432.852
+    ],
+    [
+     61.229,
+     434.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     58.912,
+     434.075
+    ],
+    [
+     60.88,
+     435.166
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_island_F_E_hatch_9",
+   "type": "line",
+   "path": [
+    [
+     59.263,
+     435.299
+    ],
+    [
+     59.832,
+     435.614
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing and angle estimated"
+  },
+  {
+   "name": "WB_lot_17_east_W_1",
+   "type": "stalls",
+   "line": [
+    [
+     58.745,
+     394.116
+    ],
+    [
+     60.729,
+     398.836
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_W_2",
+   "type": "stalls",
+   "line": [
+    [
+     61.227,
+     400.022
+    ],
+    [
+     63.211,
+     404.742
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_W_3",
+   "type": "stalls",
+   "line": [
+    [
+     63.71,
+     405.928
+    ],
+    [
+     65.694,
+     410.648
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_W_4",
+   "type": "stalls",
+   "line": [
+    [
+     66.193,
+     411.834
+    ],
+    [
+     68.177,
+     416.554
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_W_5",
+   "type": "stalls",
+   "line": [
+    [
+     68.675,
+     417.74
+    ],
+    [
+     70.659,
+     422.46
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_W_6",
+   "type": "stalls",
+   "line": [
+    [
+     71.158,
+     423.646
+    ],
+    [
+     73.142,
+     428.366
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_1",
+   "type": "stalls",
+   "line": [
+    [
+     57.462,
+     391.065
+    ],
+    [
+     59.446,
+     395.785
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_2",
+   "type": "stalls",
+   "line": [
+    [
+     59.957,
+     397.001
+    ],
+    [
+     61.942,
+     401.721
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_3",
+   "type": "stalls",
+   "line": [
+    [
+     62.453,
+     402.937
+    ],
+    [
+     64.437,
+     407.657
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_4",
+   "type": "stalls",
+   "line": [
+    [
+     64.948,
+     408.873
+    ],
+    [
+     66.932,
+     413.593
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_5",
+   "type": "stalls",
+   "line": [
+    [
+     67.443,
+     414.809
+    ],
+    [
+     69.427,
+     419.529
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls in pairs with a hatched 1.3 m aisle between pairs; only the white dividers are drawn"
+  },
+  {
+   "name": "WB_lot_17_east_E_6",
+   "type": "stalls",
+   "line": [
+    [
+     69.938,
+     420.745
+    ],
+    [
+     71.922,
+     425.465
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "stall pair hidden by parked cars and a tree: taken from the pair pitch"
+  },
+  {
+   "name": "WB_lot_17_east_E_7",
+   "type": "stalls",
+   "line": [
+    [
+     72.434,
+     426.681
+    ],
+    [
+     74.418,
+     431.401
+    ]
+   ],
+   "count": 2,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "stall pair hidden by parked cars and a tree: taken from the pair pitch"
+  },
+  {
+   "name": "WB_lot_17_east_centre_line",
+   "type": "line",
+   "path": [
+    [
+     57.282,
+     390.636
+    ],
+    [
+     74.352,
+     431.244
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_Blanton_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     79.401,
+     443.731
+    ],
+    [
+     90.997,
+     439.279
+    ]
+   ],
+   "count": 5,
+   "depth": 5.2,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "blue-tinted accessible stalls with hatched aisles; uneven widths (2.3 to 2.7 m)"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch",
+   "type": "line",
+   "path": [
+    [
+     74.844,
+     445.48
+    ],
+    [
+     73.411,
+     441.745,
+     1.0
+    ],
+    [
+     77.404,
+     439.034,
+     1.0
+    ],
+    [
+     79.232,
+     443.795
+    ],
+    [
+     74.844,
+     445.48
+    ]
+   ],
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched area read at 0.075 m; it may be a raised island"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     76.475,
+     439.852
+    ],
+    [
+     77.8,
+     440.442
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     75.693,
+     440.379
+    ],
+    [
+     78.205,
+     441.498
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     74.911,
+     440.907
+    ],
+    [
+     78.611,
+     442.554
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     74.129,
+     441.434
+    ],
+    [
+     79.016,
+     443.61
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     73.803,
+     442.165
+    ],
+    [
+     78.143,
+     444.097
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     74.072,
+     443.16
+    ],
+    [
+     77.086,
+     444.503
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_Blanton_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     74.477,
+     444.217
+    ],
+    [
+     76.03,
+     444.908
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch spacing estimated"
+  },
+  {
+   "name": "WB_lot_17_lane_crossing",
+   "type": "crosswalk",
+   "line": [
+    [
+     73.915,
+     415.753
+    ],
+    [
+     80.829,
+     412.847
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_17_walkway",
+   "type": "crosswalk",
+   "line": [
+    [
+     -0.381,
+     426.392
+    ],
+    [
+     13.6,
+     397.0
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020, osm 313029918",
+   "unverified": "a painted walkway across the lot: two side lines and bars; the centre line fitted to the ladder's mid-points (y 397..425)"
+  },
+  {
+   "name": "WB_lot_17_walkway_S",
+   "type": "crosswalk",
+   "line": [
+    [
+     13.6,
+     397.0
+    ],
+    [
+     13.6,
+     390.3
+    ]
+   ],
+   "width": 2.4,
+   "style": "ladder",
+   "colour": "white",
+   "evidence": "ortho2020, osm 313029918",
+   "unverified": "the ladder's south run, due south to the walk; read at 0.075 m to about 0.2 m"
+  },
+  {
+   "name": "WB_lot_38_N_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     17.891,
+     354.528
+    ],
+    [
+     34.196,
+     352.526
+    ]
+   ],
+   "count": 6,
+   "depth": 6.63,
+   "side": "right",
+   "angle": 108.3,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "faint blue-tinted angled stalls; the first divider is under a parked car (from the pitch)"
+  },
+  {
+   "name": "WB_lot_30_N_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -262.938,
+     337.438
+    ],
+    [
+     -255.682,
+     353.472
+    ]
+   ],
+   "count": 5,
+   "depth": 6.62,
+   "side": "right",
+   "angle": 46.5,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the two stalls across the west area's cut (dividers at u -4.7 and -1.1) are drawn by neither area: they would run more than 1 m past either footprint"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R1",
+   "type": "stalls",
+   "line": [
+    [
+     -168.375,
+     553.611
+    ],
+    [
+     -148.55,
+     598.56
+    ]
+   ],
+   "count": 18,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR1_W",
+   "type": "stalls",
+   "line": [
+    [
+     -150.101,
+     551.232
+    ],
+    [
+     -132.381,
+     591.409
+    ]
+   ],
+   "count": 16,
+   "depth": 5.52,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR1_E",
+   "type": "stalls",
+   "line": [
+    [
+     -150.094,
+     551.249
+    ],
+    [
+     -132.418,
+     591.326
+    ]
+   ],
+   "count": 16,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR2_W",
+   "type": "stalls",
+   "line": [
+    [
+     -135.561,
+     538.778
+    ],
+    [
+     -115.637,
+     583.95
+    ]
+   ],
+   "count": 18,
+   "depth": 5.55,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "first divider irregular (3.1 m)"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR2_E",
+   "type": "stalls",
+   "line": [
+    [
+     -135.574,
+     538.747
+    ],
+    [
+     -113.407,
+     589.007
+    ]
+   ],
+   "count": 20,
+   "depth": 5.29,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R7_W",
+   "type": "stalls",
+   "line": [
+    [
+     -111.792,
+     552.846
+    ],
+    [
+     -101.799,
+     575.503
+    ]
+   ],
+   "count": 9,
+   "depth": 6.6,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R7_E",
+   "type": "stalls",
+   "line": [
+    [
+     -96.53,
+     585.467
+    ],
+    [
+     -88.716,
+     603.185
+    ]
+   ],
+   "count": 7,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R7_E2",
+   "type": "stalls",
+   "line": [
+    [
+     -87.471,
+     602.538
+    ],
+    [
+     -85.215,
+     607.652
+    ]
+   ],
+   "count": 2,
+   "depth": 3.6,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the dividers run on under the published arena walk; drawn to the footprint only"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR3_W",
+   "type": "stalls",
+   "line": [
+    [
+     -91.677,
+     551.37
+    ],
+    [
+     -72.873,
+     594.005
+    ]
+   ],
+   "count": 17,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR3_E",
+   "type": "stalls",
+   "line": [
+    [
+     -92.704,
+     549.041
+    ],
+    [
+     -72.776,
+     594.225
+    ]
+   ],
+   "count": 18,
+   "depth": 5.25,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R10",
+   "type": "stalls",
+   "line": [
+    [
+     -79.417,
+     533.943
+    ],
+    [
+     -56.153,
+     586.689
+    ]
+   ],
+   "count": 21,
+   "depth": 5.83,
+   "side": "left",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the stall east of u 78.6 lies past the north-east area's edge (x -56) and is left out; u 21..29 beside parked cars from the pitch"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR1_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -150.109,
+     551.215
+    ],
+    [
+     -132.393,
+     591.382
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR2_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -136.889,
+     535.767
+    ],
+    [
+     -113.402,
+     589.017
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_DR3_centre_line",
+   "type": "line",
+   "path": [
+    [
+     -92.695,
+     549.063
+    ],
+    [
+     -72.275,
+     595.36
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R6",
+   "type": "stalls",
+   "line": [
+    [
+     -149.668,
+     536.375
+    ],
+    [
+     -167.341,
+     544.17
+    ]
+   ],
+   "count": 7,
+   "depth": 5.2,
+   "side": "right",
+   "angle": 90.0,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "several dividers faint beside parked cars"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R11",
+   "type": "stalls",
+   "line": [
+    [
+     -108.711,
+     542.021
+    ],
+    [
+     -90.087,
+     530.415
+    ]
+   ],
+   "count": 8,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 101.3,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "WB_lot_ice_arena_S_R12",
+   "type": "stalls",
+   "line": [
+    [
+     -80.327,
+     609.567
+    ],
+    [
+     -62.782,
+     601.829
+    ]
+   ],
+   "count": 7,
+   "depth": 4.45,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the dividers run on 1.5 m under the published arena walk; drawn to the footprint only"
+  },
+  {
+   "name": "WB_lot_19_S_island_outline",
+   "type": "line",
+   "path": [
+    [
+     220.0,
+     489.9
+    ],
+    [
+     222.25,
+     486.0
+    ],
+    [
+     223.9,
+     484.6
+    ],
+    [
+     226.0,
+     486.0
+    ],
+    [
+     228.0,
+     488.25
+    ],
+    [
+     230.0,
+     490.75
+    ],
+    [
+     231.0,
+     493.5
+    ],
+    [
+     230.5,
+     494.6
+    ],
+    [
+     229.0,
+     494.6
+    ],
+    [
+     225.75,
+     493.0
+    ],
+    [
+     226.25,
+     491.75
+    ],
+    [
+     227.6,
+     488.25
+    ],
+    [
+     225.0,
+     487.25
+    ],
+    [
+     223.0,
+     486.5
+    ],
+    [
+     221.5,
+     489.0
+    ],
+    [
+     221.25,
+     490.5
+    ],
+    [
+     220.55,
+     490.9
+    ]
+   ],
+   "closed": true,
+   "width": 0.12,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "painted hatched island, outline read to about 0.3 m"
+  },
+  {
+   "name": "WB_lot_19_S_island_1",
+   "type": "line",
+   "path": [
+    [
+     223.6,
+     485.59
+    ],
+    [
+     223.02,
+     486.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_2",
+   "type": "line",
+   "path": [
+    [
+     222.28,
+     487.71
+    ],
+    [
+     220.42,
+     490.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_3",
+   "type": "line",
+   "path": [
+    [
+     222.82,
+     485.52
+    ],
+    [
+     220.04,
+     489.97
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_4",
+   "type": "line",
+   "path": [
+    [
+     228.97,
+     489.46
+    ],
+    [
+     230.31,
+     491.62
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_5",
+   "type": "line",
+   "path": [
+    [
+     225.97,
+     485.98
+    ],
+    [
+     227.32,
+     488.14
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_6",
+   "type": "line",
+   "path": [
+    [
+     227.52,
+     488.46
+    ],
+    [
+     230.86,
+     493.81
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_7",
+   "type": "line",
+   "path": [
+    [
+     224.55,
+     485.03
+    ],
+    [
+     226.23,
+     487.72
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_8",
+   "type": "line",
+   "path": [
+    [
+     227.2,
+     489.28
+    ],
+    [
+     230.51,
+     494.57
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_9",
+   "type": "line",
+   "path": [
+    [
+     223.61,
+     484.85
+    ],
+    [
+     225.15,
+     487.31
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_10",
+   "type": "line",
+   "path": [
+    [
+     226.89,
+     490.09
+    ],
+    [
+     229.7,
+     494.6
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_11",
+   "type": "line",
+   "path": [
+    [
+     223.6,
+     486.15
+    ],
+    [
+     224.07,
+     486.9
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_12",
+   "type": "line",
+   "path": [
+    [
+     226.57,
+     490.91
+    ],
+    [
+     228.82,
+     494.51
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_13",
+   "type": "line",
+   "path": [
+    [
+     226.26,
+     491.73
+    ],
+    [
+     227.63,
+     493.93
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_island_14",
+   "type": "line",
+   "path": [
+    [
+     225.94,
+     492.53
+    ],
+    [
+     226.44,
+     493.34
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "hatching: stripe count and spacing approximate"
+  },
+  {
+   "name": "WB_lot_19_S_divider",
+   "type": "line",
+   "path": [
+    [
+     223.25,
+     491.75
+    ],
+    [
+     225.0,
+     487.4
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m)"
+  },
+  {
+   "name": "WB_lot_19_S_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     229.0,
+     479.25
+    ],
+    [
+     231.0,
+     481.0
+    ]
+   ],
+   "count": 1,
+   "depth": 3.4,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "two dividers of a row that runs on east of the footprint; their south ends are under a tree crown, depth as seen"
+  }
+ ],
+ "points": []
+}

@@ -9,7 +9,8 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone, finishMetal } from './viewer/tone.js';
-import { fixCat, isSeeThroughSolid } from './viewer/cat.js';
+import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
+import { inVolume, nearVolumes, GLASS_GROW } from './viewer/rooms-math.js';
 export { fixTone, fixCat };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
@@ -357,7 +358,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       if (o.isInstancedMesh) o.computeBoundingSphere();
       const bs = (o.isInstancedMesh ? o.boundingSphere : o.geometry.boundingSphere).clone().applyMatrix4(o.matrixWorld);
       if (o.userData.treeLod) return; // trees.js culls these per instance
-      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius, root });
+      if (bs.radius < 120) items.push({ o, c: bs.center, r: bs.radius, root, vol: -1 });
       else o.visible = true;
       if (bs.radius > 400) o.castShadow = false; // far-field ground: receives only
     });
@@ -366,10 +367,12 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function cull(force) {
     const now = performance.now(); if (!force && now - lastCull < 200) return; lastCull = now;
     const p = camera.position;
+    // near or inside a building with a real interior, everything inside it stays drawn (see setInteriors)
+    const near = interiors.length ? nearVolumes(interiors, p) : [];
     for (const it of items) {
       if (it.o.userData.treeLod) continue; // trees.js culls these per instance
       const d = Math.max(1, p.distanceTo(it.c) - it.r);
-      const v = it.r > d * cullK;
+      const v = it.r > d * cullK || (it.vol >= 0 && near.includes(it.vol));
       if (v !== it.o.visible) { it.o.visible = v; if (it.r > 1.5) shadowDirty = true; } // tiny things do not move the shadow map
     }
   }
@@ -474,8 +477,12 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   }
   // Interior mapping: fake rooms behind vertical window glass. World-space cells (3.6 m bays,
   // 3.4 m storeys, 5 m deep) aligned to each facade; per-room tint and lights from a hash of the cell.
-  function glassInterior(m) {
+  // `vol` (glass near a building with a real interior, see setInteriors): vertical glass inside a volume
+  // grown by GLASS_GROW gets no fake rooms; 2 also draws it see-through (clear glazing), 1 keeps it opaque.
+  function glassInterior(m, vol = 0) {
+    m.userData.gi = true;
     m.onBeforeCompile = sh => {
+      if (vol) Object.assign(sh.uniforms, giUniforms);
       sh.vertexShader = sh.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vGiPos; varying vec3 vGiNrm;')
         .replace('#include <begin_vertex>', `#include <begin_vertex>
@@ -483,13 +490,37 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vGiPos; varying vec3 vGiNrm;
-          float giHash(vec3 c) { return fract(sin(dot(c, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }`)
+          float giHash(vec3 c) { return fract(sin(dot(c, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+          bool giIn = false; float giFres = 0.0;
+          ${vol ? `uniform vec2 giRing[${GI_P}]; uniform vec4 giVol[${GI_V}]; uniform int giN;
+          // inside a volume's ring (or within GROW of it) and its height range (grown too): rooms-math inVolume
+          bool giInside(vec3 p) {
+            const float GROW = ${GLASS_GROW.toFixed(2)};
+            for (int v = 0; v < ${GI_V}; v++) {
+              if (v >= giN) break;
+              vec4 b = giVol[v];
+              if (p.y < b.z - GROW || p.y > b.w + GROW) continue;
+              int s = int(b.x), n = int(b.y);
+              bool odd = false; float d2 = 1e9;
+              for (int i = 0; i < ${GI_P}; i++) {
+                if (i >= n) break;
+                vec2 a = giRing[s + i], c = giRing[s + (i + 1) % n];
+                if ((a.y > p.z) != (c.y > p.z) && p.x < a.x + (p.z - a.y) * (c.x - a.x) / (c.y - a.y)) odd = !odd;
+                vec2 u = c - a; float t = clamp(dot(p.xz - a, u) / max(dot(u, u), 1e-9), 0.0, 1.0);
+                vec2 e = p.xz - a - u * t; d2 = min(d2, dot(e, e));
+              }
+              if (odd || d2 <= GROW * GROW) return true;
+            }
+            return false;
+          }` : ''}`)
         .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
           {
             vec3 Nw = normalize(vGiNrm);
             if (!gl_FrontFacing) Nw = -Nw;
             vec3 V = normalize(vGiPos - cameraPosition);
-            if (abs(Nw.y) < 0.5 && dot(V, Nw) < 0.0) {
+            ${vol ? 'giIn = abs(Nw.y) < 0.5 && giInside(vGiPos);' : ''}
+            ${vol === 2 ? 'giFres = 0.04 + 0.96 * pow(1.0 - clamp(abs(dot(V, Nw)), 0.0, 1.0), 5.0);' : ''}
+            if (!giIn && abs(Nw.y) < 0.5 && dot(V, Nw) < 0.0) {
               vec3 N = normalize(vec3(Nw.x, 0.0, Nw.z)), T = vec3(-N.z, 0.0, N.x);
               const vec3 CELL = vec3(3.6, 3.4, 5.0);
               vec3 p = vec3(dot(vGiPos, T), vGiPos.y, 0.0) / CELL;
@@ -513,9 +544,65 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
               totalEmissiveRadiance += col * (1.0 - fres);
             }
           }`);
+      // real glass: mostly see-through face on, mostly reflection at grazing angles
+      if (vol === 2) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `#include <opaque_fragment>
+          if (giIn) gl_FragColor.a = mix(0.16, 0.92, giFres);`);
     };
-    m.customProgramCacheKey = () => 'glass_interior';
+    m.customProgramCacheKey = () => 'glass_interior' + (vol ? '_vol' + vol : '');
     m.needsUpdate = true;
+  }
+
+  // --- buildings with a real interior (viewer/rooms.json volumes, see docs/VIEWER.md "Interiors") ---
+  // Within INTERIOR_REACH of a volume, meshes whose centre lies in it (grown by GLASS_GROW) are not
+  // screen-size culled; glass meshes that reach into it get a copy of their material that draws the part
+  // inside it as real glass (decided per pixel, so a mesh the export joined across buildings works too).
+  const GI_P = 64, GI_V = 4; // ring points and volumes the glass shader holds
+  const giUniforms = {
+    giRing: { value: Array.from({ length: GI_P }, () => new THREE.Vector2()) },
+    giVol: { value: Array.from({ length: GI_V }, () => new THREE.Vector4()) },
+    giN: { value: 0 },
+  };
+  let interiors = [];
+  const decorated = new Set(), seeThroughs = new WeakMap(), _gb = new THREE.Box3();
+  /** Use these volumes ({ ring: [[x, z]], y0, y1 }, viewer metres) for the interior rule. */
+  function setInteriors(volumes) {
+    interiors = volumes.map(v => {
+      const xs = v.ring.map(p => p[0]), zs = v.ring.map(p => p[1]), g = GLASS_GROW;
+      return { ...v, box: new THREE.Box3(new THREE.Vector3(Math.min(...xs) - g, v.y0 - g, Math.min(...zs) - g), new THREE.Vector3(Math.max(...xs) + g, v.y1 + g, Math.max(...zs) + g)) };
+    });
+    let at = 0, n = 0;
+    for (const v of interiors) {
+      if (n === GI_V || at + v.ring.length > GI_P) { console.warn('interior volume left out of the glass rule:', v.id); continue; }
+      v.ring.forEach((p, i) => giUniforms.giRing.value[at + i].set(p[0], p[1]));
+      giUniforms.giVol.value[n++].set(at, v.ring.length, v.y0, v.y1); at += v.ring.length;
+    }
+    giUniforms.giN.value = n;
+    for (const root of decorated) claim(root);
+    cull(true); shadowDirty = true; onChange();
+  }
+  function seeThrough(m) {
+    if (!m?.userData.gi || m.userData.giVol) return m;
+    if (!seeThroughs.has(m)) {
+      const c = m.clone(), clear = isClearGlass(m.name || '');
+      c.userData.giVol = true;
+      if (clear) { c.transparent = true; c.depthWrite = false; c.side = THREE.DoubleSide; c.forceSinglePass = true; }
+      glassInterior(c, clear ? 2 : 1);
+      seeThroughs.set(m, c);
+    }
+    return seeThroughs.get(m);
+  }
+  function claim(root) {
+    if (!interiors.length) return;
+    for (const it of items) if (it.root === root) it.vol = interiors.findIndex(v => inVolume(v, it.c.x, it.c.y, it.c.z, GLASS_GROW));
+    root.traverse(o => {
+      if (!o.isMesh || o.isInstancedMesh || o.userData.interiorGlass || ![].concat(o.material).some(m => m?.userData.gi)) return;
+      if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+      _gb.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld);
+      if (!interiors.some(v => v.box.intersectsBox(_gb))) return;
+      o.material = Array.isArray(o.material) ? o.material.map(seeThrough) : seeThrough(o.material);
+      o.userData.interiorGlass = true;
+      o.castShadow = false; // sunlight comes in through the windows
+    });
   }
   // lamp heads often reuse a building's clear window glass, which the window treatment turns near-black:
   // give lamp meshes their own frosted (opal) globe with a faint warm glow instead
@@ -578,14 +665,15 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       }
     });
     register(root);
+    decorated.add(root); claim(root);
     addLamps(root);
     shadowDirty = true;
   }
   /** Forget a tile that was dropped from memory. */
-  function forget(root) { items = items.filter(it => it.root !== root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
-  function reset() { items = []; lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
+  function forget(root) { items = items.filter(it => it.root !== root); decorated.delete(root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
+  function reset() { items = []; decorated.clear(); lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun, setInteriors,
     invalidateShadows() { shadowDirty = true; },
     get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
   };

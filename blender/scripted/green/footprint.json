@@ -1,0 +1,16 @@
+{
+ "zone": "green",
+ "notes": "Alumni Green: no ground of its own. The plaza (adopted from the main model and corrected, adopt.json) replaces the main model's plaza mesh; nothing else of the green (lawn, walks, the WS3 paving, beds, trees, buildings, lamps) is taken out. In the published tiles the mesh WS5_Cole_plaza_circle holds only that object's three materials (pavers, brick edge course, band; checked in a dump of t_-1_-1), so it is dropped by name.",
+ "supersede": {
+  "volumes": [
+   {
+    "name": "plaza",
+    "meshes": [
+     "WS5_Cole_plaza_circle"
+    ],
+    "drop": "all",
+    "why": "the ws5 plaza, rebuilt from Joe's photos in sw_ tiles"
+   }
+  ]
+ }
+}

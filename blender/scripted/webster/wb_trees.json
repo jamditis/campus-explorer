@@ -1,0 +1,1734 @@
+{
+ "zone": "wb_trees",
+ "notes": "Written by tools/evidence/trees.py from the LiDAR canopy: positions and heights are measured, species are not (see that file). Do not edit by hand; run the tool again.",
+ "points": [
+  {
+   "name": "Tree_001",
+   "kind": "tree",
+   "at": [
+    -30.2,
+    420.2
+   ],
+   "height": 38.8,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_002",
+   "kind": "tree",
+   "at": [
+    -96.8,
+    454.2
+   ],
+   "height": 25.7,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_003",
+   "kind": "tree",
+   "at": [
+    -231.2,
+    340.8
+   ],
+   "height": 25.1,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_004",
+   "kind": "tree",
+   "at": [
+    -255.2,
+    320.2
+   ],
+   "height": 24.7,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_005",
+   "kind": "tree",
+   "at": [
+    -91.2,
+    454.8
+   ],
+   "height": 24.6,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_006",
+   "kind": "tree",
+   "at": [
+    -247.8,
+    335.2
+   ],
+   "height": 24.3,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_007",
+   "kind": "tree",
+   "at": [
+    -248.2,
+    342.2
+   ],
+   "height": 24.3,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_008",
+   "kind": "tree",
+   "at": [
+    -245.8,
+    298.2
+   ],
+   "height": 24.2,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_009",
+   "kind": "tree",
+   "at": [
+    -254.8,
+    310.2
+   ],
+   "height": 23.8,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_010",
+   "kind": "tree",
+   "at": [
+    -236.8,
+    341.8
+   ],
+   "height": 23.8,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_011",
+   "kind": "tree",
+   "at": [
+    -97.8,
+    449.8
+   ],
+   "height": 23.4,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_012",
+   "kind": "tree",
+   "at": [
+    -256.8,
+    296.2
+   ],
+   "height": 23.1,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_013",
+   "kind": "tree",
+   "at": [
+    -231.8,
+    333.8
+   ],
+   "height": 23.1,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_014",
+   "kind": "tree",
+   "at": [
+    -250.2,
+    303.2
+   ],
+   "height": 22.8,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_015",
+   "kind": "tree",
+   "at": [
+    -236.8,
+    362.8
+   ],
+   "height": 22.6,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_016",
+   "kind": "tree",
+   "at": [
+    -279.8,
+    351.2
+   ],
+   "height": 22.2,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_017",
+   "kind": "tree",
+   "at": [
+    -216.8,
+    496.8
+   ],
+   "height": 22.2,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_018",
+   "kind": "tree",
+   "at": [
+    -251.2,
+    295.8
+   ],
+   "height": 22.1,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_019",
+   "kind": "tree",
+   "at": [
+    -245.8,
+    323.8
+   ],
+   "height": 21.7,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_020",
+   "kind": "tree",
+   "at": [
+    -224.8,
+    475.2
+   ],
+   "height": 21.7,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_021",
+   "kind": "tree",
+   "at": [
+    -224.2,
+    369.2
+   ],
+   "height": 21.6,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_022",
+   "kind": "tree",
+   "at": [
+    -82.2,
+    443.2
+   ],
+   "height": 21.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_023",
+   "kind": "tree",
+   "at": [
+    -278.2,
+    344.8
+   ],
+   "height": 20.8,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_024",
+   "kind": "tree",
+   "at": [
+    -239.8,
+    330.8
+   ],
+   "height": 20.7,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_025",
+   "kind": "tree",
+   "at": [
+    -225.2,
+    481.2
+   ],
+   "height": 20.7,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_026",
+   "kind": "tree",
+   "at": [
+    -81.8,
+    453.8
+   ],
+   "height": 20.7,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_027",
+   "kind": "tree",
+   "at": [
+    -255.2,
+    327.2
+   ],
+   "height": 20.5,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_028",
+   "kind": "tree",
+   "at": [
+    -240.8,
+    307.8
+   ],
+   "height": 20.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_029",
+   "kind": "tree",
+   "at": [
+    -227.2,
+    319.8
+   ],
+   "height": 20.1,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_030",
+   "kind": "tree",
+   "at": [
+    -79.2,
+    487.2
+   ],
+   "height": 19.9,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_031",
+   "kind": "tree",
+   "at": [
+    -83.2,
+    456.8
+   ],
+   "height": 19.9,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_032",
+   "kind": "tree",
+   "at": [
+    -204.8,
+    516.8
+   ],
+   "height": 19.9,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_033",
+   "kind": "tree",
+   "at": [
+    -92.2,
+    436.8
+   ],
+   "height": 19.6,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_034",
+   "kind": "tree",
+   "at": [
+    -79.8,
+    447.2
+   ],
+   "height": 19.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_035",
+   "kind": "tree",
+   "at": [
+    -223.8,
+    361.8
+   ],
+   "height": 19.0,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_036",
+   "kind": "tree",
+   "at": [
+    -9.2,
+    391.2
+   ],
+   "height": 18.9,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_037",
+   "kind": "tree",
+   "at": [
+    -85.2,
+    449.8
+   ],
+   "height": 18.9,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_038",
+   "kind": "tree",
+   "at": [
+    -237.8,
+    302.2
+   ],
+   "height": 18.9,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_039",
+   "kind": "tree",
+   "at": [
+    -207.8,
+    510.2
+   ],
+   "height": 18.8,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_040",
+   "kind": "tree",
+   "at": [
+    -102.8,
+    461.2
+   ],
+   "height": 18.7,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_041",
+   "kind": "tree",
+   "at": [
+    -78.8,
+    481.8
+   ],
+   "height": 18.6,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_042",
+   "kind": "tree",
+   "at": [
+    -229.8,
+    370.8
+   ],
+   "height": 18.5,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_043",
+   "kind": "tree",
+   "at": [
+    -236.8,
+    325.8
+   ],
+   "height": 18.4,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_044",
+   "kind": "tree",
+   "at": [
+    -5.2,
+    390.2
+   ],
+   "height": 18.1,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_045",
+   "kind": "tree",
+   "at": [
+    -16.8,
+    391.8
+   ],
+   "height": 17.9,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_046",
+   "kind": "tree",
+   "at": [
+    -64.2,
+    510.2
+   ],
+   "height": 17.8,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_047",
+   "kind": "tree",
+   "at": [
+    -76.8,
+    387.8
+   ],
+   "height": 17.8,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_048",
+   "kind": "tree",
+   "at": [
+    -210.8,
+    368.8
+   ],
+   "height": 17.7,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_049",
+   "kind": "tree",
+   "at": [
+    -106.8,
+    440.8
+   ],
+   "height": 17.6,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_050",
+   "kind": "tree",
+   "at": [
+    -212.8,
+    507.8
+   ],
+   "height": 17.6,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_051",
+   "kind": "tree",
+   "at": [
+    -1.2,
+    388.8
+   ],
+   "height": 17.6,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_052",
+   "kind": "tree",
+   "at": [
+    -210.8,
+    363.8
+   ],
+   "height": 17.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_053",
+   "kind": "tree",
+   "at": [
+    -113.2,
+    451.2
+   ],
+   "height": 17.3,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_054",
+   "kind": "tree",
+   "at": [
+    -106.2,
+    452.8
+   ],
+   "height": 17.2,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_055",
+   "kind": "tree",
+   "at": [
+    -65.2,
+    341.8
+   ],
+   "height": 17.1,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_056",
+   "kind": "tree",
+   "at": [
+    -215.8,
+    359.2
+   ],
+   "height": 17.0,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_057",
+   "kind": "tree",
+   "at": [
+    -22.8,
+    394.2
+   ],
+   "height": 16.8,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_058",
+   "kind": "tree",
+   "at": [
+    -118.8,
+    446.8
+   ],
+   "height": 16.7,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_059",
+   "kind": "tree",
+   "at": [
+    -94.8,
+    474.8
+   ],
+   "height": 16.7,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_060",
+   "kind": "tree",
+   "at": [
+    -109.8,
+    466.2
+   ],
+   "height": 16.5,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_061",
+   "kind": "tree",
+   "at": [
+    -30.2,
+    392.8
+   ],
+   "height": 16.4,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_062",
+   "kind": "tree",
+   "at": [
+    -274.2,
+    363.8
+   ],
+   "height": 16.4,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_063",
+   "kind": "tree",
+   "at": [
+    -84.2,
+    474.2
+   ],
+   "height": 16.3,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_064",
+   "kind": "tree",
+   "at": [
+    -80.8,
+    474.2
+   ],
+   "height": 16.3,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_065",
+   "kind": "tree",
+   "at": [
+    -233.2,
+    374.2
+   ],
+   "height": 16.1,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_066",
+   "kind": "tree",
+   "at": [
+    -55.8,
+    350.2
+   ],
+   "height": 15.9,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_067",
+   "kind": "tree",
+   "at": [
+    -219.2,
+    371.2
+   ],
+   "height": 15.9,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_068",
+   "kind": "tree",
+   "at": [
+    -246.2,
+    354.2
+   ],
+   "height": 15.9,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_069",
+   "kind": "tree",
+   "at": [
+    -97.2,
+    464.2
+   ],
+   "height": 15.8,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_070",
+   "kind": "tree",
+   "at": [
+    -224.2,
+    357.8
+   ],
+   "height": 15.8,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_071",
+   "kind": "tree",
+   "at": [
+    -58.2,
+    350.2
+   ],
+   "height": 15.7,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_072",
+   "kind": "tree",
+   "at": [
+    4.8,
+    384.8
+   ],
+   "height": 15.7,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_073",
+   "kind": "tree",
+   "at": [
+    -36.8,
+    412.8
+   ],
+   "height": 15.7,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_074",
+   "kind": "tree",
+   "at": [
+    -195.2,
+    372.2
+   ],
+   "height": 15.6,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_075",
+   "kind": "tree",
+   "at": [
+    -236.2,
+    372.8
+   ],
+   "height": 15.3,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_076",
+   "kind": "tree",
+   "at": [
+    -231.8,
+    378.2
+   ],
+   "height": 15.2,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_077",
+   "kind": "tree",
+   "at": [
+    22.8,
+    380.8
+   ],
+   "height": 15.2,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_078",
+   "kind": "tree",
+   "at": [
+    -82.8,
+    469.2
+   ],
+   "height": 15.1,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_079",
+   "kind": "tree",
+   "at": [
+    31.2,
+    379.2
+   ],
+   "height": 14.9,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_080",
+   "kind": "tree",
+   "at": [
+    -26.8,
+    398.8
+   ],
+   "height": 14.9,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_081",
+   "kind": "tree",
+   "at": [
+    -73.2,
+    514.2
+   ],
+   "height": 14.8,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_082",
+   "kind": "tree",
+   "at": [
+    -122.2,
+    446.8
+   ],
+   "height": 14.7,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_083",
+   "kind": "tree",
+   "at": [
+    -118.8,
+    349.2
+   ],
+   "height": 14.7,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_084",
+   "kind": "tree",
+   "at": [
+    -263.8,
+    385.8
+   ],
+   "height": 14.6,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_085",
+   "kind": "tree",
+   "at": [
+    -78.2,
+    502.2
+   ],
+   "height": 14.5,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_086",
+   "kind": "tree",
+   "at": [
+    -101.2,
+    475.2
+   ],
+   "height": 14.5,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_087",
+   "kind": "tree",
+   "at": [
+    -73.8,
+    511.8
+   ],
+   "height": 14.5,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_088",
+   "kind": "tree",
+   "at": [
+    41.2,
+    377.2
+   ],
+   "height": 14.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_089",
+   "kind": "tree",
+   "at": [
+    -48.8,
+    350.2
+   ],
+   "height": 14.3,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_090",
+   "kind": "tree",
+   "at": [
+    -72.2,
+    504.2
+   ],
+   "height": 14.3,
+   "species": "white_pine",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_091",
+   "kind": "tree",
+   "at": [
+    -122.2,
+    348.2
+   ],
+   "height": 13.9,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_092",
+   "kind": "tree",
+   "at": [
+    -36.2,
+    395.2
+   ],
+   "height": 13.9,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_093",
+   "kind": "tree",
+   "at": [
+    -68.2,
+    531.2
+   ],
+   "height": 13.8,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_094",
+   "kind": "tree",
+   "at": [
+    -76.2,
+    510.8
+   ],
+   "height": 13.5,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_095",
+   "kind": "tree",
+   "at": [
+    -216.2,
+    326.8
+   ],
+   "height": 13.3,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_096",
+   "kind": "tree",
+   "at": [
+    -78.2,
+    516.2
+   ],
+   "height": 13.3,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_097",
+   "kind": "tree",
+   "at": [
+    -110.2,
+    361.8
+   ],
+   "height": 13.2,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_098",
+   "kind": "tree",
+   "at": [
+    -83.2,
+    385.8
+   ],
+   "height": 13.1,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_099",
+   "kind": "tree",
+   "at": [
+    -82.8,
+    500.8
+   ],
+   "height": 12.9,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_100",
+   "kind": "tree",
+   "at": [
+    -98.2,
+    479.2
+   ],
+   "height": 12.9,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_101",
+   "kind": "tree",
+   "at": [
+    -83.2,
+    497.8
+   ],
+   "height": 12.8,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_102",
+   "kind": "tree",
+   "at": [
+    -22.8,
+    351.8
+   ],
+   "height": 12.5,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_103",
+   "kind": "tree",
+   "at": [
+    -67.2,
+    497.2
+   ],
+   "height": 12.4,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_104",
+   "kind": "tree",
+   "at": [
+    -111.2,
+    367.2
+   ],
+   "height": 12.2,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_105",
+   "kind": "tree",
+   "at": [
+    -204.8,
+    496.8
+   ],
+   "height": 11.9,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_106",
+   "kind": "tree",
+   "at": [
+    -89.2,
+    485.8
+   ],
+   "height": 11.8,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_107",
+   "kind": "tree",
+   "at": [
+    -85.2,
+    505.8
+   ],
+   "height": 11.6,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_108",
+   "kind": "tree",
+   "at": [
+    -89.2,
+    463.2
+   ],
+   "height": 11.5,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_109",
+   "kind": "tree",
+   "at": [
+    -92.2,
+    489.8
+   ],
+   "height": 11.5,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_110",
+   "kind": "tree",
+   "at": [
+    -67.8,
+    523.2
+   ],
+   "height": 11.4,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_111",
+   "kind": "tree",
+   "at": [
+    -71.8,
+    523.2
+   ],
+   "height": 11.3,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_112",
+   "kind": "tree",
+   "at": [
+    17.2,
+    371.8
+   ],
+   "height": 11.3,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_113",
+   "kind": "tree",
+   "at": [
+    -108.8,
+    459.8
+   ],
+   "height": 10.8,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_114",
+   "kind": "tree",
+   "at": [
+    -26.2,
+    354.2
+   ],
+   "height": 10.7,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_115",
+   "kind": "tree",
+   "at": [
+    -90.8,
+    518.8
+   ],
+   "height": 10.2,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_116",
+   "kind": "tree",
+   "at": [
+    -239.8,
+    441.2
+   ],
+   "height": 10.2,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_117",
+   "kind": "tree",
+   "at": [
+    -114.2,
+    370.2
+   ],
+   "height": 10.1,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_118",
+   "kind": "tree",
+   "at": [
+    -132.2,
+    341.8
+   ],
+   "height": 10.0,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_119",
+   "kind": "tree",
+   "at": [
+    -84.8,
+    514.2
+   ],
+   "height": 9.9,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_120",
+   "kind": "tree",
+   "at": [
+    -112.8,
+    323.2
+   ],
+   "height": 9.4,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_121",
+   "kind": "tree",
+   "at": [
+    -93.2,
+    484.8
+   ],
+   "height": 9.2,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_122",
+   "kind": "tree",
+   "at": [
+    -180.8,
+    479.2
+   ],
+   "height": 9.0,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_123",
+   "kind": "tree",
+   "at": [
+    -128.8,
+    323.2
+   ],
+   "height": 8.7,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_124",
+   "kind": "tree",
+   "at": [
+    -216.2,
+    330.2
+   ],
+   "height": 8.6,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_125",
+   "kind": "tree",
+   "at": [
+    -63.2,
+    549.2
+   ],
+   "height": 8.6,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_126",
+   "kind": "tree",
+   "at": [
+    -88.8,
+    528.2
+   ],
+   "height": 8.5,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_127",
+   "kind": "tree",
+   "at": [
+    -237.2,
+    437.8
+   ],
+   "height": 8.4,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_128",
+   "kind": "tree",
+   "at": [
+    -235.8,
+    442.2
+   ],
+   "height": 8.1,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_129",
+   "kind": "tree",
+   "at": [
+    -241.8,
+    353.2
+   ],
+   "height": 8.1,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_130",
+   "kind": "tree",
+   "at": [
+    -193.2,
+    494.2
+   ],
+   "height": 8.1,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_131",
+   "kind": "tree",
+   "at": [
+    -119.8,
+    327.2
+   ],
+   "height": 7.9,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_132",
+   "kind": "tree",
+   "at": [
+    -121.2,
+    323.8
+   ],
+   "height": 7.8,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_133",
+   "kind": "tree",
+   "at": [
+    -209.8,
+    462.8
+   ],
+   "height": 7.4,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_134",
+   "kind": "tree",
+   "at": [
+    -126.8,
+    319.8
+   ],
+   "height": 7.4,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_135",
+   "kind": "tree",
+   "at": [
+    -224.2,
+    456.8
+   ],
+   "height": 7.4,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_136",
+   "kind": "tree",
+   "at": [
+    -213.8,
+    477.2
+   ],
+   "height": 7.4,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_137",
+   "kind": "tree",
+   "at": [
+    -151.2,
+    429.8
+   ],
+   "height": 7.2,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_138",
+   "kind": "tree",
+   "at": [
+    -148.2,
+    435.8
+   ],
+   "height": 6.8,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_139",
+   "kind": "tree",
+   "at": [
+    -197.8,
+    469.2
+   ],
+   "height": 6.7,
+   "species": "red_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_140",
+   "kind": "tree",
+   "at": [
+    -142.8,
+    358.8
+   ],
+   "height": 6.6,
+   "species": "pin_oak",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_141",
+   "kind": "tree",
+   "at": [
+    -212.2,
+    464.8
+   ],
+   "height": 6.6,
+   "species": "sugar_maple",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_142",
+   "kind": "tree",
+   "at": [
+    -176.2,
+    463.2
+   ],
+   "height": 6.6,
+   "species": "tulip_poplar",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_143",
+   "kind": "tree",
+   "at": [
+    -120.8,
+    316.8
+   ],
+   "height": 6.4,
+   "species": "american_beech",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  },
+  {
+   "name": "Tree_144",
+   "kind": "tree",
+   "at": [
+    -132.2,
+    361.8
+   ],
+   "height": 6.4,
+   "species": "sweetgum",
+   "evidence": "lidar canopy peak",
+   "unverified": "species; crown shape"
+  }
+ ]
+}

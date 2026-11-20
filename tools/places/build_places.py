@@ -56,6 +56,17 @@ _N = _F / (2 - _F)
 _RECT_A = _A / (1 + _N) * (1 + _N**2 / 4 + _N**4 / 64 + _N**6 / 256)
 
 
+
+# Names the university uses where OpenStreetMap has an older or other one. The owner works in the
+# first: it is the College of Communication and Media (2026-11-20), mapped as "School of ...".
+NAMES = {"way/1188721159": "College of Communication and Media"}
+
+
+def place_name(osm_type, oid, tags):
+    """The name shown for a place: the university's own where NAMES has one, else OSM's."""
+    return NAMES.get(f"{osm_type}/{oid}", tags["name"].strip())
+
+
 def _series(rows: list[list[float]]) -> list[float]:
     return [sum(c * _N ** (i + 1) for i, c in enumerate(row)) for row in rows]
 
@@ -396,7 +407,7 @@ def collect(data: OsmData, tiles: list) -> list[dict]:
                 continue
             lat, lon = from_local(x, z)
             candidates.append({
-                "name": tags["name"].strip(),
+                "name": place_name(osm_type, oid, tags),
                 "kind": kind,
                 "x": round(x, 2),
                 "z": round(z, 2),

@@ -1,0 +1,2335 @@
+{
+ "zone": "ccom_interior",
+ "notes": "Interior of the College of Communication and Media, rebuilt as a scripted area with the main model's sound interior adopted (adopt.json): keep-outs only for what is adopted (the newsroom with its back offices and mezzanine, the south corridor furniture, the atrium group moved square to the shell by T1). Floor 1 slabs reach the walls (the volume rule takes the other sources' ground out of the building). Open questions for Joe: the newsroom office stack (the sign has it about 2.5 m east), the east lounge level (left out: its floor 134.85 and ceiling 138.95 cross floor 1), the lab room (not modelled). College of Communication and Media (CCOM) interior, floors 1 and 2, from Joe's two evacuation floor plans (2026-11-20). Exterior walls, windows and roof: ccom_shell.json. Levels from the main model: floor 1 slabs 137.40 (south) and 137.70 (north), floor 2 slabs 141.85 with soffits at 141.45, floor 2 ceilings 144.86. Wall runs start at 137.30 so they meet both floor 1 levels. The sign plans are diagrams: positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign. The room 1000 block (south-west connector, two lifts, a stair) lies inside Morehead Hall's shell in the main model and is not built. The double-height lobby (Joe's photos 1000102886 and 1000102887) is the main model's atrium behind the west doors: its window wall, doors, wood panel wall, stair, glass balustrade, walk-off mat and cube seats exist there (turned 13.7 deg off the shell), so nothing of it is built here; its video wall is missing. Written by a scratch script from pixel positions; edit by hand from here.",
+ "interiors": [
+  {
+   "name": "CCOM_F1",
+   "level": 1,
+   "floor": 137.3,
+   "ceiling": 141.45,
+   "evidence": "1000102884_ccom_floor1_plan.jpg (Joe, 2026-11-20)",
+   "unverified": "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign",
+   "outline": [
+    [
+     -10.76,
+     41.65
+    ],
+    [
+     -14.7,
+     24.12
+    ],
+    [
+     -18.3,
+     25.03
+    ],
+    [
+     -20.0,
+     18.34
+    ],
+    [
+     -18.68,
+     17.56
+    ],
+    [
+     -20.92,
+     8.15
+    ],
+    [
+     -19.12,
+     7.6
+    ],
+    [
+     -26.21,
+     -21.4
+    ],
+    [
+     -13.88,
+     -24.41
+    ],
+    [
+     -12.38,
+     -18.18
+    ],
+    [
+     -10.59,
+     -18.61
+    ],
+    [
+     18.99,
+     -25.82
+    ],
+    [
+     20.88,
+     -18.11
+    ],
+    [
+     24.88,
+     -19.09
+    ],
+    [
+     28.57,
+     -3.98
+    ],
+    [
+     31.94,
+     -4.8
+    ],
+    [
+     34.27,
+     4.75
+    ],
+    [
+     34.56,
+     5.71
+    ],
+    [
+     12.62,
+     10.74
+    ],
+    [
+     17.57,
+     32.01
+    ],
+    [
+     12.62,
+     33.08
+    ],
+    [
+     13.02,
+     35.04
+    ],
+    [
+     -0.26,
+     39.39
+    ]
+   ],
+   "inside": [
+    [
+     -10.49,
+     41.23
+    ],
+    [
+     -14.44,
+     23.69
+    ],
+    [
+     -18.05,
+     24.61
+    ],
+    [
+     -19.6,
+     18.51
+    ],
+    [
+     -18.28,
+     17.73
+    ],
+    [
+     -20.5,
+     8.39
+    ],
+    [
+     -18.7,
+     7.84
+    ],
+    [
+     -23.66,
+     -12.41
+    ],
+    [
+     -22.2,
+     -12.77
+    ],
+    [
+     -11.35,
+     -15.43
+    ],
+    [
+     -11.96,
+     -17.92
+    ],
+    [
+     -10.51,
+     -18.27
+    ],
+    [
+     18.73,
+     -25.4
+    ],
+    [
+     20.62,
+     -17.69
+    ],
+    [
+     24.62,
+     -18.67
+    ],
+    [
+     28.31,
+     -3.56
+    ],
+    [
+     31.68,
+     -4.38
+    ],
+    [
+     33.93,
+     4.84
+    ],
+    [
+     34.12,
+     5.45
+    ],
+    [
+     12.2,
+     10.48
+    ],
+    [
+     17.15,
+     31.74
+    ],
+    [
+     12.21,
+     32.81
+    ],
+    [
+     12.61,
+     34.8
+    ],
+    [
+     -0.35,
+     39.05
+    ]
+   ],
+   "keep_out": [
+    {
+     "name": "newsroom",
+     "ring": [
+      [
+       -24.64,
+       -12.42
+      ],
+      [
+       -9.95,
+       -16.0
+      ],
+      [
+       -5.28,
+       3.18
+      ],
+      [
+       -19.97,
+       6.76
+      ]
+     ],
+     "objects": "MS_CCOM_newsroom_studio_*, MS_CCOM_back_rooms_furnish_20261030na, CCOM newsroom back offices (mw), adopted as is",
+     "why": "room 1002 with its back offices as the main model has them; the sign puts the office stack about 2.5 m further east (open question for Joe)"
+    },
+    {
+     "name": "south_corridor",
+     "ring": [
+      [
+       -11.34,
+       -18.65
+      ],
+      [
+       14.21,
+       -24.87
+      ],
+      [
+       15.28,
+       -20.5
+      ],
+      [
+       -10.27,
+       -14.27
+      ]
+     ],
+     "objects": "CCOM_1f_interior_full_dd (dd_SOUTH0_*), adopted without its back wall",
+     "why": "furniture along the south wall in 1005 and 1005B"
+    },
+    {
+     "name": "atrium_T1",
+     "ring": [
+      [
+       -19.18,
+       8.28
+      ],
+      [
+       13.46,
+       0.32
+      ],
+      [
+       16.25,
+       11.79
+      ],
+      [
+       -16.39,
+       19.74
+      ]
+     ],
+     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
+     "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
+    }
+   ],
+   "walls": [
+    {
+     "name": "SW_CCOM_F1_1011_W_glazed_UNVERIFIED",
+     "path": [
+      [
+       1.2,
+       3.12
+      ],
+      [
+       -0.8,
+       -4.61
+      ]
+     ],
+     "thickness": 0.06,
+     "glazed": true
+    },
+    {
+     "name": "SW_CCOM_F1_1009_W_UNVERIFIED",
+     "path": [
+      [
+       -0.85,
+       -4.6
+      ],
+      [
+       -2.81,
+       -12.15
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        -1.83,
+        -8.37
+       ],
+       "to": [
+        -2.12,
+        -9.5
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_1009_N_UNVERIFIED",
+     "path": [
+      [
+       -1.8,
+       -8.26
+      ],
+      [
+       5.18,
+       -9.92
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1009_E_UNVERIFIED",
+     "path": [
+      [
+       3.58,
+       -9.54
+      ],
+      [
+       2.57,
+       -13.42
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1011_E_UNVERIFIED",
+     "path": [
+      [
+       9.67,
+       -2.4
+      ],
+      [
+       6.56,
+       -14.37
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1011A_N_E_UNVERIFIED",
+     "path": [
+      [
+       9.36,
+       1.3
+      ],
+      [
+       13.78,
+       0.25
+      ],
+      [
+       12.87,
+       -3.27
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1011A_W_UNVERIFIED",
+     "path": [
+      [
+       10.6,
+       1.01
+      ],
+      [
+       9.7,
+       -2.47
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        9.98,
+        -1.4
+       ],
+       "to": [
+        9.72,
+        -2.41
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_1011A_S_UNVERIFIED",
+     "path": [
+      [
+       9.65,
+       -2.46
+      ],
+      [
+       12.88,
+       -3.23
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1021_1023_E_UNVERIFIED",
+     "path": [
+      [
+       12.83,
+       -3.22
+      ],
+      [
+       9.74,
+       -15.12
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        12.81,
+        -3.31
+       ],
+       "to": [
+        12.53,
+        -4.39
+       ]
+      },
+      {
+       "at": [
+        11.91,
+        -6.74
+       ],
+       "to": [
+        11.57,
+        -8.09
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_1021_S_UNVERIFIED",
+     "path": [
+      [
+       8.74,
+       -5.99
+      ],
+      [
+       11.96,
+       -6.76
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1020_W_UNVERIFIED",
+     "path": [
+      [
+       16.15,
+       -6.27
+      ],
+      [
+       14.43,
+       -5.86
+      ],
+      [
+       12.58,
+       -12.98
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1009_1020_S_UNVERIFIED",
+     "path": [
+      [
+       -2.93,
+       -12.12
+      ],
+      [
+       20.76,
+       -17.74
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1005_W_UNVERIFIED",
+     "path": [
+      [
+       -2.93,
+       -12.12
+      ],
+      [
+       -5.15,
+       -20.7
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1005A_S_UNVERIFIED",
+     "path": [
+      [
+       -3.42,
+       -14.01
+      ],
+      [
+       2.97,
+       -15.52
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        -1.22,
+        -14.53
+       ],
+       "to": [
+        0.77,
+        -15.0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_1005A_E_UNVERIFIED",
+     "path": [
+      [
+       3.46,
+       -13.63
+      ],
+      [
+       1.23,
+       -22.22
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        2.6,
+        -16.94
+       ],
+       "to": [
+        2.22,
+        -18.4
+       ]
+      }
+     ]
+    }
+   ],
+   "slabs": [
+    {
+     "name": "SW_CCOM_F1_slab_south_UNVERIFIED",
+     "ring": [
+      [
+       -9.53,
+       -14.4
+      ],
+      [
+       15.34,
+       -20.47
+      ],
+      [
+       14.34,
+       -24.57
+      ],
+      [
+       18.91,
+       -25.69
+      ],
+      [
+       20.78,
+       -18.03
+      ],
+      [
+       24.8,
+       -19.02
+      ],
+      [
+       28.5,
+       -3.86
+      ],
+      [
+       31.87,
+       -4.68
+      ],
+      [
+       31.97,
+       -4.24
+      ],
+      [
+       -18.95,
+       8.17
+      ],
+      [
+       -19.33,
+       6.63
+      ],
+      [
+       -5.24,
+       3.19
+      ]
+     ],
+     "z0": 137.0,
+     "z1": 137.4,
+     "unverified": "level 137.40 from the main model's newsroom and corridor floors"
+    },
+    {
+     "name": "SW_CCOM_F1_slab_notch_UNVERIFIED",
+     "ring": [
+      [
+       -12.29,
+       -18.08
+      ],
+      [
+       -11.28,
+       -18.33
+      ],
+      [
+       -10.68,
+       -15.87
+      ],
+      [
+       -11.69,
+       -15.63
+      ]
+     ],
+     "z0": 137.0,
+     "z1": 137.4,
+     "unverified": "fills the gap between the corridor floor and the south-west notch wall"
+    },
+    {
+     "name": "SW_CCOM_F1_slab_north_UNVERIFIED",
+     "ring": [
+      [
+       -20.73,
+       8.6
+      ],
+      [
+       31.97,
+       -4.24
+      ],
+      [
+       34.41,
+       5.61
+      ],
+      [
+       12.5,
+       10.66
+      ],
+      [
+       17.45,
+       31.92
+      ],
+      [
+       12.5,
+       33.0
+      ],
+      [
+       12.89,
+       34.94
+      ],
+      [
+       -0.29,
+       39.28
+      ],
+      [
+       -10.67,
+       41.51
+      ],
+      [
+       -14.62,
+       24.05
+      ],
+      [
+       -16.34,
+       17.11
+      ],
+      [
+       -18.59,
+       17.45
+      ]
+     ],
+     "z0": 137.3,
+     "z1": 137.7,
+     "under": [
+      "atrium_T1"
+     ],
+     "kind": "paint",
+     "colour": "#d2cec6",
+     "unverified": "level 137.70 from the main model's atrium terrazzo (dropped: this slab replaces it)"
+    }
+   ],
+   "blocks": [
+    {
+     "name": "SW_CCOM_NE_lift_UNVERIFIED",
+     "kind": "lift",
+     "ring": [
+      [
+       16.62,
+       -4.16
+      ],
+      [
+       19.76,
+       -4.93
+      ],
+      [
+       20.35,
+       -2.48
+      ],
+      [
+       17.22,
+       -1.71
+      ]
+     ],
+     "unverified": "a closed block for the core, not a stair: plan size from the sign, full height to the floor 2 ceiling",
+     "z0": 137.54,
+     "z1": 144.86
+    },
+    {
+     "name": "SW_CCOM_NE_stair_UNVERIFIED",
+     "kind": "stair",
+     "ring": [
+      [
+       19.86,
+       -4.98
+      ],
+      [
+       27.46,
+       -6.83
+      ],
+      [
+       28.35,
+       -3.18
+      ],
+      [
+       20.75,
+       -1.33
+      ]
+     ],
+     "unverified": "a closed block for the core, not a stair: plan size from the sign, full height to the floor 2 ceiling",
+     "z0": 137.54,
+     "z1": 144.86
+    }
+   ],
+   "solids": [
+    {
+     "name": "SW_CCOM_F1_column_0_UNVERIFIED",
+     "ring": [
+      [
+       6.88,
+       -6.88
+      ],
+      [
+       7.46,
+       -7.02
+      ],
+      [
+       7.6,
+       -6.44
+      ],
+      [
+       7.02,
+       -6.3
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_1_UNVERIFIED",
+     "ring": [
+      [
+       13.31,
+       -8.41
+      ],
+      [
+       13.89,
+       -8.55
+      ],
+      [
+       14.03,
+       -7.97
+      ],
+      [
+       13.45,
+       -7.82
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_2_UNVERIFIED",
+     "ring": [
+      [
+       4.23,
+       -17.32
+      ],
+      [
+       4.81,
+       -17.46
+      ],
+      [
+       4.95,
+       -16.88
+      ],
+      [
+       4.37,
+       -16.73
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_3_UNVERIFIED",
+     "ring": [
+      [
+       10.39,
+       -18.78
+      ],
+      [
+       10.98,
+       -18.92
+      ],
+      [
+       11.12,
+       -18.34
+      ],
+      [
+       10.53,
+       -18.2
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_4_UNVERIFIED",
+     "ring": [
+      [
+       5.61,
+       -14.12
+      ],
+      [
+       6.2,
+       -14.26
+      ],
+      [
+       6.34,
+       -13.68
+      ],
+      [
+       5.76,
+       -13.53
+      ]
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_column_5_UNVERIFIED",
+     "ring": [
+      [
+       15.94,
+       -0.5
+      ],
+      [
+       16.53,
+       -0.64
+      ],
+      [
+       16.67,
+       -0.05
+      ],
+      [
+       16.09,
+       0.09
+      ]
+     ]
+    }
+   ],
+   "items": [
+    {
+     "name": "SW_CCOM_lobby_video_wall_UNVERIFIED",
+     "ring": [
+      [
+       -10.84,
+       16.74
+      ],
+      [
+       -5.99,
+       15.56
+      ],
+      [
+       -5.96,
+       15.68
+      ],
+      [
+       -10.81,
+       16.86
+      ]
+     ],
+     "z0": 140.6,
+     "z1": 143.1,
+     "kind": "paint",
+     "colour": "#111316",
+     "unverified": "about 5 x 2.5 m by eye from Joe's photo 1000102886; centre a -12 +- 2 m along the wood wall"
+    },
+    {
+     "name": "SW_CCOM_lobby_light_shelf_UNVERIFIED",
+     "ring": [
+      [
+       -11.24,
+       16.38
+      ],
+      [
+       -5.8,
+       15.05
+      ],
+      [
+       -5.67,
+       15.61
+      ],
+      [
+       -11.11,
+       16.93
+      ]
+     ],
+     "z0": 143.5,
+     "z1": 143.56,
+     "kind": "metal",
+     "colour": "#d8d8d4",
+     "unverified": "above the video wall, by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_studio_door_glass_UNVERIFIED",
+     "ring": [
+      [
+       -14.19,
+       17.58
+      ],
+      [
+       -12.54,
+       17.18
+      ],
+      [
+       -12.52,
+       17.26
+      ],
+      [
+       -14.17,
+       17.66
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 140.9,
+     "kind": "glass",
+     "colour": "#9fb3bd",
+     "unverified": "glazed double door with a glazed band over it at the west end of the north wall (photo 1000102887); a panel on the wall, not an opening; width by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_studio_door_frame_UNVERIFIED",
+     "ring": [
+      [
+       -14.27,
+       17.68
+      ],
+      [
+       -12.42,
+       17.23
+      ],
+      [
+       -12.41,
+       17.27
+      ],
+      [
+       -14.26,
+       17.72
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 141.0,
+     "kind": "paint",
+     "colour": "#592d28",
+     "unverified": "maroon frame, by eye"
+    },
+    {
+     "name": "SW_CCOM_lobby_south_wall_white_UNVERIFIED",
+     "ring": [
+      [
+       -13.93,
+       7.05
+      ],
+      [
+       -0.62,
+       3.8
+      ],
+      [
+       -0.6,
+       3.88
+      ],
+      [
+       -13.91,
+       7.13
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 141.4,
+     "kind": "plaster",
+     "colour": "#f2f1ec",
+     "unverified": "white plaster in place of the main model's red panel (Joe's photo shows white walls left of the entrance)"
+    },
+    {
+     "name": "SW_CCOM_lobby_walkoff_mat_UNVERIFIED",
+     "ring": [
+      [
+       -20.49,
+       9.68
+      ],
+      [
+       -17.87,
+       9.04
+      ],
+      [
+       -16.84,
+       13.27
+      ],
+      [
+       -19.46,
+       13.9
+      ]
+     ],
+     "z0": 137.7,
+     "z1": 137.72,
+     "kind": "rubber",
+     "colour": "#3a3b3d",
+     "unverified": "dark mat inside the four doors, about 4.4 x 2.7 m by eye"
+    }
+   ],
+   "rooms": [
+    {
+     "number": "1000",
+     "at": [
+      -22.75,
+      -17.84
+     ]
+    },
+    {
+     "number": "1002",
+     "at": [
+      -15.48,
+      -2.99
+     ]
+    },
+    {
+     "number": "1002A",
+     "at": [
+      -5.4,
+      0.35
+     ]
+    },
+    {
+     "number": "1002B1",
+     "at": [
+      -6.87,
+      -5.03
+     ]
+    },
+    {
+     "number": "1002B",
+     "at": [
+      -9.51,
+      -9.53
+     ]
+    },
+    {
+     "number": "1002B2",
+     "at": [
+      -7.0,
+      -10.13
+     ]
+    },
+    {
+     "number": "1002B3",
+     "at": [
+      -9.06,
+      -13.45
+     ]
+    },
+    {
+     "number": "1005",
+     "at": [
+      -0.95,
+      -17.41
+     ]
+    },
+    {
+     "number": "1005A",
+     "at": [
+      -0.02,
+      -13.81
+     ]
+    },
+    {
+     "number": "1005B",
+     "at": [
+      6.82,
+      -19.25
+     ]
+    },
+    {
+     "number": "1009",
+     "at": [
+      0.38,
+      -10.81
+     ]
+    },
+    {
+     "number": "1011",
+     "at": [
+      4.51,
+      -3.68
+     ]
+    },
+    {
+     "number": "1011A",
+     "at": [
+      11.73,
+      -1.1
+     ]
+    },
+    {
+     "number": "1011B",
+     "at": [
+      5.16,
+      -11.94
+     ]
+    },
+    {
+     "number": "1020",
+     "at": [
+      20.05,
+      -11.3
+     ]
+    },
+    {
+     "number": "1021",
+     "at": [
+      10.83,
+      -4.58
+     ]
+    },
+    {
+     "number": "1023",
+     "at": [
+      9.28,
+      -10.53
+     ]
+    }
+   ]
+  },
+  {
+   "name": "CCOM_F2",
+   "level": 2,
+   "floor": 141.8,
+   "ceiling": 144.86,
+   "evidence": "1000102885_ccom_floor2_plan.jpg (Joe, 2026-11-20)",
+   "unverified": "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign; studio wall thickness as drawn (0.35 to 0.5 m)",
+   "outline": [
+    [
+     -10.76,
+     41.65
+    ],
+    [
+     -14.7,
+     24.12
+    ],
+    [
+     -18.3,
+     25.03
+    ],
+    [
+     -20.0,
+     18.34
+    ],
+    [
+     -18.68,
+     17.56
+    ],
+    [
+     -20.92,
+     8.15
+    ],
+    [
+     -19.12,
+     7.6
+    ],
+    [
+     -26.21,
+     -21.4
+    ],
+    [
+     -13.88,
+     -24.41
+    ],
+    [
+     -12.38,
+     -18.18
+    ],
+    [
+     -10.59,
+     -18.61
+    ],
+    [
+     18.99,
+     -25.82
+    ],
+    [
+     20.88,
+     -18.11
+    ],
+    [
+     24.88,
+     -19.09
+    ],
+    [
+     28.57,
+     -3.98
+    ],
+    [
+     31.94,
+     -4.8
+    ],
+    [
+     34.27,
+     4.75
+    ],
+    [
+     34.56,
+     5.71
+    ],
+    [
+     12.62,
+     10.74
+    ],
+    [
+     17.57,
+     32.01
+    ],
+    [
+     12.62,
+     33.08
+    ],
+    [
+     13.02,
+     35.04
+    ],
+    [
+     -0.26,
+     39.39
+    ]
+   ],
+   "inside": [
+    [
+     -10.49,
+     41.23
+    ],
+    [
+     -14.44,
+     23.69
+    ],
+    [
+     -18.05,
+     24.61
+    ],
+    [
+     -19.6,
+     18.51
+    ],
+    [
+     -18.28,
+     17.73
+    ],
+    [
+     -20.5,
+     8.39
+    ],
+    [
+     -18.7,
+     7.84
+    ],
+    [
+     -23.66,
+     -12.41
+    ],
+    [
+     -22.2,
+     -12.77
+    ],
+    [
+     -11.35,
+     -15.43
+    ],
+    [
+     -11.96,
+     -17.92
+    ],
+    [
+     -10.51,
+     -18.27
+    ],
+    [
+     18.73,
+     -25.4
+    ],
+    [
+     20.62,
+     -17.69
+    ],
+    [
+     24.62,
+     -18.67
+    ],
+    [
+     28.31,
+     -3.56
+    ],
+    [
+     31.68,
+     -4.38
+    ],
+    [
+     33.93,
+     4.84
+    ],
+    [
+     34.12,
+     5.45
+    ],
+    [
+     12.2,
+     10.48
+    ],
+    [
+     17.15,
+     31.74
+    ],
+    [
+     12.21,
+     32.81
+    ],
+    [
+     12.61,
+     34.8
+    ],
+    [
+     -0.35,
+     39.05
+    ]
+   ],
+   "keep_out": [
+    {
+     "name": "newsroom_mezzanine",
+     "ring": [
+      [
+       -24.64,
+       -12.42
+      ],
+      [
+       -9.95,
+       -16.0
+      ],
+      [
+       -5.28,
+       3.18
+      ],
+      [
+       -19.97,
+       6.76
+      ]
+     ],
+     "objects": "MS_CCOM_newsroom_studio_* (double height), CCOM newsroom back mezzanine slab + fascia (mw), MS_CCM_office_interior_20261030na",
+     "why": "void over 1002 and the mezzanine offices as the main model has them (the sign's 2002..2012 lie about 2.5 m east: open question)"
+    },
+    {
+     "name": "atrium_T1",
+     "ring": [
+      [
+       -19.18,
+       8.28
+      ],
+      [
+       13.46,
+       0.32
+      ],
+      [
+       16.25,
+       11.79
+      ],
+      [
+       -16.39,
+       19.74
+      ]
+     ],
+     "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
+     "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
+    }
+   ],
+   "walls": [
+    {
+     "name": "SW_CCOM_F2_N_band_1_UNVERIFIED",
+     "path": [
+      [
+       30.19,
+       1.73
+      ],
+      [
+       26.53,
+       2.59
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_2_UNVERIFIED",
+     "path": [
+      [
+       27.14,
+       2.44
+      ],
+      [
+       27.98,
+       5.63
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_3_UNVERIFIED",
+     "path": [
+      [
+       24.09,
+       3.16
+      ],
+      [
+       24.94,
+       6.34
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_4_UNVERIFIED",
+     "path": [
+      [
+       22.26,
+       3.58
+      ],
+      [
+       23.11,
+       6.77
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_5_UNVERIFIED",
+     "path": [
+      [
+       20.03,
+       4.11
+      ],
+      [
+       20.87,
+       7.29
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_6_UNVERIFIED",
+     "path": [
+      [
+       16.98,
+       4.82
+      ],
+      [
+       17.83,
+       8.01
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_N_band_7_UNVERIFIED",
+     "path": [
+      [
+       12.34,
+       9.29
+      ],
+      [
+       11.5,
+       6.1
+      ],
+      [
+       6.21,
+       7.33
+      ],
+      [
+       6.78,
+       9.47
+      ]
+     ],
+     "thickness": 0.3
+    },
+    {
+     "name": "SW_CCOM_F2_2025_2023_UNVERIFIED",
+     "path": [
+      [
+       13.29,
+       -25.08
+      ],
+      [
+       14.75,
+       -21.5
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2023_2021_UNVERIFIED",
+     "path": [
+      [
+       10.2,
+       -24.36
+      ],
+      [
+       11.16,
+       -20.74
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2021_2019_UNVERIFIED",
+     "path": [
+      [
+       6.14,
+       -23.41
+      ],
+      [
+       7.42,
+       -19.87
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2019_2017_UNVERIFIED",
+     "path": [
+      [
+       2.68,
+       -22.6
+      ],
+      [
+       3.64,
+       -18.98
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2017_2015_UNVERIFIED",
+     "path": [
+      [
+       -1.18,
+       -21.7
+      ],
+      [
+       -0.22,
+       -18.08
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2015_E_UNVERIFIED",
+     "path": [
+      [
+       -5.12,
+       -20.78
+      ],
+      [
+       -3.75,
+       -17.26
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2015_2023_front_UNVERIFIED",
+     "path": [
+      [
+       14.73,
+       -21.58
+      ],
+      [
+       -3.75,
+       -17.26
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        14.53,
+        -21.53
+       ],
+       "to": [
+        13.31,
+        -21.24
+       ]
+      },
+      {
+       "at": [
+        11.16,
+        -20.74
+       ],
+       "to": [
+        9.86,
+        -20.44
+       ]
+      },
+      {
+       "at": [
+        7.42,
+        -19.87
+       ],
+       "to": [
+        5.92,
+        -19.52
+       ]
+      },
+      {
+       "at": [
+        3.64,
+        -18.98
+       ],
+       "to": [
+        2.14,
+        -18.63
+       ]
+      },
+      {
+       "at": [
+        -0.22,
+        -18.08
+       ],
+       "to": [
+        -1.72,
+        -17.73
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_2027_N_UNVERIFIED",
+     "path": [
+      [
+       20.39,
+       -20.59
+      ],
+      [
+       15.39,
+       -19.91
+      ],
+      [
+       16.4,
+       -16.1
+      ]
+     ],
+     "thickness": 0.35
+    },
+    {
+     "name": "SW_CCOM_F2_2027_W_UNVERIFIED",
+     "path": [
+      [
+       19.85,
+       -20.5
+      ],
+      [
+       20.16,
+       -15.74
+      ]
+     ],
+     "thickness": 0.35
+    },
+    {
+     "name": "SW_CCOM_F2_2027_S_UNVERIFIED",
+     "path": [
+      [
+       20.97,
+       -15.93
+      ],
+      [
+       16.71,
+       -14.94
+      ]
+     ],
+     "thickness": 0.25
+    },
+    {
+     "name": "SW_CCOM_F2_2031_2031A_UNVERIFIED",
+     "path": [
+      [
+       20.89,
+       -15.91
+      ],
+      [
+       21.98,
+       -11.83
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2031A_E_UNVERIFIED",
+     "path": [
+      [
+       16.71,
+       -14.94
+      ],
+      [
+       17.79,
+       -10.85
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2031A_S_UNVERIFIED",
+     "path": [
+      [
+       21.92,
+       -12.03
+      ],
+      [
+       17.74,
+       -11.05
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        21.92,
+        -12.03
+       ],
+       "to": [
+        20.79,
+        -11.76
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_2035_N_UNVERIFIED",
+     "path": [
+      [
+       26.73,
+       -11.29
+      ],
+      [
+       18.2,
+       -9.3
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2035_E_UNVERIFIED",
+     "path": [
+      [
+       18.2,
+       -9.3
+      ],
+      [
+       19.41,
+       -4.75
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        19.23,
+        -5.41
+       ],
+       "to": [
+        19.41,
+        -4.75
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_2026_2028_W_UNVERIFIED",
+     "path": [
+      [
+       13.56,
+       -18.33
+      ],
+      [
+       15.42,
+       -11.33
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2026_S_UNVERIFIED",
+     "path": [
+      [
+       14.35,
+       -15.38
+      ],
+      [
+       11.5,
+       -14.71
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2028_S_UNVERIFIED",
+     "path": [
+      [
+       15.44,
+       -11.25
+      ],
+      [
+       12.6,
+       -10.59
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2032_W_UNVERIFIED",
+     "path": [
+      [
+       15.44,
+       -11.25
+      ],
+      [
+       16.81,
+       -6.08
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2032_S_UNVERIFIED",
+     "path": [
+      [
+       16.22,
+       -8.3
+      ],
+      [
+       13.66,
+       -7.7
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2034_S_UNVERIFIED",
+     "path": [
+      [
+       16.81,
+       -6.08
+      ],
+      [
+       14.25,
+       -5.48
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2010A_E_UNVERIFIED",
+     "path": [
+      [
+       9.14,
+       -9.78
+      ],
+      [
+       9.79,
+       -7.33
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2010A_S_UNVERIFIED",
+     "path": [
+      [
+       13.63,
+       -7.82
+      ],
+      [
+       9.77,
+       -6.92
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_studios_N_UNVERIFIED",
+     "path": [
+      [
+       13.42,
+       -19.2
+      ],
+      [
+       -3.73,
+       -15.2
+      ]
+     ],
+     "thickness": 0.5
+    },
+    {
+     "name": "SW_CCOM_F2_studios_E_UNVERIFIED",
+     "path": [
+      [
+       -3.55,
+       -15.49
+      ],
+      [
+       1.46,
+       3.41
+      ]
+     ],
+     "thickness": 0.5
+    },
+    {
+     "name": "SW_CCOM_F2_studios_S_UNVERIFIED",
+     "path": [
+      [
+       15.66,
+       -0.16
+      ],
+      [
+       1.16,
+       3.23
+      ]
+     ],
+     "thickness": 0.5
+    },
+    {
+     "name": "SW_CCOM_F2_2010_W_UNVERIFIED",
+     "path": [
+      [
+       13.43,
+       -7.77
+      ],
+      [
+       15.52,
+       0.12
+      ]
+     ],
+     "thickness": 0.4
+    },
+    {
+     "name": "SW_CCOM_F2_2009_W_UNVERIFIED",
+     "path": [
+      [
+       10.62,
+       -18.05
+      ],
+      [
+       12.2,
+       -10.79
+      ]
+     ],
+     "thickness": 0.4
+    },
+    {
+     "name": "SW_CCOM_F2_2009_2005_UNVERIFIED",
+     "path": [
+      [
+       12.52,
+       -10.86
+      ],
+      [
+       -1.7,
+       -7.54
+      ]
+     ],
+     "thickness": 0.35,
+     "openings": [
+      {
+       "at": [
+        8.75,
+        -9.98
+       ],
+       "to": [
+        6.51,
+        -9.46
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_2005_2010_UNVERIFIED",
+     "path": [
+      [
+       9.74,
+       -7.03
+      ],
+      [
+       -0.9,
+       -4.54
+      ]
+     ],
+     "thickness": 0.35,
+     "openings": [
+      {
+       "at": [
+        9.54,
+        -6.98
+       ],
+       "to": [
+        7.3,
+        -6.46
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_2009_2007_UNVERIFIED",
+     "path": [
+      [
+       4.04,
+       -16.52
+      ],
+      [
+       5.35,
+       -14.64
+      ],
+      [
+       6.38,
+       -10.75
+      ],
+      [
+       5.87,
+       -9.6
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2010_2008_UNVERIFIED",
+     "path": [
+      [
+       6.82,
+       -6.02
+      ],
+      [
+       8.0,
+       -4.64
+      ],
+      [
+       9.14,
+       -0.37
+      ],
+      [
+       8.72,
+       1.17
+      ]
+     ],
+     "thickness": 0.15
+    }
+   ],
+   "slabs": [
+    {
+     "name": "SW_CCOM_F2_slab_UNVERIFIED",
+     "ring": [
+      [
+       -10.53,
+       -18.51
+      ],
+      [
+       18.91,
+       -25.69
+      ],
+      [
+       20.78,
+       -18.03
+      ],
+      [
+       24.8,
+       -19.02
+      ],
+      [
+       31.0,
+       6.39
+      ],
+      [
+       15.84,
+       9.88
+      ],
+      [
+       13.5,
+       0.26
+      ],
+      [
+       9.85,
+       1.15
+      ],
+      [
+       10.06,
+       2.0
+      ],
+      [
+       -0.33,
+       4.54
+      ],
+      [
+       -0.54,
+       3.68
+      ],
+      [
+       -18.95,
+       8.17
+      ],
+      [
+       -19.33,
+       6.63
+      ],
+      [
+       -5.24,
+       3.19
+      ]
+     ],
+     "z0": 141.45,
+     "z1": 141.85,
+     "under": [
+      "atrium_T1"
+     ],
+     "unverified": "reaches the adopted 2F hallway slab (b 4.35) under the studios' north wall"
+    }
+   ],
+   "blocks": [],
+   "solids": [],
+   "rooms": [
+    {
+     "number": "2002",
+     "at": [
+      -9.21,
+      -13.42
+     ]
+    },
+    {
+     "number": "2004",
+     "at": [
+      -8.03,
+      -8.95
+     ]
+    },
+    {
+     "number": "2006",
+     "at": [
+      -6.69,
+      -3.89
+     ]
+    },
+    {
+     "number": "2012",
+     "at": [
+      -5.47,
+      0.69
+     ]
+    },
+    {
+     "number": "2005",
+     "at": [
+      3.35,
+      -7.07
+     ]
+    },
+    {
+     "number": "2007",
+     "at": [
+      1.95,
+      -12.35
+     ]
+    },
+    {
+     "number": "2008",
+     "at": [
+      4.77,
+      -1.7
+     ]
+    },
+    {
+     "number": "2009",
+     "at": [
+      8.81,
+      -13.96
+     ]
+    },
+    {
+     "number": "2010",
+     "at": [
+      11.64,
+      -3.3
+     ]
+    },
+    {
+     "number": "2010A",
+     "at": [
+      11.15,
+      -8.89
+     ]
+    },
+    {
+     "number": "2015",
+     "at": [
+      -2.62,
+      -19.5
+     ]
+    },
+    {
+     "number": "2017",
+     "at": [
+      1.11,
+      -20.37
+     ]
+    },
+    {
+     "number": "2019",
+     "at": [
+      4.69,
+      -21.21
+     ]
+    },
+    {
+     "number": "2021",
+     "at": [
+      8.71,
+      -22.15
+     ]
+    },
+    {
+     "number": "2023",
+     "at": [
+      12.21,
+      -22.97
+     ]
+    },
+    {
+     "number": "2025",
+     "at": [
+      16.74,
+      -22.95
+     ]
+    },
+    {
+     "number": "2026",
+     "at": [
+      12.6,
+      -16.91
+     ]
+    },
+    {
+     "number": "2027",
+     "at": [
+      18.05,
+      -17.85
+     ]
+    },
+    {
+     "number": "2028",
+     "at": [
+      13.68,
+      -12.86
+     ]
+    },
+    {
+     "number": "2031",
+     "at": [
+      23.15,
+      -14.25
+     ]
+    },
+    {
+     "number": "2031A",
+     "at": [
+      19.25,
+      -13.34
+     ]
+    },
+    {
+     "number": "2032",
+     "at": [
+      14.66,
+      -9.13
+     ]
+    },
+    {
+     "number": "2034",
+     "at": [
+      15.36,
+      -6.53
+     ]
+    },
+    {
+     "number": "2035",
+     "at": [
+      22.66,
+      -7.45
+     ]
+    }
+   ]
+  }
+ ]
+}

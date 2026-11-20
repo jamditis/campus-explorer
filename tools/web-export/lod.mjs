@@ -7,11 +7,14 @@ import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, q
 import { MeshoptSimplifier, MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import sharp from 'sharp';
 import { farImageSize } from './pack.mjs';
+import { keepShared, sharedRefs } from './tex.mjs';
+import { writeFileSync } from 'node:fs';
 const [inp, out] = process.argv.slice(2);
 const MIN = +(process.env.MIN || 6), RATIO = +(process.env.RATIO || 0.3), ERR_M = +(process.env.ERR_M || 0.25); // error in metres
 await Promise.all([MeshoptSimplifier.ready, MeshoptEncoder.ready, MeshoptDecoder.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
 const doc = await io.read(inp);
+const uris = doc.getRoot().listTextures().map(t => t.getURI()); // shared images (tex/) the tile names
 const root = doc.getRoot();
 let dropped = 0;
 for (const node of root.listNodes()) {
@@ -57,5 +60,6 @@ for (const t of root.listTextures()) {
   if (want && (want[0] !== size[0] || want[1] !== size[1])) await compressTexture(t, { encoder: sharp, targetFormat: 'webp', resize: want });
 }
 console.log('tris', before, '->', after);
-await io.write(out, doc);
+// an image left as it was (64 px or less) still names its shared file, from the far version's folder
+writeFileSync(out, keepShared(await io.writeBinary(doc), sharedRefs(uris, inp, out)));
 console.log('lod', inp.split('/').pop(), 'dropped nodes', dropped);

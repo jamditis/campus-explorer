@@ -6,6 +6,8 @@ import json
 import os
 import re
 
+from glb_refs import image_files, shared_bytes
+
 S = os.environ.get("OUT", "/workspace/nj-scenes/web/campus/models/main")
 src = os.environ.get("FILE", "/workspace/nj-scenes/montclair-state/montclair_state.blend")
 TILE = float(os.environ.get("TILE", "160"))
@@ -20,7 +22,15 @@ for f in sorted(glob.glob(S + "/*.glb")):
         if os.path.exists(lod):
             t["lod"] = "lod/" + t["file"]  # far-distance version (lod.mjs)
             t["lod_bytes"] = os.path.getsize(lod)
+            if lod_tex := image_files(S, t["lod"]):
+                t["lod_tex"] = lod_tex
+    # shared images (tex/, share_tex.mjs) the tile refers to: downloaded once, whichever tile asks first
+    if tex := image_files(S, t["file"]):
+        t["tex"] = tex
     tiles.append(t)
+# every file a tile or far version names, with its size (a missing one stops the export here)
+named = {f for t in tiles for f in t.get("tex", []) + t.get("lod_tex", [])}
+tex_sizes = {f: os.path.getsize(os.path.join(S, f)) for f in sorted(named)}
 order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "sw_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
 mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
@@ -56,9 +66,11 @@ json.dump(
         far_trees="far_trees.bin" if os.path.exists(S + "/far_trees.bin") else None,
         hide=hide,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),
-        total_bytes=sum(t["bytes"] for t in tiles),
+        # the tiles' own bytes and, once each, the shared images they name (far versions are not counted)
+        tex=tex_sizes,
+        total_bytes=sum(t["bytes"] for t in tiles) + shared_bytes(tiles, tex_sizes),
     ),
     open(S + "/manifest.json", "w"),
     indent=1,
 )
-print("manifest", len(tiles), sum(t["bytes"] for t in tiles))
+print("manifest", len(tiles), sum(t["bytes"] for t in tiles) + shared_bytes(tiles, tex_sizes))
