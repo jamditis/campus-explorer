@@ -21,6 +21,7 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 - [x] More facade materials get a category in the export (roof tile courses, eaves, soffits, fascia, bark, light massing)
 - [x] Window glass with fake rooms behind it (interior mapping: 3.6 m bays, 3.4 m storeys, some rooms lit), reflection by Fresnel
 - [x] Normal maps (ambientCG NormalGL, triplanar) for the textured categories; displacement bump stays for stone and metal
+- [ ] Tile roofs: the main model's roofs render pale pink (`Roof_tile_or_membrane`, #eaccc5) and its barrel tile courses grey (#898a86); Joe's 2026-11-20 photos show red-brown clay tile. Retint both materials across the campus together (the scripted College of Communication and Media roof uses the same values so it matches its neighbours)
 - [ ] Glass: per-building tint and room layouts that follow the real floor heights
 - [ ] Bake Blender procedural detail (stains, panel joints, dirt bands) into textures for the hero buildings
 - [ ] Spruce and other conifer cards: check every conifer material exports its opacity map

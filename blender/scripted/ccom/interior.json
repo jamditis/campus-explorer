@@ -701,8 +701,8 @@
      "under": [
       "atrium_T1"
      ],
-     "kind": "stone",
-     "colour": "#d8d6d0",
+     "kind": "paint",
+     "colour": "#d2cec6",
      "unverified": "level 137.70 from the main model's atrium terrazzo (dropped: this slab replaces it)"
     }
    ],
