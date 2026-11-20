@@ -8,8 +8,9 @@
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
-import { statSync } from 'node:fs';
+import { statSync, writeFileSync } from 'node:fs';
 import { toNormalizedInt16 } from './pack.mjs';
+import { keepShared, sharedRefs } from './tex.mjs';
 
 await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
@@ -26,7 +27,9 @@ for (const f of process.argv.slice(2)) {
   for (const a of unused) a.dispose();
   for (const r of rotations) r.setArray(toNormalizedInt16(r.getArray())).setNormalized(true);
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
-  await io.write(f, doc);
+  // images the tile shares with others (models/main/tex/) stay outside it: io.write would embed them
+  const refs = sharedRefs(doc.getRoot().listTextures().map(t => t.getURI()), f, f);
+  writeFileSync(f, keepShared(await io.writeBinary(doc), refs));
   const after = statSync(f).size; saved += before - after;
   console.log(`compact ${f.split('/').pop()}: ${unused.length} unused accessors, ${rotations.size} rotations packed, ${(before / 1e6).toFixed(1)} -> ${(after / 1e6).toFixed(1)} MB`);
 }
