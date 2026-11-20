@@ -1844,18 +1844,18 @@
      311.834
     ],
     [
-     -265.767,
-     331.192
+     -267.193,
+     327.966
     ]
    ],
-   "count": 6,
+   "count": 5,
    "depth": 6.62,
    "side": "right",
    "angle": 46.5,
    "colour": "white",
    "width": 0.1,
    "evidence": "ortho2020, lidar2017",
-   "unverified": "fitted to the painted lines: pitch 3.55 m along the road, 46.5 deg; the row continues north of this area's edge"
+   "unverified": "fitted to the painted lines: pitch 3.55 m along the road, 46.5 deg; the row continues north of this area's edge (the sixth stall, whose divider reached 1.1 m past the footprint, is left out in the fix-up pass)"
   },
   {
    "name": "W_lot_30S_angled_1",

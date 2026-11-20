@@ -1,6 +1,6 @@
 {
  "zone": "v_roads",
- "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn here: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars). Fix-up pass (edited by hand): crosswalks, stop bars, lane lines, arrows and the chevron gore are in v_marks, lamps and the pool fence in v_fixtures, the pool deck in v_water; the two crosswalks this zone drew as stall rows were moved to v_marks; the walk past Lot 61 is cut at the painted crossing of the Lot 61 exit, which gets an asphalt patch (V_road_Lot61_exit_crossing), and runs on 5.6 m to the footprint under the north solar canopy's corner. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins.\nFollow-up after the cross-zone review: mouth drives from the road edge into the rings of Lots 41, 27 (both), 29 (exit taper), the Children's Center strip (south drive and the service road north to Lot 28 and the T), 45 (the paved apron at the loop's north-west corner) and 46 (mouth extended), and the station-side drives on both sides of the painted island; asphalt bays under the lots zone's roadside stall rows; holes for the Lot 47 and Lot 48 islands; the east drive at the T left to the lots zone's deck-front asphalt except its west end; walks cut at curbs, lot paving, walls and the footprint, sharp turns rounded or split; the Clove south east curb north of y 700 moved onto the sidewalk band edge, the Clove north west curb and the Lot 61 entrance edge moved onto the measured sidewalk, the Sinatra service drive refitted.",
+ "notes": "Zone v_roads: every road and walk of the Village area that is not a parking lot. Clove Road from the south cut (y 535) to the rail crossing (x -12), with the T junction (Sinatra Hall lay-by, east drive), the main junction with Village Road and the station loop, the Lot 46 mouth, the Lot 61 junction and north drive; the Village Road loop with its two on-street parking bays; drives to Lots 47 and 48, the Sinatra service drive, the east drive at the T, the station-side loop drive; the walks; the stormwater basin floor.\nMethod: painted lines were found as thin bright features in the 2020 ortho (0.15 m), traced every 0.5-1 m and fitted with straight runs and true arcs (rms 0.03-0.2 m to the paint). Clove carriageway edges are offsets from the fitted edge lines (0.45-0.7 m, read from averaged colour and LiDAR ground profiles) or curbs found directly as the asphalt-to-sidewalk rise on profiles every 1 m; junction outlines, islands and corner radii come from colour scans across the junctions every 5-10 m and were checked on --plan overlays (about 0.5 m). Village Road is the OpenStreetMap centre line (checked against the measured inner curb: 4.3 m right of it within 0.5 m) with a constant 8.4 m carriageway. Walks follow OpenStreetMap footways moved onto the concrete band seen in the ortho (centre and width measured every 1 m; shaded parts bridged).\nNot drawn here: lamps (the 2014-2017 LiDAR here is sparse and leaf-off; no pole could be separated from tree twigs and cars). Fix-up pass (edited by hand): crosswalks, stop bars, lane lines, arrows and the chevron gore are in v_marks, lamps and the pool fence in v_fixtures, the pool deck in v_water; the two crosswalks this zone drew as stall rows were moved to v_marks; the walk west of the south crosswalk ends at the crossing, which gets an asphalt patch (V_road_Clove_S_crossing_W), and the walk south-west of the Village Road north-east crosswalk ends at its north-west end; the walk past Lot 61 is cut at the painted crossing of the Lot 61 exit, which gets an asphalt patch (V_road_Lot61_exit_crossing), and runs on 5.6 m to the footprint under the north solar canopy's corner. The station loop: only its west arc and the part of the island inside the footprint are covered; its asphalt is cut on the footprint where the published asphalt begins.\nFollow-up after the cross-zone review: mouth drives from the road edge into the rings of Lots 41, 27 (both), 29 (exit taper), the Children's Center strip (south drive and the service road north to Lot 28 and the T), 45 (the paved apron at the loop's north-west corner) and 46 (mouth extended), and the station-side drives on both sides of the painted island; asphalt bays under the lots zone's roadside stall rows; holes for the Lot 47 and Lot 48 islands; the east drive at the T left to the lots zone's deck-front asphalt except its west end; walks cut at curbs, lot paving, walls and the footprint, sharp turns rounded or split; the Clove south east curb north of y 700 moved onto the sidewalk band edge, the Clove north west curb and the Lot 61 entrance edge moved onto the measured sidewalk, the Sinatra service drive refitted.",
  "surfaces": [
   {
    "name": "V_road_Clove_S",
@@ -1654,6 +1654,13 @@
    "unverified": "bay from the carriageway edge to the stall ends plus 0.3 m; ends square to the row"
   },
   {
+   "name": "V_road_Clove_S_crossing_W",
+   "kind": "asphalt",
+   "ring": [[-277.68, 617.24], [-275.05, 616.29], [-274.2, 618.64], [-276.83, 619.59]],
+   "evidence": "ortho2020 (the crosswalk's west bars lie on asphalt between the road edge and the walk end; cross-area review)",
+   "unverified": "patch ends square to the crossing; overlaps Clove Road's asphalt by about 1 m"
+  },
+  {
    "name": "V_road_Lot61_exit_crossing",
    "kind": "asphalt",
    "ring": [[-59.79, 1347.49], [-68.04, 1355.57], [-73.9, 1350.4], [-69.6, 1345.3], [-62.96, 1344.52], [-60.3, 1345.6]],
@@ -2466,17 +2473,11 @@
     ],
     [
      -278.21,
-     621.36,
-     3.25
+     621.36
     ],
     [
-     -275.43,
-     617.87,
-     3.07
-    ],
-    [
-     -274.17,
-     617.41
+     -277.0,
+     618.9
     ]
    ],
    "width": 2.5,
@@ -3191,8 +3192,8 @@
      16.23
     ],
     [
-     -114.66,
-     1136.59
+     -114.2,
+     1135.65
     ]
    ],
    "width": 2.3,
@@ -3230,13 +3231,8 @@
      24.49
     ],
     [
-     -120.96,
-     1142.08,
-     3.06
-    ],
-    [
-     -120.62,
-     1144.08
+     -121.76,
+     1140.98
     ]
    ],
    "width": 2.6,
