@@ -58,21 +58,25 @@ test('triangles that straddle north keep both sides of 0 degrees', () => {
   assert.equal(p.e[Math.floor(180 / 0.5)], -Infinity);
 });
 
-test('simplify keeps the ends and peaks of each run and drops points within the height tolerance', () => {
+const R = n => new Float64Array(n).fill(1000);
+const pts = runs => runs.map(run => run.map(p => [p.b, p.e]));
+
+test('simplify gives each run as a stepped outline (flat over each bin) and keeps its corners', () => {
   const e = Float64Array.from([-Infinity, 1, 1, 1, 1, 5, 1, 1, -Infinity, -Infinity, 2, 2]);
-  const runs = simplify({ e, step: 1 }, 0.1);
-  assert.deepEqual(runs, [[1, 4, 5, 6, 7], [10, 11]]);
-  // a slope within the tolerance collapses to its ends
-  const s = simplify({ e: Float64Array.from([1, 2.01, 3, 3.99, 5, 6]), step: 1 }, 0.05);
-  assert.deepEqual(s, [[0, 5]]);
+  const runs = simplify({ e, r: R(12), step: 1 }, 0.1);
+  // a one-bin tower keeps its vertical sides: no slope from its neighbours up to its top
+  assert.deepEqual(pts(runs), [[[1, 1], [5, 1], [5, 5], [6, 5], [6, 1], [8, 1]], [[10, 2], [12, 2]]]);
+  assert.equal(runs[0][0].r, 1000);
+  // steps lower than the tolerance collapse to the ends
+  assert.deepEqual(pts(simplify({ e: Float64Array.from([1, 1.01, 1.02, 1.01, 1]), r: R(5), step: 1 }, 0.05)), [[[0, 1], [5, 1]]]);
 });
 
-test('a run that wraps past 360 degrees is one run', () => {
+test('a run that wraps past 360 degrees is one run, its bearings continuing past 360', () => {
   const e = Float64Array.from([2, 2, -Infinity, -Infinity, 2, 2]);
-  assert.deepEqual(simplify({ e, step: 60 }, 0.1), [[4, 1]]);
+  assert.deepEqual(pts(simplify({ e, r: R(6), step: 60 }, 0.1)), [[[240, 2], [480, 2]]]);
 });
 
-test('the curtain stands at the profile points, from the lowest source height to their tops', () => {
+test('the curtain stands at the outline points, from the lowest source height to their tops', () => {
   const p = profile(new Float32Array(wall(10000, 500, 10000, -500, -20, 300)), EYE, 0.5);
   const runs = simplify(p, 0.01);
   const c = curtain(runs, p, EYE);
@@ -81,11 +85,10 @@ test('the curtain stands at the profile points, from the lowest source height to
   assert.equal(c.index.length, (k - 1) * 6);
   for (let v = 0; v < k * 2; v++) {
     const [x, y, z] = c.position.slice(v * 3, v * 3 + 3);
-    near(x, 10000, 0.5); // on the wall plane (a top point is where the ray meets the wall)
-    assert.ok(Math.abs(y) <= 501);
-    assert.ok(v % 2 ? Math.abs(z + 20) < 1e-3 : Math.abs(z - 300) < 1e-3); // top, then bottom
-    // normal faces the eye, level
-    near(c.normal[v * 3 + 2], 0);
+    near(x, 10000, 10); // near the wall plane: each bin's corners stand at the distance of its highest point
+    assert.ok(Math.abs(y) <= 530); // bins run to their edges, a little past the wall's ends
+    assert.ok(v % 2 ? Math.abs(z + 20) < 1e-3 : Math.abs(z - 300) < 1e-3); // top, then foot
+    near(c.normal[v * 3 + 2], 0); // level, facing the eye
     assert.ok(c.normal[v * 3] < -0.99);
   }
 });

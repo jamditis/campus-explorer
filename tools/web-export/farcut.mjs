@@ -2,12 +2,12 @@
 // as one light silhouette instead of their 3D meshes. Past FAR_M (10 km) the viewer's fog (look.js, FogExp2
 // 0.00027) leaves under 0.1 % of a surface's own colour and a 30 m wide building is under 3 pixels wide at
 // the walk view's 68 degree field of view on a 1080 px screen: all that shows is the outline against the sky.
-// The stand-in keeps that outline as seen from the campus centre (skyline.mjs): a curtain through the tops of
-// the source triangles, at their true bearings, distances and heights.
+// The stand-in keeps that outline as seen from the campus centre (skyline.mjs): a curtain along the highest
+// elevation the source triangles reach in each bin of bearing, at the distance of the point that reaches it.
 //   node farcut.mjs FILE.glb [FILE.glb ...]
 // Rewrites a file in place only when it holds such meshes; a later export brings them back and this step,
 // run again by build_web.sh after the context tile is optimized, replaces them again. Ground (terrain, the
-// far-field 3DEP surface) is never cut. Env: FAR_M (10000), STEP (bin, degrees, 0.1: 1.2 to 1.6 px), TOL (degrees, 0.05: under a pixel),
+// far-field 3DEP surface) is never cut. Env: FAR_M (10000), STEP (bin, degrees, 0.05: under a pixel), TOL (degrees, 0.05: under a pixel),
 // EYE_Z (eye height at the campus centre, NAVD88 m, 138: LiDAR ground 136.7 plus eye height), REACH (0).
 // The viewer's far plane (app.js, 20 km) cuts off every part of the 3D skyline past 20 km from the camera,
 // most of Manhattan seen from the campus: REACH=17000 keeps the whole outline inside it from anywhere in the
@@ -20,7 +20,7 @@ import { statSync, writeFileSync } from 'node:fs';
 import { profile, simplify, curtain, beyond } from './skyline.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
 
-const FAR_M = +(process.env.FAR_M || 10000), STEP = +(process.env.STEP || 0.1), TOL = +(process.env.TOL || 0.05);
+const FAR_M = +(process.env.FAR_M || 10000), STEP = +(process.env.STEP || 0.05), TOL = +(process.env.TOL || 0.05);
 const EYE = [0, 0, +(process.env.EYE_Z || 138)];
 // REACH (m, 0: none): bring stand-in points past it nearer along their sight line (skyline.mjs curtain)
 const REACH = +(process.env.REACH || 0);

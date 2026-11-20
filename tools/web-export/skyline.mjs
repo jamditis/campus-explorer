@@ -55,45 +55,59 @@ export function profile(tris, eye, step) {
   return { step, e, r, x, y, z, zMin: zMin === Infinity ? 0 : zMin };
 }
 
-/** Douglas-Peucker on one run of elevations by vertical error: the indices (into `idx`) to keep. */
-function keep(idx, e, tol) {
-  const out = new Set([0, idx.length - 1]);
-  const stack = [[0, idx.length - 1]];
+/** Douglas-Peucker on outline points ({ b, e }, degrees) by distance in the bearing-elevation plane. */
+function keep(P, tol) {
+  const out = new Set([0, P.length - 1]);
+  const stack = [[0, P.length - 1]];
   while (stack.length) {
-    const [a, b] = stack.pop();
+    const [a, c] = stack.pop();
+    const db = P[c].b - P[a].b, de = P[c].e - P[a].e, len = Math.hypot(db, de);
     let worst = -1, far = tol;
-    for (let k = a + 1; k < b; k++) {
-      const line = e[idx[a]] + (e[idx[b]] - e[idx[a]]) * (k - a) / (b - a), d = Math.abs(e[idx[k]] - line);
+    for (let k = a + 1; k < c; k++) {
+      const qb = P[k].b - P[a].b, qe = P[k].e - P[a].e;
+      const d = len ? Math.abs(db * qe - de * qb) / len : Math.hypot(qb, qe);
       if (d > far) { far = d; worst = k; }
     }
-    if (worst > 0) { out.add(worst); stack.push([a, worst], [worst, b]); }
+    if (worst > 0) { out.add(worst); stack.push([a, worst], [worst, c]); }
   }
-  return [...out].sort((p, q) => p - q).map(k => idx[k]);
+  return [...out].sort((p, q) => p - q).map(k => P[k]);
 }
 
 /**
- * The profile as runs of bins with something in them (a run may wrap past 360 degrees), each reduced to
- * the bins where the outline turns by more than `tol` degrees of elevation. Returns arrays of bin indices.
+ * The profile as runs of bins with something in them (a run may wrap past 360 degrees: its bearings go on
+ * past 360). Each run is a stepped outline, flat over each bin at its height, so a tower one bin wide keeps
+ * its vertical sides; then only the points where it turns by more than `tol` degrees are kept.
+ * Returns arrays of points { b: bearing, e: elevation, r: plan distance of the bin's highest point }.
  */
-export function simplify({ e }, tol) {
+export function simplify({ e, r, step }, tol) {
   const n = e.length, full = i => e[i] > -Infinity;
   const gap = [...e.keys()].find(i => !full(i));
-  if (gap === undefined) return [keep([...e.keys()], e, tol)];
   const runs = [];
   let run = [];
   for (let s = 1; s <= n; s++) {
-    const i = (gap + s) % n;
+    const i = gap === undefined ? s - 1 : (gap + s) % n;
     if (full(i)) run.push(i);
     else if (run.length) { runs.push(run); run = []; }
   }
   if (run.length) runs.push(run);
-  return runs.map(r => keep(r, e, tol));
+  return runs.map(bins => {
+    const P = [];
+    let turn = 0;
+    bins.forEach((i, k) => {
+      if (k && i < bins[k - 1]) turn += 360; // past north
+      for (const b of [i * step + turn, (i + 1) * step + turn]) {
+        const last = P[P.length - 1];
+        if (!last || last.b !== b || last.e !== e[i]) P.push({ b, e: e[i], r: r[i] });
+      }
+    });
+    return keep(P, tol);
+  });
 }
 
 /**
- * The stand-in: a curtain through the kept profile points, each from its true top down to the lowest
- * source height, with level normals facing the eye. Two vertices a point (top, then foot) and two
- * triangles between neighbours, wound to face the eye. Model frame.
+ * The stand-in: a curtain through the outline points, each from its top (at the point's elevation angle and
+ * distance) down to the lowest source height, with level normals facing the eye. Two vertices a point (top,
+ * then foot) and two triangles between neighbours. Model frame.
  * `reach` (metres, 0 for none): a point farther than that from the eye comes nearer along its sight line,
  * top and foot each keeping their elevation angle, so the outline from the eye stays the same while the
  * whole curtain stays inside the viewer's far plane.
@@ -102,11 +116,12 @@ export function curtain(runs, prof, eye, reach = 0) {
   const pos = [], nor = [], index = [];
   for (const run of runs) {
     const first = pos.length / 3;
-    run.forEach((i, k) => {
-      const dx = prof.x[i] - eye[0], dy = prof.y[i] - eye[1], d = Math.hypot(dx, dy) || 1;
-      const s = reach > 0 && d > reach ? reach / d : 1, x = eye[0] + dx * s, y = eye[1] + dy * s;
-      pos.push(x, y, eye[2] + (prof.z[i] - eye[2]) * s, x, y, eye[2] + (prof.zMin - eye[2]) * s);
-      nor.push(-dx / d, -dy / d, 0, -dx / d, -dy / d, 0);
+    run.forEach((p, k) => {
+      const th = p.b / DEG, dx = Math.sin(th), dy = Math.cos(th);
+      const d = reach > 0 && p.r > reach ? reach : p.r, s = d / p.r;
+      const x = eye[0] + dx * d, y = eye[1] + dy * d;
+      pos.push(x, y, eye[2] + d * Math.tan(p.e / DEG), x, y, eye[2] + (prof.zMin - eye[2]) * s);
+      nor.push(-dx, -dy, 0, -dx, -dy, 0);
       if (k) {
         const a = first + 2 * (k - 1), b = a + 2; // a, a+1: previous top, foot; b, b+1: this top, foot
         index.push(a, a + 1, b, b, a + 1, b + 1);
