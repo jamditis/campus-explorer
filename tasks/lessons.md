@@ -109,3 +109,8 @@ Rules learned from corrections. Read at the start of a session.
 - What happened: I started an export from the working tree while an agent was changing `blender/scripted/terrain.py` (uncommitted, 11 seconds before the Blender build read it). The tiles would have been built from code that is in no commit. I saw it in `git status`, stopped the export and ran it again from a clean checkout.
 - Rule: an export builds from a separate checkout at the commit being published (`ENG`), and publishes tiles into the working tree (`SITE` in `build_web.sh`). The export script refuses to start unless that checkout is clean and at the working tree's HEAD. Agents may then keep editing the working tree during an export.
 - Added the same day: a clean checkout is not enough. My second export built from a commit that held a work-in-progress snapshot of `terrain.py` (the stop hook asks for a commit of whatever is in the tree). Rule: start an export only after every agent that edits the engine has reported and the tests pass at that commit; name snapshot commits "Work in progress" and never export from one.
+
+## Show a cheap sample before a long render (2026-11-21)
+
+- What happened: the teaser film took about a day of capture, several redraws and many tokens before Joe saw it. He judged the result bad and stopped the work: "let's abandon the video idea because that's really bad so far and not worth all the time and token we wasted".
+- Rule: for work whose worth only Joe can judge (a film, a look, a style), send a sample that costs minutes (a few stills, a 5 s clip) and wait for his view before the full run. Give the cost of the full run with the sample. The model's speed, accuracy and realism come first; side products wait for his go-ahead at each stage.

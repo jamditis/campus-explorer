@@ -163,6 +163,6 @@ Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per
 - [x] Viewer: interiors and room labels, arrivals above ground (Joe's bug report), a soft flight limit
 - [ ] Browser checks on the new tiles: floor 2 walking, room labels on screen, the stair
 - [x] Next areas from the survey: core walks and drives (`core`), Lots 1 and 2 with the Normal Avenue houses (`normal`); export sw12, 185.6 MB
-- [ ] Teaser film (`tools/teaser/`): first full cut with sound, review, deliver to Joe outside the repository
+- [x] Teaser film (`tools/teaser/`): delivered, then stopped on Joe's word (2026-11-21); no more work on it. The tooling stays in the repository, unused
 
 Engine features added: `adopt` (carry objects over from the release file, with a fix hook), supersede `volumes`, `interiors`, building options (ring roof, recessed windows, openings), `free_edges`.
