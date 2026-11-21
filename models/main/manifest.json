@@ -22,7 +22,7 @@
   },
   {
    "file": "sw_context.glb",
-   "bytes": 343808
+   "bytes": 343860
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -350,13 +350,13 @@
   },
   {
    "file": "sw_t_-1_-1.glb",
-   "bytes": 1564944,
+   "bytes": 1564976,
    "center": [
     -80.0,
     80.0
    ],
    "lod": "lod/sw_t_-1_-1.glb",
-   "lod_bytes": 370484,
+   "lod_bytes": 370536,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp",
     "tex/6fa1702c8490c5de645c.webp",
@@ -374,13 +374,13 @@
   },
   {
    "file": "sw_t_-1_-2.glb",
-   "bytes": 561100,
+   "bytes": 561296,
    "center": [
     -80.0,
     240.0
    ],
    "lod": "lod/sw_t_-1_-2.glb",
-   "lod_bytes": 250072,
+   "lod_bytes": 250044,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/3178afa6d3f8d3bd4214.webp",
@@ -394,13 +394,13 @@
   },
   {
    "file": "sw_t_-1_-3.glb",
-   "bytes": 1063604,
+   "bytes": 1063596,
    "center": [
     -80.0,
     400.0
    ],
    "lod": "lod/sw_t_-1_-3.glb",
-   "lod_bytes": 71600,
+   "lod_bytes": 71812,
    "lod_tex": [
     "tex/14f74a5c266ae227e630.webp",
     "tex/d3d3c445be8f39a5cada.webp",
@@ -424,7 +424,7 @@
     560.0
    ],
    "lod": "lod/sw_t_-1_-4.glb",
-   "lod_bytes": 88476,
+   "lod_bytes": 88460,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/51ef5141b3cdf3788161.webp"
@@ -436,13 +436,13 @@
   },
   {
    "file": "sw_t_-1_0.glb",
-   "bytes": 1326204,
+   "bytes": 1326140,
    "center": [
     -80.0,
     -80.0
    ],
    "lod": "lod/sw_t_-1_0.glb",
-   "lod_bytes": 238272,
+   "lod_bytes": 238260,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -452,13 +452,13 @@
   },
   {
    "file": "sw_t_-1_1.glb",
-   "bytes": 792676,
+   "bytes": 792572,
    "center": [
     -80.0,
     -240.0
    ],
    "lod": "lod/sw_t_-1_1.glb",
-   "lod_bytes": 134284,
+   "lod_bytes": 134272,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp"
@@ -476,7 +476,7 @@
     -400.0
    ],
    "lod": "lod/sw_t_-1_2.glb",
-   "lod_bytes": 82732,
+   "lod_bytes": 82716,
    "lod_tex": [
     "tex/30a3014331c096ef8b58.webp",
     "tex/ef7413f63872c432ea0d.webp",
@@ -498,13 +498,13 @@
   },
   {
    "file": "sw_t_-1_3.glb",
-   "bytes": 1033744,
+   "bytes": 1033776,
    "center": [
     -80.0,
     -560.0
    ],
    "lod": "lod/sw_t_-1_3.glb",
-   "lod_bytes": 39768,
+   "lod_bytes": 39720,
    "lod_tex": [
     "tex/30a3014331c096ef8b58.webp",
     "tex/a21129734c9c5adc0c24.webp",
@@ -520,13 +520,13 @@
   },
   {
    "file": "sw_t_-1_4.glb",
-   "bytes": 810964,
+   "bytes": 811040,
    "center": [
     -80.0,
     -720.0
    ],
    "lod": "lod/sw_t_-1_4.glb",
-   "lod_bytes": 113000,
+   "lod_bytes": 112992,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -544,13 +544,13 @@
   },
   {
    "file": "sw_t_-1_5.glb",
-   "bytes": 1097564,
+   "bytes": 1097612,
    "center": [
     -80.0,
     -880.0
    ],
    "lod": "lod/sw_t_-1_5.glb",
-   "lod_bytes": 188636,
+   "lod_bytes": 188556,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -580,7 +580,7 @@
   },
   {
    "file": "sw_t_-1_6.glb",
-   "bytes": 1019956,
+   "bytes": 1020080,
    "center": [
     -80.0,
     -1040.0
@@ -617,13 +617,13 @@
   },
   {
    "file": "sw_t_-1_7.glb",
-   "bytes": 1153908,
+   "bytes": 1154084,
    "center": [
     -80.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-1_7.glb",
-   "lod_bytes": 113384,
+   "lod_bytes": 113364,
    "lod_tex": [
     "tex/b89c68f01d80f56dc2b4.webp",
     "tex/0f3f5a6838511d141e5e.webp",
@@ -645,15 +645,15 @@
   },
   {
    "file": "sw_t_-1_8.glb",
-   "bytes": 1112444,
+   "bytes": 1112384,
    "center": [
     -80.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-1_8.glb",
-   "lod_bytes": 76056,
+   "lod_bytes": 76048,
    "lod_tex": [
-    "tex/e4f5210122058d91efb4.webp",
+    "tex/e4fcf45798ee81c50ae8.webp",
     "tex/504458f417fd90086ff6.webp",
     "tex/4479157ddcf48ed73f8d.webp",
     "tex/3b44a1ce65e51dff09ed.webp",
@@ -662,7 +662,7 @@
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp",
-    "tex/8113eee9ff70cd81fd5b.webp",
+    "tex/0db45be7cad281d89f2e.webp",
     "tex/2332e86844581b6b223b.webp",
     "tex/40a2e96930d25addd9fd.webp",
     "tex/fa563e5073d6373cb9b6.webp",
@@ -671,13 +671,13 @@
   },
   {
    "file": "sw_t_-1_9.glb",
-   "bytes": 95600,
+   "bytes": 95568,
    "center": [
     -80.0,
     -1520.0
    ],
    "lod": "lod/sw_t_-1_9.glb",
-   "lod_bytes": 53872,
+   "lod_bytes": 53904,
    "lod_tex": [
     "tex/504458f417fd90086ff6.webp",
     "tex/f355716b3e0ec6456a96.webp",
@@ -691,13 +691,13 @@
   },
   {
    "file": "sw_t_-2_-1.glb",
-   "bytes": 233232,
+   "bytes": 233568,
    "center": [
     -240.0,
     80.0
    ],
    "lod": "lod/sw_t_-2_-1.glb",
-   "lod_bytes": 185584,
+   "lod_bytes": 185552,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/b2aa14c5a1b2a45036d4.webp",
@@ -715,7 +715,7 @@
   },
   {
    "file": "sw_t_-2_-2.glb",
-   "bytes": 496788,
+   "bytes": 496876,
    "center": [
     -240.0,
     240.0
@@ -741,7 +741,7 @@
   },
   {
    "file": "sw_t_-2_-3.glb",
-   "bytes": 1037332,
+   "bytes": 1037404,
    "center": [
     -240.0,
     400.0
@@ -765,13 +765,13 @@
   },
   {
    "file": "sw_t_-2_-4.glb",
-   "bytes": 958148,
+   "bytes": 958132,
    "center": [
     -240.0,
     560.0
    ],
    "lod": "lod/sw_t_-2_-4.glb",
-   "lod_bytes": 169888,
+   "lod_bytes": 169892,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -787,13 +787,13 @@
   },
   {
    "file": "sw_t_-2_0.glb",
-   "bytes": 652396,
+   "bytes": 652604,
    "center": [
     -240.0,
     -80.0
    ],
    "lod": "lod/sw_t_-2_0.glb",
-   "lod_bytes": 46968,
+   "lod_bytes": 46924,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -803,13 +803,13 @@
   },
   {
    "file": "sw_t_-2_1.glb",
-   "bytes": 822208,
+   "bytes": 822884,
    "center": [
     -240.0,
     -240.0
    ],
    "lod": "lod/sw_t_-2_1.glb",
-   "lod_bytes": 54692,
+   "lod_bytes": 54632,
    "lod_tex": [
     "tex/2ab5c0cd7a2207f09ae2.webp",
     "tex/a5b149f1394056e9b6fd.webp",
@@ -827,13 +827,13 @@
   },
   {
    "file": "sw_t_-2_2.glb",
-   "bytes": 812960,
+   "bytes": 812984,
    "center": [
     -240.0,
     -400.0
    ],
    "lod": "lod/sw_t_-2_2.glb",
-   "lod_bytes": 65128,
+   "lod_bytes": 65112,
    "lod_tex": [
     "tex/2434804c646476ebe124.webp",
     "tex/0caf102612a15c9a0c47.webp",
@@ -851,13 +851,13 @@
   },
   {
    "file": "sw_t_-2_3.glb",
-   "bytes": 1019568,
+   "bytes": 1019560,
    "center": [
     -240.0,
     -560.0
    ],
    "lod": "lod/sw_t_-2_3.glb",
-   "lod_bytes": 93640,
+   "lod_bytes": 93592,
    "lod_tex": [
     "tex/8dc980d24ff242d87ba5.webp",
     "tex/201f97e006bbb9687940.webp",
@@ -881,13 +881,13 @@
   },
   {
    "file": "sw_t_-2_4.glb",
-   "bytes": 1069560,
+   "bytes": 1069620,
    "center": [
     -240.0,
     -720.0
    ],
    "lod": "lod/sw_t_-2_4.glb",
-   "lod_bytes": 150956,
+   "lod_bytes": 151036,
    "lod_tex": [
     "tex/201f97e006bbb9687940.webp",
     "tex/93ffa1e1459b181869a6.webp",
@@ -909,13 +909,13 @@
   },
   {
    "file": "sw_t_-2_5.glb",
-   "bytes": 788824,
+   "bytes": 789736,
    "center": [
     -240.0,
     -880.0
    ],
    "lod": "lod/sw_t_-2_5.glb",
-   "lod_bytes": 45408,
+   "lod_bytes": 45764,
    "lod_tex": [
     "tex/d1d4956de669b31db341.webp",
     "tex/9dee378460d16cbe9f2f.webp",
@@ -933,13 +933,13 @@
   },
   {
    "file": "sw_t_-2_6.glb",
-   "bytes": 1051264,
+   "bytes": 1051592,
    "center": [
     -240.0,
     -1040.0
    ],
    "lod": "lod/sw_t_-2_6.glb",
-   "lod_bytes": 115716,
+   "lod_bytes": 115824,
    "lod_tex": [
     "tex/7b7b6b8171ca14321b80.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -963,13 +963,13 @@
   },
   {
    "file": "sw_t_-2_7.glb",
-   "bytes": 1093492,
+   "bytes": 1092948,
    "center": [
     -240.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-2_7.glb",
-   "lod_bytes": 121652,
+   "lod_bytes": 121700,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -991,34 +991,34 @@
   },
   {
    "file": "sw_t_-2_8.glb",
-   "bytes": 854920,
+   "bytes": 856216,
    "center": [
     -240.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-2_8.glb",
-   "lod_bytes": 126428,
+   "lod_bytes": 125752,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
-    "tex/82fdbfa4e05cd7f52f09.webp",
+    "tex/0172f2dd1b45da375ed4.webp",
     "tex/a1aaebbd535f67ed5b92.webp",
-    "tex/e4f5210122058d91efb4.webp",
+    "tex/e4fcf45798ee81c50ae8.webp",
     "tex/504458f417fd90086ff6.webp",
     "tex/3e295dc57231c00e7219.webp"
    ],
    "tex": [
     "tex/addb47b0b2bdd5e1ad34.webp",
     "tex/73871effb0d8f8e01093.webp",
-    "tex/f63d33161fc72f1be27b.webp",
+    "tex/7bcba9716977894762cc.webp",
     "tex/6a40608a9cbddead4c65.webp",
-    "tex/8113eee9ff70cd81fd5b.webp",
+    "tex/0db45be7cad281d89f2e.webp",
     "tex/2332e86844581b6b223b.webp",
     "tex/53eaf8dda10743d12bf5.webp"
    ]
   },
   {
    "file": "sw_t_-2_9.glb",
-   "bytes": 911372,
+   "bytes": 911744,
    "center": [
     -240.0,
     -1520.0
@@ -1026,7 +1026,7 @@
    "lod": "lod/sw_t_-2_9.glb",
    "lod_bytes": 116464,
    "lod_tex": [
-    "tex/82fdbfa4e05cd7f52f09.webp",
+    "tex/0172f2dd1b45da375ed4.webp",
     "tex/a1aaebbd535f67ed5b92.webp",
     "tex/f355716b3e0ec6456a96.webp",
     "tex/504458f417fd90086ff6.webp"
@@ -1034,7 +1034,7 @@
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp",
-    "tex/f63d33161fc72f1be27b.webp",
+    "tex/7bcba9716977894762cc.webp",
     "tex/6a40608a9cbddead4c65.webp",
     "tex/814660908be216f091d2.webp",
     "tex/2332e86844581b6b223b.webp"
@@ -1042,20 +1042,20 @@
   },
   {
    "file": "sw_t_-3_-1.glb",
-   "bytes": 963948,
+   "bytes": 963732,
    "center": [
     -400.0,
     80.0
    ],
    "lod": "lod/sw_t_-3_-1.glb",
-   "lod_bytes": 359916,
+   "lod_bytes": 359884,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
     "tex/30866238488a1e9ff644.webp",
     "tex/aed9ae20a0040b724668.webp",
-    "tex/d93691d7f5936ca97d92.webp",
     "tex/339cad57d889f000a693.webp",
+    "tex/d93691d7f5936ca97d92.webp",
     "tex/fe0cc9e37df7dc75a9b0.webp",
     "tex/b33d260388edd93e97d3.webp",
     "tex/945968bcf75eed8acfe2.webp"
@@ -1065,8 +1065,8 @@
     "tex/addb47b0b2bdd5e1ad34.webp",
     "tex/b97bb14dc66dd3b4bb19.webp",
     "tex/a46fe7f582900bfeda8c.webp",
-    "tex/573cd0a58a73f4acd10b.webp",
     "tex/49be086edf12efba9b75.webp",
+    "tex/573cd0a58a73f4acd10b.webp",
     "tex/a503d16f378d30438331.webp",
     "tex/a28db9f1da0e5d154140.webp",
     "tex/dd48444bce990f512a3c.webp"
@@ -1074,13 +1074,13 @@
   },
   {
    "file": "sw_t_-3_-2.glb",
-   "bytes": 362140,
+   "bytes": 362068,
    "center": [
     -400.0,
     240.0
    ],
    "lod": "lod/sw_t_-3_-2.glb",
-   "lod_bytes": 116188,
+   "lod_bytes": 116220,
    "lod_tex": [
     "tex/cfd9f72bd04a5b9c9f57.webp",
     "tex/46461a5a9d3c1258670a.webp",
@@ -1101,7 +1101,7 @@
   },
   {
    "file": "sw_t_-3_-3.glb",
-   "bytes": 152852,
+   "bytes": 152884,
    "center": [
     -400.0,
     400.0
@@ -1119,13 +1119,13 @@
   },
   {
    "file": "sw_t_-3_0.glb",
-   "bytes": 1019800,
+   "bytes": 1019864,
    "center": [
     -400.0,
     -80.0
    ],
    "lod": "lod/sw_t_-3_0.glb",
-   "lod_bytes": 128876,
+   "lod_bytes": 128812,
    "lod_tex": [
     "tex/be8c7b0035bab6cf15dc.webp",
     "tex/fe0cc9e37df7dc75a9b0.webp",
@@ -1143,13 +1143,13 @@
   },
   {
    "file": "sw_t_-3_1.glb",
-   "bytes": 879624,
+   "bytes": 879688,
    "center": [
     -400.0,
     -240.0
    ],
    "lod": "lod/sw_t_-3_1.glb",
-   "lod_bytes": 183552,
+   "lod_bytes": 183288,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/be8c7b0035bab6cf15dc.webp",
@@ -1168,13 +1168,13 @@
   },
   {
    "file": "sw_t_-3_3.glb",
-   "bytes": 640224,
+   "bytes": 640144,
    "center": [
     -400.0,
     -560.0
    ],
    "lod": "lod/sw_t_-3_3.glb",
-   "lod_bytes": 6068,
+   "lod_bytes": 6096,
    "lod_tex": [
     "tex/8dc980d24ff242d87ba5.webp"
    ],
@@ -1186,7 +1186,7 @@
   },
   {
    "file": "sw_t_-3_4.glb",
-   "bytes": 388700,
+   "bytes": 388624,
    "center": [
     -400.0,
     -720.0
@@ -1203,7 +1203,7 @@
   },
   {
    "file": "sw_t_-3_6.glb",
-   "bytes": 2124,
+   "bytes": 2100,
    "center": [
     -400.0,
     -1040.0
@@ -1213,13 +1213,13 @@
   },
   {
    "file": "sw_t_-3_7.glb",
-   "bytes": 730436,
+   "bytes": 731312,
    "center": [
     -400.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-3_7.glb",
-   "lod_bytes": 12400,
+   "lod_bytes": 12516,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp"
    ],
@@ -1240,23 +1240,23 @@
    "lod_bytes": 19544,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp",
-    "tex/82fdbfa4e05cd7f52f09.webp"
+    "tex/0172f2dd1b45da375ed4.webp"
    ],
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp",
-    "tex/f63d33161fc72f1be27b.webp"
+    "tex/7bcba9716977894762cc.webp"
    ]
   },
   {
    "file": "sw_t_-3_9.glb",
-   "bytes": 367192,
+   "bytes": 367352,
    "center": [
     -400.0,
     -1520.0
    ],
    "lod": "lod/sw_t_-3_9.glb",
-   "lod_bytes": 22012,
+   "lod_bytes": 22000,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -1282,33 +1282,33 @@
   },
   {
    "file": "sw_t_0_-1.glb",
-   "bytes": 140268,
+   "bytes": 140216,
    "center": [
     80.0,
     80.0
    ],
    "lod": "lod/sw_t_0_-1.glb",
-   "lod_bytes": 38756
+   "lod_bytes": 38696
   },
   {
    "file": "sw_t_0_0.glb",
-   "bytes": 542568,
+   "bytes": 542896,
    "center": [
     80.0,
     -80.0
    ],
    "lod": "lod/sw_t_0_0.glb",
-   "lod_bytes": 99992
+   "lod_bytes": 99700
   },
   {
    "file": "sw_t_0_1.glb",
-   "bytes": 774600,
+   "bytes": 774624,
    "center": [
     80.0,
     -240.0
    ],
    "lod": "lod/sw_t_0_1.glb",
-   "lod_bytes": 62360,
+   "lod_bytes": 62104,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -1325,7 +1325,7 @@
     -400.0
    ],
    "lod": "lod/sw_t_0_2.glb",
-   "lod_bytes": 209540,
+   "lod_bytes": 209476,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/ef7413f63872c432ea0d.webp",
@@ -1356,7 +1356,7 @@
     -560.0
    ],
    "lod": "lod/sw_t_0_3.glb",
-   "lod_bytes": 269812,
+   "lod_bytes": 269684,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/f10adfbe056df3f0f056.webp",
@@ -1384,7 +1384,7 @@
   },
   {
    "file": "sw_t_0_4.glb",
-   "bytes": 1117196,
+   "bytes": 1117068,
    "center": [
     80.0,
     -720.0
@@ -1420,13 +1420,13 @@
   },
   {
    "file": "sw_t_0_5.glb",
-   "bytes": 1166648,
+   "bytes": 1166604,
    "center": [
     80.0,
     -880.0
    ],
    "lod": "lod/sw_t_0_5.glb",
-   "lod_bytes": 107684,
+   "lod_bytes": 107612,
    "lod_tex": [
     "tex/d5812bf2f8c348dcd23b.webp",
     "tex/eadbec1ab444f849d13d.webp",
@@ -1454,13 +1454,13 @@
   },
   {
    "file": "sw_t_0_6.glb",
-   "bytes": 1092360,
+   "bytes": 1092088,
    "center": [
     80.0,
     -1040.0
    ],
    "lod": "lod/sw_t_0_6.glb",
-   "lod_bytes": 75208,
+   "lod_bytes": 75096,
    "lod_tex": [
     "tex/312231d7a835677f1910.webp",
     "tex/61f72413f0d67f00f76b.webp",
@@ -1478,13 +1478,13 @@
   },
   {
    "file": "sw_t_0_7.glb",
-   "bytes": 1065548,
+   "bytes": 1065420,
    "center": [
     80.0,
     -1200.0
    ],
    "lod": "lod/sw_t_0_7.glb",
-   "lod_bytes": 74992,
+   "lod_bytes": 75020,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1492,13 +1492,13 @@
   },
   {
    "file": "sw_t_0_8.glb",
-   "bytes": 717200,
+   "bytes": 717536,
    "center": [
     80.0,
     -1360.0
    ],
    "lod": "lod/sw_t_0_8.glb",
-   "lod_bytes": 6640,
+   "lod_bytes": 6660,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1512,7 +1512,7 @@
     -400.0
    ],
    "lod": "lod/sw_t_1_2.glb",
-   "lod_bytes": 22436,
+   "lod_bytes": 22452,
    "lod_tex": [
     "tex/f0afad39f57b1676f76b.webp",
     "tex/f327bf1d388720c4306d.webp"
@@ -1530,7 +1530,7 @@
     -560.0
    ],
    "lod": "lod/sw_t_1_3.glb",
-   "lod_bytes": 100232,
+   "lod_bytes": 100132,
    "lod_tex": [
     "tex/694d34902adebd300273.webp",
     "tex/291811ca4ee47b9b5355.webp",
@@ -1548,13 +1548,13 @@
   },
   {
    "file": "sw_t_1_4.glb",
-   "bytes": 1011092,
+   "bytes": 1011160,
    "center": [
     240.0,
     -720.0
    ],
    "lod": "lod/sw_t_1_4.glb",
-   "lod_bytes": 192880,
+   "lod_bytes": 192840,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/df8b14578ced3ec8d84a.webp",
@@ -1576,13 +1576,13 @@
   },
   {
    "file": "sw_t_1_5.glb",
-   "bytes": 1257112,
+   "bytes": 1257256,
    "center": [
     240.0,
     -880.0
    ],
    "lod": "lod/sw_t_1_5.glb",
-   "lod_bytes": 266664,
+   "lod_bytes": 266616,
    "lod_tex": [
     "tex/d5812bf2f8c348dcd23b.webp",
     "tex/eadbec1ab444f849d13d.webp",
@@ -1606,13 +1606,13 @@
   },
   {
    "file": "sw_t_1_6.glb",
-   "bytes": 1056360,
+   "bytes": 1056688,
    "center": [
     240.0,
     -1040.0
    ],
    "lod": "lod/sw_t_1_6.glb",
-   "lod_bytes": 51144,
+   "lod_bytes": 51080,
    "lod_tex": [
     "tex/8ad2f931eae658277400.webp",
     "tex/e42481bb74b3c0469fb6.webp"
@@ -1626,7 +1626,7 @@
   },
   {
    "file": "sw_t_1_7.glb",
-   "bytes": 1158700,
+   "bytes": 1158732,
    "center": [
     240.0,
     -1200.0
@@ -1654,7 +1654,7 @@
     -1360.0
    ],
    "lod": "lod/sw_t_1_8.glb",
-   "lod_bytes": 99004,
+   "lod_bytes": 99012,
    "lod_tex": [
     "tex/2f38e1deb8300eaff7d5.webp",
     "tex/96a38f6c245235e60535.webp"
@@ -1674,7 +1674,7 @@
     -880.0
    ],
    "lod": "lod/sw_t_2_5.glb",
-   "lod_bytes": 7208,
+   "lod_bytes": 7248,
    "lod_tex": [
     "tex/9be78f3023525fd1bd11.webp"
    ],
@@ -1686,13 +1686,13 @@
   },
   {
    "file": "sw_t_2_6.glb",
-   "bytes": 712132,
+   "bytes": 712084,
    "center": [
     400.0,
     -1040.0
    ],
    "lod": "lod/sw_t_2_6.glb",
-   "lod_bytes": 4292,
+   "lod_bytes": 4316,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1700,13 +1700,13 @@
   },
   {
    "file": "sw_t_2_7.glb",
-   "bytes": 744456,
+   "bytes": 744520,
    "center": [
     400.0,
     -1200.0
    ],
    "lod": "lod/sw_t_2_7.glb",
-   "lod_bytes": 18424,
+   "lod_bytes": 18408,
    "lod_tex": [
     "tex/903e060513c76b60cfd9.webp",
     "tex/96a38f6c245235e60535.webp"
@@ -2247,8 +2247,8 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 20, 2026, 11:32 PM ET",
-   "version": "sw13",
+   "saved": "November 21, 2026, 3:23 PM ET",
+   "version": "sw14",
    "file": "montclair_southwest.blend"
   }
  },
@@ -2260,14 +2260,16 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 20, 2026, 11:41 PM ET",
+ "exported": "November 21, 2026, 3:32 PM ET",
  "tex": {
+  "tex/0172f2dd1b45da375ed4.webp": 14900,
   "tex/03f48791ef4e88e66401.webp": 3472,
   "tex/0561d1e460e344080c40.webp": 1420,
   "tex/0941993ce47cdb404933.webp": 13072,
   "tex/0aff4fa4c0138b3e58fc.webp": 38484,
   "tex/0caf102612a15c9a0c47.webp": 1382,
   "tex/0cb886d74904cf7a5cda.webp": 3018,
+  "tex/0db45be7cad281d89f2e.webp": 19902,
   "tex/0f2b4ff6d5289b7c9983.webp": 2942,
   "tex/0f3f5a6838511d141e5e.webp": 1104,
   "tex/10156639b2c575018984.webp": 6090,
@@ -2354,12 +2356,11 @@
   "tex/781f2815c41bcb7a9a69.webp": 2536,
   "tex/7b7b6b8171ca14321b80.webp": 4218,
   "tex/7b964e8a5a98d337347c.webp": 15636,
+  "tex/7bcba9716977894762cc.webp": 36726,
   "tex/7ca8719ea229eb53bc0f.webp": 9860,
   "tex/7dcfd568ded8cee6ab4b.webp": 14960,
-  "tex/8113eee9ff70cd81fd5b.webp": 19672,
   "tex/814660908be216f091d2.webp": 11816,
   "tex/82ab94bc29af32ff532a.webp": 4750,
-  "tex/82fdbfa4e05cd7f52f09.webp": 15534,
   "tex/88b2b491acef49a0e22a.webp": 71078,
   "tex/8ad2f931eae658277400.webp": 5636,
   "tex/8cdd81930946fc4a1452.webp": 68526,
@@ -2428,7 +2429,7 @@
   "tex/e0aa06bcbca728eeca11.webp": 30402,
   "tex/e1a6f91e0efc5341900d.webp": 1910,
   "tex/e42481bb74b3c0469fb6.webp": 10818,
-  "tex/e4f5210122058d91efb4.webp": 7620,
+  "tex/e4fcf45798ee81c50ae8.webp": 7642,
   "tex/e8ee3a25346dba9da93e.webp": 2354,
   "tex/e9ac33c7e725d903a313.webp": 28292,
   "tex/ea1cd4ae4c223856b3d4.webp": 2046,
@@ -2442,7 +2443,6 @@
   "tex/f2921a3937d373b8f221.webp": 2102,
   "tex/f327bf1d388720c4306d.webp": 1960,
   "tex/f355716b3e0ec6456a96.webp": 3994,
-  "tex/f63d33161fc72f1be27b.webp": 36870,
   "tex/f9380b7036705e943b3f.webp": 666,
   "tex/fa1966357f33bc98d259.webp": 69800,
   "tex/fa563e5073d6373cb9b6.webp": 24994,
@@ -2451,5 +2451,5 @@
   "tex/fe3ff2714b734ccbbb0a.webp": 15400,
   "tex/ffc0e69be8e2a820a243.webp": 8756
  },
- "total_bytes": 185607120
+ "total_bytes": 185612858
 }
