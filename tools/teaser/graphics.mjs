@@ -10,6 +10,8 @@ export function installGraphics({ fonts, mathSource }) {
     white: new THREE.MeshStandardMaterial({ color: '#f1eee7', roughness: 0.55, metalness: 0 }),
     red: new THREE.MeshStandardMaterial({ color: '#b3282d', roughness: 0.5, metalness: 0 }),
     ink: new THREE.MeshStandardMaterial({ color: '#2a2b2e', roughness: 0.7, metalness: 0 }),
+    // after sunset: the same off-white with a faint glow of its own, so a title reads at blue hour
+    lit: new THREE.MeshStandardMaterial({ color: '#f1eee7', roughness: 0.55, metalness: 0, emissive: '#f1eee7', emissiveIntensity: 0.28 }),
   };
   const glyphGeo = new Map(); // `${font}|${ch}|${depth}` -> geometry (unit em size)
   function glyph(fontName, ch, depth, bevel) {
@@ -92,7 +94,16 @@ export function installGraphics({ fonts, mathSource }) {
       const m = new THREE.Mesh(g, mats[d.headColour ?? d.colour ?? 'white']); shade(m); holder.add(m);
       m.userData.tip = T; return m;
     });
-    items.set(d.id, { d, kind: 'dim', holder, dim, shaft, ticks, heads });
+    // scale marks every `every` metres (a longer one every fifth), shown as the shaft wipes past them
+    const marks = [];
+    if (d.every) {
+      for (let k = d.every, i = 1; k < dim.length - d.every / 2; k += d.every, i++) {
+        const s = (d.tick ?? 2) * (i % 5 ? 0.45 : 0.8), p = d.a.map((v, j) => v + dim.dir[j] * k);
+        const m = bar(p.map((v, j) => v - dim.side[j] * s), p.map((v, j) => v + dim.side[j] * s));
+        m.userData.at = Math.abs(k - dim.length / 2) / (dim.length / 2); holder.add(m); marks.push(m);
+      }
+    }
+    items.set(d.id, { d, kind: 'dim', holder, dim, shaft, ticks, heads, marks });
   }
 
   /** Pin: a thin post from the ground with a ball at the top. { id, at [x,y,z] (foot), height, radius } */
@@ -141,6 +152,7 @@ export function installGraphics({ fonts, mathSource }) {
           h.position.set(want[0] - tip[0], want[1] - tip[1], want[2] - tip[2]);
           void end;
         });
+        for (const m of it.marks) m.visible = m.userData.at <= w;
         it.ticks.forEach((t, i) => {
           const [p, q] = it.dim.ticks[i], m = p.map((v, j) => (v + q[j]) / 2);
           t.userData.set(m.map((v, j) => v + (p[j] - v) * tw), m.map((v, j) => v + (q[j] - v) * tw));
