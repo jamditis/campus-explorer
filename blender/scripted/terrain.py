@@ -290,8 +290,8 @@ class Terrain:
     footprint  closed outline of the build; the edge blend acts within BLEND of it
     paved      outlines of the paved surfaces (roads, lots, walks, turf): the cells that grade
     together
-    roads      outlines of the paving that may ramp down to a lower neighbour at the edge (the
-    plan's `"road": true`); other paving is only raised to meet one
+    roads      outlines of the paving that may ramp to a coarse neighbour where it crosses the edge
+    (the plan's `"road": true`); without any, the road-cut rule does nothing
     """
 
     def __init__(
@@ -390,8 +390,8 @@ class Terrain:
         much paving meets it (`free`, 0 to 1). Paving meets where the LiDAR shows no step across
         the edge (a road that runs on, met by a coarse ground): a step to the neighbour there is
         the neighbour's error. Where the LiDAR shows one (a wall, a bank) or does not reach past
-        the edge, paving keeps its grade. Both only at a cut, where paving crosses the edge (a
-        road), and the soft ground beside it ramps with it; elsewhere soft ground bends over
+        the edge, paving keeps its grade. Both only at a cut, where a road (`roads`) crosses the
+        edge, and the soft ground beside it ramps with it; elsewhere soft ground bends over
         BLEND as before (a coarse skirt over a hill must not flatten the hill). Both are spread
         along the run (`_windows`), first widened, so neither changes in a jump from one sample
         to the next and a cut meets in full across its whole width."""
@@ -481,8 +481,8 @@ class Terrain:
         """The edge blend: soft ground bends to the neighbours' ground over BLEND, or over the
         nearest sample's `ramp` where that is longer. Paving bends where the two are nearly level
         already (within SEAM), and by the sample's `free` share where the LiDAR shows no step
-        across the edge: a road must not climb a bank that stands beside it, but a road that
-        runs on into a coarse neighbour meets it. Paving outside `roads` is only raised."""
+        across the edge, on `roads` only: a road must not climb a bank that stands beside it,
+        but a flagged road that runs on into a coarse neighbour meets it."""
         paved = np.broadcast_to(np.asarray(paved, bool), np.shape(x))
         d = _edge_distance(self.footprint, x, y)
         n = len(x)
