@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { BufferAttribute, Quaternion, Matrix4, Vector3 } from '../vendor/three.module.js';
-import { toNormalizedInt16, farImageSize, linearPart, instanceShift, unitQuats, fewestBits, decodeUnit } from '../tools/web-export/pack.mjs';
+import { toNormalizedInt16, farImageSize, linearPart, instanceShift, unitQuats, fewestBits, decodeUnit, isWhite } from '../tools/web-export/pack.mjs';
 
 test('instance rotations stored as normalized int16 decode to the same turn in three.js', () => {
   const qs = [[0, 0, 0, 1], [0, 0.3826834, 0, 0.9238795], [0.1, -0.7, 0.2, 0.6782330], [0, -1, 0, 0]];
@@ -66,4 +66,14 @@ test('fewestBits takes the first candidate within tolerance, else null', () => {
   const err = b => 2 ** -b;
   assert.equal(fewestBits([8, 10, 12, 14], err, 0.001), 10);
   assert.equal(fewestBits([8, 10], err, 1e-6), null);
+});
+
+test('a vertex colour is dropped only when every vertex is opaque white, which multiplies by one', () => {
+  assert.equal(isWhite(new Uint8Array([255, 255, 255, 255, 255, 255, 255, 255]), true), true);
+  assert.equal(isWhite(new Uint16Array([65535, 65535, 65535]), true), true);
+  assert.equal(isWhite(new Float32Array([1, 1, 1, 1]), false), true);
+  assert.equal(isWhite(new Uint8Array([255, 255, 254, 255]), true), false);
+  assert.equal(isWhite(new Uint8Array([255, 255, 255, 128]), true), false); // see-through
+  assert.equal(isWhite(new Float32Array([1, 0.99, 1]), false), false);
+  assert.equal(isWhite(new Uint8Array([]), true), false);
 });

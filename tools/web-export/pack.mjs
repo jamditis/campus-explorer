@@ -94,3 +94,15 @@ export function fewestBits(candidates, err, tol) {
   for (const b of candidates) if (err(b) <= tol) return b;
   return null;
 }
+
+/**
+ * True when a COLOR_0 array is opaque white at every vertex (all components at 1 once decoded): three.js multiplies
+ * the base colour by it, so it changes nothing and only costs a vertex attribute. Empty arrays are not white.
+ */
+export function isWhite(values, normalized) {
+  if (!values.length) return false;
+  const one = !normalized || values instanceof Float32Array ? 1 : { Uint8Array: 255, Uint16Array: 65535 }[values.constructor.name];
+  if (!one) return false;
+  for (let i = 0; i < values.length; i++) if (values[i] !== one) return false;
+  return true;
+}
