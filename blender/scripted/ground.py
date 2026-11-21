@@ -63,6 +63,9 @@ def triangulate(lay):
     triangle).
     """
     foot = _densify(lay["footprint"], GRID)
+    # the edge samples either side of a step in the neighbour's ground (Terrain.break_points):
+    # vertices there put this ground's step where the neighbour's is, not across a grid gap
+    foot = geom.insert_on_ring(foot, lay.get("edge_points", ()))
     pts, edges = [], []
 
     def add_ring(ring):
@@ -152,6 +155,7 @@ def heights(lay, terrain, xy, tris, owner):
 
 def build(lay, terrain, image_dir=None):
     """Make the ground objects (one per kind, verified and UNVERIFIED apart). Returns them."""
+    lay["edge_points"] = terrain.break_points()
     xy, tris, owner = triangulate(lay)
     zcap, zfree = heights(lay, terrain, xy, tris, owner)
     capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl

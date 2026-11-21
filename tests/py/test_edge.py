@@ -29,6 +29,26 @@ class EdgeFromTriangles(unittest.TestCase):
                 self.assertAlmostEqual(np.hypot(px - x, py - y), 0.3, places=6)
                 self.assertFalse(0 < px < 20 and 0 < py < 20)
 
+    def test_a_step_between_two_samples_is_found_and_sampled_on_both_sides(self):
+        # a skirt at 100 m outside the south edge, another model's sidewalk at 100.9 m from
+        # x 12.37 on: samples every metre miss the step by up to half a metre; the refined ones
+        # lie on either side of it, at most 5 cm apart, with their own side's height
+        skirt = [[(-5, -5, 100), (12.37, -5, 100), (12.37, 0, 100)],
+                 [(-5, -5, 100), (12.37, 0, 100), (-5, 0, 100)]]
+        walk = [[(12.37, -5, 100.9), (25, -5, 100.9), (25, 0, 100.9)],
+                [(12.37, -5, 100.9), (25, 0, 100.9), (12.37, 0, 100.9)]]
+        tris = np.array(skirt + walk, float)
+        got = edge.sample(FOOT, tris)
+        south = [s for s in got if s[1] == 0.0 and 0 <= s[0] <= 20]
+        xs = [s[0] for s in south]
+        self.assertEqual(xs, sorted(xs))
+        low = max(s[0] for s in south if s[2] < 100.5)
+        high = min(s[0] for s in south if s[2] > 100.5)
+        self.assertLess(high - low, 0.051)
+        self.assertTrue(low <= 12.37 <= high)
+        # the plain samples every metre are all still there
+        self.assertTrue(all(any(abs(s[0] - x) < 1e-6 for s in south) for x in range(0, 20)))
+
     def test_the_highest_triangle_over_a_point_sets_its_height(self):
         # a skirt at 100 m and a sidewalk 0.15 m over it on part of it; nothing at x 50
         skirt = [
