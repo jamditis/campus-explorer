@@ -26,6 +26,7 @@ export const FACTS = {
 const OPEN = '2026-09-22T17:35:00-04:00'; // sun 258° (west), 14° up
 const GOLD = '2026-09-22T17:55:00-04:00'; // sun 261°, 10° up: the College of Communication and Media's west front lit
 const LOW = '2026-09-22T18:10:00-04:00'; // sun 263°, 7.5° up: long shadows
+const AFT = '2026-09-22T17:25:00-04:00'; // sun 256°, 16° up: the long travelling shot, shadows open
 const SET = '2026-09-22T18:40:00-04:00'; // sun 268°, 1.8° up
 const BLUE = '2026-09-22T19:14:00-04:00'; // sun 5° below: lamps coming on
 const DUSK = '2026-09-22T19:04:00-04:00'; // sun 3° below: the end card
@@ -60,6 +61,7 @@ export const storyboard = {
     ui: { warm: 0, sat: 1, contrast: 0, vignette: 0, grain: 0, bloom: 0 },
     morning: { warm: 0.6, sat: 1.04, contrast: 0.14, lift: [0.015, 0.012, 0.02], gamma: 1.02, vignette: 0.24, grain: 0.016, bloom: 0.3 },
     interior: { warm: 0.9, sat: 1.0, contrast: 0.12, lift: [0.02, 0.015, 0.01], gamma: 1.05, vignette: 0.28, grain: 0.02, bloom: 0.2 },
+    travel: { warm: 0.45, sat: 1.08, contrast: 0.1, lift: [0.035, 0.035, 0.04], gamma: 1.18, gain: 1.08, vignette: 0.2, grain: 0.016, bloom: 0.25 },
     day: { warm: 0.4, sat: 1.06, contrast: 0.14, lift: [0.01, 0.01, 0.015], vignette: 0.22, grain: 0.016, bloom: 0.25 },
     gold: { warm: 0.7, sat: 1.12, contrast: 0.15, lift: [0.015, 0.01, 0.0], vignette: 0.24, grain: 0.016, bloom: 0.35 },
     blue: { warm: -0.5, sat: 1.0, contrast: 0.14, lift: [0.0, 0.01, 0.03], gamma: 1.25, gain: 1.5, vignette: 0.3, grain: 0.022, bloom: 0.5 },
@@ -113,13 +115,13 @@ export const storyboard = {
     {
       // one continuous move from Montclair Heights station up the ridge past Sprague Field, the stadium and
       // the decks to the Village; a measured line joins the campus's two stations
-      name: 'travel', duration: 9.0, grade: 'day', time: LOW, rel: true, accel: 0.2, decel: 0.22,
+      name: 'travel', duration: 9.0, grade: 'travel', time: AFT, rel: true, accel: 0.2, decel: 0.22,
       pos: [[-600, 85, 420], [-470, 105, 160], [-300, 130, -260], [-170, 150, -700], [-90, 150, -990]],
       look: [[-454, 0, 266], [-336, 0, 100], [-150, 0, -560], [40, 0, -960], [-165, 0, -1160]],
       fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
-        { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 30, tick: 16, width: 3.5, up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
-        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 15, -380], yaw: -0.45, rise: 'scale', in: 2.6, inDur: 1.0, out: 8.7, outDur: 0.3 },
+        { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 26, tick: 18, width: 1.6, every: 100, colour: 'lit', headColour: 'red', up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, colour: 'lit', size: 24, depth: 3, at: [-200, 5, -470], yaw: -0.28, flat: true, rise: 'extrude', in: 2.4, inDur: 0.9, out: 5.6, outDur: 0.3 },
       ],
     },
     {
