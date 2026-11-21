@@ -1,0 +1,274 @@
+{
+ "zone": "core_lots",
+ "notes": "Zone core_lots: parking off the through roads of the core area. The JSON is the source; it was written by a generator in scratch (/tmp/claude-0/p5/core/core_lots/gen.py) and may be edited by hand from here on. Lot 10 (OSM 312932817, named Lot 10, reserved parking on the university's parking map): the 2020 ortho shows the ground west of Skyline Way under site trailers and dust (the Alumni Green and Cole Hall works), the 2017 and 2014 LiDAR show a smooth crossfall with no curb or step, and the published model shows lawn. OSM was edited on 2026-09-01 together with the new footways 1554281915 and 1554281916, which cross the lot to Skyline Way at its north and south ends (core_ways draws them; concrete wins). The asphalt therefore follows the OSM ring on its west side and ends, and runs 0.2 m past Skyline Way's west edge line onto the carriageway along its whole length: the lot is open to the road (OSM's ring shares Skyline Way's centre-line nodes). No stall paint, arrows, islands, curbs or lamps are readable in any source, so none are drawn (the brief's 'about 20 stalls' is an estimate, not seen); no pole returns in the 2017 LiDAR. The paved apron at the bend west of Skyline Way (x -30..-10, y -75..-55) is the walk and entry of Morehead Hall in the ortho and lies mostly outside the footprint: not drawn here. Chapin Drive bays (north side, x -177..-147): read in a frame along Chapin (origin -175, -137, angle -9.2 degrees) on the 7.5 cm ortho. Dividers found as brightness peaks on transects every 0.25 m along each divider, each fitted as a straight run by least squares (rms 0.04 to 0.07 m, skew under 2 degrees, so the rows are drawn at 90 degrees to Chapin). East group (x -165..-147): an accessible stall, a 2.1 m access aisle, an accessible stall and four standard stalls; dividers at u 12.86, 14.97, 17.61, 20.29, 22.97, 25.70, 28.41; least-squares pitch 2.69 m (residuals under 0.05 m), 7 stalls in all, 5.0 m deep from the back curb (v 3.4) to the road. The first stall (u 10.15..12.86) is bounded by the walk that meets the crosswalk, so it has no west divider. West group (x -177..-168): three stalls about 3.1 to 3.3 m wide and 8.8 m deep (dividers at u -1.90, 1.39, 4.42, the third stall bounded by the walk); what they are for is not known. Both pads reach 0.2 m past Chapin's north edge line onto the carriageway; the walk between them and the walk behind them are core_ways'. Curbs on the back and outer ends of the pads only, from the shadow line; none across the mouths. No lamps: the 2017 LiDAR shows no pole returns in or by either. Dark ground east of the east bays (u 29..34) is planting in shade, not drawn.",
+ "surfaces": [
+  {
+   "name": "cl_lot10_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -39.04,
+     -121.3
+    ],
+    [
+     -46.8,
+     -118.0
+    ],
+    [
+     -27.2,
+     -76.5
+    ],
+    [
+     -19.15,
+     -80.42
+    ]
+   ],
+   "evidence": "osm 312932817 (Lot 10, edited 2026-09-01); ortho2020 (paved ground west of Skyline Way under construction trailers); lidar2017",
+   "unverified": "west edge and both ends follow the OSM ring: the 2020 ortho shows site trailers and dust over it and the 2017 LiDAR shows no curb or step; east side runs 0.2 m past Skyline Way's west edge line onto the carriageway along the whole lot"
+  },
+  {
+   "name": "cl_chapin_bay_W_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -177.41,
+     -138.4
+    ],
+    [
+     -167.93,
+     -139.94
+    ],
+    [
+     -166.49,
+     -131.08
+    ],
+    [
+     -175.97,
+     -129.55
+    ]
+   ],
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "west end in tree shade"
+  },
+  {
+   "name": "cl_chapin_bay_E_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -165.26,
+     -140.37
+    ],
+    [
+     -146.9,
+     -143.34
+    ],
+    [
+     -146.08,
+     -138.24
+    ],
+    [
+     -164.44,
+     -135.27
+    ]
+   ],
+   "evidence": "ortho2020 7.5 cm"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "cl_chapin_bay_W_curb",
+   "path": [
+    [
+     -177.37,
+     -138.21
+    ],
+    [
+     -175.97,
+     -129.55
+    ],
+    [
+     -166.49,
+     -131.08
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb read from the shadow line at the back; the west end is in shade"
+  },
+  {
+   "name": "cl_chapin_bay_E_curb",
+   "path": [
+    [
+     -164.44,
+     -135.27
+    ],
+    [
+     -146.08,
+     -138.24
+    ],
+    [
+     -146.87,
+     -143.15
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020",
+   "unverified": "curb read from the shadow line at the back of the bays"
+  }
+ ],
+ "markings": [
+  {
+   "name": "cl_chapin_bay_E_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -159.68,
+     -136.04
+    ],
+    [
+     -146.4,
+     -138.19
+    ]
+   ],
+   "count": 5,
+   "depth": 5.0,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm"
+  },
+  {
+   "name": "cl_chapin_bay_E_aisle_line",
+   "type": "line",
+   "path": [
+    [
+     -161.76,
+     -135.7
+    ],
+    [
+     -162.56,
+     -140.64
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm"
+  },
+  {
+   "name": "cl_chapin_bay_E_access_aisle",
+   "type": "area",
+   "ring": [
+    [
+     -161.72,
+     -135.76
+    ],
+    [
+     -159.74,
+     -136.08
+    ],
+    [
+     -160.52,
+     -140.92
+    ],
+    [
+     -162.5,
+     -140.59
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "faint blue tint and hatching between the two accessible stalls; drawn as a plain blue area"
+  },
+  {
+   "name": "cl_chapin_bay_E_access_symbol_1",
+   "type": "area",
+   "ring": [
+    [
+     -164.45,
+     -140.03
+    ],
+    [
+     -163.26,
+     -140.22
+    ],
+    [
+     -163.07,
+     -139.03
+    ],
+    [
+     -164.26,
+     -138.84
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "white mark at the stall's road end read as the wheelchair symbol; drawn as a plain square"
+  },
+  {
+   "name": "cl_chapin_bay_E_access_symbol_2",
+   "type": "area",
+   "ring": [
+    [
+     -159.71,
+     -140.79
+    ],
+    [
+     -158.53,
+     -140.99
+    ],
+    [
+     -158.33,
+     -139.8
+    ],
+    [
+     -159.52,
+     -139.61
+    ]
+   ],
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "white mark at the stall's road end read as the wheelchair symbol; drawn as a plain square"
+  },
+  {
+   "name": "cl_chapin_bay_W_stalls_1",
+   "type": "stalls",
+   "line": [
+    [
+     -175.72,
+     -129.59
+    ],
+    [
+     -172.48,
+     -130.11
+    ]
+   ],
+   "count": 1,
+   "depth": 8.8,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "west divider in tree shade"
+  },
+  {
+   "name": "cl_chapin_bay_W_stalls_2",
+   "type": "stalls",
+   "line": [
+    [
+     -172.48,
+     -130.11
+    ],
+    [
+     -169.49,
+     -130.6
+    ]
+   ],
+   "count": 1,
+   "depth": 8.8,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
  "zone": "n_lots",
- "notes": "Zone n_lots (draft).",
+ "notes": "Zone n_lots: the university's parking south of Normal Avenue: Lot 1, the stall-lined drive north of it (up to the end of n_roads' service road at y -360), Lot 2 and the court south of the walk to Legge House. The JSON is written by /tmp/claude-0/p5/normal/n_lots/gen.py; that script is the source until the file is edited by hand. Method: each lot read in its own straightened frame on the 2020 ortho fetched at 0.075 m/px. Dividers found as brightness peaks across each row, each divider line fitted through its centre points, then a least-squares fit of phase and pitch; row fronts and backs from the median brightness profile along the dividers. Frames: Lot 1 origin (-215.3, -505.9) at 61.98 deg (dividers square to it within 0.3 deg); the drive's rows turn 1.5 and 2.3 deg more, the east row 0.8 deg; Lot 2 origin (-207.7, -324.2) at -19.4 deg; the bay north of the drive at 99 deg. Lot 1 (osm 312839920), 109 stalls: south row 16 (pitch 2.568 m, fit rms 0.06 m), two double rows of 13 + 13 (2.565 and 2.573 m, rms 0.06 to 0.18 m), north row 12 (2.563 m, rms 0.07 m), west row 12 under tree shade (2.611 m, rms 0.10 m), east row 17 (2.596 m, rms 0.05 m); stall depth 5.3 to 5.85 m, aisles 7.7 to 8.1 m. Hatched caps at the east ends of the double rows, 15 aisle arrows (white ovals 1.5 to 1.6 m long; heads not readable, direction from right-hand traffic), four lamps: two LiDAR poles 5.5 and 5.6 m high at the west ends of the centre lines, two at the east caps from dark spots and shadows in the ortho. Drive north of Lot 1, 27 stalls: south row 10 (2.587 m, rms 0.05 m), north row 9 (2.59 m, rms 0.05 m), two stalls beside two blue hatched aisles west of the lane to the service road, a bay of 6 (2.593 m, rms 0.04 m) between two curbed islands. Lot 2 (osm 291713843), 30 stalls: north row 4 (2.57 m, rms 0.04 m), middle double row 5 north and 12 south with a hatched aisle at the foot of the walk to the Center for Autism (rms 0.02 to 0.06 m), south row 6 + 3 (2.59 m, rms 0.02 m); hatched cap at the west end, 6 arrows. Court: asphalt south of n_roads' walk NR_walk_lot2_s to x -128, a rounded island at its west end, two stalls on the pad in the walk's jog in front of Legge House. Edges: 0.2 m under n_roads' walks, 0.2 m onto the end lines of NR_service_rd and NR_service_rd_N; Lot 2's west 2 m lies under President's Drive (NR_pres_dr_to_normal), both asphalt. Heights: none given; the engine grades the paving. Left out: the small lot at 20 and 22 Normal Avenue (aisle osm 232846656: no stalls in the ortho, n_roads draws it as a drive); the drive that goes on east from the court (osm 312839919 east of x -128) under trees: the LiDAR shows a cut drive descending about 6 m to Normal Avenue, but neither its edges nor any stalls can be read; stalls south of the court aisle (two divider ends seen under trees, not enough to count). Edited by hand since the review of 2026-11-21: the angled row west of the concrete band north of the drive (NL_service_bay_stalls, 3 stalls at 46 deg; a fifth divider that starts on the T bar is left out) and the narrow curbed island at Lot 2's west end (NL_lot2_island_W, with the lamp NL_lot2_lamp_SW at its south tip).",
  "surfaces": [
   {
    "name": "NL_lot1",
@@ -75,13 +75,13 @@
      0.5
     ],
     [
-     -215.0,
-     -381.75,
+     -214.0,
+     -381.85,
      0.5
     ],
     [
-     -215.1,
-     -366.6,
+     -216.45,
+     -366.3,
      0.5
     ],
     [
@@ -291,6 +291,31 @@
    "evidence": "ortho2020",
    "unverified": "island with a light rim and a brown inside: taken as a planted island with a curb; could be paint only",
    "layer": 3.2
+  },
+  {
+   "name": "NL_lot2_island_W",
+   "kind": "mulch",
+   "layer": 3.2,
+   "ring": [
+    [
+     -210.66,
+     -333.97
+    ],
+    [
+     -209.34,
+     -334.44
+    ],
+    [
+     -207.34,
+     -328.83
+    ],
+    [
+     -208.64,
+     -328.37
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m: bright curb outline with a dark inside, cross profiles every 0.5 m)",
+   "unverified": "planting not seen (mulch drawn); north end under shadow"
   }
  ],
  "curbs": [
@@ -369,8 +394,8 @@
    "name": "NL_bay_island_S_curb",
    "path": [
     [
-     -215.3,
-     -381.7
+     -214.0,
+     -381.85
     ],
     [
      -221.4,
@@ -396,8 +421,8 @@
    "name": "NL_bay_island_N_curb",
    "path": [
     [
-     -215.4,
-     -366.6
+     -216.45,
+     -366.3
     ],
     [
      -222.9,
@@ -516,6 +541,29 @@
    "evidence": "ortho2020",
    "closed": true,
    "unverified": "island with a light rim: curb assumed"
+  },
+  {
+   "name": "NL_lot2_island_W_curb",
+   "path": [
+    [
+     -210.66,
+     -333.97
+    ],
+    [
+     -209.34,
+     -334.44
+    ],
+    [
+     -207.34,
+     -328.83
+    ],
+    [
+     -208.64,
+     -328.37
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
   }
  ],
  "markings": [
@@ -2077,6 +2125,27 @@
    "colour": "white",
    "evidence": "ortho2020",
    "unverified": "two pale painted blocks (symbols or hatching, not readable) read as two stalls; the divider is placed between them"
+  },
+  {
+   "name": "NL_service_bay_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -209.25,
+     -343.44
+    ],
+    [
+     -213.51,
+     -353.59
+    ]
+   ],
+   "count": 3,
+   "depth": 6.3,
+   "side": "right",
+   "angle": 46.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m: divider peaks along 13 lines 1.5 to 4.5 m west of the band; common slope and pitch fitted, 50 of 55 peaks within 0.4 m; pitch 3.54 m along the band)",
+   "unverified": "faint dividers; the divider ends (depth) read where the peaks fade; a fifth divider that starts at the T bar is left out"
   }
  ],
  "points": [

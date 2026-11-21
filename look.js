@@ -568,7 +568,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     inLight: { value: new THREE.Color(1, 0.95, 0.86).multiplyScalar(INTERIOR_LIGHT) },
   };
   let interiors = [];
-  const decorated = new Set(), seeThroughs = new WeakMap(), lits = new WeakMap(), _gb = new THREE.Box3();
+  const decorated = new Set(), seeThroughs = new WeakMap(), clearUnits = new WeakMap(), lits = new WeakMap(), _gb = new THREE.Box3();
   /** Use these volumes ({ ring: [[x, z]], y0, y1 }, viewer metres) for the interior rule. */
   function setInteriors(volumes) {
     interiors = volumes.map(v => {
@@ -652,7 +652,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     m.needsUpdate = true;
   }
   function litFor(m) {
-    if (!m?.isMeshStandardMaterial || m.userData.gi || m.userData.inLit || m.userData.leaf) return m;
+    if (!m?.isMeshStandardMaterial || m.userData.gi || m.userData.glass || m.userData.cat === 'glass' || m.userData.inLit || m.userData.leaf) return m;
     if (!lits.has(m)) { const c = m.clone(); c.userData.inLit = true; interiorLight(c, m); lits.set(m, c); }
     return lits.get(m);
   }
@@ -666,6 +666,28 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       if (!interiors.some(v => v.box.intersectsBox(_gb))) return;
       o.userData.interiorLit = true;
       o.material = Array.isArray(o.material) ? o.material.map(litFor) : litFor(o.material);
+    });
+    // instanced window units (the carried-over north wing of the College of Communication and Media): their glass
+    // has no shader hook (decorate leaves instanced glass at 82 % opacity), so it read as dark panes. A unit set
+    // whose box centre lies in a volume (grown by GLASS_GROW) gets clear glass: 22 % opacity, both sides, no shadow.
+    root.traverse(o => {
+      if (!o.isInstancedMesh || o.userData.interiorGlass || o.userData.treeLod) return;
+      const mats = [].concat(o.material);
+      const isGlass = m => (m?.userData.glass || m?.userData.cat === 'glass') && isClearGlass(m.name || '');
+      if (!mats.some(isGlass)) return;
+      const bb = o.boundingBox ?? (o.computeBoundingBox(), o.boundingBox);
+      _gb.copy(bb).applyMatrix4(o.matrixWorld); const c = _gb.getCenter(new THREE.Vector3());
+      if (!interiors.some(v => inVolume(v, c.x, c.y, c.z, GLASS_GROW))) return;
+      const clear = m => {
+        if (!isGlass(m)) return m;
+        if (!clearUnits.has(m)) {
+          const g = m.clone(); g.transparent = true; g.opacity = 0.22; g.depthWrite = false; g.side = THREE.DoubleSide; g.forceSinglePass = true;
+          clearUnits.set(m, g);
+        }
+        return clearUnits.get(m);
+      };
+      o.material = Array.isArray(o.material) ? o.material.map(clear) : clear(o.material);
+      o.userData.interiorGlass = true; o.castShadow = false;
     });
     root.traverse(o => {
       if (!o.isMesh || o.isInstancedMesh || o.userData.interiorGlass || ![].concat(o.material).some(m => m?.userData.gi)) return;

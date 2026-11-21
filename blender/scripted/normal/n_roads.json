@@ -1,6 +1,6 @@
 {
  "zone": "n_roads",
- "notes": "Zone n_roads: Valley Road inside the footprint (carriageway, curbs, the west walk north of the taper, the east walk, all its paint), President's Drive from its Valley Road mouth to the forecourt north-west of the President's House, President's Drive Extension and its run on to President's Drive by Lot 2, President's Drive north to Normal Avenue, the service road from President's Drive west to Lot 1, the loop round the Van Reyper-Bond House, the driveways at 20 and 22 Normal Avenue, and the walks and steps between them. The JSON is written by /tmp/claude-0/p5/normal/n_roads/gen.py; that script is the source until the file is edited by hand. Valley Road: one straight frame fitted to 217 points of the east-sidewalk band (origin (-110.607, -445.407), heading 61.194 deg, o metres to the west); every line is an offset in it. Read in strips straightened along the frame from the 2020 ortho at 0.075 m/px, heights from the LiDAR: east curb o 1.5, east walk o -0.75..0.65; west curb o 12.82 to s -65, a 99 m taper (arcs r 300) to o 19.45 at s 34 (LiDAR gutter low o 18.5..19, rise 19.5..20.5); north of the taper a 1.4 m walk on the curb (osm 1132693555). Paint: yellow centre line o 7.7 south of s -50, hatched yellow median s -50..24 (bars at 5 m centres), double yellow o 12.3 north of it, white lane line o 5.8 (3 m dashes at 12 m from s -0.5, solid s 95.5..110), the left-turn lane line o 9.4, five left-turn arrows (2.6 m measured) at s 61..107, stop bar s 110.3, crosswalk lines at s 113.4 and 116.6 and at s 140.2 and 144.8. North end: the asphalt ends on the footprint, 0.2 m under the main model's Normal Avenue sidewalk, its carriageway's east cut and its north piece (the main pieces lie 3 to 5 m off the ortho; they are met where they are). President's Drive south: both curbs tracked as bright lines in perpendicular profiles every 1.5 m; the centre fitted as runs and arcs through 77 mid points (error median 0.08 m, p90 0.25 m, max 0.69 m), width 5.7 m (p10 5.55, p90 5.96); the mouth flared with arcs r 6 (south) and r 4 (north) into Valley Road's curb. The other drives have no curbs in the ortho and lie partly under trees: lines from osm checked against the ortho, widths read where the edges show; marked unverified. Walks from the ortho (bright bands) and osm. Not drawn: Normal Avenue and the sidewalk the ortho shows south of the main model's sidewalk (left as lawn); the loop round the island south of 20 Normal Avenue; front walks of the houses (the building zone's aprons and steps); the forecourt's link north to the stall court (not seen).",
+ "notes": "Zone n_roads: Valley Road inside the footprint (carriageway, curbs, the west walk north of the taper, the east walk, all its paint), President's Drive from its Valley Road mouth to the forecourt north-west of the President's House, President's Drive Extension and its run on to President's Drive by Lot 2, President's Drive north to Normal Avenue, the service road from President's Drive west to Lot 1, the loop round the Van Reyper-Bond House, the driveways at 20 and 22 Normal Avenue, and the walks and steps between them. The JSON is written by /tmp/claude-0/p5/normal/n_roads/gen.py; that script is the source until the file is edited by hand. Valley Road: one straight frame fitted to 217 points of the east-sidewalk band (origin (-110.607, -445.407), heading 61.194 deg, o metres to the west); every line is an offset in it. Read in strips straightened along the frame from the 2020 ortho at 0.075 m/px, heights from the LiDAR: east curb o 1.5, east walk o -0.75..0.65; west curb o 12.82 to s -65, a 99 m taper (arcs r 300) to o 19.45 at s 34 (LiDAR gutter low o 18.5..19, rise 19.5..20.5); north of the taper a 1.4 m walk on the curb (osm 1132693555). Paint: yellow centre line o 7.7 south of s -50, hatched yellow median s -50..24 (bars at 5 m centres), double yellow o 12.3 north of it, white lane line o 5.8 (3 m dashes at 12 m from s -0.5, solid s 95.5..110), the left-turn lane line o 9.4, five left-turn arrows (2.6 m measured) at s 61..107, stop bar s 110.3, crosswalk lines at s 113.4 and 116.6 and at s 140.2 and 144.8. North end: the asphalt ends on the footprint, 0.2 m under the main model's Normal Avenue sidewalk, its carriageway's east cut and its north piece (the main pieces lie 3 to 5 m off the ortho; they are met where they are). President's Drive south: both curbs tracked as bright lines in perpendicular profiles every 1.5 m; the centre fitted as runs and arcs through 77 mid points (error median 0.08 m, p90 0.25 m, max 0.69 m), width 5.7 m (p10 5.55, p90 5.96); the mouth flared with arcs r 6 (south) and r 4 (north) into Valley Road's curb. The other drives have no curbs in the ortho and lie partly under trees: lines from osm checked against the ortho, widths read where the edges show; marked unverified. Walks from the ortho (bright bands) and osm. Not drawn: Normal Avenue and the sidewalk the ortho shows south of the main model's sidewalk (left as lawn); the loop round the island south of 20 Normal Avenue; front walks of the houses (the building zone's aprons and steps); the forecourt's link north to the stall court (not seen). Edited by hand since the review of 2026-11-21 (the generator is no longer the source): the paving between the service road north of Lot 1 and the concrete band east of it (NR_service_rd_N_bay), the band and its T bar; NR_walk_bond_w, NR_walk_lot2_s (west end), NR_walk_pres_house (north end) and NR_walk_lot1_ne (y -382 to -364) moved onto the ortho bands.",
  "surfaces": [
   {
    "name": "NR_valley_rd",
@@ -187,6 +187,42 @@
    ],
    "evidence": "ortho2020, osm 232846647",
    "unverified": "turning area north-west of the President's House; edges hidden by trees on the west"
+  },
+  {
+   "name": "NR_service_rd_N_bay",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -216.0,
+     -341.3
+    ],
+    [
+     -212.5,
+     -341.95
+    ],
+    [
+     -208.75,
+     -342.77
+    ],
+    [
+     -216.13,
+     -360.34
+    ],
+    [
+     -220.18,
+     -361.99
+    ],
+    [
+     -223.6,
+     -360.2
+    ],
+    [
+     -220.82,
+     -351.4
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m: asphalt brightness 80 to 90 from the drive to the band), lidar2017 (one smooth plane, no curb)",
+   "unverified": "west half shaded by trees; it joins the service road, whose west edge is kept"
   }
  ],
  "strips": [
@@ -350,7 +386,41 @@
    ],
    "width": 5.0,
    "evidence": "osm 232846701, ortho2020",
-   "unverified": "under trees; ends where the stall-lined drive of n_lots begins (y -360)"
+   "unverified": "under trees; ends where the stall-lined drive of n_lots begins (y -360); the paving east of it to the concrete band is NR_service_rd_N_bay"
+  },
+  {
+   "name": "NR_service_rd_N_band",
+   "kind": "concrete",
+   "centre": [
+    [
+     -215.67,
+     -360.53
+    ],
+    [
+     -207.88,
+     -342.0
+    ]
+   ],
+   "width": 1.4,
+   "evidence": "ortho2020 (0.075 m: centre fitted through 18 cross profiles, rms 0.08 m)",
+   "unverified": "a bright concrete band 1.2 to 1.5 m wide; raised island or flush walk not known (under trees, no LiDAR step)"
+  },
+  {
+   "name": "NR_service_rd_N_band_T",
+   "kind": "concrete",
+   "centre": [
+    [
+     -212.5,
+     -341.4
+    ],
+    [
+     -204.3,
+     -343.1
+    ]
+   ],
+   "width": 1.4,
+   "evidence": "ortho2020 (0.075 m)",
+   "unverified": "the T bar at the band's north end; its west 1.5 m is faint"
   },
   {
    "name": "NR_bond_loop",
@@ -485,13 +555,13 @@
      5.0
     ],
     [
-     -141.2,
-     -387.3
+     -140.4,
+     -388.0
     ]
    ],
    "width": 1.3,
    "evidence": "ortho2020",
-   "unverified": "north end at the house under trees"
+   "unverified": "north end at the house under trees; it ends on the side step NB_Presidents_House_side_step"
   },
   {
    "name": "NR_walk_lot1_ne",
@@ -502,12 +572,12 @@
      -389.8
     ],
     [
-     -211.6,
+     -212.4,
      -381.0,
      6.0
     ],
     [
-     -210.6,
+     -211.6,
      -371.5,
      6.0
     ],
@@ -528,24 +598,29 @@
    ],
    "width": 1.5,
    "evidence": "osm 232846704, ortho2020",
-   "unverified": "only the south 8 m is clear in the ortho; the rest follows osm under trees"
+   "unverified": "y -382 to -364 moved onto the ortho band (0.075 m); north of y -362 it follows osm under trees"
   },
   {
    "name": "NR_walk_bond_w",
    "kind": "concrete",
    "centre": [
     [
-     -217.2,
-     -404.4
+     -215.9,
+     -405.39
+    ],
+    [
+     -207.6,
+     -408.92,
+     3.0
     ],
     [
      -196.4,
-     -408.8
+     -409.26
     ]
    ],
-   "width": 2.0,
-   "evidence": "ortho2020",
-   "unverified": "not in osm"
+   "width": 1.4,
+   "evidence": "ortho2020 (0.075 m: band centre and edges read across it every 2 m from x -216 to -199)",
+   "unverified": "not in osm; west end on the back line of the drive's south stall row"
   },
   {
    "name": "NR_walk_autism_w",
@@ -573,12 +648,12 @@
    "kind": "concrete",
    "centre": [
     [
-     -177.5,
-     -330.4
+     -172.8,
+     -331.95
     ],
     [
      -165.5,
-     -332.0,
+     -332.4,
      4.0
     ],
     [
@@ -613,7 +688,7 @@
    ],
    "width": 1.6,
    "evidence": "ortho2020",
-   "unverified": "not in osm; west end at the Lot 2 corner under tree shadow"
+   "unverified": "not in osm; starts where the concrete starts in the ortho (x -172.8), Lot 2 asphalt west of it"
   },
   {
    "name": "NR_walk_coder_w",
