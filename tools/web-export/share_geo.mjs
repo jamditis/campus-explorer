@@ -2,14 +2,17 @@
 // let the files' meshopt views point into it (geoshare.mjs). The tree meshes are the case: each tile carries its
 // own copy of every Tree_* mesh it plants, the same bytes in up to 64 files. Views that exactly the same files use
 // go in one pack, so a tile never downloads geometry it does not draw. Works on published tiles (DIR/*.glb and
-// DIR/lod/*.glb), so it needs no .blend; the data is copied as bytes, never decoded. A pack no file names any more
-// is deleted, and a view that is no longer shared goes back into its file.
+// DIR/lod/*.glb), so it needs no .blend; vertex data is copied as bytes, never decoded. Index views that hold many
+// primitives' indices are first split into one view per primitive (geoshare.mjs splitIndexViews: decoded and encoded
+// again, lossless), so a tree's indices match across tiles too. A pack no file names any more is deleted, and a view
+// that is no longer shared goes back into its file.
 //   node share_geo.mjs DIR            (build_web.sh runs it after share_tex.mjs, before manifest.py)
 //   node share_geo.mjs DIR --embed    (SHARE_GEO=0: every view back inside its file, geo/ removed)
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, renameSync, rmSync, statSync, rmdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
+import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { parseGlb, buildGlb } from './tex.mjs';
-import { compressedViews, planPacks, packBytes, relink, geoUri, geoName } from './geoshare.mjs';
+import { compressedViews, planPacks, packBytes, relink, geoUri, geoName, splitIndexViews } from './geoshare.mjs';
 
 const args = process.argv.slice(2), embedAll = args.includes('--embed'), dir = args.find(a => !a.startsWith('--'));
 if (!dir) { console.error('usage: node share_geo.mjs DIR [--embed]'); process.exit(2); }
@@ -30,6 +33,19 @@ function read(file) {
   });
   return { raw, json, bin, views };
 }
+const put = (path, bytes) => { writeFileSync(path + '.part', bytes); renameSync(path + '.part', path); };
+// pass 0: one index view per primitive, so equal index lists are equal bytes
+let splitFiles = 0;
+if (!embedAll) {
+  await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
+  const decode = (m, bytes) => { const o = new Uint8Array(m.count * m.byteStride); MeshoptDecoder.decodeGltfBuffer(o, m.count, m.byteStride, bytes, 'TRIANGLES', m.filter); return o; };
+  const encode = (raw, count, stride) => MeshoptEncoder.encodeGltfBuffer(raw, count, stride, 'TRIANGLES');
+  for (const f of files) {
+    const { json, bin } = parseGlb(readFileSync(join(dir, f)));
+    const r = splitIndexViews(json, bin, decode, encode);
+    if (r) { put(join(dir, f), buildGlb(r.json, r.bin)); splitFiles++; }
+  }
+}
 // pass 1: which files use each view
 const uses = new Map();
 for (const f of files) {
@@ -41,7 +57,6 @@ for (const f of files) {
 const packs = embedAll ? [] : planPacks(uses), packOf = new Map();
 for (const p of packs) for (const k of p.keys) packOf.set(k, p);
 // pass 2: write the packs before any file names them
-const put = (path, bytes) => { writeFileSync(path + '.part', bytes); renameSync(path + '.part', path); };
 const want = new Map(), have = new Map();
 for (const p of packs) if (!existsSync(join(geoDir, p.name))) for (const k of p.keys) want.set(k, p);
 for (const f of files) {
@@ -70,5 +85,5 @@ let pruned = 0;
 for (const f of geoFiles()) if (!keep.has(f)) { rmSync(join(geoDir, f)); pruned++; }
 if (existsSync(geoDir) && !geoFiles().length) rmdirSync(geoDir);
 const geoBytes = geoFiles().reduce((s, f) => s + size(join(geoDir, f)), 0);
-console.log(`share geometry: ${files.length} files, ${packs.length} packs (${(geoBytes / 1e6).toFixed(2)} MB; ${written} new, ${pruned} pruned), ` +
+console.log(`share geometry: ${files.length} files (${splitFiles} with index views split), ${packs.length} packs (${(geoBytes / 1e6).toFixed(2)} MB; ${written} new, ${pruned} pruned), ` +
   `${rewritten} files rewritten, ${(before / 1e6).toFixed(2)} -> ${(total() / 1e6).toFixed(2)} MB`);

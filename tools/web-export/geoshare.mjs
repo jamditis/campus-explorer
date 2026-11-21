@@ -119,6 +119,42 @@ export function compactBin(json, bin, put = new Map()) {
 }
 
 /**
+ * gltf-transform writes the indices of many primitives into one compressed view, so a tree's indices are mixed with
+ * the rest of its tile and never match another tile's. Give every index accessor of such a view its own view, so
+ * identical index data compresses to identical bytes (+0.7 % index bytes, and 4.3 MB more shared, in models/main
+ * when this was written). `decode(ext, bytes)` returns the view's raw bytes; `encode(raw, count, byteStride)` the
+ * compressed bytes of an index list (the meshopt codec, injected so this stays pure). The index codec keeps
+ * triangle order and winding (it may start a triangle at another corner). Returns a new { json, bin }, or null
+ * when no view holds more than one accessor.
+ */
+export function splitIndexViews(json0, bin, decode, encode) {
+  const users = new Map();
+  (json0.accessors || []).forEach((a, i) => { if (a.bufferView !== undefined) { if (!users.has(a.bufferView)) users.set(a.bufferView, []); users.get(a.bufferView).push(i); } });
+  const indexOf = new Set();
+  for (const m of json0.meshes || []) for (const p of m.primitives) if (p.indices !== undefined) indexOf.add(p.indices);
+  const split = [...users].filter(([v, list]) => {
+    const m = json0.bufferViews[v].extensions?.[MESHOPT];
+    return m && m.mode === 'TRIANGLES' && m.buffer === 0 && list.length > 1 && list.every(i => indexOf.has(i) && !json0.accessors[i].sparse);
+  });
+  if (!split.length) return null;
+  const json = structuredClone(json0), put = new Map();
+  for (const [vi, list] of split) {
+    const v = json.bufferViews[vi], m = v.extensions[MESHOPT];
+    const raw = decode(m, bin.subarray(m.byteOffset, m.byteOffset + m.byteLength));
+    list.forEach((ai, k) => {
+      const a = json.accessors[ai], o = a.byteOffset || 0, len = a.count * m.byteStride;
+      const ext = { buffer: 0, byteOffset: 0, byteLength: 0, byteStride: m.byteStride, count: a.count, mode: 'TRIANGLES' };
+      const view = { ...v, byteOffset: (v.byteOffset || 0) + o, byteLength: len, extensions: { ...v.extensions, [MESHOPT]: ext } };
+      put.set(ext, encode(raw.slice(o, o + len), a.count, m.byteStride));
+      if (k === 0) json.bufferViews[vi] = view;
+      else { a.bufferView = json.bufferViews.length; json.bufferViews.push(view); }
+      a.byteOffset = 0;
+    });
+  }
+  return { json, bin: compactBin(json, bin, put) };
+}
+
+/**
  * Point a tile's views at the packs. `views`: compressedViews() of the tile; `assign`: Map view index ->
  * { uri, byteOffset, size } (the pack's URI from this file, the view's offset in it, the pack's size). Every other
  * view that is in a pack now comes back into the binary chunk. Buffers that are not packs keep their order (the

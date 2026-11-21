@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  geoName, geoUri, viewKey, packName, compressedViews, planPacks, packBytes, compactBin, relink,
+  geoName, geoUri, viewKey, packName, compressedViews, planPacks, packBytes, compactBin, relink, splitIndexViews,
 } from '../tools/web-export/geoshare.mjs';
 
 const bytes = (n, v) => new Uint8Array(n).fill(v);
@@ -121,4 +121,38 @@ test('a buffer that is not a pack is never followed or dropped', () => {
   const out = relink(t.json, t.bin, views, new Map());
   assert.deepEqual(out.json.buffers[2], { uri: 'other.bin', byteLength: 24 });
   assert.equal(out.json.bufferViews[1].extensions.EXT_meshopt_compression.buffer, 2);
+});
+
+test('an index view shared by several primitives is split into one view per accessor', () => {
+  // "compressed" here is the raw bytes with a 1-byte header, so the test can see what went where
+  const decode = (m, b) => b.slice(1), encode = (raw, count) => { const o = new Uint8Array(raw.length + 1); o[0] = count; o.set(raw, 1); return o; };
+  const raw = Uint8Array.from({ length: 24 }, (_, i) => i); // 12 uint16 indices: a 6-index and a 6-index accessor
+  const bin = new Uint8Array(64); bin.set(bytes(8, 4), 0); bin[16] = 12; bin.set(raw, 17);
+  const json = {
+    buffers: [{ byteLength: 64 }, { byteLength: 200 }],
+    bufferViews: [
+      { buffer: 0, byteOffset: 0, byteLength: 8 },
+      { buffer: 1, byteOffset: 100, byteLength: 24, target: 34963, extensions: { EXT_meshopt_compression: { buffer: 0, byteOffset: 16, byteLength: 25, byteStride: 2, count: 12, mode: 'TRIANGLES' } } },
+    ],
+    accessors: [
+      { bufferView: 1, byteOffset: 0, componentType: 5123, count: 6, type: 'SCALAR' },
+      { bufferView: 1, byteOffset: 12, componentType: 5123, count: 6, type: 'SCALAR' },
+    ],
+    meshes: [{ primitives: [{ attributes: {}, indices: 0 }, { attributes: {}, indices: 1 }] }],
+  };
+  const out = splitIndexViews(json, bin, decode, encode);
+  assert.equal(out.json.bufferViews.length, 3);
+  const [a, b] = out.json.accessors;
+  assert.equal(a.bufferView, 1); assert.equal(b.bufferView, 2);
+  assert.equal(a.byteOffset, 0); assert.equal(b.byteOffset, 0);
+  const va = out.json.bufferViews[1], vb = out.json.bufferViews[2];
+  assert.deepEqual([va.buffer, va.byteOffset, va.byteLength, va.target], [1, 100, 12, 34963]);
+  assert.deepEqual([vb.buffer, vb.byteOffset, vb.byteLength, vb.target], [1, 112, 12, 34963]);
+  const got = v => { const m = v.extensions.EXT_meshopt_compression; return [...out.bin.subarray(m.byteOffset, m.byteOffset + m.byteLength)]; };
+  assert.deepEqual(got(va), [6, ...raw.slice(0, 12)]);
+  assert.deepEqual(got(vb), [6, ...raw.slice(12)]);
+  assert.equal(vb.extensions.EXT_meshopt_compression.count, 6);
+  assert.deepEqual([...out.bin.subarray(0, 8)], [...bytes(8, 4)]); // other data stays
+  assert.equal(json.bufferViews.length, 2); // the input is not changed
+  assert.equal(splitIndexViews(out.json, out.bin, decode, encode), null); // nothing left to split
 });
