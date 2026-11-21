@@ -10,6 +10,8 @@ export function installGraphics({ fonts, mathSource }) {
     white: new THREE.MeshStandardMaterial({ color: '#f1eee7', roughness: 0.55, metalness: 0 }),
     red: new THREE.MeshStandardMaterial({ color: '#b3282d', roughness: 0.5, metalness: 0 }),
     ink: new THREE.MeshStandardMaterial({ color: '#2a2b2e', roughness: 0.7, metalness: 0 }),
+    // after sunset: the same off-white with a faint glow of its own, so a title reads at blue hour
+    lit: new THREE.MeshStandardMaterial({ color: '#f1eee7', roughness: 0.55, metalness: 0, emissive: '#f1eee7', emissiveIntensity: 0.28 }),
   };
   const glyphGeo = new Map(); // `${font}|${ch}|${depth}` -> geometry (unit em size)
   function glyph(fontName, ch, depth, bevel) {

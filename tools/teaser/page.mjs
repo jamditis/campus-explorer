@@ -55,7 +55,7 @@ export async function installSettle(page) {
         if (phase === 0) {
           if (t.draws !== seen) { seen = t.draws; still = 0; } else still++;
           // nothing in the scene changed (a still shot; the interface may change): the canvas still holds this frame
-          if (still >= quiet && (t.draws === from || t.same)) { done(0); return; }
+          if ((still >= quiet && t.draws === from) || (t.same && guard >= quiet)) { done(0); return; }
           if (still >= quiet || guard > 3000) { phase = 1; real = t.real; t.live = true; app.invalidate(); }
         } else if (t.real > real) { done(t.draws - from); return; }
         requestAnimationFrame(tick);
