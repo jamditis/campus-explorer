@@ -1,6 +1,8 @@
 * text=auto eol=lf
 
 *.glb binary
+# geometry packs (models/main/geo/, share_geo.mjs) and far_trees.bin: never let text=auto touch a CR LF in them
+*.bin binary
 *.gltf -text
 *.webp binary
 *.png binary

@@ -4,12 +4,15 @@
 //   node compact.mjs FILE.glb [FILE.glb ...]
 // It also stores instance rotations as normalized 16-bit integers (pack.mjs): float rotations barely
 // compress, and the main model's shrub leaf cards carry hundreds of thousands of them.
+// And it drops vertex colours that are opaque white at every vertex (pack.mjs isWhite): three.js multiplies the base
+// colour by them, so they change nothing, but every such vertex cost 4 bytes of GPU memory and a vertex fetch
+// (1.45 M vertices, mostly the main model's shrubs, when this was written).
 // Rewrites a file in place only when it holds such data, with the same meshopt filters `optimize` wrote.
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { statSync, writeFileSync } from 'node:fs';
-import { toNormalizedInt16 } from './pack.mjs';
+import { toNormalizedInt16, isWhite } from './pack.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
 
 await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
@@ -23,7 +26,13 @@ for (const f of process.argv.slice(2)) {
     const r = node.getExtension('EXT_mesh_gpu_instancing')?.getAttribute('ROTATION');
     if (r && r.getComponentType() === 5126) rotations.add(r); // FLOAT
   }
-  if (!unused.length && !rotations.size) continue;
+  const white = [];
+  for (const mesh of doc.getRoot().listMeshes()) for (const p of mesh.listPrimitives()) {
+    const c = p.getAttribute('COLOR_0');
+    if (c && isWhite(c.getArray(), c.getNormalized())) white.push(p);
+  }
+  if (!unused.length && !rotations.size && !white.length) continue;
+  for (const p of white) { const c = p.getAttribute('COLOR_0'); p.setAttribute('COLOR_0', null); if (!c.listParents().some(x => x.propertyType !== 'Root')) c.dispose(); }
   for (const a of unused) a.dispose();
   for (const r of rotations) r.setArray(toNormalizedInt16(r.getArray())).setNormalized(true);
   doc.getRoot().listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.FILTER });
@@ -31,6 +40,6 @@ for (const f of process.argv.slice(2)) {
   const refs = sharedRefs(doc.getRoot().listTextures().map(t => t.getURI()), f, f);
   writeFileSync(f, keepShared(await io.writeBinary(doc), refs));
   const after = statSync(f).size; saved += before - after;
-  console.log(`compact ${f.split('/').pop()}: ${unused.length} unused accessors, ${rotations.size} rotations packed, ${(before / 1e6).toFixed(1)} -> ${(after / 1e6).toFixed(1)} MB`);
+  console.log(`compact ${f.split('/').pop()}: ${unused.length} unused accessors, ${rotations.size} rotations packed, ${white.length} white colours dropped, ${(before / 1e6).toFixed(1)} -> ${(after / 1e6).toFixed(1)} MB`);
 }
 console.log(`compact: saved ${(saved / 1e6).toFixed(1)} MB`);

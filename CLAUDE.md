@@ -53,7 +53,8 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `tools/places/build_rooms.py` | `viewer/rooms.json` from the interior plans; run after an interior plan changes |
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
 | `tools/web-export/supersede.mjs`, `cut.mjs`, `volume.mjs` | Take other sources' ground out of each area's footprint, cut exactly at the outline; take a building out of the other sources' tiles by a ring |
-| `tools/web-export/compact.mjs`, `tree_instance.mjs`, `pack.mjs`, `share_tex.mjs`, `tex.mjs` | Drop unused vertex data and pack instance rotations; make small tree groups instances; store each repeated image once under `models/main/tex/` |
+| `tools/web-export/compact.mjs`, `tree_instance.mjs`, `pack.mjs`, `share_tex.mjs`, `tex.mjs` | Drop unused vertex data and all-white vertex colours, and pack instance rotations; make small tree groups instances; store each repeated image once under `models/main/tex/` |
+| `tools/web-export/share_geo.mjs`, `geoshare.mjs`, `inst_filter.mjs` | Store geometry that several files carry byte for byte (the tree meshes) once under `models/main/geo/`; instance transforms through meshopt's exponential and quaternion filters, every vertex within 1 mm |
 | `tools/teaser/` | The teaser film: storyboard, frame capture from the viewer, 3D titles, grade, sound mix. Film, frames and audio stay outside the repository |
 | `tools/web-export/farcut.mjs`, `skyline.mjs`, `skirt.mjs`, `drop_zero.mjs` | Far field: a skyline stand-in for buildings past 10 km, a lighter far ground, empty triangles dropped |
 

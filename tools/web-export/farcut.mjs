@@ -95,7 +95,8 @@ for (const f of process.argv.slice(2)) {
   for (const n of [...far, ...filler]) n.dispose();
   // only what the removed meshes leave unused: nodes the viewer reads by name stay
   await doc.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true, keepSolidTextures: true }));
-  // write with the method the file has: filtered (optimize) or plain quantized (lod.mjs), so nothing loses precision
+  // write with the method the file has: filtered (optimize, lod.mjs) or plain quantized (far versions written before
+  // lod.mjs used filters), so nothing loses precision
   const filtered = (json.bufferViews ?? []).some(v => (v.extensions?.EXT_meshopt_compression?.filter ?? 'NONE') !== 'NONE');
   const { FILTER, QUANTIZE } = EXTMeshoptCompression.EncoderMethod;
   root.listExtensionsUsed().find(e => e.extensionName === 'EXT_meshopt_compression')?.setEncoderOptions({ method: filtered ? FILTER : QUANTIZE });

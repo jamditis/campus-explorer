@@ -6,7 +6,7 @@ import json
 import os
 import re
 
-from glb_refs import image_files, shared_bytes
+from glb_refs import shared_bytes, uri_files
 
 S = os.environ.get("OUT", "/workspace/nj-scenes/web/campus/models/main")
 src = os.environ.get("FILE", "/workspace/nj-scenes/montclair-state/montclair_state.blend")
@@ -22,10 +22,11 @@ for f in sorted(glob.glob(S + "/*.glb")):
         if os.path.exists(lod):
             t["lod"] = "lod/" + t["file"]  # far-distance version (lod.mjs)
             t["lod_bytes"] = os.path.getsize(lod)
-            if lod_tex := image_files(S, t["lod"]):
+            if lod_tex := uri_files(S, t["lod"]):
                 t["lod_tex"] = lod_tex
-    # shared images (tex/, share_tex.mjs) the tile refers to: downloaded once, whichever tile asks first
-    if tex := image_files(S, t["file"]):
+    # shared files the tile refers to (images in tex/, share_tex.mjs; geometry packs in geo/, share_geo.mjs):
+    # downloaded once, whichever tile asks first
+    if tex := uri_files(S, t["file"]):
         t["tex"] = tex
     tiles.append(t)
 # every file a tile or far version names, with its size (a missing one stops the export here)
@@ -66,7 +67,7 @@ json.dump(
         far_trees="far_trees.bin" if os.path.exists(S + "/far_trees.bin") else None,
         hide=hide,
         exported=datetime.datetime.now().strftime("%B %-d, %Y, %-I:%M %p ET"),
-        # the tiles' own bytes and, once each, the shared images they name (far versions are not counted)
+        # the tiles' own bytes and, once each, the shared files (images, geometry) they name (far versions are not counted)
         tex=tex_sizes,
         total_bytes=sum(t["bytes"] for t in tiles) + shared_bytes(tiles, tex_sizes),
     ),

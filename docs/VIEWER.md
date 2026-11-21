@@ -152,8 +152,8 @@ Other manifest fields the viewer uses:
 
 | Field | Use |
 |---|---|
-| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. Their images are half size per side (`lod.mjs`): from 260 m a half-size paint texel is still under a screen pixel. Trees used twice or more in a tile are instances (`tree_instance.mjs`), so they are not in the far versions; the tree stand-ins of `trees.js` show them at distance. |
-| `tiles[].tex`, `tiles[].lod_tex`, `tex` | Shared images (see "Shared images" below): the files in `tex/` a tile and its far version name, and the size of each. `world.js` adds each file's bytes once to the download total and to the progress when the first tile naming it is in. `total_bytes` is the full tiles plus, once each, the shared images they name. |
+| `tiles[].lod` | Far version of a tile (`lod/`). `world.js` loads them after the full campus is in and swaps by distance (260 / 420 / 650 m for Low / Medium / High). Collision and picks always use the full tiles. The lite profile does not load them. Their images are half size per side (`lod.mjs`): from 260 m a half-size paint texel is still under a screen pixel. A tile whose far version would keep 80 % or more of both its plain triangles and its draw calls, or nothing, has none (`farWorthIt` in `pack.mjs`): it would be downloaded and held in GPU memory beside the full tile for almost no saving, so the full tile draws at every distance. Trees used twice or more in a tile are instances (`tree_instance.mjs`), so they are not in the far versions; the tree stand-ins of `trees.js` show them at distance. |
+| `tiles[].tex`, `tiles[].lod_tex`, `tex` | Shared files (see "Shared images" and "Shared geometry" below): the files in `tex/` and `geo/` a tile and its far version name, and the size of each. `world.js` adds each file's bytes once to the download total and to the progress when the first tile naming it is in. `total_bytes` is the full tiles plus, once each, the shared files they name. |
 | `landcover` | An image draped over the 4 km skirt (`scenery.js`). |
 | `far_trees` | Positions and sizes of far-field trees, drawn as simple crowns (`trees.js`): one instanced mesh per 500 m ground cell (`FAR_CELL`, `viewer/trees-math.js`), each with its own bounding sphere, so cells out of view are skipped in the view and in the shadow map. |
 | `paint` | Lot markings painted into asphalt (`look.js`), up to 8 layers. |
@@ -167,6 +167,13 @@ An image that two or more published files carry (the leaf textures are in almost
 - Memory: GLTFLoader makes a new texture per tile. `world.js` swaps it for the texture an earlier tile already has for the same file, sampler, colour space and UV transform (`viewer/texshare.js`), so the GPU holds one copy. Materials stay per tile. `free()` does not dispose a shared texture; the share disposes it with the last tile that uses it (the lite profile evicts tiles one by one). `look.js` sets only `anisotropy` on a texture, the same for every tile.
 - Network: each tile still asks for the file; the browser's HTTP cache answers after the first download (GitHub Pages sends `max-age=600`, then revalidates).
 - Tools that read published tiles (`supersede.mjs`, `compact.mjs`, `lod.mjs`, `tools/evidence/dump_tiles.mjs`) read the images through gltf-transform's NodeIO, which resolves the URI against the tile's folder. gltf-transform writes every image into a GLB, so `compact.mjs` and `lod.mjs` write through `keepShared` (tex.mjs), which points the unchanged shared images back at their files; the export's last step catches anything else.
+
+### Shared geometry
+
+Every tile carries its own copy of each tree mesh it plants (the instanced `Tree_*` meshes), byte for byte the same in up to 64 files: 38 MB of copies when this was written. The export's last step after the shared images (`tools/web-export/share_geo.mjs`, pure parts in `geoshare.mjs`; `SHARE_GEO=0` keeps everything inside the tiles) stores each compressed buffer view that two or more files carry once, in `models/main/geo/<name>.bin`. Views used by exactly the same set of files go in one pack, so a tile never downloads geometry it does not draw; a pack under 4 kB, or saving under 32 kB, stays inside its files, since every pack is one more request. gltf-transform writes the indices of many primitives into one view, so the step first gives each index accessor of such a view its own (decoded and encoded again, lossless: the viewer's loader gets the same index arrays); then a tree's indices match across tiles too. The tile's meshopt views then point at a buffer with a `uri` (`geo/...` from a tile, `../geo/...` from a far version), as the glTF spec allows; the data is copied as bytes, never decoded, so what the viewer decodes is the same.
+
+- Loading: GLTFLoader fetches a buffer URI through its FileLoader relative to the tile's folder, as it does images. Concurrent requests for one URL wait for the first, and the HTTP cache answers the later ones. The GPU still holds one copy per tile, as before.
+- Tools: gltf-transform reads such a tile but writes a GLB with one buffer only, so `build_web.sh` puts the shared geometry back into the published tiles (`share_geo.mjs --embed`) before any step reads them, and shares it again at the end. Run the same before using `compact.mjs`, `lod.mjs`, `supersede.mjs` or `drop_zero.mjs` by hand on published tiles. `check_viewer_refs.py` fails CI when a listed tile names a pack that is not there.
 
 ### Far field
 
@@ -202,6 +209,13 @@ The export applies four steps to the published files (`build_web.sh`, after supe
   width, and only the share (old radius / new radius)^2 of them stays, chosen by a hash of the position: the same
   covered area, fewer crowns (35,134 to 30,510). Fog leaves 56 % even at the skirt's corners, so none is dropped
   for fog. A second run changes nothing.
+
+After those, `inst_filter.mjs` stores instance transforms through the meshopt filters made for them (EXPONENTIAL for
+translation and scale, QUATERNION for rotation; gltf-transform filters only normals and animation). Each batch gets
+the fewest bits that keep every vertex of its mesh within 1 mm of where the unfiltered transform put it, checked on
+the decoded values, and records them in the node's extras (`inst_bits`) so a later rewrite re-encodes at the same
+bits and the error does not add up. A rotation batch with quaternions off unit length (some shrub leaf cards: the
+filter stores unit quaternions, and normalizing one moves its card by more than 1 mm) keeps its 16-bit values.
 
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
 

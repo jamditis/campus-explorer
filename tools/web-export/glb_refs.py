@@ -1,4 +1,5 @@
-"""Files a published tile names by URI (the shared images in models/main/tex/, from share_tex.mjs).
+"""Files a published tile names by URI: the shared images in models/main/tex/ (share_tex.mjs) and the shared
+geometry packs in models/main/geo/ (share_geo.mjs).
 
 Used by manifest.py (per-tile image lists and true download sizes) and tools/ci/check_viewer_refs.py.
 """
@@ -21,9 +22,19 @@ def gltf_json(path):
 
 def image_files(base, tile):
     """Files the images of `tile` (a path relative to `base`) refer to, relative to `base`, in order."""
+    return _uris(base, tile, ("images",))
+
+
+def uri_files(base, tile):
+    """Every file `tile` refers to (images, then buffers such as geometry packs), relative to `base`, in order."""
+    return _uris(base, tile, ("images", "buffers"))
+
+
+def _uris(base, tile, kinds):
     out = []
-    for im in gltf_json(os.path.join(base, tile)).get("images", []):
-        uri = im.get("uri")
+    gltf = gltf_json(os.path.join(base, tile))
+    for item in (x for kind in kinds for x in gltf.get(kind, [])):
+        uri = item.get("uri")
         if not uri or uri.startswith("data:"):
             continue
         path = posixpath.normpath(posixpath.join(posixpath.dirname(tile), uri))
