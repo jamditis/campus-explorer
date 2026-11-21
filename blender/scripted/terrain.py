@@ -25,9 +25,12 @@ EDGE_RUN = (
     12  # edge samples (1 m apart) averaged each side, so the blended edge has no lumps either
 )
 HEIGHT_RUN = 3  # edge samples averaged each side where the neighbour is met as a height
+BREAK_CLOSE = 0.2  # metres: samples this close either side of a step in the neighbour place it
+LINE_STEP = 0.5  # metres between the points of a line in from a step (break_lines)
+LINE_MAX = 12.0  # metres: the deepest such line
 RUN_STEP = 1.5  # edge samples further apart than this are not one run (edge.py: 1 m apart)
-RUN_DZ = 0.3  # metres: nor are two samples whose values step by more (two meshes meet there)
-SIDE = 3  # samples each side whose means must show that step too (a one-sample swing is noise)
+RUN_DZ = 0.3  # metres: nor are two samples whose heights jump by more (two meshes meet there)
+SIDE = 3  # break points: samples each side whose means must show the step too (not noise)
 FOLLOW_TOL = 0.05  # metres: a neighbour this close to following the LiDAR is met as an offset
 # Where the LiDAR runs on across the edge with no step (a road cut, not a wall or a bank), a
 # step to the neighbour is the neighbour's error (a coarse skirt or far-field ground): the ground
@@ -108,6 +111,22 @@ def _normals(ring, px, py):
         hit = dist < best
         best[hit] = dist[hit]
         out[hit] = sign * np.array([d[1], -d[0]]) / ln
+    return out
+
+
+def _project(ring, px, py):
+    """Each point moved onto the nearest edge of a closed outline."""
+    r = np.asarray(ring, float)
+    best = np.full(len(px), np.inf)
+    out = np.stack([px, py], 1).astype(float)
+    for a, b in zip(r, np.roll(r, -1, 0), strict=True):
+        d = b - a
+        t = np.clip(((px - a[0]) * d[0] + (py - a[1]) * d[1]) / (float(d @ d) or 1e-12), 0, 1)
+        q = np.stack([a[0] + t * d[0], a[1] + t * d[1]], 1)
+        dist = np.hypot(px - q[:, 0], py - q[:, 1])
+        hit = dist < best
+        best[hit] = dist[hit]
+        out[hit] = q[hit]
     return out
 
 
@@ -222,19 +241,18 @@ def _steps(v, dz=RUN_DZ):
     return (np.abs(np.roll(v, -1) - v) > dz) & (np.abs(after - before) > dz)
 
 
-def _windows(e, kind=None, run=EDGE_RUN, dz=RUN_DZ, v=None):
+def _windows(e, kind=None, run=EDGE_RUN, dz=RUN_DZ):
     """Symmetric windows along the run of samples e (in footprint order, wrapping at the ends):
     for each sample the indices of the k <= `run` samples each side, where the run goes on
     unbroken both ways (no step over RUN_STEP: the old ground had none there, or the edge is
-    shared with another scripted area; no step in the values `v` (default: the neighbour's
-    heights) over `dz` from one sample to the next that also holds, as a difference of the means
-    of the SIDE samples on either side: another mesh begins there, where a one-sample swing is
-    noise; and no change of `kind`). A run's end sample has k = 0."""
+    shared with another scripted area; no jump of the neighbour's height over `dz` from one
+    sample to the next: another mesh begins; and no change of `kind`). A run's end sample has
+    k = 0."""
     n = len(e)
     step = np.hypot(*(np.roll(e[:, :2], -1, 0) - e[:, :2]).T)  # i to i + 1
     joined = step <= RUN_STEP
     if dz is not None:
-        joined &= ~_steps(e[:, 2] if v is None else v, dz)
+        joined &= np.abs(np.roll(e[:, 2], -1) - e[:, 2]) <= dz
     if kind is not None:
         joined &= np.roll(kind, -1) == kind
     out = []
@@ -248,12 +266,9 @@ def _windows(e, kind=None, run=EDGE_RUN, dz=RUN_DZ, v=None):
 
 def _follows(e, off, tol=FOLLOW_TOL):
     """Whether the neighbour follows the LiDAR at each sample: over its window, its offset from
-    the LiDAR varies no more than its height strays from a straight line (plus `tol`). Read over
-    whole runs (no break at a height jump): a jump on a steep slope is the slope, and a sample
-    beside a step in a coarse ground must not be cut off from its run and pass by default.
-    """
+    the LiDAR varies no more than its height strays from a straight line (plus `tol`)."""
     out = np.ones(len(e), bool)
-    for i, idx in enumerate(_windows(e, dz=None)):
+    for i, idx in enumerate(_windows(e)):
         if len(idx) < 3:
             continue
         t = np.arange(len(idx), dtype=float)
@@ -267,11 +282,8 @@ def _run_mean(e, v, kind):
     """Mean of v over each sample's symmetric window (`_windows`): a sample at the end of a run
     keeps its own value; offsets and heights (`kind`) are not averaged together. Offsets (kind
     True: the LiDAR's noise is in them) are averaged over EDGE_RUN, heights (a coarse ground,
-    smooth already) over HEIGHT_RUN only, so a coarse ground's bend round a corner stays. A run
-    breaks where the value itself steps (`_windows`): an offset, not a height, on a steep slope,
-    where the height jumps from sample to sample but the offset does not."""
-    long = _windows(e, kind, v=v)
-    short = _windows(e, kind, run=HEIGHT_RUN, v=v)
+    smooth already) over HEIGHT_RUN only, so a coarse ground's bend round a corner stays."""
+    long, short = _windows(e, kind), _windows(e, kind, run=HEIGHT_RUN)
     return np.array([v[a if k else b].mean() for a, b, k in zip(long, short, kind, strict=True)])
 
 
@@ -385,6 +397,7 @@ class Terrain:
             only[blind] = _masked_blur(base, mask, GRADE / cell)[blind]
             self.graded = np.where(np.isfinite(only), only, self.graded)
         self.edge, self.relative, self.breaks = None, None, np.zeros((0, 2))
+        self.break_pairs = []
         if edge:
             self.set_edge(edge)
 
@@ -409,10 +422,15 @@ class Terrain:
         # mesh (ground.triangulate), so its step lies between them and not across a grid gap
         # (offsets or heights as met, within a run of one kind; the heights themselves where the
         # kind changes)
-        gap = np.hypot(*(np.roll(e[:, :2], -1, 0) - e[:, :2]).T) <= RUN_STEP
+        # Only where the two samples lie within BREAK_CLOSE of each other (edge.py finds a step
+        # to 5 cm): samples a metre apart do not say where between them the neighbour steps.
+        gap = np.hypot(*(np.roll(e[:, :2], -1, 0) - e[:, :2]).T) <= BREAK_CLOSE
         same = np.roll(rel, -1) == rel
         at = np.nonzero(gap & np.where(same, _steps(v), _steps(e[:, 2])))[0]
-        self.breaks = e[np.unique(np.r_[at, (at + 1) % len(e)]), :2].copy()
+        self.break_pairs = [(int(i), int((i + 1) % len(e))) for i in at]
+        k = np.unique(np.r_[at, (at + 1) % len(e)]).astype(int)
+        self.breaks = (_project(footprint, e[k, 0], e[k, 1]) if footprint is not None
+                       else e[k, :2].copy())
         e[:, 2] = _run_mean(e, v, rel) if EDGE_RUN > 0 else v
         self.edge, self.relative = e, rel
         self.ramp, self.free = np.full(len(e), BLEND), np.zeros(len(e))
@@ -423,6 +441,39 @@ class Terrain:
         """[x, y] of the edge samples either side of a step in the neighbour's ground, in edge
         order: ground.triangulate makes them vertices of the footprint."""
         return [] if self.edge is None else self.breaks.tolist()
+
+    def break_lines(self):
+        """For each step in the neighbour (`break_points`), a line from each of its two samples
+        straight in (square to the pair, so along the inward normal on a straight edge), a point
+        every LINE_STEP metres, as deep as the edge blend reaches there (BLEND, or the sample's
+        longer ramp; at most LINE_MAX):
+        ground.triangulate makes them constraints, so on either side of the step the mesh takes
+        only that side's heights and no triangle spans the step inside the edge either. A point
+        on a line is nearest to its own line's sample, so it takes that side's neighbour."""
+        if self.edge is None or not self.break_pairs:
+            return []
+        out = []
+        for i, j in self.break_pairs:
+            depth = min(max(BLEND, float(self.ramp[i]), float(self.ramp[j])), LINE_MAX)
+            t = np.linspace(0.0, depth, int(np.ceil(depth / LINE_STEP)) + 1)
+            # one direction for both, square to the line between them (so each line keeps to the
+            # side its own sample is nearest: heights come from the nearest sample), inward; at a
+            # corner of the footprint (edge.py puts the pair on its two edges) the corner's bisector
+            a, b = self.edge[i, :2], self.edge[j, :2]
+            mx, my = (a + b) / 2
+            n = _normals(self.footprint, np.array([mx]), np.array([my]))[0]  # outward
+            d = b - a
+            sq = np.array([-d[1], d[0]]) / (np.hypot(*d) or 1.0)
+            n = sq if sq @ n > 0 else -sq  # outward, as n was: the line runs along -n, inward
+            for k in (i, j):
+                x, y = _project(self.footprint, self.edge[k, :1], self.edge[k, 1:2])[0]
+                px, py = x - t * n[0], y - t * n[1]
+                inside = _inside(self.footprint, px, py)
+                inside[0] = True  # the sample itself, on the outline
+                stop = int(np.argmin(inside)) if not inside.all() else len(t)
+                keep = zip(px[:stop], py[:stop], strict=True)
+                out.append([[float(a), float(b)] for a, b in keep])
+        return out
 
     def _ramps(self, nbz):
         """Per edge sample: how far in the ground ramps to the neighbour (`ramp`, metres) and how

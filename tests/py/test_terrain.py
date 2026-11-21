@@ -176,35 +176,6 @@ class Grading(unittest.TestCase):
         z = t.neighbour_z(np.array([98.0, 99.0, 100.0, 101.0]), np.zeros(4))
         np.testing.assert_allclose(z, [99.0, 99.0, 100.0, 100.0], atol=0.02)
 
-    def test_offsets_on_a_steep_slope_are_still_averaged(self):
-        # a neighbour that follows the LiDAR up a slope rising 0.4 m per m along the edge, 0.2 m
-        # over it with +-5 cm of noise: its height jumps more than RUN_DZ from sample to sample,
-        # but its offset does not, so the offsets are one run and the noise is averaged out
-        def f(x, y):
-            return 100 + 0.4 * x
-
-        samples = [[x, 0.0, f(x, 0) + 0.2 + (0.05 if x % 2 else -0.05)] for x in range(0, 200)]
-        with tempfile.TemporaryDirectory() as d:
-            t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT)
-        self.assertTrue(t.relative[40:160].all())
-        off = t.edge[40:160, 2]  # the offsets kept: 0.2 m, the +-5 cm swing averaged out
-        np.testing.assert_allclose(off, 0.2, atol=0.03)
-        self.assertLess(np.abs(np.diff(off)).max(), 0.02)
-
-    def test_a_step_in_a_coarse_neighbour_does_not_make_it_follow_the_lidar(self):
-        # a coarse ground that ignores 2 m bumps running across the edge, with a 0.5 m step at
-        # x 100 (two meshes): the samples at the step are still met as heights, not as offsets
-        # from the bumps (which would carry a bump's height inward)
-        def f(x, y):
-            return 100 + 2 * np.sin((x + y) / 2)
-
-        samples = [[x, 0.0, 100.0 if x < 100 else 100.5] for x in range(0, 200)]
-        with tempfile.TemporaryDirectory() as d:
-            t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT)
-        self.assertFalse(t.relative[95:105].any())
-        x = np.array([99.0, 100.0])
-        np.testing.assert_allclose(t.neighbour_z(x, np.full(2, 2.0)), [100.0, 100.5], atol=0.05)
-
     def test_the_samples_either_side_of_a_step_in_the_neighbour_are_break_points(self):
         # a skirt 1 m under another model's sidewalk from x 100, sampled 5 cm either side of the
         # step: the ground mesh takes a vertex at both, so its own step is 5 cm long, not a ramp
@@ -215,6 +186,30 @@ class Grading(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT)
         np.testing.assert_allclose(t.break_points(), [[99.95, 0.0], [100.0, 0.0]])
+        # and a line in from each, along the inward normal, as deep as the blend reaches: the
+        # mesh keeps the two sides apart inside the edge too (no triangle spans the step)
+        lines = t.break_lines()
+        self.assertEqual(len(lines), 2)
+        for line, x in zip(lines, (99.95, 100.0), strict=True):
+            line = np.asarray(line)
+            np.testing.assert_allclose(line[:, 0], x)
+            self.assertAlmostEqual(line[0, 1], 0.0)
+            self.assertGreaterEqual(line[-1, 1], terrain.BLEND - 1e-9)
+            self.assertLessEqual(np.diff(line[:, 1]).max(), terrain.LINE_STEP + 1e-9)
+        # each line's points take their own side's neighbour: met at the edge, eased inward
+        za = t.surface(*np.asarray(lines[0]).T, np.zeros(len(lines[0]), bool))
+        zb = t.surface(*np.asarray(lines[1]).T, np.zeros(len(lines[1]), bool))
+        self.assertAlmostEqual(za[0], 99.0, delta=0.05)
+        self.assertAlmostEqual(zb[0], 100.0, delta=0.05)
+
+    def test_a_step_found_only_to_a_metre_makes_no_break_points(self):
+        # samples a metre apart do not say where the neighbour steps between them: the ground
+        # keeps its ramp there (a sharp step in the wrong place is no better)
+        samples = [[float(x), 0.0, 99.0 if x < 100 else 100.0] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT)
+        self.assertEqual(t.break_points(), [])
+        self.assertEqual(t.break_lines(), [])
 
     def test_a_coarse_neighbours_bend_is_kept(self):
         # a coarse neighbour that ignores the 2 m bumps of the ground (so it is met as heights)

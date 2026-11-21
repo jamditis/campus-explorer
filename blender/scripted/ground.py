@@ -82,6 +82,12 @@ def triangulate(lay):
     # so no triangle runs from the concourse over the rows
     for ring in lay.get("caps", ()):
         add_ring(_densify(ring, GRID))
+    # lines in from a step in the neighbour's ground (Terrain.break_lines): each side of the
+    # step takes only its own heights inside the edge too
+    for line in lay.get("edge_lines", ()):
+        base = len(pts)
+        pts.extend(tuple(p) for p in line)
+        edges.extend((base + i, base + i + 1) for i in range(len(line) - 1))
     for line in lay.get("cap_lines", ()):  # and on its risers, so no triangle spans a step
         dense = [(p[0], p[1]) for p in geom.resample(list(line), GRID, False)] + [tuple(line[-1])]
         base = len(pts)
@@ -155,7 +161,7 @@ def heights(lay, terrain, xy, tris, owner):
 
 def build(lay, terrain, image_dir=None):
     """Make the ground objects (one per kind, verified and UNVERIFIED apart). Returns them."""
-    lay["edge_points"] = terrain.break_points()
+    lay["edge_points"], lay["edge_lines"] = terrain.break_points(), terrain.break_lines()
     xy, tris, owner = triangulate(lay)
     zcap, zfree = heights(lay, terrain, xy, tris, owner)
     capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl
