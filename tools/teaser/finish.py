@@ -66,6 +66,22 @@ def grade(img, g, k, n):
     return img + (out - img) * k
 
 
+def at_time(g, t):
+    """A grade whose `end` settings ease in over the shot (a light change such as dusk)."""
+    end = g.get("end")
+    if not end:
+        return g
+    k = float(smooth(t))
+    out = dict(g)
+    for key, v in end.items():
+        a = g.get(key, 1.0 if key in ("gain", "gamma", "sat") else 0.0)
+        if isinstance(v, list):
+            out[key] = [x + (y - x) * k for x, y in zip(a, v, strict=True)]
+        else:
+            out[key] = a + (v - a) * k
+    return out
+
+
 def letterbox(img, k):
     """Black bars eased in by k toward a 2.39:1 frame."""
     if k <= 0:
@@ -96,7 +112,7 @@ def main(out, fps=30, start=0, end=None, encode=True):
         if os.path.exists(target) and os.path.getmtime(target) > os.path.getmtime(last):
             continue
         img = np.asarray(Image.open(last).convert("RGB"), dtype=np.float32) / 255
-        img = grade(img, plan["grades"][p["grade"]], p["film"], n)
+        img = grade(img, at_time(plan["grades"][p["grade"]], p.get("t", 0)), p["film"], n)
         img = letterbox(img, p["bars"])
         Image.fromarray((img * 255 + 0.5).astype(np.uint8)).save(target, compress_level=1)
     if encode:

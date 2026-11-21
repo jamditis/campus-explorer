@@ -91,6 +91,16 @@ class Signal(unittest.TestCase):
         self.assertGreaterEqual(float(g.min()), 10 ** (-6 / 20) - 1e-4)
 
 
+class Markers(unittest.TestCase):
+    def test_fallback_fills_and_override_wins(self):
+        shots = mix.shot_table(TL)
+        sheet = {"marker_fallback": {"glass": ["dawn", 9.0], "stair": ["dawn", 1.0]},
+                 "marker_override": {"glass": ["dawn", 2.5]}}
+        m = mix.marker_table(sheet, TL, shots, mix.graphic_table(TL))
+        self.assertEqual(m["glass"], 7.5)
+        self.assertEqual(m["stair"], 6.0)
+
+
 class CueSheet(unittest.TestCase):
     def test_a_zero_db_duck_still_ducks(self):
         self.assertEqual(mix.duck_key({"duck": 0}), 1.0)

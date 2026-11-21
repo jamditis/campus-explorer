@@ -5,7 +5,7 @@
 // stopped (or a tab that crashed) carries on from where it was. `--step 6` shoots every 6th frame (an
 // animatic); `--sub 3` averages 3 sub-frames per frame on shots with `blur: true` (motion blur).
 // The camera, the time of day, the interface fade and the 3D graphics all come from storyboard.mjs.
-import { existsSync, mkdirSync, readFileSync, renameSync, appendFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, appendFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -46,7 +46,7 @@ for (const [name, file] of [['semibold', 'InterDisplay-SemiBold.otf'], ['regular
 const plan = { fps, grades: storyboard.grades, frames: [], shots: shots.map((s, i) => ({ name: s.name, start: starts[i] })) };
 for (let f = 0; f < frames; f++) {
   const at = frameAt(f, shots, fps), shot = shots[at.shot], film = shot.film ? shot.film(at.sec) : 1;
-  plan.frames.push({ shot: at.shot, grade: shot.grade ?? 'day', film, bars: shot.bars ? shot.bars(at.sec) : film });
+  plan.frames.push({ shot: at.shot, grade: shot.grade ?? 'day', film, bars: shot.bars ? shot.bars(at.sec) : film, t: +at.t.toFixed(4) });
 }
 writeFileSync(join(out, 'plan.json'), JSON.stringify(plan));
 const mathSource = readFileSync(join(here, 'path.mjs'), 'utf8').replace(/^export /gm, '');
@@ -129,8 +129,22 @@ async function build(i) {
   built = i;
 }
 
+/** What decides a frame's picture; two frames with the same signature are the same image. */
+function signature(f) {
+  const at = frameAt(f, shots, fps), shot = shots[at.shot], sec = at.sec;
+  const g = (shot.graphics ?? []).map(d => { const p = presence(d, sec); return [d.id, +p.up.toFixed(4), +p.down.toFixed(4)]; });
+  return JSON.stringify([at.shot, cameraAt(shot.move ? shot : { ...shot, pos: shot.pos, look: shot.look }, at.t),
+    shot.time ? timeAt(shot, at.t).getTime() : 0, g, shot.ui ? +shot.ui(sec).toFixed(4) : 0, shot.typed ? shot.typed(sec) : '']);
+}
+
 async function shoot(f) {
   const at = frameAt(f, shots, fps), shot = shots[at.shot];
+  // a held frame (nothing moves: the interface bookends) is a copy of the frame before it
+  const prev = join(framesDir, `${String(f - 1).padStart(5, '0')}.png`);
+  if (f > 0 && existsSync(prev) && signature(f) === signature(f - 1)) {
+    copyFileSync(prev, join(framesDir, `${String(f).padStart(5, '0')}.png`));
+    return;
+  }
   await build(at.shot);
   const s = shot._abs, n = Math.round(shot.duration * fps);
   const subs = shot.blur && sub > 1 ? sub : 1, paths = [];
@@ -169,6 +183,7 @@ let done = 0, t0 = Date.now(), crashes = 0;
 for (let i = 0; i < todo.length;) {
   try {
     await shoot(todo[i]); i++; done++;
+    if (done % 200 === 0 && i < todo.length) { log('fresh tab (memory)'); await start(); } // a long run leaks memory
     if (done % 10 === 0 || i === todo.length) {
       const per = (Date.now() - t0) / 1000 / done;
       log(`frame ${todo[i - 1]} (${i}/${todo.length}) ${per.toFixed(1)} s per frame, ${((todo.length - i) * per / 60).toFixed(0)} min left`);
