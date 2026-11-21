@@ -106,3 +106,13 @@ export function isWhite(values, normalized) {
   for (let i = 0; i < values.length; i++) if (values[i] !== one) return false;
   return true;
 }
+
+/**
+ * Whether a far version (lod.mjs) is worth shipping. `full` and `far`: { tris, draws } of the plain (not instanced)
+ * meshes. One that keeps `keep` (80 %) or more of both the triangles and the draw calls is nearly a copy: the viewer
+ * would download it and hold both in GPU memory for almost no saving at distance. An empty one draws nothing.
+ */
+export function farWorthIt(full, far, keep = 0.8) {
+  if (!far.tris) return false;
+  return far.tris < keep * full.tris || far.draws < keep * full.draws;
+}

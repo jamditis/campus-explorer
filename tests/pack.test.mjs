@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { BufferAttribute, Quaternion, Matrix4, Vector3 } from '../vendor/three.module.js';
-import { toNormalizedInt16, farImageSize, linearPart, instanceShift, unitQuats, fewestBits, decodeUnit, isWhite } from '../tools/web-export/pack.mjs';
+import { toNormalizedInt16, farImageSize, linearPart, instanceShift, unitQuats, fewestBits, decodeUnit, isWhite, farWorthIt } from '../tools/web-export/pack.mjs';
 
 test('instance rotations stored as normalized int16 decode to the same turn in three.js', () => {
   const qs = [[0, 0, 0, 1], [0, 0.3826834, 0, 0.9238795], [0.1, -0.7, 0.2, 0.6782330], [0, -1, 0, 0]];
@@ -76,4 +76,12 @@ test('a vertex colour is dropped only when every vertex is opaque white, which m
   assert.equal(isWhite(new Uint8Array([255, 255, 255, 128]), true), false); // see-through
   assert.equal(isWhite(new Float32Array([1, 0.99, 1]), false), false);
   assert.equal(isWhite(new Uint8Array([]), true), false);
+});
+
+test('a far version is kept only when it draws clearly less than its full tile', () => {
+  assert.equal(farWorthIt({ tris: 600000, draws: 140 }, { tris: 200000, draws: 113 }), true); // a third of the triangles
+  assert.equal(farWorthIt({ tris: 1000, draws: 100 }, { tris: 950, draws: 30 }), true); // far fewer draw calls
+  assert.equal(farWorthIt({ tris: 100000, draws: 6 }, { tris: 92000, draws: 6 }), false); // nearly a copy
+  assert.equal(farWorthIt({ tris: 5000, draws: 3 }, { tris: 0, draws: 0 }), false); // empty
+  assert.equal(farWorthIt({ tris: 0, draws: 0 }, { tris: 0, draws: 0 }), false);
 });
