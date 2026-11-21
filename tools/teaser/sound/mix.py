@@ -65,7 +65,7 @@ def resolve(anchor, shots, graphics=None, markers=None):
     {"any": [anchor, ...]} the first that exists; a bare number is already film time.
     Unknown names raise KeyError so a renamed shot fails loudly.
     """
-    if isinstance(anchor, (int, float)):
+    if isinstance(anchor, int | float):
         return float(anchor)
     if isinstance(anchor, dict):
         off = float(anchor.get("offset", 0.0))
@@ -234,7 +234,7 @@ def render_cue(c, src_dir, sources, t0, t1, shots, graphics, markers):
     g = np.full(n, 10 ** (c.get("gain", 0.0) / 20), np.float32)
     pts = []
     for t, db in c.get("env", []):
-        tt = t if isinstance(t, (int, float)) else resolve(t, shots, graphics, markers) - t0
+        tt = t if isinstance(t, int | float) else resolve(t, shots, graphics, markers) - t0
         pts.append([tt, db])
     if pts:
         g *= envelope(None, sorted(pts), n)
