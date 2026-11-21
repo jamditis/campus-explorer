@@ -12,9 +12,10 @@ import { ease } from './path.mjs';
 export const FACTS = {
   places: { text: '90 named places', from: 'viewer/places.json: places.length = 90 (OpenStreetMap)' },
   rooms: { text: '41 rooms', from: 'viewer/rooms.json: rooms.length = 41 (floor signs)' },
-  tiles: { text: '63 squares of 160 m', from: 'models/main/manifest.json: 63 distinct non-empty tile centres, 160 m tiles (README)' },
-  area: { text: '1.6 km²', from: '63 × 0.16 km × 0.16 km = 1.61 km²' },
-  size: { text: '180 MB', from: 'models/main/manifest.json: total_bytes = 180,213,896' },
+  tiles: { text: '67 squares of 160 m', from: 'models/main/manifest.json (sw12, exported November 20, 2026, 9:07 PM ET): 67 distinct non-empty tile centres; 160 m tiles (README)' },
+  area: { text: '1.7 km²', from: '67 × 0.16 km × 0.16 km = 1.72 km²' },
+  size: { text: '186 MB', from: 'models/main/manifest.json: total_bytes = 185,605,520' },
+  stations: { text: '1.4 km station to station', from: 'viewer/places.json at 17c0170 (OpenStreetMap): Montclair Heights station (-454, 266), Montclair State University station (-28, -1063): 1,396 m' },
   sources: { text: 'USGS 3DEP LiDAR · NJ 2020 orthoimagery · OpenStreetMap', from: 'README.md, Data sources' },
   tools: { text: 'Blender · three.js', from: 'README.md' },
   name: { text: 'Campus explorer', from: 'README.md title' },
@@ -57,119 +58,117 @@ export const storyboard = {
     morning: { warm: 0.6, sat: 1.04, contrast: 0.14, lift: [0.015, 0.012, 0.02], gamma: 1.02, vignette: 0.24, grain: 0.016, bloom: 0.3 },
     interior: { warm: 0.9, sat: 1.0, contrast: 0.12, lift: [0.02, 0.015, 0.01], gamma: 1.05, vignette: 0.28, grain: 0.02, bloom: 0.2 },
     day: { warm: 0.4, sat: 1.06, contrast: 0.14, lift: [0.01, 0.01, 0.015], vignette: 0.22, grain: 0.016, bloom: 0.25 },
-    gold: { warm: 1.0, sat: 1.08, contrast: 0.16, lift: [0.02, 0.012, 0.0], vignette: 0.26, grain: 0.016, bloom: 0.35 },
-    blue: { warm: -0.6, sat: 1.0, contrast: 0.14, lift: [0.0, 0.01, 0.03], gamma: 1.04, vignette: 0.3, grain: 0.022, bloom: 0.5 },
+    gold: { warm: 0.7, sat: 1.12, contrast: 0.15, lift: [0.015, 0.01, 0.0], vignette: 0.24, grain: 0.016, bloom: 0.35 },
+    blue: { warm: -0.5, sat: 1.0, contrast: 0.14, lift: [0.0, 0.01, 0.03], gamma: 1.25, gain: 1.5, vignette: 0.3, grain: 0.022, bloom: 0.5 },
   },
   shots: [
     {
-      // the real interface: a visitor types a place into the search box; then the interface dissolves,
-      // the film frame and grade come in, and the camera starts to move
-      name: 'ui_open', duration: 4.0, grade: 'morning', time: MORNING, rel: true, ui: unfade(2.3, 3.3),
-      film: fade(2.6, 4.0), accel: 0.9, decel: 0,
-      typed: sec => 'College of Communication and Media'.slice(0, Math.max(0, Math.floor((sec - 0.4) * 16))),
-      pos: [[700, 520, 700], [690, 512, 690]], look: [[-120, 0, -450], [-120, 0, -450]], fov: 42,
-      shadow: { focus: [-60, 0, -200], half: 900 },
+      // the real interface as a visitor sees it; the search box is typed for real. The interface
+      // dissolves, the film frame and the grade come in; the camera is still (one draw for 4 s)
+      name: 'ui_open', duration: 4.0, grade: 'gold', time: OPEN, rel: true, ui: unfade(2.3, 3.3), film: fade(2.5, 4.0),
+      typed: sec => 'College of Communication and Media'.slice(0, Math.max(0, Math.floor((sec - 0.3) * 20))),
+      pos: [[-250, 380, 700], [-250, 380, 700]], look: [[-100, 0, -150], [-100, 0, -150]], fov: 42,
+      shadow: { focus: [-110, 0, -60], half: 900 },
     },
     {
-      // high over the campus in early light, slow push in; the title stands on the Alumni Green
-      name: 'dawn_wide', duration: 5.0, grade: 'morning', time: MORNING, rel: true, accel: 0, decel: 0.5,
-      pos: [[690, 512, 690], [560, 380, 520], [430, 270, 380]], look: [[-120, 0, -450], [-110, 0, -300], [-100, 0, -120]],
-      fov: 42, fov2: 38, shadow: { focus: [-60, 0, -200], half: 900 },
+      // a drone descends over the campus toward the Alumni Green, where the title stands among the trees
+      name: 'dawn_wide', duration: 5.0, grade: 'gold', time: OPEN, rel: true, accel: 0.45, decel: 0.35,
+      pos: [[-250, 380, 700], [-215, 290, 520], [-175, 195, 335]], look: [[-100, 0, -150], [-104, 0, -20], [-105, 0, 40]],
+      fov: 42, fov2: 38, shadow: { focus: [-110, 0, -60], half: 900 },
       graphics: [
-        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, size: 26, depth: 4, at: [-105, 0, 40], yaw: 0.65, in: 1.0, inDur: 1.0, out: 4.8, outDur: 0.4 },
-        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.note, size: 9, depth: 1.5, at: [-80, 0, 75], yaw: 0.65, in: 1.8, inDur: 0.8, out: 4.8, outDur: 0.4 },
+        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, size: 14, depth: 2.4, at: [-106, 0, 36], yaw: -0.22, in: 1.3, inDur: 1.1, out: 4.75, outDur: 0.25 },
+        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.note, size: 4.6, depth: 0.8, at: [-102, 0, 54], yaw: -0.22, in: 2.1, inDur: 0.9, out: 4.75, outDur: 0.25 },
       ],
     },
     {
-      // a low glide in to the College of Communication and Media past the trees; its name stands on the lawn
-      name: 'ccm_glide', duration: 4.5, grade: 'morning', time: MORNING, rel: true, accel: 0.25, decel: 0.15,
-      pos: [[-110, 14, -40], [-80, 7, -20], [-48, 3.5, -10]], look: [[-10, 10, 0], [0, 9, -5], [-20, 3.5, -8]],
-      fov: 40, fov2: 48, shadow: { focus: [-40, 0, -10], half: 90 },
+      // down from over the library roof to the plaza; the college's name stands along its west front
+      name: 'ccm_glide', duration: 4.5, grade: 'gold', time: GOLD, rel: false, move: CCM, span: [0, 0.5],
+      shadow: { focus: [-30, 137, -15], half: 80 },
       graphics: [
-        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 3.4, depth: 0.6, at: [-62, 0, 6], yaw: -1.2, in: 0.5, inDur: 0.8, out: 3.9, outDur: 0.4 },
-        { id: 'dim_ccm', kind: 'dim', a: [-36, 0, 22], b: [-36, 11, 22], head: 0.9, tick: 0.8, width: 0.16, up: [0, 0, 1], in: 1.2, inDur: 0.8, out: 3.9, outDur: 0.3 },
+        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.7, depth: 0.32, at: [-26.5, 137.4, 9.5], yaw: -Math.PI / 2, in: 0.7, inDur: 0.9, out: 4.5, outDur: 0.01 },
       ],
     },
     {
-      // through the entrance glass into the double-height atrium; a handheld drift up toward the stair
-      name: 'atrium', duration: 4.5, grade: 'interior', time: MORNING, rel: false, accel: 0, decel: 0.5, drift: 0.05,
-      pos: [[-30, 139.6, -8.5], [-18, 139.4, -9], [-8, 140.6, -10.5]], look: [[0, 139.8, -9], [5, 140.2, -10], [6, 142.6, -2]],
-      fov: 52, fov2: 58, shadow: { focus: [-20, 137, -8], half: 60 },
+      // through the entrance glass into the double-height atrium, drifting toward the stair; a room on floor 2
+      name: 'atrium', duration: 4.5, grade: 'interior', time: GOLD, rel: false, move: CCM, span: [0.5, 1],
+      shadow: { focus: [-30, 137, -15], half: 80 },
       graphics: [
-        { id: 'room_2012', kind: 'text', text: '2012', ...T.name, size: 0.7, depth: 0.08, bevel: 0.006, at: [-5.47, 143.0, -0.69], yaw: -1.6, in: 2.4, inDur: 0.6, out: 4.4, outDur: 0.2, rise: 'extrude' },
-        { id: 'title_rooms', kind: 'text', text: '41 rooms', ...T.note, size: 0.5, depth: 0.06, bevel: 0.004, at: [-5.4, 142.3, -0.7], yaw: -1.6, in: 2.8, inDur: 0.6, out: 4.4, outDur: 0.2, rise: 'extrude' },
+        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.7, depth: 0.32, at: [-26.5, 137.4, 9.5], yaw: -Math.PI / 2, in: -9, out: 0.8, outDur: 0.5 },
+        { id: 'room_2012', kind: 'text', text: 'Room 2012', ...T.name, size: 0.42, depth: 0.06, bevel: 0.005, at: [-5.6, 142.55, -0.7], yaw: -Math.PI / 2, in: 2.2, inDur: 0.6, rise: 'extrude' },
+        { id: 'title_rooms', kind: 'text', text: '41 rooms, numbered from the floor signs', ...T.note, size: 0.2, depth: 0.03, bevel: 0.002, at: [-5.6, 142.2, -0.7], yaw: -Math.PI / 2, in: 2.7, inDur: 0.6, rise: 'extrude' },
       ],
     },
     {
-      // the Alumni Green: a crane rise that reveals Susan A. Cole Hall, in high morning light
-      name: 'green', duration: 4.5, grade: 'day', time: NOON, rel: true, accel: 0.3, decel: 0.4,
-      pos: [[-60, 3, 10], [-62, 18, 0], [-66, 40, -12]], look: [[-110, 6, 60], [-112, 8, 80], [-114, 6, 95]],
-      fov: 38, shadow: { focus: [-100, 0, 55], half: 140 },
+      // a crane rise past Kasser Theater's plaza over the Alumni Green, low sun behind; Cole Hall pinned
+      name: 'green', duration: 4.5, grade: 'gold', time: LOW, rel: true, accel: 0.35, decel: 0.4,
+      pos: [[-182, 3, 50], [-178, 14, 45], [-170, 32, 38]], look: [[-100, 6, 52], [-98, 4, 56], [-95, 0, 60]],
+      fov: 38, shadow: { focus: [-130, 0, 55], half: 170 },
       graphics: [
-        { id: 'title_green', kind: 'text', text: 'Alumni Green', ...T.name, size: 5, depth: 0.9, at: [-98, 0, 40], yaw: -0.8, in: 0.4, inDur: 0.8, out: 4.3, outDur: 0.3 },
-        { id: 'pin_cole', kind: 'pin', at: [-113, 22, 95], height: 10, radius: 0.35, in: 1.6, inDur: 0.6, out: 4.3, outDur: 0.3 },
-        { id: 'title_cole', kind: 'text', text: 'Susan A. Cole Hall', ...T.note, size: 3.2, depth: 0.5, at: [-113, 35, 95], yaw: -0.6, in: 1.9, inDur: 0.6, out: 4.3, outDur: 0.3 },
+        { id: 'title_green', kind: 'text', text: 'Alumni Green', ...T.name, size: 4.2, depth: 0.7, at: [-112, 0, 38], yaw: -1.49, in: 0.5, inDur: 0.9, out: 4.3, outDur: 0.2 },
+        { id: 'pin_cole', kind: 'pin', at: [-113, 20, 95], height: 9, radius: 0.32, in: 1.7, inDur: 0.6, out: 4.3, outDur: 0.2 },
+        { id: 'title_cole', kind: 'text', text: 'Susan A. Cole Hall', ...T.note, size: 2.6, depth: 0.4, at: [-113, 32.5, 95], yaw: -1.35, in: 2.0, inDur: 0.6, out: 4.3, outDur: 0.2 },
       ],
     },
     {
-      // one continuous move, south-west to north: the station, Sprague Field, up the ridge to the stadium,
-      // the decks and the Village. A dimension line on the ground measures the run.
-      name: 'travel', duration: 9.0, grade: 'day', time: AFTERNOON, rel: true, accel: 0.18, decel: 0.2,
-      pos: [[-560, 70, 380], [-420, 110, 120], [-250, 150, -350], [-60, 150, -800], [-20, 170, -1150], [-60, 200, -1420]],
-      look: [[-454, 0, 262], [-330, 0, 100], [-150, 0, -500], [80, 0, -960], [-120, 0, -1180], [-200, 0, -1600]],
-      fov: 46, fov2: 40, shadow: { focus: [-200, 0, -600], half: 1100 },
+      // one continuous move from Montclair Heights station up the ridge past Sprague Field, the stadium and
+      // the decks to the Village; a measured line joins the campus's two stations
+      name: 'travel', duration: 9.0, grade: 'day', time: LOW, rel: true, accel: 0.2, decel: 0.22,
+      pos: [[-600, 60, 420], [-470, 95, 160], [-300, 130, -260], [-170, 150, -700], [-110, 170, -1080], [-120, 200, -1320]],
+      look: [[-454, 0, 266], [-336, 0, 100], [-150, 0, -560], [40, 0, -960], [-60, 0, -1160], [-190, 0, -1520]],
+      fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
-        { id: 'dim_travel', kind: 'dim', a: [-454, 2, 262], b: [-200, 2, -1460], head: 24, tick: 14, width: 3.2, up: [0.98, 0, 0.2], in: 0.6, inDur: 2.4, out: 8.6, outDur: 0.4 },
-        { id: 'title_travel', kind: 'text', text: '1.7 km', ...T.title, size: 40, depth: 5, at: [-250, 2, -600], yaw: 0.6, flat: true, in: 3.2, inDur: 1.0, out: 8.6, outDur: 0.4, rise: 'extrude' },
+        { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 30, tick: 16, width: 3.5, up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 40, -380], yaw: 0.6, in: 3.0, inDur: 1.0, out: 8.7, outDur: 0.3 },
       ],
     },
     {
-      // long lens over the ridge to the Manhattan skyline as the light goes; lamps come on
-      name: 'dusk', duration: 6.0, grade: 'blue', time: GOLD, time2: BLUE, timeFrom: 0.05, timeTo: 0.8, rel: true,
-      accel: 0.4, decel: 0.4, pos: [[-260, 85, -40], [-250, 88, -60]], look: [[2000, 40, 300], [2000, 40, 280]],
-      fov: 20, fov2: 18, shadow: { focus: [0, 0, 0], half: 600 },
+      // a long lens over the ridge as the sun sets and the light goes blue; the numbers stand on the ridge
+      name: 'dusk', duration: 6.0, grade: 'blue', time: SET, time2: BLUE, timeFrom: 0.05, timeTo: 0.85, rel: true,
+      accel: 0.4, decel: 0.4, pos: [[-150, 100, -60], [-150, 102, -80]], look: [[1800, 40, 900], [1800, 40, 860]],
+      fov: 12, fov2: 11, shadow: { focus: [0, 0, 0], half: 800 },
       graphics: [
-        { id: 'title_skyline', kind: 'text', text: '90 named places · 41 rooms · 1.6 km²', ...T.note, size: 7, depth: 1, at: [-60, 30, -20], yaw: -1.45, in: 3.2, inDur: 0.8, out: 5.8, outDur: 0.3 },
+        { id: 'title_skyline', kind: 'text', text: '90 named places · 41 rooms · 1.7 km²', ...T.note, size: 5, depth: 0.8, at: [130, 10, 70], yaw: -2.02, in: 2.6, inDur: 0.8, out: 5.8, outDur: 0.2 },
       ],
     },
     {
       // the end title stands over the campus at blue hour
-      name: 'end_title', duration: 3.5, grade: 'blue', time: BLUE, rel: true, accel: 0.4, decel: 0.6,
-      pos: [[-640, 360, 520], [-610, 345, 490]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
-      shadow: null,
+      name: 'end_title', duration: 3.5, grade: 'blue', time: BLUE, rel: true, accel: 0.3, decel: 0.7,
+      pos: [[-660, 370, 540], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
-        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, size: 34, depth: 5, at: [-230, 30, 0], yaw: -0.85, in: 0.3, inDur: 1.0 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, size: 11, depth: 1.5, at: [-205, 6, 30], yaw: -0.85, in: 1.0, inDur: 0.8 },
+        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, size: 50, depth: 7, at: [-380, 0, 150], yaw: -0.61, in: 0.3, inDur: 1.1 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, size: 14, depth: 2, at: [-405, 0, 190], yaw: -0.61, in: 1.0, inDur: 0.9 },
       ],
     },
     {
       // the film frame eases out and the real interface returns over the same view: it all runs in the browser
-      name: 'ui_close', duration: 4.0, grade: 'blue', time: BLUE, rel: true, still: false,
-      film: unfade(0.2, 1.4), ui: fade(0.6, 1.6), accel: 0, decel: 1,
-      pos: [[-610, 345, 490], [-606, 343, 486]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
+      name: 'ui_close', duration: 4.0, grade: 'blue', time: BLUE, rel: true,
+      film: unfade(0.3, 1.5), ui: fade(0.8, 1.8),
+      pos: [[-640, 360, 520], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
-        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, size: 34, depth: 5, at: [-230, 30, 0], yaw: -0.85, in: -5 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, size: 11, depth: 1.5, at: [-205, 6, 30], yaw: -0.85, in: -5 },
+        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, size: 50, depth: 7, at: [-380, 0, 150], yaw: -0.61, in: -9 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, size: 14, depth: 2, at: [-405, 0, 190], yaw: -0.61, in: -9 },
       ],
     },
   ],
   // hit points for the sound (seconds into a shot)
   markers: [
-    { name: 'keypress', shot: 'ui_open', at: 0.4 },
+    { name: 'keypress', shot: 'ui_open', at: 0.3 },
     { name: 'ui_fade', shot: 'ui_open', at: 2.3 },
-    { name: 'glass', shot: 'atrium', at: 1.1 },
-    { name: 'stair', shot: 'atrium', at: 2.6 },
-    { name: 'glass_out', shot: 'atrium', at: 4.4 },
+    { name: 'title_main_land', shot: 'dawn_wide', at: 2.4 },
+    { name: 'glass', shot: 'atrium', at: 0.5 },
+    { name: 'stair', shot: 'atrium', at: 2.4 },
+    { name: 'glass_out', shot: 'atrium', at: 4.5 },
     { name: 'travel_start', shot: 'travel', at: 0 },
-    { name: 'station', shot: 'travel', at: 0.6 },
-    { name: 'sprague', shot: 'travel', at: 2.0 },
-    { name: 'stadium', shot: 'travel', at: 5.2 },
-    { name: 'decks', shot: 'travel', at: 6.4 },
-    { name: 'travel_peak', shot: 'travel', at: 4.2 },
-    { name: 'village', shot: 'travel', at: 7.6 },
+    { name: 'station', shot: 'travel', at: 0.5 },
+    { name: 'sprague', shot: 'travel', at: 1.9 },
+    { name: 'travel_peak', shot: 'travel', at: 4.0 },
+    { name: 'stadium', shot: 'travel', at: 5.4 },
+    { name: 'decks', shot: 'travel', at: 6.6 },
+    { name: 'village', shot: 'travel', at: 8.2 },
     { name: 'dusk_turn', shot: 'dusk', at: 0.3 },
-    { name: 'lamps', shot: 'dusk', at: 3.6 },
-    { name: 'skyline', shot: 'dusk', at: 2.0 },
-    { name: 'ui_return', shot: 'ui_close', at: 0.6 },
+    { name: 'skyline', shot: 'dusk', at: 1.5 },
+    { name: 'lamps', shot: 'dusk', at: 4.4 },
+    { name: 'title_end_land', shot: 'end_title', at: 1.4 },
+    { name: 'ui_return', shot: 'ui_close', at: 0.8 },
   ],
 };
