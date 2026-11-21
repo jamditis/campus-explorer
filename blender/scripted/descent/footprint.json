@@ -1,6 +1,6 @@
 {
  "zone": "yd_footprint",
- "notes": "draft",
+ "notes": "The ground this area owns (2.76 ha): Yogi Berra Drive's descent from the stadium area to Valley Road, the wooded slope it passes through between the north-east area and Valley Road, and Valley Road itself (a county road, CR 621, not campus ground) for 170 m round the drive's mouth, with the mouth of Charles Street. Names from OpenStreetMap (Yogi Berra Drive, way 233324750, one-way up from Valley Road; Valley Road, way 312841179; Charles Street, way 11733749); no building stands inside. The drive leaves Valley Road southbound by a deceleration lane and a painted gore, runs south-west beside it behind a wooded island, turns through a hairpin with a retaining wall of up to 6 m on its outer side, and climbs north at about 10 % to the stadium area. Frame used for Valley Road: origin (404, 646), heading 67.7 deg (osm 312841179 runs straight here; the centre line lies at t -0.85 to -1.15 in it), s along, t to the east. West: x 300 from y 716.76 to 826, shared with the north-east area (its east edge, the wood edge). North-west: y 826 from x 300 to 345 and x 345 from y 826 to 918.3, shared with the stadium area; Yogi Berra Drive crosses x 345 between y 886.8 and 900.8, where the stadium plan's ST_road_YB_one_way ends. North: a straight run from (345, 918.3) on the OSM campus line (way 233913199) to (455.8, 835.5), 0 to 11 m inside the campus line (on it at x 345) and 16 m or more from the private houses on Adams Terrace and Valley Road; then square across Valley Road at s 195, 10 m south of the Pino Court mouth and its crosswalk. East: t 10.5, 4.75 to 5.3 m behind Valley Road's east curb, 2.2 m or more from the nearest house (osm 1135575457 at t 12.7); it crosses the Charles Street mouth. South: square across Valley Road at s 26 and on along that line to x 300, 14 m or more south of the hairpin. Neighbours outside the shared edges are the north model's far-field ground (BD_farfield_3DEP, triangles up to 100 m across) and the 4 km skirt; both lie off the LiDAR here by -1.7 to +3.2 m over the woods (the wooded slope west of Valley Road is the worst: +2.5 to +3.2 m at x 415 to 440 on the north edge), so soft ground bends to them over 4 m there (BLEND). Across Valley Road at both cuts they lie within 0.1 to 1.2 m of the LiDAR road, and Valley Road and the Charles Street mouth are marked road. No building, paving, fence or instanced object of another model lies inside; the north-east and stadium areas meet this one along the shared edges from the same LiDAR. Evidence: NJ 2020 ortho (0.15 m), NJ NW 6-County 2017 LiDAR (ground returns, 3 per m2), OpenStreetMap (2026-11-21); no photograph of Joe's shows this place.",
  "footprint": [
   [
    423.58,
@@ -32,7 +32,7 @@
   ]
  ],
  "supersede": {
-  "notes": "draft",
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area with its centre inside, m2, from a dump of the published sw14 tiles: Context_skirt_3DEP_ortho_4km 27650, BD_farfield_3DEP 28261); both run on beyond the outline. drop: far_houses (none inside; kept as in every area, so a far-field house mapped later inside is not left standing in the wood). Far-field trees inside are removed by the export.",
   "clip": [
    "Context_skirt",
    "BD_farfield_3DEP"
