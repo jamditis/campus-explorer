@@ -14,6 +14,7 @@ import numpy as np
 
 BLEND = 4.0  # width of the band along the footprint edge that blends into the neighbours' ground
 GRADE = 5.0  # smoothing length of paved ground, metres
+GRADE_RIDGE = 0.3  # cells squared: how firmly a slope paved cells hardly show is held level
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
 LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
@@ -81,6 +82,45 @@ def _masked_blur(a, mask, sigma):
     """Gaussian blur of `a` that uses the cells of `mask` only. NaN where no masked cell is near."""
     w = _blur(mask.astype(float), sigma)
     return np.where(w > 0.02, _blur(np.where(mask, a, 0.0), sigma) / np.maximum(w, 1e-9), np.nan)
+
+
+def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE):
+    """Like `_masked_blur`, but each cell takes the value at its centre of a plane fitted to the
+    masked cells round it (Gaussian weights): a local linear fit. Inside a wide paved area it is
+    the same smoothing; where the masked cells lie on one side only (the end of a drive or walk, a
+    lot's edge) a mean is pulled toward them, up or down the slope, and a plane is not. `ridge`
+    (cells squared, times the weight) holds a slope that the cells hardly show (across a strip one
+    or two cells wide) toward level, so it never amplifies the noise. NaN where no masked cell is
+    near."""
+    ny, nx = a.shape
+    m = mask.astype(float)
+    z0 = float(np.nanmean(a[mask])) if mask.any() else 0.0
+    z = np.where(mask, a - z0, 0.0)
+    v, u = np.mgrid[0:ny, 0:nx].astype(float)
+    u -= nx / 2
+    v -= ny / 2
+
+    def b(q):
+        return _blur(q, sigma)
+
+    s0, su, sv = b(m), b(m * u), b(m * v)
+    suu, suv, svv = b(m * u * u), b(m * u * v), b(m * v * v)
+    sz, suz, svz = b(z), b(z * u), b(z * v)
+    # moments about each cell's own centre
+    cu, cv = su - u * s0, sv - v * s0
+    cuu = suu - 2 * u * su + u * u * s0 + ridge * s0
+    cvv = svv - 2 * v * sv + v * v * s0 + ridge * s0
+    cuv = suv - u * sv - v * su + u * v * s0
+    cuz, cvz = suz - u * sz, svz - v * sz
+    mat = np.stack(
+        [np.stack([s0, cu, cv], -1), np.stack([cu, cuu, cuv], -1), np.stack([cv, cuv, cvv], -1)],
+        -2,
+    )
+    ok = s0 > 0.02
+    rhs = np.stack([sz, cuz, cvz], -1)
+    out = np.full(a.shape, np.nan)
+    out[ok] = np.linalg.solve(mat[ok], rhs[ok][..., None])[..., 0, 0] + z0
+    return out
 
 
 def _sample(a, x, y, x0, y1, cell):
@@ -218,7 +258,7 @@ class Terrain:
                 )
                 idx = np.nonzero(box)[0]
                 mask[idx[_inside(ring, gx[idx], gy[idx])]] = True
-            only = _masked_blur(base, mask.reshape(ny, nx), GRADE)
+            only = _masked_plane(base, mask.reshape(ny, nx), GRADE / cell)
             self.graded = np.where(np.isfinite(only), only, self.graded)
         self.edge, self.relative = None, None
         if edge:

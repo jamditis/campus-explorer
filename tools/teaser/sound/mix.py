@@ -44,6 +44,8 @@ def graphic_table(timeline):
     out = {}
     for s in timeline["shots"]:
         for g in s.get("graphics", []):
+            if g["id"] in out or g.get("in", 0.0) < 0:  # carried over from an earlier shot
+                continue
             t_in = s["start"] + g.get("in", 0.0)
             dur = g.get("inDur", 0.6)
             end = g.get("out")

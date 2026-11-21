@@ -50,6 +50,25 @@ travelling shot, the last chord on the end title), `dur` or `until`, `gain` (dB)
 anchors), `fade_in` / `fade_out` (equal-power), `bus` (`amb`, `place`, `music`, `fx`, `ui`) and
 `duck` (the beds and the music dip under this cue).
 
+## Score edit (45 s storyboard)
+
+The Grieg recording is cut in three pieces. Every cut sits on a phrase boundary of the recording,
+found from its own level envelope (troughs between phrases) and onsets, and the first cut was chosen
+among the possible trough pairs by how well the pitch content on both sides matches:
+
+- A: from the start (the flute's first note at 0.25 s) to 17.7 s, just before the note at 17.75 s.
+  It is placed so the flute enters as the dawn wide shot starts.
+- B: from 42.25 s (the trough before the crescendo) with a 0.24 s equal-power crossfade from A; the
+  first full orchestral downbeat (47.15 s) lands on `travel_peak`. The two sides of the cut share
+  their pitch classes (C#, D#, F#/G#, B; chroma similarity 0.83). B settles after the peak and fades
+  over the dusk turn.
+- C: from the hush at 214.4 s; the last chord (onset 218.35 s) lands on the end title's landing and
+  fades as the interface returns.
+
+All three are anchored to `travel_peak` and the end title, so a re-timed cut moves them together.
+
 Each 3D title has the same signature: a reversed cloth whoosh that lifts into it, a thump on a large
-hollow wooden surface as it lands, and a small metal click as a glint. Dimension lines draw with a
-pen scratch and two switch clicks; pins get a wooden tick.
+hollow wooden surface as it lands, and a small metal click as a glint. Smaller lines of text (a
+subtitle, a room count, a building name, the address) get the glint only. Dimension lines draw with a
+pen scratch and switch clicks; pins get a wooden tick. The interface opens on a few real laptop key
+presses while the search box is typed.

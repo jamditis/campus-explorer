@@ -63,6 +63,47 @@ class Grading(unittest.TestCase):
         edge = t.surface(x, np.full(len(x), 51.0), np.ones(len(x), bool)) - (100 - 0.02 * x)
         self.assertLess(np.abs(edge).max(), 0.05)  # 1 m from a 1.5 m bank, the road stays on grade
 
+    def test_a_narrow_strip_down_a_slope_follows_it_to_its_end(self):
+        # a drive 3 m wide climbing 0.1 m per m northward, ending in soft ground at y 60: its end
+        # has paved cells on one side only and must not take their (higher) mean
+        def f(x, y):
+            return 100 + 0.1 * y
+
+        drive = [(98.5, 20), (101.5, 20), (101.5, 60), (98.5, 60)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), paved=[drive])
+        y = np.arange(20.5, 60.0, 1.0)
+        got = t.surface(np.full(len(y), 100.0), y, np.ones(len(y), bool))
+        np.testing.assert_allclose(got, f(100, y), atol=0.04)
+
+    def test_a_walk_ending_at_the_footprint_edge_follows_the_slope_there(self):
+        # a walk 1.6 m wide running down 0.12 m per m to the footprint edge at y 0, where the
+        # ground runs on outside (another model's road)
+        def f(x, y):
+            return 100 + 0.12 * y
+
+        walk = [(49.2, 0), (50.8, 0), (50.8, 30), (49.2, 30)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), footprint=FOOT, paved=[walk])
+        y = np.array([0.1, 1.0, 2.0, 5.0, 15.0])
+        got = t.surface(np.full(len(y), 50.0), y, np.ones(len(y), bool))
+        np.testing.assert_allclose(got, f(50, y), atol=0.04)
+
+    def test_a_wide_lot_on_noisy_ground_stays_smooth_to_its_edges(self):
+        # the grading still takes the LiDAR noise out, also along a lot's edge and in its corners
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), paved=[[(40, 20), (90, 20), (90, 70), (40, 70)]])
+        xs, ys = np.meshgrid(np.arange(40.5, 90.0, 1.0), np.arange(20.5, 70.0, 1.0))
+        x, y = xs.ravel(), ys.ravel()
+        road = t.surface(x, y, np.ones(len(x), bool)) - (100 - 0.02 * x)
+        soft = t.surface(x, y, np.zeros(len(x), bool)) - (100 - 0.02 * x)
+        self.assertLess(np.abs(road).max(), 0.03)
+        self.assertLess(road.std(), soft.std() / 2)
+        # a plane fitted at the rim leans on fewer cells than in the middle: a little less smooth
+        # there, but still well under the soft ground's noise and without the mean's lean
+        rim = (np.minimum(x - 40, 90 - x) < 2) | (np.minimum(y - 20, 70 - y) < 2)
+        self.assertLess(road[rim].std(), 0.7 * soft[rim].std())
+
     def test_paving_meets_a_level_neighbour_but_not_a_bank(self):
         samples = [[x, 0.0, 99.0] for x in range(0, 200)]  # neighbour ground along the south edge
         with tempfile.TemporaryDirectory() as d:

@@ -48,6 +48,11 @@ class Anchors(unittest.TestCase):
         self.assertAlmostEqual(mix.resolve(land, self.shots, self.gr), 7.85)
         self.assertEqual(mix.resolve(out, self.shots, self.gr), 12.0)
 
+    def test_graphic_carried_into_a_later_shot_keeps_its_first_landing(self):
+        tl = dict(TL, shots=TL["shots"] + [{"name": "after", "start": 20.0, "duration": 4.0,
+                                             "graphics": [{"id": "title", "in": -5}]}])
+        self.assertAlmostEqual(mix.graphic_table(tl)["title"]["land"], 7.85)
+
     def test_marker(self):
         at = {"marker": "glass", "offset": 0.25}
         self.assertEqual(mix.resolve(at, self.shots, self.gr, TL["markers"]), 7.5)

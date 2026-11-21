@@ -16,8 +16,8 @@ credited anyway.
 Put this text in the video description, or on the end card, wherever the film is published:
 
 > Sound: field recordings and sound effects from radio aporee ::: maps, the Yellowstone National Park
-> Sound Library (National Park Service), the USC School of Cinematic Arts sound effects libraries, and
-> Wikimedia Commons, via the Internet Archive. Music: Edvard Grieg, "Morning" from Peer Gynt Suite
+> Sound Library (National Park Service) and the USC School of Cinematic Arts sound effects libraries,
+> via the Internet Archive. Music: Edvard Grieg, "Morning" from Peer Gynt Suite
 > No. 1, performed by the Czech National Symphony Orchestra, recorded and released into the public
 > domain by Musopen.
 >
@@ -72,6 +72,7 @@ on radio aporee ::: maps (archived on the Internet Archive), or a US government 
 | `garage_poz` | "Poznan, underground parking lot - garage ambience" (2012-08-12) | maciej janasik | https://archive.org/details/aporee_14347_16700 |
 | `library_queens` | "Flushing, Queens, NY - Queens Library Quiet Room 1" (2017-03-04) | susanfedynak | https://archive.org/details/aporee_35418_40678 |
 | `atrium_denhaag` | "City Hall, Spui, Den Haag - Atrium City Hall" (2015-08-06) | Thijs Geritz | https://archive.org/details/aporee_27340_33642 |
+| `ui_typing` | "106 W Oliver St, Baltimore, MD - Sound of typing" (laptop keyboard, 2023-12-10) | mzhou | https://archive.org/details/aporee_62283_71764 |
 | `stair_houston` | "Sound in a stairwell (level 2), Memorial Hermann Hospital, Houston, Texas" (2012-08-24) | ryan urban | https://archive.org/details/aporee_14583_16975 |
 | `robin_nps` | "American Robin", Yellowstone National Park Sound Library (2016-05-06) | NPS & MSU Acoustic Atlas / Jennifer Jerrett | https://archive.org/details/nps-yell-sounds-americanrobins (from https://www.nps.gov/yell/learn/photosmultimedia/sounds-americanrobins.htm) |
 | `wind_nps_strong` | "Soundscape - Lower Geyser Basin (Strong Wind)", Yellowstone National Park Sound Library (2015-03-21) | NPS / Peter Comley | https://archive.org/details/nps-yell-sounds-soundscapes, file 03 |
@@ -101,13 +102,6 @@ https://archive.org/details/sound-effect-libraries-red-gold-sunset-editorial.
 | `fx_sticks` | R15-80 Wooden Sticks | https://archive.org/details/Red_Library_Foley_Props_1 |
 | `fx_metal_clicks` | MECHClik Metal clicks; several takes | https://archive.org/details/SSE_Library_MECHANICAL |
 | `fx_switches` | MECHSwtch Footsteps; turning off several light switches | https://archive.org/details/SSE_Library_MECHANICAL |
-| `fx_latch` | DOORHdwr Short door latch | https://archive.org/details/SSE_Library_DOORS |
-
-Wikimedia Commons, CC0 1.0:
-
-| Key | Recording | Author | Source |
-|---|---|---|---|
-| `ui_click` | "Computer mouse single click" (NEC ECM-S5002 mouse, 2016-06-09) | Darklanlan | https://commons.wikimedia.org/wiki/File:Computer_mouse_single_click.ogg |
 
 ## Fetched but not in the mix
 
@@ -118,5 +112,6 @@ credit unless they are used.
 - `garage_dus` Frank Schulte, "Düsseldorf, parking garage", PDM, https://archive.org/details/aporee_15415_17956
 - `dawn_irondequoit` adphoenix, "Suburban Birds in the Morning", PDM, https://archive.org/details/aporee_64370_74286
 - `train_medford` Bagel_Sandwich, "outbound Lowell commuter rail arrives", PDM, https://archive.org/details/aporee_13660_15930
-- `fx_impact_sweet`, `fx_metal_thump`, `fx_paper_sheet`, `fx_swishes`, `fx_rustle_click` (USC libraries, CC0)
+- `fx_impact_sweet`, `fx_metal_thump`, `fx_paper_sheet`, `fx_swishes`, `fx_rustle_click`, `fx_latch` (USC libraries, CC0)
+- `ui_click` Darklanlan, "Computer mouse single click", CC0, https://commons.wikimedia.org/wiki/File:Computer_mouse_single_click.ogg (the 45 s cut has no click)
 - `mus_borodin_steppes` Borodin, "In the Steppes of Central Asia", Czech National Symphony Orchestra, Musopen, CC0 (same item as the Grieg)
