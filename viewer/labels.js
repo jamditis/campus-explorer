@@ -4,7 +4,7 @@
 // Layout runs only when the camera moved, writes transforms only, and never reads layout in the frame path (sizes are measured once per label).
 import * as THREE from 'three';
 import { labelPriority, distanceOpacity, inRange, declutter, sourceTitle } from './labels-math.js';
-import { visibleRooms } from './rooms-math.js';
+import { visibleRooms, roomHere, sightPass, volumeAt } from './rooms-math.js';
 
 const STORE = 'campus-labels';
 const ABOVE = 6;            // metres above the top of the model
@@ -123,18 +123,42 @@ export function createLabels(app) {
     l.shown = false; l.el.classList.remove('lbl-shown');
   }
 
+  // Room labels by line of sight: of the rooms near enough on this floor (visibleRooms), show those whose label
+  // point a ray from the camera reaches without hitting a wall, and always the room the camera stands in.
+  // At most SIGHT_RAYS rays a pass, only when the camera moved, on collision already built (never stalls).
+  const SIGHT_RAYS = 12, sightMemo = new Map(), sightAt = new THREE.Vector3(Infinity, 0, 0), _sd = new THREE.Vector3();
+  let sightShown = new Set(), sightFrom = 0; // sightFrom: the pass at which the camera last moved
+  function roomsInSight() {
+    const ids = visibleRooms(app.rooms, camera.position, app.state.mode);
+    if (camera.position.distanceToSquared(sightAt) >= 1e-6) { sightAt.copy(camera.position); sightFrom = (sightMemo.pass ?? 0) + 1; }
+    else if (ids.every(id => (sightMemo.get(id)?.pass ?? 0) >= sightFrom)) return sightShown; // all checked from here
+    const cast = id => {
+      const r = app.rooms.rooms[id];
+      _sd.set(r.x, r.y + ROOM_ABOVE, r.z).sub(camera.position);
+      const d = _sd.length(); if (d < 0.5) return true;
+      return !app.world.raycast(camera.position, _sd.divideScalar(d), d - 0.3, { builtOnly: true });
+    };
+    sightShown = sightPass(ids, sightMemo, cast, { budget: SIGHT_RAYS, here: roomHere(app.rooms, camera.position) });
+    // a room checked earlier but out of reach now must not come back from the memo
+    for (const id of sightShown) if (!ids.includes(id)) sightShown.delete(id);
+    if (ids.some(id => (sightMemo.get(id)?.pass ?? 0) < sightFrom)) dirty = true; // more rays on the next frame
+    return sightShown;
+  }
+
   function layout() {
     dirty = false;
     if (!visible || !labels.length) return;
     const moving = app.state.mode !== 'orbit';
     const max = width < 700 ? 12 : 28;
     const items = [], owners = [];
-    const rooms = app.rooms?.rooms.length ? new Set(visibleRooms(app.rooms, camera.position, app.state.mode)) : null;
+    const rooms = app.rooms?.rooms.length ? roomsInSight() : null;
+    // inside a building with rooms, place names (seen through its walls and roof) give way to room numbers
+    const indoors = !!app.rooms?.volumes.length && volumeAt(app.rooms.volumes, camera.position) >= 0;
     for (const l of labels) {
       const isOn = l.place === highlighted;
       const dist = camera.position.distanceTo(l.anchor);
       const ok = l.room >= 0 ? !!rooms?.has(l.room)
-        : isOn ? !(moving && dist < NEAR_MOVING) : inRange(l.place.kind, dist, { far: FAR, parking: PARKING, minimum: moving ? NEAR_MOVING : 0 });
+        : isOn ? !(moving && dist < NEAR_MOVING) : !indoors && inRange(l.place.kind, dist, { far: FAR, parking: PARKING, minimum: moving ? NEAR_MOVING : 0 });
       if (!ok) { hide(l); continue; }
       // camera space first: anything at or behind the camera plane has no sensible projection
       v.copy(l.anchor).applyMatrix4(camera.matrixWorldInverse);

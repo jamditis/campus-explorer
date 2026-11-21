@@ -1,0 +1,1428 @@
+{
+ "zone": "n_roads",
+ "notes": "Zone n_roads: Valley Road inside the footprint (carriageway, curbs, the west walk north of the taper, the east walk, all its paint), President's Drive from its Valley Road mouth to the forecourt north-west of the President's House, President's Drive Extension and its run on to President's Drive by Lot 2, President's Drive north to Normal Avenue, the service road from President's Drive west to Lot 1, the loop round the Van Reyper-Bond House, the driveways at 20 and 22 Normal Avenue, and the walks and steps between them. The JSON is written by /tmp/claude-0/p5/normal/n_roads/gen.py; that script is the source until the file is edited by hand. Valley Road: one straight frame fitted to 217 points of the east-sidewalk band (origin (-110.607, -445.407), heading 61.194 deg, o metres to the west); every line is an offset in it. Read in strips straightened along the frame from the 2020 ortho at 0.075 m/px, heights from the LiDAR: east curb o 1.5, east walk o -0.75..0.65; west curb o 12.82 to s -65, a 99 m taper (arcs r 300) to o 19.45 at s 34 (LiDAR gutter low o 18.5..19, rise 19.5..20.5); north of the taper a 1.4 m walk on the curb (osm 1132693555). Paint: yellow centre line o 7.7 south of s -50, hatched yellow median s -50..24 (bars at 5 m centres), double yellow o 12.3 north of it, white lane line o 5.8 (3 m dashes at 12 m from s -0.5, solid s 95.5..110), the left-turn lane line o 9.4, five left-turn arrows (2.6 m measured) at s 61..107, stop bar s 110.3, crosswalk lines at s 113.4 and 116.6 and at s 140.2 and 144.8. North end: the asphalt ends on the footprint, 0.2 m under the main model's Normal Avenue sidewalk, its carriageway's east cut and its north piece (the main pieces lie 3 to 5 m off the ortho; they are met where they are). President's Drive south: both curbs tracked as bright lines in perpendicular profiles every 1.5 m; the centre fitted as runs and arcs through 77 mid points (error median 0.08 m, p90 0.25 m, max 0.69 m), width 5.7 m (p10 5.55, p90 5.96); the mouth flared with arcs r 6 (south) and r 4 (north) into Valley Road's curb. The other drives have no curbs in the ortho and lie partly under trees: lines from osm checked against the ortho, widths read where the edges show; marked unverified. Walks from the ortho (bright bands) and osm. Not drawn: Normal Avenue and the sidewalk the ortho shows south of the main model's sidewalk (left as lawn); the loop round the island south of 20 Normal Avenue; front walks of the houses (the building zone's aprons and steps); the forecourt's link north to the stall court (not seen).",
+ "surfaces": [
+  {
+   "name": "NR_valley_rd",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -164.925,
+     -541.072
+    ],
+    [
+     -38.106,
+     -310.45
+    ],
+    [
+     -46.0,
+     -310.45
+    ],
+    [
+     -49.3,
+     -309.8
+    ],
+    [
+     -54.9,
+     -310.85
+    ],
+    [
+     -53.88,
+     -319.81
+    ],
+    [
+     -61.0,
+     -334.34
+    ],
+    [
+     -69.455,
+     -330.207
+    ],
+    [
+     -111.359,
+     -406.409,
+     300.0
+    ],
+    [
+     -153.18,
+     -496.221,
+     300.0
+    ],
+    [
+     -174.844,
+     -535.617
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm",
+   "unverified": "west curb under trees at s -110..-60 read from the LiDAR rise (fit p90 0.83 m)"
+  },
+  {
+   "name": "NR_pres_dr_S",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -166.084,
+     -521.346
+    ],
+    [
+     -166.785,
+     -520.961
+    ],
+    [
+     -162.063,
+     -512.374,
+     6.8
+    ],
+    [
+     -171.348,
+     -498.935,
+     13.32
+    ],
+    [
+     -172.191,
+     -483.54,
+     38.58
+    ],
+    [
+     -161.939,
+     -465.826,
+     43.02
+    ],
+    [
+     -148.665,
+     -450.741,
+     38.67
+    ],
+    [
+     -140.983,
+     -425.927,
+     24.15
+    ],
+    [
+     -139.636,
+     -418.129,
+     33.15
+    ],
+    [
+     -141.618,
+     -405.468
+    ],
+    [
+     -135.986,
+     -404.586
+    ],
+    [
+     -133.86,
+     -418.175,
+     38.85
+    ],
+    [
+     -135.429,
+     -427.261,
+     29.85
+    ],
+    [
+     -143.581,
+     -453.591,
+     44.37
+    ],
+    [
+     -157.287,
+     -469.168,
+     37.32
+    ],
+    [
+     -166.407,
+     -484.924,
+     32.88
+    ],
+    [
+     -165.708,
+     -497.677,
+     7.62
+    ],
+    [
+     -160.741,
+     -509.97,
+     2.5
+    ],
+    [
+     -158.09,
+     -505.15
+    ],
+    [
+     -157.389,
+     -505.536
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m), osm 232846647",
+   "unverified": "north end (y -405..-399) under trees"
+  },
+  {
+   "name": "NR_pres_dr_forecourt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -148.6,
+     -364.2
+    ],
+    [
+     -156.6,
+     -360.4
+    ],
+    [
+     -159.4,
+     -365.2,
+     3.0
+    ],
+    [
+     -156.0,
+     -372.6,
+     3.0
+    ],
+    [
+     -151.6,
+     -373.6
+    ]
+   ],
+   "evidence": "ortho2020, osm 232846647",
+   "unverified": "turning area north-west of the President's House; edges hidden by trees on the west"
+  }
+ ],
+ "strips": [
+  {
+   "name": "NR_valley_rd_E_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -163.567,
+     -541.819
+    ],
+    [
+     -36.406,
+     -310.576
+    ]
+   ],
+   "width": 1.4,
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "north of s 126 the bright band lies about 0.5 m further west; kept straight"
+  },
+  {
+   "name": "NR_pres_dr_N",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -138.725,
+     -405.521
+    ],
+    [
+     -139.714,
+     -399.198,
+     10.0
+    ],
+    [
+     -149.3,
+     -388.8,
+     14.0
+    ],
+    [
+     -153.8,
+     -378.0,
+     12.0
+    ],
+    [
+     -150.6,
+     -368.6
+    ]
+   ],
+   "width": 5.0,
+   "evidence": "osm 232846647, ortho2020",
+   "unverified": "under tree cover from y -398 to the forecourt: line from osm, width 5.0 m guessed"
+  },
+  {
+   "name": "NR_pres_dr_ext",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -149.6,
+     -366.0
+    ],
+    [
+     -167.6,
+     -356.1,
+     30.0
+    ],
+    [
+     -183.4,
+     -347.0,
+     15.0
+    ],
+    [
+     -192.9,
+     -343.7,
+     20.0
+    ],
+    [
+     -204.3,
+     -339.5,
+     30.0
+    ],
+    [
+     -214.6,
+     -335.8
+    ]
+   ],
+   "width": 4.6,
+   "evidence": "osm 232846683 1079364263, ortho2020",
+   "unverified": "x -190..-168 under trees: line from osm; width 4.4 m measured at both ends, 4.6 used"
+  },
+  {
+   "name": "NR_pres_dr_to_normal",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -199.378,
+     -292.597
+    ],
+    [
+     -203.0,
+     -306.0,
+     25.0
+    ],
+    [
+     -208.0,
+     -320.2,
+     25.0
+    ],
+    [
+     -214.3,
+     -335.0
+    ]
+   ],
+   "width": 7.0,
+   "evidence": "osm 232846641 1060984051, ortho2020",
+   "unverified": "east edge is the west end of Lot 2's angled stalls (n_lots overlaps it)"
+  },
+  {
+   "name": "NR_service_rd",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -136.2,
+     -412.4
+    ],
+    [
+     -168.5,
+     -416.5,
+     12.0
+    ],
+    [
+     -194.5,
+     -406.0,
+     15.0
+    ],
+    [
+     -204.6,
+     -399.4
+    ]
+   ],
+   "width": 5.0,
+   "evidence": "osm 232846701, ortho2020",
+   "unverified": "edges under tree shadow; width 5.0 m read where the ortho is clear (x -195..-180)"
+  },
+  {
+   "name": "NR_service_rd_N",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -213.9,
+     -336.8
+    ],
+    [
+     -221.2,
+     -352.2,
+     20.0
+    ],
+    [
+     -224.4,
+     -360.6
+    ]
+   ],
+   "width": 5.0,
+   "evidence": "osm 232846701, ortho2020",
+   "unverified": "under trees; ends where the stall-lined drive of n_lots begins (y -360)"
+  },
+  {
+   "name": "NR_bond_loop",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -171.2,
+     -416.6
+    ],
+    [
+     -179.0,
+     -431.8,
+     6.0
+    ],
+    [
+     -191.0,
+     -438.0,
+     6.0
+    ],
+    [
+     -204.0,
+     -430.5,
+     5.0
+    ],
+    [
+     -203.8,
+     -423.0,
+     8.0
+    ],
+    [
+     -195.9,
+     -408.6
+    ]
+   ],
+   "width": 3.2,
+   "evidence": "osm 232846690, ortho2020",
+   "unverified": "east arm (x -180..-171) beside the light apron east of the house: line from osm"
+  },
+  {
+   "name": "NR_drive_22_normal",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -228.462,
+     -285.284
+    ],
+    [
+     -235.4,
+     -314.5,
+     6.0
+    ],
+    [
+     -238.4,
+     -327.0
+    ]
+   ],
+   "width": 3.2,
+   "evidence": "osm 232846656, ortho2020",
+   "unverified": "no stalls seen; the loop round the planted island south of No. 20 is not clear, left out"
+  },
+  {
+   "name": "NR_drive_20_normal",
+   "kind": "asphalt",
+   "centre": [
+    [
+     -213.476,
+     -289.052
+    ],
+    [
+     -224.3,
+     -320.7
+    ]
+   ],
+   "width": 3.0,
+   "evidence": "ortho2020",
+   "unverified": "shared driveway between Nos. 18 and 20 (not in osm), centred in the gap between the osm outlines; south end under trees"
+  },
+  {
+   "name": "NR_valley_rd_W_walk",
+   "kind": "concrete",
+   "centre": [
+    [
+     -117.378,
+     -416.006
+    ],
+    [
+     -70.084,
+     -330.002
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "start at the foot of the steps (s 22.5) read under trees"
+  },
+  {
+   "name": "NR_steps_valley_rd",
+   "kind": "concrete",
+   "centre": [
+    [
+     -135.4,
+     -411.9
+    ],
+    [
+     -129.6,
+     -411.6
+    ],
+    [
+     -114.6,
+     -410.6
+    ]
+   ],
+   "width": 2.2,
+   "evidence": "osm 232846646 312839921, ortho2020",
+   "unverified": "steps drawn as a flat walk; width 2.2 m from the landing"
+  },
+  {
+   "name": "NR_walk_pres_house",
+   "kind": "concrete",
+   "centre": [
+    [
+     -133.4,
+     -410.6
+    ],
+    [
+     -133.6,
+     -403.0,
+     5.0
+    ],
+    [
+     -139.6,
+     -393.6,
+     5.0
+    ],
+    [
+     -141.2,
+     -387.3
+    ]
+   ],
+   "width": 1.3,
+   "evidence": "ortho2020",
+   "unverified": "north end at the house under trees"
+  },
+  {
+   "name": "NR_walk_lot1_ne",
+   "kind": "concrete",
+   "centre": [
+    [
+     -219.0,
+     -389.8
+    ],
+    [
+     -211.6,
+     -381.0,
+     6.0
+    ],
+    [
+     -210.6,
+     -371.5,
+     6.0
+    ],
+    [
+     -205.7,
+     -362.2,
+     15.0
+    ],
+    [
+     -201.0,
+     -350.8,
+     8.0
+    ],
+    [
+     -197.3,
+     -344.6
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "osm 232846704, ortho2020",
+   "unverified": "only the south 8 m is clear in the ortho; the rest follows osm under trees"
+  },
+  {
+   "name": "NR_walk_bond_w",
+   "kind": "concrete",
+   "centre": [
+    [
+     -217.2,
+     -404.4
+    ],
+    [
+     -196.4,
+     -408.8
+    ]
+   ],
+   "width": 2.0,
+   "evidence": "ortho2020",
+   "unverified": "not in osm"
+  },
+  {
+   "name": "NR_walk_autism_w",
+   "kind": "concrete",
+   "centre": [
+    [
+     -179.029,
+     -297.714
+    ],
+    [
+     -179.6,
+     -302.0
+    ],
+    [
+     -185.6,
+     -320.5
+    ]
+   ],
+   "width": 1.6,
+   "evidence": "osm 312841183 312841184, ortho2020",
+   "unverified": "steps at the north end drawn as walk"
+  },
+  {
+   "name": "NR_walk_lot2_s",
+   "kind": "concrete",
+   "centre": [
+    [
+     -177.5,
+     -330.4
+    ],
+    [
+     -165.5,
+     -332.0,
+     4.0
+    ],
+    [
+     -160.0,
+     -335.8,
+     3.0
+    ],
+    [
+     -141.3,
+     -335.6,
+     1.0
+    ],
+    [
+     -140.6,
+     -330.7,
+     1.0
+    ],
+    [
+     -131.2,
+     -332.0,
+     1.0
+    ],
+    [
+     -130.6,
+     -338.2,
+     1.0
+    ],
+    [
+     -125.2,
+     -338.5
+    ]
+   ],
+   "width": 1.6,
+   "evidence": "ortho2020",
+   "unverified": "not in osm; west end at the Lot 2 corner under tree shadow"
+  },
+  {
+   "name": "NR_walk_coder_w",
+   "kind": "concrete",
+   "centre": [
+    [
+     -164.0,
+     -332.0
+    ],
+    [
+     -163.6,
+     -326.8
+    ]
+   ],
+   "width": 1.5,
+   "evidence": "ortho2020"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "NR_valley_rd_E_curb",
+   "path": [
+    [
+     -164.925,
+     -541.072
+    ],
+    [
+     -38.203,
+     -310.626
+    ]
+   ],
+   "evidence": "lidar2017, ortho2020",
+   "unverified": "north of s 126 the curb line is not clear in the ortho"
+  },
+  {
+   "name": "NR_pres_dr_S_W_curb",
+   "path": [
+    [
+     -166.785,
+     -520.961
+    ],
+    [
+     -162.063,
+     -512.374,
+     6.8
+    ],
+    [
+     -171.348,
+     -498.935,
+     13.32
+    ],
+    [
+     -172.191,
+     -483.54,
+     38.58
+    ],
+    [
+     -161.939,
+     -465.826,
+     43.02
+    ],
+    [
+     -148.665,
+     -450.741,
+     38.67
+    ],
+    [
+     -140.983,
+     -425.927,
+     24.15
+    ],
+    [
+     -140.565,
+     -423.507
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NR_pres_dr_S_E_curb",
+   "path": [
+    [
+     -158.09,
+     -505.15
+    ],
+    [
+     -160.741,
+     -509.97,
+     2.5
+    ],
+    [
+     -165.708,
+     -497.677,
+     7.62
+    ],
+    [
+     -166.407,
+     -484.924,
+     32.88
+    ],
+    [
+     -157.287,
+     -469.168,
+     37.32
+    ],
+    [
+     -143.581,
+     -453.591,
+     44.37
+    ],
+    [
+     -135.429,
+     -427.261,
+     29.85
+    ],
+    [
+     -133.86,
+     -418.175,
+     38.85
+    ],
+    [
+     -134.925,
+     -411.365
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NR_valley_rd_W_curb_S",
+   "path": [
+    [
+     -174.844,
+     -535.617
+    ],
+    [
+     -166.785,
+     -520.961
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "under trees south of s -95"
+  },
+  {
+   "name": "NR_valley_rd_W_curb_N",
+   "path": [
+    [
+     -158.09,
+     -505.15
+    ],
+    [
+     -153.18,
+     -496.221,
+     300.0
+    ],
+    [
+     -111.359,
+     -406.409,
+     300.0
+    ],
+    [
+     -69.455,
+     -330.207
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017"
+  }
+ ],
+ "markings": [
+  {
+   "name": "NR_valley_rd_CL_S_W",
+   "type": "line",
+   "path": [
+    [
+     -170.283,
+     -537.783
+    ],
+    [
+     -141.517,
+     -485.471
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "a 0.3 to 0.6 m wide yellow band; drawn as a double line"
+  },
+  {
+   "name": "NR_valley_rd_CL_S_E",
+   "type": "line",
+   "path": [
+    [
+     -170.108,
+     -537.879
+    ],
+    [
+     -141.341,
+     -485.567
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "a 0.3 to 0.6 m wide yellow band; drawn as a double line"
+  },
+  {
+   "name": "NR_valley_rd_median_E",
+   "type": "line",
+   "path": [
+    [
+     -141.429,
+     -485.519
+    ],
+    [
+     -137.855,
+     -476.072
+    ],
+    [
+     -133.124,
+     -467.261
+    ],
+    [
+     -114.989,
+     -433.868
+    ],
+    [
+     -109.514,
+     -418.619
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_W",
+   "type": "line",
+   "path": [
+    [
+     -141.429,
+     -485.519
+    ],
+    [
+     -138.556,
+     -475.687
+    ],
+    [
+     -129.62,
+     -457.776
+    ],
+    [
+     -120.421,
+     -440.01
+    ],
+    [
+     -115.909,
+     -431.079
+    ],
+    [
+     -109.514,
+     -418.619
+    ]
+   ],
+   "width": 0.12,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_1",
+   "type": "area",
+   "ring": [
+    [
+     -138.166,
+     -474.844
+    ],
+    [
+     -137.925,
+     -474.406
+    ],
+    [
+     -136.773,
+     -474.072
+    ],
+    [
+     -137.014,
+     -474.51
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "bars at 5 m centres; the south ones are faint"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_2",
+   "type": "area",
+   "ring": [
+    [
+     -135.968,
+     -470.433
+    ],
+    [
+     -135.727,
+     -469.994
+    ],
+    [
+     -134.372,
+     -469.601
+    ],
+    [
+     -134.613,
+     -470.039
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_3",
+   "type": "area",
+   "ring": [
+    [
+     -133.772,
+     -466.024
+    ],
+    [
+     -133.531,
+     -465.586
+    ],
+    [
+     -131.962,
+     -465.13
+    ],
+    [
+     -132.202,
+     -465.568
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_4",
+   "type": "area",
+   "ring": [
+    [
+     -131.58,
+     -461.622
+    ],
+    [
+     -131.339,
+     -461.184
+    ],
+    [
+     -129.534,
+     -460.66
+    ],
+    [
+     -129.774,
+     -461.098
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_5",
+   "type": "area",
+   "ring": [
+    [
+     -129.361,
+     -457.222
+    ],
+    [
+     -129.12,
+     -456.784
+    ],
+    [
+     -127.111,
+     -456.201
+    ],
+    [
+     -127.352,
+     -456.639
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_6",
+   "type": "area",
+   "ring": [
+    [
+     -127.085,
+     -452.824
+    ],
+    [
+     -126.844,
+     -452.386
+    ],
+    [
+     -124.701,
+     -451.763
+    ],
+    [
+     -124.942,
+     -452.201
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_7",
+   "type": "area",
+   "ring": [
+    [
+     -124.809,
+     -448.425
+    ],
+    [
+     -124.568,
+     -447.987
+    ],
+    [
+     -122.291,
+     -447.326
+    ],
+    [
+     -122.532,
+     -447.764
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_8",
+   "type": "area",
+   "ring": [
+    [
+     -122.533,
+     -444.027
+    ],
+    [
+     -122.292,
+     -443.589
+    ],
+    [
+     -119.881,
+     -442.889
+    ],
+    [
+     -120.122,
+     -443.327
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_9",
+   "type": "area",
+   "ring": [
+    [
+     -120.275,
+     -439.628
+    ],
+    [
+     -120.034,
+     -439.19
+    ],
+    [
+     -117.468,
+     -438.445
+    ],
+    [
+     -117.708,
+     -438.883
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_10",
+   "type": "area",
+   "ring": [
+    [
+     -118.055,
+     -435.228
+    ],
+    [
+     -117.814,
+     -434.79
+    ],
+    [
+     -115.046,
+     -433.986
+    ],
+    [
+     -115.286,
+     -434.424
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_11",
+   "type": "area",
+   "ring": [
+    [
+     -115.69,
+     -430.585
+    ],
+    [
+     -115.449,
+     -430.147
+    ],
+    [
+     -113.246,
+     -429.507
+    ],
+    [
+     -113.487,
+     -429.945
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_median_bar_12",
+   "type": "area",
+   "ring": [
+    [
+     -113.248,
+     -425.848
+    ],
+    [
+     -113.007,
+     -425.41
+    ],
+    [
+     -111.692,
+     -425.028
+    ],
+    [
+     -111.933,
+     -425.466
+    ]
+   ],
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_CL_N_W",
+   "type": "line",
+   "path": [
+    [
+     -109.601,
+     -418.571
+    ],
+    [
+     -102.198,
+     -404.382
+    ],
+    [
+     -68.469,
+     -343.045
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "reads as one pale line; drawn as a double yellow; faint north of s 92"
+  },
+  {
+   "name": "NR_valley_rd_CL_N_E",
+   "type": "line",
+   "path": [
+    [
+     -109.426,
+     -418.667
+    ],
+    [
+     -102.023,
+     -404.478
+    ],
+    [
+     -68.294,
+     -343.141
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "reads as one pale line; drawn as a double yellow; faint north of s 92"
+  },
+  {
+   "name": "NR_valley_rd_lane_dash",
+   "type": "line",
+   "path": [
+    [
+     -115.93,
+     -443.05
+    ],
+    [
+     -74.009,
+     -366.817
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "dash": [
+    3.0,
+    9.0
+   ],
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_lane_solid",
+   "type": "line",
+   "path": [
+    [
+     -69.673,
+     -358.93
+    ],
+    [
+     -62.686,
+     -346.225
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_turn_dash",
+   "type": "line",
+   "path": [
+    [
+     -78.272,
+     -367.097
+    ],
+    [
+     -76.923,
+     -364.644
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_turn_solid",
+   "type": "line",
+   "path": [
+    [
+     -72.827,
+     -357.196
+    ],
+    [
+     -65.84,
+     -344.49
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_left_arrow_0",
+   "type": "arrow",
+   "at": [
+    -90.073,
+    -387.312
+   ],
+   "angle": 61.19,
+   "shape": "left",
+   "length": 2.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_left_arrow_1",
+   "type": "arrow",
+   "at": [
+    -84.387,
+    -376.973
+   ],
+   "angle": 61.19,
+   "shape": "left",
+   "length": 2.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_left_arrow_2",
+   "type": "arrow",
+   "at": [
+    -78.798,
+    -366.808
+   ],
+   "angle": 61.19,
+   "shape": "left",
+   "length": 2.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "arrow at s 84 partly hidden"
+  },
+  {
+   "name": "NR_valley_rd_left_arrow_3",
+   "type": "arrow",
+   "at": [
+    -73.305,
+    -356.819
+   ],
+   "angle": 61.19,
+   "shape": "left",
+   "length": 2.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_left_arrow_4",
+   "type": "arrow",
+   "at": [
+    -67.715,
+    -346.654
+   ],
+   "angle": 61.19,
+   "shape": "left",
+   "length": 2.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_stop_bar_N",
+   "type": "line",
+   "path": [
+    [
+     -59.036,
+     -347.889
+    ],
+    [
+     -68.324,
+     -342.782
+    ]
+   ],
+   "width": 0.6,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_crosswalk_S",
+   "type": "crosswalk",
+   "line": [
+    [
+     -56.684,
+     -343.819
+    ],
+    [
+     -72.062,
+     -335.363
+    ]
+   ],
+   "width": 3.5,
+   "style": "lines",
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm"
+  },
+  {
+   "name": "NR_valley_rd_crosswalk_N",
+   "type": "crosswalk",
+   "line": [
+    [
+     -43.433,
+     -319.722
+    ],
+    [
+     -51.144,
+     -315.482
+    ]
+   ],
+   "width": 4.9,
+   "style": "lines",
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "west of o 10.5 it runs under the main model's carriageway"
+  },
+  {
+   "name": "NR_valley_rd_edge_N",
+   "type": "line",
+   "path": [
+    [
+     -54.231,
+     -338.321
+    ],
+    [
+     -38.812,
+     -310.281
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m), lidar2017, osm",
+   "unverified": "reads as a white edge line or the gutter lip"
+  }
+ ],
+ "points": []
+}

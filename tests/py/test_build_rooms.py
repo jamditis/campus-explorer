@@ -49,6 +49,7 @@ class Build(unittest.TestCase):
         self.assertEqual(vol["ring"], [[0, 0], [20, 0], [20, -10], [0, -10]])
         self.assertEqual(vol["levels"], [dict(floor=1, y=100.0), dict(floor=2, y=104.0)])
         self.assertEqual(vol["y0"], 100.0)
+        self.assertEqual(vol["ceiling"], 107.0)  # the highest interior ceiling
 
     def test_the_volume_reaches_the_top_of_the_shell_that_holds_it(self):
         self.assertEqual(self.out["volumes"][0]["y1"], 110.5)

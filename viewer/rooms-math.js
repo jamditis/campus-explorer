@@ -18,7 +18,7 @@ export function parseRooms(data) {
   for (const v of Array.isArray(data?.volumes) ? data.volumes : []) {
     if (!v || !Array.isArray(v.ring) || v.ring.length < 3 || !v.ring.every(point) || !num(v.y0) || !num(v.y1)) continue;
     const levels = (Array.isArray(v.levels) ? v.levels : []).filter(l => l && num(l.floor) && num(l.y)).sort((a, b) => a.y - b.y);
-    volumes.push({ id: String(v.id ?? ''), building: String(v.building ?? ''), short: String(v.short ?? ''), ring: v.ring.map(p => [p[0], p[1]]), y0: v.y0, y1: v.y1, levels });
+    volumes.push({ id: String(v.id ?? ''), building: String(v.building ?? ''), short: String(v.short ?? ''), ring: v.ring.map(p => [p[0], p[1]]), y0: v.y0, y1: v.y1, ceiling: num(v.ceiling) ? v.ceiling : v.y1, levels });
   }
   for (const r of Array.isArray(data?.rooms) ? data.rooms : []) {
     if (!r || typeof r.name !== 'string' || !r.name || ![r.x, r.y, r.z, r.floor].every(num)) continue;
@@ -39,7 +39,11 @@ export function inRing(ring, x, z) {
 
 /** Horizontal distance from (x, z) to the ring: 0 inside. */
 export function ringGap(ring, x, z) {
-  if (inRing(ring, x, z)) return 0;
+  return inRing(ring, x, z) ? 0 : edgeGap(ring, x, z);
+}
+
+/** Horizontal distance from (x, z) to the nearest edge of the ring, inside or out. */
+export function edgeGap(ring, x, z) {
   let best = Infinity;
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
     const [ax, az] = ring[j], [bx, bz] = ring[i], ux = bx - ax, uz = bz - az, l2 = ux * ux + uz * uz;
@@ -113,4 +117,57 @@ export function searchPool(places, rooms, query) {
 /** Height to start walking from when walk mode starts: the storey the camera is on (orbit, fly), else none. */
 export function walkStartY(from, y) {
   return (from === 'orbit' || from === 'fly') && num(y) ? y : null;
+}
+
+/** Fragments nearer than this (metres) to the outline are the shell's outer face: no interior light. */
+export const EDGE = 0.2;
+/** Room points nearer than this (metres) to the camera, on its floor, mark the room it stands in. */
+export const ROOM_HERE = 5;
+
+/**
+ * Does the point (with world normal y `ny`) take the interior light (look.js, same rule in GLSL)? Inside
+ * the outline and more than EDGE from it, from just below the lowest floor to the top of the shell (in its
+ * top half metre only surfaces facing down: the roof's underside, not the parapets), and not a surface
+ * facing up above the interior ceiling (the roof).
+ */
+export function interiorLit(v, x, y, z, ny) {
+  if (y < v.y0 - 0.3 || y > v.y1) return false;
+  if (y > v.y1 - 0.5 && ny > -0.5) return false; // the top half metre: parapets, but the roof's underside is lit
+  if (ny > 0.5 && y > v.ceiling + 0.5) return false;
+  return inRing(v.ring, x, z) && edgeGap(v.ring, x, z) > EDGE;
+}
+
+/** Share of the interior light a surface takes by its world normal y: ceilings all, walls 0.8, floors 0.55. */
+export function ambientFactor(ny) {
+  return ny < -0.5 ? 1 : ny > 0.5 ? 0.55 : 0.8;
+}
+
+/** Index of the room the camera stands in: the nearest room point on its floor within ROOM_HERE, inside the building; else -1. */
+export function roomHere(data, cam) {
+  let best = -1, bd = ROOM_HERE;
+  for (const v of data.volumes) {
+    if (!inVolume(v, cam.x, cam.y, cam.z)) continue;
+    const f = floorAt(v.levels, cam.y);
+    data.rooms.forEach((r, i) => {
+      if (r.building !== v.building || r.floor !== f) return;
+      const d = Math.hypot(r.x - cam.x, r.z - cam.z);
+      if (d <= bd) { bd = d; best = i; }
+    });
+  }
+  return best;
+}
+
+/**
+ * Room labels by line of sight. `ids`: the rooms that may show; `memo`: Map id -> { clear, pass } kept between
+ * passes; `cast(id)`: true when nothing solid lies between the camera and that room's label point. Casts at most
+ * `budget` rays, rooms never checked first, then the longest unchecked; returns the Set of rooms to show: those
+ * last seen clear, and always `here`, the room the camera stands in.
+ */
+export function sightPass(ids, memo, cast, { budget = 12, here = -1 } = {}) {
+  const pass = (memo.pass = (memo.pass ?? 0) + 1);
+  const order = ids.filter(id => id !== here).sort((a, b) => (memo.get(a)?.pass ?? -1) - (memo.get(b)?.pass ?? -1));
+  for (const id of order.slice(0, budget)) memo.set(id, { clear: !!cast(id), pass });
+  const shown = new Set(ids.filter(id => memo.get(id)?.clear));
+  if (here >= 0) shown.add(here);
+  return shown;
 }

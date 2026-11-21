@@ -1,0 +1,1196 @@
+{
+ "zone": "n_buildings",
+ "notes": "Zone n_buildings of the normal area: the ten university buildings south of Normal Avenue and west of Valley Road, and their own small paving. The JSON is written by a generator (/tmp/claude-0/p5/normal/n_buildings/gen.py, scratch, not kept); this file is the source. Names: Van Reyper-Bond House (Bond House, 848 Valley Road, Italianate, 1872, National Register; Wikipedia), the President's House, Legge House (860 Valley Road), Coder House (10 Normal Avenue, the Center for Heritage and Archaeological Studies), the Center for Autism and Early Childhood Mental Health (14 Normal Avenue), the university houses at 18, 20 and 22 Normal Avenue (no names in any source) and a small university building (OSM 232846628, no name). 30 Normal Avenue lies outside the footprint and is not built. Method: the LiDAR here (2017 cloud, 3.7 points per m2, leaf-off) has no building class, so roofs are single returns more than 1.5 m above the ground (ground filled under the roofs from the nearest ground cells). Each house was read in a frame along its walls (the OSM wall direction), as a map of 0.5 m cells; every part is a rectangle split where the roof height or form changes. Pitched roofs: the ridge is the 0.5 m band with the highest returns, and each slope is a straight line fitted to its returns, its value at the wall line is the eave (fit rms 0.02 to 0.05 m on the Normal Avenue houses and Coder House, 0.14 to 0.53 m on the larger houses under trees). Flat and porch roofs: the 75th percentile of the returns. Outlines are the roof edges (eaves), so walls stand on the eave line. The 2020 ortho leans the taller roofs 1 to 3 m north-east (Bond House and the President's House most), so outlines come from the LiDAR only; the ortho gave roof colours, porches and the paving. Wall colours, doors, windows and the posts of the porches are not seen from above and are guessed. Paving: only a terrace at Legge House, a porch apron and a ramp landing at Coder House and a door step at the President's House, where the 2020 ortho shows paving and the roads zone's walks arrive; front stoops at 18 and 20 Normal Avenue show in the ortho but their place is uncertain under the lean: left out.",
+ "buildings": [
+  {
+   "name": "NB_Bond_main_south",
+   "ring": [
+    [
+     -185.8,
+     -428.78
+    ],
+    [
+     -180.04,
+     -416.9
+    ],
+    [
+     -186.24,
+     -413.89
+    ],
+    [
+     -192.01,
+     -425.76
+    ]
+   ],
+   "roof": "gable",
+   "top": 131.9,
+   "eave": 129.65,
+   "ridge_angle": 64.1,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e6dfcf",
+   "trim": "#f4f2ea",
+   "roof_colour": "#45484a",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable along the long side: ridge 131.9 m, south-east slope fitted to 60 returns (rms 0.16 m) to an eave of 129.6 m); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_main_north",
+   "ring": [
+    [
+     -193.1,
+     -428.01
+    ],
+    [
+     -189.26,
+     -420.1
+    ],
+    [
+     -195.1,
+     -417.26
+    ],
+    [
+     -198.95,
+     -425.17
+    ]
+   ],
+   "roof": "gable",
+   "top": 131.45,
+   "eave": 129.75,
+   "ridge_angle": 64.1,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e6dfcf",
+   "trim": "#f4f2ea",
+   "roof_colour": "#45484a",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a second gable beside the first, valley between: ridge 131.45 m, both slopes fitted (rms 0.22 m), eaves 129.6 to 129.9 m); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_east_wing",
+   "ring": [
+    [
+     -189.26,
+     -420.1
+    ],
+    [
+     -187.2,
+     -415.87
+    ],
+    [
+     -192.69,
+     -413.2
+    ],
+    [
+     -194.74,
+     -417.43
+    ]
+   ],
+   "roof": "flat",
+   "top": 129.05,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e6dfcf",
+   "trim": "#f4f2ea",
+   "roof_colour": "#45484a",
+   "parapet": 0.1,
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; flat roof 129.05 m (52 returns), 6.7 m above the ground); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_cross_gable",
+   "ring": [
+    [
+     -186.67,
+     -423.69
+    ],
+    [
+     -185.62,
+     -421.53
+    ],
+    [
+     -189.13,
+     -419.83
+    ],
+    [
+     -190.17,
+     -421.98
+    ]
+   ],
+   "roof": "gable",
+   "top": 132.5,
+   "eave": 131.5,
+   "ridge_angle": 154.1,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e6dfcf",
+   "trim": "#f4f2ea",
+   "roof_colour": "#45484a",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a short ridge 132.5 m across the main roofs in front of the tower); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_tower",
+   "ring": [
+    [
+     -183.79,
+     -424.64
+    ],
+    [
+     -182.22,
+     -421.4
+    ],
+    [
+     -184.92,
+     -420.09
+    ],
+    [
+     -186.49,
+     -423.33
+    ]
+   ],
+   "roof": "hip",
+   "top": 135.35,
+   "eave": 134.7,
+   "ridge_angle": 64.1,
+   "style": "shed",
+   "floors": 3,
+   "wall": "#e6dfcf",
+   "trim": "#f4f2ea",
+   "roof_colour": "#45484a",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a square block 3.6 by 3.0 m standing to 135.3 m (18 returns), 13.6 m above the ground); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "low hipped top guessed; the Italianate style of 1872 (Wikipedia) makes it a belvedere tower; wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_porch_west",
+   "ring": [
+    [
+     -199.08,
+     -425.44
+    ],
+    [
+     -195.19,
+     -417.44
+    ],
+    [
+     -197.44,
+     -416.34
+    ],
+    [
+     -201.33,
+     -424.35
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.1,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f4f2ea",
+   "trim": "#f4f2ea",
+   "roof_colour": "#c9cbc6",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 125.1 m along the north-west side); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_porch_west_end",
+   "ring": [
+    [
+     -194.83,
+     -417.61
+    ],
+    [
+     -192.87,
+     -413.56
+    ],
+    [
+     -194.13,
+     -412.95
+    ],
+    [
+     -196.09,
+     -417.0
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.5,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f4f2ea",
+   "trim": "#f4f2ea",
+   "roof_colour": "#c9cbc6",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 125.5 m); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_porch_east",
+   "ring": [
+    [
+     -184.78,
+     -432.39
+    ],
+    [
+     -178.75,
+     -419.97
+    ],
+    [
+     -181.0,
+     -418.88
+    ],
+    [
+     -187.03,
+     -431.3
+    ]
+   ],
+   "roof": "flat",
+   "top": 126.3,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f4f2ea",
+   "trim": "#f4f2ea",
+   "roof_colour": "#c9cbc6",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 126.3 m along the south-east side (61 returns); the 2020 ortho shows it as a pale L); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_porch_east_entry",
+   "ring": [
+    [
+     -180.73,
+     -426.57
+    ],
+    [
+     -178.98,
+     -422.97
+    ],
+    [
+     -179.97,
+     -422.49
+    ],
+    [
+     -181.72,
+     -426.09
+    ]
+   ],
+   "roof": "flat",
+   "top": 126.4,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f4f2ea",
+   "trim": "#f4f2ea",
+   "roof_colour": "#c9cbc6",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 126.4 m stepping out at the entrance (5 returns)); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Bond_porch_south",
+   "ring": [
+    [
+     -186.89,
+     -431.03
+    ],
+    [
+     -185.8,
+     -428.78
+    ],
+    [
+     -192.01,
+     -425.76
+    ],
+    [
+     -193.1,
+     -428.01
+    ]
+   ],
+   "roof": "flat",
+   "top": 126.2,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f4f2ea",
+   "trim": "#f4f2ea",
+   "roof_colour": "#c9cbc6",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 126.2 m on the south-west end); osm 232846668 (Bond House, 848 Valley Road, Italianate, 1872, on the National Register (Wikipedia)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Presidents_House_main",
+   "ring": [
+    [
+     -138.63,
+     -382.06
+    ],
+    [
+     -132.94,
+     -369.04
+    ],
+    [
+     -139.45,
+     -366.2
+    ],
+    [
+     -145.13,
+     -379.21
+    ]
+   ],
+   "roof": "gable",
+   "top": 132.6,
+   "eave": 127.9,
+   "ridge_angle": 66.4,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#c8b9a2",
+   "trim": "#efeee8",
+   "roof_colour": "#7a6356",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable along the long side: ridge 132.6 m, south-east slope fitted to 119 returns (rms 0.14 m) to an eave of 127.85 m (pitch 50 deg)); osm 232846644 (the President's House); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Presidents_House_cross_gable",
+   "ring": [
+    [
+     -143.49,
+     -375.46
+    ],
+    [
+     -139.45,
+     -366.2
+    ],
+    [
+     -142.75,
+     -364.76
+    ],
+    [
+     -146.79,
+     -374.02
+    ]
+   ],
+   "roof": "gable",
+   "top": 132.6,
+   "eave": 127.6,
+   "ridge_angle": 156.4,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#c8b9a2",
+   "trim": "#efeee8",
+   "roof_colour": "#7a6356",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; cross gable on the north-west side: ridge 132.6 m across the main ridge, both slopes fitted (rms 0.04 and 0.09 m), eaves 127.3 to 127.9 m); osm 232846644 (the President's House); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Presidents_House_south_wing",
+   "ring": [
+    [
+     -141.55,
+     -388.75
+    ],
+    [
+     -138.63,
+     -382.06
+    ],
+    [
+     -145.22,
+     -379.17
+    ],
+    [
+     -147.87,
+     -385.22
+    ],
+    [
+     -147.41,
+     -386.18
+    ]
+   ],
+   "roof": "shed",
+   "top": 129.1,
+   "eave": 126.3,
+   "ridge_angle": 66.4,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#c8b9a2",
+   "trim": "#efeee8",
+   "roof_colour": "#7a6356",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a lower wing at the south-west end, its roof falling from about 129.1 m by the house to about 126.3 m on the south-east side (102 returns, uneven)); osm 232846644 (the President's House); ortho2020 (roof colour)",
+   "unverified": "roof form not clear in the LiDAR (returns spread 1 m); drawn as one slope; wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Presidents_House_west_room",
+   "ring": [
+    [
+     -147.79,
+     -385.04
+    ],
+    [
+     -145.22,
+     -379.17
+    ],
+    [
+     -147.61,
+     -378.13
+    ],
+    [
+     -149.25,
+     -381.89
+    ],
+    [
+     -147.97,
+     -384.96
+    ]
+   ],
+   "roof": "shed",
+   "top": 127.7,
+   "eave": 125.6,
+   "ridge_angle": 246.4,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#c8b9a2",
+   "trim": "#efeee8",
+   "roof_colour": "#7a6356",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a one-storey room on the north-west side, its roof falling from about 127.7 m at the house to 125.6 m (32 returns, uneven)); osm 232846644 (the President's House); ortho2020 (roof colour)",
+   "unverified": "a sunroom or a covered terrace: closed walls guessed; outline kept 0.2 m clear of the drive the roads zone draws (its west corner cut on the drive edge; LiDAR returns 2 to 4 m high reach up to 2 m further: shrubs, parked cars or a roof over the drive); wall and trim colours, doors and window grid guessed (walls not seen from above); the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Presidents_House_porch_west",
+   "ring": [
+    [
+     -145.96,
+     -378.85
+    ],
+    [
+     -144.32,
+     -375.1
+    ],
+    [
+     -146.33,
+     -374.22
+    ],
+    [
+     -147.97,
+     -377.97
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.4,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#efeee8",
+   "trim": "#efeee8",
+   "roof_colour": "#7a6356",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof about 125.4 m (3.2 to 3.7 m above the ground, 10 returns) beside the west room); osm 232846644 (the President's House); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen; the 2020 ortho leans the roof 2 to 3 m north-east, outline from the LiDAR"
+  },
+  {
+   "name": "NB_Legge_main",
+   "ring": [
+    [
+     -117.07,
+     -336.23
+    ],
+    [
+     -111.47,
+     -324.94
+    ],
+    [
+     -121.68,
+     -319.87
+    ],
+    [
+     -127.28,
+     -331.16
+    ]
+   ],
+   "roof": "gable",
+   "top": 133.5,
+   "eave": 129.85,
+   "ridge_angle": 63.6,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e8e4d8",
+   "trim": "#f6f5f0",
+   "roof_colour": "#5a5f5c",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable along the long side: ridge 133.5 m, slopes fitted to 136 and 140 returns (rms 0.33 and 0.53 m), eaves 129.45 and 130.3 m); osm 232846635 (Legge House, 860 Valley Road); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_Legge_porch_south",
+   "ring": [
+    [
+     -119.39,
+     -339.54
+    ],
+    [
+     -117.61,
+     -335.96
+    ],
+    [
+     -124.24,
+     -332.67
+    ],
+    [
+     -126.01,
+     -336.25
+    ]
+   ],
+   "roof": "flat",
+   "top": 127.1,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f6f5f0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#5a5f5c",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 127.1 m on the south-west end (56 returns)); osm 232846635 (Legge House, 860 Valley Road); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen"
+  },
+  {
+   "name": "NB_Legge_porch_north",
+   "ring": [
+    [
+     -122.57,
+     -321.66
+    ],
+    [
+     -121.41,
+     -319.33
+    ],
+    [
+     -122.93,
+     -318.58
+    ],
+    [
+     -124.09,
+     -320.91
+    ]
+   ],
+   "roof": "flat",
+   "top": 126.3,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f6f5f0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#5a5f5c",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a small roof 126.3 m at the north corner (6 returns)); osm 232846635 (Legge House, 860 Valley Road); ortho2020 (roof colour)",
+   "unverified": "a porch over the side door, size from few returns; drawn as an open roof on posts; posts, rails and floor not seen"
+  },
+  {
+   "name": "NB_Coder_main",
+   "ring": [
+    [
+     -154.22,
+     -327.54
+    ],
+    [
+     -151.35,
+     -319.44
+    ],
+    [
+     -160.78,
+     -316.1
+    ],
+    [
+     -163.65,
+     -324.21
+    ]
+   ],
+   "roof": "gable",
+   "top": 131.7,
+   "eave": 129.0,
+   "ridge_angle": 70.5,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e3ddcd",
+   "trim": "#f6f5f0",
+   "roof_colour": "#7a8480",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable along the long side: ridge 131.7 m, slopes fitted to 78 and 102 returns (rms 0.04 m), eaves 129.3 (south-east) and 128.5 m (north-west)); osm 232846649 (Coder House, 10 Normal Avenue (Center for Heritage and Archaeological Studies)); ortho2020 (roof colour)",
+   "unverified": "one eave height for both sides (the north-west slope runs 0.8 m lower); wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_Coder_rear_wing",
+   "ring": [
+    [
+     -156.62,
+     -332.21
+    ],
+    [
+     -154.88,
+     -327.31
+    ],
+    [
+     -160.07,
+     -325.47
+    ],
+    [
+     -161.8,
+     -330.38
+    ]
+   ],
+   "roof": "flat",
+   "top": 127.0,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#e3ddcd",
+   "trim": "#f6f5f0",
+   "roof_colour": "#7a8480",
+   "parapet": 0.1,
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; one-storey rear wing, flat roof 127.0 m (56 returns)); osm 232846649 (Coder House, 10 Normal Avenue (Center for Heritage and Archaeological Studies)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_Coder_porch_west",
+   "ring": [
+    [
+     -163.52,
+     -323.83
+    ],
+    [
+     -161.05,
+     -316.85
+    ],
+    [
+     -161.99,
+     -316.52
+    ],
+    [
+     -164.46,
+     -323.5
+    ]
+   ],
+   "roof": "flat",
+   "top": 126.25,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f6f5f0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#7a8480",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 126.25 m along the north-west side (7 returns)); osm 232846649 (Coder House, 10 Normal Avenue (Center for Heritage and Archaeological Studies)); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen"
+  },
+  {
+   "name": "NB_Autism_Center_main",
+   "ring": [
+    [
+     -173.13,
+     -320.28
+    ],
+    [
+     -170.36,
+     -312.78
+    ],
+    [
+     -180.11,
+     -309.17
+    ],
+    [
+     -182.89,
+     -316.68
+    ]
+   ],
+   "roof": "gable",
+   "top": 131.1,
+   "eave": 128.5,
+   "ridge_angle": 159.7,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#ddd6c6",
+   "trim": "#f6f5f0",
+   "roof_colour": "#3e4446",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable with its ridge across the house (gable ends to the street and the back): ridge 131.1 m, slopes fitted to 74 and 86 returns (rms 0.40 and 0.03 m), eaves 128.4 to 128.7 m); osm 232846651 (the Center for Autism and Early Childhood Mental Health, 14 Normal Avenue); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_Autism_Center_east_wing",
+   "ring": [
+    [
+     -170.12,
+     -323.96
+    ],
+    [
+     -166.24,
+     -313.45
+    ],
+    [
+     -170.08,
+     -312.03
+    ],
+    [
+     -173.97,
+     -322.54
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.9,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#ddd6c6",
+   "trim": "#f6f5f0",
+   "roof_colour": "#3e4446",
+   "parapet": 0.1,
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; one-storey wing on the south-east side, flat roof 125.9 m (90 returns)); osm 232846651 (the Center for Autism and Early Childhood Mental Health, 14 Normal Avenue); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_Autism_Center_porch_south",
+   "ring": [
+    [
+     -173.97,
+     -322.54
+    ],
+    [
+     -173.13,
+     -320.28
+    ],
+    [
+     -176.7,
+     -318.97
+    ],
+    [
+     -177.53,
+     -321.22
+    ]
+   ],
+   "roof": "flat",
+   "top": 125.9,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f6f5f0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#3e4446",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; porch roof 125.9 m at the south-west side (17 returns)); osm 232846651 (the Center for Autism and Early Childhood Mental Health, 14 Normal Avenue); ortho2020 (roof colour)",
+   "unverified": "drawn as an open roof on posts; posts, rails and floor not seen"
+  },
+  {
+   "name": "NB_18_Normal_main",
+   "ring": [
+    [
+     -211.56,
+     -315.05
+    ],
+    [
+     -208.04,
+     -305.05
+    ],
+    [
+     -215.49,
+     -302.43
+    ],
+    [
+     -219.01,
+     -312.42
+    ]
+   ],
+   "roof": "gable",
+   "top": 129.9,
+   "eave": 127.3,
+   "ridge_angle": 160.6,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#e2ddd0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#66706d",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable, ridge across the house: 129.9 m; both slopes fitted to 81 and 80 returns (rms 0.05 m), eaves 127.3 m); osm 232846688 (university house, 18 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_18_Normal_rear_wing",
+   "ring": [
+    [
+     -213.29,
+     -318.47
+    ],
+    [
+     -212.03,
+     -314.88
+    ],
+    [
+     -219.1,
+     -312.39
+    ],
+    [
+     -220.36,
+     -315.97
+    ]
+   ],
+   "roof": "flat",
+   "top": 124.9,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#e2ddd0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#66706d",
+   "parapet": 0.1,
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; one-storey rear wing, roof 124.8 to 124.9 m (54 returns)); osm 232846688 (university house, 18 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_20_Normal_main",
+   "ring": [
+    [
+     -223.33,
+     -311.01
+    ],
+    [
+     -219.78,
+     -300.92
+    ],
+    [
+     -227.51,
+     -298.19
+    ],
+    [
+     -231.07,
+     -308.28
+    ]
+   ],
+   "roof": "gable",
+   "top": 129.2,
+   "eave": 126.6,
+   "ridge_angle": 160.6,
+   "style": "shed",
+   "floors": 2,
+   "wall": "#ddd8ca",
+   "trim": "#f6f5f0",
+   "roof_colour": "#6b7470",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable, ridge across the house: 129.2 m; both slopes fitted to 87 and 72 returns (rms 0.05 m), eaves 126.4 and 126.7 m); osm 232846633 (university house, 20 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_20_Normal_rear_wing",
+   "ring": [
+    [
+     -225.13,
+     -314.3
+    ],
+    [
+     -223.9,
+     -310.81
+    ],
+    [
+     -230.22,
+     -308.58
+    ],
+    [
+     -231.45,
+     -312.07
+    ]
+   ],
+   "roof": "flat",
+   "top": 124.2,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#ddd8ca",
+   "trim": "#f6f5f0",
+   "roof_colour": "#6b7470",
+   "parapet": 0.1,
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; one-storey rear wing, roof 124.2 m (45 returns)); osm 232846633 (university house, 20 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_22_Normal_main",
+   "ring": [
+    [
+     -236.07,
+     -303.43
+    ],
+    [
+     -233.8,
+     -294.21
+    ],
+    [
+     -248.76,
+     -290.54
+    ],
+    [
+     -251.02,
+     -299.76
+    ]
+   ],
+   "roof": "gable",
+   "top": 125.55,
+   "eave": 123.2,
+   "ridge_angle": 166.2,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#e4dfd2",
+   "trim": "#f6f5f0",
+   "roof_colour": "#9a9f98",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; gable along the street: ridge 125.55 m; both slopes fitted to 173 and 125 returns (rms 0.02 and 0.03 m), eaves 123.1 and 123.3 m); osm 232846676 (university house, 22 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  },
+  {
+   "name": "NB_22_Normal_porch_west",
+   "ring": [
+    [
+     -249.95,
+     -295.39
+    ],
+    [
+     -249.31,
+     -292.77
+    ],
+    [
+     -251.54,
+     -292.22
+    ],
+    [
+     -252.18,
+     -294.84
+    ]
+   ],
+   "roof": "flat",
+   "top": 120.8,
+   "open": true,
+   "parapet": 0.05,
+   "style": "shed",
+   "wall": "#f6f5f0",
+   "trim": "#f6f5f0",
+   "roof_colour": "#9a9f98",
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a small roof 120.8 m at the west end (5 returns)); osm 232846676 (university house, 22 Normal Avenue (no name in any source)); ortho2020 (roof colour)",
+   "unverified": "a stoop roof, size from few returns; drawn as an open roof on posts; posts, rails and floor not seen"
+  },
+  {
+   "name": "NB_small_bldg_main",
+   "ring": [
+    [
+     -154.66,
+     -359.85
+    ],
+    [
+     -152.12,
+     -354.19
+    ],
+    [
+     -158.97,
+     -351.13
+    ],
+    [
+     -161.5,
+     -356.79
+    ]
+   ],
+   "roof": "gable",
+   "top": 127.2,
+   "eave": 126.1,
+   "ridge_angle": 65.9,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#d6d0c2",
+   "trim": "#efeee8",
+   "roof_colour": "#4a4d4b",
+   "windows": {
+    "width": 0.9,
+    "height": 1.4,
+    "spacing": 3.0
+   },
+   "evidence": "lidar2017 (outline from roof returns read in a frame along the walls, 0.5 m cells; a block 6.2 by 7.5 m, 3.3 to 4.4 m high, under tree cover (67 returns)); osm 232846628 (a small university building (OSM, no name)); ortho2020 (roof colour)",
+   "unverified": "mostly hidden by trees in the 2020 ortho; outline and low gable from few roof returns; wall and trim colours, doors and window grid guessed (walls not seen from above)"
+  }
+ ],
+ "surfaces": [
+  {
+   "name": "NB_Legge_terrace",
+   "kind": "concrete",
+   "ring": [
+    [
+     -124.13,
+     -339.42
+    ],
+    [
+     -123.24,
+     -337.63
+    ],
+    [
+     -126.01,
+     -336.25
+    ],
+    [
+     -124.24,
+     -332.67
+    ],
+    [
+     -127.55,
+     -331.02
+    ],
+    [
+     -130.22,
+     -336.4
+    ]
+   ],
+   "evidence": "ortho2020 (pale paving west of the porch where the walk from Lot 2 arrives)",
+   "unverified": "edges under the porch roof and tree shade read to about 0.5 m"
+  },
+  {
+   "name": "NB_Coder_porch_apron",
+   "kind": "concrete",
+   "ring": [
+    [
+     -160.94,
+     -327.93
+    ],
+    [
+     -160.07,
+     -325.47
+    ],
+    [
+     -164.59,
+     -323.87
+    ],
+    [
+     -165.46,
+     -326.32
+    ]
+   ],
+   "evidence": "ortho2020 (pale paving between the rear wing and the north-west porch, where the walk from the south arrives)",
+   "unverified": "extent read to about 0.5 m"
+  },
+  {
+   "name": "NB_Coder_ramp_landing",
+   "kind": "concrete",
+   "ring": [
+    [
+     -152.58,
+     -319.0
+    ],
+    [
+     -151.98,
+     -317.31
+    ],
+    [
+     -158.1,
+     -315.14
+    ],
+    [
+     -158.7,
+     -316.83
+    ]
+   ],
+   "evidence": "ortho2020 (pale strip along the south-east wall); lidar2017 (returns 1 to 2 m above the ground there)",
+   "unverified": "a ramp or deck along the wall, drawn as flat paving at ground level; its rails and slope are not modelled"
+  },
+  {
+   "name": "NB_Presidents_House_side_step",
+   "kind": "concrete",
+   "ring": [
+    [
+     -140.17,
+     -388.59
+    ],
+    [
+     -139.53,
+     -387.12
+    ],
+    [
+     -140.63,
+     -386.64
+    ],
+    [
+     -141.27,
+     -388.1
+    ]
+   ],
+   "evidence": "ortho2020 (pale spot where the walk from Valley Road meets the south wing)",
+   "unverified": "a door step: size guessed"
+  }
+ ]
+}

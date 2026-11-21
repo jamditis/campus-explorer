@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   parseRooms, inRing, ringGap, inVolume, volumeGap, nearVolumes, volumeAt, floorAt, visibleRooms,
-  roomPlaces, searchPool, walkStartY, INTERIOR_REACH,
+  roomPlaces, searchPool, walkStartY, INTERIOR_REACH, interiorLit, ambientFactor, roomHere, sightPass,
 } from '../viewer/rooms-math.js';
 
 // a 20 x 10 m building in viewer metres, floors at 100 and 104, roof at 110
@@ -110,4 +110,47 @@ test('the published rooms file parses, and every room lies in its volume', () =>
     const v = data.volumes.find(x => x.building === r.building);
     assert.ok(v && inRing(v.ring, r.x, r.z), r.name);
   }
+});
+
+test('interior light: inside the ring, away from the outer wall face, not on the roof', () => {
+  const v = { ...V, ceiling: 107 };
+  assert.equal(interiorLit(v, 5, 101, -5, 0), true); // an inner wall
+  assert.equal(interiorLit(v, 5, 106.9, -5, -1), true); // the top floor's ceiling
+  assert.equal(interiorLit(v, 5, 100.0, -5, 1), true); // a floor
+  assert.equal(interiorLit(v, 20, 101, -5, 0), false); // the outer face of the shell, on the outline
+  assert.equal(interiorLit(v, 19.9, 101, -5, 0), false); // within EDGE of it
+  assert.equal(interiorLit(v, 19.6, 101, -5, 0), true); // the inner face of a 0.4 m wall
+  assert.equal(interiorLit(v, 5, 109.5, -5, 1), false); // the roof, facing up, above the ceiling
+  assert.equal(interiorLit(v, 5, 109.5, -5, -1), true); // under the roof (an atrium), facing down
+  assert.equal(interiorLit(v, 5, 109.7, -5, 0), false); // a parapet in the top half metre
+  assert.equal(interiorLit(v, 5, 109.7, -5, -1), true); // the underside of a flat roof with no ceiling under it
+  assert.equal(interiorLit(v, 25, 101, -5, 0), false); // outside
+  assert.equal(interiorLit(v, 5, 111, -5, -1), false); // above the volume
+});
+
+test('interior light is strongest on ceilings and weakest on floors', () => {
+  assert.ok(ambientFactor(-1) > ambientFactor(0) && ambientFactor(0) > ambientFactor(1));
+  assert.equal(ambientFactor(-1), 1);
+});
+
+test('the room you stand in is the nearest room point on your floor, inside the building', () => {
+  assert.equal(roomHere(D, { x: 6, y: 105.65, z: -5 }), 1);
+  assert.equal(roomHere(D, { x: 17, y: 105.65, z: -5 }), 2);
+  assert.equal(roomHere(D, { x: 6, y: 101.65, z: -5 }), 0);
+  assert.equal(roomHere(D, { x: 12, y: 105.65, z: -5 }), -1); // more than ROOM_HERE from any room point
+  assert.equal(roomHere(D, { x: -3, y: 101.65, z: -5 }), -1); // outside
+});
+
+test('line of sight: a dozen rays a pass, unchecked rooms first, the room you are in always shows', () => {
+  const ids = Array.from({ length: 30 }, (_, i) => i);
+  const memo = new Map(); let rays = 0;
+  const clear = id => { rays++; return id % 2 === 0; }; // odd rooms are behind walls
+  let shown = sightPass(ids, memo, clear, { budget: 12, here: 7 });
+  assert.equal(rays, 12);
+  assert.deepEqual([...shown].sort((a, b) => a - b), [0, 2, 4, 6, 7, 8, 10, 12]); // no ray for the room you are in
+  sightPass(ids, memo, clear, { budget: 12, here: 7 });
+  shown = sightPass(ids, memo, clear, { budget: 12, here: 7 });
+  assert.equal(rays, 36); // every room checked once, the next pass starts again with the oldest
+  assert.equal(shown.size, 16); // 15 even rooms and the room you stand in
+  assert.equal(sightPass([], memo, clear).size, 0);
 });
