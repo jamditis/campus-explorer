@@ -1,0 +1,721 @@
+{
+ "zone": "yd_roads",
+ "notes": "draft",
+ "surfaces": [
+  {
+   "name": "YD_valley_rd",
+   "kind": "asphalt",
+   "road": true,
+   "ring": [
+    [
+     407.01,
+     671.79
+    ],
+    [
+     418.81,
+     666.95
+    ],
+    [
+     483.18,
+     825.37
+    ],
+    [
+     471.9,
+     830.0
+    ],
+    [
+     461.27,
+     804.09,
+     60.0
+    ],
+    [
+     443.03,
+     778.07,
+     60.0
+    ],
+    [
+     435.44,
+     759.56,
+     20.0
+    ],
+    [
+     421.15,
+     742.73,
+     25.0
+    ],
+    [
+     417.9,
+     737.57
+    ],
+    [
+     424.48,
+     734.88
+    ],
+    [
+     440.6,
+     760.15,
+     0.5
+    ],
+    [
+     438.88,
+     749.5,
+     3.0
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017, osm 312841179",
+   "unverified": "west curb under trees south of the island read from the LiDAR (flat to t -7.0 in a frame along the road); the narrowing west edge at s 96..117 read from the pale edge in the ortho"
+  },
+  {
+   "name": "YD_charles_st_mouth",
+   "kind": "asphalt",
+   "road": true,
+   "ring": [
+    [
+     442.35,
+     727.55
+    ],
+    [
+     443.28,
+     727.17
+    ],
+    [
+     446.9,
+     736.08,
+     3.0
+    ],
+    [
+     454.33,
+     729.18
+    ],
+    [
+     457.44,
+     736.76
+    ],
+    [
+     449.99,
+     743.68,
+     3.0
+    ],
+    [
+     452.31,
+     749.4
+    ],
+    [
+     451.39,
+     749.78
+    ]
+   ],
+   "evidence": "ortho2020 (curb returns), osm 11733749",
+   "unverified": "curb radius 3 m estimated; Charles Street is a public street outside campus, only its mouth is in the footprint"
+  },
+  {
+   "name": "YD_drive_hairpin_inside",
+   "kind": "asphalt",
+   "ring": [
+    [
+     362.36,
+     728.82
+    ],
+    [
+     366.23,
+     648.91,
+     22.6
+    ],
+    [
+     407.78,
+     714.92
+    ],
+    [
+     410.74,
+     726.19
+    ],
+    [
+     369.19,
+     660.18,
+     21.0
+    ],
+    [
+     365.32,
+     740.09
+    ]
+   ],
+   "evidence": "lidar2017 (flat ground to 13 m from the bend centre, against 19 m for a 7 m road)",
+   "unverified": "the widened inside of the bend: from the LiDAR flat only, its edge not seen in the ortho"
+  }
+ ],
+ "strips": [
+  {
+   "name": "YD_drive",
+   "kind": "asphalt",
+   "centre": [
+    [
+     338.13,
+     906.71
+    ],
+    [
+     355.18,
+     877.16,
+     70.0
+    ],
+    [
+     366.23,
+     648.91,
+     22.6
+    ],
+    [
+     422.81,
+     738.8
+    ]
+   ],
+   "width": 7.0,
+   "evidence": "ortho2020 (pale east edge y 788..876, curbs at the start of the NE leg), lidar2017 (flat band, the walls), osm 233324750, st_roads.json ST_road_YB_one_way (7.0 m, the line it continues)",
+   "unverified": "width 7.0 m kept from the stadium plan; the NE leg north of y 712 is under trees (its line joins the ortho curbs at (403.1, 707.5) to the island nose; 1 to 2 m)"
+  },
+  {
+   "name": "YD_drive_wall_foot_UNVERIFIED",
+   "kind": "concrete",
+   "centre": [
+    [
+     356.95,
+     760.0
+    ],
+    [
+     360.03,
+     696.48,
+     26.5
+    ],
+    [
+     383.95,
+     695.22
+    ]
+   ],
+   "width": 0.8,
+   "evidence": "lidar2017 (road level runs to the wall face)",
+   "unverified": "a concrete gutter at the foot of the retaining wall is assumed: the LiDAR shows the road level reaching the wall"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "YD_valley_rd_E_curb_S",
+   "path": [
+    [
+     419.41,
+     668.43
+    ],
+    [
+     446.9,
+     736.08,
+     3.0
+    ],
+    [
+     450.34,
+     732.89
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (the pale gutter line)",
+   "unverified": "no 15 cm step stands out in the LiDAR; a curb is assumed as on the rest of Valley Road"
+  },
+  {
+   "name": "YD_valley_rd_E_curb_N",
+   "path": [
+    [
+     453.44,
+     740.47
+    ],
+    [
+     449.99,
+     743.68,
+     3.0
+    ],
+    [
+     482.58,
+     823.89
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (the pale gutter line)",
+   "unverified": "no 15 cm step stands out in the LiDAR; a curb is assumed as on the rest of Valley Road"
+  },
+  {
+   "name": "YD_valley_rd_W_curb_island",
+   "path": [
+    [
+     407.62,
+     673.27
+    ],
+    [
+     438.88,
+     749.5,
+     3.0
+    ],
+    [
+     440.6,
+     760.15,
+     0.5
+    ],
+    [
+     424.48,
+     734.88
+    ],
+    [
+     399.27,
+     694.82,
+     26.1
+    ],
+    [
+     383.97,
+     695.62
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (island nose and its two edges), lidar2017 (west edge south of the island)",
+   "unverified": "a curb is assumed where the ortho shows a pale edge line; south of the island and along the NE leg under trees"
+  },
+  {
+   "name": "YD_drive_W_curb",
+   "path": [
+    [
+     357.35,
+     760.0
+    ],
+    [
+     351.83,
+     874.02,
+     66.5
+    ],
+    [
+     345.6,
+     886.52
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (pale edge y 788..876)",
+   "unverified": "curb or painted edge line: the 0.15 m ortho cannot tell; a curb is assumed"
+  },
+  {
+   "name": "YD_drive_E_curb",
+   "path": [
+    [
+     345.6,
+     900.77
+    ],
+    [
+     358.64,
+     878.18,
+     73.5
+    ],
+    [
+     369.19,
+     660.18,
+     21.0
+    ],
+    [
+     421.15,
+     742.73,
+     25.0
+    ],
+    [
+     435.44,
+     759.56,
+     20.0
+    ],
+    [
+     443.03,
+     778.07,
+     60.0
+    ],
+    [
+     461.27,
+     804.09,
+     60.0
+    ],
+    [
+     471.29,
+     828.52
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (pale east edge y 788..876, curbs at the start of the NE leg), lidar2017",
+   "unverified": "curb or painted edge line: the 0.15 m ortho cannot tell; a curb is assumed; under trees on most of the hairpin"
+  }
+ ],
+ "markings": [
+  {
+   "name": "YD_valley_rd_CL_W",
+   "type": "line",
+   "path": [
+    [
+     412.7,
+     669.45
+    ],
+    [
+     477.31,
+     827.78
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "a 0.4 to 0.6 m pale band on the centre line; drawn as a double yellow line"
+  },
+  {
+   "name": "YD_valley_rd_CL_E",
+   "type": "line",
+   "path": [
+    [
+     412.89,
+     669.38
+    ],
+    [
+     477.49,
+     827.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "yellow",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "a 0.4 to 0.6 m pale band on the centre line; drawn as a double yellow line"
+  },
+  {
+   "name": "YD_valley_rd_NB_edge",
+   "type": "line",
+   "path": [
+    [
+     416.08,
+     668.07
+    ],
+    [
+     456.3,
+     766.14
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "where it ends at s 131 (it fades under a tree shadow)"
+  },
+  {
+   "name": "YD_gore_E",
+   "type": "line",
+   "path": [
+    [
+     442.39,
+     752.39
+    ],
+    [
+     452.64,
+     777.37
+    ]
+   ],
+   "width": 0.2,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)"
+  },
+  {
+   "name": "YD_gore_dash",
+   "type": "line",
+   "path": [
+    [
+     453.11,
+     778.8
+    ],
+    [
+     455.82,
+     785.25
+    ]
+   ],
+   "width": 0.15,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "one dash seen; the rest of a dotted extension may be worn"
+  },
+  {
+   "name": "YD_gore_chevron_1_R",
+   "type": "line",
+   "path": [
+    [
+     443.01,
+     754.3
+    ],
+    [
+     440.83,
+     757.68
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_2_R",
+   "type": "line",
+   "path": [
+    [
+     444.81,
+     758.69
+    ],
+    [
+     442.63,
+     762.07
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_2_L",
+   "type": "line",
+   "path": [
+    [
+     442.63,
+     762.07
+    ],
+    [
+     440.94,
+     761.36
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_3_R",
+   "type": "line",
+   "path": [
+    [
+     446.62,
+     763.09
+    ],
+    [
+     444.44,
+     766.47
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_3_L",
+   "type": "line",
+   "path": [
+    [
+     444.44,
+     766.47
+    ],
+    [
+     442.74,
+     765.76
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_4_R",
+   "type": "line",
+   "path": [
+    [
+     448.42,
+     767.48
+    ],
+    [
+     446.24,
+     770.86
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_4_L",
+   "type": "line",
+   "path": [
+    [
+     446.24,
+     770.86
+    ],
+    [
+     444.54,
+     770.15
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_5_R",
+   "type": "line",
+   "path": [
+    [
+     450.22,
+     771.88
+    ],
+    [
+     448.04,
+     775.26
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  },
+  {
+   "name": "YD_gore_chevron_5_L",
+   "type": "line",
+   "path": [
+    [
+     448.04,
+     775.26
+    ],
+    [
+     446.34,
+     774.55
+    ]
+   ],
+   "width": 0.4,
+   "colour": "white",
+   "evidence": "ortho2020 (0.15 m)",
+   "unverified": "five chevrons; spacing and angle regularised from the 0.15 m ortho"
+  }
+ ],
+ "fences": [
+  {
+   "name": "YD_drive_retaining_wall_1",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     356.75,
+     760.0
+    ],
+    [
+     357.33,
+     748.0
+    ]
+   ],
+   "height": 2.0,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m; the top is not clear in the LiDAR here (the wall ends in the bank); height guessed between 1.3 m at y 760 and 4.2 m at y 745"
+  },
+  {
+   "name": "YD_drive_retaining_wall_2",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     357.33,
+     748.0
+    ],
+    [
+     358.3,
+     728.0
+    ]
+   ],
+   "height": 5.4,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m"
+  },
+  {
+   "name": "YD_drive_retaining_wall_3",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     358.3,
+     728.0
+    ],
+    [
+     358.98,
+     713.94,
+     26.7
+    ],
+    [
+     362.21,
+     708.34
+    ]
+   ],
+   "height": 6.0,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m"
+  },
+  {
+   "name": "YD_drive_retaining_wall_4",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     362.21,
+     708.34
+    ],
+    [
+     365.17,
+     703.21,
+     26.7
+    ],
+    [
+     370.02,
+     699.81
+    ]
+   ],
+   "height": 4.6,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m"
+  },
+  {
+   "name": "YD_drive_retaining_wall_5",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     370.02,
+     699.81
+    ],
+    [
+     374.87,
+     696.42,
+     26.7
+    ],
+    [
+     380.7,
+     695.39
+    ]
+   ],
+   "height": 3.2,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m"
+  },
+  {
+   "name": "YD_drive_retaining_wall_6",
+   "kind": "wall_concrete",
+   "path": [
+    [
+     380.7,
+     695.39
+    ],
+    [
+     382.31,
+     695.11,
+     26.7
+    ],
+    [
+     383.94,
+     695.02
+    ]
+   ],
+   "height": 1.8,
+   "thickness": 0.45,
+   "evidence": "lidar2017 (a drop of up to 6 m in 0.5 m behind the road edge, no ground returns on the face)",
+   "unverified": "material, colour and thickness; the top is read 0.3 to 3 m behind the face, so the height is good to about 0.5 m"
+  }
+ ]
+}

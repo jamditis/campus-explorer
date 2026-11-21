@@ -1,0 +1,45 @@
+{
+ "zone": "yd_footprint",
+ "notes": "draft",
+ "footprint": [
+  [
+   423.58,
+   666.07
+  ],
+  [
+   487.71,
+   822.43
+  ],
+  [
+   455.79,
+   835.52
+  ],
+  [
+   345.0,
+   918.3
+  ],
+  [
+   345.0,
+   826.0
+  ],
+  [
+   300.0,
+   826.0
+  ],
+  [
+   300.0,
+   716.76
+  ]
+ ],
+ "supersede": {
+  "notes": "draft",
+  "clip": [
+   "Context_skirt",
+   "BD_farfield_3DEP"
+  ],
+  "drop": [
+   "far_houses"
+  ],
+  "tuck": 0.5
+ }
+}
