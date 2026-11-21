@@ -1,6 +1,6 @@
 {
  "zone": "core_lots",
- "notes": "Zone core_lots: parking off the through roads of the core area. The JSON is the source; it was written by a generator in scratch (/tmp/claude-0/p5/core/core_lots/gen.py) and may be edited by hand from here on. Lot 10 (OSM 312932817, named Lot 10, reserved parking on the university's parking map): the 2020 ortho shows the ground west of Skyline Way under site trailers and dust (the Alumni Green and Cole Hall works), the 2017 and 2014 LiDAR show a smooth crossfall with no curb or step, and the published model shows lawn. OSM was edited on 2026-09-01 together with the new footways 1554281915 and 1554281916, which cross the lot to Skyline Way at its north and south ends (core_ways draws them; concrete wins). The asphalt therefore follows the OSM ring on its west side and ends, and runs 0.2 m past Skyline Way's west edge line onto the carriageway along its whole length: the lot is open to the road (OSM's ring shares Skyline Way's centre-line nodes). No stall paint, arrows, islands, curbs or lamps are readable in any source, so none are drawn (the brief's 'about 20 stalls' is an estimate, not seen); no pole returns in the 2017 LiDAR. The paved apron at the bend west of Skyline Way (x -30..-10, y -75..-55) is the walk and entry of Morehead Hall in the ortho and lies mostly outside the footprint: not drawn here. Chapin Drive bays (north side, x -177..-147): read in a frame along Chapin (origin -175, -137, angle -9.2 degrees) on the 7.5 cm ortho. Dividers found as brightness peaks on transects every 0.25 m along each divider, each fitted as a straight run by least squares (rms 0.04 to 0.07 m, skew under 2 degrees, so the rows are drawn at 90 degrees to Chapin). East group (x -165..-147): an accessible stall, a 2.1 m access aisle, an accessible stall and four standard stalls; dividers at u 12.86, 14.97, 17.61, 20.29, 22.97, 25.70, 28.41; least-squares pitch 2.69 m (residuals under 0.05 m), 7 stalls in all, 5.0 m deep from the back curb (v 3.4) to the road. The first stall (u 10.15..12.86) is bounded by the walk that meets the crosswalk, so it has no west divider. West group (x -177..-168): three stalls about 3.1 to 3.3 m wide and 8.8 m deep (dividers at u -1.90, 1.39, 4.42, the third stall bounded by the walk); what they are for is not known. Both pads reach 0.2 m past Chapin's north edge line onto the carriageway; the walk between them and the walk behind them are core_ways'. Curbs on the back and outer ends of the pads only, from the shadow line; none across the mouths. No lamps: the 2017 LiDAR shows no pole returns in or by either. Dark ground east of the east bays (u 29..34) is planting in shade, not drawn.",
+ "notes": "Zone core_lots: parking off the through roads of the core area. The JSON is the source; it was written by a generator in scratch (/tmp/claude-0/p5/core/core_lots/gen.py) and may be edited by hand from here on. Lot 10 (OSM 312932817, named Lot 10, reserved parking on the university's parking map): the 2020 ortho shows the ground west of Skyline Way under site trailers and dust (the Alumni Green and Cole Hall works), the 2017 and 2014 LiDAR show a smooth crossfall with no curb or step, and the published model shows lawn. OSM was edited on 2026-09-01 together with the new footways 1554281915 and 1554281916, which cross the lot to Skyline Way at its north and south ends (core_ways draws them; concrete wins). The asphalt therefore follows the OSM ring on its west side and ends, and runs 0.2 m past Skyline Way's west edge line onto the carriageway along its whole length: the lot is open to the road (OSM's ring shares Skyline Way's centre-line nodes). No stall paint, arrows, islands, curbs or lamps are readable in any source, so none are drawn (the brief's 'about 20 stalls' is an estimate, not seen); no pole returns in the 2017 LiDAR. The paved apron at the bend west of Skyline Way (x -30..-10, y -75..-55) is the walk and entry of Morehead Hall in the ortho and lies mostly outside the footprint: not drawn here. Chapin Drive bays (north side, x -177..-147): read in a frame along Chapin (origin -175, -137, angle -9.2 degrees) on the 7.5 cm ortho. Dividers found as brightness peaks on transects every 0.25 m along each divider, each fitted as a straight run by least squares (rms 0.04 to 0.07 m, skew under 2 degrees, so the rows are drawn at 90 degrees to Chapin). East group (x -165..-147): an accessible stall, a 2.1 m access aisle, an accessible stall and four standard stalls; dividers at u 12.86, 14.97, 17.61, 20.29, 22.97, 25.70, 28.41; least-squares pitch 2.69 m (residuals under 0.05 m), 7 stalls in all, 5.0 m deep from the back curb (v 3.4) to the road. The first stall (u 10.15..12.86) is bounded by the walk that meets the crosswalk, so it has no west divider. West group (x -177..-168): three stalls about 3.1 to 3.3 m wide and 8.8 m deep (dividers at u -1.90, 1.39, 4.42, the third stall bounded by the walk); what they are for is not known. Both pads reach 0.2 m past Chapin's north edge line onto the carriageway; the walk between them and the walk behind them are core_ways'. Curbs on the back and outer ends of the pads only, from the shadow line; none across the mouths. No lamps: the 2017 LiDAR shows no pole returns in or by either. Dark ground east of the east bays (u 29..34) is planting in shade, not drawn. Middle bay (north side, x -105..-93, added in the fix-up pass): read in a frame along Chapin's north edge line here (origin -112.33, -151.83, angle -14.24 degrees) on the 7.5 cm ortho. Brightness transects parallel to the road at 1.5, 2.5 and 3.5 m in find the west curb of a curbed lawn corner and four dividers (x -104.54, -101.68, -99.21, -96.5, -93.78 at 2.5 m in); they shift 0.25 m east per metre in, so the stalls are at 90 degrees. Least-squares pitch 2.75 m along the road (residuals under 0.14 m), 4 stalls. Dividers run from the road edge to 4.8 m in; the walk starts at 4.9 to 5.0 m in, so the pad's back edge lies 0.2 m under the walk and the back curb on the walk's edge. Planting east of the last divider. The pad runs 0.2 m onto the carriageway; core_ways' north curb is broken across its mouth.",
  "surfaces": [
   {
    "name": "cl_lot10_asphalt",
@@ -72,6 +72,30 @@
     ]
    ],
    "evidence": "ortho2020 7.5 cm"
+  },
+  {
+   "name": "cl_chapin_bay_M_asphalt",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -105.15,
+     -153.86
+    ],
+    [
+     -94.47,
+     -156.57
+    ],
+    [
+     -93.16,
+     -151.43
+    ],
+    [
+     -103.84,
+     -148.72
+    ]
+   ],
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "back edge 0.2 m under the walk; still there after 2020 not checked"
   }
  ],
  "curbs": [
@@ -114,6 +138,39 @@
    "closed": false,
    "evidence": "ortho2020",
    "unverified": "curb read from the shadow line at the back of the bays"
+  },
+  {
+   "name": "cl_chapin_bay_M_curb",
+   "path": [
+    [
+     -106.51,
+     -153.31
+    ],
+    [
+     -105.1,
+     -153.67,
+     1.0
+    ],
+    [
+     -103.89,
+     -148.92
+    ],
+    [
+     -93.21,
+     -151.63
+    ],
+    [
+     -94.42,
+     -156.38
+    ],
+    [
+     -93.63,
+     -156.58
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020 7.5 cm",
+   "unverified": "west end: the curbed lawn corner, radius read as about 1 m; back curb along the walk's edge (no shadow line readable); east end along the planting"
   }
  ],
  "markings": [
@@ -265,6 +322,26 @@
    ],
    "count": 1,
    "depth": 8.8,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "evidence": "ortho2020 7.5 cm"
+  },
+  {
+   "name": "cl_chapin_bay_M_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -103.89,
+     -148.92
+    ],
+    [
+     -93.21,
+     -151.63
+    ]
+   ],
+   "count": 4,
+   "depth": 4.9,
    "side": "right",
    "angle": 90,
    "colour": "white",
