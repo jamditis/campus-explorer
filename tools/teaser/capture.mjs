@@ -72,14 +72,18 @@ async function start() {
   const t0 = Date.now();
   ({ browser, page } = await open(`${server.url}?capture&quality=${quality}`, { width, height, minutes: 90 }));
   await waitFor(page, 'loaded');
-  // far versions of tiles load after the campus: wait until their count stops growing
-  let n = -1;
-  for (;;) { const m = await page.evaluate(() => window.__campus.lods); if (m === n) break; n = m; await page.waitForTimeout(8000); }
-  await page.addStyleTag({ content: 'body.teaser-noui>:not(#viewer){display:none!important}.teaser-fade>:not(#viewer){transition:none!important}' });
+  // far versions of tiles load after the campus: wait for all of them (else they swap in mid-shot)
+  const want = await page.evaluate(() => fetch('models/main/manifest.json').then(r => r.json()).then(m => m.tiles.filter(t => t.lod).length));
+  let n = 0;
+  for (let i = 0; i < 120 && n < want; i++) { await page.waitForTimeout(5000); n = await page.evaluate(() => window.__campus.lods); }
+  // the frame-rate readout would show the capture's own numbers (one draw per frame, none in between)
+  await page.addStyleTag({ content: 'body.teaser-noui>:not(#viewer){display:none!important}.teaser-fade>:not(#viewer){transition:none!important}#performance{visibility:hidden}' });
+  // the visitor closes the minimap (a real click on Map); in software WebGL it is drawn too late to read
+  if (await page.locator('#tool-map[aria-pressed=true]').count()) await page.click('#tool-map');
   await installSettle(page);
   await page.evaluate(installGraphics, { fonts, mathSource });
   built = -1;
-  log(`viewer loaded in ${((Date.now() - t0) / 1000).toFixed(0)} s, ${n} far versions`);
+  log(`viewer loaded in ${((Date.now() - t0) / 1000).toFixed(0)} s, ${n} of ${want} far versions`);
 }
 
 /** Resolve storyboard heights: [x, h, z] with `rel` are metres above the ground at (x, z). */
@@ -87,10 +91,11 @@ async function ground(shot) {
   if (shot._abs) return shot._abs;
   const up = async list => page.evaluate(({ list, rel }) => list.map(([x, y, z]) => [x, rel ? y + (window.__campus.groundAt(x, z) ?? 100) : y, z]), { list, rel: !!shot.rel });
   const g = [];
+  const upg = async (list, rel) => page.evaluate(({ list, rel }) => list.map(([x, y, z]) => [x, rel ? y + (window.__campus.groundAt(x, z) ?? 100) : y, z]), { list, rel });
   for (const d of shot.graphics ?? []) {
-    const e = { ...d };
-    if (e.at) [e.at] = await up([e.at]);
-    if (e.a) [e.a, e.b] = await up([e.a, e.b]);
+    const e = { ...d }, rel = d.rel ?? !!shot.rel; // a graphic may set its own `rel`
+    if (e.at) [e.at] = await upg([e.at], rel);
+    if (e.a) [e.a, e.b] = await upg([e.a, e.b], rel);
     g.push(e);
   }
   const shadow = shot.shadow ? { focus: (await up([shot.shadow.focus]))[0], half: shot.shadow.half } : null;
@@ -141,6 +146,8 @@ async function shoot(f) {
     }, { cam, time: shot.time ? timeAt(shot, local).toISOString() : null, states, ui, shadow: s.shadow ?? null });
     if (shot.typed && k === 0) await type(shot.typed(sec));
     await settle(page);
+    // the viewer shows "ran out of graphics memory" when the WebGL context is lost: never keep such a frame
+    if (await page.evaluate(() => window.__campus.app.renderer.getContext().isContextLost())) throw new Error('WebGL context lost');
     const p = join(framesDir, subs > 1 ? `${String(f).padStart(5, '0')}.s${k}.png` : `${String(f).padStart(5, '0')}.tmp.png`);
     await page.screenshot({ path: p });
     paths.push(p);

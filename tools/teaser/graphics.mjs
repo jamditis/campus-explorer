@@ -150,8 +150,7 @@ export function installGraphics({ fonts, mathSource }) {
     }
     // the shadow map is drawn again only when a graphic moved (see page.mjs)
     const sig = [...items.keys()].map(id => (states[id] ? `${states[id].up.toFixed(4)},${states[id].down.toFixed(4)}` : '-')).join('|');
-    if (sig !== lastSig) { lastSig = sig; window.__teaser.version++; app.look.invalidateShadows(); }
-    app.invalidate();
+    if (sig !== lastSig) { lastSig = sig; window.__teaser.version++; app.look.invalidateShadows(); app.invalidate(); }
   }
   let lastSig = '';
   function clear() { for (const it of items.values()) root.remove(it.holder); items.clear(); lastSig = ''; window.__teaser.version++; }
