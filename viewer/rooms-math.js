@@ -171,3 +171,9 @@ export function sightPass(ids, memo, cast, { budget = 12, here = -1 } = {}) {
   if (here >= 0) shown.add(here);
   return shown;
 }
+
+/** True while a room that may show still waits for its ray since pass `from`. The room the camera stands in
+ * never gets a ray (sightPass), so it never counts: else the label pass would not settle while you stand in a room. */
+export function sightPending(ids, memo, from, here = -1) {
+  return ids.some(id => id !== here && (memo.get(id)?.pass ?? 0) < from);
+}

@@ -4,7 +4,7 @@
 // Layout runs only when the camera moved, writes transforms only, and never reads layout in the frame path (sizes are measured once per label).
 import * as THREE from 'three';
 import { labelPriority, distanceOpacity, inRange, declutter, sourceTitle } from './labels-math.js';
-import { visibleRooms, roomHere, sightPass, volumeAt } from './rooms-math.js';
+import { visibleRooms, roomHere, sightPass, sightPending, volumeAt } from './rooms-math.js';
 
 const STORE = 'campus-labels';
 const ABOVE = 6;            // metres above the top of the model
@@ -130,18 +130,23 @@ export function createLabels(app) {
   let sightShown = new Set(), sightFrom = 0; // sightFrom: the pass at which the camera last moved
   function roomsInSight() {
     const ids = visibleRooms(app.rooms, camera.position, app.state.mode);
+    const here = roomHere(app.rooms, camera.position);
     if (camera.position.distanceToSquared(sightAt) >= 1e-6) { sightAt.copy(camera.position); sightFrom = (sightMemo.pass ?? 0) + 1; }
-    else if (ids.every(id => (sightMemo.get(id)?.pass ?? 0) >= sightFrom)) return sightShown; // all checked from here
+    else if (!sightPending(ids, sightMemo, sightFrom, here)) { // all checked from here
+      // the mode can change with the camera still (walk to fly): rooms that may no longer show leave the kept set
+      for (const id of sightShown) if (!ids.includes(id)) sightShown.delete(id);
+      return sightShown;
+    }
     const cast = id => {
       const r = app.rooms.rooms[id];
       _sd.set(r.x, r.y + ROOM_ABOVE, r.z).sub(camera.position);
       const d = _sd.length(); if (d < 0.5) return true;
       return !app.world.raycast(camera.position, _sd.divideScalar(d), d - 0.3, { builtOnly: true });
     };
-    sightShown = sightPass(ids, sightMemo, cast, { budget: SIGHT_RAYS, here: roomHere(app.rooms, camera.position) });
+    sightShown = sightPass(ids, sightMemo, cast, { budget: SIGHT_RAYS, here });
     // a room checked earlier but out of reach now must not come back from the memo
     for (const id of sightShown) if (!ids.includes(id)) sightShown.delete(id);
-    if (ids.some(id => (sightMemo.get(id)?.pass ?? 0) < sightFrom)) dirty = true; // more rays on the next frame
+    if (sightPending(ids, sightMemo, sightFrom, here)) dirty = true; // more rays on the next frame
     return sightShown;
   }
 

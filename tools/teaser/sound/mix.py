@@ -152,6 +152,13 @@ def duck_gain(side, depth_db, rate=SR, block=0.01, attack=0.02, release=0.35, fl
 # ---------------------------------------------------------------- audio I/O through ffmpeg
 
 
+def duck_key(cue):
+    """Linear level of a cue in the ducking key, or None when it does not duck. `duck` is in dB:
+    0 is the cue at full level, so it must not read as "off"."""
+    d = cue.get("duck")
+    return None if d is None else 10 ** (d / 20)
+
+
 def source_path(src_dir, name):
     p = os.path.join(src_dir, name)
     if os.path.exists(p):
@@ -294,8 +301,9 @@ def build(cue_sheet, timeline, src_dir):
         a = int(round(t0 * SR))
         x = x[: n - a]
         bus[c.get("bus", "fx")][a:a + len(x)] += x
-        if c.get("duck"):
-            key[a:a + len(x)] += np.abs(x).mean(1) * 10 ** (c["duck"] / 20)
+        k = duck_key(c)
+        if k is not None:
+            key[a:a + len(x)] += np.abs(x).mean(1) * k
             duck_depth = max(duck_depth, cue_sheet.get("duck_db", 6.0))
         placed.append({"id": c.get("id", c["key"]), "key": c["key"], "bus": c.get("bus", "fx"),
                        "t0": round(t0, 3), "t1": round(t1, 3)})

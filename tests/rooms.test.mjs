@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   parseRooms, inRing, ringGap, inVolume, volumeGap, nearVolumes, volumeAt, floorAt, visibleRooms,
-  roomPlaces, searchPool, walkStartY, INTERIOR_REACH, interiorLit, ambientFactor, roomHere, sightPass,
+  roomPlaces, searchPool, walkStartY, INTERIOR_REACH, interiorLit, ambientFactor, roomHere, sightPass, sightPending,
 } from '../viewer/rooms-math.js';
 
 // a 20 x 10 m building in viewer metres, floors at 100 and 104, roof at 110
@@ -153,4 +153,14 @@ test('line of sight: a dozen rays a pass, unchecked rooms first, the room you ar
   assert.equal(rays, 36); // every room checked once, the next pass starts again with the oldest
   assert.equal(shown.size, 16); // 15 even rooms and the room you stand in
   assert.equal(sightPass([], memo, clear).size, 0);
+});
+
+test('the sight pass settles while the camera stands in a room', () => {
+  const memo = new Map(), ids = [0, 1, 2, 3, 4];
+  assert.equal(sightPending(ids, memo, 1, 2), true); // nothing checked yet
+  sightPass(ids, memo, () => true, { budget: 12, here: 2 });
+  assert.equal(memo.has(2), false); // the room you stand in gets no ray
+  assert.equal(sightPending(ids, memo, 1, 2), false); // and does not keep the pass open
+  assert.equal(sightPending(ids, memo, 1, -1), true); // outside every room it would still wait
+  assert.equal(sightPending([], memo, 5), false);
 });

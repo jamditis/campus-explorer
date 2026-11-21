@@ -92,6 +92,11 @@ class Signal(unittest.TestCase):
 
 
 class CueSheet(unittest.TestCase):
+    def test_a_zero_db_duck_still_ducks(self):
+        self.assertEqual(mix.duck_key({"duck": 0}), 1.0)
+        self.assertAlmostEqual(mix.duck_key({"duck": -6}), 0.501, places=3)
+        self.assertIsNone(mix.duck_key({}))
+
     def test_every_cue_names_a_known_source_and_bus(self):
         sheet = json.loads((SOUND / "cues.json").read_text())
         for c in sheet["cues"]:
