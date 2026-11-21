@@ -1,6 +1,6 @@
 {
  "zone": "yd_roads",
- "notes": "Zone yd_roads: Yogi Berra Drive from the stadium area's edge to Valley Road, Valley Road from s 26 to s 195 with the drive's deceleration lane, the painted gore and the island nose, the mouth of Charles Street, the drive's curbs and the retaining wall on the outer side of its hairpin. Written by a generator (scratch, not kept); this file is the source now and may be edited by hand. Valley Road frame: origin (404, 646), heading 67.7 deg, s along, t to the east (positive). Read from the 2020 ortho resampled in that frame (0.15 m), heights and edges under trees from the LiDAR ground (2017). Valley Road: east curb at the pale gutter line, t 5.75 at s 26 to 5.2 at s 195; west curb t -7.0 (LiDAR: the road's flat ends there; trees hide it in the ortho south of the island); centre line t -0.85 to -1.15 (a 0.4 to 0.6 m pale band, drawn as a double yellow line as in the normal area); a white line t 2.8 from the south cut to s 131 (a 2.5 m shoulder on the northbound side). The drive's mouth: the west pavement edge narrows from the drive's line at s 96 to t -14.0 at s 117 (pale edge in the ortho at -18 (s 100 to 105), -16.5 (110), -14 (115 to 130)), runs at -14 to s 137 and tapers to Valley Road's west curb at s 168 (ortho: -13 at 135, -11.25 at 140, -9.75 at 150, -8.25 at 160, -7 at 170); island nose at s 119.5, t -9.45 (ortho, crisp), its east side to t -7.0 at s 109; five gore chevrons s 115 to 136 between t -9.6 and -5.0 and a white line t -4.85 s 113 to 140 (ortho), one dash beyond. Yogi Berra Drive (one-way up from Valley Road, osm): a 7.0 m strip, the width and line of the stadium plan's ST_road_YB_one_way where it leaves that area (heading -60 deg), a true arc r 70 to the N-S leg; the N-S leg's line from the pale east edge in the ortho (19 points, y 788 to 876: x = 363.0 - 0.0484 (y - 788), the edge 3.5 m east of the centre; the LiDAR's flat band agrees within 0.5 m at y 742 to 790); the hairpin a true arc r 22.6 on the centre line, fitted so its outer edge meets the LiDAR's flat-to-wall line at the bottom (y 695.6); the NE leg's line through the curbs the ortho shows where it leaves the hairpin (centre (403.13, 707.53)) and the island's west edge (s 110, t -11.3, the drive's east edge), heading 57.8 deg. Its inside at the hairpin is flat in the LiDAR to 13 m from the bend's centre, so the inner edge is widened there to an arc r 21 on the inner edge lines (up to 4.5 m wider at the apex), UNVERIFIED. Retaining wall: the LiDAR has no ground returns on a face 0.5 to 0.8 m outside the drive's west and outer edge from y 760 round the hairpin to its bottom (x 383.5), with the ground behind up to 6 m higher (y 715 to 735); drawn as six concrete wall pieces 0.6 m outside the road edge with heights read from the ground behind (good to about 0.5 m), a concrete foot between it and the road. Curbs: the pale edge lines the ortho shows along the drive and the island are taken as curbs, UNVERIFIED (a painted edge line would look the same at 0.15 m). Not modelled: driveways on the east side of Valley Road (outside the east edge except their aprons, not readable), Charles Street's stop bar and crosswalk (outside the footprint), signs and lamps (no pole returns that can be told from trunks), the drive's own paint (none readable under the trees).",
+ "notes": "Zone yd_roads: Yogi Berra Drive from the stadium area's edge to Valley Road, Valley Road from s -28 to s 177 with the drive's deceleration lane, the painted gore and the island nose, the mouths of Maclean Road and Charles Street, the drive's curbs and the retaining wall on the outer side of its hairpin. Written by a generator (scratch, not kept); this file is the source now and may be edited by hand. Valley Road frame: origin (404, 646), heading 67.7 deg, s along, t to the east (positive). Read from the 2020 ortho resampled in that frame (0.15 m), heights and edges under trees from the LiDAR ground (2017). Valley Road: east curb at the pale gutter line, t 5.75 at s 26 to 5.2 at s 195 (one straight line, run on to s -28); west curb t -7.0 (LiDAR: the road's flat ends there; trees hide it in the ortho south of the island); centre line t -0.5 (s -29), -0.85 (s 30), -1.12 (s 178), two straight runs (a 0.4 to 0.6 m pale band, drawn as a double yellow line as in the normal area); a white line from t 3.1 at the south cut to 2.78 at s 131 (a 2.5 m shoulder on the northbound side). The drive's mouth: the west pavement edge narrows from the drive's line at s 96 to t -14.0 at s 117 (pale edge in the ortho at -18 (s 100 to 105), -16.5 (110), -14 (115 to 130)), runs at -14 to s 137 and tapers to Valley Road's west curb at s 168 (ortho: -13 at 135, -11.25 at 140, -9.75 at 150, -8.25 at 160, -7 at 170); island nose at s 119.5, t -9.45 (ortho, crisp), its east side to t -7.0 at s 109; five gore chevrons s 115 to 136 between t -9.6 and -5.0 and a white line t -4.85 s 113 to 140 (ortho), one dash beyond. Yogi Berra Drive (one-way up from Valley Road, osm): a 7.0 m strip, the width and line of the stadium plan's ST_road_YB_one_way where it leaves that area (heading -60 deg), a true arc r 70 to the N-S leg; the N-S leg's line from the pale east edge in the ortho (19 points, y 788 to 876: x = 363.0 - 0.0484 (y - 788), the edge 3.5 m east of the centre; the LiDAR's flat band agrees within 0.5 m at y 742 to 790); the hairpin a true arc r 22.6 on the centre line, fitted so its outer edge meets the LiDAR's flat-to-wall line at the bottom (y 695.6); the NE leg's line through the curbs the ortho shows where it leaves the hairpin (centre (403.13, 707.53)) and the island's west edge (s 110, t -11.3, the drive's east edge), heading 57.8 deg. Its inside at the hairpin is flat in the LiDAR to 13 m from the bend's centre, so the inner edge is widened there to an arc r 21 on the inner edge lines (up to 4.5 m wider at the apex), UNVERIFIED. Retaining wall: the LiDAR has no ground returns on a face 0.5 to 0.8 m outside the drive's west and outer edge from y 760 round the hairpin to its bottom (x 383.5), with the ground behind up to 6 m higher (y 715 to 735); drawn as six concrete wall pieces 0.6 m outside the road edge with heights read from the ground behind (good to about 0.5 m), a concrete foot between it and the road. Curbs: the pale edge lines the ortho shows along the drive and the island are taken as curbs, UNVERIFIED (a painted edge line would look the same at 0.15 m). Maclean Road's mouth: curbs under tree shadow, its line from osm 11745726, 7.1 m between curbs, UNVERIFIED. Not modelled: driveways on the east side of Valley Road (outside the east edge except their aprons, not readable), Charles Street's stop bar (outside the footprint), the two pale bars across Maclean Road's mouth (a crosswalk or a stop bar, not readable under the shadow), signs and lamps (no pole returns that can be told from trunks), the drive's own paint (none readable under the trees).",
  "surfaces": [
   {
    "name": "YD_valley_rd",
@@ -8,20 +8,20 @@
    "road": true,
    "ring": [
     [
-     407.01,
-     671.79
+     386.52,
+     621.83
     ],
     [
-     418.81,
-     666.95
+     398.48,
+     616.92
     ],
     [
-     483.18,
-     825.37
+     476.41,
+     808.69
     ],
     [
-     471.9,
-     830.0
+     465.07,
+     813.34
     ],
     [
      461.27,
@@ -107,6 +107,49 @@
    ],
    "evidence": "ortho2020 (curb returns), osm 11733749",
    "unverified": "curb radius 3 m estimated; Charles Street is a public street outside campus, only its mouth is in the footprint"
+  },
+  {
+   "name": "YD_maclean_rd_mouth",
+   "kind": "asphalt",
+   "road": true,
+   "ring": [
+    [
+     403.96,
+     633.05
+    ],
+    [
+     404.88,
+     632.67
+    ],
+    [
+     409.38,
+     643.75,
+     3.0
+    ],
+    [
+     416.64,
+     637.3
+    ],
+    [
+     419.49,
+     644.24
+    ],
+    [
+     412.21,
+     650.71,
+     3.0
+    ],
+    [
+     415.42,
+     658.61
+    ],
+    [
+     414.5,
+     658.99
+    ]
+   ],
+   "evidence": "ortho2020 (pale curb returns), osm 11745726",
+   "unverified": "curbs under tree shadow: the mouth may lie 1 to 1.5 m off along Valley Road; curb radius 3 m estimated; Maclean Road is a public street outside campus, only its mouth is in the footprint"
   },
   {
    "name": "YD_drive_hairpin_inside",
@@ -196,11 +239,36 @@
  ],
  "curbs": [
   {
+   "name": "YD_valley_rd_E_curb_SS",
+   "path": [
+    [
+     399.08,
+     618.4
+    ],
+    [
+     409.38,
+     643.75,
+     3.0
+    ],
+    [
+     412.6,
+     640.89
+    ]
+   ],
+   "evidence": "ortho2020 (0.15 m) (the pale gutter line)",
+   "unverified": "no 15 cm step stands out in the LiDAR; a curb is assumed as on the rest of Valley Road"
+  },
+  {
    "name": "YD_valley_rd_E_curb_S",
    "path": [
     [
-     419.41,
-     668.43
+     415.45,
+     647.83
+    ],
+    [
+     412.21,
+     650.71,
+     3.0
     ],
     [
      446.9,
@@ -228,8 +296,8 @@
      3.0
     ],
     [
-     482.58,
-     823.89
+     475.8,
+     807.21
     ]
    ],
    "evidence": "ortho2020 (0.15 m) (the pale gutter line)",
@@ -239,8 +307,8 @@
    "name": "YD_valley_rd_W_curb_island",
    "path": [
     [
-     407.62,
-     673.27
+     387.13,
+     623.31
     ],
     [
      438.88,
@@ -327,8 +395,8 @@
      60.0
     ],
     [
-     471.29,
-     828.52
+     464.46,
+     811.86
     ]
    ],
    "evidence": "ortho2020 (0.15 m) (pale east edge y 788..876, curbs at the start of the NE leg), lidar2017",
@@ -341,12 +409,16 @@
    "type": "line",
    "path": [
     [
-     412.7,
-     669.45
+     392.44,
+     619.4
     ],
     [
-     477.31,
-     827.78
+     414.5,
+     674.12
+    ],
+    [
+     470.41,
+     811.15
     ]
    ],
    "width": 0.1,
@@ -359,12 +431,16 @@
    "type": "line",
    "path": [
     [
-     412.89,
-     669.38
+     392.63,
+     619.32
     ],
     [
-     477.49,
-     827.7
+     414.69,
+     674.04
+    ],
+    [
+     470.6,
+     811.07
     ]
    ],
    "width": 0.1,
@@ -377,12 +453,12 @@
    "type": "line",
    "path": [
     [
-     416.08,
-     668.07
+     395.86,
+     617.99
     ],
     [
-     456.3,
-     766.14
+     456.28,
+     766.15
     ]
    ],
    "width": 0.15,
