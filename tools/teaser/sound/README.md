@@ -42,6 +42,8 @@ Cues are placed by name, not by time, so a re-timed cut needs no new numbers:
 - `{"any": [a, b]}` the first of these that exists in the cut.
 
 `shots`, `markers` and `graphics` map the names used in the cue sheet to the storyboard's names.
+`marker_override` replaces a storyboard marker with the time read off the rendered frames (for the
+final cut: the pass through the entrance glass is at 17.1 s on the picture, not 14.0 s).
 
 Per cue: `key` (the recording), `src` (seconds into it) or `align` (put a moment of the recording on
 an anchor: the train horn on the station, the orchestra's first full chord on the peak of the

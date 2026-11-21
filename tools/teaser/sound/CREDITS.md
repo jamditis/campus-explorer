@@ -17,7 +17,7 @@ Put this text in the video description, or on the end card, wherever the film is
 
 > Sound: field recordings and sound effects from radio aporee ::: maps, the Yellowstone National Park
 > Sound Library (National Park Service) and the USC School of Cinematic Arts sound effects libraries,
-> via the Internet Archive. Music: Edvard Grieg, "Morning" from Peer Gynt Suite
+> via the Internet Archive, and Wikimedia Commons. Music: Edvard Grieg, "Morning" from Peer Gynt Suite
 > No. 1, performed by the Czech National Symphony Orchestra, recorded and released into the public
 > domain by Musopen.
 >
@@ -103,6 +103,12 @@ https://archive.org/details/sound-effect-libraries-red-gold-sunset-editorial.
 | `fx_metal_clicks` | MECHClik Metal clicks; several takes | https://archive.org/details/SSE_Library_MECHANICAL |
 | `fx_switches` | MECHSwtch Footsteps; turning off several light switches | https://archive.org/details/SSE_Library_MECHANICAL |
 
+Wikimedia Commons, CC0 1.0:
+
+| Key | Recording | Author | Source |
+|---|---|---|---|
+| `ui_click` | "Computer mouse single click" (NEC ECM-S5002 mouse, 2016-06-09) | Darklanlan | https://commons.wikimedia.org/wiki/File:Computer_mouse_single_click.ogg |
+
 ## Fetched but not in the mix
 
 Kept in the source list for a re-cut, not heard in the current mix: none of the files below need a
@@ -113,5 +119,4 @@ credit unless they are used.
 - `dawn_irondequoit` adphoenix, "Suburban Birds in the Morning", PDM, https://archive.org/details/aporee_64370_74286
 - `train_medford` Bagel_Sandwich, "outbound Lowell commuter rail arrives", PDM, https://archive.org/details/aporee_13660_15930
 - `fx_impact_sweet`, `fx_metal_thump`, `fx_paper_sheet`, `fx_swishes`, `fx_rustle_click`, `fx_latch` (USC libraries, CC0)
-- `ui_click` Darklanlan, "Computer mouse single click", CC0, https://commons.wikimedia.org/wiki/File:Computer_mouse_single_click.ogg (the 45 s cut has no click)
 - `mus_borodin_steppes` Borodin, "In the Steppes of Central Asia", Czech National Symphony Orchestra, Musopen, CC0 (same item as the Grieg)

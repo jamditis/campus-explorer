@@ -256,13 +256,10 @@ def render_cue(c, src_dir, sources, t0, t1, shots, graphics, markers):
 # ---------------------------------------------------------------- mix
 
 
-def build(cue_sheet, timeline, src_dir):
-    names = cue_sheet.get("shots", {})
-    shots = shot_table(timeline, names)
-    graphics = graphic_table(timeline)
-    for mine, theirs in cue_sheet.get("graphics", {}).items():
-        if theirs in graphics:
-            graphics[mine] = graphics[theirs]
+def marker_table(cue_sheet, timeline, shots, graphics):
+    """{marker: film seconds}: the storyboard's markers, renamed by the cue sheet's `markers`,
+    filled in from `marker_fallback` where missing, replaced by `marker_override` (checked on the
+    rendered picture)."""
     markers = dict(timeline.get("markers", {}))
     for mine, theirs in cue_sheet.get("markers", {}).items():
         if theirs in markers:
@@ -270,6 +267,20 @@ def build(cue_sheet, timeline, src_dir):
     for name, anchor in cue_sheet.get("marker_fallback", {}).items():
         if name not in markers:
             markers[name] = resolve(anchor, shots, graphics, markers)
+    for name, anchor in cue_sheet.get("marker_override", {}).items():
+        # a hit point checked against the rendered picture wins over the storyboard's estimate
+        markers[name] = resolve(anchor, shots, graphics, markers)
+    return markers
+
+
+def build(cue_sheet, timeline, src_dir):
+    names = cue_sheet.get("shots", {})
+    shots = shot_table(timeline, names)
+    graphics = graphic_table(timeline)
+    for mine, theirs in cue_sheet.get("graphics", {}).items():
+        if theirs in graphics:
+            graphics[mine] = graphics[theirs]
+    markers = marker_table(cue_sheet, timeline, shots, graphics)
     total = timeline["total"] + cue_sheet.get("tail", 0.0)
     n = int(round(total * SR))
     bus = {b: np.zeros((n, 2), np.float32) for b in BUSES}
