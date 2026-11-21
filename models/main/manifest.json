@@ -22,7 +22,7 @@
   },
   {
    "file": "sw_context.glb",
-   "bytes": 343860
+   "bytes": 343808
   },
   {
    "file": "n_t_-1_-1.glb",
@@ -350,13 +350,13 @@
   },
   {
    "file": "sw_t_-1_-1.glb",
-   "bytes": 1564960,
+   "bytes": 1564944,
    "center": [
     -80.0,
     80.0
    ],
    "lod": "lod/sw_t_-1_-1.glb",
-   "lod_bytes": 370468,
+   "lod_bytes": 370484,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp",
     "tex/6fa1702c8490c5de645c.webp",
@@ -374,13 +374,13 @@
   },
   {
    "file": "sw_t_-1_-2.glb",
-   "bytes": 561004,
+   "bytes": 561100,
    "center": [
     -80.0,
     240.0
    ],
    "lod": "lod/sw_t_-1_-2.glb",
-   "lod_bytes": 249836,
+   "lod_bytes": 250072,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/3178afa6d3f8d3bd4214.webp",
@@ -394,13 +394,13 @@
   },
   {
    "file": "sw_t_-1_-3.glb",
-   "bytes": 1063212,
+   "bytes": 1063604,
    "center": [
     -80.0,
     400.0
    ],
    "lod": "lod/sw_t_-1_-3.glb",
-   "lod_bytes": 70788,
+   "lod_bytes": 71600,
    "lod_tex": [
     "tex/14f74a5c266ae227e630.webp",
     "tex/d3d3c445be8f39a5cada.webp",
@@ -418,13 +418,13 @@
   },
   {
    "file": "sw_t_-1_-4.glb",
-   "bytes": 352132,
+   "bytes": 352156,
    "center": [
     -80.0,
     560.0
    ],
    "lod": "lod/sw_t_-1_-4.glb",
-   "lod_bytes": 88456,
+   "lod_bytes": 88476,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/51ef5141b3cdf3788161.webp"
@@ -436,13 +436,13 @@
   },
   {
    "file": "sw_t_-1_0.glb",
-   "bytes": 1326112,
+   "bytes": 1326204,
    "center": [
     -80.0,
     -80.0
    ],
    "lod": "lod/sw_t_-1_0.glb",
-   "lod_bytes": 238308,
+   "lod_bytes": 238272,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -452,7 +452,7 @@
   },
   {
    "file": "sw_t_-1_1.glb",
-   "bytes": 792680,
+   "bytes": 792676,
    "center": [
     -80.0,
     -240.0
@@ -470,13 +470,13 @@
   },
   {
    "file": "sw_t_-1_2.glb",
-   "bytes": 1098596,
+   "bytes": 1098500,
    "center": [
     -80.0,
     -400.0
    ],
    "lod": "lod/sw_t_-1_2.glb",
-   "lod_bytes": 82796,
+   "lod_bytes": 82732,
    "lod_tex": [
     "tex/30a3014331c096ef8b58.webp",
     "tex/ef7413f63872c432ea0d.webp",
@@ -520,13 +520,13 @@
   },
   {
    "file": "sw_t_-1_4.glb",
-   "bytes": 810980,
+   "bytes": 810964,
    "center": [
     -80.0,
     -720.0
    ],
    "lod": "lod/sw_t_-1_4.glb",
-   "lod_bytes": 112984,
+   "lod_bytes": 113000,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -544,13 +544,13 @@
   },
   {
    "file": "sw_t_-1_5.glb",
-   "bytes": 1097548,
+   "bytes": 1097564,
    "center": [
     -80.0,
     -880.0
    ],
    "lod": "lod/sw_t_-1_5.glb",
-   "lod_bytes": 188604,
+   "lod_bytes": 188636,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -580,13 +580,13 @@
   },
   {
    "file": "sw_t_-1_6.glb",
-   "bytes": 1019988,
+   "bytes": 1019956,
    "center": [
     -80.0,
     -1040.0
    ],
    "lod": "lod/sw_t_-1_6.glb",
-   "lod_bytes": 65176,
+   "lod_bytes": 65160,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/312231d7a835677f1910.webp",
@@ -617,13 +617,13 @@
   },
   {
    "file": "sw_t_-1_7.glb",
-   "bytes": 1153872,
+   "bytes": 1153908,
    "center": [
     -80.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-1_7.glb",
-   "lod_bytes": 113304,
+   "lod_bytes": 113384,
    "lod_tex": [
     "tex/b89c68f01d80f56dc2b4.webp",
     "tex/0f3f5a6838511d141e5e.webp",
@@ -651,7 +651,7 @@
     -1360.0
    ],
    "lod": "lod/sw_t_-1_8.glb",
-   "lod_bytes": 76040,
+   "lod_bytes": 76056,
    "lod_tex": [
     "tex/e4f5210122058d91efb4.webp",
     "tex/504458f417fd90086ff6.webp",
@@ -671,7 +671,7 @@
   },
   {
    "file": "sw_t_-1_9.glb",
-   "bytes": 95544,
+   "bytes": 95600,
    "center": [
     -80.0,
     -1520.0
@@ -691,13 +691,13 @@
   },
   {
    "file": "sw_t_-2_-1.glb",
-   "bytes": 233072,
+   "bytes": 233232,
    "center": [
     -240.0,
     80.0
    ],
    "lod": "lod/sw_t_-2_-1.glb",
-   "lod_bytes": 185360,
+   "lod_bytes": 185584,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/b2aa14c5a1b2a45036d4.webp",
@@ -721,7 +721,7 @@
     240.0
    ],
    "lod": "lod/sw_t_-2_-2.glb",
-   "lod_bytes": 223896,
+   "lod_bytes": 223800,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/bb2ec0f4e6decab3e7a5.webp",
@@ -741,13 +741,13 @@
   },
   {
    "file": "sw_t_-2_-3.glb",
-   "bytes": 1037268,
+   "bytes": 1037332,
    "center": [
     -240.0,
     400.0
    ],
    "lod": "lod/sw_t_-2_-3.glb",
-   "lod_bytes": 51364,
+   "lod_bytes": 51348,
    "lod_tex": [
     "tex/636868684cde11068d26.webp",
     "tex/bb2ec0f4e6decab3e7a5.webp",
@@ -765,13 +765,13 @@
   },
   {
    "file": "sw_t_-2_-4.glb",
-   "bytes": 958004,
+   "bytes": 958148,
    "center": [
     -240.0,
     560.0
    ],
    "lod": "lod/sw_t_-2_-4.glb",
-   "lod_bytes": 169668,
+   "lod_bytes": 169888,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -787,13 +787,13 @@
   },
   {
    "file": "sw_t_-2_0.glb",
-   "bytes": 652380,
+   "bytes": 652396,
    "center": [
     -240.0,
     -80.0
    ],
    "lod": "lod/sw_t_-2_0.glb",
-   "lod_bytes": 46888,
+   "lod_bytes": 46968,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -803,13 +803,13 @@
   },
   {
    "file": "sw_t_-2_1.glb",
-   "bytes": 822256,
+   "bytes": 822208,
    "center": [
     -240.0,
     -240.0
    ],
    "lod": "lod/sw_t_-2_1.glb",
-   "lod_bytes": 54540,
+   "lod_bytes": 54692,
    "lod_tex": [
     "tex/2ab5c0cd7a2207f09ae2.webp",
     "tex/a5b149f1394056e9b6fd.webp",
@@ -827,7 +827,7 @@
   },
   {
    "file": "sw_t_-2_2.glb",
-   "bytes": 812948,
+   "bytes": 812960,
    "center": [
     -240.0,
     -400.0
@@ -851,13 +851,13 @@
   },
   {
    "file": "sw_t_-2_3.glb",
-   "bytes": 1019604,
+   "bytes": 1019568,
    "center": [
     -240.0,
     -560.0
    ],
    "lod": "lod/sw_t_-2_3.glb",
-   "lod_bytes": 93544,
+   "lod_bytes": 93640,
    "lod_tex": [
     "tex/8dc980d24ff242d87ba5.webp",
     "tex/201f97e006bbb9687940.webp",
@@ -881,13 +881,13 @@
   },
   {
    "file": "sw_t_-2_4.glb",
-   "bytes": 1069568,
+   "bytes": 1069560,
    "center": [
     -240.0,
     -720.0
    ],
    "lod": "lod/sw_t_-2_4.glb",
-   "lod_bytes": 150904,
+   "lod_bytes": 150956,
    "lod_tex": [
     "tex/201f97e006bbb9687940.webp",
     "tex/93ffa1e1459b181869a6.webp",
@@ -909,13 +909,13 @@
   },
   {
    "file": "sw_t_-2_5.glb",
-   "bytes": 788628,
+   "bytes": 788824,
    "center": [
     -240.0,
     -880.0
    ],
    "lod": "lod/sw_t_-2_5.glb",
-   "lod_bytes": 45424,
+   "lod_bytes": 45408,
    "lod_tex": [
     "tex/d1d4956de669b31db341.webp",
     "tex/9dee378460d16cbe9f2f.webp",
@@ -933,13 +933,13 @@
   },
   {
    "file": "sw_t_-2_6.glb",
-   "bytes": 1051180,
+   "bytes": 1051264,
    "center": [
     -240.0,
     -1040.0
    ],
    "lod": "lod/sw_t_-2_6.glb",
-   "lod_bytes": 115756,
+   "lod_bytes": 115716,
    "lod_tex": [
     "tex/7b7b6b8171ca14321b80.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -963,13 +963,13 @@
   },
   {
    "file": "sw_t_-2_7.glb",
-   "bytes": 1093508,
+   "bytes": 1093492,
    "center": [
     -240.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-2_7.glb",
-   "lod_bytes": 121636,
+   "lod_bytes": 121652,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -991,13 +991,13 @@
   },
   {
    "file": "sw_t_-2_8.glb",
-   "bytes": 855016,
+   "bytes": 854920,
    "center": [
     -240.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-2_8.glb",
-   "lod_bytes": 126444,
+   "lod_bytes": 126428,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/82fdbfa4e05cd7f52f09.webp",
@@ -1018,7 +1018,7 @@
   },
   {
    "file": "sw_t_-2_9.glb",
-   "bytes": 911332,
+   "bytes": 911372,
    "center": [
     -240.0,
     -1520.0
@@ -1042,13 +1042,13 @@
   },
   {
    "file": "sw_t_-3_-1.glb",
-   "bytes": 963868,
+   "bytes": 963948,
    "center": [
     -400.0,
     80.0
    ],
    "lod": "lod/sw_t_-3_-1.glb",
-   "lod_bytes": 359904,
+   "lod_bytes": 359916,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -1107,7 +1107,7 @@
     400.0
    ],
    "lod": "lod/sw_t_-3_-3.glb",
-   "lod_bytes": 140196,
+   "lod_bytes": 140216,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/46461a5a9d3c1258670a.webp"
@@ -1119,13 +1119,13 @@
   },
   {
    "file": "sw_t_-3_0.glb",
-   "bytes": 1019752,
+   "bytes": 1019800,
    "center": [
     -400.0,
     -80.0
    ],
    "lod": "lod/sw_t_-3_0.glb",
-   "lod_bytes": 128812,
+   "lod_bytes": 128876,
    "lod_tex": [
     "tex/be8c7b0035bab6cf15dc.webp",
     "tex/fe0cc9e37df7dc75a9b0.webp",
@@ -1143,13 +1143,13 @@
   },
   {
    "file": "sw_t_-3_1.glb",
-   "bytes": 879592,
+   "bytes": 879624,
    "center": [
     -400.0,
     -240.0
    ],
    "lod": "lod/sw_t_-3_1.glb",
-   "lod_bytes": 183280,
+   "lod_bytes": 183552,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/be8c7b0035bab6cf15dc.webp",
@@ -1168,13 +1168,13 @@
   },
   {
    "file": "sw_t_-3_3.glb",
-   "bytes": 640208,
+   "bytes": 640224,
    "center": [
     -400.0,
     -560.0
    ],
    "lod": "lod/sw_t_-3_3.glb",
-   "lod_bytes": 6028,
+   "lod_bytes": 6068,
    "lod_tex": [
     "tex/8dc980d24ff242d87ba5.webp"
    ],
@@ -1186,13 +1186,13 @@
   },
   {
    "file": "sw_t_-3_4.glb",
-   "bytes": 388764,
+   "bytes": 388700,
    "center": [
     -400.0,
     -720.0
    ],
    "lod": "lod/sw_t_-3_4.glb",
-   "lod_bytes": 53020,
+   "lod_bytes": 53024,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp"
    ],
@@ -1213,13 +1213,13 @@
   },
   {
    "file": "sw_t_-3_7.glb",
-   "bytes": 730260,
+   "bytes": 730436,
    "center": [
     -400.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-3_7.glb",
-   "lod_bytes": 12368,
+   "lod_bytes": 12400,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp"
    ],
@@ -1231,13 +1231,13 @@
   },
   {
    "file": "sw_t_-3_8.glb",
-   "bytes": 713256,
+   "bytes": 713244,
    "center": [
     -400.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-3_8.glb",
-   "lod_bytes": 19540,
+   "lod_bytes": 19544,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp",
     "tex/82fdbfa4e05cd7f52f09.webp"
@@ -1256,7 +1256,7 @@
     -1520.0
    ],
    "lod": "lod/sw_t_-3_9.glb",
-   "lod_bytes": 21976,
+   "lod_bytes": 22012,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -1266,13 +1266,13 @@
   },
   {
    "file": "sw_t_-4_-2.glb",
-   "bytes": 20192,
+   "bytes": 20224,
    "center": [
     -560.0,
     240.0
    ],
    "lod": "lod/sw_t_-4_-2.glb",
-   "lod_bytes": 11096,
+   "lod_bytes": 11240,
    "lod_tex": [
     "tex/cfd9f72bd04a5b9c9f57.webp"
    ],
@@ -1282,33 +1282,33 @@
   },
   {
    "file": "sw_t_0_-1.glb",
-   "bytes": 140296,
+   "bytes": 140268,
    "center": [
     80.0,
     80.0
    ],
    "lod": "lod/sw_t_0_-1.glb",
-   "lod_bytes": 38676
+   "lod_bytes": 38756
   },
   {
    "file": "sw_t_0_0.glb",
-   "bytes": 542412,
+   "bytes": 542568,
    "center": [
     80.0,
     -80.0
    ],
    "lod": "lod/sw_t_0_0.glb",
-   "lod_bytes": 99552
+   "lod_bytes": 99992
   },
   {
    "file": "sw_t_0_1.glb",
-   "bytes": 774532,
+   "bytes": 774600,
    "center": [
     80.0,
     -240.0
    ],
    "lod": "lod/sw_t_0_1.glb",
-   "lod_bytes": 62168,
+   "lod_bytes": 62360,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp"
    ],
@@ -1319,13 +1319,13 @@
   },
   {
    "file": "sw_t_0_2.glb",
-   "bytes": 464392,
+   "bytes": 464412,
    "center": [
     80.0,
     -400.0
    ],
    "lod": "lod/sw_t_0_2.glb",
-   "lod_bytes": 209556,
+   "lod_bytes": 209540,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/ef7413f63872c432ea0d.webp",
@@ -1484,7 +1484,7 @@
     -1200.0
    ],
    "lod": "lod/sw_t_0_7.glb",
-   "lod_bytes": 75000,
+   "lod_bytes": 74992,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1492,13 +1492,13 @@
   },
   {
    "file": "sw_t_0_8.glb",
-   "bytes": 717196,
+   "bytes": 717200,
    "center": [
     80.0,
     -1360.0
    ],
    "lod": "lod/sw_t_0_8.glb",
-   "lod_bytes": 6596,
+   "lod_bytes": 6640,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1512,7 +1512,7 @@
     -400.0
    ],
    "lod": "lod/sw_t_1_2.glb",
-   "lod_bytes": 22484,
+   "lod_bytes": 22436,
    "lod_tex": [
     "tex/f0afad39f57b1676f76b.webp",
     "tex/f327bf1d388720c4306d.webp"
@@ -1524,13 +1524,13 @@
   },
   {
    "file": "sw_t_1_3.glb",
-   "bytes": 883032,
+   "bytes": 883064,
    "center": [
     240.0,
     -560.0
    ],
    "lod": "lod/sw_t_1_3.glb",
-   "lod_bytes": 100168,
+   "lod_bytes": 100232,
    "lod_tex": [
     "tex/694d34902adebd300273.webp",
     "tex/291811ca4ee47b9b5355.webp",
@@ -1548,13 +1548,13 @@
   },
   {
    "file": "sw_t_1_4.glb",
-   "bytes": 1011088,
+   "bytes": 1011092,
    "center": [
     240.0,
     -720.0
    ],
    "lod": "lod/sw_t_1_4.glb",
-   "lod_bytes": 192848,
+   "lod_bytes": 192880,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/df8b14578ced3ec8d84a.webp",
@@ -1582,7 +1582,7 @@
     -880.0
    ],
    "lod": "lod/sw_t_1_5.glb",
-   "lod_bytes": 266648,
+   "lod_bytes": 266664,
    "lod_tex": [
     "tex/d5812bf2f8c348dcd23b.webp",
     "tex/eadbec1ab444f849d13d.webp",
@@ -1648,13 +1648,13 @@
   },
   {
    "file": "sw_t_1_8.glb",
-   "bytes": 963864,
+   "bytes": 963880,
    "center": [
     240.0,
     -1360.0
    ],
    "lod": "lod/sw_t_1_8.glb",
-   "lod_bytes": 98976,
+   "lod_bytes": 99004,
    "lod_tex": [
     "tex/2f38e1deb8300eaff7d5.webp",
     "tex/96a38f6c245235e60535.webp"
@@ -1674,7 +1674,7 @@
     -880.0
    ],
    "lod": "lod/sw_t_2_5.glb",
-   "lod_bytes": 7272,
+   "lod_bytes": 7208,
    "lod_tex": [
     "tex/9be78f3023525fd1bd11.webp"
    ],
@@ -1686,13 +1686,13 @@
   },
   {
    "file": "sw_t_2_6.glb",
-   "bytes": 712100,
+   "bytes": 712132,
    "center": [
     400.0,
     -1040.0
    ],
    "lod": "lod/sw_t_2_6.glb",
-   "lod_bytes": 4280,
+   "lod_bytes": 4292,
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp"
@@ -1700,13 +1700,13 @@
   },
   {
    "file": "sw_t_2_7.glb",
-   "bytes": 744472,
+   "bytes": 744456,
    "center": [
     400.0,
     -1200.0
    ],
    "lod": "lod/sw_t_2_7.glb",
-   "lod_bytes": 18368,
+   "lod_bytes": 18424,
    "lod_tex": [
     "tex/903e060513c76b60cfd9.webp",
     "tex/96a38f6c245235e60535.webp"
@@ -1720,13 +1720,13 @@
   },
   {
    "file": "sw_t_2_8.glb",
-   "bytes": 803784,
+   "bytes": 803780,
    "center": [
     400.0,
     -1360.0
    ],
    "lod": "lod/sw_t_2_8.glb",
-   "lod_bytes": 182792,
+   "lod_bytes": 182732,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/0941993ce47cdb404933.webp",
@@ -2247,8 +2247,8 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 20, 2026, 9:00 PM ET",
-   "version": "sw12",
+   "saved": "November 20, 2026, 11:32 PM ET",
+   "version": "sw13",
    "file": "montclair_southwest.blend"
   }
  },
@@ -2260,7 +2260,7 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 20, 2026, 9:07 PM ET",
+ "exported": "November 20, 2026, 11:41 PM ET",
  "tex": {
   "tex/03f48791ef4e88e66401.webp": 3472,
   "tex/0561d1e460e344080c40.webp": 1420,
@@ -2451,5 +2451,5 @@
   "tex/fe3ff2714b734ccbbb0a.webp": 15400,
   "tex/ffc0e69be8e2a820a243.webp": 8756
  },
- "total_bytes": 185605520
+ "total_bytes": 185607120
 }
