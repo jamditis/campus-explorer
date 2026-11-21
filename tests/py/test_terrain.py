@@ -348,6 +348,9 @@ class RoadCuts(unittest.TestCase):
         got = t.surface(x, y, np.ones(len(y), bool))
         np.testing.assert_allclose(t.surface(x, y, True), got)  # one flag for all (the curbs)
         self.assertAlmostEqual(got[0], 102.0, delta=0.1)
+        # a ground vertex on the outline lies on the road's own edge too: it meets as well
+        on_edge = t.surface(np.array([100.0, 110.0]), np.array([0.0, 0.0]), np.ones(2, bool))
+        np.testing.assert_allclose(on_edge, 102.0, atol=0.1)
         self.assertLess(np.abs(np.diff(got) / 0.5).max(), 1.6 * terrain.RAMP_GRADE)
         far = y > terrain.RAMP_MAX + 1
         np.testing.assert_allclose(got[far], f(x[far], y[far]), atol=0.04)

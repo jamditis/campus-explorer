@@ -38,6 +38,7 @@ RAMP_MAX = 30.0  # metres: the longest ramp
 CUT_DEPTH = 8.0  # metres in from the edge over which a cut's paving is read
 CUT_SHARE = 0.6  # paved share of CUT_DEPTH (paved 1 m in too) that makes a cut: a road crossing
 # the edge, also at a slant; a drive or a walk along the edge is not one
+ON_ROAD = 0.05  # metres: a point this close to a road's outline is on the road
 CUT_SPREAD = 4  # samples each side over which a cut's ramp and share are spread along the edge
 
 
@@ -510,8 +511,8 @@ class Terrain:
         dz = np.nan_to_num(step * (1 - wb) + at_s * (wb - wl))
         ask = paved & (free > 0)  # paving ramps by the cut's share only on a road
         road = np.zeros(int(ask.sum()), bool)
-        for ring in self.roads:
-            road |= _inside(ring, x[ask], y[ask])
+        for ring in self.roads:  # a vertex on the road's own outline (at the cut) counts
+            road |= _inside(ring, x[ask], y[ask]) | (_edge_distance(ring, x[ask], y[ask]) < ON_ROAD)
         free[np.nonzero(ask)[0][~road]] = 0.0
         return z + dz * np.where(paved, np.maximum(free, seam), 1.0)
 
