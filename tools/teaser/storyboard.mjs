@@ -114,12 +114,12 @@ export const storyboard = {
       // one continuous move from Montclair Heights station up the ridge past Sprague Field, the stadium and
       // the decks to the Village; a measured line joins the campus's two stations
       name: 'travel', duration: 9.0, grade: 'day', time: LOW, rel: true, accel: 0.2, decel: 0.22,
-      pos: [[-600, 60, 420], [-470, 95, 160], [-300, 130, -260], [-170, 150, -700], [-90, 150, -990]],
+      pos: [[-600, 85, 420], [-470, 105, 160], [-300, 130, -260], [-170, 150, -700], [-90, 150, -990]],
       look: [[-454, 0, 266], [-336, 0, 100], [-150, 0, -560], [40, 0, -960], [-165, 0, -1160]],
       fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
         { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 30, tick: 16, width: 3.5, up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
-        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 40, -380], yaw: -0.45, rise: 'scale', in: 2.6, inDur: 1.0, out: 8.7, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 15, -380], yaw: -0.45, rise: 'scale', in: 2.6, inDur: 1.0, out: 8.7, outDur: 0.3 },
       ],
     },
     {
