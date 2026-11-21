@@ -341,7 +341,7 @@ class RoadCuts(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as d:
             t = terrain.Terrain(
-                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT]
+                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT], roads=[CUT]
             )
         y = np.arange(0.1, 50.0, 0.5)
         x = np.full(len(y), 100.0)
@@ -351,20 +351,26 @@ class RoadCuts(unittest.TestCase):
         self.assertLess(np.abs(np.diff(got) / 0.5).max(), 1.6 * terrain.RAMP_GRADE)
         far = y > terrain.RAMP_MAX + 1
         np.testing.assert_allclose(got[far], f(x[far], y[far]), atol=0.04)
+        # the lawn 2 m beside the road ramps with it, past the 4 m soft-ground bend
+        lawn = t.surface(np.array([88.0]), np.array([10.0]), np.zeros(1, bool))[0]
+        self.assertGreater(lawn, f(88.0, 10.0) + 0.2)
 
-    def test_a_lot_is_raised_to_a_neighbour_but_never_lowered_a_road_may_ramp_down(self):
+    def test_only_paving_marked_road_ramps_and_it_may_ramp_down(self):
+        # without "road": true paving keeps the old rule (meets only within SEAM), up or down;
+        # a road ramps to the neighbour either way
         def f(x, y):
             return 100 + 0.01 * x
 
+        x, y = np.array([100.0, 100.0]), np.array([0.1, 10.0])
+        on = np.ones(2, bool)
         with tempfile.TemporaryDirectory() as d:
             path = lidar_from(d, f)
-            lot = terrain.Terrain(path, edge=cut_samples(99.0), footprint=FOOT, paved=[CUT])
+            for z in (99.0, 102.0):
+                lot = terrain.Terrain(path, edge=cut_samples(z), footprint=FOOT, paved=[CUT])
+                np.testing.assert_allclose(lot.surface(x, y, on), f(x, y), atol=0.04)
             road = terrain.Terrain(
                 path, edge=cut_samples(99.0), footprint=FOOT, paved=[CUT], roads=[CUT]
             )
-        x, y = np.array([100.0, 100.0]), np.array([0.1, 10.0])
-        on = np.ones(2, bool)
-        np.testing.assert_allclose(lot.surface(x, y, on), f(x, y), atol=0.04)
         got = road.surface(x, y, on)
         self.assertAlmostEqual(got[0], 99.0, delta=0.1)
         self.assertLess(got[1], f(100.0, 10.0) - 0.2)  # still on its way down 10 m in
@@ -378,7 +384,7 @@ class RoadCuts(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as d:
             t = terrain.Terrain(
-                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT]
+                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT], roads=[CUT]
             )
         x, y = np.array([100.0, 100.0]), np.array([0.3, 3.0])
         np.testing.assert_allclose(t.surface(x, y, np.ones(2, bool)), 100.0, atol=0.15)
@@ -393,7 +399,7 @@ class RoadCuts(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as d:
             t = terrain.Terrain(
-                lidar_from(d, f), edge=cut_samples(100.4), footprint=FOOT, paved=[CUT]
+                lidar_from(d, f), edge=cut_samples(100.4), footprint=FOOT, paved=[CUT], roads=[CUT]
             )
         got = t.surface(np.array([100.0]), np.array([0.3]), np.ones(1, bool))
         self.assertAlmostEqual(got[0], 100.0, delta=0.1)

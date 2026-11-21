@@ -108,6 +108,22 @@ def _normals(ring, px, py):
     return out
 
 
+def _cells(rings, x0, y1, nx, ny, cell):
+    """Grid cells (row 0 north) whose centres lie inside any of the closed outlines."""
+    out = np.zeros((ny, nx), bool)
+    cx, cy = x0 + (np.arange(nx) + 0.5) * cell, y1 - (np.arange(ny) + 0.5) * cell
+    for ring in rings:
+        r = np.asarray(ring, float)
+        ci = np.nonzero((cx >= r[:, 0].min()) & (cx <= r[:, 0].max()))[0]
+        cj = np.nonzero((cy >= r[:, 1].min()) & (cy <= r[:, 1].max()))[0]
+        if not len(ci) or not len(cj):
+            continue
+        gx, gy = np.meshgrid(cx[ci], cy[cj])
+        hit = _inside(r, gx.ravel(), gy.ravel()).reshape(gx.shape)
+        out[np.ix_(cj, ci)] |= hit
+    return out
+
+
 def _masked_blur(a, mask, sigma):
     """Gaussian blur of `a` that uses the cells of `mask` only. NaN where no masked cell is near."""
     w = _blur(mask.astype(float), sigma)
@@ -321,6 +337,8 @@ class Terrain:
         self.rough = _blur(base, 1.0)
         self.graded = _blur(base, 2.5)
         self.paved = np.zeros((ny, nx), bool)  # the paved cells
+        self.roads = list(roads)  # the plan's "road": true surfaces, the only ones that ramp
+        self.road_cells = _cells(self.roads, self.x0, self.y1, nx, ny, cell)
         if paved:
             cx = self.x0 + (np.arange(nx) + 0.5) * cell
             cy = self.y1 - (np.arange(ny) + 0.5) * cell
@@ -364,9 +382,8 @@ class Terrain:
             e[:, 2] = _run_mean(e, v, rel) if EDGE_RUN > 0 else v
             self.edge, self.relative = e, rel
             self.ramp, self.free = np.full(len(e), BLEND), np.zeros(len(e))
-            if footprint is not None:
+            if footprint is not None and self.roads:
                 self._ramps(np.where(rel, ground + e[:, 2], e[:, 2]))
-        self.roads = list(roads)
 
     def _ramps(self, nbz):
         """Per edge sample: how far in the ground ramps to the neighbour (`ramp`, metres) and how
@@ -383,14 +400,14 @@ class Terrain:
         real = self.step_across(e[:, 0], e[:, 1], nrm)
         step = nbz - self.z(e[:, 0], e[:, 1], True)
         free = np.abs(np.nan_to_num(real, nan=np.inf)) < REAL_STEP  # the LiDAR runs on level
-        # a cut: paving runs on in from the edge (a road or a lot that crosses it)
+        # a cut: a road ("road": true) runs on in from the edge
         ny, nx = self.paved.shape
         depth = np.arange(1.0, CUT_DEPTH + 0.5)
         hits = np.zeros((len(e), len(depth)), bool)
         for c, t in enumerate(depth):
             i = np.clip(((e[:, 0] - t * nrm[:, 0] - self.x0) / self.cell).astype(int), 0, nx - 1)
             j = np.clip(((self.y1 - e[:, 1] + t * nrm[:, 1]) / self.cell).astype(int), 0, ny - 1)
-            hits[:, c] = self.paved[j, i]
+            hits[:, c] = self.road_cells[j, i]
         cut = free & hits[:, 0] & (hits.mean(1) >= CUT_SHARE)
         length = np.where(cut, np.clip(np.abs(step) / RAMP_GRADE, BLEND, RAMP_MAX), BLEND)
         wins = _windows(e, run=CUT_SPREAD, dz=None)
@@ -491,14 +508,12 @@ class Terrain:
         wb, wl = ease(d / BLEND), ease(d / length)
         seam = np.abs(step) < SEAM
         dz = np.nan_to_num(step * (1 - wb) + at_s * (wb - wl))
-        dz *= np.where(paved, np.maximum(free, seam), 1.0)
-        down = paved & ~seam & (dz < 0)
-        if down.any():
-            road = np.zeros(int(down.sum()), bool)
-            for ring in self.roads:
-                road |= _inside(ring, x[down], y[down])
-            dz[np.nonzero(down)[0][~road]] = 0.0
-        return z + dz
+        ask = paved & (free > 0)  # paving ramps by the cut's share only on a road
+        road = np.zeros(int(ask.sum()), bool)
+        for ring in self.roads:
+            road |= _inside(ring, x[ask], y[ask])
+        free[np.nonzero(ask)[0][~road]] = 0.0
+        return z + dz * np.where(paved, np.maximum(free, seam), 1.0)
 
     def lift(self, x, y):
         """Height added by the plan's `lifts`: `dz` inside a ring, eased to zero over `feather`."""
