@@ -46,3 +46,51 @@ export function treeBatches(nodes, min = 2) {
   });
   return [...byMesh.values()].filter(ix => ix.length >= min && !ix.some(i => nodes[i].skin));
 }
+
+/**
+ * The 3x3 linear part of an instance matrix, column-major, as three.js Matrix4.compose builds it (GLTFLoader's
+ * path for EXT_mesh_gpu_instancing). A quaternion a little off unit length gives a slightly sheared matrix.
+ */
+export function linearPart([x, y, z, w], [sx, sy, sz]) {
+  const x2 = x + x, y2 = y + y, z2 = z + z;
+  const xx = x * x2, xy = x * y2, xz = x * z2, yy = y * y2, yz = y * z2, zz = z * z2, wx = w * x2, wy = w * y2, wz = w * z2;
+  return [(1 - (yy + zz)) * sx, (xy + wz) * sx, (xz - wy) * sx, (xy - wz) * sy, (1 - (xx + zz)) * sy, (yz + wx) * sy,
+    (xz + wy) * sz, (yz - wx) * sz, (1 - (xx + yy)) * sz];
+}
+
+/**
+ * How far any vertex within `radius` of the mesh origin can move when instance `a` ({ t, q, s }) is stored as `b`:
+ * the move of the origin plus the Frobenius norm of the change in the linear part (an upper bound of how much it
+ * stretches a vector) times the radius.
+ */
+export function instanceShift(a, b, radius) {
+  const la = linearPart(a.q, a.s), lb = linearPart(b.q, b.s);
+  let f = 0; for (let i = 0; i < 9; i++) f += (la[i] - lb[i]) ** 2;
+  return Math.hypot(a.t[0] - b.t[0], a.t[1] - b.t[1], a.t[2] - b.t[2]) + Math.sqrt(f) * radius;
+}
+
+/** Quaternions (x, y, z, w per instance) scaled to unit length, as Float32Array; a zero one becomes no turn. */
+export function unitQuats(values) {
+  const out = new Float32Array(values.length);
+  for (let i = 0; i < values.length; i += 4) {
+    const l = Math.hypot(values[i], values[i + 1], values[i + 2], values[i + 3]);
+    if (!l) { out[i + 3] = 1; continue; }
+    for (let j = 0; j < 4; j++) out[i + j] = values[i + j] / l;
+  }
+  return out;
+}
+
+/** Normalized integers (glTF `normalized: true`) to floats, as the glTF spec decodes them; floats pass through. */
+export function decodeUnit(values) {
+  const max = { Int8Array: 127, Uint8Array: 255, Int16Array: 32767, Uint16Array: 65535 }[values.constructor.name];
+  if (!max) return Float32Array.from(values);
+  const signed = values instanceof Int8Array || values instanceof Int16Array, out = new Float32Array(values.length);
+  for (let i = 0; i < values.length; i++) out[i] = signed ? Math.max(values[i] / max, -1) : values[i] / max;
+  return out;
+}
+
+/** The first of `candidates` (bit counts, fewest first) whose error `err(bits)` is within `tol`, else null. */
+export function fewestBits(candidates, err, tol) {
+  for (const b of candidates) if (err(b) <= tol) return b;
+  return null;
+}

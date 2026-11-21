@@ -136,6 +136,10 @@ cp $W/farcut.mjs $W/skyline.mjs $W/skirt.mjs $W/drop_zero.mjs $W/zero.mjs $W/tex
 for f in $S/*context.glb; do node farcut.mjs $f || fail "far cut $(basename $f)"; done
 if [ -e $S/skirt.glb ]; then node skirt.mjs $S/skirt.glb || fail "skirt"; fi
 node drop_zero.mjs $S/*.glb $S/lod/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "zero-area triangles"
+# instance transforms through the meshopt filters made for them (inst_filter.mjs: every vertex within 1 mm), after
+# the last step that writes tiles through gltf-transform, which stores them unfiltered
+cp $W/inst_filter.mjs $W/geoshare.mjs $W/pack.mjs $W/tex.mjs ./
+node inst_filter.mjs $S/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "instance filters"
 # far trees under 4 px wide: fewer, wider crowns, same covered area (far_thin.py; a second run changes nothing)
 if [ -e $S/far_trees.bin ]; then python3 $W/far_thin.py $S/far_trees.bin || fail "far trees"; fi
 # Images two or more tiles carry (leaf textures, paint sheets in a tile and its far version) are stored once as

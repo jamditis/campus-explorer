@@ -210,6 +210,13 @@ The export applies four steps to the published files (`build_web.sh`, after supe
   covered area, fewer crowns (35,134 to 30,510). Fog leaves 56 % even at the skirt's corners, so none is dropped
   for fog. A second run changes nothing.
 
+After those, `inst_filter.mjs` stores instance transforms through the meshopt filters made for them (EXPONENTIAL for
+translation and scale, QUATERNION for rotation; gltf-transform filters only normals and animation). Each batch gets
+the fewest bits that keep every vertex of its mesh within 1 mm of where the unfiltered transform put it, checked on
+the decoded values, and records them in the node's extras (`inst_bits`) so a later rewrite re-encodes at the same
+bits and the error does not add up. A rotation batch with quaternions off unit length (some shrub leaf cards: the
+filter stores unit quaternions, and normalizing one moves its card by more than 1 mm) keeps its 16-bit values.
+
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
 
 ## Moving to a place
