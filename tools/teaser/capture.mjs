@@ -71,16 +71,21 @@ async function start() {
   if (browser) await browser.close().catch(() => {});
   const t0 = Date.now();
   ({ browser, page } = await open(`${server.url}?capture&quality=${quality}`, { width, height, minutes: 90 }));
+  // draw nothing while the campus streams in (each software draw holds the page for half a minute)
+  await waitFor(page, 'ready');
+  await installSettle(page);
   await waitFor(page, 'loaded');
   // far versions of tiles load after the campus: wait for all of them (else they swap in mid-shot)
   const want = await page.evaluate(() => fetch('models/main/manifest.json').then(r => r.json()).then(m => m.tiles.filter(t => t.lod).length));
   let n = 0;
-  for (let i = 0; i < 120 && n < want; i++) { await page.waitForTimeout(5000); n = await page.evaluate(() => window.__campus.lods); }
+  for (let i = 0, last = -1, same = 0; i < 240 && n < want && same < 24; i++) {
+    await page.waitForTimeout(5000); n = await page.evaluate(() => window.__campus.lods);
+    same = n === last ? same + 1 : 0; last = n; // two minutes with no new far version: the rest have none
+  }
   // the frame-rate readout would show the capture's own numbers (one draw per frame, none in between)
   await page.addStyleTag({ content: 'body.teaser-noui>:not(#viewer){display:none!important}.teaser-fade>:not(#viewer){transition:none!important}#performance{visibility:hidden}' });
   // the visitor closes the minimap (a real click on Map); in software WebGL it is drawn too late to read
   if (await page.locator('#tool-map[aria-pressed=true]').count()) await page.click('#tool-map');
-  await installSettle(page);
   await page.evaluate(installGraphics, { fonts, mathSource });
   built = -1;
   log(`viewer loaded in ${((Date.now() - t0) / 1000).toFixed(0)} s, ${n} of ${want} far versions`);

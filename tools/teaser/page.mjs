@@ -36,8 +36,9 @@ export async function installSettle(page) {
     t.shot = ({ pose, fov = 50, time = null, shadow }) => {
       t.mark = t.draws;
       // a frame that repeats the last pose, lens, light and shadow box asks for no draw (still shots)
-      const key = JSON.stringify([pose, fov, time, shadow]);
-      if (key === t.lastKey) return;
+      const key = JSON.stringify([pose, fov, time, shadow, t.version]);
+      t.same = key === t.lastKey;
+      if (t.same) return;
       t.lastKey = key;
       if (shadow !== undefined) t.shadow = shadow;
       if (time) app.setTime(new Date(time));
@@ -53,7 +54,8 @@ export async function installSettle(page) {
         guard++;
         if (phase === 0) {
           if (t.draws !== seen) { seen = t.draws; still = 0; } else still++;
-          if (still >= quiet && t.draws === from) { done(0); return; } // nothing changed: the canvas still holds this frame
+          // nothing in the scene changed (a still shot; the interface may change): the canvas still holds this frame
+          if (still >= quiet && (t.draws === from || t.same)) { done(0); return; }
           if (still >= quiet || guard > 3000) { phase = 1; real = t.real; t.live = true; app.invalidate(); }
         } else if (t.real > real) { done(t.draws - from); return; }
         requestAnimationFrame(tick);

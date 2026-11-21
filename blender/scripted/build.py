@@ -120,7 +120,12 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     lay["caps"] = [c["ring"] for c in caps]
     lay["cap_lines"] = [ln for c in caps for ln in c["lines"]]
     lidar = data / plan_dir.name / "lidar.npz"
-    terrain = ground.Terrain(lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps)
+    # paving a plan marks `"road": true` may ramp down to a lower neighbour at the edge; lots and
+    # other paving are only raised (AGENTS rule 6)
+    roads = [s["ring"] for s in lay["surfaces"] if s.get("road")]
+    terrain = ground.Terrain(
+        lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps, roads=roads
+    )
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
     objects = ground.build(lay, terrain, lay["image_dir"])

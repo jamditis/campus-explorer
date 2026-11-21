@@ -167,6 +167,28 @@ class Grading(unittest.TestCase):
         z = t.neighbour_z(np.array([58.0, 142.0]), np.array([0.0, 0.0]))
         np.testing.assert_allclose(z, [99.0, 96.0], atol=0.01)
 
+    def test_edge_samples_are_not_averaged_across_a_step_in_the_neighbour(self):
+        # the neighbour's ground steps up 1 m at x 100 (a skirt, then another model's sidewalk):
+        # two meshes, two runs, each met at its own height up to the step
+        samples = [[x, 0.0, 99.0 if x < 100 else 100.0] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT, paved=[ROAD])
+        z = t.neighbour_z(np.array([98.0, 99.0, 100.0, 101.0]), np.zeros(4))
+        np.testing.assert_allclose(z, [99.0, 99.0, 100.0, 100.0], atol=0.02)
+
+    def test_a_coarse_neighbours_bend_is_kept(self):
+        # a coarse neighbour that ignores the 2 m bumps of the ground (so it is met as heights)
+        # falls 0.1 m per m both ways from x 100: its own heights are smooth already, so a short
+        # run keeps the bend within 0.2 m
+        def f(x, y):
+            return 100 + 2 * np.sin(x / 2)
+
+        samples = [[x, 0.0, 100.0 - 0.1 * abs(x - 100)] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT)
+        self.assertFalse(t.relative[100])
+        self.assertAlmostEqual(t.neighbour_z(np.array([100.0]), np.zeros(1))[0], 100.0, delta=0.2)
+
     def test_a_run_of_samples_that_ends_on_a_slope_keeps_its_end_value(self):
         # the neighbour lies 0.5 m over a ground rising 0.3 m per m eastward; its samples stop at
         # x 59 and start again at x 140 (a stretch dropped at a shared edge or a free-edge ring)
@@ -273,6 +295,120 @@ class Grading(unittest.TestCase):
         np.testing.assert_allclose(capped.surface(x, y, np.zeros(6, bool), capped=False), free)
         inside = capped.under_caps(np.array([95.0, 89.0, 100.0]), np.array([50.0, 50.0, 81.0]))
         self.assertEqual(inside.tolist(), [True, False, False])
+
+
+# a road 20 m wide that crosses the south edge of FOOT and runs on north into the area
+CUT = [(90, 0), (110, 0), (110, 70), (90, 70)]
+
+
+def cut_samples(z):
+    """The neighbour's ground along the south edge, every metre: `z` metres, flat (a coarse
+    far-field ground that does not follow the LiDAR)."""
+    return [[x, 0.0, z] for x in range(0, 201)]
+
+
+@unittest.skipIf(np is None, "numpy is not installed")
+class RoadCuts(unittest.TestCase):
+    def test_outward_normals_of_a_ring_either_way_round(self):
+        x, y = np.array([50.0, 200.0, 100.0, 0.0]), np.array([0.0, 50.0, 100.0, 30.0])
+        want = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+        for ring in (FOOT, FOOT[::-1]):
+            np.testing.assert_allclose(terrain._normals(ring, x, y), want, atol=1e-9)
+
+    def test_the_lidar_step_across_an_edge(self):
+        # a plane sloping across the edge has no step; a 2 m wall on the edge has a 2 m step;
+        # where the LiDAR does not reach past the edge the step is not known
+        def wall(x, y):
+            return 100 + 0.05 * y + 2 / (1 + np.exp(y / 0.2))
+
+        x, y = np.array([50.0, 150.0]), np.zeros(2)
+        n = np.array([[0.0, -1.0], [0.0, -1.0]])
+        with tempfile.TemporaryDirectory() as d:
+            plane = terrain.Terrain(lidar_from(d, lambda x, y: 100 + 0.05 * y))
+            walled = terrain.Terrain(lidar_from(d, wall))
+            short = terrain.Terrain(lidar_file(d))
+        np.testing.assert_allclose(plane.step_across(x, y, n), 0.0, atol=0.05)
+        # read from the soft ground, blurred over 1 m: a wall shows at about nine tenths
+        np.testing.assert_allclose(walled.step_across(x, y, n), 1.8, atol=0.15)
+        self.assertTrue(np.isnan(short.step_across(x, y, n)).all())
+
+    def test_a_road_ramps_up_to_a_coarse_neighbour_the_lidar_does_not_see(self):
+        # the LiDAR runs on level across the edge (the road goes on); the neighbour's coarse
+        # ground lies 1.5 m above it: no step at the cut, a ramp no steeper than RAMP_GRADE
+        # (smoothstep: 1.5 times the mean slope at most), and the road's own grade past it
+        def f(x, y):
+            return 100 + 0.01 * x
+
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(
+                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT]
+            )
+        y = np.arange(0.1, 50.0, 0.5)
+        x = np.full(len(y), 100.0)
+        got = t.surface(x, y, np.ones(len(y), bool))
+        np.testing.assert_allclose(t.surface(x, y, True), got)  # one flag for all (the curbs)
+        self.assertAlmostEqual(got[0], 102.0, delta=0.1)
+        self.assertLess(np.abs(np.diff(got) / 0.5).max(), 1.6 * terrain.RAMP_GRADE)
+        far = y > terrain.RAMP_MAX + 1
+        np.testing.assert_allclose(got[far], f(x[far], y[far]), atol=0.04)
+
+    def test_a_lot_is_raised_to_a_neighbour_but_never_lowered_a_road_may_ramp_down(self):
+        def f(x, y):
+            return 100 + 0.01 * x
+
+        with tempfile.TemporaryDirectory() as d:
+            path = lidar_from(d, f)
+            lot = terrain.Terrain(path, edge=cut_samples(99.0), footprint=FOOT, paved=[CUT])
+            road = terrain.Terrain(
+                path, edge=cut_samples(99.0), footprint=FOOT, paved=[CUT], roads=[CUT]
+            )
+        x, y = np.array([100.0, 100.0]), np.array([0.1, 10.0])
+        on = np.ones(2, bool)
+        np.testing.assert_allclose(lot.surface(x, y, on), f(x, y), atol=0.04)
+        got = road.surface(x, y, on)
+        self.assertAlmostEqual(got[0], 99.0, delta=0.1)
+        self.assertLess(got[1], f(100.0, 10.0) - 0.2)  # still on its way down 10 m in
+        self.assertGreater(got[1], 99.0)
+
+    def test_a_wall_the_lidar_shows_keeps_its_step(self):
+        # a 2 m wall on the edge, the yard behind it at the neighbour's height: paving does not
+        # climb it (a bank face closes the step), soft ground still bends to it
+        def f(x, y):
+            return 100 + 2 / (1 + np.exp(y / 0.2))
+
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(
+                lidar_from(d, f), edge=cut_samples(102.0), footprint=FOOT, paved=[CUT]
+            )
+        x, y = np.array([100.0, 100.0]), np.array([0.3, 3.0])
+        np.testing.assert_allclose(t.surface(x, y, np.ones(2, bool)), 100.0, atol=0.15)
+        self.assertGreater(t.surface(x[:1], y[:1], np.zeros(1, bool))[0], 101.5)
+
+    def test_a_neighbour_against_the_lidars_step_is_not_met(self):
+        # the LiDAR falls 1 m outside the edge (a bank down to a pond) and the coarse neighbour
+        # lies 0.4 m over the lot: the LiDAR shows a real step there, so the lot keeps its grade
+        # (a bank face closes the step; the neighbour is wrong, not the lot)
+        def f(x, y):
+            return 100 - 1 / (1 + np.exp(y / 0.2))
+
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(
+                lidar_from(d, f), edge=cut_samples(100.4), footprint=FOOT, paved=[CUT]
+            )
+        got = t.surface(np.array([100.0]), np.array([0.3]), np.ones(1, bool))
+        self.assertAlmostEqual(got[0], 100.0, delta=0.1)
+
+    def test_a_neighbour_that_follows_the_lidar_is_met_as_before(self):
+        # an edge with no step at all: nothing moves, paved or not
+        def f(x, y):
+            return 100 + 0.01 * x + 0.02 * y
+
+        samples = [[x, 0.0, float(f(x, 0.0))] for x in range(0, 201)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT, paved=[CUT])
+        y = np.arange(0.1, 40.0, 2.0)
+        x = np.full(len(y), 100.0)
+        np.testing.assert_allclose(t.surface(x, y, np.ones(len(y), bool)), f(x, y), atol=0.04)
 
 
 if __name__ == "__main__":

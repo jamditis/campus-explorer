@@ -5,6 +5,7 @@
   {
    "name": "NR_valley_rd",
    "kind": "asphalt",
+   "road": true,
    "ring": [
     [
      -164.925,
@@ -229,6 +230,7 @@
   {
    "name": "NR_valley_rd_E_walk",
    "kind": "concrete",
+   "road": true,
    "centre": [
     [
      -163.567,
@@ -315,6 +317,7 @@
   {
    "name": "NR_pres_dr_to_normal",
    "kind": "asphalt",
+   "road": true,
    "centre": [
     [
      -199.378,
@@ -462,6 +465,7 @@
   {
    "name": "NR_drive_22_normal",
    "kind": "asphalt",
+   "road": true,
    "centre": [
     [
      -228.462,
@@ -484,6 +488,7 @@
   {
    "name": "NR_drive_20_normal",
    "kind": "asphalt",
+   "road": true,
    "centre": [
     [
      -213.476,
@@ -501,6 +506,7 @@
   {
    "name": "NR_valley_rd_W_walk",
    "kind": "concrete",
+   "road": true,
    "centre": [
     [
      -117.378,
