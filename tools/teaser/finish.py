@@ -26,7 +26,7 @@ def smooth(x):
 
 
 def grade(img, g, k, n):
-    """img float32 0..1 RGB. g: grade settings; k: how far the film look is on (0..1); n: frame number."""
+    """img: float RGB 0..1; g: grade settings; k: how far the film look is on (0..1); n: frame."""
     if k <= 0:
         return img
     h, w, _ = img.shape
@@ -35,7 +35,8 @@ def grade(img, g, k, n):
     if g.get("bloom", 0.25) > 0:
         lum = out.mean(axis=2)
         hi = np.clip((lum - 0.72) / 0.28, 0, 1)[..., None] * out
-        small = Image.fromarray((hi * 255).astype(np.uint8)).resize((w // 4, h // 4), Image.BILINEAR)
+        small = Image.fromarray((hi * 255).astype(np.uint8))
+        small = small.resize((w // 4, h // 4), Image.BILINEAR)
         glow = small.filter(ImageFilter.GaussianBlur(6)).resize((w, h), Image.BILINEAR)
         out = out + np.asarray(glow, dtype=np.float32) / 255 * g.get("bloom", 0.25)
     # white balance and lift / gamma / gain, per channel

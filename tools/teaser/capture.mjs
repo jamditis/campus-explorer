@@ -94,7 +94,8 @@ async function ground(shot) {
     g.push(e);
   }
   const shadow = shot.shadow ? { focus: (await up([shot.shadow.focus]))[0], half: shot.shadow.half } : null;
-  shot._abs = { ...shot, pos: await up(shot.pos), look: await up(shot.look), graphics: g, shadow };
+  shot._abs = { ...shot, graphics: g, shadow };
+  if (!shot.move) { shot._abs.pos = await up(shot.pos); shot._abs.look = await up(shot.look); }
   return shot._abs;
 }
 

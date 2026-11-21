@@ -2,9 +2,9 @@
 
     PYTHONPATH=<folder with fontTools> python3 tools/teaser/font.py FONT.otf OUT.json
 
-Writes, per character, the advance and its shapes (outer outline counter-clockwise, holes clockwise,
-y up, in em units: 1.0 = font size), curves flattened to straight runs. Kerning pairs from the font's
-`kern` feature are not read; the type is set with plain advances.
+Writes, per character, the advance and its shapes (outer outline counter-clockwise, holes
+clockwise, y up, in em units: 1.0 = font size), curves flattened to straight runs. Kerning pairs
+are not read; the type is set with plain advances.
 """
 
 import json
@@ -12,7 +12,7 @@ import sys
 
 CHARS = (
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    " .,:;-–·/()&'’%+×km"
+    " .,:;-–·/()&'’%+×²"
 )
 STEPS = 6  # straight runs per curve segment
 

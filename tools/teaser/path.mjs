@@ -104,6 +104,9 @@ export function frameAt(frame, shots, fps) {
  * is set, made of slow incommensurate sines so it never repeats or jerks.
  */
 export function cameraAt(shot, t) {
+  // a shot that is one part of a longer move (`move`, with `span` [from, to] of the move's time):
+  // the cut falls mid-move and the speed carries across it
+  if (shot.move) return cameraAt(shot.move, lerp(shot.span[0], shot.span[1], clamp01(t)));
   const s = cruise(t, shot.accel ?? 0.3, shot.decel ?? 0.3);
   const pos = spline(shot.pos).at(s), look = spline(shot.look).at(s);
   const fov = lerp(shot.fov ?? 50, shot.fov2 ?? shot.fov ?? 50, ease.sine(t));

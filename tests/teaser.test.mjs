@@ -58,6 +58,13 @@ test('camera at the ends of a shot is at its first and last keys', () => {
   near(a.fov, 40); near(b.fov, 30);
 });
 
+test('two shots that share a move meet at the cut', () => {
+  const move = { duration: 6, pos: [[0, 0, 0], [60, 0, 0]], look: [[0, 0, -10], [60, 0, -10]], accel: 0.3, decel: 0.3 };
+  const a = { move, span: [0, 0.5] }, b = { move, span: [0.5, 1] };
+  assert.deepEqual(cameraAt(a, 1).pos, cameraAt(b, 0).pos);
+  near(cameraAt(a, 0).pos[0], 0); near(cameraAt(b, 1).pos[0], 60, 1e-6);
+});
+
 test('presence rises with an overshoot, holds and leaves', () => {
   const g = { in: 1, inDur: 0.5, out: 4, outDur: 0.5 };
   near(presence(g, 0.5).on, 0); near(presence(g, 2).on, 1); near(presence(g, 4).on, 0);

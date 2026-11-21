@@ -21,13 +21,24 @@ export const FACTS = {
   url: { text: 'jamditis.github.io/campus-explorer', from: 'README.md, live viewer' },
 };
 
-const MORNING = '2026-09-23T07:40:00-04:00'; // sun 98° (east), 9° up
-const NOON = '2026-09-23T10:40:00-04:00';
-const AFTERNOON = '2026-09-22T17:20:00-04:00'; // sun 255° (west-south-west), 17° up
-const GOLD = '2026-09-22T18:15:00-04:00'; // sun 264°, 6° up
-const BLUE = '2026-09-22T19:28:00-04:00'; // sun 8° below: lamps on
+// One evening, late afternoon to blue hour (the sun model is the viewer's, for 22 September 2026).
+const OPEN = '2026-09-22T17:35:00-04:00'; // sun 258° (west), 14° up
+const GOLD = '2026-09-22T17:55:00-04:00'; // sun 261°, 10° up: the College of Communication and Media's west front lit
+const LOW = '2026-09-22T18:10:00-04:00'; // sun 263°, 7.5° up: long shadows
+const SET = '2026-09-22T18:40:00-04:00'; // sun 268°, 1.8° up
+const BLUE = '2026-09-22T19:14:00-04:00'; // sun 5° below: lamps coming on
 const fade = (a, b) => sec => ease.smooth((sec - a) / (b - a));
 const unfade = (a, b) => sec => 1 - ease.smooth((sec - a) / (b - a));
+
+// The move into the College of Communication and Media: down from over the library roof to the plaza,
+// level with the arched entrance, through its glass and on into the atrium toward the stair.
+// Absolute heights (the atrium floor is 137.3, the plaza about 137).
+const CCM = {
+  duration: 9, accel: 0.22, decel: 0.3,
+  pos: [[-78, 158, -62], [-56, 149, -40], [-40, 141.5, -18], [-30, 139.8, -9.6], [-20, 139.7, -8.9], [-12, 139.9, -9.4], [-7, 140.6, -8]],
+  look: [[-21, 146, -8.5], [-21, 144, -8.5], [-10, 141, -8.5], [0, 140.2, -9], [4, 140.4, -7], [4, 141.6, -4], [3, 142.8, -1]],
+  fov: 40, fov2: 54, drift: 0.03,
+};
 
 // typographic system: Inter Display, two weights; sizes are em heights in metres by role and distance
 const T = {
