@@ -36,6 +36,22 @@ class GlbRefsTest(unittest.TestCase):
             self.assertEqual(glb_refs.image_files(d, "t_0_0.glb"), ["tex/a.webp"])
             self.assertEqual(glb_refs.image_files(d, "skirt.glb"), [])
 
+    def test_geometry_packs_are_files_the_tile_names(self):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "lod").mkdir()
+            gltf = {
+                "images": [{"uri": "../tex/a.webp"}],
+                # the binary chunk and the meshopt fallback buffer have no URI; a pack does
+                "buffers": [
+                    {"byteLength": 8},
+                    {"byteLength": 99},
+                    {"uri": "../geo/p.bin", "byteLength": 4},
+                ],
+            }
+            write_glb(Path(d) / "lod" / "t_0_0.glb", gltf)
+            self.assertEqual(glb_refs.uri_files(d, "lod/t_0_0.glb"), ["tex/a.webp", "geo/p.bin"])
+            self.assertEqual(glb_refs.image_files(d, "lod/t_0_0.glb"), ["tex/a.webp"])
+
     def test_shared_bytes_count_each_file_once(self):
         tiles = [{"tex": ["tex/a.webp", "tex/b.webp"]}, {"tex": ["tex/a.webp"]}, {}]
         sizes = {"tex/a.webp": 100, "tex/b.webp": 7, "tex/c.webp": 50}

@@ -10,6 +10,7 @@
 #   REPACK=1 = run this version's compact and far-version steps on the other sources' published tiles too
 #   TREE_INSTANCE=0 leaves trees used 2 to 4 times in a tile to optimize (joined into one plain mesh), as before
 #   SHARE_TEX=0 keeps every image inside its tile instead of one shared copy in models/main/tex/ (share_tex.mjs)
+#   SHARE_GEO=0 keeps all geometry inside its tile instead of one shared copy in models/main/geo/ (share_geo.mjs)
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
 #   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
 # Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
@@ -65,6 +66,10 @@ for C in $CHUNKS; do
   [ "${PIPESTATUS[0]}" -eq 0 ] && [ -s $B/raw/$C.glb ] || fail "export $C (no new GLB; not publishing)"
 done
 cd $R/web/tools
+# geometry the published tiles share (geo/, share_geo.mjs) goes back into them first: gltf-transform writes a GLB
+# with one buffer only, so every tool below that reads a published tile needs it inside; the last step shares it again
+cp $W/share_geo.mjs $W/geoshare.mjs $W/tex.mjs ./
+node share_geo.mjs $S --embed || fail "embed shared geometry"
 for f in $B/raw/*.glb; do
   C=$(basename $f .glb); [ -n "${ONLY:-}" ] && [[ " $ONLY " != *" $C "* ]] && continue
   echo "$(date +%T) optimize $C"
@@ -131,6 +136,10 @@ cp $W/farcut.mjs $W/skyline.mjs $W/skirt.mjs $W/drop_zero.mjs $W/zero.mjs $W/tex
 for f in $S/*context.glb; do node farcut.mjs $f || fail "far cut $(basename $f)"; done
 if [ -e $S/skirt.glb ]; then node skirt.mjs $S/skirt.glb || fail "skirt"; fi
 node drop_zero.mjs $S/*.glb $S/lod/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "zero-area triangles"
+# instance transforms through the meshopt filters made for them (inst_filter.mjs: every vertex within 1 mm), after
+# the last step that writes tiles through gltf-transform, which stores them unfiltered
+cp $W/inst_filter.mjs $W/geoshare.mjs $W/pack.mjs $W/tex.mjs ./
+node inst_filter.mjs $S/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "instance filters"
 # far trees under 4 px wide: fewer, wider crowns, same covered area (far_thin.py; a second run changes nothing)
 if [ -e $S/far_trees.bin ]; then python3 $W/far_thin.py $S/far_trees.bin || fail "far trees"; fi
 # Images two or more tiles carry (leaf textures, paint sheets in a tile and its far version) are stored once as
@@ -140,6 +149,12 @@ if [ -e $S/far_trees.bin ]; then python3 $W/far_thin.py $S/far_trees.bin || fail
 cp $W/share_tex.mjs $W/tex.mjs ./
 if [ "${SHARE_TEX:-1}" != 0 ]; then node share_tex.mjs $S || fail "share images"
 else node share_tex.mjs $S --embed || fail "embed images"; fi
+# Compressed geometry two or more files carry byte for byte (each tile has its own copy of every tree mesh it plants)
+# is stored once as $S/geo/<name>.bin, one pack per set of files that use it, and the views point into it
+# (share_geo.mjs, after share_tex: both copy bytes and never decode). SHARE_GEO=0 leaves it inside every file.
+cp $W/share_geo.mjs $W/geoshare.mjs $W/tex.mjs ./
+if [ "${SHARE_GEO:-1}" != 0 ]; then node share_geo.mjs $S || fail "share geometry"
+else node share_geo.mjs $S --embed || fail "embed geometry"; fi
 OUT=$S python3 $W/manifest.py || fail "manifest"
 find $S -size +95M | grep . && fail "file over 95 MB"
 ls -la $S; du -sh $S

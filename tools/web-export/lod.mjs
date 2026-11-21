@@ -1,14 +1,16 @@
 // Far-distance version of a campus tile: drops instanced nodes (trees, repeated assets: the viewer keeps the full
 // tile's instances), interiors and meshes smaller than MIN m, then simplifies what is left without tearing it. usage: node lod.mjs in.glb out.glb
-// Its images are half size per side (pack.mjs farImageSize).
+// Its images are half size per side (pack.mjs farImageSize); normals are 8-bit octahedral, as in the full tile.
+// A far version that keeps 80 % or more of both the tile's plain triangles and its draw calls, or nothing at all, is
+// not written (and an old one is removed): the viewer then draws the full tile at every distance (pack.mjs farWorthIt).
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, quantize, compressTexture } from '@gltf-transform/functions';
+import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, compressTexture } from '@gltf-transform/functions';
 import { MeshoptSimplifier, MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import sharp from 'sharp';
-import { farImageSize } from './pack.mjs';
+import { farImageSize, farWorthIt } from './pack.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, rmSync } from 'node:fs';
 const [inp, out] = process.argv.slice(2);
 const MIN = +(process.env.MIN || 6), RATIO = +(process.env.RATIO || 0.3), ERR_M = +(process.env.ERR_M || 0.25); // error in metres
 await Promise.all([MeshoptSimplifier.ready, MeshoptEncoder.ready, MeshoptDecoder.ready]);
@@ -16,6 +18,16 @@ const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies(
 const doc = await io.read(inp);
 const uris = doc.getRoot().listTextures().map(t => t.getURI()); // shared images (tex/) the tile names
 const root = doc.getRoot();
+// triangles and draw calls of the plain (not instanced) meshes: what a far version stands in for
+function plain() {
+  let tris = 0, draws = 0;
+  for (const n of root.listNodes()) {
+    const m = n.getMesh(); if (!m || n.getExtension('EXT_mesh_gpu_instancing')) continue;
+    for (const p of m.listPrimitives()) { draws++; if (p.getMode() === 4) tris += (p.getIndices()?.getCount() ?? p.getAttribute('POSITION')?.getCount() ?? 0) / 3; }
+  }
+  return { tris, draws };
+}
+const full = plain();
 let dropped = 0;
 for (const node of root.listNodes()) {
   const mesh = node.getMesh(); if (!mesh) continue;
@@ -54,7 +66,16 @@ for (const mesh of root.listMeshes()) for (const prim of mesh.listPrimitives()) 
   idx.setArray(J); compactPrimitive(prim);
 }
 for (const mesh of root.listMeshes()) if (!mesh.listPrimitives().length) mesh.dispose();
-await doc.transform(prune(), quantize(), meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
+// meshopt at its default level, as `optimize` writes the full tiles: positions and UVs quantized, normals 8-bit
+// octahedral through the meshopt filter. Level 'medium' stored them as plain 16-bit vectors: a third of a far
+// version's bytes went to normals finer than its own full tile's.
+const far = plain();
+if (!farWorthIt(full, far)) {
+  rmSync(out, { force: true });
+  console.log('lod', inp.split('/').pop(), `not written: ${far.tris} of ${full.tris} triangles, ${far.draws} of ${full.draws} draw calls`);
+  process.exit(0);
+}
+await doc.transform(prune(), meshopt({ encoder: MeshoptEncoder }));
 for (const t of root.listTextures()) {
   const size = t.getSize(), want = size && farImageSize(size);
   if (want && (want[0] !== size[0] || want[1] !== size[1])) await compressTexture(t, { encoder: sharp, targetFormat: 'webp', resize: want });
