@@ -8,12 +8,15 @@ export async function installSettle(page) {
     const c = window.__campus, app = c.app, look = app.look;
     // capture draws are never "moving": full resolution (no governor) and a fresh cull each frame
     const render = look.render.bind(look), update = look.update.bind(look);
-    look.render = () => render(false);
+    // Draws are real only when asked for (t.live): while the viewer settles (grass scattered over many
+    // frames, trees and far versions swapped, textures arriving) its frames run without drawing, so a
+    // software renderer that needs half a minute per draw draws each captured frame once.
+    look.render = () => { if (t.live) { render(false); t.live = false; t.real++; pending = false; } };
     // Shadows: the viewer moves its shadow box with the view and redraws the shadow map when it moves.
     // A shot may instead name one box for the whole move (`t.shadow = { focus, half }`): the map is then
     // drawn once and again only when the sun or the graphics change, and its texels do not crawl.
     const sun = look.sun, sc = sun.shadow.camera, d = new c.THREE.Vector3();
-    let key = '';
+    let key = '', pending = false;
     look.update = (target) => {
       update(target, true);
       const s = t.shadow;
@@ -23,11 +26,12 @@ export async function installSettle(page) {
       sun.target.position.set(...s.focus); sun.position.set(...s.focus).add(d);
       sun.target.updateMatrixWorld();
       const k = `${s.focus}|${s.half}|${d.x.toFixed(3)},${d.y.toFixed(3)},${d.z.toFixed(3)}|${t.version}`;
-      sun.shadow.needsUpdate = k !== key; key = k;
+      if (k !== key) pending = true; // kept until a real draw has drawn the shadow map
+      sun.shadow.needsUpdate = pending; key = k;
     };
     // orbit controls keep the camera a little above its target; a film camera may look up
     c.controls.maxPolarAngle = Math.PI * 0.97; c.controls.minDistance = 0.5;
-    const t = window.__teaser = { draws: 0, shadow: null, version: 0 };
+    const t = window.__teaser = { draws: 0, real: 0, live: false, shadow: null, version: 0 };
     app.on('drawn', () => { t.draws++; });
     t.shot = ({ pose, fov = 50, time = null, shadow }) => {
       t.mark = t.draws;
@@ -37,12 +41,17 @@ export async function installSettle(page) {
       c.camera.fov = fov; c.camera.updateProjectionMatrix();
       app.invalidate();
     };
-    // resolves once a draw has happened since `from` and then `quiet` animation frames pass with no draw
-    t.settled = (from, quiet = 3) => new Promise(done => {
-      let still = 0, seen = t.draws;
+    // resolves once the viewer has gone quiet since the last pose (no frame asked for a draw for `quiet`
+    // animation frames), then draws one real frame
+    t.settled = (from, quiet = 4) => new Promise(done => {
+      let still = 0, seen = t.draws, phase = 0, real = 0, guard = 0;
       const tick = () => {
-        if (t.draws !== seen) { seen = t.draws; still = 0; } else if (t.draws > from) still++;
-        if (still >= quiet) done(t.draws - from); else requestAnimationFrame(tick);
+        guard++;
+        if (phase === 0) {
+          if (t.draws !== seen) { seen = t.draws; still = 0; } else if (t.draws > from) still++;
+          if (still >= quiet || guard > 3000) { phase = 1; real = t.real; t.live = true; app.invalidate(); }
+        } else if (t.real > real) { done(t.draws - from); return; }
+        requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
     });
