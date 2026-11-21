@@ -64,7 +64,10 @@ export const storyboard = {
     travel: { warm: 0.45, sat: 1.08, contrast: 0.1, lift: [0.035, 0.035, 0.04], gamma: 1.18, gain: 1.08, vignette: 0.2, grain: 0.016, bloom: 0.25 },
     day: { warm: 0.4, sat: 1.06, contrast: 0.14, lift: [0.01, 0.01, 0.015], vignette: 0.22, grain: 0.016, bloom: 0.25 },
     gold: { warm: 0.7, sat: 1.12, contrast: 0.15, lift: [0.015, 0.01, 0.0], vignette: 0.24, grain: 0.016, bloom: 0.35 },
-    blue: { warm: -0.5, sat: 1.0, contrast: 0.14, lift: [0.0, 0.01, 0.03], gamma: 1.25, gain: 1.5, vignette: 0.3, grain: 0.022, bloom: 0.5 },
+    blue: { warm: -0.5, sat: 1.0, contrast: 0.12, lift: [0.0, 0.01, 0.03], gamma: 1.2, gain: 1.45, vignette: 0.3, grain: 0.012, bloom: 0.5 },
+    // the sun sets during the shot: start as a warm late-day grade, end as blue hour
+    dusk: { warm: 0.5, sat: 1.05, contrast: 0.16, lift: [0.0, 0.0, 0.0], gamma: 1.0, gain: 0.95, vignette: 0.26, grain: 0.014, bloom: 0.3,
+      end: { warm: -0.5, contrast: 0.12, lift: [0.0, 0.01, 0.03], gamma: 1.2, gain: 1.5, bloom: 0.5 } },
   },
   shots: [
     {
@@ -121,13 +124,13 @@ export const storyboard = {
       fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
         { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 26, tick: 18, width: 1.6, every: 100, colour: 'lit', headColour: 'red', up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
-        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, colour: 'lit', size: 14, depth: 2.2, at: [-110, 70, -560], yaw: -0.46, tilt: -0.3, rise: 'scale', in: 2.0, inDur: 0.9, out: 5.4, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, colour: 'lit', size: 14, depth: 2.2, at: [-110, 30, -560], yaw: -0.46, tilt: -0.3, rise: 'scale', in: 2.0, inDur: 0.9, out: 5.4, outDur: 0.3 },
       ],
     },
     {
       // a long lens from the north-west: the College of Communication and Media's tower in the last sun
       // against the Manhattan skyline as the light goes blue; a slow sideways drift for parallax
-      name: 'dusk', duration: 6.0, grade: 'blue', time: SET, time2: BLUE, timeFrom: 0.1, timeTo: 0.9, rel: false,
+      name: 'dusk', duration: 6.0, grade: 'dusk', time: SET, time2: BLUE, timeFrom: 0.1, timeTo: 0.9, rel: false,
       accel: 0.4, decel: 0.4, pos: [[-296, 187, -190], [-284, 186, -205]], look: [[-21, 165, -12], [-21, 164.5, -12]],
       fov: 13, fov2: 11.5, shadow: { focus: [-60, 140, -60], half: 260 },
     },
@@ -136,9 +139,9 @@ export const storyboard = {
       name: 'end_title', duration: 3.5, grade: 'blue', time: DUSK, rel: true, accel: 0.3, decel: 0.7,
       pos: [[-660, 370, 540], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
-        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 22, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 0.3, inDur: 1.1 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 8, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.0, inDur: 0.9 },
-        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 3, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.6, inDur: 0.8 },
+        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 34, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 0.3, inDur: 1.1 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 22, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.0, inDur: 0.9 },
+        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 17, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.6, inDur: 0.8 },
       ],
     },
     {
@@ -147,9 +150,9 @@ export const storyboard = {
       film: unfade(0.3, 1.5), ui: fade(0.8, 1.8),
       pos: [[-640, 360, 520], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
-        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 22, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 8, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
-        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 3, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
+        { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 34, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 22, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
+        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 17, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
       ],
     },
   ],

@@ -46,7 +46,7 @@ for (const [name, file] of [['semibold', 'InterDisplay-SemiBold.otf'], ['regular
 const plan = { fps, grades: storyboard.grades, frames: [], shots: shots.map((s, i) => ({ name: s.name, start: starts[i] })) };
 for (let f = 0; f < frames; f++) {
   const at = frameAt(f, shots, fps), shot = shots[at.shot], film = shot.film ? shot.film(at.sec) : 1;
-  plan.frames.push({ shot: at.shot, grade: shot.grade ?? 'day', film, bars: shot.bars ? shot.bars(at.sec) : film });
+  plan.frames.push({ shot: at.shot, grade: shot.grade ?? 'day', film, bars: shot.bars ? shot.bars(at.sec) : film, t: +at.t.toFixed(4) });
 }
 writeFileSync(join(out, 'plan.json'), JSON.stringify(plan));
 const mathSource = readFileSync(join(here, 'path.mjs'), 'utf8').replace(/^export /gm, '');
