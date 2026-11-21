@@ -118,6 +118,21 @@ class Grading(unittest.TestCase):
             got = t.surface(x, np.full(len(x), y), np.ones(len(x), bool))
             np.testing.assert_allclose(got, want, atol=0.05)
 
+    def test_paving_under_a_stand_keeps_the_plain_mean(self):
+        # under a stand's void the LiDAR ground is filled in: the grade there stays the masked mean
+        # of the paving round it, as before the plane fit
+        void = [(90, 42), (110, 42), (110, 50), (90, 50)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), paved=[ROAD], voids=[void])
+        i, j = int(100 - t.x0), int(t.y1 - 46)
+        mask = np.zeros_like(t.base, bool)
+        cx = t.x0 + np.arange(t.base.shape[1]) + 0.5
+        cy = t.y1 - np.arange(t.base.shape[0]) - 0.5
+        gx, gy = np.meshgrid(cx, cy)
+        mask[(gx > 10) & (gx < 190) & (gy > 40) & (gy < 52)] = True
+        want = terrain._masked_blur(t.base, mask, terrain.GRADE)[j, i]
+        self.assertAlmostEqual(t.graded[j, i], want, places=6)
+
     def test_paving_meets_a_level_neighbour_but_not_a_bank(self):
         samples = [[x, 0.0, 99.0] for x in range(0, 200)]  # neighbour ground along the south edge
         with tempfile.TemporaryDirectory() as d:

@@ -85,12 +85,12 @@ def _masked_blur(a, mask, sigma):
     return np.where(w > 0.02, _blur(np.where(mask, a, 0.0), sigma) / np.maximum(w, 1e-9), np.nan)
 
 
-def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE, level=GRADE_LEVEL, data=None):
+def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE, level=GRADE_LEVEL, data=None, ref=None):
     """Graded paving: each masked cell takes the value at its centre of a plane fitted to the
     masked cells round it, weighted by distance (Gaussian, `sigma` cells, out to 2.5 sigma) and by
-    height (Gaussian, `level` metres, against the masked mean there). Only cells of `data` (the
-    masked cells with LiDAR ground returns of their own) give heights: under a stand's void the
-    ground is a guess filled in from round it.
+    height (Gaussian, `level` metres, against `ref`, the cell's own lightly smoothed ground; `a`
+    if not given). Only cells of `data` (the masked cells with LiDAR ground returns of their own)
+    give heights: under a stand's void the ground is a guess filled in from round it.
 
     - A plane, not a mean: where the masked cells lie on one side only (the end of a drive or a
       walk, a lot's edge, a strip that stops at the footprint) a mean is the height of a point
@@ -104,8 +104,7 @@ def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE, level=GRADE_LEVEL, data=Non
     paving's edge reads between them; farther cells are NaN."""
     ny, nx = a.shape
     data = mask if data is None else mask & data
-    ref = _masked_blur(a, data, sigma)
-    ref = np.where(np.isfinite(ref), ref, a)
+    ref = a if ref is None else ref
     za = np.where(data, a, np.nan)
     rr = int(np.ceil(2.5 * sigma))
     zp = np.pad(za, rr, constant_values=np.nan)
@@ -290,10 +289,13 @@ class Terrain:
                 idx = np.nonzero(box)[0]
                 mask[idx[_inside(ring, gx[idx], gy[idx])]] = True
             mask = mask.reshape(ny, nx)
-            only = _masked_plane(base, mask, GRADE / cell, data=n > 0)
-            # paving the LiDAR does not see (under a stand's void, or a roof: no ground returns
-            # within a cell) keeps the plain mean over the paving round it, filled ground included
-            blind = mask & ~self.measured
+            only = _masked_plane(base, mask, GRADE / cell, data=n > 0, ref=self.rough)
+            # paving under a stand (a void: its ground is filled in from round the stand, and the
+            # bowl hides it) keeps the plain mean over the paving round it, as before
+            blind = np.zeros(nx * ny, bool)
+            for ring in voids:
+                blind |= _inside(ring, gx, gy)
+            blind = mask & blind.reshape(ny, nx)
             only[blind] = _masked_blur(base, mask, GRADE / cell)[blind]
             self.graded = np.where(np.isfinite(only), only, self.graded)
         self.edge, self.relative = None, None
