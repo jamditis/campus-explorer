@@ -121,7 +121,7 @@ export const storyboard = {
       fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
         { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 26, tick: 18, width: 1.6, every: 100, colour: 'lit', headColour: 'red', up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
-        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, colour: 'lit', size: 24, depth: 3, at: [-200, 5, -470], yaw: -0.28, flat: true, rise: 'extrude', in: 2.4, inDur: 0.9, out: 5.6, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, colour: 'lit', size: 14, depth: 2.2, at: [-110, 70, -560], yaw: -0.46, tilt: -0.3, rise: 'scale', in: 2.0, inDur: 0.9, out: 5.4, outDur: 0.3 },
       ],
     },
     {
