@@ -20,6 +20,15 @@ PLAN = SCRIPTED / "southwest"
 
 
 class Geometry(unittest.TestCase):
+    def test_points_on_a_ring_are_inserted_in_order(self):
+        ring = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        # on the south run, one a hair off it, one on the closing run, one already a vertex and
+        # one off the ring
+        got = geom.insert_on_ring(ring, [(6.0, 0.004), (2.0, 0.0), (0.0, 5.0), (10.0, 0.0), (5, 5)])
+        self.assertEqual(
+            got, [(0, 0), (2.0, 0.0), (6.0, 0.0), (10, 0), (10, 10), (0, 10), (0.0, 5.0)]
+        )
+
     def test_fillet_is_a_true_arc(self):
         # a 10 m square with 2 m corners: every arc point is 2 m from its corner's centre
         ring = geom.expand([[0, 0, 2], [10, 0, 2], [10, 10, 2], [0, 10, 2]], True)

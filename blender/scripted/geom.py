@@ -141,6 +141,36 @@ def resample(line, step, closed=False):
     return out
 
 
+def insert_on_ring(ring, points, tol=0.02):
+    """The closed ring with each of `points` that lies within `tol` of it put in as a vertex, in
+    order along its run (moved onto the run). Points off the ring, or on a vertex already, are
+    left out."""
+    extra = {}
+    n = len(ring)
+    for p in points:
+        best = None
+        for i in range(n):
+            a, b = ring[i], ring[(i + 1) % n]
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            ln2 = dx * dx + dy * dy or 1e-12
+            t = max(0.0, min(1.0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / ln2))
+            q = (a[0] + t * dx, a[1] + t * dy)
+            d = math.hypot(p[0] - q[0], p[1] - q[1])
+            if d <= tol and (best is None or d < best[0]):
+                best = (d, i, t, q)
+        if best is None:
+            continue
+        _d, i, t, q = best
+        ln = math.hypot(ring[(i + 1) % n][0] - ring[i][0], ring[(i + 1) % n][1] - ring[i][1])
+        if t * ln > tol and (1 - t) * ln > tol:
+            extra.setdefault(i, []).append((t, (p[0], p[1]) if _d < 1e-9 else q))
+    out = []
+    for i in range(n):
+        out.append(ring[i])
+        out.extend(q for _t, q in sorted(extra.get(i, [])))
+    return out
+
+
 def area(ring):
     """Signed area of a closed polyline: positive when it runs anticlockwise."""
     return (

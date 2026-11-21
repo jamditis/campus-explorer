@@ -34,6 +34,8 @@ GROUND = re.compile(
 )
 NOT_GROUND = re.compile(r"(?i)far_houses|crown|tree|roof|bleacher|field_lines|endzone|curb|wall")
 GAP = 0.3  # metres outside the footprint at which a triangle dump is read
+REFINE_GAP = 0.05  # metres outside at which a step between two samples is looked for
+REFINE = 0.05  # metres: how closely a step in the neighbour's ground is found between samples
 
 
 def outside(ring, step=1.0, gap=GAP):
@@ -65,6 +67,80 @@ def top_z(tris, px, py):
     return out
 
 
+def sample(ring, tris, step=1.0, gap=GAP, tol=REFINE):
+    """[x, y, z] along a closed footprint every `step` metres: the top of `tris` `gap` metres
+    outside. Where two neighbouring samples differ by more than terrain.RUN_DZ (two meshes meet,
+    a skirt and another model's sidewalk), the step between them is found by halving the run to
+    `tol` metres, and a sample is added on either side of it, so the edge knows where the
+    neighbour steps and not only that it does. A step found at a corner of the footprint takes,
+    instead of the corner's own sample, one sample `tol` / 2 along each of its two edges: the
+    ground then parts the two sides along the corner's bisector (terrain.Terrain.break_lines),
+    not across one of the edges. No sample where the tiles have no ground."""
+    ring = [(p[0], p[1]) for p in ring]
+    pts = outside(ring, step, gap)
+    z = top_z(tris, np.array([p[2] for p in pts]), np.array([p[3] for p in pts]))
+    npts = len(pts)
+
+    def at(x, y):  # read just outside the outline: where the two meshes meet at the outline
+        n = terrain._normals(ring, np.array([x]), np.array([y]))[0]
+        g = REFINE_GAP
+        return float(top_z(tris, np.array([x + g * n[0]]), np.array([y + g * n[1]]))[0])
+
+    def unit(i, j):
+        (ax, ay), (bx, by) = pts[i][:2], pts[j][:2]
+        ln = math.hypot(bx - ax, by - ay) or 1.0
+        return (bx - ax) / ln, (by - ay) / ln
+
+    def corner(i):
+        (ux, uy), (vx, vy) = unit((i - 1) % npts, i), unit(i, (i + 1) % npts)
+        return abs(ux * vy - uy * vx) > 0.02 or ux * vx + uy * vy < 0  # turns by over 1 degree
+
+    def beside(i):
+        """The two samples tol / 2 either side of corner i, before and after it."""
+        (cx, cy), half = pts[i][:2], tol / 2
+        (ux, uy), (vx, vy) = unit((i - 1) % npts, i), unit(i, (i + 1) % npts)
+        out = []
+        for px, py in ((cx - half * ux, cy - half * uy), (cx + half * vx, cy + half * vy)):
+            zz = at(px, py)
+            if np.isfinite(zz):
+                out.append([round(px, 2), round(py, 2), round(zz, 3)])
+        return out
+
+    rows = {}  # sample index -> the samples that stand for it (a corner's are its two beside it)
+    extra = {}  # sample index -> refined samples after it
+    for k in range(npts):
+        if np.isfinite(z[k]):
+            rows.setdefault(k, [[round(pts[k][0], 2), round(pts[k][1], 2), round(float(z[k]), 3)]])
+        j = (k + 1) % npts
+        if not (np.isfinite(z[k]) and np.isfinite(z[j])) or abs(z[j] - z[k]) <= terrain.RUN_DZ:
+            continue
+        (ax, ay), (bx, by) = pts[k][:2], pts[j][:2]  # resample keeps corners: a straight run
+        lo, hi, zlo, zhi = 0.0, 1.0, z[k], z[j]
+        ln = math.hypot(bx - ax, by - ay)
+        while (hi - lo) * ln > tol:
+            mid = (lo + hi) / 2
+            zm = at(ax + mid * (bx - ax), ay + mid * (by - ay))
+            if not np.isfinite(zm):
+                break
+            if abs(zm - z[k]) <= abs(zm - z[j]):
+                lo, zlo = mid, zm
+            else:
+                hi, zhi = mid, zm
+        else:
+            if lo == 0.0 and corner(k):
+                rows[k] = beside(k)
+            elif hi == 1.0 and corner(j):
+                rows[j] = beside(j)
+            else:
+                extra[k] = [[round(ax + t * (bx - ax), 2), round(ay + t * (by - ay), 2),
+                             round(float(zz), 3)] for t, zz in ((lo, zlo), (hi, zhi))
+                            if 0.0 < t < 1.0]
+    out = []
+    for k in range(npts):
+        out += rows.get(k, []) + extra.get(k, [])
+    return out
+
+
 def from_triangles(lay, dump):
     """Edge samples from a triangle dump: the other sources' ground (no scripted-build tile, no
     instanced mesh) GAP metres outside the footprint, at the footprint point."""
@@ -79,13 +155,7 @@ def from_triangles(lay, dump):
         and not NOT_GROUND.search(e["mesh"])
     ]
     tris = np.concatenate(keep).astype(float) if keep else np.zeros((0, 3, 3))
-    pts = outside(lay["footprint"])
-    z = top_z(tris, np.array([p[2] for p in pts]), np.array([p[3] for p in pts]))
-    return [
-        [round(x, 2), round(y, 2), round(float(h), 3)]
-        for (x, y, _px, _py), h in zip(pts, z, strict=True)
-        if np.isfinite(h)
-    ]
+    return sample(lay["footprint"], tris)
 
 
 def main():
