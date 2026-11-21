@@ -15,6 +15,7 @@ import numpy as np
 BLEND = 4.0  # width of the band along the footprint edge that blends into the neighbours' ground
 GRADE = 5.0  # smoothing length of paved ground, metres
 GRADE_RIDGE = 0.3  # cells squared: how firmly a slope paved cells hardly show is held level
+GRADE_LEVEL = 1.0  # metres: paving this far above or below a cell counts less in its grade
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
 LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
@@ -84,42 +85,72 @@ def _masked_blur(a, mask, sigma):
     return np.where(w > 0.02, _blur(np.where(mask, a, 0.0), sigma) / np.maximum(w, 1e-9), np.nan)
 
 
-def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE):
-    """Like `_masked_blur`, but each cell takes the value at its centre of a plane fitted to the
-    masked cells round it (Gaussian weights): a local linear fit. Inside a wide paved area it is
-    the same smoothing; where the masked cells lie on one side only (the end of a drive or walk, a
-    lot's edge) a mean is pulled toward them, up or down the slope, and a plane is not. `ridge`
-    (cells squared, times the weight) holds a slope that the cells hardly show (across a strip one
-    or two cells wide) toward level, so it never amplifies the noise. NaN where no masked cell is
-    near."""
+def _masked_plane(a, mask, sigma, ridge=GRADE_RIDGE, level=GRADE_LEVEL, data=None):
+    """Graded paving: each masked cell takes the value at its centre of a plane fitted to the
+    masked cells round it, weighted by distance (Gaussian, `sigma` cells, out to 2.5 sigma) and by
+    height (Gaussian, `level` metres, against the masked mean there). Only cells of `data` (the
+    masked cells with LiDAR ground returns of their own) give heights: under a stand's void the
+    ground is a guess filled in from round it.
+
+    - A plane, not a mean: where the masked cells lie on one side only (the end of a drive or a
+      walk, a lot's edge, a strip that stops at the footprint) a mean is the height of a point
+      inside the paving, up or down the slope; a plane is not. Inside a wide paved area the two
+      are the same smoothing, which takes the LiDAR noise out of roads.
+    - Weighted by height: paving on another level nearby (a lot below a bank, a walk on top of
+      one) does not tilt the plane. A road's own cells up or down its slope keep most weight.
+    - `ridge` (cells squared, times the weight) holds a slope the cells hardly show (across a
+      strip one or two cells wide) toward level.
+    A cell next to the mask carries on the slope of the two cells beside it (two rings), so the
+    paving's edge reads between them; farther cells are NaN."""
     ny, nx = a.shape
-    m = mask.astype(float)
-    z0 = float(np.nanmean(a[mask])) if mask.any() else 0.0
-    z = np.where(mask, a - z0, 0.0)
-    v, u = np.mgrid[0:ny, 0:nx].astype(float)
-    u -= nx / 2
-    v -= ny / 2
-
-    def b(q):
-        return _blur(q, sigma)
-
-    s0, su, sv = b(m), b(m * u), b(m * v)
-    suu, suv, svv = b(m * u * u), b(m * u * v), b(m * v * v)
-    sz, suz, svz = b(z), b(z * u), b(z * v)
-    # moments about each cell's own centre
-    cu, cv = su - u * s0, sv - v * s0
-    cuu = suu - 2 * u * su + u * u * s0 + ridge * s0
-    cvv = svv - 2 * v * sv + v * v * s0 + ridge * s0
-    cuv = suv - u * sv - v * su + u * v * s0
-    cuz, cvz = suz - u * sz, svz - v * sz
+    data = mask if data is None else mask & data
+    ref = _masked_blur(a, data, sigma)
+    ref = np.where(np.isfinite(ref), ref, a)
+    za = np.where(data, a, np.nan)
+    rr = int(np.ceil(2.5 * sigma))
+    zp = np.pad(za, rr, constant_values=np.nan)
+    acc = np.zeros((9, ny, nx))
+    for dj in range(-rr, rr + 1):
+        for di in range(-rr, rr + 1):
+            d2 = di * di + dj * dj
+            if d2 > rr * rr:
+                continue
+            zs = zp[rr + dj : rr + dj + ny, rr + di : rr + di + nx]
+            dz = zs - ref
+            w = np.exp(-0.5 * d2 / sigma**2) * np.exp(-0.5 * (dz / level) ** 2)
+            w = np.where(np.isfinite(w), w, 0.0)
+            dz = np.where(np.isfinite(dz), dz, 0.0)
+            wz = w * dz
+            for k, q in enumerate((w, w * di, w * dj, w * di * di, w * di * dj, w * dj * dj)):
+                acc[k] += q
+            acc[6] += wz
+            acc[7] += wz * di
+            acc[8] += wz * dj
+    s0, su, sv, suu, suv, svv, sz, suz, svz = acc
+    ok = mask & (s0 > 1e-6)
     mat = np.stack(
-        [np.stack([s0, cu, cv], -1), np.stack([cu, cuu, cuv], -1), np.stack([cv, cuv, cvv], -1)],
+        [
+            np.stack([s0, su, sv], -1),
+            np.stack([su, suu + ridge * s0, suv], -1),
+            np.stack([sv, suv, svv + ridge * s0], -1),
+        ],
         -2,
-    )
-    ok = s0 > 0.02
-    rhs = np.stack([sz, cuz, cvz], -1)
+    )[ok]
+    rhs = np.stack([sz, suz, svz], -1)[ok]
     out = np.full(a.shape, np.nan)
-    out[ok] = np.linalg.solve(mat[ok], rhs[ok][..., None])[..., 0, 0] + z0
+    out[ok] = np.linalg.solve(mat, rhs[..., None])[..., 0, 0] + ref[ok]
+    done = ok.copy()
+    for _ in range(2):  # two rings of cells round the paving
+        p = np.pad(np.where(done, out, np.nan), 2, constant_values=np.nan)
+        near = [p[1:-3, 2:-2], p[3:-1, 2:-2], p[2:-2, 1:-3], p[2:-2, 3:-1]]  # N S W E
+        far = [p[:-4, 2:-2], p[4:, 2:-2], p[2:-2, :-4], p[2:-2, 4:]]
+        # the slope of the two cells next to it carried on one cell, else the next cell's value
+        pairs = zip(near, far, strict=True)
+        stack = np.stack([np.where(np.isfinite(f), 2 * c - f, c) for c, f in pairs])
+        n = np.isfinite(stack).sum(0)
+        ring = ~done & (n > 0)
+        out[ring] = (np.nansum(stack, 0) / np.maximum(n, 1))[ring]
+        done |= ring
     return out
 
 
@@ -258,7 +289,12 @@ class Terrain:
                 )
                 idx = np.nonzero(box)[0]
                 mask[idx[_inside(ring, gx[idx], gy[idx])]] = True
-            only = _masked_plane(base, mask.reshape(ny, nx), GRADE / cell)
+            mask = mask.reshape(ny, nx)
+            only = _masked_plane(base, mask, GRADE / cell, data=n > 0)
+            # paving the LiDAR does not see (under a stand's void, or a roof: no ground returns
+            # within a cell) keeps the plain mean over the paving round it, filled ground included
+            blind = mask & ~self.measured
+            only[blind] = _masked_blur(base, mask, GRADE / cell)[blind]
             self.graded = np.where(np.isfinite(only), only, self.graded)
         self.edge, self.relative = None, None
         if edge:

@@ -104,6 +104,20 @@ class Grading(unittest.TestCase):
         rim = (np.minimum(x - 40, 90 - x) < 2) | (np.minimum(y - 20, 70 - y) < 2)
         self.assertLess(road[rim].std(), 0.7 * soft[rim].std())
 
+    def test_paving_on_another_level_nearby_does_not_tilt_a_road(self):
+        # a walk on top of a 5 m bank, 6 m from the road's edge: both are paved, but the road's
+        # grade comes from the road
+        def f(x, y):
+            return 100 + 5 / (1 + np.exp(-(y - 55) / 0.5))
+
+        walk = [(10, 58), (190, 58), (190, 61), (10, 61)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_from(d, f), paved=[ROAD, walk])
+        x = np.arange(20.0, 180.0, 5.0)
+        for y, want in ((51.5, 100.0), (46.0, 100.0), (59.5, 105.0)):
+            got = t.surface(x, np.full(len(x), y), np.ones(len(x), bool))
+            np.testing.assert_allclose(got, want, atol=0.05)
+
     def test_paving_meets_a_level_neighbour_but_not_a_bank(self):
         samples = [[x, 0.0, 99.0] for x in range(0, 200)]  # neighbour ground along the south edge
         with tempfile.TemporaryDirectory() as d:

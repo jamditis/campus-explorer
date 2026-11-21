@@ -1,6 +1,6 @@
 // Capture the teaser frame by frame from the viewer in headless Chromium (software WebGL).
 //   node tools/teaser/capture.mjs OUT_DIR [--fonts DIR] [--quality high] [--width 1920 --height 1080]
-//        [--step N] [--only shot,shot] [--from FRAME] [--to FRAME] [--sub N]
+//        [--step N] [--only shot,shot] [--from FRAME] [--to FRAME] [--sub N] [--site FROZEN_COPY]
 // Writes OUT_DIR/frames/NNNNN.png (raw, no grade). Frames already on disk are skipped, so a run that
 // stopped (or a tab that crashed) carries on from where it was. `--step 6` shoots every 6th frame (an
 // animatic); `--sub 3` averages 3 sub-frames per frame on shots with `blur: true` (motion blur).
@@ -62,7 +62,10 @@ for (let f = from; f < to; f++) {
 log(`${todo.length} frames to shoot of ${frames} (${width}x${height}, ${quality}, step ${step}, sub ${sub})`);
 if (!todo.length) process.exit(0);
 
-const server = await serve(repo);
+// --site DIR: serve a frozen copy of the viewer and its models, so a new export cannot change the film
+const site = resolve(opt('site', repo));
+const server = await serve(site);
+log(`serving ${site}`);
 let browser = null, page = null, built = -1;
 async function start() {
   if (browser) await browser.close().catch(() => {});
