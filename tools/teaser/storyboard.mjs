@@ -79,8 +79,8 @@ export const storyboard = {
       pos: [[-250, 380, 700], [-215, 290, 520], [-175, 195, 335]], look: [[-100, 0, -150], [-104, 0, -20], [-105, 0, 40]],
       fov: 42, fov2: 38, shadow: { focus: [-110, 0, -60], half: 900 },
       graphics: [
-        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, colour: 'red', size: 17, depth: 3, at: [-106, 12, 30], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 1.3, inDur: 1.1, out: 4.75, outDur: 0.25 },
-        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.note, size: 6.5, depth: 1, at: [-101, 5, 62], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 2.1, inDur: 0.9, out: 4.75, outDur: 0.25 },
+        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, colour: 'lit', size: 21, depth: 3.5, at: [-106, 12, 30], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 1.3, inDur: 1.1, out: 4.75, outDur: 0.25 },
+        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.name, colour: 'lit', size: 9, depth: 1.4, at: [-101, 5, 66], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 2.1, inDur: 0.9, out: 4.75, outDur: 0.25 },
       ],
     },
     {
@@ -88,15 +88,15 @@ export const storyboard = {
       name: 'ccm_glide', duration: 4.5, grade: 'gold', time: GOLD, rel: false, move: CCM, span: [0, 0.5],
       shadow: { focus: [-30, 137, -15], half: 80 },
       graphics: [
-        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.15, depth: 0.22, at: [-34, 0, -26], rel: true, yaw: -2.25, in: 0.8, inDur: 0.9, out: 4.5, outDur: 0.01 },
+        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.0, depth: 0.2, at: [-27.5, 0.1, -20.5], rel: true, yaw: -2.25, tilt: -0.3, in: 0.8, inDur: 0.9, out: 4.5, outDur: 0.01 },
       ],
     },
     {
       // through the entrance glass into the double-height atrium, drifting toward the stair; a room on floor 2
-      name: 'atrium', duration: 4.5, grade: 'interior', time: GOLD, rel: false, move: CCM, span: [0.5, 1],
+      name: 'atrium', duration: 4.5, grade: 'interior', time: GOLD, rel: false, move: CCM, span: [0.5, 0.8],
       shadow: { focus: [-30, 137, -15], half: 80 },
       graphics: [
-        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.15, depth: 0.22, at: [-34, 0, -26], rel: true, yaw: -2.25, in: -9, out: 0.8, outDur: 0.5 },
+        { id: 'title_ccm', kind: 'text', text: 'College of Communication and Media', ...T.name, size: 1.0, depth: 0.2, at: [-27.5, 0.1, -20.5], rel: true, yaw: -2.25, tilt: -0.3, in: -9, out: 0.8, outDur: 0.5 },
       ],
     },
     {
@@ -126,7 +126,7 @@ export const storyboard = {
       // a long lens from the north-west: the College of Communication and Media's tower in the last sun
       // against the Manhattan skyline as the light goes blue; a slow sideways drift for parallax
       name: 'dusk', duration: 6.0, grade: 'blue', time: SET, time2: BLUE, timeFrom: 0.1, timeTo: 0.9, rel: false,
-      accel: 0.4, decel: 0.4, pos: [[-296, 187, -190], [-284, 186, -205]], look: [[-21, 151, -12], [-21, 150.5, -12]],
+      accel: 0.4, decel: 0.4, pos: [[-296, 187, -190], [-284, 186, -205]], look: [[-21, 165, -12], [-21, 164.5, -12]],
       fov: 13, fov2: 11.5, shadow: { focus: [-60, 140, -60], half: 260 },
     },
     {
@@ -135,8 +135,8 @@ export const storyboard = {
       pos: [[-660, 370, 540], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
         { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 22, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 0.3, inDur: 1.1 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 19, depth: 2.5, at: [-271, 10, -74], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.0, inDur: 0.9 },
-        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 9, depth: 1.2, at: [-303, 4, -23], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.6, inDur: 0.8 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 8, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.0, inDur: 0.9 },
+        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 3, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: 1.6, inDur: 0.8 },
       ],
     },
     {
@@ -146,8 +146,8 @@ export const storyboard = {
       pos: [[-640, 360, 520], [-640, 360, 520]], look: [[-100, 0, -350], [-100, 0, -350]], fov: 40,
       graphics: [
         { id: 'title_end', kind: 'text', text: 'Campus explorer', ...T.title, colour: 'lit', size: 66, depth: 8, at: [-235, 22, -132], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
-        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 19, depth: 2.5, at: [-271, 10, -74], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
-        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 9, depth: 1.2, at: [-303, 4, -23], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
+        { id: 'title_url', kind: 'text', text: 'jamditis.github.io/campus-explorer', ...T.note, colour: 'lit', size: 27, depth: 3, at: [-275, 8, -68], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
+        { id: 'title_facts', kind: 'text', text: '90 named places · 41 rooms · 1.7 km² · free public data', ...T.note, colour: 'lit', size: 12.5, depth: 1.5, at: [-312, 3, -10], yaw: -0.556, tilt: -0.35, rise: 'scale', in: -9 },
       ],
     },
   ],
