@@ -40,7 +40,7 @@ const CCM = {
   // stays above the library roof (about 149) until past its east wall, then drops to the plaza; the
   // entrance doors' centre is at z -10.5 (measured on the animatic frames)
   pos: [[-78, 160, -62], [-56, 155.5, -41], [-44, 150.5, -27], [-35, 143, -16], [-28.5, 139.9, -11], [-20, 139.75, -10.5], [-13, 139.85, -11], [-8, 140.4, -11.8]],
-  look: [[-21, 146, -10.5], [-21, 144.5, -10.5], [-15, 142, -10.5], [-5, 140.6, -10.5], [2, 140.3, -10.5], [4, 140.6, -11.5], [4, 141.4, -15], [3, 142.4, -17]],
+  look: [[-21, 146, -10.5], [-21, 144.5, -10.5], [-15, 142, -10.5], [-5, 140.6, -10.5], [2, 140.3, -10.5], [4, 140.5, -12], [3, 140.8, -16], [0, 141, -20]],
   fov: 40, fov2: 54, drift: 0.03,
 };
 
@@ -79,8 +79,8 @@ export const storyboard = {
       pos: [[-250, 380, 700], [-215, 290, 520], [-175, 195, 335]], look: [[-100, 0, -150], [-104, 0, -20], [-105, 0, 40]],
       fov: 42, fov2: 38, shadow: { focus: [-110, 0, -60], half: 900 },
       graphics: [
-        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, colour: 'red', size: 24, depth: 4, at: [-106, 0, 36], yaw: -0.22, in: 1.3, inDur: 1.1, out: 4.75, outDur: 0.25 },
-        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.note, size: 8, depth: 1.2, at: [-100, 0, 62], yaw: -0.22, in: 2.1, inDur: 0.9, out: 4.75, outDur: 0.25 },
+        { id: 'title_main', kind: 'text', text: 'Montclair State University', ...T.title, colour: 'red', size: 17, depth: 3, at: [-106, 12, 30], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 1.3, inDur: 1.1, out: 4.75, outDur: 0.25 },
+        { id: 'title_sub', kind: 'text', text: 'an open 3D model from free public data', ...T.note, size: 6.5, depth: 1, at: [-101, 5, 62], yaw: -0.22, tilt: -0.42, rise: 'scale', in: 2.1, inDur: 0.9, out: 4.75, outDur: 0.25 },
       ],
     },
     {
@@ -107,7 +107,7 @@ export const storyboard = {
       graphics: [
         { id: 'title_green', kind: 'text', text: 'Alumni Green', ...T.name, size: 4.2, depth: 0.7, at: [-112, 0, 38], yaw: -1.49, in: 0.5, inDur: 0.9, out: 4.3, outDur: 0.2 },
         { id: 'pin_cole', kind: 'pin', at: [-113, 20, 95], height: 9, radius: 0.32, in: 1.7, inDur: 0.6, out: 4.3, outDur: 0.2 },
-        { id: 'title_cole', kind: 'text', text: 'Susan A. Cole Hall', ...T.note, size: 2.6, depth: 0.4, at: [-113, 32.5, 95], yaw: -1.35, in: 2.0, inDur: 0.6, out: 4.3, outDur: 0.2 },
+        { id: 'title_cole', kind: 'text', text: 'Susan A. Cole Hall', ...T.note, size: 2.6, depth: 0.4, at: [-113, 32.5, 95], yaw: -1.35, rise: 'scale', in: 2.0, inDur: 0.6, out: 4.3, outDur: 0.2 },
       ],
     },
     {
@@ -119,7 +119,7 @@ export const storyboard = {
       fov: 46, fov2: 42, shadow: { focus: [-260, 0, -480], half: 1000 },
       graphics: [
         { id: 'dim_travel', kind: 'dim', a: [-454, 30, 266], b: [-28, 30, -1063], head: 30, tick: 16, width: 3.5, up: [0, 1, 0], in: 0.7, inDur: 2.6, out: 8.7, outDur: 0.3 },
-        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 40, -380], yaw: -0.45, in: 2.6, inDur: 1.0, out: 8.7, outDur: 0.3 },
+        { id: 'title_travel', kind: 'text', text: '1.4 km station to station', ...T.title, size: 22, depth: 3, at: [-238, 40, -380], yaw: -0.45, rise: 'scale', in: 2.6, inDur: 1.0, out: 8.7, outDur: 0.3 },
       ],
     },
     {

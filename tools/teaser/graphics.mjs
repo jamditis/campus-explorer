@@ -120,6 +120,9 @@ export function installGraphics({ fonts, mathSource }) {
           if ((d.rise ?? 'ground') === 'ground') {
             // rise out of the ground (or roof): the letter starts below its base line, hidden by what it stands on
             l.position.y = -(1 - k) * 1.1; l.scale.set(1, 1, 1); l.visible = k > 0.001 || s.down >= 1;
+          } else if (d.rise === 'scale') {
+            // a letter in the air grows from its base line, with the eased overshoot
+            l.scale.setScalar(Math.max(0.001, k)); l.position.y = 0; l.visible = k > 0.001;
           } else {
             // extrude: grow out of the surface it lies on, with a slight scale-in
             l.scale.set(0.85 + 0.15 * k, 0.85 + 0.15 * k, Math.max(0.001, k)); l.position.y = 0; l.visible = k > 0.001;
