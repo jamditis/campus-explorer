@@ -10,7 +10,7 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
-import { inVolume, nearVolumes, GLASS_GROW } from './viewer/rooms-math.js';
+import { inVolume, nearVolumes, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 export { fixTone, fixCat };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
@@ -47,6 +47,8 @@ export const QUALITY = {
   high: { pixelRatio: 2, shadows: 4096, ao: true, cull: 0.003, tex: true, macro: true },
 };
 const COARSE = matchMedia('(pointer: coarse)').matches;
+// indirect light inside a building with rooms (linear, warm white), before ambientFactor: see interiorLight()
+const INTERIOR_LIGHT = 0.6;
 const MIN_SCALE = 0.5; // lowest resolution scale the governor may use while the view moves
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
@@ -561,9 +563,12 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     giRing: { value: Array.from({ length: GI_P }, () => new THREE.Vector2()) },
     giVol: { value: Array.from({ length: GI_V }, () => new THREE.Vector4()) },
     giN: { value: 0 },
+    inBox: { value: Array.from({ length: GI_V }, () => new THREE.Vector4()) }, // x0, z0, x1, z1 of each ring
+    inTop: { value: new Array(GI_V).fill(0) }, // each volume's highest interior ceiling
+    inLight: { value: new THREE.Color(1, 0.95, 0.86).multiplyScalar(INTERIOR_LIGHT) },
   };
   let interiors = [];
-  const decorated = new Set(), seeThroughs = new WeakMap(), _gb = new THREE.Box3();
+  const decorated = new Set(), seeThroughs = new WeakMap(), clearUnits = new WeakMap(), lits = new WeakMap(), _gb = new THREE.Box3();
   /** Use these volumes ({ ring: [[x, z]], y0, y1 }, viewer metres) for the interior rule. */
   function setInteriors(volumes) {
     interiors = volumes.map(v => {
@@ -574,6 +579,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     for (const v of interiors) {
       if (n === GI_V || at + v.ring.length > GI_P) { console.warn('interior volume left out of the glass rule:', v.id); continue; }
       v.ring.forEach((p, i) => giUniforms.giRing.value[at + i].set(p[0], p[1]));
+      giUniforms.inBox.value[n].set(v.box.min.x, v.box.min.z, v.box.max.x, v.box.max.z);
+      giUniforms.inTop.value[n] = v.ceiling ?? v.y1;
       giUniforms.giVol.value[n++].set(at, v.ring.length, v.y0, v.y1); at += v.ring.length;
     }
     giUniforms.giN.value = n;
@@ -591,9 +598,97 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     }
     return seeThroughs.get(m);
   }
+  // Interior light: rooms get only sky and hemisphere light, so ceilings took the dark ground colour and walls
+  // sat in shade. Every pixel inside a volume (interiorLit in rooms-math.js: inside the outline, more than EDGE
+  // from it, not the roof) gains an even warm-white indirect light, more on ceilings, less on floors
+  // (ambientFactor). It is electric light: the same by day and by night, so after dark a building with rooms
+  // reads as lit from inside. No light objects, no extra draws: a copy of each material of a mesh that reaches
+  // into a volume, with the test in its shader.
+  function interiorLight(m, from) {
+    // a cloned material does not keep its shader hook: chain the original's (textures, paint, water)
+    const base = from.onBeforeCompile, key = from.customProgramCacheKey.call(from);
+    m.onBeforeCompile = (sh, r) => {
+      base.call(from, sh, r);
+      Object.assign(sh.uniforms, giUniforms);
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vInPos; varying vec3 vInNrm;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vec4 inW = vec4(transformed, 1.0); vec3 inN = objectNormal;
+          #ifdef USE_INSTANCING
+            inW = instanceMatrix * inW; inN = mat3(instanceMatrix) * inN;
+          #endif
+          vInPos = (modelMatrix * inW).xyz; vInNrm = normalize(mat3(modelMatrix) * inN);`);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          varying vec3 vInPos; varying vec3 vInNrm;
+          uniform vec2 giRing[${GI_P}]; uniform vec4 giVol[${GI_V}]; uniform int giN;
+          uniform vec4 inBox[${GI_V}]; uniform float inTop[${GI_V}]; uniform vec3 inLight;
+          bool inLitAt(vec3 p, float ny) { // rooms-math interiorLit
+            for (int v = 0; v < ${GI_V}; v++) {
+              if (v >= giN) break;
+              vec4 b = giVol[v], bx = inBox[v];
+              if (p.y < b.z - 0.3 || p.y > b.w || (p.y > b.w - 0.5 && ny > -0.5) || p.x < bx.x || p.z < bx.y || p.x > bx.z || p.z > bx.w) continue;
+              if (ny > 0.5 && p.y > inTop[v] + 0.5) continue;
+              int s = int(b.x), n = int(b.y);
+              bool odd = false; float d2 = 1e9;
+              for (int i = 0; i < ${GI_P}; i++) {
+                if (i >= n) break;
+                vec2 a = giRing[s + i], c = giRing[s + (i + 1) % n];
+                if ((a.y > p.z) != (c.y > p.z) && p.x < a.x + (p.z - a.y) * (c.x - a.x) / (c.y - a.y)) odd = !odd;
+                vec2 u = c - a; float t = clamp(dot(p.xz - a, u) / max(dot(u, u), 1e-9), 0.0, 1.0);
+                vec2 e = p.xz - a - u * t; d2 = min(d2, dot(e, e));
+              }
+              if (odd && d2 > ${(EDGE * EDGE).toFixed(4)}) return true;
+            }
+            return false;
+          }`)
+        .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>
+          {
+            vec3 Nw = normalize(vInNrm); if (!gl_FrontFacing) Nw = -Nw;
+            if (inLitAt(vInPos, Nw.y)) reflectedLight.indirectDiffuse += material.diffuseColor * inLight * (Nw.y < -0.5 ? 1.0 : Nw.y > 0.5 ? 0.55 : 0.8);
+          }`);
+    };
+    m.customProgramCacheKey = () => key + '_in';
+    m.needsUpdate = true;
+  }
+  function litFor(m) {
+    if (!m?.isMeshStandardMaterial || m.userData.gi || m.userData.glass || m.userData.cat === 'glass' || m.userData.inLit || m.userData.leaf) return m;
+    if (!lits.has(m)) { const c = m.clone(); c.userData.inLit = true; interiorLight(c, m); lits.set(m, c); }
+    return lits.get(m);
+  }
   function claim(root) {
     if (!interiors.length) return;
     for (const it of items) if (it.root === root) it.vol = interiors.findIndex(v => inVolume(v, it.c.x, it.c.y, it.c.z, GLASS_GROW));
+    root.traverse(o => {
+      if (!o.isMesh || o.userData.interiorLit || o.userData.filler || o.userData.treeLod) return;
+      const bb = o.isInstancedMesh ? (o.boundingBox ?? (o.computeBoundingBox(), o.boundingBox)) : (o.geometry.boundingBox ?? (o.geometry.computeBoundingBox(), o.geometry.boundingBox));
+      _gb.copy(bb).applyMatrix4(o.matrixWorld);
+      if (!interiors.some(v => v.box.intersectsBox(_gb))) return;
+      o.userData.interiorLit = true;
+      o.material = Array.isArray(o.material) ? o.material.map(litFor) : litFor(o.material);
+    });
+    // instanced window units (the carried-over north wing of the College of Communication and Media): their glass
+    // has no shader hook (decorate leaves instanced glass at 82 % opacity), so it read as dark panes. A unit set
+    // whose box centre lies in a volume (grown by GLASS_GROW) gets clear glass: 22 % opacity, both sides, no shadow.
+    root.traverse(o => {
+      if (!o.isInstancedMesh || o.userData.interiorGlass || o.userData.treeLod) return;
+      const mats = [].concat(o.material);
+      const isGlass = m => (m?.userData.glass || m?.userData.cat === 'glass') && isClearGlass(m.name || '');
+      if (!mats.some(isGlass)) return;
+      const bb = o.boundingBox ?? (o.computeBoundingBox(), o.boundingBox);
+      _gb.copy(bb).applyMatrix4(o.matrixWorld); const c = _gb.getCenter(new THREE.Vector3());
+      if (!interiors.some(v => inVolume(v, c.x, c.y, c.z, GLASS_GROW))) return;
+      const clear = m => {
+        if (!isGlass(m)) return m;
+        if (!clearUnits.has(m)) {
+          const g = m.clone(); g.transparent = true; g.opacity = 0.22; g.depthWrite = false; g.side = THREE.DoubleSide; g.forceSinglePass = true;
+          clearUnits.set(m, g);
+        }
+        return clearUnits.get(m);
+      };
+      o.material = Array.isArray(o.material) ? o.material.map(clear) : clear(o.material);
+      o.userData.interiorGlass = true; o.castShadow = false;
+    });
     root.traverse(o => {
       if (!o.isMesh || o.isInstancedMesh || o.userData.interiorGlass || ![].concat(o.material).some(m => m?.userData.gi)) return;
       if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
@@ -674,6 +769,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function reset() { items = []; decorated.clear(); lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
     applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun, setInteriors,
+    interiorUniforms: giUniforms, // tests: giN 0 switches the per-pixel volume tests off
     invalidateShadows() { shadowDirty = true; },
     get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
   };

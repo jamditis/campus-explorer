@@ -3,8 +3,9 @@
 Reads every scripted interior plan (blender/scripted/<area>/interior.json) through the plan's own
 label rule (blender/scripted/rooms.py `labels`), so no Blender is needed. Each area with an
 interior gives one volume: the floor outline, from the lowest floor up to the top of the shell
-building that holds it (the highest ceiling when there is none), with the floor levels. The
-building's name is the viewer place (viewer/places.json) that lies inside the outline.
+building that holds it (the highest ceiling when there is none), with the floor levels and the
+highest interior ceiling. The building's name is the viewer place (viewer/places.json) that lies
+inside the outline.
 
 Coordinates are written in the viewer frame: x east, y up, z = -model y, metres.
 
@@ -69,6 +70,7 @@ def area(name, floors, places, buildings, short=SHORT):
         ring=_view(outline),
         y0=floors[0]["floor"],
         y1=max(tops) if tops else max(f["ceiling"] for f in floors),
+        ceiling=max(f["ceiling"] for f in floors),
         levels=[dict(floor=f["level"], y=f["floor"]) for f in floors],
         unverified=sorted({f["unverified"] for f in floors if f.get("unverified")}),
     )

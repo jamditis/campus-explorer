@@ -1,0 +1,2207 @@
+{
+ "zone": "n_lots",
+ "notes": "Zone n_lots: the university's parking south of Normal Avenue: Lot 1, the stall-lined drive north of it (up to the end of n_roads' service road at y -360), Lot 2 and the court south of the walk to Legge House. The JSON is written by /tmp/claude-0/p5/normal/n_lots/gen.py; that script is the source until the file is edited by hand. Method: each lot read in its own straightened frame on the 2020 ortho fetched at 0.075 m/px. Dividers found as brightness peaks across each row, each divider line fitted through its centre points, then a least-squares fit of phase and pitch; row fronts and backs from the median brightness profile along the dividers. Frames: Lot 1 origin (-215.3, -505.9) at 61.98 deg (dividers square to it within 0.3 deg); the drive's rows turn 1.5 and 2.3 deg more, the east row 0.8 deg; Lot 2 origin (-207.7, -324.2) at -19.4 deg; the bay north of the drive at 99 deg. Lot 1 (osm 312839920), 109 stalls: south row 16 (pitch 2.568 m, fit rms 0.06 m), two double rows of 13 + 13 (2.565 and 2.573 m, rms 0.06 to 0.18 m), north row 12 (2.563 m, rms 0.07 m), west row 12 under tree shade (2.611 m, rms 0.10 m), east row 17 (2.596 m, rms 0.05 m); stall depth 5.3 to 5.85 m, aisles 7.7 to 8.1 m. Hatched caps at the east ends of the double rows, 15 aisle arrows (white ovals 1.5 to 1.6 m long; heads not readable, direction from right-hand traffic), four lamps: two LiDAR poles 5.5 and 5.6 m high at the west ends of the centre lines, two at the east caps from dark spots and shadows in the ortho. Drive north of Lot 1, 27 stalls: south row 10 (2.587 m, rms 0.05 m), north row 9 (2.59 m, rms 0.05 m), two stalls beside two blue hatched aisles west of the lane to the service road, a bay of 6 (2.593 m, rms 0.04 m) between two curbed islands. Lot 2 (osm 291713843), 30 stalls: north row 4 (2.57 m, rms 0.04 m), middle double row 5 north and 12 south with a hatched aisle at the foot of the walk to the Center for Autism (rms 0.02 to 0.06 m), south row 6 + 3 (2.59 m, rms 0.02 m); hatched cap at the west end, 6 arrows. Court: asphalt south of n_roads' walk NR_walk_lot2_s to x -128, a rounded island at its west end, two stalls on the pad in the walk's jog in front of Legge House. Edges: 0.2 m under n_roads' walks, 0.2 m onto the end lines of NR_service_rd and NR_service_rd_N; Lot 2's west 2 m lies under President's Drive (NR_pres_dr_to_normal), both asphalt. Heights: none given; the engine grades the paving. Left out: the small lot at 20 and 22 Normal Avenue (aisle osm 232846656: no stalls in the ortho, n_roads draws it as a drive); the drive that goes on east from the court (osm 312839919 east of x -128) under trees: the LiDAR shows a cut drive descending about 6 m to Normal Avenue, but neither its edges nor any stalls can be read; stalls south of the court aisle (two divider ends seen under trees, not enough to count). Edited by hand since the review of 2026-11-21: the angled row west of the concrete band north of the drive (NL_service_bay_stalls, 3 stalls at 46 deg; a fifth divider that starts on the T bar is left out) and the narrow curbed island at Lot 2's west end (NL_lot2_island_W, with the lamp NL_lot2_lamp_SW at its south tip).",
+ "surfaces": [
+  {
+   "name": "NL_lot1",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -214.434,
+     -507.04,
+     3.0
+    ],
+    [
+     -185.317,
+     -452.325,
+     3.0
+    ],
+    [
+     -232.894,
+     -427.845,
+     0.5
+    ],
+    [
+     -235.543,
+     -432.824,
+     0.5
+    ],
+    [
+     -236.649,
+     -427.025,
+     0.5
+    ],
+    [
+     -231.951,
+     -418.198,
+     0.5
+    ],
+    [
+     -224.227,
+     -422.308,
+     0.5
+    ],
+    [
+     -214.38,
+     -402.57,
+     0.5
+    ],
+    [
+     -207.203,
+     -406.39,
+     0.5
+    ],
+    [
+     -205.811,
+     -401.602
+    ],
+    [
+     -202.201,
+     -396.138
+    ],
+    [
+     -218.5,
+     -388.302,
+     1.5
+    ],
+    [
+     -222.3,
+     -384.6,
+     1.0
+    ],
+    [
+     -221.4,
+     -382.6,
+     0.5
+    ],
+    [
+     -214.0,
+     -381.85,
+     0.5
+    ],
+    [
+     -216.45,
+     -366.3,
+     0.5
+    ],
+    [
+     -222.9,
+     -366.5,
+     1.0
+    ],
+    [
+     -223.0,
+     -363.6,
+     1.0
+    ],
+    [
+     -220.18,
+     -361.99
+    ],
+    [
+     -226.67,
+     -359.52
+    ],
+    [
+     -228.8,
+     -358.708
+    ],
+    [
+     -229.6,
+     -370.0
+    ],
+    [
+     -230.0,
+     -378.0
+    ],
+    [
+     -230.3,
+     -381.2,
+     0.5
+    ],
+    [
+     -226.2,
+     -388.0,
+     0.5
+    ],
+    [
+     -228.6,
+     -388.6,
+     0.5
+    ],
+    [
+     -231.556,
+     -386.271,
+     0.5
+    ],
+    [
+     -241.677,
+     -407.312,
+     1.0
+    ],
+    [
+     -238.151,
+     -412.18,
+     3.0
+    ],
+    [
+     -243.716,
+     -437.538,
+     3.0
+    ],
+    [
+     -243.643,
+     -439.955,
+     0.5
+    ],
+    [
+     -265.018,
+     -480.122,
+     3.0
+    ]
+   ],
+   "evidence": "ortho2020, osm, lidar2017",
+   "unverified": "corners under trees (south-west, south-east, north-west) drawn with 3 m radii; the north edge of the aisle between Lot 1 and the drive (x -240..-226, y -425..-405) is under trees"
+  },
+  {
+   "name": "NL_lot2",
+   "kind": "asphalt",
+   "ring": [
+    [
+     -211.022,
+     -333.632,
+     1.0
+    ],
+    [
+     -176.783,
+     -345.69
+    ],
+    [
+     -160.0,
+     -344.2
+    ],
+    [
+     -128.0,
+     -343.6
+    ],
+    [
+     -128.0,
+     -338.93
+    ],
+    [
+     -131.148,
+     -338.771,
+     1.6
+    ],
+    [
+     -131.752,
+     -332.529,
+     0.4
+    ],
+    [
+     -140.091,
+     -331.376,
+     0.4
+    ],
+    [
+     -140.779,
+     -336.194,
+     1.6
+    ],
+    [
+     -160.184,
+     -336.402,
+     3.6
+    ],
+    [
+     -165.722,
+     -332.576,
+     3.4
+    ],
+    [
+     -172.216,
+     -331.819
+    ],
+    [
+     -170.555,
+     -327.103,
+     0.5
+    ],
+    [
+     -185.175,
+     -321.954,
+     0.3
+    ],
+    [
+     -185.076,
+     -321.671
+    ],
+    [
+     -187.056,
+     -320.974
+    ],
+    [
+     -185.362,
+     -316.163,
+     0.5
+    ],
+    [
+     -186.683,
+     -315.698
+    ],
+    [
+     -182.365,
+     -303.437,
+     0.5
+    ],
+    [
+     -198.399,
+     -297.79,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020, osm",
+   "unverified": "west edge laid under the east side of President's Drive (n_roads); the court south of the walk to Legge House lies under trees: its south edge (y -343.5) and east end (x -128) are guesses; the drive that goes on east (osm 312839919) is not drawn"
+  },
+  {
+   "name": "NL_court_island",
+   "kind": "mulch",
+   "ring": [
+    [
+     -174.754,
+     -337.452,
+     1.0
+    ],
+    [
+     -165.827,
+     -339.677,
+     1.0
+    ],
+    [
+     -165.246,
+     -337.348,
+     1.0
+    ],
+    [
+     -174.173,
+     -335.123,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island with a light rim and a brown inside: taken as a planted island with a curb; could be paint only",
+   "layer": 3.2
+  },
+  {
+   "name": "NL_lot2_island_W",
+   "kind": "mulch",
+   "layer": 3.2,
+   "ring": [
+    [
+     -210.66,
+     -333.97
+    ],
+    [
+     -209.34,
+     -334.44
+    ],
+    [
+     -207.34,
+     -328.83
+    ],
+    [
+     -208.64,
+     -328.37
+    ]
+   ],
+   "evidence": "ortho2020 (0.075 m: bright curb outline with a dark inside, cross profiles every 0.5 m)",
+   "unverified": "planting not seen (mulch drawn); north end under shadow"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "NL_lot1_curb_S",
+   "path": [
+    [
+     -214.434,
+     -507.04
+    ],
+    [
+     -185.317,
+     -452.325
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb read from the dark line behind the south row; ends under trees"
+  },
+  {
+   "name": "NL_lot1_curb_E",
+   "path": [
+    [
+     -185.317,
+     -452.325
+    ],
+    [
+     -232.894,
+     -427.845
+    ]
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "unverified": "south end under trees"
+  },
+  {
+   "name": "NL_lot1_curb_W",
+   "path": [
+    [
+     -222.644,
+     -502.671
+    ],
+    [
+     -265.018,
+     -480.122
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "edge under tree shade"
+  },
+  {
+   "name": "NL_lot1_island_NE_curb",
+   "path": [
+    [
+     -232.894,
+     -427.845
+    ],
+    [
+     -235.543,
+     -432.824
+    ],
+    [
+     -236.649,
+     -427.025
+    ],
+    [
+     -231.951,
+     -418.198
+    ],
+    [
+     -224.491,
+     -422.167
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_bay_island_S_curb",
+   "path": [
+    [
+     -214.0,
+     -381.85
+    ],
+    [
+     -221.4,
+     -382.6
+    ],
+    [
+     -222.3,
+     -384.6
+    ],
+    [
+     -220.5,
+     -386.7
+    ],
+    [
+     -218.6,
+     -388.4
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb round the south island; its south-east side is the walk of n_roads"
+  },
+  {
+   "name": "NL_bay_island_N_curb",
+   "path": [
+    [
+     -216.45,
+     -366.3
+    ],
+    [
+     -222.9,
+     -366.5
+    ],
+    [
+     -223.0,
+     -363.6
+    ],
+    [
+     -220.18,
+     -361.99
+    ],
+    [
+     -216.5,
+     -360.2
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "island outline read at 0.075 m; north-east end outside the zone (lawn)"
+  },
+  {
+   "name": "NL_drive_V_island_curb",
+   "path": [
+    [
+     -230.3,
+     -381.2
+    ],
+    [
+     -226.2,
+     -388.0
+    ],
+    [
+     -228.6,
+     -388.6
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "small planted island under a tree"
+  },
+  {
+   "name": "NL_drive_lane_E_curb",
+   "path": [
+    [
+     -202.201,
+     -396.138
+    ],
+    [
+     -218.5,
+     -388.302
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_W_curb",
+   "path": [
+    [
+     -228.8,
+     -358.708
+    ],
+    [
+     -229.6,
+     -370.0
+    ],
+    [
+     -230.0,
+     -378.0
+    ],
+    [
+     -230.3,
+     -381.2
+    ]
+   ],
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_curb_S",
+   "path": [
+    [
+     -210.456,
+     -333.832
+    ],
+    [
+     -176.783,
+     -345.69
+    ]
+   ],
+   "evidence": "ortho2020",
+   "unverified": "curb between the south row and President's Drive Extension read from the shadow line"
+  },
+  {
+   "name": "NL_court_island_curb",
+   "path": [
+    [
+     -174.754,
+     -337.452,
+     1.0
+    ],
+    [
+     -165.827,
+     -339.677,
+     1.0
+    ],
+    [
+     -165.246,
+     -337.348,
+     1.0
+    ],
+    [
+     -174.173,
+     -335.123,
+     1.0
+    ]
+   ],
+   "evidence": "ortho2020",
+   "closed": true,
+   "unverified": "island with a light rim: curb assumed"
+  },
+  {
+   "name": "NL_lot2_island_W_curb",
+   "path": [
+    [
+     -210.66,
+     -333.97
+    ],
+    [
+     -209.34,
+     -334.44
+    ],
+    [
+     -207.34,
+     -328.83
+    ],
+    [
+     -208.64,
+     -328.37
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020"
+  }
+ ],
+ "markings": [
+  {
+   "name": "NL_lot1_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     -209.41,
+     -497.174
+    ],
+    [
+     -190.108,
+     -460.902
+    ]
+   ],
+   "count": 16,
+   "depth": 5.8,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_stalls_M1_S",
+   "type": "stalls",
+   "line": [
+    [
+     -225.442,
+     -486.003
+    ],
+    [
+     -209.777,
+     -456.567
+    ]
+   ],
+   "count": 13,
+   "depth": 5.55,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_stalls_M1_N",
+   "type": "stalls",
+   "line": [
+    [
+     -225.442,
+     -486.003
+    ],
+    [
+     -209.777,
+     -456.567
+    ]
+   ],
+   "count": 13,
+   "depth": 5.3,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "several dividers faded; placed by the fitted pitch"
+  },
+  {
+   "name": "NL_lot1_stalls_M2_S",
+   "type": "stalls",
+   "line": [
+    [
+     -241.955,
+     -477.442
+    ],
+    [
+     -226.242,
+     -447.914
+    ]
+   ],
+   "count": 13,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "front ends faded between v 31.4 and 32.8 (lot frame)"
+  },
+  {
+   "name": "NL_lot1_stalls_M2_N",
+   "type": "stalls",
+   "line": [
+    [
+     -241.955,
+     -477.442
+    ],
+    [
+     -226.242,
+     -447.914
+    ]
+   ],
+   "count": 13,
+   "depth": 5.4,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     -257.727,
+     -467.486
+    ],
+    [
+     -243.278,
+     -440.335
+    ]
+   ],
+   "count": 12,
+   "depth": 5.5,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the first divider (west end) under tree shade"
+  },
+  {
+   "name": "NL_lot1_stalls_W",
+   "type": "stalls",
+   "line": [
+    [
+     -229.998,
+     -498.418
+    ],
+    [
+     -257.657,
+     -483.699
+    ]
+   ],
+   "count": 12,
+   "depth": 5.6,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "under tree shade: 9 of 13 dividers seen, the rest placed by the pitch; may continue south of v 16.5 under the trees"
+  },
+  {
+   "name": "NL_lot1_stalls_E",
+   "type": "stalls",
+   "line": [
+    [
+     -193.357,
+     -448.467
+    ],
+    [
+     -232.609,
+     -428.269
+    ]
+   ],
+   "count": 17,
+   "depth": 5.5,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the south divider under tree shade"
+  },
+  {
+   "name": "NL_lot1_M1_centre",
+   "type": "line",
+   "path": [
+    [
+     -225.442,
+     -486.003
+    ],
+    [
+     -209.822,
+     -456.651
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_M2_centre",
+   "type": "line",
+   "path": [
+    [
+     -241.955,
+     -477.442
+    ],
+    [
+     -226.241,
+     -447.913
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_N_back",
+   "type": "line",
+   "path": [
+    [
+     -257.727,
+     -467.486
+    ],
+    [
+     -243.277,
+     -440.331
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faint"
+  },
+  {
+   "name": "NL_lot1_M1_cap_outline",
+   "type": "line",
+   "path": [
+    [
+     -204.922,
+     -459.258
+    ],
+    [
+     -203.936,
+     -457.404
+    ],
+    [
+     -213.514,
+     -452.307
+    ],
+    [
+     -214.5,
+     -454.161
+    ],
+    [
+     -204.922,
+     -459.258
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -205.717,
+     -458.835
+    ],
+    [
+     -206.584,
+     -455.995
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -206.776,
+     -458.272
+    ],
+    [
+     -207.643,
+     -455.431
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -207.835,
+     -457.708
+    ],
+    [
+     -208.703,
+     -454.867
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -208.895,
+     -457.144
+    ],
+    [
+     -209.762,
+     -454.304
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     -209.954,
+     -456.58
+    ],
+    [
+     -210.821,
+     -453.74
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     -211.013,
+     -456.017
+    ],
+    [
+     -211.881,
+     -453.176
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     -212.073,
+     -455.453
+    ],
+    [
+     -212.94,
+     -452.613
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M1_cap_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     -213.132,
+     -454.889
+    ],
+    [
+     -213.772,
+     -452.793
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_outline",
+   "type": "line",
+   "path": [
+    [
+     -221.386,
+     -450.497
+    ],
+    [
+     -220.4,
+     -448.643
+    ],
+    [
+     -230.022,
+     -443.522
+    ],
+    [
+     -231.008,
+     -445.376
+    ],
+    [
+     -221.386,
+     -450.497
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -222.181,
+     -450.074
+    ],
+    [
+     -223.048,
+     -447.234
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -223.24,
+     -449.51
+    ],
+    [
+     -224.107,
+     -446.67
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -224.299,
+     -448.946
+    ],
+    [
+     -225.167,
+     -446.106
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -225.359,
+     -448.383
+    ],
+    [
+     -226.226,
+     -445.542
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     -226.418,
+     -447.819
+    ],
+    [
+     -227.285,
+     -444.979
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     -227.477,
+     -447.255
+    ],
+    [
+     -228.345,
+     -444.415
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_7",
+   "type": "line",
+   "path": [
+    [
+     -228.537,
+     -446.692
+    ],
+    [
+     -229.404,
+     -443.851
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_M2_cap_hatch_8",
+   "type": "line",
+   "path": [
+    [
+     -229.596,
+     -446.128
+    ],
+    [
+     -230.257,
+     -443.964
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot1_arrow_1",
+   "type": "arrow",
+   "at": [
+    -213.351,
+    -488.167
+   ],
+   "angle": 61.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_2",
+   "type": "arrow",
+   "at": [
+    -216.796,
+    -486.232
+   ],
+   "angle": 241.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_3",
+   "type": "arrow",
+   "at": [
+    -200.436,
+    -463.005
+   ],
+   "angle": 61.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_4",
+   "type": "arrow",
+   "at": [
+    -203.904,
+    -461.091
+   ],
+   "angle": 241.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_5",
+   "type": "arrow",
+   "at": [
+    -225.936,
+    -487.655
+   ],
+   "angle": 151.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_6",
+   "type": "arrow",
+   "at": [
+    -227.613,
+    -490.999
+   ],
+   "angle": 331.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_7",
+   "type": "arrow",
+   "at": [
+    -243.998,
+    -482.472
+   ],
+   "angle": 331.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_8",
+   "type": "arrow",
+   "at": [
+    -206.602,
+    -450.004
+   ],
+   "angle": 151.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_9",
+   "type": "arrow",
+   "at": [
+    -208.483,
+    -453.093
+   ],
+   "angle": 331.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_10",
+   "type": "arrow",
+   "at": [
+    -223.077,
+    -441.328
+   ],
+   "angle": 151.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_11",
+   "type": "arrow",
+   "at": [
+    -246.55,
+    -470.749
+   ],
+   "angle": 61.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_12",
+   "type": "arrow",
+   "at": [
+    -233.384,
+    -477.789
+   ],
+   "angle": 241.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_13",
+   "type": "arrow",
+   "at": [
+    -216.702,
+    -453.828
+   ],
+   "angle": 61.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_14",
+   "type": "arrow",
+   "at": [
+    -233.781,
+    -445.69
+   ],
+   "angle": 61.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot1_arrow_15",
+   "type": "arrow",
+   "at": [
+    -236.922,
+    -443.781
+   ],
+   "angle": 241.98,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_drive_stalls_S",
+   "type": "stalls",
+   "line": [
+    [
+     -224.402,
+     -422.0
+    ],
+    [
+     -212.854,
+     -398.84
+    ]
+   ],
+   "count": 10,
+   "depth": 6.0,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     -241.365,
+     -407.479
+    ],
+    [
+     -231.228,
+     -386.445
+    ]
+   ],
+   "count": 9,
+   "depth": 5.65,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the west end under trees: the row may go on 1 or 2 stalls"
+  },
+  {
+   "name": "NL_drive_S_back",
+   "type": "line",
+   "path": [
+    [
+     -224.487,
+     -422.17
+    ],
+    [
+     -212.167,
+     -397.461
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_access_div_1",
+   "type": "line",
+   "path": [
+    [
+     -213.241,
+     -402.836
+    ],
+    [
+     -210.775,
+     -398.202
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_access_div_2",
+   "type": "line",
+   "path": [
+    [
+     -211.299,
+     -403.87
+    ],
+    [
+     -208.833,
+     -399.235
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_access_div_3",
+   "type": "line",
+   "path": [
+    [
+     -209.269,
+     -404.95
+    ],
+    [
+     -206.803,
+     -400.316
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_access_div_4",
+   "type": "line",
+   "path": [
+    [
+     -207.648,
+     -405.416
+    ],
+    [
+     -205.346,
+     -401.091
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "faint, beside the hatched aisles"
+  },
+  {
+   "name": "NL_drive_access_back",
+   "type": "line",
+   "path": [
+    [
+     -208.298,
+     -405.467
+    ],
+    [
+     -214.51,
+     -402.161
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_drive_access_aisle_1",
+   "type": "area",
+   "ring": [
+    [
+     -213.194,
+     -402.748
+    ],
+    [
+     -210.775,
+     -398.202
+    ],
+    [
+     -212.015,
+     -397.542
+    ],
+    [
+     -214.435,
+     -402.088
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue with white hatching in the ortho: drawn as a plain blue area; the stalls beside them read as accessible, no symbol seen"
+  },
+  {
+   "name": "NL_drive_access_aisle_2",
+   "type": "area",
+   "ring": [
+    [
+     -207.765,
+     -405.637
+    ],
+    [
+     -205.346,
+     -401.091
+    ],
+    [
+     -206.803,
+     -400.316
+    ],
+    [
+     -209.222,
+     -404.862
+    ]
+   ],
+   "colour": "blue",
+   "evidence": "ortho2020",
+   "unverified": "blue with white hatching in the ortho: drawn as a plain blue area; the stalls beside them read as accessible, no symbol seen"
+  },
+  {
+   "name": "NL_drive_arrow_1",
+   "type": "arrow",
+   "at": [
+    -221.104,
+    -396.239
+   ],
+   "angle": 63.48,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_drive_arrow_2",
+   "type": "arrow",
+   "at": [
+    -225.745,
+    -393.679
+   ],
+   "angle": 243.48,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_bay_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -214.506,
+     -381.969
+    ],
+    [
+     -216.945,
+     -366.571
+    ]
+   ],
+   "count": 6,
+   "depth": 5.55,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_bay_back",
+   "type": "line",
+   "path": [
+    [
+     -214.449,
+     -382.325
+    ],
+    [
+     -216.984,
+     -366.324
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_stalls_N",
+   "type": "stalls",
+   "line": [
+    [
+     -193.213,
+     -300.04
+    ],
+    [
+     -183.554,
+     -303.442
+    ]
+   ],
+   "count": 4,
+   "depth": 5.75,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "the west end of the row is under tree shade (no dividers seen west of the first)"
+  },
+  {
+   "name": "NL_lot2_stalls_mid_N",
+   "type": "stalls",
+   "line": [
+    [
+     -202.079,
+     -316.426
+    ],
+    [
+     -189.769,
+     -320.761
+    ]
+   ],
+   "count": 5,
+   "depth": 5.6,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_stalls_mid_S_W",
+   "type": "stalls",
+   "line": [
+    [
+     -202.145,
+     -316.403
+    ],
+    [
+     -189.732,
+     -320.774
+    ]
+   ],
+   "count": 5,
+   "depth": 5.35,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_mid_S_div",
+   "type": "line",
+   "path": [
+    [
+     -187.666,
+     -321.501
+    ],
+    [
+     -189.443,
+     -326.547
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_stalls_mid_S_E",
+   "type": "stalls",
+   "line": [
+    [
+     -186.223,
+     -322.009
+    ],
+    [
+     -171.509,
+     -327.191
+    ]
+   ],
+   "count": 6,
+   "depth": 5.35,
+   "side": "right",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_mid_centre_W",
+   "type": "line",
+   "path": [
+    [
+     -202.097,
+     -316.419
+    ],
+    [
+     -187.666,
+     -321.501
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_mid_centre_E",
+   "type": "line",
+   "path": [
+    [
+     -186.223,
+     -322.009
+    ],
+    [
+     -171.065,
+     -327.347
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_stalls_S_W",
+   "type": "stalls",
+   "line": [
+    [
+     -208.37,
+     -334.142
+    ],
+    [
+     -193.713,
+     -339.304
+    ]
+   ],
+   "count": 6,
+   "depth": 5.85,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_stalls_S_E",
+   "type": "stalls",
+   "line": [
+    [
+     -190.204,
+     -340.539
+    ],
+    [
+     -182.847,
+     -343.13
+    ]
+   ],
+   "count": 3,
+   "depth": 5.85,
+   "side": "left",
+   "angle": 90,
+   "colour": "white",
+   "width": 0.1,
+   "evidence": "ortho2020",
+   "unverified": "under tree shade: three dividers seen, pitch from the west part; a light patch at u 18.5..19.5 (lot frame) may be a hatched aisle"
+  },
+  {
+   "name": "NL_lot2_cap_W_outline",
+   "type": "line",
+   "path": [
+    [
+     -206.185,
+     -320.652
+    ],
+    [
+     -203.874,
+     -321.465
+    ],
+    [
+     -200.237,
+     -311.137
+    ],
+    [
+     -202.548,
+     -310.323
+    ],
+    [
+     -206.185,
+     -320.652
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "rounded corners drawn square"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -205.803,
+     -319.567
+    ],
+    [
+     -202.961,
+     -318.872
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -205.272,
+     -318.058
+    ],
+    [
+     -202.43,
+     -317.362
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -204.74,
+     -316.549
+    ],
+    [
+     -201.898,
+     -315.853
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -204.209,
+     -315.039
+    ],
+    [
+     -201.367,
+     -314.344
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_5",
+   "type": "line",
+   "path": [
+    [
+     -203.678,
+     -313.53
+    ],
+    [
+     -200.835,
+     -312.835
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_cap_W_hatch_6",
+   "type": "line",
+   "path": [
+    [
+     -203.146,
+     -312.021
+    ],
+    [
+     -200.304,
+     -311.326
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatch strokes: count and slant approximate"
+  },
+  {
+   "name": "NL_lot2_aisle_hatch_outline",
+   "type": "line",
+   "path": [
+    [
+     -189.443,
+     -326.547
+    ],
+    [
+     -188.0,
+     -327.056
+    ],
+    [
+     -186.223,
+     -322.009
+    ],
+    [
+     -187.666,
+     -321.501
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020"
+  },
+  {
+   "name": "NL_lot2_aisle_hatch_1",
+   "type": "line",
+   "path": [
+    [
+     -189.26,
+     -326.029
+    ],
+    [
+     -187.485,
+     -325.594
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched aisle beside the stalls at the foot of the walk: probably the access aisle of accessible stalls (no blue or symbol readable)"
+  },
+  {
+   "name": "NL_lot2_aisle_hatch_2",
+   "type": "line",
+   "path": [
+    [
+     -188.862,
+     -324.897
+    ],
+    [
+     -187.087,
+     -324.462
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched aisle beside the stalls at the foot of the walk: probably the access aisle of accessible stalls (no blue or symbol readable)"
+  },
+  {
+   "name": "NL_lot2_aisle_hatch_3",
+   "type": "line",
+   "path": [
+    [
+     -188.463,
+     -323.765
+    ],
+    [
+     -186.688,
+     -323.33
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched aisle beside the stalls at the foot of the walk: probably the access aisle of accessible stalls (no blue or symbol readable)"
+  },
+  {
+   "name": "NL_lot2_aisle_hatch_4",
+   "type": "line",
+   "path": [
+    [
+     -188.065,
+     -322.633
+    ],
+    [
+     -186.289,
+     -322.198
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "hatched aisle beside the stalls at the foot of the walk: probably the access aisle of accessible stalls (no blue or symbol readable)"
+  },
+  {
+   "name": "NL_lot2_arrow_1",
+   "type": "arrow",
+   "at": [
+    -198.034,
+    -310.058
+   ],
+   "angle": 340.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot2_arrow_2",
+   "type": "arrow",
+   "at": [
+    -196.752,
+    -306.66
+   ],
+   "angle": 160.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot2_arrow_3",
+   "type": "arrow",
+   "at": [
+    -204.364,
+    -327.251
+   ],
+   "angle": 340.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot2_arrow_4",
+   "type": "arrow",
+   "at": [
+    -203.006,
+    -323.817
+   ],
+   "angle": 160.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot2_arrow_5",
+   "type": "arrow",
+   "at": [
+    -172.95,
+    -339.925
+   ],
+   "angle": 340.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_lot2_arrow_6",
+   "type": "arrow",
+   "at": [
+    -171.344,
+    -334.49
+   ],
+   "angle": 160.6,
+   "shape": "straight",
+   "length": 1.6,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "white arrow 1.5 to 1.6 m long in the ortho; its head is not readable, so the direction is taken from right-hand traffic in a two-way aisle"
+  },
+  {
+   "name": "NL_court_pad_div",
+   "type": "line",
+   "path": [
+    [
+     -135.4,
+     -332.5
+    ],
+    [
+     -135.6,
+     -336.7
+    ]
+   ],
+   "width": 0.1,
+   "colour": "white",
+   "evidence": "ortho2020",
+   "unverified": "two pale painted blocks (symbols or hatching, not readable) read as two stalls; the divider is placed between them"
+  },
+  {
+   "name": "NL_service_bay_stalls",
+   "type": "stalls",
+   "line": [
+    [
+     -209.25,
+     -343.44
+    ],
+    [
+     -213.51,
+     -353.59
+    ]
+   ],
+   "count": 3,
+   "depth": 6.3,
+   "side": "right",
+   "angle": 46.1,
+   "colour": "white",
+   "evidence": "ortho2020 (0.075 m: divider peaks along 13 lines 1.5 to 4.5 m west of the band; common slope and pitch fitted, 50 of 55 peaks within 0.4 m; pitch 3.54 m along the band)",
+   "unverified": "faint dividers; the divider ends (depth) read where the peaks fade; a fifth divider that starts at the T bar is left out"
+  }
+ ],
+ "points": [
+  {
+   "name": "NL_lot1_lamp_M1_W",
+   "kind": "lamp",
+   "at": [
+    -224.361,
+    -483.973
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "height": 5.6,
+   "unverified": "head type; pole base taken on the centre line under the LiDAR return"
+  },
+  {
+   "name": "NL_lot1_lamp_M2_W",
+   "kind": "lamp",
+   "at": [
+    -240.969,
+    -475.588
+   ],
+   "evidence": "ortho2020, lidar2017",
+   "height": 5.5,
+   "unverified": "head type; pole base taken on the centre line under the LiDAR return"
+  },
+  {
+   "name": "NL_lot1_lamp_M1_E",
+   "kind": "lamp",
+   "at": [
+    -209.328,
+    -455.724
+   ],
+   "evidence": "ortho2020",
+   "height": 5.6,
+   "unverified": "no LiDAR return: dark spot and shadow in the ortho; height from the west lamps"
+  },
+  {
+   "name": "NL_lot1_lamp_M2_E",
+   "kind": "lamp",
+   "at": [
+    -225.748,
+    -446.986
+   ],
+   "evidence": "ortho2020",
+   "height": 5.5,
+   "unverified": "no LiDAR return: dark spot and shadow in the ortho; height from the west lamps"
+  },
+  {
+   "name": "NL_lot2_lamp_SW",
+   "kind": "lamp",
+   "at": [
+    -210.017,
+    -334.092
+   ],
+   "evidence": "ortho2020",
+   "unverified": "bright head and a pole shadow in the ortho, no LiDAR return: position from the ortho, height unknown"
+  }
+ ]
+}

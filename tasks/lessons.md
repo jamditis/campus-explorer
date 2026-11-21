@@ -103,3 +103,9 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: I wrote "communication school" and "School of Communication and Media" in reports, plans and agent briefs. Joe corrected it: the building is the College of Communication and Media. The viewer's label, search and landmark hunt carried the same wrong name, taken from OpenStreetMap.
 - Rule: OpenStreetMap is a source for positions, not for what the university calls a place. Where Joe or the university's own signs give a name, use it everywhere (reports, plans, viewer labels) and record it in `NAMES` in `tools/places/build_places.py` so a rebuild keeps it. Object names inside the main `.blend` and the historical scripts stay as they are.
+
+## Export from a clean checkout of the commit, not from the tree agents work in (2026-11-21)
+
+- What happened: I started an export from the working tree while an agent was changing `blender/scripted/terrain.py` (uncommitted, 11 seconds before the Blender build read it). The tiles would have been built from code that is in no commit. I saw it in `git status`, stopped the export and ran it again from a clean checkout.
+- Rule: an export builds from a separate checkout at the commit being published (`ENG`), and publishes tiles into the working tree (`SITE` in `build_web.sh`). The export script refuses to start unless that checkout is clean and at the working tree's HEAD. Agents may then keep editing the working tree during an export.
+- Added the same day: a clean checkout is not enough. My second export built from a commit that held a work-in-progress snapshot of `terrain.py` (the stop hook asks for a commit of whatever is in the tree). Rule: start an export only after every agent that edits the engine has reported and the tests pass at that commit; name snapshot commits "Work in progress" and never export from one.

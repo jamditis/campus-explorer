@@ -37,7 +37,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 
 ## Scripted builds index
 
-`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`, `overlook/`, `webster/`, `lot60/`, and two with no ground of their own: `ccom/`, the College of Communication and Media, and `green/`, the Alumni Green); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
+`blender/scripted/` builds whole areas from plan files, one folder per area (`southwest/`, `west/`, `northeast/`, `stadium/`, `village/`, `overlook/`, `webster/`, `lot60/`, `core/`, `normal/`, and two with no ground of their own: `ccom/`, the College of Communication and Media, and `green/`, the Alumni Green); its [README](blender/scripted/README.md) has the plan format and the run steps. Run `python3 -m unittest discover -s tests/py` before a PR that touches it.
 
 | File | What it does |
 |---|---|
@@ -54,6 +54,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `tools/evidence/` | `fetch.py` (ortho, LiDAR, OSM), `overlay.py` (gridded sheets, plan overlay), `dump_tiles.mjs` and `plan.py` (plan of the published tiles), `trees.py` (tree points from the LiDAR canopy) |
 | `tools/web-export/supersede.mjs`, `cut.mjs`, `volume.mjs` | Take other sources' ground out of each area's footprint, cut exactly at the outline; take a building out of the other sources' tiles by a ring |
 | `tools/web-export/compact.mjs`, `tree_instance.mjs`, `pack.mjs`, `share_tex.mjs`, `tex.mjs` | Drop unused vertex data and pack instance rotations; make small tree groups instances; store each repeated image once under `models/main/tex/` |
+| `tools/teaser/` | The teaser film: storyboard, frame capture from the viewer, 3D titles, grade, sound mix. Film, frames and audio stay outside the repository |
 | `tools/web-export/farcut.mjs`, `skyline.mjs`, `skirt.mjs`, `drop_zero.mjs` | Far field: a skyline stand-in for buildings past 10 km, a lighter far ground, empty triangles dropped |
 
 ## Git identity
