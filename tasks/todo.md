@@ -162,6 +162,7 @@ Review: what stays open is in `docs/ROADMAP.md` under Completeness, one line per
 - [x] Two new areas: the Webster Road band and the Lot 60 complex
 - [x] Viewer: interiors and room labels, arrivals above ground (Joe's bug report), a soft flight limit
 - [ ] Browser checks on the new tiles: floor 2 walking, room labels on screen, the stair
-- [ ] Next areas from the survey: core walks and drives, Lots 1 and 2 with the Normal Avenue houses
+- [x] Next areas from the survey: core walks and drives (`core`), Lots 1 and 2 with the Normal Avenue houses (`normal`); export sw12, 185.6 MB
+- [ ] Teaser film (`tools/teaser/`): first full cut with sound, review, deliver to Joe outside the repository
 
 Engine features added: `adopt` (carry objects over from the release file, with a fix hook), supersede `volumes`, `interiors`, building options (ring roof, recessed windows, openings), `free_edges`.
