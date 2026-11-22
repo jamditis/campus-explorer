@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
+import { withFullRange,
   barkOrder, reorderIndex, thinPick, scaleLinear, pixels, treeBand,
   TREE_MID, TREE_FAR_MID, BARK_MIN_DIAMETER, BARK_SHARE, SHRUB_REACH, SHRUB_THIN,
 } from '../viewer/treelod-math.js';
@@ -125,4 +125,13 @@ test('middle tree and thinned shrub distances keep what they change under a pixe
   assert.ok(SHRUB_REACH.low < SHRUB_REACH.medium && SHRUB_REACH.medium < SHRUB_REACH.high);
   assert.equal(SHRUB_THIN, 8);
   assert.ok(Math.abs(pixels(1, 593, 68, 800) - 1) < 0.01); // 1 m at 593 m is one pixel at 68 degrees, 800 px
+});
+
+test('a collision build sees every triangle, whatever range is drawn now', () => {
+  const geo = { drawRange: { start: 0, count: 30 } };
+  const seen = withFullRange(geo, g => ({ ...g.drawRange }));
+  assert.deepEqual(seen, { start: 0, count: Infinity });
+  assert.deepEqual(geo.drawRange, { start: 0, count: 30 }); // the drawn range is put back
+  assert.throws(() => withFullRange(geo, () => { throw new Error('x'); }));
+  assert.deepEqual(geo.drawRange, { start: 0, count: 30 }); // also when the build fails
 });

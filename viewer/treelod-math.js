@@ -150,3 +150,13 @@ export function pixels(size, d, fov, height) {
 export function treeBand(d, mid, farMid, dist) {
   return d >= dist ? 3 : d >= farMid ? 2 : d >= mid ? 1 : 0;
 }
+
+/** Run `build(geo)` with the geometry's whole index range in place, then put the drawn range back.
+ *  A collision structure is built from the range drawn now (three-mesh-bvh reads `drawRange`), and a
+ *  tree at middle distance draws only its thick branches: built then, the twigs would be missing
+ *  from picking and measuring for good. */
+export function withFullRange(geo, build) {
+  const { start, count } = geo.drawRange;
+  geo.drawRange.start = 0; geo.drawRange.count = Infinity;
+  try { return build(geo); } finally { geo.drawRange.start = start; geo.drawRange.count = count; }
+}

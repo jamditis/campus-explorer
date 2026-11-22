@@ -8,6 +8,7 @@ import { MeshBVH, CENTER, acceleratedRaycast } from 'three-mesh-bvh';
 import { orderTiles, firstBatch, tileAt, boundsOf, squareDistance } from './schedule.js';
 import { dirOf, resolveUri, imageUri, textureKey, createTextureShare, sharedBytes, newBytes } from './texshare.js';
 import { inCampusBox } from './pose-math.js';
+import { withFullRange } from './treelod-math.js';
 
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
@@ -355,7 +356,7 @@ export function createWorld(app, prepare, release = () => {}) {
   // ---- collision ----
   function ensureBVH(c) {
     const g = c.mesh.geometry;
-    if (!g.boundsTree) g.boundsTree = new MeshBVH(g, { strategy: CENTER, maxLeafTris: 12, indirect: true });
+    if (!g.boundsTree) g.boundsTree = withFullRange(g, () => new MeshBVH(g, { strategy: CENTER, maxLeafTris: 12, indirect: true }));
     return g.boundsTree;
   }
   const ray = new THREE.Raycaster(); ray.firstHitOnly = true;
