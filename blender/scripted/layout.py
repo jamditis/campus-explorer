@@ -44,7 +44,30 @@ def areas(args=()):
         if missing:
             raise SystemExit(f"no such area: {sorted(missing)}")
         found = [d for d in found if d.name in want]
-    return found
+    after = {}
+    for d in found:
+        f = d / "footprint.json"
+        if f.exists():
+            after[d.name] = json.loads(f.read_text()).get("build_after", [])
+    order = build_order([d.name for d in found], after)
+    return sorted(found, key=lambda d: order.index(d.name))
+
+
+def build_order(names, after):
+    """The order the areas `names` are built in: by name, except that an area comes after every
+    area its footprint.json names in `build_after` (`after`: name -> names; a name not being built
+    is ignored). Along a shared edge the area built first sets the heights of the vertices both
+    meshes have (seam.py), so an area fitted into reviewed neighbours builds after them and takes
+    their edge as it is, instead of moving their paving to its own. A loop is an error."""
+    left = sorted(names)
+    out = []
+    while left:
+        ready = [n for n in left if all(a in out or a not in left for a in after.get(n, []))]
+        if not ready:
+            raise SystemExit(f"build_after goes round in a loop: {left}")
+        out.append(ready[0])
+        left.remove(ready[0])
+    return out
 
 
 def load(plan_dir):

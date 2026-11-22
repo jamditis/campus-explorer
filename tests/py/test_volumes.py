@@ -103,6 +103,18 @@ class Volumes(unittest.TestCase):
         self.assertFalse(geom.inside(out, 10 - d / 2, 11))
         self._grown_ok("b", b, out, [a])
 
+    def test_a_narrow_notch_in_a_shared_edge_leaves_no_loop(self):
+        # webster's outline round Blanton Hall's east corner, shared with the blanton area: short
+        # runs (0.3 to 0.6 m) round the corner stay where they are, the runs either side move 0.6 m
+        # out past them, and the grown outline crossed itself at (191.7, 472.4)
+        chain = [(178.89, 442.4), (191.26, 469.87), (191.88, 470.96), (192.82, 471.9),
+                 (192.27, 472.13), (196.3, 480.69), (196.02, 480.82), (196.14, 481.08),
+                 (182.16, 486.75)]  # fmt: skip
+        west = [*chain, (170.0, 486.75), (170.0, 442.4)][::-1]  # the hall's side, anticlockwise
+        east = [*chain, (182.16, 500.0), (215.0, 500.0), (215.0, 442.4)]
+        for ring, other in ((east, west), (west, east)):
+            self._grown_ok("notch", ring, supersede.grow_shared(ring, [other]), [other])
+
     def test_a_corner_where_the_neighbour_ends_takes_no_far_field(self):
         # a three-way corner: a and b share x 10 from y 0 to 10; past (10, 10) the far field lies
         # north of a and west of b's slanted edge. Grown by lines alone, a's corner would reach

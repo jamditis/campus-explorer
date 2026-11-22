@@ -262,7 +262,44 @@ def grow_shared(ring, others, d=OVERLAP):
                 out.append(q)
     if math.hypot(out[0][0] - out[-1][0], out[0][1] - out[-1][1]) <= 1e-9:
         out.pop()
-    return out
+    return _unloop(out)
+
+
+def _unloop(ring):
+    """`ring` with the small loops cut off where it crosses itself: where runs i and j cross, the
+    corners between them (the shorter way round) go and the crossing point takes their place. A
+    notch of a shared edge narrower than twice OVERLAP (an outline that runs round a door or a
+    pier) leaves such a loop when the runs either side move out past each other; the outer line
+    is the cut."""
+    ring = list(ring)
+    for _ in range(len(ring)):
+        n = len(ring)
+        hit = None
+        for i in range(n):
+            for j in range(i + 2, n):
+                if (j + 1) % n == i:
+                    continue
+                p, q, r, s = ring[i], ring[(i + 1) % n], ring[j], ring[(j + 1) % n]
+                if _crosses(p, q, r, s):
+                    hit = (i, j, p, q, r, s)
+                    break
+            if hit:
+                break
+        if not hit:
+            return ring
+        i, j, p, q, r, s = hit
+        dx, dy, ex, ey = q[0] - p[0], q[1] - p[1], s[0] - r[0], s[1] - r[1]
+        t = ((r[0] - p[0]) * ey - (r[1] - p[1]) * ex) / (dx * ey - dy * ex)
+        x = (p[0] + t * dx, p[1] + t * dy)
+        inner = ring[i + 1 : j + 1]  # the corners between the two runs one way round
+        outer = ring[j + 1 :] + ring[: i + 1]  # and the other way
+        # the loop is the part that turns the other way round (a run moved out past its
+        # neighbour), else the shorter part
+        if geom.area([x, *inner]) * geom.area(ring) < 0 or len(inner) <= len(outer):
+            ring = ring[: i + 1] + [x] + ring[j + 1 :]
+        else:
+            ring = [x, *inner]
+    return ring
 
 
 def area_rules(plan_dir, chosen, others=()):
