@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind } from '../tools/web-export/cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind, planeLevel } from '../tools/web-export/cut.mjs';
 
 // a square footprint 0..10 x 0..10, anticlockwise
 const SQ = [[0, 0], [10, 0], [10, 10], [0, 10]];
@@ -157,4 +157,34 @@ test('a triangle with every corner inside a footprint can still be crossed by a 
   const tri = [[-205.043, 725.014], [-205.043, 715.104], [-194.891, 725.014]];
   assert.deepEqual(cornersIn(ring, ...tri), []);
   assert.ok(edgesCross(ring, tri));
+});
+
+test('a corner moved off plain rounding takes the height of the ground it was cut from there', () => {
+  // a far-field slope of 0.42 m a metre to the east, on the 0.38 m grid, cut by outlines of x 300.3 to 302.8
+  const z = (x, y) => 120 - 0.42 * (x - 300) + 0.01 * (y - 650);
+  const tri = [[290, 640], [320, 640], [300, 680]].map(([x, y]) => local(x, y, z(x, y)));
+  const level = planeLevel(...tri, 1);
+  near(level(local(305, 650, 0)) * SCALE, z(305, 650), 1e-6);
+  let worst = 0, n = 0;
+  for (let k = 0; k < 200; k++) {
+    const y = 650 + k * 0.137, x = 300.3 + k * 0.0123;
+    const keep = px => px < x - 0.01;
+    const c = snapQuantized(local(x, y, z(x, y)), DIV, toModel, keep, 3, level);
+    const [sx, sy, sz] = toModel(c.map(v => v / DIV));
+    assert.ok(keep(sx, sy));
+    const plain = local(x, y, z(x, y)).map(v => Math.round(v * DIV));
+    if (c[0] === plain[0] && c[2] === plain[2]) continue; // not moved: rounded as before
+    worst = Math.max(worst, Math.abs(sz - z(sx, sy))); n++;
+  }
+  assert.ok(n > 50, `${n}`);
+  assert.ok(worst <= STEP / 2 + 1e-6, `${worst}`); // half a step off its own ground at most
+});
+
+test('a corner moved on a steep face keeps its rounded height', () => {
+  // a near-vertical drop (the skirt's edge): 10 m a metre
+  const z = x => 115 - 10 * (x - 300);
+  const tri = [[299.9, 640], [300.1, 640], [300, 680]].map(([x, y]) => local(x, y, z(x)));
+  const q = local(300.05, 650, z(300.05)), keep = px => px < 300.0;
+  const c = snapQuantized(q, DIV, toModel, keep, 3, planeLevel(...tri, 1));
+  near(toModel(c.map(v => v / DIV))[2], z(300.05), STEP / 2 + 1e-9);
 });

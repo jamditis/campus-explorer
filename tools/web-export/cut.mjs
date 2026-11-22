@@ -77,32 +77,71 @@ export function ringDistance(ring, x, y) {
   return best;
 }
 
+const COARSE = 0.1; // metres between grid points: the north model's far field (0.38 m), not the skirt (6 cm)
+
 /**
  * Where a vertex the outline cut is stored in a quantised mesh (KHR_mesh_quantization: normalized integers, `div`
  * steps per node unit). Rounded to the nearest grid point, a vertex moves up to half a step either way, and the far
  * field's grid is coarse (0.38 m in the north model's 12 km BD_farfield_3DEP, 6 cm in the 4 km skirt): its cut edge
  * ended up to a quarter metre short of the outline, a crack that showed the ground below. Instead, of the grid
  * points round the exact point `q` (node units), the one nearest it in the model frame (`toModel` maps node units
- * to [x, y, z] metres) that `keep(x, y)` accepts (inside the outline, under the new ground), as integers; up (the node
- * axis that is most of model z) is rounded to the nearest. The nearest grid point when none of them is accepted.
+ * to [x, y, z] metres) that `keep(x, y)` accepts (inside the outline, under the new ground), as integers. Up (the node
+ * axis that is most of model z) is rounded to the nearest. Where the point has to move off plain rounding and `level`
+ * is given (node units in, the up coordinate of the ground's own surface there out), up is that surface's height at
+ * the new point, rounded, and on a grid of COARSE or more, of the accepted points up to a grid step further than the
+ * nearest the one whose rounded height lies nearest that surface: on the far field's slopes (0.4 m a metre) and its 0.38 m height steps a moved
+ * corner would otherwise stand up to 0.4 m off the ground it was cut from. A face steeper than 45 degrees (a skirt's
+ * drop) keeps the rounded height. The nearest grid point when none of them is accepted.
  */
-export function snapQuantized(q, div, toModel, keep, reach = 3) {
+export function snapQuantized(q, div, toModel, keep, reach = 3, level = null) {
   // the same corner reached from two triangles can differ in the last bits: the same input, the same grid point
   q = q.map(v => Math.round(v * 1e9) / 1e9);
   const o = toModel([0, 0, 0]), signed = div === 127 || div === 32767;
   const rise = [0, 1, 2].map(a => { const e = [0, 0, 0]; e[a] = 1; return Math.abs(toModel(e)[2] - o[2]); });
   const up = rise.indexOf(Math.max(...rise)), [h0, h1] = [0, 1, 2].filter(a => a !== up);
   const clamp = v => Math.max(signed ? -div : 0, Math.min(div, v));
+  const plain = q.map(v => clamp(Math.round(v * div)));
   const at = toModel(q), base = q.map(v => Math.floor(v * div)), cands = [];
   for (let i = 1 - reach; i <= reach; i++) for (let j = 1 - reach; j <= reach; j++) {
     const c = base.slice();
-    c[h0] = clamp(c[h0] + i); c[h1] = clamp(c[h1] + j); c[up] = clamp(Math.round(q[up] * div));
+    c[h0] = clamp(c[h0] + i); c[h1] = clamp(c[h1] + j); c[up] = plain[up];
     const m = toModel(c.map(v => v / div));
     cands.push([Math.hypot(m[0] - at[0], m[1] - at[1], m[2] - at[2]), c, m]);
   }
   cands.sort((a, b) => a[0] - b[0]);
-  for (const [, c, m] of cands) if (keep(m[0], m[1])) return c;
-  return q.map(v => clamp(Math.round(v * div)));
+  const ok = cands.filter(([, , m]) => keep(m[0], m[1]));
+  if (!ok.length) return plain;
+  const [d0, c0] = ok[0];
+  if (!level || (c0[h0] === plain[h0] && c0[h1] === plain[h1])) return c0;
+  // moved off plain rounding: of the accepted points up to a step further, the one whose rounded height lies nearest
+  // the ground's own surface there, on a face no steeper than 45 degrees (a skirt's drop: the plane would throw the
+  // corner up or down, so it keeps the rounded height)
+  const e0 = [0, 0, 0]; e0[h0] = 1 / div;
+  const g = toModel(e0), step = Math.hypot(g[0] - o[0], g[1] - o[1]); // metres between grid points
+  let best = c0, err = Infinity;
+  for (const [d, c, m] of ok) {
+    // a further point only on a grid as coarse as the north model's far field (on a finer one its height error is
+    // small, and two corners on an edge that moved apart leave a pinhole)
+    if (d > d0 + (step >= COARSE ? step : 0) + 1e-9) break;
+    const v = c.slice(); v[up] = level(c.map(u => u / div)) * div;
+    const t = toModel(v.map(u => u / div));
+    if (Math.abs(t[2] - at[2]) > Math.hypot(m[0] - at[0], m[1] - at[1])) continue;
+    const e = Math.abs(Math.round(v[up]) - v[up]);
+    if (e < err - 1e-9) { err = e; best = c.slice(); best[up] = clamp(Math.round(v[up])); }
+  }
+  return best;
+}
+
+/** The up coordinate (axis `up`) of the plane through three points (node units) at the horizontal place of `p`. */
+export function planeLevel(p0, p1, p2, up) {
+  const [h0, h1] = [0, 1, 2].filter(a => a !== up);
+  const d = (p1[h1] - p2[h1]) * (p0[h0] - p2[h0]) + (p2[h0] - p1[h0]) * (p0[h1] - p2[h1]);
+  return p => {
+    if (!d) return p[up];
+    const l0 = ((p1[h1] - p2[h1]) * (p[h0] - p2[h0]) + (p2[h0] - p1[h0]) * (p[h1] - p2[h1])) / d;
+    const l1 = ((p2[h1] - p0[h1]) * (p[h0] - p2[h0]) + (p0[h0] - p2[h0]) * (p[h1] - p2[h1])) / d;
+    return l0 * p0[up] + l1 * p1[up] + (1 - l0 - l1) * p2[up];
+  };
 }
 
 /**

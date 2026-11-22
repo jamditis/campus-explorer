@@ -23,7 +23,7 @@ import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extension
 import { compactPrimitive, getBounds } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { readFileSync, writeFileSync, readdirSync, existsSync, appendFileSync } from 'node:fs';
-import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind } from './cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind, planeLevel } from './cut.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
 import { pattern, region, cutVolume } from './volume.mjs';
 
@@ -261,7 +261,8 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const before = removed + cutN;
       // corners added by cutting, numbered after the original ones: each a weighted mean of earlier corners,
       // [[corner, weight], ...] (an edge's midpoint, a point where the outline crosses an edge, an outline corner)
-      // onLine: added corners on the outline, each with the outline corner it stands for (-1: a crossing on a run)
+      // onLine: added corners on the outline, each with the outline corner it stands for (-1: a crossing on a run) and
+      // the triangle it was cut from
       const added = [], ax = [], ay = [], memo = new Map(), onLine = new Map();
       const X = i => (i < n ? wx[i] : ax[i - n]), Y = i => (i < n ? wy[i] : ay[i - n]);
       const add = (key, parents, inside, line = null) => {
@@ -278,7 +279,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const pair = (a, b) => (a < b ? a * 4294967296 + b : b * 4294967296 + a);
       const mid = (a, b) => add('m' + pair(a, b), [[a, 0.5], [b, 0.5]], within((X(a) + X(b)) / 2, (Y(a) + Y(b)) / 2));
       // the crossing on an edge is found from its inside corner, so the two triangles on the edge share it
-      const cross = (i, o, t) => add('x' + i * 4294967296 + o, [[i, 1 - t], [o, t]], false, -1);
+      const cross = (i, o, t, tri) => add('x' + i * 4294967296 + o, [[i, 1 - t], [o, t]], false, { corner: -1, tri });
       const I = idx.getArray(), keep = [];
       const P = i => [X(i), Y(i)];
       // straddling edges crossed once, other edges not at all: the piece can be cut with one run of the outline
@@ -312,11 +313,11 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         const part = outsidePart(ring, tri, ids.map(i => isIn[i] === 1), at, OVER);
         const vs = part.map(q => {
           if (q.kind === 'corner') return ids[q.i];
-          if (q.kind === 'cross') return cross(ids[q.edge[0]], ids[q.edge[1]], q.t);
+          if (q.kind === 'cross') return cross(ids[q.edge[0]], ids[q.edge[1]], q.t, ids);
           // the outline corner: barycentric weights of the piece's corners
           const [[x1, y1], [x2, y2], [x3, y3]] = tri, d = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3);
           const l1 = ((y2 - y3) * (q.x - x3) + (x3 - x2) * (q.y - y3)) / d, l2 = ((y3 - y1) * (q.x - x3) + (x1 - x3) * (q.y - y3)) / d;
-          return add(null, [[a, l1], [b, l2], [c, 1 - l1 - l2]], false, q.index);
+          return add(null, [[a, l1], [b, l2], [c, 1 - l1 - l2]], false, { corner: q.index, tri: ids });
         });
         // a fan from the outline corner (the part is star-shaped round it) or from any corner of a convex part
         const s0 = Math.max(0, part.findIndex(q => q.kind === 'ring'));
@@ -344,8 +345,12 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
           for (const [i, wgt] of added[k]) { copy.getElement(i, e); for (let q = 0; q < size; q++) sum[q] += e[q] * wgt; }
           copy.setElement(n + k, sum);
           if (sem === 'POSITION' && SNAP && onLine.has(k)) {
-            const c = onLine.get(k), keep = c < 0 ? keepIn : (x, y) => keepIn(x, y) && behind(ring, c, x, y) >= MARGIN;
-            copy.getArray().set(snapQuantized(sum, DIV, local, keep), (n + k) * size);
+            const { corner, tri } = onLine.get(k);
+            const keep = corner < 0 ? keepIn : (x, y) => keepIn(x, y) && behind(ring, corner, x, y) >= MARGIN;
+            // the cut triangle's own plane gives the height where the corner moves (up: the axis most of model z)
+            const [p0, p1, p2] = tri.map(i => copy.getElement(i, []));
+            const rise = [w[1], w[5], w[9]].map(Math.abs), up = rise.indexOf(Math.max(...rise));
+            copy.getArray().set(snapQuantized(sum, DIV, local, keep, 3, planeLevel(p0, p1, p2, up)), (n + k) * size);
           }
         }
         prim.setAttribute(sem, copy); olds.push(old);
