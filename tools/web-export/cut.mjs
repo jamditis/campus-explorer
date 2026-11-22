@@ -83,26 +83,46 @@ export function ringDistance(ring, x, y) {
  * field's grid is coarse (0.38 m in the north model's 12 km BD_farfield_3DEP, 6 cm in the 4 km skirt): its cut edge
  * ended up to a quarter metre short of the outline, a crack that showed the ground below. Instead, of the grid
  * points round the exact point `q` (node units), the one nearest it in the model frame (`toModel` maps node units
- * to [x, y, z] metres) that `keep(x, y)` accepts (inside the outline, under the new ground), as integers; up (the node
- * axis that is most of model z) is rounded to the nearest. The nearest grid point when none of them is accepted.
+ * to [x, y, z] metres) that `keep(x, y)` accepts (inside the outline, under the new ground), as integers. Up (the node
+ * axis that is most of model z) is rounded to the nearest; where the point moves off plain rounding and `level` is
+ * given (node units in, the up coordinate of the ground's own surface there out), up is that surface's height at the
+ * new point, rounded: on the far field's slopes (0.4 m a metre) a half-metre move would otherwise leave the corner
+ * 0.2 m off the ground it was cut from. The nearest grid point when none of them is accepted.
  */
-export function snapQuantized(q, div, toModel, keep, reach = 3) {
+export function snapQuantized(q, div, toModel, keep, reach = 3, level = null) {
   // the same corner reached from two triangles can differ in the last bits: the same input, the same grid point
   q = q.map(v => Math.round(v * 1e9) / 1e9);
   const o = toModel([0, 0, 0]), signed = div === 127 || div === 32767;
   const rise = [0, 1, 2].map(a => { const e = [0, 0, 0]; e[a] = 1; return Math.abs(toModel(e)[2] - o[2]); });
   const up = rise.indexOf(Math.max(...rise)), [h0, h1] = [0, 1, 2].filter(a => a !== up);
   const clamp = v => Math.max(signed ? -div : 0, Math.min(div, v));
+  const plain = q.map(v => clamp(Math.round(v * div)));
   const at = toModel(q), base = q.map(v => Math.floor(v * div)), cands = [];
   for (let i = 1 - reach; i <= reach; i++) for (let j = 1 - reach; j <= reach; j++) {
     const c = base.slice();
-    c[h0] = clamp(c[h0] + i); c[h1] = clamp(c[h1] + j); c[up] = clamp(Math.round(q[up] * div));
+    c[h0] = clamp(c[h0] + i); c[h1] = clamp(c[h1] + j); c[up] = plain[up];
     const m = toModel(c.map(v => v / div));
     cands.push([Math.hypot(m[0] - at[0], m[1] - at[1], m[2] - at[2]), c, m]);
   }
   cands.sort((a, b) => a[0] - b[0]);
-  for (const [, c, m] of cands) if (keep(m[0], m[1])) return c;
-  return q.map(v => clamp(Math.round(v * div)));
+  for (const [, c, m] of cands) {
+    if (!keep(m[0], m[1])) continue;
+    if (level && (c[h0] !== plain[h0] || c[h1] !== plain[h1])) c[up] = clamp(Math.round(level(c.map(v => v / div)) * div));
+    return c;
+  }
+  return plain;
+}
+
+/** The up coordinate (axis `up`) of the plane through three points (node units) at the horizontal place of `p`. */
+export function planeLevel(p0, p1, p2, up) {
+  const [h0, h1] = [0, 1, 2].filter(a => a !== up);
+  const d = (p1[h1] - p2[h1]) * (p0[h0] - p2[h0]) + (p2[h0] - p1[h0]) * (p0[h1] - p2[h1]);
+  return p => {
+    if (!d) return p[up];
+    const l0 = ((p1[h1] - p2[h1]) * (p[h0] - p2[h0]) + (p2[h0] - p1[h0]) * (p[h1] - p2[h1])) / d;
+    const l1 = ((p2[h1] - p0[h1]) * (p[h0] - p2[h0]) + (p0[h0] - p2[h0]) * (p[h1] - p2[h1])) / d;
+    return l0 * p0[up] + l1 * p1[up] + (1 - l0 - l1) * p2[up];
+  };
 }
 
 /**
