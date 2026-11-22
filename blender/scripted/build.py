@@ -133,8 +133,10 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
     # an edge shared with another area of this build: the other area's outline points become
     # vertices here too, and the vertices there take the heights of the area built first
-    lay["seam_points"] = seam.points_on(
-        lay["footprint"], [o["footprint"] for o in others if o["footprint"]], ground.GRID
+    rings = [o["footprint"] for o in others if o["footprint"]]
+    # and a vertex just past each end of a shared stretch keeps this area's height (seam.ends)
+    lay["seam_points"] = seam.points_on(lay["footprint"], rings, ground.GRID) + seam.ends(
+        lay["footprint"], rings
     )
     objects = ground.build(lay, terrain, lay["image_dir"], SEAM)
     try:

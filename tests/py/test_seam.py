@@ -60,3 +60,17 @@ class SharedEdge(unittest.TestCase):
         got = s.take(np.array([[100.0, 10.01], [100.0, 12.5], [100.0, 11.0]]))
         self.assertEqual(got[0], 5.0)  # within 2 cm: the recorded height
         self.assertTrue(np.isnan(got[1:]).all())  # anything further is the area's own
+
+    def test_a_vertex_just_past_each_end_of_a_shared_edge_keeps_its_own_height(self):
+        # WEST shares x 100 with EAST from y 0 to 92.3 and goes on from both ends as an edge with
+        # no area beside it: a point 0.25 m along each of those edges from the corner, and none on
+        # the shared edge (the vertices there take the first area's heights, sw16's flush seam)
+        pts = seam.ends(WEST, [EAST])
+        got = sorted((round(x, 6), round(y, 6)) for x, y in pts)
+        self.assertEqual(got, [(99.75, 0.0), (99.75, 92.3)])
+        # an edge shared all round a corner gives no point there
+        inner = [(0, 0), (100, 0), (100, 92.3), (0, 92.3)]
+        outer = [(-10, -10), (100, -10), (100, 0), (0, 0), (0, 92.3), (100, 92.3), (100, 200),
+                 (-10, 200)]  # fmt: skip
+        self.assertEqual(sorted((round(x, 6), round(y, 6)) for x, y in seam.ends(inner, [outer])),
+                         [(100.0, 0.25), (100.0, 92.05)])  # fmt: skip
