@@ -1,0 +1,618 @@
+{
+ "zone": "bl_ground",
+ "notes": "Zone bl_ground: the paving round Blanton Hall inside this area. Blanton Hall itself is the main model's (an OpenStreetMap extrusion, way 313029108, walls down to 135.83 m) and stays; the ground under it is this area's and is hidden. Most of what lies outside the walls is hidden in the 2020 ortho by the hall's leaning roof (5 to 8 m to the north-west), so the layout comes from the LiDAR (NJ NW 6-County 2017, class-2 ground in 0.5 m cells and profiles every 10 m), the neighbours' surfaces that meet the outline (webster: the plaza, Lot 17, the west walks; north-east: Webster Road and the Stone Street apron) and OpenStreetMap footways; every surface is UNVERIFIED. Where a neighbour's lawn meets the outline (the east end, the west end between the walks, the stretch x 121 to 141 of the north-west edge, which here is walk) the ground is this area's soft ground (lawn). Every surface is 'grade': false and follows the LiDAR ground (blurred over 1 m): graded, its cells (some under the hall, where the ground is filled, not measured) joined the neighbours' grade and moved webster's plaza by up to 0.19 m and the north-east area's Webster Road by 0.20 m (pure-Python terrain against the merged branch); ungraded, their paving does not move. No markings: none can be seen. No curbs: the curb of Webster Road lies in the north-east area or on its edge. Generator: scratchpad blanton/gen.py (not in the repository); edit this file by hand from now on and say so here.",
+ "surfaces": [
+  {
+   "name": "BL_S_apron_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "ring": [
+    [
+     157.19,
+     433.27
+    ],
+    [
+     157.48,
+     433.39
+    ],
+    [
+     158.17,
+     434.83
+    ],
+    [
+     153.91,
+     433.18
+    ],
+    [
+     153.56,
+     434.11
+    ],
+    [
+     150.56,
+     432.93
+    ],
+    [
+     148.02,
+     432.4
+    ],
+    [
+     111.16,
+     417.63
+    ],
+    [
+     105.48,
+     415.2
+    ],
+    [
+     104.74,
+     415.2
+    ],
+    [
+     99.46,
+     417.6
+    ],
+    [
+     91.89,
+     420.63
+    ],
+    [
+     90.74,
+     418.06
+    ],
+    [
+     93.02,
+     417.04
+    ],
+    [
+     93.19,
+     417.42
+    ],
+    [
+     98.48,
+     415.3
+    ],
+    [
+     104.48,
+     412.57
+    ],
+    [
+     104.6,
+     412.29
+    ],
+    [
+     104.87,
+     412.4
+    ],
+    [
+     105.51,
+     412.12
+    ],
+    [
+     105.75,
+     412.7
+    ],
+    [
+     107.35,
+     412.7
+    ],
+    [
+     107.14,
+     413.19
+    ],
+    [
+     112.12,
+     415.32
+    ],
+    [
+     148.74,
+     430.0
+    ],
+    [
+     149.08,
+     430.07
+    ],
+    [
+     149.22,
+     429.71
+    ],
+    [
+     152.13,
+     430.86
+    ],
+    [
+     152.48,
+     429.95
+    ],
+    [
+     153.23,
+     430.24
+    ],
+    [
+     151.39,
+     426.35
+    ],
+    [
+     152.67,
+     425.73
+    ],
+    [
+     155.3,
+     431.04
+    ],
+    [
+     157.69,
+     431.97
+    ]
+   ],
+   "evidence": "ortho2020 (the plaza concrete of the webster area reaches the outline here; the 1 m to the wall is under the leaning roof in the image); lidar2017 (smooth ground, 136.2 to 137.0 m)",
+   "unverified": "the plaza concrete is taken to run on to the wall; joints, drains and planting at the wall foot not seen"
+  },
+  {
+   "name": "BL_W_walk_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "ring": [
+    [
+     86.85,
+     418.55
+    ],
+    [
+     89.15,
+     417.57
+    ],
+    [
+     90.24,
+     420.07
+    ],
+    [
+     89.82,
+     420.36
+    ],
+    [
+     95.89,
+     433.5
+    ],
+    [
+     96.69,
+     436.47
+    ],
+    [
+     95.75,
+     436.89
+    ],
+    [
+     95.83,
+     437.06
+    ],
+    [
+     95.86,
+     437.5
+    ],
+    [
+     96.86,
+     437.05
+    ],
+    [
+     97.7,
+     438.88
+    ],
+    [
+     98.67,
+     440.1
+    ],
+    [
+     98.38,
+     440.33
+    ],
+    [
+     98.46,
+     440.51
+    ],
+    [
+     97.64,
+     440.91
+    ],
+    [
+     97.82,
+     444.31
+    ],
+    [
+     96.71,
+     441.65
+    ],
+    [
+     96.52,
+     441.41
+    ],
+    [
+     96.19,
+     441.56
+    ],
+    [
+     95.63,
+     440.35
+    ],
+    [
+     95.12,
+     440.58
+    ],
+    [
+     95.35,
+     444.92
+    ],
+    [
+     93.92,
+     445.02
+    ],
+    [
+     93.37,
+     437.68
+    ],
+    [
+     92.45,
+     435.63
+    ],
+    [
+     93.72,
+     435.06
+    ],
+    [
+     93.53,
+     434.35
+    ],
+    [
+     86.67,
+     419.51
+    ],
+    [
+     87.13,
+     419.19
+    ]
+   ],
+   "evidence": "ortho2020 (Lot 17's west-end hook and the two walks of the webster area meet the outline here); OpenStreetMap footways 313029908 and 313029909 run on into the hall (a passage, tunnel=yes)",
+   "unverified": "a walk from the lot and the walks to the west doors is taken to fill the 1 m to the wall; under the leaning roof in the image"
+  },
+  {
+   "name": "BL_NW_walk_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "ring": [
+    [
+     90.0,
+     455.0
+    ],
+    [
+     101.13,
+     452.22
+    ],
+    [
+     106.0,
+     457.5
+    ],
+    [
+     141.2,
+     471.3
+    ],
+    [
+     141.0,
+     481.09
+    ]
+   ],
+   "evidence": "lidar2017 profiles across the north-east area's edge every 10 m: a 0.10 to 0.15 m curb 0.5 to 1 m outside the edge (x 90 to 125), then an even surface rising from 136.65 to 136.75 m up to the wall; OpenStreetMap footway 1132693536 runs 2.2 m inside the edge from x 89 to 127",
+   "unverified": "hidden by the leaning roof in the ortho: a concrete walk wall to curb is inferred from the profile and the OSM footway; the north-east area paves its last 0.5 to 1 m before the edge as road"
+  },
+  {
+   "name": "BL_N_dock_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "ring": [
+    [
+     141.2,
+     471.3
+    ],
+    [
+     177.0,
+     485.3
+    ],
+    [
+     176.16,
+     487.64
+    ],
+    [
+     171.93,
+     486.12
+    ],
+    [
+     173.0,
+     489.5
+    ],
+    [
+     169.0,
+     486.5
+    ],
+    [
+     159.2,
+     487.4
+    ],
+    [
+     159.2,
+     483.0
+    ],
+    [
+     146.0,
+     482.0
+    ],
+    [
+     141.0,
+     481.09
+    ]
+   ],
+   "evidence": "lidar2017 class-2 ground in 0.5 m cells: a raised band at 136.7 to 136.8 m along the north-west wall, 4 to 6 m deep; at x 159 to 169 its edge drops 1.1 to 1.2 m within 0.5 m to the yard (a loading dock face), west of x 159 and east of x 169 it ramps down over 2 to 4 m",
+   "unverified": "hidden by the leaning roof in the ortho; the edge is drawn as three straight runs through the LiDAR step (rms about 0.6 m); a dock with a face of 1.2 m is inferred from the step and the dumpsters in the yard; material, bumpers, stairs and rails not seen. Not graded: it follows the LiDAR, so the dock face stays a step, though the LiDAR ground and the mesh smooth its 1.2 m over about 3 m (no wall is modelled)"
+  },
+  {
+   "name": "BL_N_yard_UNVERIFIED",
+   "kind": "asphalt",
+   "grade": false,
+   "ring": [
+    [
+     141.0,
+     481.09
+    ],
+    [
+     146.0,
+     482.0
+    ],
+    [
+     159.2,
+     483.0
+    ],
+    [
+     159.2,
+     487.4
+    ],
+    [
+     169.0,
+     486.5
+    ],
+    [
+     173.0,
+     489.5
+    ],
+    [
+     176.0,
+     499.0
+    ]
+   ],
+   "evidence": "ortho2020 (dumpsters and the north-east area's asphalt service apron of Stone Street run on under the leaning roof); lidar2017 (yard at 135.4 to 136.0 m, falling to the north-east)",
+   "unverified": "asphalt is taken to run on from the north-east area's apron up to the dock; its south edge is the dock line above. Not graded, so the dock face is not smoothed into a 5 m ramp"
+  },
+  {
+   "name": "BL_W_landing_passage_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.435,
+   "ring": [
+    [
+     97.81,
+     441.06
+    ],
+    [
+     97.76,
+     441.17
+    ],
+    [
+     96.71,
+     441.65
+    ],
+    [
+     96.52,
+     441.41
+    ],
+    [
+     96.19,
+     441.56
+    ],
+    [
+     95.63,
+     440.35
+    ],
+    [
+     95.35,
+     440.47
+    ],
+    [
+     93.51,
+     436.46
+    ],
+    [
+     93.56,
+     436.35
+    ],
+    [
+     95.18,
+     435.6
+    ],
+    [
+     95.32,
+     435.65
+    ]
+   ],
+   "evidence": "the main model's landing at the west passage doors (TU_Blanton_entrance_0_landing, top faces 136.425 to 136.467 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.435 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
+  },
+  {
+   "name": "BL_W_landing_SW_low_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.56,
+   "ring": [
+    [
+     91.23,
+     417.53
+    ],
+    [
+     92.12,
+     418.17
+    ],
+    [
+     92.49,
+     419.08
+    ],
+    [
+     92.44,
+     419.14
+    ],
+    [
+     90.9,
+     419.81
+    ],
+    [
+     90.74,
+     420.12
+    ],
+    [
+     90.65,
+     420.12
+    ],
+    [
+     90.48,
+     420.0
+    ],
+    [
+     89.95,
+     420.2
+    ],
+    [
+     88.24,
+     418.98
+    ],
+    [
+     88.2,
+     418.91
+    ],
+    [
+     88.26,
+     418.81
+    ]
+   ],
+   "evidence": "the main model's landing at the south-west corner door, its lower (north-west) part (TU_Blanton_entrance_0_landing, top faces 136.554 to 136.587 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.560 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
+  },
+  {
+   "name": "BL_W_landing_SW_high_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.59,
+   "ring": [
+    [
+     91.15,
+     417.54
+    ],
+    [
+     92.3,
+     417.03
+    ],
+    [
+     92.42,
+     417.3
+    ],
+    [
+     93.02,
+     417.04
+    ],
+    [
+     93.19,
+     417.42
+    ],
+    [
+     93.47,
+     417.31
+    ],
+    [
+     93.94,
+     418.37
+    ],
+    [
+     93.92,
+     418.47
+    ],
+    [
+     92.44,
+     419.13
+    ],
+    [
+     92.49,
+     419.08
+    ],
+    [
+     92.12,
+     418.17
+    ],
+    [
+     91.23,
+     417.53
+    ],
+    [
+     91.13,
+     417.57
+    ]
+   ],
+   "evidence": "the main model's landing at the south-west corner door, its higher (south-east) part (TU_Blanton_entrance_0_landing, top faces 136.583 to 136.608 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.590 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
+  }
+ ],
+ "lifts": [
+  {
+   "name": "BL_W_landing_SW_level",
+   "dz": -0.17,
+   "feather": 3.0,
+   "ring": [
+    [
+     88.3,
+     416.8
+    ],
+    [
+     93.9,
+     416.8
+    ],
+    [
+     93.9,
+     421.4
+    ],
+    [
+     88.3,
+     421.4
+    ]
+   ],
+   "unverified": "meets the main model's landing at the hall's south-west corner door (TU_Blanton_entrance_0_landing, top 136.58 to 136.61 m; door frames from 136.53 m): the LiDAR puts the walk 0.15 to 0.20 m higher (136.72 to 136.74 m), which buried the frames' feet; the walk is lowered to the landing until the main file sets that entrance at the LiDAR level, then remove this"
+  },
+  {
+   "name": "BL_W_landing_passage_level",
+   "dz": -0.23,
+   "feather": 3.0,
+   "ring": [
+    [
+     93.2,
+     435.7
+    ],
+    [
+     97.7,
+     435.7
+    ],
+    [
+     97.7,
+     445.2
+    ],
+    [
+     93.2,
+     445.2
+    ]
+   ],
+   "unverified": "meets the main model's landing at the west passage doors (top 136.41 to 136.47 m; door frames from 136.37 m): the LiDAR puts the walk 0.21 to 0.24 m higher (136.68 to 136.71 m); lowered to the landing until the main file sets that entrance at the LiDAR level, then remove this"
+  }
+ ]
+}

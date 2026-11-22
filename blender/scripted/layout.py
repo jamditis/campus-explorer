@@ -44,7 +44,30 @@ def areas(args=()):
         if missing:
             raise SystemExit(f"no such area: {sorted(missing)}")
         found = [d for d in found if d.name in want]
-    return found
+    after = {}
+    for d in found:
+        f = d / "footprint.json"
+        if f.exists():
+            after[d.name] = json.loads(f.read_text()).get("build_after", [])
+    order = build_order([d.name for d in found], after)
+    return sorted(found, key=lambda d: order.index(d.name))
+
+
+def build_order(names, after):
+    """The order the areas `names` are built in: by name, except that an area comes after every
+    area its footprint.json names in `build_after` (`after`: name -> names; a name not being built
+    is ignored). Along a shared edge the area built first sets the heights of the vertices both
+    meshes have (seam.py), so an area fitted into reviewed neighbours builds after them and takes
+    their edge as it is, instead of moving their paving to its own. A loop is an error."""
+    left = sorted(names)
+    out = []
+    while left:
+        ready = [n for n in left if all(a in out or a not in left for a in after.get(n, []))]
+        if not ready:
+            raise SystemExit(f"build_after goes round in a loop: {left}")
+        out.append(ready[0])
+        left.remove(ready[0])
+    return out
 
 
 def load(plan_dir):
@@ -223,12 +246,13 @@ def check_point(p):
 
 def check_surface(s):
     """Refuse what the builders cannot honour for water: a water surface is one level sheet with
-    no paint; `level` (metres, NAVD88) is for water only and must be a number."""
+    no paint; `level` (metres, NAVD88) must be a number, on water or paving (paving held at
+    another model's level, such as an entrance landing the ground must come down to)."""
     name = s.get("name")
     if "level" in s:
         lv = s["level"]
-        if s["kind"] != "water":
-            raise ValueError(f"{name}: only water takes a level")
+        if s["kind"] not in ("water", "asphalt", "concrete", "brick"):
+            raise ValueError(f"{name}: only water and paving take a level")
         if isinstance(lv, bool) or not isinstance(lv, int | float) or not math.isfinite(lv):
             raise ValueError(f"{name}: level must be a height in metres, not {lv!r}")
     if s["kind"] == "water" and s.get("paint"):

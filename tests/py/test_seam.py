@@ -99,6 +99,16 @@ class SharedEdge(unittest.TestCase):
         np.testing.assert_array_equal(seam.taken(known, own, lot, old),
                                       [False, True, True, True, False])  # fmt: skip
 
+    def test_a_vertex_of_a_levelled_surface_keeps_its_level(self):
+        # a surface with a `level` (a landing of another model the ground must come down to) keeps
+        # its level on the shared edge too; the first area's skirt closes the step there
+        own = np.array([10.0, 10.0, 10.0])
+        known = np.array([10.2, 10.2, 10.2])
+        none = np.zeros(3, bool)
+        keep = np.array([True, False, False])
+        np.testing.assert_array_equal(seam.taken(known, own, none, none, keep), [False, True, True])
+        np.testing.assert_array_equal(seam.taken(known, own, none, none), [True, True, True])
+
     def test_a_vertex_just_past_each_end_of_a_shared_edge_keeps_its_own_height(self):
         # WEST shares x 100 with EAST from y 0 to 92.3 and goes on from both ends as an edge with
         # no area beside it: a point 0.25 m along each of those edges from the corner, and none on

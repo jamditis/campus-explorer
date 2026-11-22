@@ -158,7 +158,8 @@ class PlanFiles(unittest.TestCase):
                     "an area without ground holds interiors, adopted objects or points",
                 )
                 continue
-            self.assertGreater(abs(geom.area(lay["footprint"])), 10000)
+            # the smallest: the ground round Blanton Hall (4,904 m2), closed in by two areas
+            self.assertGreater(abs(geom.area(lay["footprint"])), 4000)
             names = set()
             for s in lay["surfaces"]:
                 self.assertIn(s["kind"], layout.LAYER, s["name"])
@@ -267,6 +268,35 @@ class FreeEdges(unittest.TestCase):
         self.assertFalse(layout.meets_neighbour(lay, 2, 2))
         self.assertTrue(layout.meets_neighbour(lay, 6, 2))
         self.assertTrue(layout.meets_neighbour(dict(free_edges=[]), 2, 2))
+
+
+class BuildOrder(unittest.TestCase):
+    def test_areas_build_by_name(self):
+        got = layout.build_order(["west", "core", "lot60"], {})
+        self.assertEqual(got, ["core", "lot60", "west"])
+
+    def test_an_area_builds_after_the_areas_it_names(self):
+        names = ["blanton", "core", "northeast", "webster", "west"]
+        got = layout.build_order(names, {"blanton": ["northeast", "webster"]})
+        self.assertEqual(got, ["core", "northeast", "webster", "blanton", "west"])
+
+    def test_a_name_not_being_built_is_ignored(self):
+        got = layout.build_order(["blanton", "core"], {"blanton": ["webster"]})
+        self.assertEqual(got, ["blanton", "core"])
+
+    def test_a_loop_is_an_error(self):
+        with self.assertRaises(SystemExit):
+            layout.build_order(["a", "b"], {"a": ["b"], "b": ["a"]})
+
+    def test_every_area_named_in_build_after_comes_first(self):
+        order = [d.name for d in layout.areas()]
+        for name in order:
+            f = SCRIPTED / name / "footprint.json"
+            if not f.exists():
+                continue
+            for a in json.loads(f.read_text()).get("build_after", []):
+                self.assertIn(a, order, f"{name}: build_after names no area")
+                self.assertLess(order.index(a), order.index(name))
 
 
 if __name__ == "__main__":
