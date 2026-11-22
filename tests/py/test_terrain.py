@@ -147,6 +147,27 @@ class Grading(unittest.TestCase):
         soft = t.surface(x, y, np.zeros(2, bool))
         self.assertAlmostEqual(soft[1], 99.0, delta=0.1)  # soft ground rises to meet it
 
+    def test_paving_held_to_old_samples_keeps_its_height_while_soft_ground_lets_go(self):
+        # the south edge became shared with a later area: its samples are gone for the ground,
+        # but paving near it keeps the bend the old samples gave it (lots are never lowered and
+        # reviewed paving does not move); soft ground follows its own LiDAR
+        road = [(10, 0.5), (190, 0.5), (190, 12), (10, 12)]
+        old = [[x, 0.0, 100 - 0.02 * x + 0.1] for x in range(0, 200)]  # 0.1 m over: met flush
+        with tempfile.TemporaryDirectory() as d:
+            f = lidar_file(d)
+            before = terrain.Terrain(f, edge=old, footprint=FOOT, paved=[road])
+            after = terrain.Terrain(f, edge=None, footprint=FOOT, paved=[road], paving_edge=old)
+            bare = terrain.Terrain(f, edge=None, footprint=FOOT, paved=[road])
+        x = np.arange(20.0, 180.0, 5.0)
+        for y in (0.6, 2.0, 5.0):
+            yy = np.full(len(x), y)
+            on = np.ones(len(x), bool)
+            np.testing.assert_allclose(after.surface(x, yy, on), before.surface(x, yy, on))
+            np.testing.assert_allclose(after.surface(x, yy, ~on), bare.surface(x, yy, ~on))
+        self.assertGreater(before.surface(x, np.full(len(x), 0.6), np.ones(len(x), bool)).mean()
+                           - bare.surface(x, np.full(len(x), 0.6), np.ones(len(x), bool)).mean(),
+                           0.05)  # fmt: skip
+
     def test_an_edge_with_no_samples_keeps_its_own_ground(self):
         # samples only along the south edge, 5 m above the ground: the north edge (shared with
         # another scripted area, so it has none) must not take a height from 100 m away

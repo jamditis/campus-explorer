@@ -85,5 +85,17 @@ class MappedBuildings(unittest.TestCase):
         )
 
 
+@unittest.skipIf(np is None, "numpy and Pillow are not installed")
+class OnSurface(unittest.TestCase):
+    def test_a_tree_in_a_hole_of_the_water_is_not_on_the_water(self):
+        square = [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)]
+        hole = [(4.0, 4.0), (6.0, 4.0), (6.0, 6.0), (4.0, 6.0)]
+        pond = [dict(kind="water", ring=square, holes=[hole])]
+        self.assertTrue(trees.on_surface(pond, 2.0, 2.0))
+        self.assertFalse(trees.on_surface(pond, 5.0, 5.0))
+        self.assertFalse(trees.on_surface(pond, 12.0, 5.0))
+        self.assertTrue(trees.on_surface([dict(kind="asphalt", ring=square)], 5.0, 5.0))
+
+
 if __name__ == "__main__":
     unittest.main()

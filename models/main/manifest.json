@@ -2,7 +2,7 @@
  "tiles": [
   {
    "file": "skirt.glb",
-   "bytes": 3157932
+   "bytes": 3157480
   },
   {
    "file": "context.glb",
@@ -430,13 +430,13 @@
   },
   {
    "file": "sw_t_-1_-1.glb",
-   "bytes": 1083552,
+   "bytes": 1073804,
    "center": [
     -80.0,
     80.0
    ],
    "lod": "lod/sw_t_-1_-1.glb",
-   "lod_bytes": 290592,
+   "lod_bytes": 290560,
    "lod_tex": [
     "tex/0941993ce47cdb404933.webp",
     "tex/6fa1702c8490c5de645c.webp",
@@ -460,13 +460,13 @@
     "geo/47954a89a1f0bb525315.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/6e5a6c0c6a4f71d3ff00.bin",
-    "geo/6f7281079b51d2f19b6a.bin",
-    "geo/90b9809345931fec14be.bin"
+    "geo/90b9809345931fec14be.bin",
+    "geo/f4f85c1001157dbfba7f.bin"
    ]
   },
   {
    "file": "sw_t_-1_-2.glb",
-   "bytes": 359416,
+   "bytes": 321668,
    "center": [
     -80.0,
     240.0
@@ -493,12 +493,13 @@
     "geo/1ced7f60c7344945ea41.bin",
     "geo/47954a89a1f0bb525315.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/6e5a6c0c6a4f71d3ff00.bin"
+    "geo/6e5a6c0c6a4f71d3ff00.bin",
+    "geo/aab2da2d4f7534eed71c.bin"
    ]
   },
   {
    "file": "sw_t_-1_-3.glb",
-   "bytes": 187100,
+   "bytes": 226220,
    "center": [
     -80.0,
     400.0
@@ -522,22 +523,22 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/0f14bd9ba61ed7329a7b.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/5da42ed386634f3e49d7.bin",
-    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/d583e568d2be0bcbf011.bin"
    ]
   },
   {
@@ -564,13 +565,13 @@
   },
   {
    "file": "sw_t_-1_0.glb",
-   "bytes": 976696,
+   "bytes": 871164,
    "center": [
     -80.0,
     -80.0
    ],
    "lod": "lod/sw_t_-1_0.glb",
-   "lod_bytes": 186188,
+   "lod_bytes": 186184,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "geo/df8918608f2487156b88.bin",
@@ -579,11 +580,13 @@
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0416cace54f4feb45a41.bin",
     "geo/0c735486d6e9d2bec786.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/215774f47c6341e4db8d.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/5fc68a16fb3632d3415d.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/e01f0fc948d0d6851d1c.bin"
@@ -651,27 +654,27 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/5e5a7b6494d99f0d11bc.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/a30736d5820ab701c2a5.bin",
     "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-1_3.glb",
-   "bytes": 156440,
+   "bytes": 142684,
    "center": [
     -80.0,
     -560.0
@@ -690,30 +693,31 @@
     "tex/ffc0e69be8e2a820a243.webp",
     "tex/15ca7389c3f08ca3af12.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0236f32e81415285a615.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
-    "geo/18b50001fcfa10efe32f.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/5da42ed386634f3e49d7.bin",
-    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
+    "geo/844cf02cbdf84ba75d83.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_-1_4.glb",
-   "bytes": 154124,
+   "bytes": 207028,
    "center": [
     -80.0,
     -720.0
@@ -739,22 +743,21 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/0f14bd9ba61ed7329a7b.bin",
-    "geo/120a1989c6ed8a735a41.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
     "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/ebe5a16d98254f9b45d5.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
@@ -796,31 +799,31 @@
     "tex/993519eb3b2912930adb.webp",
     "tex/627e5f5079066d708674.webp",
     "geo/0111983f47e4c5e4ed86.bin",
-    "geo/0236f32e81415285a615.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/5eb3ab6babbaadf970ed.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/b400bd61ef8cd74269e7.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/fc7772e04d55eb9fdd6a.bin"
+    "geo/b0c7496d45709d6f1c00.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-1_6.glb",
-   "bytes": 260152,
+   "bytes": 182552,
    "center": [
     -80.0,
     -1040.0
@@ -858,25 +861,27 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/a4ac0db7f39fac450418.bin",
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/ebe5a16d98254f9b45d5.bin"
    ]
   },
   {
    "file": "sw_t_-1_7.glb",
-   "bytes": 318676,
+   "bytes": 265792,
    "center": [
     -80.0,
     -1200.0
@@ -904,27 +909,28 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/2c90fea0d4c36ea1d90d.bin",
-    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/577c3c582fb384328ed7.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/7a264ce5f9da0b749a46.bin",
+    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin",
-    "geo/ebe5a16d98254f9b45d5.bin"
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-1_8.glb",
-   "bytes": 236360,
+   "bytes": 222604,
    "center": [
     -80.0,
     -1360.0
@@ -949,6 +955,7 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
+    "geo/0b99721a2c0621afe095.bin",
     "geo/0c735486d6e9d2bec786.bin",
     "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
@@ -958,14 +965,14 @@
     "geo/57155ffb218aff4299b7.bin",
     "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
+    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/a4ac0db7f39fac450418.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/f45d47e4c82502951d3b.bin"
+    "geo/d2ab95b8b76dc0e3c73a.bin"
    ]
   },
   {
@@ -990,7 +997,7 @@
   },
   {
    "file": "sw_t_-2_-1.glb",
-   "bytes": 184092,
+   "bytes": 197404,
    "center": [
     -240.0,
     80.0
@@ -1011,12 +1018,12 @@
     "tex/573cd0a58a73f4acd10b.webp",
     "tex/dd48444bce990f512a3c.webp",
     "geo/2261ccf57dfadfc01d80.bin",
-    "geo/29252e0fc1c61728afa0.bin"
+    "geo/c79dc4087598b22e387e.bin"
    ]
   },
   {
    "file": "sw_t_-2_-2.glb",
-   "bytes": 151508,
+   "bytes": 204408,
    "center": [
     -240.0,
     240.0
@@ -1045,13 +1052,12 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/88250fbee5adbeae864e.bin",
     "geo/93807f3b2d32b2d112fc.bin"
    ]
   },
   {
    "file": "sw_t_-2_-3.glb",
-   "bytes": 200524,
+   "bytes": 264364,
    "center": [
     -240.0,
     400.0
@@ -1075,17 +1081,16 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/35130f681fd7d2bb64ba.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
@@ -1128,6 +1133,7 @@
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/3344d57360f63896c388.bin",
     "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/600387863f4cc76db7f3.bin",
@@ -1137,22 +1143,20 @@
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/ebe5a16d98254f9b45d5.bin"
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-2_0.glb",
-   "bytes": 101644,
+   "bytes": 115396,
    "center": [
     -240.0,
     -80.0
    ],
    "lod": "lod/sw_t_-2_0.glb",
-   "lod_bytes": 15428,
+   "lod_bytes": 29184,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/a1dd11f65d60365fa347.bin"
    ],
    "tex": [
@@ -1166,18 +1170,17 @@
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/2c90fea0d4c36ea1d90d.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin"
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-2_1.glb",
-   "bytes": 281956,
+   "bytes": 218124,
    "center": [
     -240.0,
     -240.0
@@ -1204,16 +1207,17 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
     "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/60bec403d3234584531d.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/ebe5a16d98254f9b45d5.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
@@ -1241,33 +1245,33 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/0da7ea20d9a3c9780423.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
-    "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/67ce3e963a3f5867e69d.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/a30736d5820ab701c2a5.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_-2_3.glb",
-   "bytes": 142672,
+   "bytes": 128920,
    "center": [
     -240.0,
     -560.0
    ],
    "lod": "lod/sw_t_-2_3.glb",
-   "lod_bytes": 48076,
+   "lod_bytes": 48060,
    "lod_tex": [
     "tex/8dc980d24ff242d87ba5.webp",
     "tex/201f97e006bbb9687940.webp",
@@ -1290,36 +1294,37 @@
     "tex/15ca7389c3f08ca3af12.webp",
     "tex/ffc0e69be8e2a820a243.webp",
     "geo/0111983f47e4c5e4ed86.bin",
-    "geo/0236f32e81415285a615.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
+    "geo/227f5d1a2ddd7483e508.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/7a264ce5f9da0b749a46.bin",
+    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/f8aa8aaf024b4e0a46e7.bin",
-    "geo/fc7772e04d55eb9fdd6a.bin"
+    "geo/e55286ed2677fc23c478.bin"
    ]
   },
   {
    "file": "sw_t_-2_4.glb",
-   "bytes": 180344,
+   "bytes": 180328,
    "center": [
     -240.0,
     -720.0
    ],
    "lod": "lod/sw_t_-2_4.glb",
-   "lod_bytes": 68196,
+   "lod_bytes": 68164,
    "lod_tex": [
     "tex/201f97e006bbb9687940.webp",
     "tex/93ffa1e1459b181869a6.webp",
@@ -1344,28 +1349,28 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin",
-    "geo/f45d47e4c82502951d3b.bin"
+    "geo/a30736d5820ab701c2a5.bin",
+    "geo/a6ecf825a2409ee43fc3.bin",
+    "geo/b0c7496d45709d6f1c00.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-2_5.glb",
-   "bytes": 198052,
+   "bytes": 131360,
    "center": [
     -240.0,
     -880.0
@@ -1391,28 +1396,30 @@
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
+    "geo/227f5d1a2ddd7483e508.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
+    "geo/a6ecf825a2409ee43fc3.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/e5993eb9475ddd4cc41e.bin"
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_-2_6.glb",
-   "bytes": 161324,
+   "bytes": 214136,
    "center": [
     -240.0,
     -1040.0
    ],
    "lod": "lod/sw_t_-2_6.glb",
-   "lod_bytes": 69636,
+   "lod_bytes": 69652,
    "lod_tex": [
     "tex/7b7b6b8171ca14321b80.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -1435,37 +1442,36 @@
     "tex/2edbb85c086409b4105d.webp",
     "tex/f9380b7036705e943b3f.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0236f32e81415285a615.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/120a1989c6ed8a735a41.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/ebe5a16d98254f9b45d5.bin",
-    "geo/ffdf57ee0bde09fce640.bin"
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_-2_7.glb",
-   "bytes": 204212,
+   "bytes": 273488,
    "center": [
     -240.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-2_7.glb",
-   "lod_bytes": 75968,
+   "lod_bytes": 77160,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp",
     "tex/5725076aadfa367a16a8.webp",
@@ -1494,36 +1500,37 @@
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
-    "geo/4336d259521f9c85d7e7.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/b400bd61ef8cd74269e7.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/dd3d8251f0c2eb2ce1f0.bin",
     "geo/ebe5a16d98254f9b45d5.bin"
    ]
   },
   {
    "file": "sw_t_-2_8.glb",
-   "bytes": 198388,
+   "bytes": 235612,
    "center": [
     -240.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-2_8.glb",
-   "lod_bytes": 118052,
+   "lod_bytes": 77076,
    "lod_tex": [
-    "tex/6fa1702c8490c5de645c.webp",
     "tex/0172f2dd1b45da375ed4.webp",
     "tex/a1aaebbd535f67ed5b92.webp",
     "tex/e4fcf45798ee81c50ae8.webp",
     "tex/504458f417fd90086ff6.webp",
-    "tex/3e295dc57231c00e7219.webp"
+    "tex/3e295dc57231c00e7219.webp",
+    "geo/08edddebd9fa41349376.bin",
+    "geo/afeb0df50214867d17dd.bin",
+    "geo/d20d5542d6212740cf0e.bin"
    ],
    "tex": [
     "tex/addb47b0b2bdd5e1ad34.webp",
@@ -1534,6 +1541,7 @@
     "tex/2332e86844581b6b223b.webp",
     "tex/53eaf8dda10743d12bf5.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
     "geo/11df98db3819380d45b1.bin",
@@ -1541,22 +1549,23 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/60bec403d3234584531d.bin",
-    "geo/80ffec3a21c4aaf5a272.bin",
+    "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
+    "geo/ac3b517a2d20dc7a4c5e.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/f8aa8aaf024b4e0a46e7.bin"
+    "geo/e55286ed2677fc23c478.bin"
    ]
   },
   {
    "file": "sw_t_-2_9.glb",
-   "bytes": 318244,
+   "bytes": 307320,
    "center": [
     -240.0,
     -1520.0
@@ -1579,26 +1588,26 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/dd3d8251f0c2eb2ce1f0.bin",
-    "geo/ebe5a16d98254f9b45d5.bin"
+    "geo/d583e568d2be0bcbf011.bin"
    ]
   },
   {
    "file": "sw_t_-3_-1.glb",
-   "bytes": 304480,
+   "bytes": 357340,
    "center": [
     -400.0,
     80.0
@@ -1632,25 +1641,24 @@
     "tex/a28db9f1da0e5d154140.webp",
     "tex/dd48444bce990f512a3c.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0236f32e81415285a615.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
     "geo/6ed0ccb5a17ca356eb90.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/88250fbee5adbeae864e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin"
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_-3_-2.glb",
-   "bytes": 317904,
+   "bytes": 331216,
    "center": [
     -400.0,
     240.0
@@ -1674,18 +1682,18 @@
     "tex/03f48791ef4e88e66401.webp",
     "tex/49be086edf12efba9b75.webp",
     "geo/2261ccf57dfadfc01d80.bin",
-    "geo/29252e0fc1c61728afa0.bin"
+    "geo/c79dc4087598b22e387e.bin"
    ]
   },
   {
    "file": "sw_t_-3_-3.glb",
-   "bytes": 102044,
+   "bytes": 115352,
    "center": [
     -400.0,
     400.0
    ],
    "lod": "lod/sw_t_-3_-3.glb",
-   "lod_bytes": 121692,
+   "lod_bytes": 121688,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/46461a5a9d3c1258670a.webp"
@@ -1694,12 +1702,12 @@
     "tex/73871effb0d8f8e01093.webp",
     "tex/d32d935da72d48647bc1.webp",
     "geo/2261ccf57dfadfc01d80.bin",
-    "geo/29252e0fc1c61728afa0.bin"
+    "geo/c79dc4087598b22e387e.bin"
    ]
   },
   {
    "file": "sw_t_-3_0.glb",
-   "bytes": 127944,
+   "bytes": 180832,
    "center": [
     -400.0,
     -80.0
@@ -1726,23 +1734,22 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/35130f681fd7d2bb64ba.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin",
-    "geo/dffd83f04e2bb574ac57.bin"
+    "geo/a4ac0db7f39fac450418.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
@@ -1786,7 +1793,7 @@
   },
   {
    "file": "sw_t_-3_3.glb",
-   "bytes": 100012,
+   "bytes": 47112,
    "center": [
     -400.0,
     -560.0
@@ -1806,12 +1813,13 @@
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
-    "geo/60bec403d3234584531d.bin",
+    "geo/227f5d1a2ddd7483e508.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
-    "geo/a4ac0db7f39fac450418.bin",
     "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
@@ -1853,22 +1861,21 @@
   },
   {
    "file": "sw_t_-3_7.glb",
-   "bytes": 70548,
+   "bytes": 168656,
    "center": [
     -400.0,
     -1200.0
    ],
    "lod": "lod/sw_t_-3_7.glb",
-   "lod_bytes": 12660,
+   "lod_bytes": 20108,
    "lod_tex": [
     "tex/9b02eb8dd47a69bc2bd0.webp"
    ],
    "tex": [
-    "tex/addb47b0b2bdd5e1ad34.webp",
     "tex/73871effb0d8f8e01093.webp",
+    "tex/addb47b0b2bdd5e1ad34.webp",
     "tex/ae051ec64a576b210e39.webp",
     "geo/0111983f47e4c5e4ed86.bin",
-    "geo/0236f32e81415285a615.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
     "geo/11df98db3819380d45b1.bin",
@@ -1876,31 +1883,29 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/dffd83f04e2bb574ac57.bin",
-    "geo/fc7772e04d55eb9fdd6a.bin"
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_-3_8.glb",
-   "bytes": 183152,
+   "bytes": 100244,
    "center": [
     -400.0,
     -1360.0
    ],
    "lod": "lod/sw_t_-3_8.glb",
-   "lod_bytes": 12420,
+   "lod_bytes": 16696,
    "lod_tex": [
-    "tex/0941993ce47cdb404933.webp",
-    "tex/0172f2dd1b45da375ed4.webp",
-    "geo/618b31b434066d54c85b.bin"
+    "tex/0172f2dd1b45da375ed4.webp"
    ],
    "tex": [
     "tex/73871effb0d8f8e01093.webp",
@@ -1913,14 +1918,17 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/35130f681fd7d2bb64ba.bin",
     "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
+    "geo/ac3b517a2d20dc7a4c5e.bin",
     "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
@@ -1964,6 +1972,67 @@
    ]
   },
   {
+   "file": "sw_t_-4_7.glb",
+   "bytes": 40148,
+   "center": [
+    -560.0,
+    -1200.0
+   ],
+   "lod": "lod/sw_t_-4_7.glb",
+   "lod_bytes": 32328,
+   "lod_tex": [
+    "tex/6fa1702c8490c5de645c.webp",
+    "tex/0941993ce47cdb404933.webp",
+    "geo/2021136aebe9b0de970a.bin",
+    "geo/90b9809345931fec14be.bin"
+   ],
+   "tex": [
+    "tex/73871effb0d8f8e01093.webp",
+    "tex/addb47b0b2bdd5e1ad34.webp",
+    "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0b3f0ea295db9cd67017.bin",
+    "geo/0c735486d6e9d2bec786.bin",
+    "geo/1494d62e1017b7b5549b.bin",
+    "geo/149bdba8f2156daa5d87.bin",
+    "geo/1c4491a8e58e8b413ef9.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/600387863f4cc76db7f3.bin",
+    "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/90b9809345931fec14be.bin",
+    "geo/93807f3b2d32b2d112fc.bin",
+    "geo/9bc8eb8eb6d9f205fc9c.bin",
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/d994c3256c0573686dd3.bin"
+   ]
+  },
+  {
+   "file": "sw_t_-4_8.glb",
+   "bytes": 259308,
+   "center": [
+    -560.0,
+    -1360.0
+   ],
+   "lod": "lod/sw_t_-4_8.glb",
+   "lod_bytes": 69532,
+   "tex": [
+    "tex/addb47b0b2bdd5e1ad34.webp",
+    "tex/73871effb0d8f8e01093.webp",
+    "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0416cace54f4feb45a41.bin",
+    "geo/0b3f0ea295db9cd67017.bin",
+    "geo/0c735486d6e9d2bec786.bin",
+    "geo/1c4491a8e58e8b413ef9.bin",
+    "geo/215774f47c6341e4db8d.bin",
+    "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/57155ffb218aff4299b7.bin",
+    "geo/6e62f011eb96710c30b9.bin",
+    "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/90b9809345931fec14be.bin",
+    "geo/93807f3b2d32b2d112fc.bin",
+    "geo/e01f0fc948d0d6851d1c.bin"
+   ]
+  },
+  {
    "file": "sw_t_0_-1.glb",
    "bytes": 146324,
    "center": [
@@ -1985,7 +2054,7 @@
   },
   {
    "file": "sw_t_0_1.glb",
-   "bytes": 116244,
+   "bytes": 169120,
    "center": [
     80.0,
     -240.0
@@ -2002,33 +2071,32 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/120a1989c6ed8a735a41.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/3344d57360f63896c388.bin",
     "geo/4036510943702bd7ee49.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/ebe5a16d98254f9b45d5.bin",
-    "geo/ffdf57ee0bde09fce640.bin"
+    "geo/d2ab95b8b76dc0e3c73a.bin"
    ]
   },
   {
    "file": "sw_t_0_2.glb",
-   "bytes": 240524,
+   "bytes": 202760,
    "center": [
     80.0,
     -400.0
    ],
    "lod": "lod/sw_t_0_2.glb",
-   "lod_bytes": 134860,
+   "lod_bytes": 134864,
    "lod_tex": [
     "tex/6fa1702c8490c5de645c.webp",
     "tex/ef7413f63872c432ea0d.webp",
@@ -2061,12 +2129,13 @@
     "geo/47954a89a1f0bb525315.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/6e5a6c0c6a4f71d3ff00.bin",
-    "geo/90b9809345931fec14be.bin"
+    "geo/90b9809345931fec14be.bin",
+    "geo/aab2da2d4f7534eed71c.bin"
    ]
   },
   {
    "file": "sw_t_0_3.glb",
-   "bytes": 671336,
+   "bytes": 547844,
    "center": [
     80.0,
     -560.0
@@ -2104,6 +2173,8 @@
     "geo/215774f47c6341e4db8d.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/5fc68a16fb3632d3415d.bin",
+    "geo/6e62f011eb96710c30b9.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/e01f0fc948d0d6851d1c.bin"
@@ -2111,7 +2182,7 @@
   },
   {
    "file": "sw_t_0_4.glb",
-   "bytes": 294140,
+   "bytes": 227508,
    "center": [
     80.0,
     -720.0
@@ -2147,12 +2218,12 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
@@ -2160,13 +2231,15 @@
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
+    "geo/a30736d5820ab701c2a5.bin",
+    "geo/a6ecf825a2409ee43fc3.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin"
+    "geo/d994c3256c0573686dd3.bin"
    ]
   },
   {
    "file": "sw_t_0_5.glb",
-   "bytes": 295648,
+   "bytes": 334756,
    "center": [
     80.0,
     -880.0
@@ -2200,22 +2273,22 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/60bec403d3234584531d.bin",
-    "geo/718bc5bddb68f9e19867.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/80ffec3a21c4aaf5a272.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
@@ -2244,27 +2317,27 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
-    "geo/4336d259521f9c85d7e7.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
+    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
    "file": "sw_t_0_7.glb",
-   "bytes": 188080,
+   "bytes": 148960,
    "center": [
     80.0,
     -1200.0
@@ -2287,11 +2360,11 @@
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/23658892400bce643114.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
+    "geo/577c3c582fb384328ed7.bin",
+    "geo/5eb3ab6babbaadf970ed.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
@@ -2313,18 +2386,18 @@
     "tex/73871effb0d8f8e01093.webp",
     "tex/addb47b0b2bdd5e1ad34.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0236f32e81415285a615.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
-    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
-    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
@@ -2352,7 +2425,7 @@
   },
   {
    "file": "sw_t_1_3.glb",
-   "bytes": 290000,
+   "bytes": 226180,
    "center": [
     240.0,
     -560.0
@@ -2374,15 +2447,16 @@
     "tex/3f91d98b22275033206e.webp",
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
+    "geo/0b99721a2c0621afe095.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/0da7ea20d9a3c9780423.bin",
     "geo/11df98db3819380d45b1.bin",
+    "geo/120a1989c6ed8a735a41.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/60bec403d3234584531d.bin",
     "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
@@ -2394,7 +2468,7 @@
   },
   {
    "file": "sw_t_1_4.glb",
-   "bytes": 198972,
+   "bytes": 251852,
    "center": [
     240.0,
     -720.0
@@ -2429,19 +2503,18 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
+    "geo/2c90fea0d4c36ea1d90d.bin",
     "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/600387863f4cc76db7f3.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
-    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/dd3d8251f0c2eb2ce1f0.bin",
-    "geo/fc7772e04d55eb9fdd6a.bin"
+    "geo/ebe5a16d98254f9b45d5.bin"
    ]
   },
   {
@@ -2483,24 +2556,24 @@
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/35130f681fd7d2bb64ba.bin",
+    "geo/3344d57360f63896c388.bin",
     "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/5e5a7b6494d99f0d11bc.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
-    "geo/92c3f847c81322f5b2be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/dffd83f04e2bb574ac57.bin",
-    "geo/fc7772e04d55eb9fdd6a.bin"
+    "geo/b0c7496d45709d6f1c00.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_1_6.glb",
-   "bytes": 180620,
+   "bytes": 166860,
    "center": [
     240.0,
     -1040.0
@@ -2520,27 +2593,28 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
+    "geo/120a1989c6ed8a735a41.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/3344d57360f63896c388.bin",
     "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
-    "geo/718bc5bddb68f9e19867.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/dd3d8251f0c2eb2ce1f0.bin"
    ]
   },
   {
    "file": "sw_t_1_7.glb",
-   "bytes": 322688,
+   "bytes": 269812,
    "center": [
     240.0,
     -1200.0
@@ -2562,22 +2636,23 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/35130f681fd7d2bb64ba.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/600387863f4cc76db7f3.bin",
+    "geo/67ce3e963a3f5867e69d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin"
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
@@ -2605,23 +2680,23 @@
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/0da7ea20d9a3c9780423.bin",
+    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
     "geo/2c90fea0d4c36ea1d90d.bin",
-    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
     "geo/7a264ce5f9da0b749a46.bin",
+    "geo/844cf02cbdf84ba75d83.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
+    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
     "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/ebe5a16d98254f9b45d5.bin"
+    "geo/d583e568d2be0bcbf011.bin"
    ]
   },
   {
@@ -2653,7 +2728,7 @@
   },
   {
    "file": "sw_t_2_4.glb",
-   "bytes": 159456,
+   "bytes": 212324,
    "center": [
     400.0,
     -720.0
@@ -2675,21 +2750,20 @@
     "geo/0c735486d6e9d2bec786.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
-    "geo/18b50001fcfa10efe32f.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/35130f681fd7d2bb64ba.bin",
     "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/7a264ce5f9da0b749a46.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/ebe5a16d98254f9b45d5.bin"
+    "geo/a4ac0db7f39fac450418.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
@@ -2711,25 +2785,25 @@
     "tex/347d98bf3f4d38deb8f2.webp",
     "tex/0cb886d74904cf7a5cda.webp",
     "geo/0111983f47e4c5e4ed86.bin",
+    "geo/0236f32e81415285a615.bin",
     "geo/08edddebd9fa41349376.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
-    "geo/600387863f4cc76db7f3.bin",
     "geo/7a264ce5f9da0b749a46.bin",
-    "geo/84e9e50b139b23e70c1a.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin"
+    "geo/bf22b9e780ee9b4dde41.bin",
+    "geo/ebe5a16d98254f9b45d5.bin",
+    "geo/fc7772e04d55eb9fdd6a.bin"
    ]
   },
   {
@@ -2747,21 +2821,21 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
+    "geo/120a1989c6ed8a735a41.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/2c90fea0d4c36ea1d90d.bin",
+    "geo/4036510943702bd7ee49.bin",
+    "geo/41a0530a2abe2bed14b2.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/d583e568d2be0bcbf011.bin"
+    "geo/a6ecf825a2409ee43fc3.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
@@ -2785,26 +2859,26 @@
     "geo/0111983f47e4c5e4ed86.bin",
     "geo/0b3f0ea295db9cd67017.bin",
     "geo/0c735486d6e9d2bec786.bin",
-    "geo/11df98db3819380d45b1.bin",
     "geo/1494d62e1017b7b5549b.bin",
     "geo/149bdba8f2156daa5d87.bin",
     "geo/1c4491a8e58e8b413ef9.bin",
     "geo/2c5e1ee9dce8900cee93.bin",
-    "geo/41a0530a2abe2bed14b2.bin",
+    "geo/3344d57360f63896c388.bin",
+    "geo/4036510943702bd7ee49.bin",
     "geo/57155ffb218aff4299b7.bin",
+    "geo/60bec403d3234584531d.bin",
     "geo/86bc8131bdb0c1ef4450.bin",
-    "geo/8ca5abbde3d3bd738d6e.bin",
     "geo/90b9809345931fec14be.bin",
     "geo/93807f3b2d32b2d112fc.bin",
     "geo/9bc8eb8eb6d9f205fc9c.bin",
     "geo/a1dd11f65d60365fa347.bin",
-    "geo/bf22b9e780ee9b4dde41.bin",
-    "geo/e5993eb9475ddd4cc41e.bin"
+    "geo/a4ac0db7f39fac450418.bin",
+    "geo/bf22b9e780ee9b4dde41.bin"
    ]
   },
   {
    "file": "sw_t_2_8.glb",
-   "bytes": 290196,
+   "bytes": 280452,
    "center": [
     400.0,
     -1360.0
@@ -2832,8 +2906,8 @@
     "geo/47954a89a1f0bb525315.bin",
     "geo/57155ffb218aff4299b7.bin",
     "geo/6e5a6c0c6a4f71d3ff00.bin",
-    "geo/6f7281079b51d2f19b6a.bin",
-    "geo/90b9809345931fec14be.bin"
+    "geo/90b9809345931fec14be.bin",
+    "geo/f4f85c1001157dbfba7f.bin"
    ]
   },
   {
@@ -3511,8 +3585,8 @@
    "file": "montclair_north.blend"
   },
   "sw": {
-   "saved": "November 22, 2026, 12:01 AM ET",
-   "version": "sw17",
+   "saved": "November 22, 2026, 1:44 AM ET",
+   "version": "sw18",
    "file": "montclair_southwest.blend"
   }
  },
@@ -3524,24 +3598,23 @@
  "hide": [
   "PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
  ],
- "exported": "November 22, 2026, 12:11 AM ET",
+ "exported": "November 22, 2026, 1:55 AM ET",
  "tex": {
   "geo/0111983f47e4c5e4ed86.bin": 22231,
   "geo/020ad4c710aa4383613d.bin": 76375,
   "geo/0236f32e81415285a615.bin": 63859,
+  "geo/0416cace54f4feb45a41.bin": 64449,
   "geo/062c68da49eccbb9a88a.bin": 91351,
   "geo/08edddebd9fa41349376.bin": 32575,
   "geo/0b3f0ea295db9cd67017.bin": 45189,
+  "geo/0b99721a2c0621afe095.bin": 52899,
   "geo/0bc688b85b9d491cadad.bin": 62387,
   "geo/0c735486d6e9d2bec786.bin": 27292,
-  "geo/0da7ea20d9a3c9780423.bin": 52899,
-  "geo/0f14bd9ba61ed7329a7b.bin": 52899,
   "geo/11df98db3819380d45b1.bin": 28096,
   "geo/120a1989c6ed8a735a41.bin": 63859,
   "geo/1494d62e1017b7b5549b.bin": 56278,
   "geo/149bdba8f2156daa5d87.bin": 5735,
   "geo/14c880d210cf14a9bc6c.bin": 90473,
-  "geo/18b50001fcfa10efe32f.bin": 52899,
   "geo/1a52404f959ab03578e1.bin": 32997,
   "geo/1c4491a8e58e8b413ef9.bin": 45627,
   "geo/1ced7f60c7344945ea41.bin": 21775,
@@ -3550,44 +3623,46 @@
   "geo/20546c5ce47132a8b37f.bin": 6815,
   "geo/215774f47c6341e4db8d.bin": 15960,
   "geo/2261ccf57dfadfc01d80.bin": 5735,
+  "geo/227f5d1a2ddd7483e508.bin": 52899,
   "geo/23658892400bce643114.bin": 38405,
-  "geo/29252e0fc1c61728afa0.bin": 47537,
   "geo/2a6a2b9829ac02278d47.bin": 15958,
   "geo/2c5e1ee9dce8900cee93.bin": 5062,
   "geo/2c90fea0d4c36ea1d90d.bin": 38762,
   "geo/2ec7f1158e46c012f421.bin": 239511,
+  "geo/3344d57360f63896c388.bin": 13805,
   "geo/343feaefc7bbcd94508b.bin": 142126,
   "geo/35130f681fd7d2bb64ba.bin": 13805,
   "geo/35947c054487862d4799.bin": 33293,
   "geo/4036510943702bd7ee49.bin": 28096,
   "geo/41a0530a2abe2bed14b2.bin": 38762,
   "geo/41ad1c0b23c6452060ac.bin": 5837,
-  "geo/4336d259521f9c85d7e7.bin": 63859,
   "geo/47954a89a1f0bb525315.bin": 34165,
   "geo/511f692950f381081adf.bin": 28649,
   "geo/54e3f37b825c3a1f75b7.bin": 106816,
   "geo/57155ffb218aff4299b7.bin": 10529,
+  "geo/577c3c582fb384328ed7.bin": 52899,
   "geo/59b49935bb0d56ef22c5.bin": 22135,
-  "geo/5da42ed386634f3e49d7.bin": 63859,
+  "geo/5e5a7b6494d99f0d11bc.bin": 63859,
+  "geo/5eb3ab6babbaadf970ed.bin": 63859,
   "geo/5f66d0937da07cb5612b.bin": 122689,
+  "geo/5fc68a16fb3632d3415d.bin": 41150,
   "geo/600387863f4cc76db7f3.bin": 63859,
   "geo/60bec403d3234584531d.bin": 38762,
   "geo/618b31b434066d54c85b.bin": 5780,
   "geo/649d709161e7d9e24c2d.bin": 111299,
   "geo/6672593d82e02743d8c5.bin": 127109,
+  "geo/67ce3e963a3f5867e69d.bin": 52899,
   "geo/6de2018061aa87ca8abb.bin": 218875,
   "geo/6e5a6c0c6a4f71d3ff00.bin": 5062,
+  "geo/6e62f011eb96710c30b9.bin": 82443,
   "geo/6ed0ccb5a17ca356eb90.bin": 73055,
-  "geo/6f7281079b51d2f19b6a.bin": 292766,
   "geo/701090351cf46a234583.bin": 68727,
-  "geo/718bc5bddb68f9e19867.bin": 52899,
   "geo/72064eac74602279dd22.bin": 107711,
   "geo/73d176b631a10faf7064.bin": 121721,
   "geo/7a264ce5f9da0b749a46.bin": 201230,
-  "geo/80ffec3a21c4aaf5a272.bin": 63859,
+  "geo/844cf02cbdf84ba75d83.bin": 52899,
   "geo/84e9e50b139b23e70c1a.bin": 13805,
   "geo/86bc8131bdb0c1ef4450.bin": 12154,
-  "geo/88250fbee5adbeae864e.bin": 52899,
   "geo/89f66100094219f86a0f.bin": 50439,
   "geo/8c74070456da160ab39b.bin": 33751,
   "geo/8ca5abbde3d3bd738d6e.bin": 13805,
@@ -3605,8 +3680,11 @@
   "geo/a3fdc88ff41b89a6f587.bin": 151256,
   "geo/a4ac0db7f39fac450418.bin": 63859,
   "geo/a5aaca96d47cef2aa08a.bin": 9729,
+  "geo/a6ecf825a2409ee43fc3.bin": 13805,
+  "geo/aab2da2d4f7534eed71c.bin": 37787,
+  "geo/ac3b517a2d20dc7a4c5e.bin": 52899,
   "geo/afeb0df50214867d17dd.bin": 10759,
-  "geo/b400bd61ef8cd74269e7.bin": 52899,
+  "geo/b0c7496d45709d6f1c00.bin": 52899,
   "geo/b668d139c5b53b1e5e38.bin": 112713,
   "geo/b73d2b357b4131f50e00.bin": 37663,
   "geo/b84cf88e9a2eaa547f7f.bin": 121638,
@@ -3616,26 +3694,26 @@
   "geo/c19353a3244248b6b87b.bin": 182200,
   "geo/c1cd3ecffe553e6d78e8.bin": 75138,
   "geo/c5ef4a8de585f47e100a.bin": 67007,
+  "geo/c79dc4087598b22e387e.bin": 34225,
   "geo/d20d5542d6212740cf0e.bin": 18618,
+  "geo/d2ab95b8b76dc0e3c73a.bin": 63859,
   "geo/d4abb5bd9948e2a41f21.bin": 51175,
   "geo/d583e568d2be0bcbf011.bin": 63859,
   "geo/d67ca31522162dec29c5.bin": 100541,
+  "geo/d994c3256c0573686dd3.bin": 52899,
   "geo/dd3d8251f0c2eb2ce1f0.bin": 52899,
   "geo/df8918608f2487156b88.bin": 14243,
-  "geo/dffd83f04e2bb574ac57.bin": 52899,
   "geo/e01f0fc948d0d6851d1c.bin": 95478,
-  "geo/e5993eb9475ddd4cc41e.bin": 63859,
+  "geo/e55286ed2677fc23c478.bin": 63859,
   "geo/e9970d7b9bdcd699f983.bin": 195279,
   "geo/ebe5a16d98254f9b45d5.bin": 13805,
   "geo/ec99a69f03ee34cf6bbf.bin": 8521,
   "geo/ed0cc7d153049b0b29f2.bin": 108153,
-  "geo/f45d47e4c82502951d3b.bin": 52899,
+  "geo/f4f85c1001157dbfba7f.bin": 302510,
   "geo/f5ee81f47d706a086ae2.bin": 25123,
   "geo/f692d6ac2c7c36d07125.bin": 38159,
-  "geo/f8aa8aaf024b4e0a46e7.bin": 52899,
   "geo/f94c849148273f159866.bin": 33363,
   "geo/fc7772e04d55eb9fdd6a.bin": 38762,
-  "geo/ffdf57ee0bde09fce640.bin": 52899,
   "tex/0172f2dd1b45da375ed4.webp": 14900,
   "tex/03f48791ef4e88e66401.webp": 3472,
   "tex/0561d1e460e344080c40.webp": 1420,
@@ -3829,5 +3907,5 @@
   "tex/fe3ff2714b734ccbbb0a.webp": 15400,
   "tex/ffc0e69be8e2a820a243.webp": 8756
  },
- "total_bytes": 142027009
+ "total_bytes": 142284178
 }
