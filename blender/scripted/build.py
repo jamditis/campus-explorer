@@ -68,7 +68,7 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     heights = plan_dir / "edge_heights.json"
     edge_file = json.loads(heights.read_text()) if heights.exists() else {}
     edge = edge_file.get("samples")
-    # edge heights read 0.3 m outside the footprint from tiles (edge.py's second way) are the far
+    # edge heights read just outside the footprint from tiles (edge.py's second way) are the far
     # field's even next to another area; the first way's are not (seam.far_samples)
     read_outside = "outside" in edge_file.get("source", "")
     # the other areas of this build (an area left out with --areas is not a neighbour here)
@@ -84,7 +84,12 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
         # a neighbour added after this area was reviewed may ask that this area's paving keep
         # the samples its edge takes away: lots are only raised, reviewed paving does not move
         holders = [o["footprint"] for o in others if o["footprint"] and o["hold_neighbour_paving"]]
-        held = seam.held_samples(edge, lay["footprint"], rings, holders, near)
+        # and paving made with older samples than the file's keeps them ("paving")
+        pave = edge_file.get("paving")
+        if pave:
+            keep = [e for e in pave["samples"] if layout.meets_neighbour(lay, e[0], e[1])]
+            pave = dict(pave, samples=keep)
+        held = seam.paving_samples(pave, edge, lay["footprint"], rings, holders, near)
         edge = seam.far_samples(edge, lay["footprint"], rings, near)
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the
@@ -121,7 +126,7 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     roads = [s["ring"] for s in lay["surfaces"] if s.get("road")]
     terrain = ground.Terrain(
         lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps, roads=roads,
-        paving_edge=held,
+        paving_edge=held, shared=[o["footprint"] for o in others if o["footprint"]],
     )
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
@@ -132,6 +137,9 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     lay["seam_points"] = seam.points_on(lay["footprint"], rings, ground.GRID) + seam.ends(
         lay["footprint"], rings
     )
+    # and the vertices the areas built before put on it, their surfaces' corners too (seam.Seam)
+    lay["seam_new"] = SEAM.on_ring(lay["footprint"], lay["seam_points"])
+    lay["seam_points"] += lay["seam_new"]
     objects = ground.build(lay, terrain, lay["image_dir"], SEAM)
     try:
         import place  # object builders; optional while the ground is being worked on

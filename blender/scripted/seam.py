@@ -137,18 +137,107 @@ def held_samples(samples, ring, others, holders, near=None):
     return far_samples(samples, ring, rest, near)
 
 
+def paving_samples(pave, edge, ring, others, holders, near=None):
+    """The edge samples this area's paving is bent by (`terrain.Terrain` `paving_edge`), None
+    where it takes the ground's. `pave` is the edge file's "paving" entry (samples and their
+    source): the samples the reviewed paving was made with, kept when the file's samples were
+    made again (sw18 read them 5 cm outside instead of 0.3 m; paving within 0.15 m of them would
+    have moved), filtered as the ground's are; without it, `edge` (the ground's samples, read
+    with `near`). Where a later neighbour holds this area's paving (`holders`, seam.held_samples)
+    the samples its edge takes away stay too."""
+    if pave:
+        src = pave["samples"]
+        near = None if "outside" in pave.get("source", "") else 2.0
+    else:
+        src = edge
+    if holders:
+        return held_samples(src, ring, others, holders, near)
+    if pave:
+        return far_samples(src, ring, others, near)
+    return None
+
+
+def taken(known, own, lot, old):
+    """Which vertices on a shared edge take the first-built area's height `known` (NaN: none)
+    instead of their `own`: all of them, except a vertex of lot paving (`lot`: graded paving that
+    is not a road) the shared height would lower, unless sw17's seam gave it that height already
+    (`old`: a vertex both meshes had before either took the other's, at a densified outline
+    point). Lots are only raised (AGENTS rule 6): the first area's height at a vertex only the
+    later mesh had, or along its edge, lowered lots by up to 7 cm and a road by 0.33 m."""
+    known, own = np.asarray(known, float), np.asarray(own, float)
+    ok = np.isfinite(known)
+    lower = ok & (known < own - 1e-6)
+    return ok & ~(lower & np.asarray(lot, bool) & ~np.asarray(old, bool))
+
+
+ECELL = 2.0  # metres: the lookup grid of recorded outline edges
+
+
 class Seam:
-    """Heights of outline vertices, shared between the areas of one build."""
+    """Heights of outline vertices and edges, shared between the areas of one build.
+
+    The first-built area's mesh may have vertices on a shared edge that the outline points of
+    `points_on` do not give (a corner of one of its surfaces on the outline), and a later area
+    has some of its own there too (an end point of `ends`, its own surfaces): either mesh's
+    edge then ran straight past a vertex of the other, a step of up to 0.4 m in sw17. A later
+    area therefore puts the first areas' recorded vertices on its outline (`on_ring`), and its
+    vertices that meet no recorded vertex take the height of the recorded edge they lie on
+    (`along`): its edge there lies on the first mesh's edge."""
 
     def __init__(self):
         self.cells = {}
+        self.edges = {}
 
-    def record(self, xy, z):
-        """Keep the heights `z` of the vertices `xy` (n x 2); a vertex already recorded keeps its
-        first height."""
-        for (x, y), h in zip(np.asarray(xy, float), np.asarray(z, float), strict=True):
+    def record(self, xy, z, edges=()):
+        """Keep the heights `z` of the vertices `xy` (n x 2), and the mesh's outline edges among
+        them (`edges`: index pairs into `xy`); a vertex already recorded keeps its first height."""
+        xy, z = np.asarray(xy, float), np.asarray(z, float)
+        for (x, y), h in zip(xy, z, strict=True):
             key = (round(x / CELL), round(y / CELL))
             self.cells.setdefault(key, []).append((x, y, float(h)))
+        for i, j in edges:
+            seg = (*xy[i], z[i], *xy[j], z[j])
+            lo, hi = np.minimum(xy[i], xy[j]) - TOL, np.maximum(xy[i], xy[j]) + TOL
+            for gx in range(math.floor(lo[0] / ECELL), math.floor(hi[0] / ECELL) + 1):
+                for gy in range(math.floor(lo[1] / ECELL), math.floor(hi[1] / ECELL) + 1):
+                    self.edges.setdefault((gx, gy), []).append(seg)
+
+    def along(self, xy):
+        """The height of the nearest recorded edge within TOL of each point of `xy`, at the point
+        (linear along the edge), NaN where none is."""
+        xy = np.asarray(xy, float)
+        out = np.full(len(xy), np.nan)
+        for k, (x, y) in enumerate(xy):
+            best = TOL * TOL + 1e-12
+            for ax, ay, az, bx, by, bz in self.edges.get(
+                (math.floor(x / ECELL), math.floor(y / ECELL)), ()
+            ):
+                dx, dy = bx - ax, by - ay
+                ln2 = dx * dx + dy * dy
+                if ln2 < 1e-12:
+                    continue
+                t = max(0.0, min(1.0, ((x - ax) * dx + (y - ay) * dy) / ln2))
+                d = (x - ax - t * dx) ** 2 + (y - ay - t * dy) ** 2
+                if d < best:
+                    best, out[k] = d, az + t * (bz - az)
+        return out
+
+    def on_ring(self, ring, skip=()):
+        """The recorded vertices that lie within TOL of the closed outline `ring`, leaving out any
+        within TOL of a point of `skip` (points the outline takes already)."""
+        ring = [(p[0], p[1]) for p in ring]
+        skip = [(p[0], p[1]) for p in skip]
+        lo = np.min(ring, 0) - TOL
+        hi = np.max(ring, 0) + TOL
+        out = []
+        for pts in self.cells.values():
+            for x, y, _h in pts:
+                if not (lo[0] <= x <= hi[0] and lo[1] <= y <= hi[1]) or not _near(ring, x, y):
+                    continue
+                if any((x - px) ** 2 + (y - py) ** 2 <= TOL * TOL for px, py in skip + out):
+                    continue
+                out.append((x, y))
+        return out
 
     def take(self, xy):
         """The recorded height within TOL of each point of `xy`, NaN where none is."""

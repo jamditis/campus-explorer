@@ -78,6 +78,8 @@ const volumeAreas = AREAS.filter(rules => !rules.skip && rules.volumes).map(rule
 }));
 // metres: a corner the outline cut in a coarsely quantised mesh is stored at least this far inside the outline
 const MARGIN = 0.01;
+// metres outside the outline within which a corner the earlier version lowered can lie now (see `pit`)
+const MEND_NEAR = 0.1;
 // metres between grid points from which the cut pieces get exact positions (the far field), and how far a cut corner
 // of those is pulled along its edge under the new ground (a hair, so the two edges overlap and no pinhole shows)
 const EXACT = 0.05, EXACT_OVER = 0.005;
@@ -282,10 +284,11 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       // high and half a metre into the lawn in sw17), any outside it a crack. On a grid of a centimetre or more a corner
       // on the outline is stored at the nearest grid point at least MARGIN inside it (snapQuantized); its height is
       // rounded as before, so a corner that rounding left inside does not move at all. A primitive the earlier version
-      // cut (southwest's marks in the tiles restored from fc1401b) is mended and cut as sw16 did: its pieces carry the
-      // earlier version's lowered corners, which only the skirt's simplification takes out
+      // cut (southwest's marks in the tiles restored from fc1401b) is mended (its lowered corners raised back) and then
+      // cut the same way: sw17 cut its far field on the grid as sw16 did, and left 16 m² of skirt standing up to 0.68 m
+      // over the south-west area's ground (0.01 m² on scratch copies of the fc1401b tiles cut this way)
       const DIV = { 5120: 127, 5121: 255, 5122: 32767, 5123: 65535 }[src.getComponentType()];
-      const STEP = DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0, EXACT_CUT = STEP >= EXACT && !mend, SNAP = !EXACT_CUT && STEP >= MARGIN;
+      const STEP = DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0, EXACT_CUT = STEP >= EXACT, SNAP = !EXACT_CUT && STEP >= MARGIN;
       const PULL = Math.min(0.15, Math.max(0.02, STEP)), OVER = EXACT_CUT || prim.getExtras().edge ? EXACT_OVER : PULL;
       const n = src.getCount(), p = [0, 0, 0];
       // model-frame position of every corner (viewer z is minus model y), and whether it is inside
@@ -390,6 +393,25 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       for (let t = 0; t < I.length; t += 3) visit(I[t], I[t + 1], I[t + 2], 0);
       if (removed + cutN === before && !mend) continue; // it only came near
       if (!keep.length) { mesh.removePrimitive(prim); prim.dispose(); removedAll++; continue; }
+      // corners the earlier version lowered that lie on the outline can read as outside it now (within a millimetre:
+      // a row of skirt corners at (-421.8, -360.6) by southwest's edge stood 0.48 m low, and the exact cut ended the
+      // far field 0.25 m under southwest's ground there). A corner within MEND_NEAR outside the outline is raised back
+      // too where it stands TUCK (give or take 40 %) under the highest corner it shares a triangle with that lies
+      // further out (and so was never lowered)
+      const pit = new Uint8Array(n);
+      if (mend && STEP >= EXACT) { // the far field only: the main and north models' own ground is fine and steep in places
+        const zOf = i => { src.getElement(i, p); return toModel(w, p)[2]; };
+        const near = i => !isIn[i] && ringDistance(ring, wx[i], wy[i]) <= MEND_NEAR, high = new Float64Array(n).fill(-Infinity);
+        for (let t = 0; t < I.length; t += 3) for (let k = 0; k < 3; k++) {
+          const i = I[t + k];
+          if (!near(i)) continue;
+          for (const j of [I[t + (k + 1) % 3], I[t + (k + 2) % 3]]) if (!isIn[j] && !near(j)) high[i] = Math.max(high[i], zOf(j));
+        }
+        for (let i = 0; i < n; i++) {
+          const drop = high[i] - (Number.isFinite(high[i]) ? zOf(i) : 0);
+          if (Number.isFinite(high[i]) && drop > 0.6 * TUCK && drop < 1.4 * TUCK) pit[i] = 1;
+        }
+      }
       // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more.
       // Every attribute gets the added corners, each the weighted mean of its parents (parents come first).
       const total = n + added.length, olds = [idx], exactPos = new Map();
@@ -400,7 +422,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         }
         if (sem === 'POSITION' && mend) {
           // the earlier version lowered every inside corner it kept by TUCK: put them back first
-          for (let i = 0; i < n; i++) if (isIn[i]) { copy.getElement(i, p); copy.setElement(i, [p[0] + up[0], p[1] + up[1], p[2] + up[2]]); mended++; }
+          for (let i = 0; i < n; i++) if (isIn[i] || pit[i]) { copy.getElement(i, p); copy.setElement(i, [p[0] + up[0], p[1] + up[1], p[2] + up[2]]); mended++; }
         }
         const e = [], sum = new Array(size);
         for (let k = 0; k < added.length; k++) {

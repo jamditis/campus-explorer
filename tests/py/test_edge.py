@@ -68,6 +68,19 @@ class EdgeFromTriangles(unittest.TestCase):
         self.assertEqual({s[2] for s in south}, {100.9})
         self.assertEqual({s[2] for s in west}, {100.0})
 
+    def test_a_neighbour_that_falls_away_from_the_edge_is_read_where_it_meets_it(self):
+        # the north model's terrain falls up to 1 m per metre away from where it was cut (its edge
+        # faces were tucked 12 cm under the main model's): read 0.3 m out, the new ground's edge
+        # stood 0.2 m under the neighbour along the west strip and Webster (sw17 tiles). Tiles cut
+        # by supersede end exactly on the outline, so the reading is taken just outside it
+        fall = [[(-5, -5, 95), (25, -5, 95), (25, 0, 100)],
+                [(-5, -5, 95), (25, 0, 100), (-5, 0, 100)]]  # fmt: skip
+        got = edge.sample(FOOT, np.array(fall, float))
+        south = [s for s in got if s[1] == 0.0 and 0 < s[0] < 20]
+        self.assertTrue(south)
+        for s in south:
+            self.assertGreater(s[2], 99.9)
+
     def test_the_highest_triangle_over_a_point_sets_its_height(self):
         # a skirt at 100 m and a sidewalk 0.15 m over it on part of it; nothing at x 50
         skirt = [

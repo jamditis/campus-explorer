@@ -16,6 +16,7 @@ import bpy
 import geom
 import kit
 import numpy as np
+import seam as seam_mod
 from mathutils import Vector
 from mathutils.geometry import delaunay_2d_cdt
 from terrain import Terrain, _edge_distance, _inside, flood  # noqa: F401
@@ -149,7 +150,11 @@ def heights(lay, terrain, xy, tris, owner):
         [o >= 0 and lay["surfaces"][o].get("grade", True) for o in owner]
     )  # a pad on a bank follows the bank
     paved[np.unique(tris[np.isin(kinds, list(PAVED)) & graded])] = True
-    z = terrain.surface(xy[:, 0], xy[:, 1], paved, capped=False)
+    # every paving vertex, graded or not ("grade": false walks follow the ground), meets the
+    # neighbour flush; the rest (lawn, mulch, gravel, water) meets it EDGE_TUCK under it
+    paving = np.zeros(len(xy), bool)
+    paving[np.unique(tris[np.isin(kinds, list(PAVED))])] = True
+    z = terrain.surface(xy[:, 0], xy[:, 1], paved, capped=False, soft=~paving)
     # under a seating bowl the ground is held below the rows (terrain caps); the ground outside
     # keeps its own height on the bowl's outline, so a vertex there has both
     zc = terrain.cap(xy[:, 0], xy[:, 1], z)
@@ -169,13 +174,51 @@ def build(lay, terrain, image_dir=None, seam=None):
     xy, tris, owner = triangulate(lay)
     zcap, zfree = heights(lay, terrain, xy, tris, owner)
     if seam is not None:  # vertices on an edge shared with an area built before take its heights
-        on = np.nonzero(_edge_distance(lay["footprint"], xy[:, 0], xy[:, 1]) < 0.005)[0]
+        # (only vertices the mesh uses: the triangulation also holds points of surface outlines
+        # that end just outside the footprint, and a later area took such a point for a vertex)
+        used = np.unique(tris)
+        on = used[_edge_distance(lay["footprint"], xy[used, 0], xy[used, 1]) < 0.005]
         known = seam.take(xy[on])
-        got = np.isfinite(known)
+        # a vertex the first area has none at lies on its mesh's edge there (seam.Seam)
+        miss = np.isnan(known)
+        # both meshes had the vertex before (sw17's seam): a vertex of the first area this mesh
+        # has without the first area's vertices it took (`seam_new`), not one met on its edge
+        old = ~miss
+        if lay.get("seam_new") and old.any():
+            took = {tuple(p) for p in lay["seam_new"]}
+            before = [p for p in lay["seam_points"] if tuple(p) not in took]
+            xy0, tris0, _owner0 = triangulate(dict(lay, seam_points=before))
+            u0 = np.unique(tris0)
+            v0 = xy0[u0[_edge_distance(lay["footprint"], xy0[u0, 0], xy0[u0, 1]) < 0.005]]
+            for k, (x, y) in enumerate(xy[on]):
+                if old[k]:
+                    old[k] = bool(len(v0)) and np.hypot(v0[:, 0] - x, v0[:, 1] - y).min() < 0.021
+        known[miss] = seam.along(xy[on[miss]])
+        # lot paving is only raised: a vertex only one of the two meshes had before (sw17 kept its
+        # own height there) keeps that where the shared one is lower (seam.taken)
+        lot = np.zeros(len(xy), bool)
+        for t, o in zip(tris, owner, strict=True):
+            if o >= 0:
+                s = lay["surfaces"][o]
+                if s["kind"] in PAVED and s.get("grade", True) and not s.get("road"):
+                    lot[t] = True
+        got = seam_mod.taken(known, zfree[on], lot[on], old)
         held = zcap[on] < zfree[on] - 1e-6  # held under a bowl in this area: it keeps that
         zfree[on[got]] = known[got]
         zcap[on[got & ~held]] = known[got & ~held]
-        seam.record(xy[on], zfree[on])
+        # this mesh's outline edges (used by one triangle) between those vertices
+        index = {int(v): k for k, v in enumerate(on)}
+        uses = {}
+        for t in tris:
+            for a, b in ((t[0], t[1]), (t[1], t[2]), (t[2], t[0])):
+                key = (min(a, b), max(a, b))
+                uses[key] = uses.get(key, 0) + 1
+        rim = [
+            (index[a], index[b])
+            for (a, b), n in uses.items()
+            if n == 1 and a in index and b in index
+        ]
+        seam.record(xy[on], zfree[on], rim)
     capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl
     groups = {}
     for t, o, under in zip(tris, owner, capped, strict=True):

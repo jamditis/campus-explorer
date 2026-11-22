@@ -147,6 +147,47 @@ class Grading(unittest.TestCase):
         soft = t.surface(x, y, np.zeros(2, bool))
         self.assertAlmostEqual(soft[1], 99.0, delta=0.1)  # soft ground rises to meet it
 
+    def test_soft_ground_meets_the_far_field_a_tuck_under_it_and_paving_flush(self):
+        # read 5 cm outside, the neighbour's height put soft ground on it within a few
+        # centimetres either way: where the edge stood over the far field its skirt showed as a
+        # thin dark line (sw19, by the stadium/north-east corner and at descent). Soft ground meets
+        # it EDGE_TUCK under it, so the far field covers the edge; paving meets it as before
+        samples = [[x, 0.0, 100 - 0.02 * x + 0.04] for x in range(0, 200)]
+        with tempfile.TemporaryDirectory() as d:
+            t = terrain.Terrain(lidar_file(d), edge=samples, footprint=FOOT, paved=[ROAD])
+        self.assertGreaterEqual(terrain.EDGE_TUCK, 0.02)
+        self.assertLessEqual(terrain.EDGE_TUCK, 0.03)
+        x = np.arange(20.0, 180.0, 10.0)
+        y = np.zeros(len(x))
+        nb = t.neighbour_z(x, y)
+        soft = t.surface(x, y, np.zeros(len(x), bool))
+        np.testing.assert_allclose(soft, nb - terrain.EDGE_TUCK, atol=1e-6)
+        paved = t.surface(x, y, np.ones(len(x), bool))
+        np.testing.assert_allclose(paved, nb, atol=1e-6)  # within SEAM: flush, as before
+        # past the blend nothing changes
+        far = t.surface(x, np.full(len(x), 20.0), np.zeros(len(x), bool))
+        np.testing.assert_allclose(far, 100 - 0.02 * x, atol=0.1)
+        # a walk that follows the ground ("grade": false) is paving all the same: not tucked
+        walk = t.surface(x, y, np.zeros(len(x), bool), soft=np.zeros(len(x), bool))
+        np.testing.assert_allclose(walk, nb, atol=1e-6)
+
+    def test_no_tuck_on_an_edge_shared_with_another_scripted_area(self):
+        # the south edge meets the far field; the west edge from y 0 to 50 is shared with another
+        # scripted area, whose mesh takes this one's vertices there as they are: the tuck fades
+        # out within EDGE_TUCK_FADE of it, so a shared vertex beside a three-way corner keeps the
+        # height it had
+        samples = [[x, 0.0, 100 - 0.02 * x + 0.04] for x in range(0, 200)]
+        other = [(-30, 0), (0, 0), (0, 50), (-30, 50)]
+        with tempfile.TemporaryDirectory() as d:
+            f = lidar_file(d)
+            plain = terrain.Terrain(f, edge=samples, footprint=FOOT, paved=[ROAD])
+            t = terrain.Terrain(f, edge=samples, footprint=FOOT, paved=[ROAD], shared=[other])
+        soft = np.zeros(2, bool)
+        on = np.array([0.0, 30.0]), np.array([1.0, 0.0])  # on the shared edge; on the far field's
+        got, ref = t.surface(*on, soft), plain.surface(*on, soft)
+        self.assertAlmostEqual(got[0], ref[0] + terrain.EDGE_TUCK, delta=1e-6)  # no tuck there
+        self.assertAlmostEqual(got[1], ref[1], delta=1e-6)  # tucked as before
+
     def test_paving_held_to_old_samples_keeps_its_height_while_soft_ground_lets_go(self):
         # the south edge became shared with a later area: its samples are gone for the ground,
         # but paving near it keeps the bend the old samples gave it (lots are never lowered and
@@ -272,7 +313,8 @@ class Grading(unittest.TestCase):
             t = terrain.Terrain(lidar_from(d, f), edge=samples, footprint=FOOT)
         x = np.arange(5.0, 195.0, 1.0)
         got = t.surface(x, np.full(len(x), 0.05), np.zeros(len(x), bool))
-        np.testing.assert_allclose(got, f(x, 0), atol=0.05)
+        # (the soft ground meets it EDGE_TUCK under it)
+        np.testing.assert_allclose(got, f(x, 0) - terrain.EDGE_TUCK, atol=0.05)
 
     def test_a_sample_round_a_corner_sets_no_flat_height_on_a_shared_edge(self):
         # the ground rises 0.3 m per m eastward; the west edge (another model, on the LiDAR) has
