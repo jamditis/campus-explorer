@@ -119,3 +119,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: my wrap-up report listed open questions for Joe as prose (Blanton Hall's dock, passage and walk; the commit identity). Joe: "I only answer questions via a auq". The rule was already known; I broke it at the end of a long session.
 - Rule: every question that needs Joe's answer goes through AskUserQuestion, recommended option first, at most four at a time, each with a "not sure, needs a photo" option where a fact may be unknown. A report may say that questions exist; it does not ask them. Record the answers in the repository the same turn.
+
+## Look for public evidence before a question goes to Joe (2026-11-22)
+
+- What happened: I asked Joe what stands at Blanton Hall (dock, passage, walk) because no photo of his shows the place. Joe: "you'll have to get creative and check online sources and open data and Google maps street view and social media or Flickr posts".
+- Rule: when the ortho, LiDAR, OpenStreetMap and Joe's photos leave a place open, search public sources first: street-level imagery (Mapillary, KartaView, Street View), Wikimedia Commons, Flickr, the university's pages and tours, student media, video tours, open data. Keep downloads outside the repository with a source list (URL, date, licence, what it shows); never commit them. Ask Joe only what those sources cannot answer, and say which sources were tried.
