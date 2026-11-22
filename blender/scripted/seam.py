@@ -105,6 +105,8 @@ def ends(ring, others, step=END):
     return out
 
 
+import os
+CORNER_SAMPLE = os.environ.get('CORNER_SAMPLE', '1') == '1'
 ALONG = 0.3  # metres along the outline either side of an edge sample, read for far field
 
 
@@ -139,10 +141,8 @@ def far_samples(samples, ring, others, along=ALONG):
     out = []
     for e in samples:
         x, y = e[0], e[1]
-        if shared(x, y):
-            at = arc(x, y)
-            if all(shared(*_along(ring, cum, total, at + s)) for s in (-along, along)):
-                continue
+        if shared(x, y) and (CORNER_SAMPLE is False or all(shared(*_along(ring, cum, total, arc(x, y) + s)) for s in (-along, along))):
+            continue
         out.append(e)
     return out
 
