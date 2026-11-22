@@ -9,6 +9,7 @@
   "notes": "Patterns match 'mesh name material name' in the other sources' tiles.",
   "clip": ["Context_skirt", "BD_farfield_3DEP", "North_ground_ortho2020", "MH_ground_ortho2020"],
   "drop": ["far_houses"],
-  "tuck": 0.5
+  "tuck": 0.5,
+  "overlap": true
  }
 }

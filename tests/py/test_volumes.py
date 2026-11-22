@@ -2,6 +2,7 @@
 and what it refuses."""
 
 import json
+import math
 import sys
 import tempfile
 import unittest
@@ -76,18 +77,59 @@ class Volumes(unittest.TestCase):
     def test_an_edge_shared_with_another_area_reaches_a_little_into_it(self):
         # two areas side by side both cut the far field on x 10: the two cuts left a sliver of it
         # standing between them (up to 0.9 m above the ground, a dark line along the seam); one
-        # area's cut now runs 0.25 m into the other's ground there and nowhere else
+        # area's cut now runs OVERLAP into the other's ground there and nowhere else
         a = [(0, 0), (10, 0), (10, 10), (0, 10)]
         b = [(10, -5), (20, -5), (20, 30), (10, 30)]
+        d = supersede.OVERLAP
         for ring in (a, a[::-1]):
             out = supersede.grow_shared(ring, [b])
             xs = sorted({round(p[0], 6) for p in out})
             ys = sorted({round(p[1], 6) for p in out})
-            self.assertEqual(xs, [0, supersede.OVERLAP + 10])
+            self.assertEqual(xs, [0, 10 + d])
             self.assertEqual(ys, [0, 10])
-        # b's edge x 10 is only partly shared: its outline stays as it is
-        self.assertEqual(supersede.grow_shared(b, [a]), b)
         self.assertEqual(supersede.grow_shared(a, []), a)
+
+    def test_a_partly_shared_edge_grows_on_the_shared_stretch_only(self):
+        # b's edge x 10 runs from y -5 to 30; a holds y 0 to 10 of it: b reaches into a there,
+        # the rest of the edge (far field on the other side) stays where it was
+        a = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        b = [(10, -5), (20, -5), (20, 30), (10, 30)]
+        d = supersede.OVERLAP
+        out = supersede.grow_shared(b, [a])
+        self.assertIn((10.0, -5.0), [tuple(p) for p in out])
+        self.assertIn((10.0, 30.0), [tuple(p) for p in out])
+        self.assertTrue(geom.inside(out, 10 - d / 2, 5))  # inside a, now cut by b too
+        self.assertFalse(geom.inside(out, 10 - d / 2, -1))  # far field: not cut
+        self.assertFalse(geom.inside(out, 10 - d / 2, 11))
+        self._grown_ok("b", b, out, [a])
+
+    def test_a_corner_where_the_neighbour_ends_takes_no_far_field(self):
+        # a three-way corner: a and b share x 10 from y 0 to 10; past (10, 10) the far field lies
+        # north of a and west of b's slanted edge. Grown by lines alone, a's corner would reach
+        # past b into the far field and leave a hole in the ground there
+        a = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        b = [(10, 0), (20, 0), (20, 20), (10, 10)]  # b's edge leaves (10, 10) at 45 degrees
+        for ring, other in ((a, b), (b, a)):
+            self._grown_ok("corner", ring, supersede.grow_shared(ring, [other]), [other])
+        # an acute corner of the neighbour (b's outline leaves the shared line at 30 degrees)
+        c = [(10, -10), (20, -10), (15, 10 - 5 * 3**0.5), (10, 10)]
+        for ring, other in ((a, c), (c, a)):
+            self._grown_ok("acute", ring, supersede.grow_shared(ring, [other]), [other])
+
+    def _grown_ok(self, name, old, grown, others, step=0.02):
+        """The grown outline holds the old one, takes no ground that no area owns (every point of
+        it lies in the old outline or in another area), and does not cross itself."""
+        for p in supersede.uncovered(old, [grown], step):
+            self.fail(f"{name}: the old outline at {p} is outside the grown one")
+        for p in supersede.uncovered(grown, [old, *others], step):
+            self.fail(f"{name}: the grown outline takes ground no area owns at {p}")
+        n = len(grown)
+        for i in range(n):
+            for j in range(i + 2, n):
+                if (j + 1) % n != i:
+                    a, b, c, e = grown[i], grown[(i + 1) % n], grown[j], grown[(j + 1) % n]
+                    crosses = supersede._crosses(a, b, c, e)
+                    self.assertFalse(crosses, f"{name}: crosses itself at {a}")
 
     def test_an_area_that_asks_for_overlap_cuts_round_all_of_its_own_ground(self):
         feet = {d.name: layout.load(d)["footprint"] for d in layout.areas()}
@@ -99,9 +141,41 @@ class Volumes(unittest.TestCase):
             r = supersede.area_rules(d, True, others)
             grown = [tuple(p) for p in r["footprint"]]
             self.assertNotEqual(grown, [tuple(round(v, 3) for v in p) for p in feet[d.name]])
-            for x, y in feet[d.name]:  # the old outline lies inside the grown one, or on it
-                on = geom.inside(grown, x, y) or supersede._near_ring(grown, x, y)
-                self.assertTrue(on, d.name)
+            self._grown_ok(d.name, [tuple(p[:2]) for p in feet[d.name]], grown, others, 0.05)
+
+    def test_every_edge_two_areas_share_is_cut_past_by_one_of_them(self):
+        # the sliver of far field between two areas' cuts goes only where one of them reaches past
+        # the shared line: every area that shares an edge asks for overlap. Near the ends of a
+        # stretch (END metres) a grown corner may step back so as not to take far field
+        END = 2.0
+        feet = {d.name: layout.load(d)["footprint"] for d in layout.areas()}
+        feet = {k: [tuple(p[:2]) for p in f] for k, f in feet.items() if f}
+        grown = {}
+        for d in layout.areas():
+            if d.name in feet:
+                others = [g for k, g in feet.items() if k != d.name]
+                rules = supersede.area_rules(d, True, others)
+                grown[d.name] = [tuple(p) for p in rules["footprint"]]
+        h = supersede.OVERLAP / 2
+        names = sorted(feet)
+        for k in names:
+            others = [feet[o] for o in names if o != k]
+            for a, b, j in supersede.shared_stretches(feet[k], others):
+                o = [n for n in names if n != k][j]
+                ln = math.hypot(b[0] - a[0], b[1] - a[1])
+                if ln < supersede.MIN_SHARED + 2 * END:
+                    continue
+                ux, uy = (b[0] - a[0]) / ln, (b[1] - a[1]) / ln
+                sign = 1.0 if geom.area(feet[k]) > 0 else -1.0
+                nx, ny = sign * uy, -sign * ux  # outward
+                t = END
+                while t <= ln - END:
+                    x, y = a[0] + ux * t, a[1] + uy * t
+                    past = geom.inside(grown[k], x + nx * h, y + ny * h) or geom.inside(
+                        grown[o], x - nx * h, y - ny * h
+                    )
+                    self.assertTrue(past, f"{k} / {o} at {(round(x, 2), round(y, 2))}")
+                    t += 0.5
 
     def test_every_plan_volume_is_usable(self):
         for d in layout.areas():
