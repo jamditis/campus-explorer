@@ -16,6 +16,7 @@ import bpy
 import geom
 import kit
 import numpy as np
+import seam as seam_mod
 from mathutils import Vector
 from mathutils.geometry import delaunay_2d_cdt
 from terrain import Terrain, _edge_distance, _inside, flood  # noqa: F401
@@ -176,8 +177,28 @@ def build(lay, terrain, image_dir=None, seam=None):
         known = seam.take(xy[on])
         # a vertex the first area has none at lies on its mesh's edge there (seam.Seam)
         miss = np.isnan(known)
+        # both meshes had the vertex before (sw17's seam): a vertex of the first area this mesh
+        # has without the first area's vertices it took (`seam_new`), not one met on its edge
+        old = ~miss
+        if lay.get("seam_new") and old.any():
+            took = {tuple(p) for p in lay["seam_new"]}
+            before = [p for p in lay["seam_points"] if tuple(p) not in took]
+            xy0, tris0, _owner0 = triangulate(dict(lay, seam_points=before))
+            u0 = np.unique(tris0)
+            v0 = xy0[u0[_edge_distance(lay["footprint"], xy0[u0, 0], xy0[u0, 1]) < 0.005]]
+            for k, (x, y) in enumerate(xy[on]):
+                if old[k]:
+                    old[k] = bool(len(v0)) and np.hypot(v0[:, 0] - x, v0[:, 1] - y).min() < 0.021
         known[miss] = seam.along(xy[on[miss]])
-        got = np.isfinite(known)
+        # lot paving is only raised: a vertex only one of the two meshes had before (sw17 kept its
+        # own height there) keeps that where the shared one is lower (seam.taken)
+        lot = np.zeros(len(xy), bool)
+        for t, o in zip(tris, owner, strict=True):
+            if o >= 0:
+                s = lay["surfaces"][o]
+                if s["kind"] in PAVED and s.get("grade", True) and not s.get("road"):
+                    lot[t] = True
+        got = seam_mod.taken(known, zfree[on], lot[on], old)
         held = zcap[on] < zfree[on] - 1e-6  # held under a bowl in this area: it keeps that
         zfree[on[got]] = known[got]
         zcap[on[got & ~held]] = known[got & ~held]

@@ -137,6 +137,19 @@ def held_samples(samples, ring, others, holders, near=None):
     return far_samples(samples, ring, rest, near)
 
 
+def taken(known, own, lot, old):
+    """Which vertices on a shared edge take the first-built area's height `known` (NaN: none)
+    instead of their `own`: all of them, except a vertex of lot paving (`lot`: graded paving that
+    is not a road) the shared height would lower, unless sw17's seam gave it that height already
+    (`old`: a vertex both meshes had before either took the other's, at a densified outline
+    point). Lots are only raised (AGENTS rule 6): the first area's height at a vertex only the
+    later mesh had, or along its edge, lowered lots by up to 7 cm and a road by 0.33 m."""
+    known, own = np.asarray(known, float), np.asarray(own, float)
+    ok = np.isfinite(known)
+    lower = ok & (known < own - 1e-6)
+    return ok & ~(lower & np.asarray(lot, bool) & ~np.asarray(old, bool))
+
+
 ECELL = 2.0  # metres: the lookup grid of recorded outline edges
 
 

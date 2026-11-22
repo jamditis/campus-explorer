@@ -133,7 +133,8 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
         lay["footprint"], rings
     )
     # and the vertices the areas built before put on it, their surfaces' corners too (seam.Seam)
-    lay["seam_points"] += SEAM.on_ring(lay["footprint"], lay["seam_points"])
+    lay["seam_new"] = SEAM.on_ring(lay["footprint"], lay["seam_points"])
+    lay["seam_points"] += lay["seam_new"]
     objects = ground.build(lay, terrain, lay["image_dir"], SEAM)
     try:
         import place  # object builders; optional while the ground is being worked on

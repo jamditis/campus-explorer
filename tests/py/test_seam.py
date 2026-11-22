@@ -88,6 +88,17 @@ class SharedEdge(unittest.TestCase):
         got = s.on_ring(EAST, skip=[(100.0, 10.71)])
         self.assertEqual(sorted(round(y, 6) for _x, y in got), [10.0, 12.0])
 
+    def test_lot_paving_takes_a_shared_height_only_upward_where_sw17_had_no_shared_vertex(self):
+        # a later area's lot met the first area's edge with a step of up to 7 cm where only one
+        # mesh had a vertex: taking the first area's height there lowered the lot (AGENTS rule
+        # 6). Other ground takes it either way, and so does a vertex both meshes had already
+        own = np.array([10.0, 10.0, 10.0, 10.0, 10.0])
+        known = np.array([9.9, 10.1, 9.9, 9.9, np.nan])
+        lot = np.array([True, True, False, True, True])
+        old = np.array([False, False, False, True, False])
+        np.testing.assert_array_equal(seam.taken(known, own, lot, old),
+                                      [False, True, True, True, False])  # fmt: skip
+
     def test_a_vertex_just_past_each_end_of_a_shared_edge_keeps_its_own_height(self):
         # WEST shares x 100 with EAST from y 0 to 92.3 and goes on from both ends as an edge with
         # no area beside it: a point 0.25 m along each of those edges from the corner, and none on
