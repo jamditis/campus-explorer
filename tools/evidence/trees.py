@@ -136,6 +136,15 @@ def existing(dump):
     return cells
 
 
+def on_surface(surfaces, x, y):
+    """Whether (x, y) lies on one of `surfaces` (plan surfaces as layout.load gives them): inside
+    its ring and in none of its holes. A hole in a pond's water is a hummock a tree stands on."""
+    return any(
+        geom.inside(s["ring"], x, y) and not any(geom.inside(h, x, y) for h in s.get("holes", []))
+        for s in surfaces
+    )
+
+
 def mapped_buildings(osm):
     """Outlines [(x, y), ...] of the buildings in an OpenStreetMap extract made by fetch.py. A
     building of another source model inside the area returns like a crown and is not in the plan:
@@ -162,7 +171,7 @@ def main():
     lay = layout.load(area)
     keep_out = [geom.offset(_ccw(geom.expand(b["ring"], True)), -2.5, True)
                 for b in lay["buildings"] + lay["stands"]]  # fmt: skip
-    keep_out += [s["ring"] for s in lay["surfaces"] if s["kind"] in PAVED]
+    on = [s for s in lay["surfaces"] if s["kind"] in PAVED]
     if (data / "osm.json").exists():
         osm = json.loads((data / "osm.json").read_text())
         # the same 2.5 m margin as the plan's own buildings: a roof edge leans in the survey
@@ -177,6 +186,8 @@ def main():
         # test the position that is written: a tree 2 cm outside paving rounded to 4 cm inside it
         x, y = round(x0 + (i + 0.5) * cell, 1), round(y1 - (j + 0.5) * cell, 1)
         if not geom.inside(lay["footprint"], x, y) or any(geom.inside(r, x, y) for r in keep_out):
+            continue
+        if on_surface(on, x, y):
             continue
         if any((x - t[0]) ** 2 + (y - t[1]) ** 2 < 81 for t in towers):
             continue
@@ -193,6 +204,12 @@ def main():
         win = height[max(0, j - w) : j + w + 1, max(0, i - w) : i + w + 1]
         solid = float((np.nan_to_num(win) > 0.4 * z).mean())
         conifer = g > 1.06 * r and g > 1.12 * b and solid >= 0.45
+        # a tree in a pond (on a hummock, a hole in the water) is seen against the water, which
+        # tints the leaf-off crown green: no conifer call there (the ponds' swamp trees read as
+        # pale, early-leafing crowns, not as evergreen ones)
+        conifer = conifer and not any(
+            s["kind"] == "water" and geom.inside(s["ring"], x, y) for s in on
+        )
         n = len(points)
         points.append(
             dict(
