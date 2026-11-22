@@ -105,6 +105,48 @@ def ends(ring, others, step=END):
     return out
 
 
+ALONG = 0.3  # metres along the outline either side of an edge sample, read for far field
+
+
+def far_samples(samples, ring, others, along=ALONG):
+    """The edge samples ([x, y, ...] on the closed outline `ring`) that meet ground other than
+    another scripted area's: a sample on an edge shared with one of `others`, or inside one, has
+    no other model to meet and goes, unless the outline `along` metres from it one way or the
+    other is not shared (the end of a shared stretch, where the far field begins: a three-way
+    corner keeps its sample). sw16 dropped every sample within 2 m of another area, so the first
+    2 m of the far-field edges from a three-way corner, and the corner itself, met no far field
+    (up to 0.40 m off it at village and Lot 60's corner, (-212, 1281))."""
+    ring = [(p[0], p[1]) for p in ring]
+    nxt = ring[1:] + ring[:1]
+    seg = [math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(ring, nxt, strict=True)]
+    cum = np.concatenate([[0.0], np.cumsum(seg)])
+    total = float(cum[-1])
+
+    def shared(x, y):
+        return any(_near(o, x, y) or geom.inside(o, x, y) for o in others)
+
+    def arc(x, y):
+        best, at = None, 0.0
+        for i, (a, b) in enumerate(zip(ring, nxt, strict=True)):
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            ln2 = (dx * dx + dy * dy) or 1e-12
+            t = max(0.0, min(1.0, ((x - a[0]) * dx + (y - a[1]) * dy) / ln2))
+            d = (x - a[0] - t * dx) ** 2 + (y - a[1] - t * dy) ** 2
+            if best is None or d < best:
+                best, at = d, cum[i] + t * seg[i]
+        return at
+
+    out = []
+    for e in samples:
+        x, y = e[0], e[1]
+        if shared(x, y):
+            at = arc(x, y)
+            if all(shared(*_along(ring, cum, total, at + s)) for s in (-along, along)):
+                continue
+        out.append(e)
+    return out
+
+
 class Seam:
     """Heights of outline vertices, shared between the areas of one build."""
 
