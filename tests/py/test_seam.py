@@ -105,3 +105,19 @@ class EdgeSamples(unittest.TestCase):
         k = kept([d])
         self.assertNotIn((10.0, 4.5), k)
         self.assertIn((10.0, 8.0), k)
+
+
+    def test_paving_keeps_the_samples_a_later_neighbour_took_away(self):
+        # B arrived after A's paving was reviewed and asks that A's paving stay as it was: the
+        # samples on the edge A now shares with B are held for A's paving; an older neighbour C's
+        # edge keeps today's rule (its samples went long ago)
+        a = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        b = [(10, -5), (20, -5), (20, 30), (10, 30)]
+        c = [(-5, 10), (5, 10), (5, 20), (-5, 20)]
+        samples = [[p[0], p[1], 1.0] for p in geom.resample(a, 0.5, True)]
+        held = seam.held_samples(samples, a, [b, c], [b])
+        got = {(round(s[0], 3), round(s[1], 3)) for s in held}
+        self.assertIn((10.0, 5.0), got)  # on the edge shared with B: held for the paving
+        self.assertNotIn((2.0, 10.0), got)  # on the edge shared with C: gone, as before
+        self.assertEqual(seam.far_samples(samples, a, [c]), held)
+        self.assertIsNone(seam.held_samples(samples, a, [b, c], []))  # no such neighbour

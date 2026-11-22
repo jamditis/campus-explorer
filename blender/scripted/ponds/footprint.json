@@ -207,6 +207,8 @@
    1281.0
   ]
  ],
+ "hold_neighbour_paving": true,
+ "hold_neighbour_paving_why": "The Village's and Lot 60's paving near the edges they now share with this area keeps the bend their old edge samples (the 4 km skirt) gave it: sharing the edge drops those samples, which would move Lot 60's L6S_paving by +0.079 / -0.076 m and Lot 45's asphalt by up to +0.049 m against sw17 (lots are only raised; reviewed paving does not move). Their soft ground lets go of the skirt and follows the LiDAR, as this area's does.",
  "supersede": {
   "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area with its centre inside, m2, from a dump of the published sw17 tiles: Context_skirt_3DEP_ortho_4km 38,440 (622 triangles); BD_farfield_3DEP, North_ground_ortho2020 and MH_ground_ortho2020 0, kept as in the neighbours so that any of their ground under the outline goes too). drop: far_houses (none inside: every far-field house stands on top of the faces, outside; kept so that a house mapped later inside is not left standing in the pond). Far-field trees inside are removed by the export. overlap: along the edges shared with the Village and Lot 60 the cut reaches 0.6 m into them (supersede.OVERLAP), so no sliver of the skirt stands between the two areas' cuts.",
   "clip": [

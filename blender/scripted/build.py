@@ -73,13 +73,19 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     read_outside = "outside" in edge_file.get("source", "")
     # the other areas of this build (an area left out with --areas is not a neighbour here)
     others = [layout.load(d) for d in built if d.name != plan_dir.name]
+    held = None
     if edge:
         edge = [e for e in edge if layout.meets_neighbour(lay, e[0], e[1])]
         # along an edge shared with another scripted area there is no other model to meet: both
         # areas take that ground from the same LiDAR, so samples of the old ground there are
         # dropped; up to the end of the shared stretch (a three-way corner) the far field is met
         rings = [o["footprint"] for o in others if o["footprint"]]
-        edge = seam.far_samples(edge, lay["footprint"], rings, None if read_outside else 2.0)
+        near = None if read_outside else 2.0
+        # a neighbour added after this area was reviewed may ask that this area's paving keep
+        # the samples its edge takes away: lots are only raised, reviewed paving does not move
+        holders = [o["footprint"] for o in others if o["footprint"] and o["hold_neighbour_paving"]]
+        held = seam.held_samples(edge, lay["footprint"], rings, holders, near)
+        edge = seam.far_samples(edge, lay["footprint"], rings, near)
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the
     # grade would be cut off at the shared edge and the two areas would meet with a step.
@@ -114,7 +120,8 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     # other paving are only raised (AGENTS rule 6)
     roads = [s["ring"] for s in lay["surfaces"] if s.get("road")]
     terrain = ground.Terrain(
-        lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps, roads=roads
+        lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps, roads=roads,
+        paving_edge=held,
     )
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
