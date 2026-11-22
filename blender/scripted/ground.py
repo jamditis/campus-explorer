@@ -66,6 +66,9 @@ def triangulate(lay):
     # the edge samples either side of a step in the neighbour's ground (Terrain.break_points):
     # vertices there put this ground's step where the neighbour's is, not across a grid gap
     foot = geom.insert_on_ring(foot, lay.get("edge_points", ()))
+    # the points another scripted area puts on an edge shared with it (seam.py): both meshes then
+    # have their vertices there at the same places
+    foot = geom.insert_on_ring(foot, lay.get("seam_points", ()))
     pts, edges = [], []
 
     def add_ring(ring):
@@ -159,11 +162,20 @@ def heights(lay, terrain, xy, tris, owner):
     return flood(zc, tris, owner, levels), flood(z, tris, owner, levels)
 
 
-def build(lay, terrain, image_dir=None):
-    """Make the ground objects (one per kind, verified and UNVERIFIED apart). Returns them."""
+def build(lay, terrain, image_dir=None, seam=None):
+    """Make the ground objects (one per kind, verified and UNVERIFIED apart). Returns them.
+    `seam` (seam.Seam) holds the heights of outline vertices of the areas built before this one."""
     lay["edge_points"], lay["edge_lines"] = terrain.break_points(), terrain.break_lines()
     xy, tris, owner = triangulate(lay)
     zcap, zfree = heights(lay, terrain, xy, tris, owner)
+    if seam is not None:  # vertices on an edge shared with an area built before take its heights
+        on = np.nonzero(_edge_distance(lay["footprint"], xy[:, 0], xy[:, 1]) < 0.005)[0]
+        known = seam.take(xy[on])
+        got = np.isfinite(known)
+        held = zcap[on] < zfree[on] - 1e-6  # held under a bowl in this area: it keeps that
+        zfree[on[got]] = known[got]
+        zcap[on[got & ~held]] = known[got & ~held]
+        seam.record(xy[on], zfree[on])
     capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl
     groups = {}
     for t, o, under in zip(tris, owner, capped, strict=True):

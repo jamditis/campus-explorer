@@ -201,7 +201,9 @@ class PlanFiles(unittest.TestCase):
             for x, y, z in json.loads(Path(f).read_text())["samples"][::25]:
                 d = min(math.hypot(x - a[0], y - a[1]) for a in foot)
                 self.assertLess(d, 1.01)
-                self.assertTrue(90 < z < 190, "NAVD88 metres on this hillside")
+                # NAVD88 metres on this hillside: Valley Road at the foot of Yogi Berra Drive's
+                # descent lies at 80 m
+                self.assertTrue(75 < z < 190, "NAVD88 metres on this hillside")
 
 
 class Southwest(unittest.TestCase):

@@ -1,0 +1,62 @@
+{
+ "zone": "yd_footprint",
+ "notes": "The ground this area owns (3.26 ha): Yogi Berra Drive's descent from the stadium area to Valley Road, the wooded slope it passes through between the north-east area and Valley Road, and Valley Road itself (a county road, CR 621, not campus ground) for 205 m round the drive's mouth, with the mouths of Maclean Road and Charles Street. Names from OpenStreetMap (Yogi Berra Drive, way 233324750, one-way up from Valley Road; Valley Road, way 312841179; Charles Street, way 11733749; Maclean Road, way 11745726); no building stands inside. The drive leaves Valley Road southbound by a deceleration lane and a painted gore, runs south-west beside it behind a wooded island, turns through a hairpin with a retaining wall of up to 6 m on its outer side, and climbs north at about 10 % to the stadium area. Frame used for Valley Road: origin (404, 646), heading 67.7 deg (osm 312841179 runs straight here; the centre line lies at t -0.85 to -1.15 in it), s along, t to the east. West: x 300 from y 716.76 to 826, shared with the north-east area (its east edge, the wood edge). North-west: y 826 from x 300 to 345 and x 345 from y 826 to 918.3, shared with the stadium area; Yogi Berra Drive crosses x 345 between y 886.8 and 900.8, where the stadium plan's ST_road_YB_one_way ends. North: a straight run from (345, 918.3) on the OSM campus line (way 233913199) to (448.96, 818.87), 0 to 11 m inside the campus line (on it at both ends) and 30 m or more from the private houses on Adams Terrace and Valley Road; then square across Valley Road at s 177, 6 m past the end of the deceleration lane's taper and 28 m south of the Pino Court mouth. East: t 10.5, 4.75 to 5.3 m behind Valley Road's east curb, 2.2 m or more from the nearest house (osm 1135575457 at t 12.7); it crosses the mouths of Maclean Road (s -2 to 6) and Charles Street (s 97 to 107). Near the two cuts it bows out, to t 19 from s -28 to -11 (back to t 10.5 at s -5.5, clear of Maclean Road's curb return) and to t 14.5 from s 163 to 177 (from t 10.5 at s 155; 2 m from the house at t 16.5): the far field lies tilted across Valley Road at both cuts (+0.5 to +0.8 m over the LiDAR at the west curb, -0.5 to -0.8 m at the east curb), so the road ramps up to 13 m on the east lanes, and where an east-edge sample is the nearest one the ramp stops (Road cuts, Edge samples). With the edge at t 10.5 to the corners, the ramp at an earlier south cut (s -22) fell by 0.76 m between two points 3 m apart on the east lane; with the bows the largest change of the ramp between points 0.5 m apart on the road is 0.08 m. The ground inside the bows is wooded private yard (no building in OSM or the 2020 ortho). South: square across Valley Road at s -28, 26 m south of the Maclean Road mouth, and on along that line to x 300 (y 658.39), 30 m or more south of the hairpin. Where the cuts lie: the far field's top over the road is closest to the LiDAR road (median across it within 0.1 m) from s -34 to -16 and at s 170 to 177; from s -7 to 58 it lies 0.5 to 0.8 m over it, so the cuts are not at the drive's mouth. Neighbours outside the shared edges are the north model's far-field ground (BD_farfield_3DEP, triangles up to 100 m across) and the 4 km skirt; both lie off the LiDAR here by -1.7 to +3.2 m over the woods (the wooded slope west of Valley Road is the worst: +2.5 to +3.2 m at x 415 to 440 on the north edge), so soft ground bends to them over 4 m there (BLEND). Valley Road and the two street mouths are marked road. No building, paving, fence or instanced object of another model lies inside; the north-east and stadium areas meet this one along the shared edges from the same LiDAR. Evidence: NJ 2020 ortho (0.15 m), NJ NW 6-County 2017 LiDAR (ground returns, 3 per m2), OpenStreetMap (2026-11-21); no photograph of Joe's shows this place.",
+ "footprint": [
+  [
+   410.95,
+   612.88
+  ],
+  [
+   417.4,
+   628.61
+  ],
+  [
+   411.63,
+   636.93
+  ],
+  [
+   472.53,
+   785.42
+  ],
+  [
+   479.27,
+   791.31
+  ],
+  [
+   484.58,
+   804.26
+  ],
+  [
+   448.96,
+   818.87
+  ],
+  [
+   345.0,
+   918.3
+  ],
+  [
+   345.0,
+   826.0
+  ],
+  [
+   300.0,
+   826.0
+  ],
+  [
+   300.0,
+   658.39
+  ]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area with its centre inside, m2, from a dump of the published sw14 tiles: Context_skirt_3DEP_ortho_4km 27650, BD_farfield_3DEP 28261); both run on beyond the outline. drop: far_houses (none inside; kept as in every area, so a far-field house mapped later inside is not left standing in the wood). Far-field trees inside are removed by the export. overlap: along the edges shared with the north-east (x 300) and stadium (y 826, x 345) areas the cut reaches 0.25 m into them, so no sliver of the far field stands between the two areas' cuts (sw16 had one, up to 0.9 m above the new ground, along y 826 and x 345).",
+  "clip": [
+   "Context_skirt",
+   "BD_farfield_3DEP"
+  ],
+  "drop": [
+   "far_houses"
+  ],
+  "tuck": 0.5,
+  "overlap": true
+ }
+}

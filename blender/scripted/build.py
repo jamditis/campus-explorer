@@ -24,6 +24,9 @@ import geom  # noqa: E402
 import ground  # noqa: E402
 import kit  # noqa: E402
 import layout  # noqa: E402
+import seam  # noqa: E402
+
+SEAM = seam.Seam()  # heights on the edges the areas of this build share
 
 
 def _near(ring, x, y, d):
@@ -128,7 +131,14 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     )
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
-    objects = ground.build(lay, terrain, lay["image_dir"])
+    # an edge shared with another area of this build: the other area's outline points become
+    # vertices here too, and the vertices there take the heights of the area built first
+    rings = [o["footprint"] for o in others if o["footprint"]]
+    # and a vertex just past each end of a shared stretch keeps this area's height (seam.ends)
+    lay["seam_points"] = seam.points_on(lay["footprint"], rings, ground.GRID) + seam.ends(
+        lay["footprint"], rings
+    )
+    objects = ground.build(lay, terrain, lay["image_dir"], SEAM)
     try:
         import place  # object builders; optional while the ground is being worked on
     except ImportError:
