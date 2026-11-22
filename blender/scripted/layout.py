@@ -246,12 +246,13 @@ def check_point(p):
 
 def check_surface(s):
     """Refuse what the builders cannot honour for water: a water surface is one level sheet with
-    no paint; `level` (metres, NAVD88) is for water only and must be a number."""
+    no paint; `level` (metres, NAVD88) must be a number, on water or paving (paving held at
+    another model's level, such as an entrance landing the ground must come down to)."""
     name = s.get("name")
     if "level" in s:
         lv = s["level"]
-        if s["kind"] != "water":
-            raise ValueError(f"{name}: only water takes a level")
+        if s["kind"] not in ("water", "asphalt", "concrete", "brick"):
+            raise ValueError(f"{name}: only water and paving take a level")
         if isinstance(lv, bool) or not isinstance(lv, int | float) or not math.isfinite(lv):
             raise ValueError(f"{name}: level must be a height in metres, not {lv!r}")
     if s["kind"] == "water" and s.get("paint"):

@@ -164,6 +164,8 @@ def heights(lay, terrain, xy, tris, owner):
         if s["kind"] == "water" and (owner == i).any():
             levels[i] = s["level"] if "level" in s else terrain.water_level(s["ring"])
             print(f"SW water {s['name']}: level {levels[i]:.2f} m")
+        elif "level" in s and (owner == i).any():  # paving held at another model's level
+            levels[i] = s["level"]
     return flood(zc, tris, owner, levels), flood(z, tris, owner, levels)
 
 
@@ -202,7 +204,12 @@ def build(lay, terrain, image_dir=None, seam=None):
                 s = lay["surfaces"][o]
                 if s["kind"] in PAVED and s.get("grade", True) and not s.get("road"):
                     lot[t] = True
-        got = seam_mod.taken(known, zfree[on], lot[on], old)
+        # paving held at a `level` keeps it on the shared edge too (seam.taken)
+        level = np.zeros(len(xy), bool)
+        for t, o in zip(tris, owner, strict=True):
+            if o >= 0 and "level" in lay["surfaces"][o] and lay["surfaces"][o]["kind"] != "water":
+                level[t] = True
+        got = seam_mod.taken(known, zfree[on], lot[on], old, level[on])
         held = zcap[on] < zfree[on] - 1e-6  # held under a bowl in this area: it keeps that
         zfree[on[got]] = known[got]
         zcap[on[got & ~held]] = known[got & ~held]

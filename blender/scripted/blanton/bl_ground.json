@@ -386,6 +386,183 @@
    ],
    "evidence": "ortho2020 (dumpsters and the north-east area's asphalt service apron of Stone Street run on under the leaning roof); lidar2017 (yard at 135.4 to 136.0 m, falling to the north-east)",
    "unverified": "asphalt is taken to run on from the north-east area's apron up to the dock; its south edge is the dock line above. Not graded, so the dock face is not smoothed into a 5 m ramp"
+  },
+  {
+   "name": "BL_W_landing_passage_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.435,
+   "ring": [
+    [
+     97.81,
+     441.06
+    ],
+    [
+     97.76,
+     441.17
+    ],
+    [
+     96.71,
+     441.65
+    ],
+    [
+     96.52,
+     441.41
+    ],
+    [
+     96.19,
+     441.56
+    ],
+    [
+     95.63,
+     440.35
+    ],
+    [
+     95.35,
+     440.47
+    ],
+    [
+     93.51,
+     436.46
+    ],
+    [
+     93.56,
+     436.35
+    ],
+    [
+     95.18,
+     435.6
+    ],
+    [
+     95.32,
+     435.65
+    ]
+   ],
+   "evidence": "the main model's landing at the west passage doors (TU_Blanton_entrance_0_landing, top faces 136.425 to 136.467 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.435 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
+  },
+  {
+   "name": "BL_W_landing_SW_low_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.56,
+   "ring": [
+    [
+     91.23,
+     417.53
+    ],
+    [
+     92.12,
+     418.17
+    ],
+    [
+     92.49,
+     419.08
+    ],
+    [
+     92.44,
+     419.14
+    ],
+    [
+     90.9,
+     419.81
+    ],
+    [
+     90.74,
+     420.12
+    ],
+    [
+     90.65,
+     420.12
+    ],
+    [
+     90.48,
+     420.0
+    ],
+    [
+     89.95,
+     420.2
+    ],
+    [
+     88.24,
+     418.98
+    ],
+    [
+     88.2,
+     418.91
+    ],
+    [
+     88.26,
+     418.81
+    ]
+   ],
+   "evidence": "the main model's landing at the south-west corner door, its lower (north-west) part (TU_Blanton_entrance_0_landing, top faces 136.554 to 136.587 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.560 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
+  },
+  {
+   "name": "BL_W_landing_SW_high_UNVERIFIED",
+   "kind": "concrete",
+   "grade": false,
+   "layer": 5.5,
+   "level": 136.59,
+   "ring": [
+    [
+     91.15,
+     417.54
+    ],
+    [
+     92.3,
+     417.03
+    ],
+    [
+     92.42,
+     417.3
+    ],
+    [
+     93.02,
+     417.04
+    ],
+    [
+     93.19,
+     417.42
+    ],
+    [
+     93.47,
+     417.31
+    ],
+    [
+     93.94,
+     418.37
+    ],
+    [
+     93.92,
+     418.47
+    ],
+    [
+     92.44,
+     419.13
+    ],
+    [
+     92.49,
+     419.08
+    ],
+    [
+     92.12,
+     418.17
+    ],
+    [
+     91.23,
+     417.53
+    ],
+    [
+     91.13,
+     417.57
+    ]
+   ],
+   "evidence": "the main model's landing at the south-west corner door, its higher (south-east) part (TU_Blanton_entrance_0_landing, top faces 136.583 to 136.608 m in the sw20 tiles): its top outline grown 0.1 m, clipped to the footprint",
+   "unverified": "held at 136.590 m, the landing's level, not the LiDAR's (0.15 to 0.29 m higher): the ground comes down to the main model's entrance, which cannot change now; it keeps that level on the edge shared with webster too (seam.taken), where webster's walk and plaza stand up to 0.29 m higher and its edge skirt closes the step. Remove when the main file sets the entrance at the LiDAR level"
   }
  ],
  "lifts": [

@@ -54,9 +54,13 @@ class Validation(unittest.TestCase):
         with self.assertRaises(ValueError):
             layout.check_surface(dict(name="Pond", kind="water", ring=SQUARE, level=float("nan")))
 
-    def test_a_level_belongs_to_water_only(self):
+    def test_a_level_belongs_to_water_and_paving_only(self):
         with self.assertRaises(ValueError):
             layout.check_surface(dict(name="Lawn", kind="lawn", ring=SQUARE, level=99.0))
+        # paving at another model's level (the main model's entrance landings at Blanton Hall)
+        layout.check_surface(dict(name="Landing", kind="concrete", ring=SQUARE, level=136.44))
+        with self.assertRaises(ValueError):
+            layout.check_surface(dict(name="Landing", kind="concrete", ring=SQUARE, level="low"))
 
     def test_load_checks_the_plan(self):
         with tempfile.TemporaryDirectory() as d:
