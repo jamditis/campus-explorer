@@ -150,7 +150,11 @@ def heights(lay, terrain, xy, tris, owner):
         [o >= 0 and lay["surfaces"][o].get("grade", True) for o in owner]
     )  # a pad on a bank follows the bank
     paved[np.unique(tris[np.isin(kinds, list(PAVED)) & graded])] = True
-    z = terrain.surface(xy[:, 0], xy[:, 1], paved, capped=False)
+    # every paving vertex, graded or not ("grade": false walks follow the ground), meets the
+    # neighbour flush; the rest (lawn, mulch, gravel, water) meets it EDGE_TUCK under it
+    paving = np.zeros(len(xy), bool)
+    paving[np.unique(tris[np.isin(kinds, list(PAVED))])] = True
+    z = terrain.surface(xy[:, 0], xy[:, 1], paved, capped=False, soft=~paving)
     # under a seating bowl the ground is held below the rows (terrain caps); the ground outside
     # keeps its own height on the bowl's outline, so a vertex there has both
     zc = terrain.cap(xy[:, 0], xy[:, 1], z)

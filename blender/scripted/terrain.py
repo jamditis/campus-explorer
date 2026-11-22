@@ -18,6 +18,18 @@ GRADE_RIDGE = 0.3  # cells squared: how firmly a slope paved cells hardly show i
 GRADE_LEVEL = 1.0  # metres: paving this far above or below a cell counts less in its grade
 REACH = 6.0  # an edge sample speaks for ground within this distance of it, metres
 SEAM = 0.15  # paving meets a neighbour flush only when they are this close in height already
+# Soft ground meets the neighbour's ground this far under it at the footprint, eased out over the
+# blend like the step itself. Read 5 cm outside the outline, edge heights put the soft ground's edge
+# on the far field within a few centimetres either way, and where it stood over it the skirt showed
+# as a thin dark line (sw19: 1,427 far-field edge points more than 2 cm over). Tile heights are
+# stored to about 1 cm, so 2 cm keeps an edge that meets the far field at least a centimetre under
+# it after rounding. 3 cm took 1,200 more points under 1 cm over (of about 5,600 left, nearly all
+# where the blend, averaged over 12 samples, misses the far field by more than any tuck) but made
+# 42 more edge points worse than sw18 by over 0.1 m, deepening steps that were there already.
+# Paving, graded or not, and edges shared with another scripted area are not tucked.
+EDGE_TUCK = 0.02
+# metres from an edge shared with another scripted area over which the tuck fades in
+EDGE_TUCK_FADE = 1.0
 LEVEL_PCT = 10  # percentile of the shore's ground that sets a water level (see shore_level)
 CAP_GAP = 0.03  # ground held this far below a cap's top (the rows of a seating bowl)
 CAP_EDGE = 0.05  # a point this close to a cap's outline is held by it too
@@ -338,8 +350,11 @@ class Terrain:
         caps=(),
         roads=(),
         paving_edge=None,
+        shared=(),
     ):
         self.lifts, self.footprint, self.caps = list(lifts), footprint, list(caps)
+        # the other scripted areas' outlines: no tuck on an edge shared with one (EDGE_TUCK)
+        self.shared = [list(r) for r in shared]
         z = np.load(lidar_npz)
         self.x0, self.y0, self.x1, self.y1 = (float(v) for v in z["box"][:4])
         self.cell = cell
@@ -563,16 +578,17 @@ class Terrain:
         a = self.graded if smooth else self.rough
         return _sample(a, x, y, self.x0, self.y1, self.cell) + self.lift(x, y)
 
-    def surface(self, x, y, paved, capped=True):
+    def surface(self, x, y, paved, capped=True, soft=None):
         """Finished height of points: `paved` (bool per point) picks graded ground; blended at the
         edge; held under the caps unless `capped` is False (the ground outside a bowl, which meets
-        the bowl's outline at its own height).
+        the bowl's outline at its own height). `soft` (default: not `paved`) is the ground that
+        meets the neighbour EDGE_TUCK under it: not paving, graded or not.
         """
         x, y = np.asarray(x, float), np.asarray(y, float)
         z = np.where(paved, self.z(x, y, True), self.z(x, y, False))
         raw = z
         if self.footprint is not None and self.edge is not None:
-            z = self._blend(x, y, z, paved)
+            z = self._blend(x, y, z, paved, ~np.asarray(paved, bool) if soft is None else soft)
         if self.footprint is not None and self._paving is not None:
             now = self._state()
             self._restore(self._paving)
@@ -602,7 +618,7 @@ class Terrain:
                 z[m] = np.minimum(z[m], np.asarray(c["top"](x[m], y[m]), float) - CAP_GAP)
         return z
 
-    def _blend(self, x, y, z, paved):
+    def _blend(self, x, y, z, paved, soft=None):
         """The edge blend: soft ground bends to the neighbours' ground over BLEND, or over the
         nearest sample's `ramp` where that is longer. Paving bends where the two are nearly level
         already (within SEAM), and by the sample's `free` share where the LiDAR shows no step
@@ -632,7 +648,17 @@ class Terrain:
 
         wb, wl = ease(d / BLEND), ease(d / length)
         seam = np.abs(step) < SEAM
-        dz = np.nan_to_num(step * (1 - wb) + at_s * (wb - wl))
+        # soft ground meets the neighbour EDGE_TUCK under it, so the far field covers its edge; not
+        # on an edge shared with another scripted area (its mesh takes this one's vertices there)
+        tuck = np.zeros(n)
+        soft = np.zeros(n, bool) if soft is None else np.broadcast_to(np.asarray(soft, bool), (n,))
+        tuck[k[soft[k]]] = EDGE_TUCK
+        for ring in self.shared:
+            near = tuck > 0
+            if near.any():
+                ds = _edge_distance(ring, x[near], y[near])
+                tuck[near] *= np.clip(ds / EDGE_TUCK_FADE, 0.0, 1.0)
+        dz = np.nan_to_num((step - tuck) * (1 - wb) + at_s * (wb - wl))
         ask = paved & (free > 0)  # paving ramps by the cut's share only on a road
         road = np.zeros(int(ask.sum()), bool)
         for ring in self.roads:  # a vertex on the road's own outline (at the cut) counts

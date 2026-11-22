@@ -126,7 +126,7 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     roads = [s["ring"] for s in lay["surfaces"] if s.get("road")]
     terrain = ground.Terrain(
         lidar, edge, lay["lifts"], lay["footprint"], paved, voids, caps=caps, roads=roads,
-        paving_edge=held,
+        paving_edge=held, shared=[o["footprint"] for o in others if o["footprint"]],
     )
     authored = data / "authored"
     lay["image_dir"] = str(authored) if authored.exists() else None  # paint sheets, also on roofs
