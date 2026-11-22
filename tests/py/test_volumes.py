@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "blender" / "scripted"))
 
+import geom  # noqa: E402
 import layout  # noqa: E402
 import supersede  # noqa: E402
 
@@ -71,6 +72,36 @@ class Volumes(unittest.TestCase):
         r = supersede.area_rules(ROOT / "blender" / "scripted" / "southwest", False)
         self.assertEqual(sorted(r), ["clip", "drop", "footprint", "name", "skip", "tuck"])
         self.assertTrue(r["skip"])
+
+    def test_an_edge_shared_with_another_area_reaches_a_little_into_it(self):
+        # two areas side by side both cut the far field on x 10: the two cuts left a sliver of it
+        # standing between them (up to 0.9 m above the ground, a dark line along the seam); one
+        # area's cut now runs 0.25 m into the other's ground there and nowhere else
+        a = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        b = [(10, -5), (20, -5), (20, 30), (10, 30)]
+        for ring in (a, a[::-1]):
+            out = supersede.grow_shared(ring, [b])
+            xs = sorted({round(p[0], 6) for p in out})
+            ys = sorted({round(p[1], 6) for p in out})
+            self.assertEqual(xs, [0, supersede.OVERLAP + 10])
+            self.assertEqual(ys, [0, 10])
+        # b's edge x 10 is only partly shared: its outline stays as it is
+        self.assertEqual(supersede.grow_shared(b, [a]), b)
+        self.assertEqual(supersede.grow_shared(a, []), a)
+
+    def test_an_area_that_asks_for_overlap_cuts_round_all_of_its_own_ground(self):
+        feet = {d.name: layout.load(d)["footprint"] for d in layout.areas()}
+        for d in layout.areas():
+            f = d / "footprint.json"
+            if not f.exists() or not json.loads(f.read_text())["supersede"].get("overlap"):
+                continue
+            others = [g for k, g in feet.items() if k != d.name and g]
+            r = supersede.area_rules(d, True, others)
+            grown = [tuple(p) for p in r["footprint"]]
+            self.assertNotEqual(grown, [tuple(round(v, 3) for v in p) for p in feet[d.name]])
+            for x, y in feet[d.name]:  # the old outline lies inside the grown one, or on it
+                on = geom.inside(grown, x, y) or supersede._near_ring(grown, x, y)
+                self.assertTrue(on, d.name)
 
     def test_every_plan_volume_is_usable(self):
         for d in layout.areas():

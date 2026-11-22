@@ -48,7 +48,7 @@
   ]
  ],
  "supersede": {
-  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area with its centre inside, m2, from a dump of the published sw14 tiles: Context_skirt_3DEP_ortho_4km 27650, BD_farfield_3DEP 28261); both run on beyond the outline. drop: far_houses (none inside; kept as in every area, so a far-field house mapped later inside is not left standing in the wood). Far-field trees inside are removed by the export.",
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (triangle area with its centre inside, m2, from a dump of the published sw14 tiles: Context_skirt_3DEP_ortho_4km 27650, BD_farfield_3DEP 28261); both run on beyond the outline. drop: far_houses (none inside; kept as in every area, so a far-field house mapped later inside is not left standing in the wood). Far-field trees inside are removed by the export. overlap: along the edges shared with the north-east (x 300) and stadium (y 826, x 345) areas the cut reaches 0.25 m into them, so no sliver of the far field stands between the two areas' cuts (sw16 had one, up to 0.9 m above the new ground, along y 826 and x 345).",
   "clip": [
    "Context_skirt",
    "BD_farfield_3DEP"
@@ -56,6 +56,7 @@
   "drop": [
    "far_houses"
   ],
-  "tuck": 0.5
+  "tuck": 0.5,
+  "overlap": true
  }
 }
