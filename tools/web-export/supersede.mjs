@@ -282,10 +282,11 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       // high and half a metre into the lawn in sw17), any outside it a crack. On a grid of a centimetre or more a corner
       // on the outline is stored at the nearest grid point at least MARGIN inside it (snapQuantized); its height is
       // rounded as before, so a corner that rounding left inside does not move at all. A primitive the earlier version
-      // cut (southwest's marks in the tiles restored from fc1401b) is mended and cut as sw16 did: its pieces carry the
-      // earlier version's lowered corners, which only the skirt's simplification takes out
+      // cut (southwest's marks in the tiles restored from fc1401b) is mended (its lowered corners raised back) and then
+      // cut the same way: sw17 cut its far field on the grid as sw16 did, and left 16 m² of skirt standing up to 0.68 m
+      // over the south-west area's ground (0.01 m² on scratch copies of the fc1401b tiles cut this way)
       const DIV = { 5120: 127, 5121: 255, 5122: 32767, 5123: 65535 }[src.getComponentType()];
-      const STEP = DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0, EXACT_CUT = STEP >= EXACT && !mend, SNAP = !EXACT_CUT && STEP >= MARGIN;
+      const STEP = DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0, EXACT_CUT = STEP >= EXACT, SNAP = !EXACT_CUT && STEP >= MARGIN;
       const PULL = Math.min(0.15, Math.max(0.02, STEP)), OVER = EXACT_CUT || prim.getExtras().edge ? EXACT_OVER : PULL;
       const n = src.getCount(), p = [0, 0, 0];
       // model-frame position of every corner (viewer z is minus model y), and whether it is inside
