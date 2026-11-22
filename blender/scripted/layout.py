@@ -64,6 +64,9 @@ def load(plan_dir):
         field_frame=None,
         adopt=[],  # adopt.json: objects taken from a main-model release (adopt.py)
         volumes=[],  # footprint.json supersede.volumes: what supersede.mjs takes out of other tiles
+        # footprint.json: an area added next to reviewed ones asks that their paving keep the edge
+        # samples its arrival took away (seam.held_samples)
+        hold_neighbour_paving=False,
     )
     out["area"] = Path(plan_dir).name
     for f in sorted(Path(plan_dir).glob("*.json")):
@@ -73,6 +76,8 @@ def load(plan_dir):
         zone = plan.get("zone", f.stem)
         if plan.get("footprint"):
             out["footprint"] = geom.expand(plan["footprint"], True)
+        if plan.get("hold_neighbour_paving"):
+            out["hold_neighbour_paving"] = True
         for e in plan.get("free_edges", []):
             out["free_edges"].append(geom.expand(e["ring"], True))
         if plan.get("field_frame"):

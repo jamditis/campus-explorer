@@ -124,6 +124,19 @@ def far_samples(samples, ring, others, near=None):
     return out
 
 
+def held_samples(samples, ring, others, holders, near=None):
+    """The samples this area's paving keeps although the ground drops them: those an edge shared
+    with one of `holders` (areas that came after this area's paving was reviewed and ask, with
+    `"hold_neighbour_paving": true`, that it stay as it was) took away; the samples the other
+    neighbours take stay gone. None when no holder is a neighbour (nothing held). Lots are only
+    raised and reviewed paving does not move: the old samples bent this paving only where it was
+    already within SEAM of them (terrain.Terrain `paving_edge`)."""
+    if not holders:
+        return None
+    rest = [o for o in others if not any(o is h for h in holders)]
+    return far_samples(samples, ring, rest, near)
+
+
 ECELL = 2.0  # metres: the lookup grid of recorded outline edges
 
 

@@ -337,6 +337,7 @@ class Terrain:
         cell=1.0,
         caps=(),
         roads=(),
+        paving_edge=None,
     ):
         self.lifts, self.footprint, self.caps = list(lifts), footprint, list(caps)
         z = np.load(lidar_npz)
@@ -398,8 +399,26 @@ class Terrain:
             self.graded = np.where(np.isfinite(only), only, self.graded)
         self.edge, self.relative, self.breaks = None, None, np.zeros((0, 2))
         self.break_pairs = []
+        self.ramp, self.free = np.zeros(0), np.zeros(0)
         if edge:
             self.set_edge(edge)
+        # paving held to older samples (seam.held_samples): a later neighbour took samples away
+        # from this area's edge, but its reviewed paving keeps the heights they gave it
+        self._paving = None
+        if paving_edge:
+            now = self._state()
+            self.set_edge(paving_edge)
+            self._paving = self._state()
+            self._restore(now)
+
+    _STATE = ("edge", "relative", "breaks", "break_pairs", "ramp", "free")
+
+    def _state(self):
+        return tuple(getattr(self, k) for k in self._STATE)
+
+    def _restore(self, state):
+        for k, v in zip(self._STATE, state, strict=True):
+            setattr(self, k, v)
 
     def set_edge(self, edge):
         """Take the neighbours' ground along the footprint (`edge`: [x, y, z] samples in order)."""
@@ -551,8 +570,17 @@ class Terrain:
         """
         x, y = np.asarray(x, float), np.asarray(y, float)
         z = np.where(paved, self.z(x, y, True), self.z(x, y, False))
+        raw = z
         if self.footprint is not None and self.edge is not None:
             z = self._blend(x, y, z, paved)
+        if self.footprint is not None and self._paving is not None:
+            now = self._state()
+            self._restore(self._paving)
+            try:
+                held = self._blend(x, y, raw, paved)
+            finally:
+                self._restore(now)
+            z = np.where(paved, held, z)
         return self.cap(x, y, z) if capped else z
 
     def under_caps(self, x, y):
