@@ -65,11 +65,12 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     lay = layout.load(plan_dir)
     if not lay["footprint"]:
         return build_groundless(lay, plan_dir, data, assets, adopt_from)
-    edge = (
-        json.loads(Path(plan_dir / "edge_heights.json").read_text())["samples"]
-        if (plan_dir / "edge_heights.json").exists()
-        else None
-    )
+    heights = plan_dir / "edge_heights.json"
+    edge_file = json.loads(heights.read_text()) if heights.exists() else {}
+    edge = edge_file.get("samples")
+    # edge heights read 0.3 m outside the footprint from tiles (edge.py's second way) are the far
+    # field's even next to another area; the first way's are not (seam.far_samples)
+    read_outside = "outside" in edge_file.get("source", "")
     # the other areas of this build (an area left out with --areas is not a neighbour here)
     others = [layout.load(d) for d in built if d.name != plan_dir.name]
     if edge:
@@ -78,7 +79,7 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
         # areas take that ground from the same LiDAR, so samples of the old ground there are
         # dropped; up to the end of the shared stretch (a three-way corner) the far field is met
         rings = [o["footprint"] for o in others if o["footprint"]]
-        edge = seam.far_samples(edge, lay["footprint"], rings)
+        edge = seam.far_samples(edge, lay["footprint"], rings, None if read_outside else 2.0)
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the
     # grade would be cut off at the shared edge and the two areas would meet with a step.

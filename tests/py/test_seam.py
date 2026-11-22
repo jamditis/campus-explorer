@@ -81,24 +81,27 @@ class EdgeSamples(unittest.TestCase):
     def test_samples_of_the_far_field_are_kept_up_to_the_end_of_a_shared_edge(self):
         # A shares x 10 with B from y 0 to 10; north and south of A past the corners lies far field.
         # Samples on the shared edge go (no other model to meet there). sw16 also dropped every
-        # sample within 2 m of B: the first 2 m of A's far-field edges from each corner, and the
-        # corner, met no far field (village and Lot 60 at (-212, 1281) stood 0.40 m over it)
+        # sample within 2 m of B: the first 2 m of A's far-field edges from each corner met no far
+        # field (Lot 60 at its corner with the Village, (-212, 1281), stood 0.40 m over it)
         a = [(0, 0), (10, 0), (10, 10), (0, 10)]
         b = [(10, -5), (20, -5), (20, 30), (10, 30)]
         samples = [[p[0], p[1], 1.0] for p in geom.resample(a, 0.5, True)]
-        kept = {(round(s[0], 3), round(s[1], 3)) for s in seam.far_samples(samples, a, [b])}
-        for y in (0.5, 5.0, 9.5):
-            self.assertNotIn((10.0, y), kept)  # on the shared edge
-        for p in ((10.0, 0.0), (10.0, 10.0), (9.5, 10.0), (8.5, 10.0), (9.0, 0.0), (5.0, 10.0)):
-            self.assertIn(p, kept)  # the corners and the far-field edges up to them
-        # an edge shared all the way round a corner keeps no sample there
-        c = [(10, 0), (20, 0), (20, 20), (0, 20), (0, 10), (10, 10)]  # B wraps round A's north
-        kept = {(round(s[0], 3), round(s[1], 3)) for s in seam.far_samples(samples, a, [c])}
-        self.assertNotIn((10.0, 10.0), kept)
-        self.assertNotIn((5.0, 10.0), kept)
-        self.assertIn((10.0, 0.0), kept)  # past (10, 0) the far field begins
+
+        def kept(others, near=None):
+            got = seam.far_samples(samples, a, others, near)
+            return {(round(s[0], 3), round(s[1], 3)) for s in got}
+
+        k = kept([b])
+        for p in ((10.0, 0.5), (10.0, 5.0), (10.0, 9.5), (10.0, 10.0), (10.0, 0.0)):
+            self.assertNotIn(p, k)  # on the shared edge, its ends included
+        for p in ((9.5, 10.0), (8.5, 10.0), (9.5, 0.0), (5.0, 10.0)):
+            self.assertIn(p, k)  # the far-field edges up to the corners
+        # edge heights made the first way keep sw16's rule
+        k = kept([b], 2.0)
+        self.assertNotIn((8.5, 10.0), k)
+        self.assertIn((7.5, 10.0), k)
         # inside another area (areas that overlap a little) a sample goes too
         d = [(9, 3), (12, 3), (12, 6), (9, 6)]
-        kept = {(round(s[0], 3), round(s[1], 3)) for s in seam.far_samples(samples, a, [d])}
-        self.assertNotIn((10.0, 4.5), kept)
-        self.assertIn((10.0, 8.0), kept)
+        k = kept([d])
+        self.assertNotIn((10.0, 4.5), k)
+        self.assertIn((10.0, 8.0), k)
