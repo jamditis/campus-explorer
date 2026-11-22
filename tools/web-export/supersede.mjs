@@ -78,6 +78,8 @@ const volumeAreas = AREAS.filter(rules => !rules.skip && rules.volumes).map(rule
 }));
 // metres: a corner the outline cut in a coarsely quantised mesh is stored at least this far inside the outline
 const MARGIN = 0.01;
+// metres outside the outline within which a corner the earlier version lowered can lie now (see `pit`)
+const MEND_NEAR = 0.1;
 // metres between grid points from which the cut pieces get exact positions (the far field), and how far a cut corner
 // of those is pulled along its edge under the new ground (a hair, so the two edges overlap and no pinhole shows)
 const EXACT = 0.05, EXACT_OVER = 0.005;
@@ -391,6 +393,25 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       for (let t = 0; t < I.length; t += 3) visit(I[t], I[t + 1], I[t + 2], 0);
       if (removed + cutN === before && !mend) continue; // it only came near
       if (!keep.length) { mesh.removePrimitive(prim); prim.dispose(); removedAll++; continue; }
+      // corners the earlier version lowered that lie on the outline can read as outside it now (within a millimetre:
+      // a row of skirt corners at (-421.8, -360.6) by southwest's edge stood 0.48 m low, and the exact cut ended the
+      // far field 0.25 m under southwest's ground there). A corner within MEND_NEAR outside the outline is raised back
+      // too where it stands TUCK (give or take 40 %) under the highest corner it shares a triangle with that lies
+      // further out (and so was never lowered)
+      const pit = new Uint8Array(n);
+      if (mend && STEP >= EXACT) { // the far field only: the main and north models' own ground is fine and steep in places
+        const zOf = i => { src.getElement(i, p); return toModel(w, p)[2]; };
+        const near = i => !isIn[i] && ringDistance(ring, wx[i], wy[i]) <= MEND_NEAR, high = new Float64Array(n).fill(-Infinity);
+        for (let t = 0; t < I.length; t += 3) for (let k = 0; k < 3; k++) {
+          const i = I[t + k];
+          if (!near(i)) continue;
+          for (const j of [I[t + (k + 1) % 3], I[t + (k + 2) % 3]]) if (!isIn[j] && !near(j)) high[i] = Math.max(high[i], zOf(j));
+        }
+        for (let i = 0; i < n; i++) {
+          const drop = high[i] - (Number.isFinite(high[i]) ? zOf(i) : 0);
+          if (Number.isFinite(high[i]) && drop > 0.6 * TUCK && drop < 1.4 * TUCK) pit[i] = 1;
+        }
+      }
       // accessors can be shared between primitives: edit copies, and drop the originals nobody uses any more.
       // Every attribute gets the added corners, each the weighted mean of its parents (parents come first).
       const total = n + added.length, olds = [idx], exactPos = new Map();
@@ -401,7 +422,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         }
         if (sem === 'POSITION' && mend) {
           // the earlier version lowered every inside corner it kept by TUCK: put them back first
-          for (let i = 0; i < n; i++) if (isIn[i]) { copy.getElement(i, p); copy.setElement(i, [p[0] + up[0], p[1] + up[1], p[2] + up[2]]); mended++; }
+          for (let i = 0; i < n; i++) if (isIn[i] || pit[i]) { copy.getElement(i, p); copy.setElement(i, [p[0] + up[0], p[1] + up[1], p[2] + up[2]]); mended++; }
         }
         const e = [], sum = new Array(size);
         for (let k = 0; k < added.length; k++) {
