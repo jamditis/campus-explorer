@@ -65,3 +65,59 @@ export function outsidePart(ring, tri, isIn, corner, over = 0) {
   }
   return out;
 }
+
+/** Distance from (x, y) to the closed outline `ring`. */
+export function ringDistance(ring, x, y) {
+  let best = Infinity;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [ax, ay] = ring[j], dx = ring[i][0] - ax, dy = ring[i][1] - ay;
+    const t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / ((dx * dx + dy * dy) || 1e-12)));
+    best = Math.min(best, Math.hypot(x - ax - t * dx, y - ay - t * dy));
+  }
+  return best;
+}
+
+/**
+ * Where a vertex the outline cut is stored in a quantised mesh (KHR_mesh_quantization: normalized integers, `div`
+ * steps per node unit). Rounded to the nearest grid point, a vertex moves up to half a step either way, and the far
+ * field's grid is coarse (0.38 m in the north model's 12 km BD_farfield_3DEP, 6 cm in the 4 km skirt): its cut edge
+ * ended up to a quarter metre short of the outline, a crack that showed the ground below. Instead, of the grid
+ * points round the exact point `q` (node units), the one nearest it in the model frame (`toModel` maps node units
+ * to [x, y, z] metres) that `keep(x, y)` accepts (inside the outline, under the new ground), as integers; up (the node
+ * axis that is most of model z) is rounded to the nearest. The nearest grid point when none of them is accepted.
+ */
+export function snapQuantized(q, div, toModel, keep, reach = 3) {
+  // the same corner reached from two triangles can differ in the last bits: the same input, the same grid point
+  q = q.map(v => Math.round(v * 1e9) / 1e9);
+  const o = toModel([0, 0, 0]), signed = div === 127 || div === 32767;
+  const rise = [0, 1, 2].map(a => { const e = [0, 0, 0]; e[a] = 1; return Math.abs(toModel(e)[2] - o[2]); });
+  const up = rise.indexOf(Math.max(...rise)), [h0, h1] = [0, 1, 2].filter(a => a !== up);
+  const clamp = v => Math.max(signed ? -div : 0, Math.min(div, v));
+  const at = toModel(q), base = q.map(v => Math.floor(v * div)), cands = [];
+  for (let i = 1 - reach; i <= reach; i++) for (let j = 1 - reach; j <= reach; j++) {
+    const c = base.slice();
+    c[h0] = clamp(c[h0] + i); c[h1] = clamp(c[h1] + j); c[up] = clamp(Math.round(q[up] * div));
+    const m = toModel(c.map(v => v / div));
+    cands.push([Math.hypot(m[0] - at[0], m[1] - at[1], m[2] - at[2]), c, m]);
+  }
+  cands.sort((a, b) => a[0] - b[0]);
+  for (const [, c, m] of cands) if (keep(m[0], m[1])) return c;
+  return q.map(v => clamp(Math.round(v * div)));
+}
+
+/**
+ * How far (x, y) lies behind the outline's corner `i`: the smaller of its distances inside the lines of the two runs
+ * that meet there (negative in front of either). A far-field corner stored at an outline corner must lie behind both:
+ * at a reflex corner a point can be inside the outline but in front of one run, and the far field's edge from it then
+ * crosses the outline and leaves a sliver of the wedge beyond it bare.
+ */
+export function behind(ring, i, x, y) {
+  let s = 0;
+  for (let k = 0, j = ring.length - 1; k < ring.length; j = k++) s += ring[j][0] * ring[k][1] - ring[k][0] * ring[j][1];
+  const o = Math.sign(s) || 1, n = ring.length, c = ring[i];
+  const side = (a, b) => { // inside of the run a -> b is to its left when the outline runs anticlockwise
+    const dx = b[0] - a[0], dy = b[1] - a[1], ln = Math.hypot(dx, dy) || 1;
+    return o * (dx * (y - a[1]) - dy * (x - a[0])) / ln;
+  };
+  return Math.min(side(ring[(i + n - 1) % n], c), side(c, ring[(i + 1) % n]));
+}

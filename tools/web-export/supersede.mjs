@@ -5,8 +5,10 @@
 // For every area and every tile that is not a scripted-build tile:
 //   clip  meshes: triangles wholly inside the footprint are removed; a triangle that straddles its edge, holds one
 //         of its corners or is crossed by it is cut exactly where the outline crosses it (cut.mjs), split into four
-//         first only where the outline turns inside it: the old ground ends at the footprint at its own height, a
-//         quantisation step (at least 2 cm) under the new ground's edge, so no crack opens and nothing dips.
+//         first only where the outline turns inside it or crosses it with every corner inside (a notch): the old ground
+//         ends at the footprint at its own height, a quantisation step (at least 2 cm) under the new ground's edge, so
+//         no crack opens and nothing dips. On a coarse grid (the far field) a cut corner is stored at a grid point
+//         inside the outline, never short of it (cut.mjs snapQuantized).
 //         (`cut`, the piece size of the earlier version, stays in the rules' hash only.)
 //   drop  meshes: triangles wholly inside the footprint are removed, nothing else changes
 // Tiles done by the earlier version (straddlers kept whole, their inside corners lowered by `tuck` metres, which
@@ -21,7 +23,7 @@ import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extension
 import { compactPrimitive, getBounds } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { readFileSync, writeFileSync, readdirSync, existsSync, appendFileSync } from 'node:fs';
-import { crossings, cornersIn, edgesCross, outsidePart } from './cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind } from './cut.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
 import { pattern, region, cutVolume } from './volume.mjs';
 
@@ -74,6 +76,8 @@ const volumeAreas = AREAS.filter(rules => !rules.skip && rules.volumes).map(rule
     above: v.above ?? null, keep: (v.keep ?? []).map(pattern),
   })),
 }));
+// metres: a corner the outline cut in a coarsely quantised mesh is stored at least this far inside the outline
+const MARGIN = 0.01;
 const marksOf = x => (x.getExtras().superseded ?? '').split(' ').filter(Boolean);
 const mark = (x, RULES) => { const m = marksOf(x); if (!m.includes(RULES)) x.setExtras({ ...x.getExtras(), superseded: [...m, RULES].join(' ') }); };
 // what each volume took, per 'mesh material' label: VOLUME_STATS=FILE appends one JSON line per changed tile
@@ -214,6 +218,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
     // raising by TUCK along world up (viewer +Y), written in the mesh's own space: inverse(rotation * scale) * (0, TUCK, 0)
     // (undoes the earlier version's lowering)
     const s2 = k => (w[k] * w[k] + w[k + 1] * w[k + 1] + w[k + 2] * w[k + 2]) || 1;
+    const local = p => toModel(w, p), keepIn = (x, y) => within(x, y) && ringDistance(ring, x, y) >= MARGIN;
     const up = [TUCK * w[1] / s2(0), TUCK * w[5] / s2(4), TUCK * w[9] / s2(8)];
     for (const prim of mesh.listPrimitives()) {
       const label = `${mesh.getName()} ${prim.getMaterial()?.getName() ?? ''}`;
@@ -228,9 +233,16 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const src = prim.getAttribute('POSITION'), idx = prim.getIndices();
       if (!src || !idx) continue;
       // a cut corner is a new vertex, rounded to the mesh's quantisation grid: pull it under the new ground by
-      // at least one step so rounding cannot open a crack (and a T-junction with the new edge cannot show)
+      // at least one step so rounding cannot open a crack (and a T-junction with the new edge cannot show). Pulled
+      // along its edge, a corner moves less than that across the outline where the edge crosses it at a slant, and
+      // the pull stops at 15 cm while the north model's far field has a grid of 0.38 m: rounded to the nearest grid
+      // point, its cut edge ended up to a quarter metre short of the outline (a crack down to the lower skirt).
+      // On a grid of a centimetre or more a corner on the outline is stored at the nearest grid point at least MARGIN
+      // inside it instead (snapQuantized); its height is rounded as before, so a corner that rounding left inside
+      // does not move at all, and ground the areas' edge heights were read from keeps its height
       const DIV = { 5120: 127, 5121: 255, 5122: 32767, 5123: 65535 }[src.getComponentType()];
-      const OVER = Math.min(0.15, Math.max(0.02, DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0));
+      const STEP = DIV && src.getNormalized() ? Math.sqrt(s2(0)) / DIV : 0, SNAP = STEP >= MARGIN;
+      const OVER = Math.min(0.15, Math.max(0.02, STEP));
       const n = src.getCount(), p = [0, 0, 0];
       // model-frame position of every corner (viewer z is minus model y), and whether it is inside
       const wx = new Float64Array(n), wy = new Float64Array(n), isIn = Array.from({ length: n }, () => 0);
@@ -249,12 +261,14 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const before = removed + cutN;
       // corners added by cutting, numbered after the original ones: each a weighted mean of earlier corners,
       // [[corner, weight], ...] (an edge's midpoint, a point where the outline crosses an edge, an outline corner)
-      const added = [], ax = [], ay = [], memo = new Map();
+      // onLine: added corners on the outline, each with the outline corner it stands for (-1: a crossing on a run)
+      const added = [], ax = [], ay = [], memo = new Map(), onLine = new Map();
       const X = i => (i < n ? wx[i] : ax[i - n]), Y = i => (i < n ? wy[i] : ay[i - n]);
-      const add = (key, parents, inside) => {
+      const add = (key, parents, inside, line = null) => {
         let m = key === null ? undefined : memo.get(key);
         if (m === undefined) {
           m = n + added.length; added.push(parents);
+          if (line !== null) onLine.set(m - n, line);
           ax.push(parents.reduce((s, [i, k]) => s + X(i) * k, 0)); ay.push(parents.reduce((s, [i, k]) => s + Y(i) * k, 0));
           isIn[m] = inside ? 1 : 0;
           if (key !== null) memo.set(key, m);
@@ -264,7 +278,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
       const pair = (a, b) => (a < b ? a * 4294967296 + b : b * 4294967296 + a);
       const mid = (a, b) => add('m' + pair(a, b), [[a, 0.5], [b, 0.5]], within((X(a) + X(b)) / 2, (Y(a) + Y(b)) / 2));
       // the crossing on an edge is found from its inside corner, so the two triangles on the edge share it
-      const cross = (i, o, t) => add('x' + i * 4294967296 + o, [[i, 1 - t], [o, t]], false);
+      const cross = (i, o, t) => add('x' + i * 4294967296 + o, [[i, 1 - t], [o, t]], false, -1);
       const I = idx.getArray(), keep = [];
       const P = i => [X(i), Y(i)];
       // straddling edges crossed once, other edges not at all: the piece can be cut with one run of the outline
@@ -276,7 +290,9 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
         const away = Math.max(X(a), X(b), X(c)) < bx[0] || Math.min(X(a), X(b), X(c)) > bx[2] ||
           Math.max(Y(a), Y(b), Y(c)) < bx[1] || Math.min(Y(a), Y(b), Y(c)) > bx[3];
         const corners = mode === 'clip' && !away ? cornersIn(ring, P(a), P(b), P(c)) : [];
-        if (!corners.length && k === 3) { removed++; return; }
+        // all corners inside and no outline corner inside: a notch of the outline can still run through it (a far-field
+        // triangle 10 m across over the Village's notch at (-200, 722) went whole, leaving a hole down to nothing)
+        if (!corners.length && k === 3 && (away || mode !== 'clip' || !edgesCross(ring, [P(a), P(b), P(c)]))) { removed++; return; }
         // all corners outside and no outline corner inside: a band of footprint can still cross it
         if (!corners.length && k === 0 && (away || mode !== 'clip' || !edgesCross(ring, [P(a), P(b), P(c)]))) { keep.push(a, b, c); return; }
         if (mode === 'drop') { if (k === 3) removed++; else keep.push(a, b, c); return; }
@@ -300,7 +316,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
           // the outline corner: barycentric weights of the piece's corners
           const [[x1, y1], [x2, y2], [x3, y3]] = tri, d = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3);
           const l1 = ((y2 - y3) * (q.x - x3) + (x3 - x2) * (q.y - y3)) / d, l2 = ((y3 - y1) * (q.x - x3) + (x1 - x3) * (q.y - y3)) / d;
-          return add(null, [[a, l1], [b, l2], [c, 1 - l1 - l2]], false);
+          return add(null, [[a, l1], [b, l2], [c, 1 - l1 - l2]], false, q.index);
         });
         // a fan from the outline corner (the part is star-shaped round it) or from any corner of a convex part
         const s0 = Math.max(0, part.findIndex(q => q.kind === 'ring'));
@@ -327,6 +343,10 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
           sum.fill(0);
           for (const [i, wgt] of added[k]) { copy.getElement(i, e); for (let q = 0; q < size; q++) sum[q] += e[q] * wgt; }
           copy.setElement(n + k, sum);
+          if (sem === 'POSITION' && SNAP && onLine.has(k)) {
+            const c = onLine.get(k), keep = c < 0 ? keepIn : (x, y) => keepIn(x, y) && behind(ring, c, x, y) >= MARGIN;
+            copy.getArray().set(snapQuantized(sum, DIV, local, keep), (n + k) * size);
+          }
         }
         prim.setAttribute(sem, copy); olds.push(old);
       }
