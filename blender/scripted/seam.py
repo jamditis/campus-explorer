@@ -137,6 +137,26 @@ def held_samples(samples, ring, others, holders, near=None):
     return far_samples(samples, ring, rest, near)
 
 
+def paving_samples(pave, edge, ring, others, holders, near=None):
+    """The edge samples this area's paving is bent by (`terrain.Terrain` `paving_edge`), None
+    where it takes the ground's. `pave` is the edge file's "paving" entry (samples and their
+    source): the samples the reviewed paving was made with, kept when the file's samples were
+    made again (sw18 read them 5 cm outside instead of 0.3 m; paving within 0.15 m of them would
+    have moved), filtered as the ground's are; without it, `edge` (the ground's samples, read
+    with `near`). Where a later neighbour holds this area's paving (`holders`, seam.held_samples)
+    the samples its edge takes away stay too."""
+    if pave:
+        src = pave["samples"]
+        near = None if "outside" in pave.get("source", "") else 2.0
+    else:
+        src = edge
+    if holders:
+        return held_samples(src, ring, others, holders, near)
+    if pave:
+        return far_samples(src, ring, others, near)
+    return None
+
+
 def taken(known, own, lot, old):
     """Which vertices on a shared edge take the first-built area's height `known` (NaN: none)
     instead of their `own`: all of them, except a vertex of lot paving (`lot`: graded paving that

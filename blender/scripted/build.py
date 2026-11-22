@@ -84,7 +84,12 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
         # a neighbour added after this area was reviewed may ask that this area's paving keep
         # the samples its edge takes away: lots are only raised, reviewed paving does not move
         holders = [o["footprint"] for o in others if o["footprint"] and o["hold_neighbour_paving"]]
-        held = seam.held_samples(edge, lay["footprint"], rings, holders, near)
+        # and paving made with older samples than the file's keeps them ("paving")
+        pave = edge_file.get("paving")
+        if pave:
+            keep = [e for e in pave["samples"] if layout.meets_neighbour(lay, e[0], e[1])]
+            pave = dict(pave, samples=keep)
+        held = seam.paving_samples(pave, edge, lay["footprint"], rings, holders, near)
         edge = seam.far_samples(edge, lay["footprint"], rings, near)
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the

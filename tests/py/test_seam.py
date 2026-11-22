@@ -159,3 +159,22 @@ class EdgeSamples(unittest.TestCase):
         self.assertNotIn((2.0, 10.0), got)  # on the edge shared with C: gone, as before
         self.assertEqual(seam.far_samples(samples, a, [c]), held)
         self.assertIsNone(seam.held_samples(samples, a, [b, c], []))  # no such neighbour
+
+    def test_paving_keeps_the_samples_it_was_reviewed_with_when_the_edge_heights_change(self):
+        # edge heights made again (sw18: read 5 cm outside instead of 0.3 m) would move paving
+        # that is within 0.15 m of the far field; the file keeps the earlier samples under
+        # "paving", and the paving is bent by those, filtered as the ground's are
+        a = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        b = [(10, -5), (20, -5), (20, 30), (10, 30)]
+        old = [[p[0], p[1], 1.0] for p in geom.resample(a, 0.5, True)]
+        new = [[p[0], p[1], 2.0] for p in geom.resample(a, 0.5, True)]
+        pave = {"samples": old, "source": "tiles, ground meshes 0.3 m outside"}
+        got = seam.paving_samples(pave, new, a, [b], [])
+        self.assertEqual({s[2] for s in got}, {1.0})
+        self.assertFalse(any(s[0] == 10.0 and 0 < s[1] < 10 for s in got))  # shared: gone
+        # held by a later neighbour: the shared edge's samples stay for the paving
+        got = seam.paving_samples(pave, new, a, [b], [b])
+        self.assertTrue(any(s[0] == 10.0 and 0 < s[1] < 10 for s in got))
+        # nothing kept: paving follows the ground (None), unless a neighbour holds it
+        self.assertIsNone(seam.paving_samples(None, new, a, [b], []))
+        self.assertEqual({s[2] for s in seam.paving_samples(None, new, a, [b], [b])}, {2.0})
