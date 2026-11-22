@@ -169,13 +169,31 @@ def build(lay, terrain, image_dir=None, seam=None):
     xy, tris, owner = triangulate(lay)
     zcap, zfree = heights(lay, terrain, xy, tris, owner)
     if seam is not None:  # vertices on an edge shared with an area built before take its heights
-        on = np.nonzero(_edge_distance(lay["footprint"], xy[:, 0], xy[:, 1]) < 0.005)[0]
+        # (only vertices the mesh uses: the triangulation also holds points of surface outlines
+        # that end just outside the footprint, and a later area took such a point for a vertex)
+        used = np.unique(tris)
+        on = used[_edge_distance(lay["footprint"], xy[used, 0], xy[used, 1]) < 0.005]
         known = seam.take(xy[on])
+        # a vertex the first area has none at lies on its mesh's edge there (seam.Seam)
+        miss = np.isnan(known)
+        known[miss] = seam.along(xy[on[miss]])
         got = np.isfinite(known)
         held = zcap[on] < zfree[on] - 1e-6  # held under a bowl in this area: it keeps that
         zfree[on[got]] = known[got]
         zcap[on[got & ~held]] = known[got & ~held]
-        seam.record(xy[on], zfree[on])
+        # this mesh's outline edges (used by one triangle) between those vertices
+        index = {int(v): k for k, v in enumerate(on)}
+        uses = {}
+        for t in tris:
+            for a, b in ((t[0], t[1]), (t[1], t[2]), (t[2], t[0])):
+                key = (min(a, b), max(a, b))
+                uses[key] = uses.get(key, 0) + 1
+        rim = [
+            (index[a], index[b])
+            for (a, b), n in uses.items()
+            if n == 1 and a in index and b in index
+        ]
+        seam.record(xy[on], zfree[on], rim)
     capped = terrain.under_caps(*xy[tris].mean(1).T)  # triangles under a bowl
     groups = {}
     for t, o, under in zip(tris, owner, capped, strict=True):

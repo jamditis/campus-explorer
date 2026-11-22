@@ -61,6 +61,33 @@ class SharedEdge(unittest.TestCase):
         self.assertEqual(got[0], 5.0)  # within 2 cm: the recorded height
         self.assertTrue(np.isnan(got[1:]).all())  # anything further is the area's own
 
+    def test_a_later_vertex_between_two_shared_ones_lies_on_the_first_areas_edge(self):
+        # a vertex only the later area has on the shared edge (a corner of one of its surfaces,
+        # an end point) kept its own height: a step to the first mesh's edge between its two
+        # vertices (west and southwest at (-404.6, -57.5): 0.40 m in sw17)
+        s = seam.Seam()
+        xy = np.array([[100.0, 10.0], [100.0, 12.0], [100.0, 20.0]])
+        s.record(xy, np.array([5.0, 6.0, 7.0]), edges=[(0, 1)])  # no edge from 12 to 20
+        got = s.along(np.array([[100.0, 11.0], [100.01, 10.5], [100.0, 10.0], [100.5, 11.0],
+                                [100.0, 16.0], [100.0, 9.0]]))  # fmt: skip
+        self.assertAlmostEqual(got[0], 5.5)
+        self.assertAlmostEqual(got[1], 5.25)  # within 2 cm of the edge
+        self.assertAlmostEqual(got[2], 5.0)  # on its end
+        self.assertTrue(np.isnan(got[3:]).all())  # off it, on no recorded edge, past its end
+
+    def test_a_later_area_puts_the_first_areas_own_vertices_on_its_outline(self):
+        # the first area's mesh had a vertex on the shared edge the later one lacked (a corner of
+        # one of its surfaces): the later mesh's edge ran straight over it, a step (north-east and
+        # stadium at (-66, 826): 0.28 m in sw17)
+        s = seam.Seam()
+        s.record(np.array([[100.0, 10.0], [100.0, 10.7], [100.0, 12.0], [50.0, 0.0]]),
+                 np.array([5.0, 4.0, 6.0, 1.0]))  # fmt: skip
+        got = sorted((round(x, 6), round(y, 6)) for x, y in s.on_ring(EAST))
+        self.assertEqual(got, [(100.0, 10.0), (100.0, 10.7), (100.0, 12.0)])
+        # less than 2 cm from a point the outline takes already: not again
+        got = s.on_ring(EAST, skip=[(100.0, 10.71)])
+        self.assertEqual(sorted(round(y, 6) for _x, y in got), [10.0, 12.0])
+
     def test_a_vertex_just_past_each_end_of_a_shared_edge_keeps_its_own_height(self):
         # WEST shares x 100 with EAST from y 0 to 92.3 and goes on from both ends as an edge with
         # no area beside it: a point 0.25 m along each of those edges from the corner, and none on

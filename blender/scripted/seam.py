@@ -124,18 +124,74 @@ def far_samples(samples, ring, others, near=None):
     return out
 
 
+ECELL = 2.0  # metres: the lookup grid of recorded outline edges
+
+
 class Seam:
-    """Heights of outline vertices, shared between the areas of one build."""
+    """Heights of outline vertices and edges, shared between the areas of one build.
+
+    The first-built area's mesh may have vertices on a shared edge that the outline points of
+    `points_on` do not give (a corner of one of its surfaces on the outline), and a later area
+    has some of its own there too (an end point of `ends`, its own surfaces): either mesh's
+    edge then ran straight past a vertex of the other, a step of up to 0.4 m in sw17. A later
+    area therefore puts the first areas' recorded vertices on its outline (`on_ring`), and its
+    vertices that meet no recorded vertex take the height of the recorded edge they lie on
+    (`along`): its edge there lies on the first mesh's edge."""
 
     def __init__(self):
         self.cells = {}
+        self.edges = {}
 
-    def record(self, xy, z):
-        """Keep the heights `z` of the vertices `xy` (n x 2); a vertex already recorded keeps its
-        first height."""
-        for (x, y), h in zip(np.asarray(xy, float), np.asarray(z, float), strict=True):
+    def record(self, xy, z, edges=()):
+        """Keep the heights `z` of the vertices `xy` (n x 2), and the mesh's outline edges among
+        them (`edges`: index pairs into `xy`); a vertex already recorded keeps its first height."""
+        xy, z = np.asarray(xy, float), np.asarray(z, float)
+        for (x, y), h in zip(xy, z, strict=True):
             key = (round(x / CELL), round(y / CELL))
             self.cells.setdefault(key, []).append((x, y, float(h)))
+        for i, j in edges:
+            seg = (*xy[i], z[i], *xy[j], z[j])
+            lo, hi = np.minimum(xy[i], xy[j]) - TOL, np.maximum(xy[i], xy[j]) + TOL
+            for gx in range(math.floor(lo[0] / ECELL), math.floor(hi[0] / ECELL) + 1):
+                for gy in range(math.floor(lo[1] / ECELL), math.floor(hi[1] / ECELL) + 1):
+                    self.edges.setdefault((gx, gy), []).append(seg)
+
+    def along(self, xy):
+        """The height of the nearest recorded edge within TOL of each point of `xy`, at the point
+        (linear along the edge), NaN where none is."""
+        xy = np.asarray(xy, float)
+        out = np.full(len(xy), np.nan)
+        for k, (x, y) in enumerate(xy):
+            best = TOL * TOL + 1e-12
+            for ax, ay, az, bx, by, bz in self.edges.get(
+                (math.floor(x / ECELL), math.floor(y / ECELL)), ()
+            ):
+                dx, dy = bx - ax, by - ay
+                ln2 = dx * dx + dy * dy
+                if ln2 < 1e-12:
+                    continue
+                t = max(0.0, min(1.0, ((x - ax) * dx + (y - ay) * dy) / ln2))
+                d = (x - ax - t * dx) ** 2 + (y - ay - t * dy) ** 2
+                if d < best:
+                    best, out[k] = d, az + t * (bz - az)
+        return out
+
+    def on_ring(self, ring, skip=()):
+        """The recorded vertices that lie within TOL of the closed outline `ring`, leaving out any
+        within TOL of a point of `skip` (points the outline takes already)."""
+        ring = [(p[0], p[1]) for p in ring]
+        skip = [(p[0], p[1]) for p in skip]
+        lo = np.min(ring, 0) - TOL
+        hi = np.max(ring, 0) + TOL
+        out = []
+        for pts in self.cells.values():
+            for x, y, _h in pts:
+                if not (lo[0] <= x <= hi[0] and lo[1] <= y <= hi[1]) or not _near(ring, x, y):
+                    continue
+                if any((x - px) ** 2 + (y - py) ** 2 <= TOL * TOL for px, py in skip + out):
+                    continue
+                out.append((x, y))
+        return out
 
     def take(self, xy):
         """The recorded height within TOL of each point of `xy`, NaN where none is."""
