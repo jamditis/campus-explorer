@@ -3,9 +3,9 @@ flush.
 
 usage: python3 blender/scripted/edge.py AREA DUMP_DIR     (system Python with numpy)
 DUMP_DIR is either a triangle dump of the published tiles (tiles.json and tiles.bin from
-tools/evidence/dump_tiles.mjs ... --no-instances): the top of the other sources' ground meshes
-0.3 m outside the footprint, where it is the ground the new ground meets, the same before and
-after the scripted build superseded the ground inside; or (as the first areas were made)
+tools/evidence/dump_tiles.mjs ... --no-instances) of tiles supersede.mjs has cut: the top
+of the other sources' ground meshes 5 cm outside the footprint, where it meets the new ground;
+or (as the first areas were made)
 ground_height.npy and ground.json from tools/evidence/plan.py --name ground, made from the tiles
 BEFORE that: the median of the cells within 1.5 m, both sides of the outline. Writes
 <area>/edge_heights.json: [x, y, z] every metre along the footprint (no sample where the tiles have
@@ -33,7 +33,11 @@ GROUND = re.compile(
     r"|platform|ballast|verge"
 )
 NOT_GROUND = re.compile(r"(?i)far_houses|crown|tree|roof|bleacher|field_lines|endzone|curb|wall")
-GAP = 0.3  # metres outside the footprint at which a triangle dump is read
+# metres outside the footprint at which a triangle dump is read: tiles supersede.mjs cut end
+# exactly on the outline (sw17), so the ground is read where it meets the new ground; 0.3 m (sw16)
+# read the north model's terrain, which falls up to 1 m per metre from its cut edge, up to 0.25 m
+# low
+GAP = 0.05
 REFINE_GAP = 0.05  # metres outside at which a step between two samples is looked for
 REFINE = 0.05  # metres: how closely a step in the neighbour's ground is found between samples
 

@@ -68,7 +68,7 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     heights = plan_dir / "edge_heights.json"
     edge_file = json.loads(heights.read_text()) if heights.exists() else {}
     edge = edge_file.get("samples")
-    # edge heights read 0.3 m outside the footprint from tiles (edge.py's second way) are the far
+    # edge heights read just outside the footprint from tiles (edge.py's second way) are the far
     # field's even next to another area; the first way's are not (seam.far_samples)
     read_outside = "outside" in edge_file.get("source", "")
     # the other areas of this build (an area left out with --areas is not a neighbour here)
