@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind, planeLevel } from '../tools/web-export/cut.mjs';
+import { crossings, cornersIn, edgesCross, outsidePart, ringDistance, snapQuantized, behind, planeLevel, splitEdge } from '../tools/web-export/cut.mjs';
 
 // a square footprint 0..10 x 0..10, anticlockwise
 const SQ = [[0, 0], [10, 0], [10, 10], [0, 10]];
@@ -187,4 +187,12 @@ test('a corner moved on a steep face keeps its rounded height', () => {
   const q = local(300.05, 650, z(300.05)), keep = px => px < 300.0;
   const c = snapQuantized(q, DIV, toModel, keep, 3, planeLevel(...tri, 1));
   near(toModel(c.map(v => v / DIV))[2], z(300.05), STEP / 2 + 1e-9);
+});
+
+test('the pieces the outline cut go to a primitive of their own, the rest stays', () => {
+  // corners 0..3 were there before (n = 4); 4 and 5 were added: 4 on the outline, 5 a midpoint
+  const keep = [0, 1, 2, 1, 4, 2, 2, 5, 3, 4, 5, 2];
+  const { rest, edge } = splitEdge(keep, 4, new Set([0]));
+  assert.deepEqual(rest, [0, 1, 2, 2, 5, 3]);
+  assert.deepEqual(edge, [1, 4, 2, 4, 5, 2]);
 });

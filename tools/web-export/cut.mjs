@@ -160,3 +160,17 @@ export function behind(ring, i, x, y) {
   };
   return Math.min(side(ring[(i + n - 1) % n], c), side(c, ring[(i + 1) % n]));
 }
+
+/**
+ * The triangles `keep` (corner indices, three a triangle) split into those that hold a corner the outline cut (an
+ * added corner, index n + k with k in `onLine`) and the rest: the cut pieces of a coarsely quantised far field go to a
+ * primitive with exact positions, the rest keeps its grid.
+ */
+export function splitEdge(keep, n, onLine) {
+  const rest = [], edge = [];
+  for (let t = 0; t < keep.length; t += 3) {
+    const tri = [keep[t], keep[t + 1], keep[t + 2]];
+    (tri.some(v => v >= n && onLine.has(v - n)) ? edge : rest).push(...tri);
+  }
+  return { rest, edge };
+}
