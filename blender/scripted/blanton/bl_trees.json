@@ -1,0 +1,5 @@
+{
+ "zone": "bl_trees",
+ "notes": "Written by tools/evidence/trees.py from the LiDAR canopy: positions and heights are measured, species are not (see that file). Do not edit by hand; run the tool again.",
+ "points": []
+}
