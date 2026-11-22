@@ -17,14 +17,18 @@ sys.path.insert(0, str(HERE))
 
 import geom  # noqa: E402
 import layout  # noqa: E402
+import numpy as np  # noqa: E402
 
 VOLUME_KEYS = {"name", "ring", "meshes", "drop", "above", "keep", "why"}
 SHARPEST = 10.0  # degrees: a sharper ring corner is an offset's miter spike, not a wall
 # metres: along an edge it shares with another area, a footprint's cut reaches this far into the
 # other area. Two areas that both cut the far field on the same line left a sliver of it standing
-# between the cuts (the tiles' quantisation moves a cut by a centimetre or two; the far field
-# stands up to 0.9 m over the new ground there): a dark line along the seam.
-OVERLAP = 0.25
+# between the cuts (the far field stands up to 0.9 m over the new ground there): a dark line along
+# the seam. The far field's cut edge lies anywhere from 1 cm to a grid diagonal (0.55 m on the
+# north model's 0.38 m grid) inside the outline that cut it (tools/web-export/cut.mjs
+# snapQuantized); the other area's cut takes that edge away only if it reaches past it.
+OVERLAP = 0.6
+MIN_SHARED = 1.0  # metres: a shared stretch shorter than this stays where it is
 TOL = 0.02  # metres: a run this close to another area's outline lies on it
 
 
@@ -107,37 +111,157 @@ def _near_ring(ring, x, y, tol=TOL):
     return False
 
 
-def grow_shared(ring, others, d=OVERLAP):
-    """The closed outline `ring` with every run that lies whole on another area's outline (both
-    ends and its middle within TOL of one of `others`) moved `d` metres outward, into that area;
-    the other runs stay where they are. Corners are where the moved and unmoved runs' lines meet;
-    two runs in line, one moved, get a short step between them."""
-    ring = [(p[0], p[1]) for p in ring]
+def _split(ring, others):
+    """`ring` with a corner added wherever a corner of one of `others` lies on one of its runs (a
+    stretch the two outlines share can start or end there)."""
+    out = []
     n = len(ring)
-    sign = 1.0 if geom.area(ring) > 0 else -1.0  # outward is to the right of an anticlockwise run
-    runs = []
     for i in range(n):
         a, b = ring[i], ring[(i + 1) % n]
+        out.append(a)
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        ln2 = dx * dx + dy * dy
+        if ln2 < 1e-12:
+            continue
+        ts = set()
+        for o in others:
+            for q in o:
+                t = ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / ln2
+                if 1e-6 < t < 1 - 1e-6:
+                    if math.hypot(a[0] + t * dx - q[0], a[1] + t * dy - q[1]) <= TOL:
+                        ts.add(round(t, 9))
+        ln = math.sqrt(ln2)
+        last = 0.0
+        for t in sorted(ts):
+            if (t - last) * ln > 1e-3 and (1 - t) * ln > 1e-3:
+                out.append((a[0] + t * dx, a[1] + t * dy))
+                last = t
+    return out
+
+
+def shared_stretches(ring, others):
+    """The runs of `ring`, split where a corner of another outline lies on it, that lie whole on
+    one of `others` (both ends and the middle within TOL): [(a, b, index into others)]."""
+    pts = _split([(p[0], p[1]) for p in ring], others)
+    out = []
+    for i in range(len(pts)):
+        a, b = pts[i], pts[(i + 1) % len(pts)]
         mid = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
-        shared = any(all(_near_ring(o, *p) for p in (a, b, mid)) for o in others)
+        for j, o in enumerate(others):
+            if all(_near_ring(o, *p) for p in (a, b, mid)):
+                out.append((a, b, j))
+                break
+    return out
+
+
+def uncovered(ring, rings, step=0.02, tol=0.005):
+    """Points of `ring`, every `step` metres, in none of `rings` and not within `tol` of one."""
+    P = np.array([p[:2] for p in geom.resample(ring, step, True)], float)
+    return [tuple(p) for p in P[~_covered(P, rings, tol)]]
+
+
+def _covered(P, rings, tol):
+    """Which of the points P (m x 2) lie inside one of `rings` (even-odd) or within `tol` of one.
+    Points go in runs of 256 (a resampled outline keeps neighbours together), each against only the
+    runs of a ring that can matter to it."""
+    ok = np.zeros(len(P), bool)
+    segs = []
+    for r in rings:
+        R = np.asarray([q[:2] for q in r], float)
+        segs.append((R, np.roll(R, -1, 0)))
+    for k in range(0, len(P), 256):
+        Q = P[k : k + 256]
+        (x0, y0), (x1, y1) = Q.min(0), Q.max(0)
+        for A, B in segs:
+            ylo, yhi = np.minimum(A[:, 1], B[:, 1]), np.maximum(A[:, 1], B[:, 1])
+            xlo, xhi = np.minimum(A[:, 0], B[:, 0]), np.maximum(A[:, 0], B[:, 0])
+            ray = (yhi >= y0) & (ylo <= y1) & (xhi >= x0)  # can cross a ray to +x from a point
+            box = (yhi >= y0 - tol) & (ylo <= y1 + tol) & (xlo <= x1 + tol) & (xhi >= x0 - tol)
+            q = Q[:, None, :]
+            if ray.any():
+                a, b = A[ray][None], B[ray][None]
+                cross = (a[..., 1] > q[..., 1]) != (b[..., 1] > q[..., 1])
+                dx, dy = b[..., 0] - a[..., 0], b[..., 1] - a[..., 1]
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    xc = a[..., 0] + (q[..., 1] - a[..., 1]) * dx / dy
+                ok[k : k + 256] |= (cross & (q[..., 0] < xc)).sum(1) % 2 == 1
+            if box.any():
+                a, d = A[box][None], (B[box] - A[box])[None]
+                ln2 = (d**2).sum(-1)
+                t = np.clip(((q - a) * d).sum(-1) / np.where(ln2 > 0, ln2, 1e-12), 0, 1)
+                e = q - a - t[..., None] * d
+                ok[k : k + 256] |= (e[..., 0] ** 2 + e[..., 1] ** 2 <= tol * tol).any(1)
+    return ok
+
+
+def _polyline(pts, step=0.02):
+    out = []
+    for a, b in zip(pts, pts[1:], strict=False):
+        k = max(1, math.ceil(math.hypot(b[0] - a[0], b[1] - a[1]) / step))
+        out += [(a[0] + (b[0] - a[0]) * i / k, a[1] + (b[1] - a[1]) * i / k) for i in range(k)]
+    return np.array(out + [pts[-1]], float)
+
+
+def grow_shared(ring, others, d=OVERLAP):
+    """The closed outline `ring` with every stretch it shares with another area (a run, split where
+    a corner of the other outline lies on it, that lies whole on one of `others`, MIN_SHARED long
+    or more) moved `d` metres outward, into that area; the other runs stay where they are.
+    Where a moved run meets another run, the corner is where their lines meet, if the new outline
+    there lies in this area or another; otherwise (the neighbour ends at a corner, and past it is
+    ground no area owns) the moved run steps back to the old corner, as far along as it needs to
+    take nothing outside the areas."""
+    ring = [(p[0], p[1]) for p in ring]
+    pts = _split(ring, others)
+    n = len(pts)
+    sign = 1.0 if geom.area(pts) > 0 else -1.0  # outward is to the right of an anticlockwise run
+    runs = []
+    for i in range(n):
+        a, b = pts[i], pts[(i + 1) % n]
         ln = math.hypot(b[0] - a[0], b[1] - a[1]) or 1.0
+        mid = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+        on = any(all(_near_ring(o, *p) for p in (a, b, mid)) for o in others)
+        shared = ln >= MIN_SHARED and on
         u = ((b[0] - a[0]) / ln, (b[1] - a[1]) / ln)
-        off = d if shared else 0.0
-        nx, ny = sign * u[1] * off, -sign * u[0] * off
-        runs.append(((a[0] + nx, a[1] + ny), (b[0] + nx, b[1] + ny), u, shared))
+        runs.append((u, (sign * u[1], -sign * u[0]), ln, d if shared else 0.0))
     if not any(r[3] for r in runs):
         return ring
+    areas = [ring, *others]
+
+    def ok(chain):
+        return bool(_covered(_polyline(chain), areas, 0.005).all())
+
     out = []
     for i in range(n):
-        (pa, pb, u, _s), (qa, _qb, w, _t) = runs[i - 1], runs[i]
-        det = u[0] * w[1] - u[1] * w[0]
-        if abs(det) < 1e-9:  # in line: one end, then the other (a step, or the same point)
-            out.append(pb)
-            if math.hypot(qa[0] - pb[0], qa[1] - pb[1]) > 1e-9:
-                out.append(qa)
+        (ua, na, la, da), (ub, nb, lb, db) = runs[i - 1], runs[i]
+        p = pts[i]
+        if not da and not db:
+            out.append(p)
             continue
-        k = ((qa[0] - pa[0]) * w[1] - (qa[1] - pa[1]) * w[0]) / det
-        out.append((pa[0] + k * u[0], pa[1] + k * u[1]))
+        a1 = (p[0] + na[0] * da, p[1] + na[1] * da)  # the end of the previous run, moved
+        b0 = (p[0] + nb[0] * db, p[1] + nb[1] * db)  # the start of the next run, moved
+        ca, cb = min(la / 2, 4 * d), min(lb / 2, 4 * d)
+        start = (a1[0] - ua[0] * ca, a1[1] - ua[1] * ca)
+        end = (b0[0] + ub[0] * cb, b0[1] + ub[1] * cb)
+        cands = []
+        det = ua[0] * ub[1] - ua[1] * ub[0]
+        if abs(det) > 1e-9:
+            k = ((b0[0] - a1[0]) * ub[1] - (b0[1] - a1[1]) * ub[0]) / det
+            cands.append([(a1[0] + k * ua[0], a1[1] + k * ua[1])])
+        elif da and db:
+            cands.append([a1])
+        for s in (0.0, d / 2, d, 2 * d, 4 * d, 8 * d, 16 * d):
+            sa, sb = min(s, 0.45 * la), min(s, 0.45 * lb)
+            chain = [(a1[0] - ua[0] * sa, a1[1] - ua[1] * sa)] if da else []
+            chain.append(p)
+            if db:
+                chain.append((b0[0] + ub[0] * sb, b0[1] + ub[1] * sb))
+            cands.append(chain)
+        best = next((c for c in cands if ok([start, *c, end])), cands[-1])
+        for q in best:
+            if not out or math.hypot(q[0] - out[-1][0], q[1] - out[-1][1]) > 1e-9:
+                out.append(q)
+    if math.hypot(out[0][0] - out[-1][0], out[0][1] - out[-1][1]) <= 1e-9:
+        out.pop()
     return out
 
 

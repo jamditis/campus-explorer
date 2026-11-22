@@ -229,6 +229,7 @@
    "Footpaths_OSM"
   ],
   "drop": [],
-  "tuck": 0.5
+  "tuck": 0.5,
+  "overlap": true
  }
 }

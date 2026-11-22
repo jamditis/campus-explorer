@@ -29,18 +29,6 @@ import seam  # noqa: E402
 SEAM = seam.Seam()  # heights on the edges the areas of this build share
 
 
-def _near(ring, x, y, d):
-    """Is (x, y) inside the closed outline `ring` or within `d` metres of it?"""
-    if geom.inside(ring, x, y):
-        return True
-    for (ax, ay), (bx, by) in zip(ring, ring[1:] + ring[:1], strict=True):
-        vx, vy = bx - ax, by - ay
-        t = max(0.0, min(1.0, ((x - ax) * vx + (y - ay) * vy) / ((vx * vx + vy * vy) or 1.0)))
-        if (x - ax - t * vx) ** 2 + (y - ay - t * vy) ** 2 < d * d:
-            return True
-    return False
-
-
 def adopted(lay, adopt_from, assets):
     """The objects an area takes over from a main-model release file (its adopt.json)."""
     if not lay["adopt"]:
@@ -77,22 +65,21 @@ def build_area(plan_dir, data, assets, built, adopt_from=None):
     lay = layout.load(plan_dir)
     if not lay["footprint"]:
         return build_groundless(lay, plan_dir, data, assets, adopt_from)
-    edge = (
-        json.loads(Path(plan_dir / "edge_heights.json").read_text())["samples"]
-        if (plan_dir / "edge_heights.json").exists()
-        else None
-    )
+    heights = plan_dir / "edge_heights.json"
+    edge_file = json.loads(heights.read_text()) if heights.exists() else {}
+    edge = edge_file.get("samples")
+    # edge heights read 0.3 m outside the footprint from tiles (edge.py's second way) are the far
+    # field's even next to another area; the first way's are not (seam.far_samples)
+    read_outside = "outside" in edge_file.get("source", "")
     # the other areas of this build (an area left out with --areas is not a neighbour here)
     others = [layout.load(d) for d in built if d.name != plan_dir.name]
     if edge:
         edge = [e for e in edge if layout.meets_neighbour(lay, e[0], e[1])]
         # along an edge shared with another scripted area there is no other model to meet: both
-        # areas take that ground from the same LiDAR, so samples of the old ground there are dropped
-        edge = [
-            e
-            for e in edge
-            if not any(o["footprint"] and _near(o["footprint"], e[0], e[1], 2.0) for o in others)
-        ]
+        # areas take that ground from the same LiDAR, so samples of the old ground there are
+        # dropped; up to the end of the shared stretch (a three-way corner) the far field is met
+        rings = [o["footprint"] for o in others if o["footprint"]]
+        edge = seam.far_samples(edge, lay["footprint"], rings, None if read_outside else 2.0)
     # Paving is graded from paved cells only. A road or lot that runs on into another scripted
     # area is one paved surface on the ground: the other areas' paving is part of that set, or the
     # grade would be cut off at the shared edge and the two areas would meet with a step.

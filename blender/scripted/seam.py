@@ -105,6 +105,25 @@ def ends(ring, others, step=END):
     return out
 
 
+def far_samples(samples, ring, others, near=None):
+    """The edge samples ([x, y, ...] on the closed outline `ring`) that meet ground other than
+    another scripted area's. A sample on an edge shared with one of `others`, or inside one, has no
+    other model to meet and goes; the samples beside it, up to the end of the shared stretch,
+    stay: there the far field begins (a three-way corner). sw16 dropped every sample within 2 m of
+    another area, so the first 2 m of the far-field edges from a three-way corner met no far field
+    (Lot 60 stood 0.40 m over it at its corner with the Village, (-212, 1281)). With `near` (metres)
+    the sw16 rule: every sample within that distance of another area goes, for edge heights made
+    the first way (a raster of tiles that still had their ground inside: near another area such a
+    sample read that area's old ground, not the far field)."""
+    out = []
+    for e in samples:
+        x, y = e[0], e[1]
+        if any(_near(o, x, y, near or TOL) or geom.inside(o, x, y) for o in others):
+            continue
+        out.append(e)
+    return out
+
+
 class Seam:
     """Heights of outline vertices, shared between the areas of one build."""
 
