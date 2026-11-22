@@ -11,7 +11,7 @@ This is a work in progress, not a survey or an as-built record. Anything inferre
 ```
 index.html, app.js, look.js,    Static three.js viewer (no build step), served by GitHub Pages
 style.css, viewer/              (viewer/ holds the modules; see docs/VIEWER.md)
-trees.js                        Per-tree level of detail (near trees in full, far trees as simple crowns)
+trees.js                        Per-tree level of detail (near trees in full, middle versions with fewer twigs, far trees as simple crowns)
 models/main/                    The campus as meshopt-compressed GLB tiles (160 m squares), their far
                                 versions in lod/, and manifest.json
 vendor/                         three.js r170, GLTF loader, meshopt decoder, three-mesh-bvh (MIT)

@@ -17,7 +17,8 @@ const DOWN = new THREE.Vector3(0, -1, 0);
  */
 export function createScenery(app) {
   const { scene, camera } = app;
-  const trees = createTrees(scene, camera);
+  // the middle versions of trees are built in idle time; when they are ready the view and its shadows redraw
+  const trees = createTrees(scene, camera, () => { app.look.invalidateShadows(); app.invalidate(); });
   let manifest = null, base = '', moved = true, last = 0, run = 0;
 
   // ---- land cover (from OpenStreetMap, tools/web-export/landcover.py) draped over the 4 km skirt ----

@@ -1,15 +1,27 @@
-// Tree LOD: per-instance culling for instanced trees, with cheap impostors past a quality-set distance.
-// Every instanced tree group (crown + trunk meshes sharing a parent and instance list) keeps its
-// original matrices; each update writes only the instances that are near and in view, and the
-// rest become one shared low-poly crown impostor (per-instance size and colour) out to FAR.
+// Tree LOD: per-instance culling for instanced trees, two middle versions, and cheap impostors past a
+// quality-set distance. Every instanced tree group (crown + trunk meshes sharing a parent and instance list) keeps
+// its original matrices; each update writes the instances that are in view to the full meshes (near), to one of
+// two middle versions (TREE_MID, TREE_FAR_MID: the same buffers with the thinnest bark left out, see
+// viewer/treelod-math.js) or, out to FAR, to one shared low-poly crown impostor (per-instance size and colour).
+// Trees that are plain meshes (a tree used once in a tile, or joined copies) get the same middle versions through
+// their draw range. Shrub leaf-card batches draw one card in SHRUB_THIN, grown, past SHRUB_REACH.
 import * as THREE from 'three';
 import { farCells } from './viewer/trees-math.js';
+import {
+  barkOrder, reorderIndex, thinPick, scaleLinear, treeBand,
+  TREE_MID, TREE_FAR_MID, BARK_MIN_DIAMETER, BARK_SHARE, SHRUB_REACH, SHRUB_THIN,
+} from './viewer/treelod-math.js';
 
 const DIST = { low: 220, medium: 420, high: 700 };
 const FAR = 2600;
+const CACHE = 64; // reordered bark indices kept for meshes that recur across tiles at the same scale
 
-export function createTrees(scene, camera) {
-  let groups = [], dist = DIST.medium, last = 0;
+/**
+ * @param onChange called when work done in idle time changed what is drawn (middle versions became ready)
+ */
+export function createTrees(scene, camera, onChange = () => {}) {
+  let groups = [], plains = [], shrubs = [], last = 0;
+  let dist = DIST.medium, mid = TREE_MID.medium, farMid = TREE_FAR_MID.medium, reach = SHRUB_REACH.medium;
   const cap = 30000;
   const geo = new THREE.IcosahedronGeometry(1, 1);
   geo.translate(0, 0.15, 0);
@@ -67,19 +79,119 @@ export function createTrees(scene, camera) {
       const col = leafColour([].concat(crowns[0].material)[0]);
       const pos = new Float32Array(n * 3), rad = new Float32Array(n), imps = [], mats = list.map(o => o.instanceMatrix.array.slice());
       const cc = cb.getCenter(new THREE.Vector3()), cs = cb.getSize(new THREE.Vector3());
+      let smax = 0; // the largest instance scale: no instance loses a branch thicker than BARK_MIN_DIAMETER
       for (let i = 0; i < n; i++) {
         a.getMatrixAt(i, m4); m4.premultiply(a.matrixWorld);
         p.copy(cc).applyMatrix4(m4); pos.set([p.x, p.y, p.z], i * 3);
         m4.decompose(new THREE.Vector3(), q, s);
+        smax = Math.max(smax, Math.abs(s.x), Math.abs(s.y), Math.abs(s.z));
         const sx = cs.x * s.x / 2, sy = cs.y * s.y / 2, sz = cs.z * s.z / 2;
         rad[i] = Math.max(sx, sy, sz, (tb.max.y - tb.min.y) * s.y / 2);
         const base = new THREE.Vector3(cc.x, tb.min.y, cc.z).applyMatrix4(m4);
         imps.push({ c: p.clone(), s: new THREE.Vector3(sx * 0.95, sy * 0.95, sz * 0.95), base, trunkH: Math.max(0.5, p.y - sy * 0.6 - base.y), trunkW: Math.max(0.12, Math.min(sx, sz) * 0.08) });
       }
       for (const o of list) { o.userData.treeLod = true; o.frustumCulled = false; }
-      groups.push({ list, n, pos, rad, mats, imps, col });
+      const g = { list, n, pos, rad, mats, imps, col, mids: null };
+      groups.push(g);
+      // the middle versions are built in idle time; until then the full meshes draw in their place
+      later(() => { if (groups.includes(g)) g.mids = middles(list, smax); });
     }
+    root.traverse(o => {
+      if (!o.isMesh || o.userData.treeLod) return;
+      const m = [].concat(o.material)[0];
+      if (o.isInstancedMesh) {
+        if (o.count >= 2 && m?.userData.leaf && /shrub/i.test(o.name) && tris(o.geometry) <= 4) shrubs.push(thinned(o));
+        return;
+      }
+      // a plain tree's bark (a tree used once in its tile, or copies joined into one mesh)
+      if (!/^Tree_/.test(o.name) || m?.userData.leaf || !o.geometry.index) return;
+      if (!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
+      const scale = o.matrixWorld.getMaxScaleOnAxis();
+      const t = { o, c: o.geometry.boundingSphere.center.clone().applyMatrix4(o.matrixWorld), r: o.geometry.boundingSphere.radius * scale, kept: null };
+      plains.push(t);
+      later(() => {
+        if (!plains.includes(t)) return;
+        t.kept = ordered(o.geometry, scale);
+        o.geometry.boundsTree = null; // collision: a BVH built on the old triangle order is built again when a ray needs it
+      });
+    });
     update(true);
+  }
+
+  const tris = geo => (geo.index ? geo.index.count : geo.attributes.position.count) / 3;
+  // Reorder a bark geometry's triangles for its middle versions (viewer/treelod-math.js), once per geometry; the
+  // same mesh in another tile (same counts, same first vertex, same scale) reuses the reordered index.
+  const cache = new Map();
+  function ordered(geo, scale) {
+    if (geo.userData.barkKept) return geo.userData.barkKept;
+    const pos = geo.attributes.position, idx = geo.index;
+    let kept = [tris(geo), tris(geo)];
+    if (pos && idx && pos.count) {
+      const key = `${idx.count}:${pos.count}:${pos.getX(0)}:${pos.getY(0)}:${pos.getZ(0)}:${scale.toFixed(2)}`;
+      let hit = cache.get(key);
+      if (!hit) {
+        // as the GPU sees them: quantized (normalized, often interleaved) positions read back as floats
+        const a = new Float32Array(pos.count * 3);
+        for (let i = 0; i < pos.count; i++) { a[i * 3] = pos.getX(i); a[i * 3 + 1] = pos.getY(i); a[i * 3 + 2] = pos.getZ(i); }
+        const r = barkOrder(a, idx.array, { minDiameter: BARK_MIN_DIAMETER, scale, shares: [BARK_SHARE.near, BARK_SHARE.far] });
+        hit = { index: reorderIndex(idx.array, r.order), kept: r.kept };
+        cache.set(key, hit);
+        if (cache.size > CACHE) cache.delete(cache.keys().next().value);
+      }
+      idx.array.set(hit.index); idx.needsUpdate = true; // in place: the same GPU buffer, now in the new order
+      kept = hit.kept;
+    }
+    geo.userData.barkKept = kept;
+    return kept;
+  }
+  // The two middle versions of an instanced tree group: for each of its meshes an instanced mesh beside it on the
+  // same geometry buffers, the bark drawn over a shorter range, the leaves whole.
+  function middles(list, smax) {
+    return [0, 1].map(b => list.map(o => {
+      const leaf = [].concat(o.material)[0]?.userData.leaf;
+      let geo = o.geometry;
+      if (!leaf) {
+        const kept = ordered(o.geometry, smax * o.matrixWorld.getMaxScaleOnAxis());
+        geo = new THREE.BufferGeometry();
+        for (const [k, v] of Object.entries(o.geometry.attributes)) geo.setAttribute(k, v);
+        geo.setIndex(o.geometry.index); geo.setDrawRange(0, kept[b] * 3);
+        geo.boundingBox = o.geometry.boundingBox; geo.boundingSphere = o.geometry.boundingSphere;
+      }
+      const m = new THREE.InstancedMesh(geo, o.material, o.instanceMatrix.count);
+      m.name = `${o.name}_mid${b + 1}`; m.count = 0; m.visible = false; m.frustumCulled = false;
+      m.castShadow = o.castShadow; m.receiveShadow = o.receiveShadow;
+      m.position.copy(o.position); m.quaternion.copy(o.quaternion); m.scale.copy(o.scale);
+      m.userData.treeLod = true;
+      o.parent.add(m); m.updateMatrixWorld(true);
+      return m;
+    }));
+  }
+  // A shrub leaf-card batch and its thinned stand-in: one card in SHRUB_THIN, each grown by sqrt(SHRUB_THIN).
+  function thinned(o) {
+    const pick = thinPick(o.count, SHRUB_THIN), f = Math.sqrt(SHRUB_THIN);
+    const t = new THREE.InstancedMesh(o.geometry, o.material, pick.length);
+    const src = o.instanceMatrix.array, dst = t.instanceMatrix.array;
+    pick.forEach((i, k) => { dst.set(src.subarray(i * 16, i * 16 + 16), k * 16); scaleLinear(dst, k * 16, f); });
+    t.name = `${o.name}_thin`; t.castShadow = o.castShadow; t.receiveShadow = o.receiveShadow; t.visible = false;
+    t.position.copy(o.position); t.quaternion.copy(o.quaternion); t.scale.copy(o.scale);
+    t.userData.treeLod = true;
+    o.parent.add(t); t.updateMatrixWorld(true); t.computeBoundingSphere();
+    o.userData.treeLod = true; // out of look.js's size culling: drawn, thinned or hidden here
+    o.computeBoundingBox();
+    return { o, t, box: o.boundingBox.clone().applyMatrix4(o.matrixWorld) };
+  }
+
+  // work for idle time, a piece per slice; the view is refreshed once the queue is empty
+  const queue = []; let pumping = false;
+  const idle = fn => (globalThis.requestIdleCallback ? requestIdleCallback(fn, { timeout: 1000 }) : setTimeout(() => fn(null), 16));
+  function later(fn) { queue.push(fn); if (!pumping) { pumping = true; idle(pump); } }
+  function pump(deadline) {
+    const t0 = performance.now();
+    // at least one piece per call: a busy page gives idle callbacks no time left once their timeout passes
+    if (queue.length) do queue.shift()();
+    while (queue.length &&(deadline ? deadline.timeRemaining() > 2 : performance.now() - t0 < 8));
+    if (queue.length) { idle(pump); return; }
+    pumping = false; update(true); onChange();
   }
 
   const frustum = new THREE.Frustum(), pv = new THREE.Matrix4(), sph = new THREE.Sphere(), v = new THREE.Vector3();
@@ -89,21 +201,32 @@ export function createTrees(scene, camera) {
     camera.updateMatrixWorld(); pv.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); frustum.setFromProjectionMatrix(pv);
     const cp = camera.position; let ni = 0, nt = 0;
     for (const g of groups) {
-      let k = 0;
+      const k = [0, 0, 0], lists = g.mids ? [g.list, ...g.mids] : [g.list];
       for (let i = 0; i < g.n; i++) {
         sph.center.set(g.pos[i * 3], g.pos[i * 3 + 1], g.pos[i * 3 + 2]); sph.radius = g.rad[i] * 1.3;
         const d = sph.center.distanceTo(cp);
         if (d > FAR || !frustum.intersectsSphere(sph)) continue;
-        if (d < dist) {
-          for (let j = 0; j < g.list.length; j++) g.list[j].instanceMatrix.array.set(g.mats[j].subarray(i * 16, i * 16 + 16), k * 16);
-          k++;
+        const band = treeBand(d, mid, farMid, dist);
+        if (band < 3) {
+          const b = g.mids ? band : 0, list = lists[b];
+          for (let j = 0; j < list.length; j++) list[j].instanceMatrix.array.set(g.mats[j].subarray(i * 16, i * 16 + 16), k[b] * 16);
+          k[b]++;
         } else if (ni < cap) {
           const t = g.imps[i];
           im4.compose(t.c, one, t.s); imp.setMatrixAt(ni, im4); imp.setColorAt(ni, g.col); ni++;
           if (d < dist * 2.5 && nt < cap) { im4.compose(v.copy(t.base), one, v.clone().set(t.trunkW, t.trunkH, t.trunkW)); trunks.setMatrixAt(nt++, im4); }
         }
       }
-      for (const o of g.list) { o.count = k; o.instanceMatrix.needsUpdate = true; o.visible = k > 0; }
+      lists.forEach((list, b) => { for (const o of list) { o.count = k[b]; o.instanceMatrix.needsUpdate = true; o.visible = k[b] > 0; } });
+    }
+    for (const t of plains) {
+      if (!t.kept) continue;
+      const band = treeBand(Math.max(0, t.c.distanceTo(cp) - t.r), mid, farMid, Infinity);
+      t.o.geometry.setDrawRange(0, band ? t.kept[band - 1] * 3 : Infinity);
+    }
+    for (const sh of shrubs) {
+      const d = sh.box.distanceToPoint(cp);
+      sh.o.visible = d < reach; sh.t.visible = d >= reach && d < FAR;
     }
     imp.count = ni; trunks.count = nt;
     imp.instanceMatrix.needsUpdate = true; if (imp.instanceColor) imp.instanceColor.needsUpdate = true; trunks.instanceMatrix.needsUpdate = true;
@@ -139,6 +262,7 @@ export function createTrees(scene, camera) {
   function showAll() {
     for (const g of groups) {
       g.list.forEach((o, j) => { o.instanceMatrix.array.set(g.mats[j]); o.count = g.n; o.instanceMatrix.needsUpdate = true; o.visible = true; });
+      for (const list of g.mids || []) for (const o of list) { o.count = 0; o.visible = false; }
     }
     imp.count = 0; trunks.count = 0;
   }
@@ -146,6 +270,7 @@ export function createTrees(scene, camera) {
   function remove(root) {
     const under = o => { for (let p = o; p; p = p.parent) if (p === root) return true; return false; };
     const n = groups.length; groups = groups.filter(g => !under(g.list[0]));
+    plains = plains.filter(t => !under(t.o)); shrubs = shrubs.filter(sh => !under(sh.o));
     if (groups.length !== n) update(true);
   }
   /**
@@ -166,9 +291,26 @@ export function createTrees(scene, camera) {
     if (moved) update(true);
     return moved;
   }
-  function setQuality(name) { dist = DIST[name] || DIST.medium; update(true); }
-  function reset() {
-    groups = []; imp.count = 0; trunks.count = 0;
+  function setQuality(name) {
+    const q = DIST[name] ? name : 'medium';
+    dist = DIST[q]; mid = TREE_MID[q]; farMid = TREE_FAR_MID[q]; reach = SHRUB_REACH[q];
+    update(true);
   }
-  return { add, remove, settle, showAll, addFar, update, setQuality, reset, get stats() { return { groups: groups.length, impostors: imp.count }; } };
+  function reset() {
+    groups = []; plains = []; shrubs = []; queue.length = 0; imp.count = 0; trunks.count = 0;
+  }
+  return {
+    add, remove, settle, showAll, addFar, update, setQuality, reset,
+    /** Trees drawn per version, plain trees drawn as a middle version, shrub batches thinned, idle work left. */
+    get stats() {
+      const n = (g, b) => (b === 0 ? g.list : g.mids?.[b - 1])?.[0].count ?? 0;
+      return {
+        groups: groups.length, impostors: imp.count, pending: queue.length,
+        full: groups.reduce((a, g) => a + n(g, 0), 0),
+        middle: groups.reduce((a, g) => a + n(g, 1), 0), farMiddle: groups.reduce((a, g) => a + n(g, 2), 0),
+        plainMiddle: plains.filter(t => t.kept && t.o.geometry.drawRange.count !== Infinity).length,
+        shrubsThinned: shrubs.filter(sh => sh.t.visible).length,
+      };
+    },
+  };
 }
