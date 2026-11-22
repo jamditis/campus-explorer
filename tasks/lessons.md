@@ -114,3 +114,8 @@ Rules learned from corrections. Read at the start of a session.
 
 - What happened: the teaser film took about a day of capture, several redraws and many tokens before Joe saw it. He judged the result bad and stopped the work: "let's abandon the video idea because that's really bad so far and not worth all the time and token we wasted".
 - Rule: for work whose worth only Joe can judge (a film, a look, a style), send a sample that costs minutes (a few stills, a 5 s clip) and wait for his view before the full run. Give the cost of the full run with the sample. The model's speed, accuracy and realism come first; side products wait for his go-ahead at each stage.
+
+## Questions for Joe go in the question dialog, never in report text (2026-11-22)
+
+- What happened: my wrap-up report listed open questions for Joe as prose (Blanton Hall's dock, passage and walk; the commit identity). Joe: "I only answer questions via a auq". The rule was already known; I broke it at the end of a long session.
+- Rule: every question that needs Joe's answer goes through AskUserQuestion, recommended option first, at most four at a time, each with a "not sure, needs a photo" option where a fact may be unknown. A report may say that questions exist; it does not ask them. Record the answers in the repository the same turn.
