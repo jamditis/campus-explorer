@@ -44,6 +44,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `blender/scripted/<area>/*.json` | The digitised plan per zone: surfaces, curbs, markings, points; `footprint.json` also holds the supersede rules |
 | `geom.py`, `layout.py` | Pure plan geometry (true-arc corners) and the layout shared by paint and ground |
 | `terrain.py`, `ground.py`, `paint.py` | Heights (paving graded, soft ground from LiDAR, level water); one seamless ground mesh; paint sheets for road lines, stalls and the football field |
+| `seam.py`, `supersede.py` | Edges two areas share: the same vertices and heights in both meshes; the rules that cut other sources' ground out of each footprint (`overlap` reaches 0.25 m into a neighbour) |
 | `stand.py`, `fixtures.py`, `place.py` | Grandstands (aluminium kit, solid concrete bowl) and fixtures, and where the plan puts them |
 | `marks.py` | Shapes of lane arrows, crosswalks and pavement words as paint outlines (pure, tested) |
 | `massing.py`, `building.py` | Buildings from measured parts: roof shapes (pure, tested), walls, windows, deck levels, roof wells, ramp bays, paint on a deck roof |
