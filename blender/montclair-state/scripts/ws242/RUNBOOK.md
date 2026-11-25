@@ -1,6 +1,6 @@
 # ws242 runbook (Nov 25, 2026, 4:31–~5:2x PM ET) — W59 skirt cracks + M3b gap/edge, W60 Lot 28S W edge flap, ONE-SCENE M2c slice 4
 
-Main before: ws241h (sha 7cdfe32e…). Backup montclair_state_pre_20261125ws242.blend = ws241h. Copies ws242a–ws242f; ws242f = MAIN (promoted 5:00:05 PM ET, sha d953d623…, see sha242.txt).
+Main before: ws241h (sha 7cdfe32e…). Backup montclair_state_pre_20261125ws242.blend = ws241h. Copies ws242a–ws242g; ws242f was main 5:00:05–5:10:15 PM ET (sha d953d623…); ws242g = MAIN (promoted 5:10:15 PM ET, sha 61935f66…, see sha242.txt).
 Probes run in subset context: `C=<cull> F=<file> CH=ws242/<probe>.py [EXTRAJ=…] bash scripts/ws242/jobprobe242.sh` (subrend234 + CHAIN, one Blender at a time). Full-file opens of main get watchdog-killed below ~4 GB MemAvailable — use the subset.
 Merges: `GATE=3000 CHAIN="…" INF=… OUTN=… bash scripts/ws242/run242.sh` (merge208 low-memory chain).
 
@@ -17,3 +17,4 @@ Merges: `GATE=3000 CHAIN="…" INF=… OUTN=… bash scripts/ws242/run242.sh` (m
    `m2c242b.py`: coherence + seat pass — also drops stand entry steps ×3, windscreen + hems, JS joints on the dropped JO walk, North_NEWalkEast_gk (floats ≤ 1.04 m, `probe242g.py`) and the SF north cap walk + curb (buried 1.9–2.5 m under WS68). 15 kept (JR2/JS/JS3/JT/JU2/JV/JW/JY drop-off loop + crossing at the NJT deck, cogen shed roof + walls). Removing objects inside a merge208 chain: also drop them from `_OFF`. → ws242f.
    `m2c_next242.json` = 45 left (deferred_ws242 entries say why). extra242.json = extra241 + the 15.
 6. WIPs: `GATE=3000 bash scripts/ws242/jobwip242.sh` (ONLY=1234).
+7. Codex P1 on PR #75 (AGENTS rule 7, markings are paint): `f242h.py` paints the 3 'JR2 Crosswalk bars' polygons into a crossing-only copy of its asphalt material (world-XY half-plane mask on Geometry.Position → crosswalk white) and deletes the bars mesh. → ws242g = MAIN (promoted 5:10:15 PM ET, sha 61935f66…). Kept 14; m2c_new242.json lists the bars under painted_not_modelled_ws242; extra242.json updated. WIP 3 re-rendered on ws242g (the other three WIPs show areas f242h doesn't touch).

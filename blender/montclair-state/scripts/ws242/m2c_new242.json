@@ -1,7 +1,6 @@
 {
 "kept": [
 "JR2 Crossing at OSM 287712280, moved onto the ortho 2020 crossw",
-"JR2 Crosswalk bars at OSM 287712280 (ortho 2020 stripes; count/",
 "JR2 Walk OSM 287712278 island edge, station NW, clipped at nort",
 "JR2 Walk crossing to steps 1433339917 foot (OSM 287712280/14333",
 "JS Curb reveal road side of JR2 walk OSM 287712278 (ortho 2020 ",
@@ -555,5 +554,8 @@
 "North_NEWalkEast_gk",
 "SF north cap asphalt walk (ortho ring ~2.5 m)",
 "SF north cap edge curb (ortho; APPROX 0.15 m)"
+],
+"painted_not_modelled_ws242": [
+"JR2 Crosswalk bars at OSM 287712280 (ortho 2020 stripes; count/"
 ]
 }
