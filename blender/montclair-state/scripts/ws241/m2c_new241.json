@@ -1,0 +1,600 @@
+{
+"kept": [
+"Greenhouse_Gable_ShadeGlazed_MSU",
+"Ice Arena L0 south strip (LiDAR 115.45 m flat; outline UNVERIFI",
+"Ice Arena L1 gable (ridge 120.18 m / eave 118.52 m; gable vs ba",
+"Ice Arena L1 main walls (LiDAR eave 118.52 m; outline UNVERIFIE",
+"IceArena_RTU_00 (LiDAR; type UNVERIFIED)",
+"KM IceArena RTU A condensing unit (cells x-72..-67, y664..667) ",
+"KM IceArena RTU B tall AHU (cells x-76..-75, y667..672) (LiDAR ",
+"KM IceArena RTU C exhaust fan (cell -69,670) (LiDAR 2017; type ",
+"KM IceArena RTU D condensing unit (cells x-68..-65, y674..676) ",
+"KM IceArena RTU E condensing unit (cells x-76..-71, y675..679) ",
+"KM IceArena RTU_00 curb (to sloped roof; UNVERIFIED)",
+"KM IceArena membrane lap seams (ridge-parallel 3.05 m; spacing ",
+"KM IceArena wall-top metal coping (profile UNVERIFIED)",
+"KN IceArena red roof 0 (LiDAR 2017 gable, ridge 118.42; materia",
+"KN IceArena red roof 0 bay walls (LiDAR 2017; UNVERIFIED facade",
+"KN IceArena red roof 1 (LiDAR 2017 lean-to, shed vs gable UNVER",
+"KN IceArena red roof 1 bay walls (LiDAR 2017; UNVERIFIED facade",
+"KO IceArena east bay entrance storefront (generic; UNVERIFIED)",
+"KO IceArena precast joints+reveal (3.05 m; UNVERIFIED)",
+"KO IceArena west bay entrance storefront (generic; UNVERIFIED)",
+"KP IceArena SSW drive-aisle asphalt (2020 ortho; UNVERIFIED)",
+"KP IceArena SSW walk + entry apron (2020 ortho; UNVERIFIED)",
+"KQ Lot 28S asphalt + ortho paint (OSM 313031565; UNVERIFIED)",
+"KR Lot 28S stall stripes (2020 ortho trace; UNVERIFIED)",
+"KT IceArena east storefront drip-end run-off streaks (decals 4 ",
+"KT IceArena east storefront head drip cap (bent metal; UNVERIFI",
+"KT IceArena east storefront head grime wash (decal 4 mm; UNVERI",
+"KT IceArena west storefront drip-end run-off streaks (decals 4 ",
+"KT IceArena west storefront head drip cap (bent metal; UNVERIFI",
+"KT IceArena west storefront head grime wash (decal 4 mm; UNVERI",
+"KU IceArena east storefront jamb-side sill splash (decals 4 mm;",
+"KU IceArena west storefront jamb-side sill splash (decals 4 mm;",
+"KV Lot28S island outline+hatch paint (ortho; UNVERIFIED)"
+],
+"dropped": [],
+"report": {
+"Greenhouse_Gable_ShadeGlazed_MSU": {
+"bbox": [
+[
+-199.61,
+705.1,
+111.63
+],
+[
+-173.15,
+719.7,
+116.86
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"Ice Arena L0 south strip (LiDAR 115.45 m flat; outline UNVERIFI": {
+"bbox": [
+[
+-133.02,
+604.02,
+110.51
+],
+[
+-84.19,
+634.44,
+115.45
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"Ice Arena L1 gable (ridge 120.18 m / eave 118.52 m; gable vs ba": {
+"bbox": [
+[
+-132.99,
+600.41,
+118.45
+],
+[
+-28.67,
+696.09,
+120.18
+]
+],
+"hits": [],
+"conflict": []
+},
+"Ice Arena L1 main walls (LiDAR eave 118.52 m; outline UNVERIFIE": {
+"bbox": [
+[
+-132.99,
+600.41,
+110.51
+],
+[
+-28.67,
+696.09,
+118.52
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"IceArena_RTU_00 (LiDAR; type UNVERIFIED)": {
+"bbox": [
+[
+-91.68,
+615.65,
+120.0
+],
+[
+-87.72,
+620.23,
+121.03
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena membrane lap seams (ridge-parallel 3.05 m; spacing ": {
+"bbox": [
+[
+-131.91,
+601.28,
+118.54
+],
+[
+-29.31,
+695.11,
+120.09
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU A condensing unit (cells x-72..-67, y664..667) ": {
+"bbox": [
+[
+-72.8,
+662.45,
+119.79
+],
+[
+-65.2,
+669.55,
+120.93
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU B tall AHU (cells x-76..-75, y667..672) (LiDAR ": {
+"bbox": [
+[
+-78.14,
+666.64,
+119.88
+],
+[
+-71.86,
+673.86,
+121.55
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU C exhaust fan (cell -69,670) (LiDAR 2017; type ": {
+"bbox": [
+[
+-69.56,
+669.54,
+119.94
+],
+[
+-67.44,
+671.66,
+121.53
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU D condensing unit (cells x-68..-65, y674..676) ": {
+"bbox": [
+[
+-68.43,
+673.2,
+119.88
+],
+[
+-63.57,
+677.8,
+121.03
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU E condensing unit (cells x-76..-71, y675..679) ": {
+"bbox": [
+[
+-76.99,
+673.95,
+119.79
+],
+[
+-69.01,
+681.55,
+120.97
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena RTU_00 curb (to sloped roof; UNVERIFIED)": {
+"bbox": [
+[
+-91.74,
+615.59,
+119.77
+],
+[
+-87.66,
+620.29,
+120.05
+]
+],
+"hits": [],
+"conflict": []
+},
+"KM IceArena wall-top metal coping (profile UNVERIFIED)": {
+"bbox": [
+[
+-133.2,
+600.2,
+118.34
+],
+[
+-28.46,
+696.3,
+118.59
+]
+],
+"hits": [],
+"conflict": []
+},
+"KN IceArena red roof 0 (LiDAR 2017 gable, ridge 118.42; materia": {
+"bbox": [
+[
+-120.04,
+608.9,
+116.26
+],
+[
+-105.45,
+626.09,
+118.45
+]
+],
+"hits": [],
+"conflict": []
+},
+"KN IceArena red roof 0 bay walls (LiDAR 2017; UNVERIFIED facade": {
+"bbox": [
+[
+-119.71,
+609.23,
+110.6
+],
+[
+-105.68,
+625.99,
+118.27
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KN IceArena red roof 1 (LiDAR 2017 lean-to, shed vs gable UNVER": {
+"bbox": [
+[
+-91.66,
+605.95,
+115.8
+],
+[
+-83.86,
+614.74,
+119.21
+]
+],
+"hits": [],
+"conflict": []
+},
+"KN IceArena red roof 1 bay walls (LiDAR 2017; UNVERIFIED facade": {
+"bbox": [
+[
+-91.33,
+606.28,
+110.6
+],
+[
+-84.09,
+614.63,
+119.06
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KO IceArena east bay entrance storefront (generic; UNVERIFIED)": {
+"bbox": [
+[
+-91.39,
+605.46,
+111.09
+],
+[
+-87.74,
+607.17,
+114.31
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KO IceArena precast joints+reveal (3.05 m; UNVERIFIED)": {
+"bbox": [
+[
+-133.0,
+600.4,
+111.23
+],
+[
+-28.66,
+696.1,
+118.45
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km"
+],
+"conflict": []
+},
+"KO IceArena west bay entrance storefront (generic; UNVERIFIED)": {
+"bbox": [
+[
+-118.76,
+609.59,
+111.01
+],
+[
+-112.54,
+612.46,
+114.33
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KP IceArena SSW drive-aisle asphalt (2020 ortho; UNVERIFIED)": {
+"bbox": [
+[
+-145.8,
+594.86,
+110.52
+],
+[
+-99.45,
+636.39,
+111.06
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KP IceArena SSW walk + entry apron (2020 ortho; UNVERIFIED)": {
+"bbox": [
+[
+-139.81,
+596.05,
+110.51
+],
+[
+-87.01,
+634.53,
+111.38
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KQ Lot 28S asphalt + ortho paint (OSM 313031565; UNVERIFIED)": {
+"bbox": [
+[
+-218.33,
+613.48,
+111.22
+],
+[
+-156.07,
+714.39,
+114.85
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KR Lot 28S stall stripes (2020 ortho trace; UNVERIFIED)": {
+"bbox": [
+[
+-215.32,
+626.33,
+111.45
+],
+[
+-157.5,
+711.66,
+114.1
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KT IceArena east storefront drip-end run-off streaks (decals 4 ": {
+"bbox": [
+[
+-91.54,
+605.5,
+112.27
+],
+[
+-87.65,
+607.23,
+114.31
+]
+],
+"hits": [],
+"conflict": []
+},
+"KT IceArena east storefront head drip cap (bent metal; UNVERIFI": {
+"bbox": [
+[
+-91.5,
+605.31,
+114.29
+],
+[
+-87.69,
+607.19,
+114.36
+]
+],
+"hits": [],
+"conflict": []
+},
+"KT IceArena east storefront head grime wash (decal 4 mm; UNVERI": {
+"bbox": [
+[
+-91.5,
+605.48,
+114.35
+],
+[
+-87.6,
+607.21,
+114.66
+]
+],
+"hits": [],
+"conflict": []
+},
+"KT IceArena west storefront drip-end run-off streaks (decals 4 ": {
+"bbox": [
+[
+-118.92,
+609.61,
+112.75
+],
+[
+-112.4,
+612.53,
+114.33
+]
+],
+"hits": [],
+"conflict": []
+},
+"KT IceArena west storefront head drip cap (bent metal; UNVERIFI": {
+"bbox": [
+[
+-118.87,
+609.44,
+114.31
+],
+[
+-112.48,
+612.48,
+114.38
+]
+],
+"hits": [],
+"conflict": []
+},
+"KT IceArena west storefront head grime wash (decal 4 mm; UNVERI": {
+"bbox": [
+[
+-118.86,
+609.61,
+114.37
+],
+[
+-112.4,
+612.5,
+114.68
+]
+],
+"hits": [],
+"conflict": []
+},
+"KU IceArena east storefront jamb-side sill splash (decals 4 mm;": {
+"bbox": [
+[
+-92.2,
+605.42,
+111.11
+],
+[
+-87.46,
+607.5,
+111.58
+]
+],
+"hits": [],
+"conflict": []
+},
+"KU IceArena west storefront jamb-side sill splash (decals 4 mm;": {
+"bbox": [
+[
+-119.56,
+609.29,
+111.02
+],
+[
+-111.71,
+612.8,
+111.5
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KV Lot28S island outline+hatch paint (ortho; UNVERIFIED)": {
+"bbox": [
+[
+-202.29,
+636.41,
+112.63
+],
+[
+-179.56,
+688.72,
+113.48
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km"
+],
+"conflict": []
+}
+}
+}
