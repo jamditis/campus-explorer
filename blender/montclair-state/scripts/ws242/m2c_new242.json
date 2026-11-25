@@ -1,0 +1,559 @@
+{
+"kept": [
+"JR2 Crossing at OSM 287712280, moved onto the ortho 2020 crossw",
+"JR2 Crosswalk bars at OSM 287712280 (ortho 2020 stripes; count/",
+"JR2 Walk OSM 287712278 island edge, station NW, clipped at nort",
+"JR2 Walk crossing to steps 1433339917 foot (OSM 287712280/14333",
+"JS Curb reveal road side of JR2 walk OSM 287712278 (ortho 2020 ",
+"JS Walk joints on JR2 walk OSM 287712278 (5 ft, UNVERIFIED)",
+"JS Walk joints on JR2 walk crossing to steps 1433339917 (5 ft, ",
+"JS3 Drop-off loop asphalt road side of JS curb (ortho 2020; dra",
+"JT Drop-off/road asphalt gap fill by crosswalk + station walk (",
+"JU2 Crosswalk-end sliver fill (0.25 m gap cells, LiDAR +1.5 cm;",
+"JV Crossing NE-end hairline sliver fill (0.1 m gap cells, LiDAR",
+"JW Asphalt north-end feather past the y 1115 cap (ortho 2020 to",
+"JY Asphalt notch fill JT/JW corner x-45.5 y1115 LiDAR+1.6cm",
+"gl_cogen_shed_roof",
+"gl_cogen_shed_walls"
+],
+"dropped": [
+"fr_front_walkway",
+"fr_stand_risers",
+"fu_light_pole_NW",
+"fu_windscreen_posts",
+"JO Walk station east stair to south (OSM 313032757 + ortho 2020"
+],
+"report": {
+"fr_front_walkway": {
+"bbox": [
+[
+-261.82,
+145.35,
+133.56
+],
+[
+-225.63,
+155.32,
+134.01
+]
+],
+"hits": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED",
+"Terrain_LiDAR_DTM_1m",
+"WS60_terrain_edge_apron_LiDAR_to_skirt"
+],
+"conflict": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED"
+]
+},
+"fr_stand_entry_steps": {
+"bbox": [
+[
+-253.9,
+149.35,
+133.75
+],
+[
+-233.04,
+153.87,
+133.79
+]
+],
+"hits": [
+"WS60_terrain_edge_apron_LiDAR_to_skirt"
+],
+"conflict": []
+},
+"fr_stand_risers": {
+"bbox": [
+[
+-259.77,
+148.57,
+133.55
+],
+[
+-224.97,
+165.8,
+138.15
+]
+],
+"hits": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED",
+"Terrain_LiDAR_DTM_1m",
+"WS60_terrain_edge_apron_LiDAR_to_skirt"
+],
+"conflict": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED"
+]
+},
+"fse_stand_entry_steps": {
+"bbox": [
+[
+-242.89,
+59.86,
+134.72
+],
+[
+-231.71,
+114.08,
+134.76
+]
+],
+"hits": [],
+"conflict": []
+},
+"fst_stand_entry_steps": {
+"bbox": [
+[
+-318.46,
+26.82,
+133.9
+],
+[
+-259.83,
+38.88,
+133.94
+]
+],
+"hits": [
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"fu_light_pole_NW": {
+"bbox": [
+[
+-302.08,
+159.23,
+132.57
+],
+[
+-298.86,
+161.06,
+154.35
+]
+],
+"hits": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED"
+],
+"conflict": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED"
+]
+},
+"fu_windscreen": {
+"bbox": [
+[
+-288.02,
+144.4,
+133.52
+],
+[
+-229.29,
+156.09,
+135.78
+]
+],
+"hits": [],
+"conflict": []
+},
+"fu_windscreen_hems": {
+"bbox": [
+[
+-288.03,
+144.36,
+133.52
+],
+[
+-229.3,
+156.04,
+135.78
+]
+],
+"hits": [],
+"conflict": []
+},
+"fu_windscreen_posts": {
+"bbox": [
+[
+-288.1,
+144.4,
+133.37
+],
+[
+-229.19,
+156.18,
+135.91
+]
+],
+"hits": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED",
+"Terrain_LiDAR_DTM_1m",
+"WS60_terrain_edge_apron_LiDAR_to_skirt"
+],
+"conflict": [
+"PK_Feliciano_west_DTM_fill_UNVERIFIED"
+]
+},
+"gl_cogen_shed_roof": {
+"bbox": [
+[
+-287.26,
+-103.02,
+123.53
+],
+[
+-283.04,
+-97.98,
+123.65
+]
+],
+"hits": [],
+"conflict": []
+},
+"gl_cogen_shed_walls": {
+"bbox": [
+[
+-287.19,
+-102.95,
+120.95
+],
+[
+-283.11,
+-98.05,
+123.53
+]
+],
+"hits": [
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"JO Walk station east stair to south (OSM 313032757 + ortho 2020": {
+"bbox": [
+[
+-36.27,
+873.2,
+107.33
+],
+[
+-3.91,
+1043.76,
+109.35
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"JO3 East stair foot landing pad (1.6 m UNVERIFIED)",
+"JP East stair box corner posts + mullions + slim landing bands ",
+"JP East stair box glazed enclosure (jp2: 4 panes between corner",
+"JP East stair switchback flights + landings (OSM 1433339919 swi",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": [
+"JO3 East stair foot landing pad (1.6 m UNVERIFIED)",
+"JP East stair box corner posts + mullions + slim landing bands ",
+"JP East stair box glazed enclosure (jp2: 4 panes between corner",
+"JP East stair switchback flights + landings (OSM 1433339919 swi"
+]
+},
+"JR2 Crossing at OSM 287712280, moved onto the ortho 2020 crossw": {
+"bbox": [
+[
+-57.68,
+1081.27,
+106.84
+],
+[
+-52.73,
+1089.6,
+107.11
+]
+],
+"hits": [],
+"conflict": []
+},
+"JR2 Crosswalk bars at OSM 287712280 (ortho 2020 stripes; count/": {
+"bbox": [
+[
+-56.66,
+1082.99,
+106.92
+],
+[
+-53.29,
+1086.15,
+106.99
+]
+],
+"hits": [],
+"conflict": []
+},
+"JR2 Walk crossing to steps 1433339917 foot (OSM 287712280/14333": {
+"bbox": [
+[
+-54.84,
+1078.2,
+106.89
+],
+[
+-43.12,
+1082.84,
+107.27
+]
+],
+"hits": [],
+"conflict": []
+},
+"JR2 Walk OSM 287712278 island edge, station NW, clipped at nort": {
+"bbox": [
+[
+-68.29,
+1086.2,
+106.59
+],
+[
+-52.12,
+1094.43,
+107.17
+]
+],
+"hits": [],
+"conflict": []
+},
+"JS Curb reveal road side of JR2 walk OSM 287712278 (ortho 2020 ": {
+"bbox": [
+[
+-68.17,
+1086.18,
+106.62
+],
+[
+-52.11,
+1092.56,
+107.1
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"JS Walk joints on JO east walk OSM 313032757 (5 ft, UNVERIFIED)": {
+"bbox": [
+[
+-35.5,
+874.63,
+107.45
+],
+[
+-4.46,
+1042.42,
+109.35
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"JS Walk joints on JR2 walk crossing to steps 1433339917 (5 ft, ": {
+"bbox": [
+[
+-53.54,
+1078.27,
+106.99
+],
+[
+-44.26,
+1082.0,
+107.21
+]
+],
+"hits": [],
+"conflict": []
+},
+"JS Walk joints on JR2 walk OSM 287712278 (5 ft, UNVERIFIED)": {
+"bbox": [
+[
+-67.95,
+1086.24,
+106.69
+],
+[
+-53.52,
+1094.14,
+107.13
+]
+],
+"hits": [],
+"conflict": []
+},
+"JS3 Drop-off loop asphalt road side of JS curb (ortho 2020; dra": {
+"bbox": [
+[
+-73.17,
+1076.2,
+106.68
+],
+[
+-51.62,
+1092.46,
+107.04
+]
+],
+"hits": [],
+"conflict": []
+},
+"JT Drop-off/road asphalt gap fill by crosswalk + station walk (": {
+"bbox": [
+[
+-73.71,
+1074.73,
+103.5
+],
+[
+-31.23,
+1115.12,
+107.2
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"JU2 Crosswalk-end sliver fill (0.25 m gap cells, LiDAR +1.5 cm;": {
+"bbox": [
+[
+-58.2,
+1081.02,
+106.88
+],
+[
+-51.7,
+1089.52,
+107.1
+]
+],
+"hits": [],
+"conflict": []
+},
+"JV Crossing NE-end hairline sliver fill (0.1 m gap cells, LiDAR": {
+"bbox": [
+[
+-54.21,
+1089.09,
+107.07
+],
+[
+-53.49,
+1089.51,
+107.1
+]
+],
+"hits": [],
+"conflict": []
+},
+"JW Asphalt north-end feather past the y 1115 cap (ortho 2020 to": {
+"bbox": [
+[
+-53.0,
+1114.0,
+105.8
+],
+[
+-39.5,
+1126.0,
+106.43
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"JY Asphalt notch fill JT/JW corner x-45.5 y1115 LiDAR+1.6cm": {
+"bbox": [
+[
+-46.5,
+1114.7,
+106.28
+],
+[
+-45.13,
+1115.5,
+106.33
+]
+],
+"hits": [],
+"conflict": []
+},
+"North_NEWalkEast_gk": {
+"bbox": [
+[
+-227.07,
+49.63,
+134.25
+],
+[
+-219.66,
+85.17,
+134.56
+]
+],
+"hits": [
+"Terrain_LiDAR_DTM_1m"
+],
+"conflict": []
+},
+"SF north cap asphalt walk (ortho ring ~2.5 m)": {
+"bbox": [
+[
+-355.94,
+-111.85,
+115.6
+],
+[
+-289.14,
+-85.82,
+115.79
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km"
+],
+"conflict": []
+},
+"SF north cap edge curb (ortho; APPROX 0.15 m)": {
+"bbox": [
+[
+-353.67,
+-111.7,
+115.6
+],
+[
+-291.64,
+-88.32,
+115.84
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km"
+],
+"conflict": []
+}
+},
+"dropped_coherence": [
+"fr_stand_entry_steps",
+"fse_stand_entry_steps",
+"fst_stand_entry_steps",
+"fu_windscreen",
+"fu_windscreen_hems",
+"JS Walk joints on JO east walk OSM 313032757 (5 ft, UNVERIFIED)",
+"North_NEWalkEast_gk",
+"SF north cap asphalt walk (ortho ring ~2.5 m)",
+"SF north cap edge curb (ortho; APPROX 0.15 m)"
+]
+}
