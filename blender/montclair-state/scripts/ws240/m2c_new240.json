@@ -1,0 +1,539 @@
+{
+"kept": [
+"JQ Deck ramp E edge wall (DSM u 16.5; 0.25 m UNVERIFIED)",
+"JQ Deck ramp E low-end shadow band",
+"JQ Deck ramp E up-ramp slab (DSM 2017; 17.5 m wide, 4.2 %; thic",
+"JQ Deck ramp W down-ramp slab (DSM 2017; 15.5 m wide, 4.2 %; th",
+"JQ Deck ramp W edge wall (DSM edge; 0.25 m UNVERIFIED)",
+"JQ Deck ramp W low-end shadow band",
+"JQ Deck ramp crossover slab in median gap",
+"JQ Deck ramp median wall N (DSM u -1.5; 1.1 m UNVERIFIED)",
+"JQ Deck ramp median wall S (DSM u -1.5; 1.1 m UNVERIFIED)",
+"JQ Deck top-slab edge beam + barrier over E ramp low end (UNVER",
+"JQ Deck top-slab edge beam + barrier over W ramp low end (UNVER",
+"KH NJT clock tower (LiDAR 2017 footprint, local)",
+"KH NJT clock tower arched window heads (kf, remapped)",
+"KL NJT deck N face closure spandrel L1 (to KH tower)",
+"KL NJT deck N face closure spandrel L2 (to KH tower)",
+"KL NJT deck N face closure spandrel L3 (to KH tower)",
+"KL NJT deck N face closure spandrel L4 (to KH tower)",
+"KL NJT deck N face closure spandrel L5 (to KH tower)",
+"KL NJT deck slab infill strips (deck edge to KH tower west wall",
+"NJ Transit Deck",
+"fp_police_body",
+"fp_police_foundation",
+"fp_police_outbuilding",
+"fp_police_parapet_coping",
+"fp_police_roof_membrane",
+"fp_police_roof_units",
+"fp_police_windows",
+"ge_grass_terrace_points",
+"ge_police_terrace_bed",
+"ge_police_terrace_walls"
+],
+"dropped": [],
+"report": {
+"fp_police_body": {
+"bbox": [
+[
+-367.76,
+-10.95,
+118.6
+],
+[
+-340.42,
+16.46,
+126.05
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam",
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"fp_police_foundation": {
+"bbox": [
+[
+-367.83,
+-11.01,
+118.6
+],
+[
+-340.35,
+16.53,
+122.55
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam",
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"fp_police_outbuilding": {
+"bbox": [
+[
+-350.84,
+2.04,
+122.7
+],
+[
+-343.56,
+7.16,
+126.15
+]
+],
+"hits": [
+"M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam",
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"fp_police_parapet_coping": {
+"bbox": [
+[
+-367.81,
+-10.99,
+126.05
+],
+[
+-340.37,
+16.51,
+126.45
+]
+],
+"hits": [],
+"conflict": []
+},
+"fp_police_roof_membrane": {
+"bbox": [
+[
+-367.4,
+-10.64,
+126.25
+],
+[
+-340.78,
+16.1,
+126.25
+]
+],
+"hits": [],
+"conflict": []
+},
+"fp_police_roof_units": {
+"bbox": [
+[
+-361.78,
+-3.22,
+126.25
+],
+[
+-353.85,
+12.67,
+127.65
+]
+],
+"hits": [],
+"conflict": []
+},
+"fp_police_windows": {
+"bbox": [
+[
+-367.56,
+-9.71,
+123.53
+],
+[
+-340.81,
+16.28,
+125.32
+]
+],
+"hits": [],
+"conflict": []
+},
+"ge_grass_terrace_points": {
+"bbox": [
+[
+-352.82,
+-18.16,
+121.43
+],
+[
+-339.03,
+-11.37,
+122.91
+]
+],
+"hits": [],
+"conflict": []
+},
+"ge_police_terrace_bed": {
+"bbox": [
+[
+-352.88,
+-18.23,
+121.35
+],
+[
+-338.96,
+-11.31,
+122.92
+]
+],
+"hits": [
+"M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"ge_police_terrace_walls": {
+"bbox": [
+[
+-353.18,
+-18.53,
+120.41
+],
+[
+-338.66,
+-11.01,
+123.02
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3b_north_LiDAR_DTM_1m_west_rail_corridor_UNVERIFIED_seam",
+"WS68_RHD_ground_northDTM (north grid_1m dtm_filled; NJ 2020 ort"
+],
+"conflict": []
+},
+"JQ Deck ramp crossover slab in median gap": {
+"bbox": [
+[
+-89.85,
+1011.95,
+124.35
+],
+[
+-87.45,
+1021.0,
+124.96
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp E edge wall (DSM u 16.5; 0.25 m UNVERIFIED)": {
+"bbox": [
+[
+-76.2,
+980.53,
+123.35
+],
+[
+-65.54,
+1045.85,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp E low-end shadow band": {
+"bbox": [
+[
+-82.97,
+1045.69,
+125.55
+],
+[
+-65.88,
+1048.44,
+126.2
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp E up-ramp slab (DSM 2017; 17.5 m wide, 4.2 %; thic": {
+"bbox": [
+[
+-93.47,
+980.55,
+123.32
+],
+[
+-65.41,
+1050.47,
+126.49
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp median wall N (DSM u -1.5; 1.1 m UNVERIFIED)": {
+"bbox": [
+[
+-88.51,
+1020.83,
+123.05
+],
+[
+-81.89,
+1055.57,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp median wall S (DSM u -1.5; 1.1 m UNVERIFIED)": {
+"bbox": [
+[
+-94.48,
+983.3,
+123.08
+],
+[
+-88.8,
+1012.12,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp W down-ramp slab (DSM 2017; 15.5 m wide, 4.2 %; th": {
+"bbox": [
+[
+-109.45,
+985.43,
+123.22
+],
+[
+-82.89,
+1058.0,
+126.49
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp W edge wall (DSM edge; 0.25 m UNVERIFIED)": {
+"bbox": [
+[
+-109.32,
+989.74,
+123.25
+],
+[
+-98.19,
+1058.03,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck ramp W low-end shadow band": {
+"bbox": [
+[
+-108.98,
+987.47,
+125.55
+],
+[
+-93.87,
+989.9,
+126.2
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck top-slab edge beam + barrier over E ramp low end (UNVER": {
+"bbox": [
+[
+-83.02,
+1045.69,
+125.55
+],
+[
+-65.77,
+1048.76,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"JQ Deck top-slab edge beam + barrier over W ramp low end (UNVER": {
+"bbox": [
+[
+-109.09,
+987.15,
+125.55
+],
+[
+-93.81,
+989.9,
+127.54
+]
+],
+"hits": [],
+"conflict": []
+},
+"KH NJT clock tower (LiDAR 2017 footprint, local)": {
+"bbox": [
+[
+-55.77,
+1053.25,
+106.71
+],
+[
+-43.05,
+1070.26,
+138.36
+]
+],
+"hits": [
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+},
+"KH NJT clock tower arched window heads (kf, remapped)": {
+"bbox": [
+[
+-54.04,
+1054.27,
+133.45
+],
+[
+-44.78,
+1069.24,
+135.16
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck N face closure spandrel L1 (to KH tower)": {
+"bbox": [
+[
+-56.38,
+1063.04,
+109.26
+],
+[
+-53.29,
+1065.14,
+112.51
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck N face closure spandrel L2 (to KH tower)": {
+"bbox": [
+[
+-56.38,
+1063.04,
+112.51
+],
+[
+-53.29,
+1065.14,
+115.76
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck N face closure spandrel L3 (to KH tower)": {
+"bbox": [
+[
+-56.38,
+1063.04,
+115.76
+],
+[
+-53.29,
+1065.14,
+119.01
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck N face closure spandrel L4 (to KH tower)": {
+"bbox": [
+[
+-56.38,
+1063.04,
+119.01
+],
+[
+-53.29,
+1065.14,
+122.26
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck N face closure spandrel L5 (to KH tower)": {
+"bbox": [
+[
+-56.38,
+1063.04,
+122.26
+],
+[
+-53.29,
+1065.14,
+125.51
+]
+],
+"hits": [],
+"conflict": []
+},
+"KL NJT deck slab infill strips (deck edge to KH tower west wall": {
+"bbox": [
+[
+-55.63,
+1058.89,
+109.91
+],
+[
+-53.33,
+1064.66,
+126.51
+]
+],
+"hits": [],
+"conflict": []
+},
+"NJ Transit Deck": {
+"bbox": [
+[
+-129.7,
+963.82,
+107.01
+],
+[
+-44.23,
+1073.28,
+127.54
+]
+],
+"hits": [
+"Context_skirt_3DEP_ortho_4km",
+"M3a_north_LiDAR_DTM_1m_ext_y515_UNVERIFIED_seam"
+],
+"conflict": []
+}
+}
+}
