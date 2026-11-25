@@ -1,0 +1,842 @@
+[
+[
+"NLamp_000",
+-45.7,
+1115.2,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+0.028,
+null
+],
+[
+"NLamp_001",
+-221.9,
+454.1,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.057,
+null
+],
+[
+"NLamp_002",
+-47.9,
+1098.5,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+-0.042,
+null
+],
+[
+"NLamp_003",
+-18.8,
+1209.2,
+"Context_skirt_3DEP_ortho_4km",
+0.461,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_004",
+-21.7,
+1179.6,
+"Context_skirt_3DEP_ortho_4km",
+0.633,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_005",
+-25.2,
+1149.6,
+"Context_skirt_3DEP_ortho_4km",
+0.682,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_006",
+-31.0,
+1120.2,
+"Context_skirt_3DEP_ortho_4km",
+-0.024,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_007",
+-36.8,
+1090.7,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+0.03,
+null
+],
+[
+"NLamp_008",
+-224.1,
+440.3,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.002,
+null
+],
+[
+"NLamp_009",
+-277.8,
+464.4,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+-0.409,
+"dz -0.41 UNVERIFIED"
+],
+[
+"NLamp_010",
+-250.4,
+466.1,
+"Context_skirt_3DEP_ortho_4km",
+1.922,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_011",
+-249.1,
+451.3,
+"Context_skirt_3DEP_ortho_4km",
+1.572,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_012",
+-186.0,
+453.2,
+"Context_skirt_3DEP_ortho_4km",
+0.508,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_013",
+-155.5,
+454.7,
+"Context_skirt_3DEP_ortho_4km",
+-2.456,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_014",
+-127.3,
+443.9,
+"Context_skirt_3DEP_ortho_4km",
+-3.509,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_015",
+-289.0,
+264.4,
+"Context_skirt_3DEP_ortho_4km",
+1.062,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_016",
+-277.5,
+292.1,
+"Context_skirt_3DEP_ortho_4km",
+2.225,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_017",
+-265.4,
+319.7,
+"Context_skirt_3DEP_ortho_4km",
+0.923,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_018",
+-252.8,
+346.9,
+"Context_skirt_3DEP_ortho_4km",
+1.394,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_019",
+-240.9,
+374.4,
+"Context_skirt_3DEP_ortho_4km",
+2.109,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_020",
+-224.9,
+400.1,
+"Context_skirt_3DEP_ortho_4km",
+0.704,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_021",
+-203.3,
+420.9,
+"Context_skirt_3DEP_ortho_4km",
+3.095,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_022",
+-213.2,
+443.9,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.011,
+null
+],
+[
+"NLamp_023",
+-56.8,
+1089.2,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+-0.014,
+null
+],
+[
+"NLamp_024",
+-47.6,
+1078.0,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+0.008,
+null
+],
+[
+"NLamp_025",
+-305.1,
+192.3,
+"Context_skirt_3DEP_ortho_4km",
+4.097,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_026",
+-322.1,
+168.2,
+"Context_skirt_3DEP_ortho_4km",
+3.039,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_027",
+-331.1,
+139.6,
+"Context_skirt_3DEP_ortho_4km",
+0.308,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_028",
+-339.9,
+111.0,
+"Context_skirt_3DEP_ortho_4km",
+-0.152,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_029",
+-348.0,
+82.1,
+"Context_skirt_3DEP_ortho_4km",
+1.489,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_030",
+-356.1,
+53.3,
+"Context_skirt_3DEP_ortho_4km",
+2.51,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_031",
+-363.7,
+24.2,
+"Context_skirt_3DEP_ortho_4km",
+1.306,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_032",
+-373.0,
+-4.2,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.063,
+null
+],
+[
+"NLamp_033",
+-359.6,
+-18.7,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+-0.059,
+null
+],
+[
+"NLamp_034",
+-350.9,
+-15.1,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.041,
+null
+],
+[
+"NLamp_035",
+-232.6,
+12.1,
+"WS64_KasserN_DTM_target",
+0.003,
+"main-native WS64_KasserN_DTM_target"
+],
+[
+"NLamp_036",
+-109.1,
+98.5,
+"Terrain_LiDAR_DTM_1m",
+0.014,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_037",
+-79.9,
+91.6,
+"Terrain_LiDAR_DTM_1m",
+0.004,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_038",
+-50.7,
+84.8,
+"Terrain_LiDAR_DTM_1m",
+0.015,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_039",
+-243.0,
+21.8,
+"WS64_KasserN_DTM_target",
+-0.067,
+"main-native WS64_KasserN_DTM_target"
+],
+[
+"NLamp_040",
+-238.8,
+37.5,
+"WS64_KasserN_DTM_target",
+0.01,
+"main-native WS64_KasserN_DTM_target"
+],
+[
+"NLamp_041",
+-215.6,
+55.7,
+"Terrain_LiDAR_DTM_1m",
+-0.496,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_042",
+-195.7,
+72.0,
+"Terrain_LiDAR_DTM_1m",
+0.086,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_043",
+-166.4,
+72.9,
+"Terrain_LiDAR_DTM_1m",
+0.032,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_044",
+-136.0,
+70.7,
+"Terrain_LiDAR_DTM_1m",
+0.024,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_045",
+-245.0,
+39.5,
+"WS64_KasserN_DTM_target",
+0.021,
+"main-native WS64_KasserN_DTM_target"
+],
+[
+"NLamp_046",
+-131.9,
+34.2,
+"Footpaths_OSM",
+0.052,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_047",
+-127.4,
+63.9,
+"Footpaths_OSM",
+0.095,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_048",
+-124.1,
+93.4,
+"Footpaths_OSM",
+0.04,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_049",
+-122.4,
+123.4,
+"Footpaths_OSM",
+0.056,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_050",
+-120.2,
+153.4,
+"Terrain_LiDAR_DTM_1m",
+-0.279,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_051",
+-117.8,
+183.3,
+"Footpaths_OSM",
+0.065,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_052",
+-115.6,
+213.2,
+"Footpaths_OSM",
+0.064,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_053",
+-188.9,
+81.9,
+"Terrain_LiDAR_DTM_1m",
+0.322,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_054",
+-133.7,
+91.9,
+"Terrain_LiDAR_DTM_1m",
+0.004,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_055",
+-129.7,
+107.1,
+"Footpaths_OSM",
+0.046,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_056",
+-76.3,
+101.2,
+"Terrain_LiDAR_DTM_1m",
+0.001,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_057",
+-74.6,
+130.9,
+"Terrain_LiDAR_DTM_1m",
+-0.02,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_058",
+-111.2,
+115.5,
+"Context_ground_beyond_data",
+-137.28,
+"main-native Context_ground_beyond_data"
+],
+[
+"NLamp_059",
+-85.0,
+130.1,
+"Terrain_LiDAR_DTM_1m",
+-0.103,
+"dup 3.9m"
+],
+[
+"NLamp_060",
+-44.0,
+123.5,
+"Terrain_LiDAR_DTM_1m",
+0.031,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_061",
+-71.4,
+133.1,
+"Footpaths_OSM",
+0.057,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_062",
+-101.3,
+135.4,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-0.218,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_063",
+-62.8,
+101.6,
+"Footpaths_OSM",
+0.057,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_064",
+-76.8,
+147.4,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-0.616,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_065",
+-35.1,
+125.2,
+"Terrain_LiDAR_DTM_1m",
+0.01,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_066",
+-112.4,
+164.6,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-0.303,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_067",
+-166.7,
+193.5,
+"Terrain_LiDAR_DTM_1m",
+-0.619,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_068",
+-154.3,
+172.0,
+"Terrain_LiDAR_DTM_1m",
+-0.794,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_069",
+-129.4,
+178.6,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-0.477,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_070",
+-133.2,
+202.6,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-2.487,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_071",
+-159.1,
+203.7,
+"Context_ground_beyond_data",
+-138.76,
+"main-native Context_ground_beyond_data"
+],
+[
+"NLamp_072",
+-129.1,
+166.2,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-0.319,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_073",
+-127.6,
+178.5,
+"Footpaths_OSM",
+0.069,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_074",
+-105.8,
+221.9,
+"Context_skirt_3DEP_ortho_4km",
+-1.462,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_075",
+-72.2,
+147.0,
+"Terrain_LiDAR_DTM_1m",
+-0.554,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_076",
+-50.5,
+141.8,
+"Context_ground_beyond_data",
+-137.06,
+"main-native Context_ground_beyond_data"
+],
+[
+"NLamp_077",
+-58.5,
+129.2,
+"Terrain_LiDAR_DTM_1m",
+0.012,
+"dup 3.2m"
+],
+[
+"NLamp_078",
+-133.0,
+216.6,
+"Context_skirt_3DEP_ortho_4km",
+-1.736,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_079",
+-126.1,
+218.7,
+"Context_skirt_3DEP_ortho_4km",
+-1.929,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_080",
+-121.9,
+205.3,
+"Footpaths_OSM",
+0.087,
+"main-native Footpaths_OSM"
+],
+[
+"NLamp_081",
+-120.6,
+208.5,
+"PB2_walk_lawn_fillet_UNVERIFIE",
+-2.997,
+"main-native PB2_walk_lawn_fillet_UNVERIFIED"
+],
+[
+"NLamp_082",
+-191.6,
+236.7,
+"Context_skirt_3DEP_ortho_4km",
+0.776,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_083",
+-203.7,
+257.1,
+"WS60_terrain_edge_apron_LiDAR_",
+1.494,
+"main-native WS60_terrain_edge_apron_LiDAR_to_skirt"
+],
+[
+"NLamp_084",
+-309.4,
+221.0,
+"PK_Feliciano_west_DTM_fill_UNV",
+-0.108,
+"main-native PK_Feliciano_west_DTM_fill_UNVERIFIED"
+],
+[
+"NLamp_085",
+-298.9,
+249.1,
+"PK_Feliciano_west_DTM_fill_UNV",
+-0.054,
+"main-native PK_Feliciano_west_DTM_fill_UNVERIFIED"
+],
+[
+"NLamp_086",
+-113.4,
+295.6,
+"Context_skirt_3DEP_ortho_4km",
+0.051,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_087",
+-131.3,
+307.4,
+"Context_ground_beyond_data",
+-139.54,
+"main-native Context_ground_beyond_data"
+],
+[
+"NLamp_088",
+-161.3,
+309.5,
+"Context_skirt_3DEP_ortho_4km",
+-0.232,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_089",
+-190.8,
+309.6,
+"Context_skirt_3DEP_ortho_4km",
+-0.126,
+"main-native Context_skirt_3DEP_ortho_4km"
+],
+[
+"NLamp_090",
+-216.8,
+296.7,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+-0.019,
+null
+],
+[
+"NLamp_091",
+-117.6,
+875.5,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+0.009,
+null
+],
+[
+"NLamp_092",
+-273.8,
+472.6,
+"M3b_north_LiDAR_DTM_1m_west_ra",
+0.015,
+null
+],
+[
+"NLamp_093",
+-181.4,
+193.7,
+"Terrain_LiDAR_DTM_1m",
+-0.792,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_094",
+-186.7,
+118.2,
+"Terrain_LiDAR_DTM_1m",
+-0.347,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_095",
+-186.0,
+147.9,
+"Terrain_LiDAR_DTM_1m",
+0.722,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_096",
+-212.2,
+157.0,
+"Context_ground_beyond_data",
+-133.6,
+"main-native Context_ground_beyond_data"
+],
+[
+"NLamp_097",
+-19.3,
+76.2,
+"Terrain_LiDAR_DTM_1m",
+-0.011,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_098",
+-8.9,
+96.6,
+"Terrain_LiDAR_DTM_1m",
+0.015,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_099",
+-37.6,
+72.1,
+"Terrain_LiDAR_DTM_1m",
+-0.04,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_100",
+-15.6,
+61.0,
+"Terrain_LiDAR_DTM_1m",
+-0.017,
+"main-native Terrain_LiDAR_DTM_1m"
+],
+[
+"NLamp_101",
+-42.6,
+53.4,
+"Lawn_worn_edge_along_walks",
+-0.011,
+"main-native Lawn_worn_edge_along_walks"
+],
+[
+"NLamp_102",
+-37.6,
+1066.5,
+"M3a_north_LiDAR_DTM_1m_ext_y51",
+0.012,
+null
+],
+[
+"NLamp_103",
+-14.9,
+1053.6,
+"JP East stair box red gable ro",
+11.11,
+"main-native JP East stair box red gable roof (ortho "
+],
+[
+"NLamp_104",
+-85.1,
+-14.9,
+"Terrain_LiDAR_DTM_1m",
+0.049,
+"main-native Terrain_LiDAR_DTM_1m"
+]
+]
