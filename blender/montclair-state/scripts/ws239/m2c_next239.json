@@ -1,0 +1,1217 @@
+{
+"fp_police_body": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 30,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_foundation": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 30,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_outbuilding": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 14,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_parapet_coping": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 60,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_roof_membrane": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 15,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_roof_units": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 24,
+"status": "clean",
+"overlaps": []
+},
+"fp_police_windows": {
+"cols": [
+"North_Police_fp"
+],
+"region": "M3b",
+"verts": 456,
+"status": "clean",
+"overlaps": []
+},
+"fr_front_walkway": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 592,
+"status": "clean",
+"overlaps": []
+},
+"fr_stand_entry_steps": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 32,
+"status": "clean",
+"overlaps": []
+},
+"fr_stand_rails": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 2960,
+"status": "review",
+"overlaps": [
+"PO_Feliciano_gutters_downpipes_UNVERIFIED"
+]
+},
+"fr_stand_risers": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 560,
+"status": "clean",
+"overlaps": []
+},
+"fr_stand_seating": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 1344,
+"status": "review",
+"overlaps": [
+"PO_Feliciano_gutters_downpipes_UNVERIFIED"
+]
+},
+"fr_stand_under_pad": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 1408,
+"status": "review",
+"overlaps": [
+"Feliciano School of Business walls",
+"PO_Feliciano_gutters_downpipes_UNVERIFIED"
+]
+},
+"fr_stand_understructure": {
+"cols": [
+"North_SoccerStands_fr"
+],
+"region": "M3b",
+"verts": 1848,
+"status": "review",
+"overlaps": [
+"PO_Feliciano_gutters_downpipes_UNVERIFIED"
+]
+},
+"fs_goal_frames": {
+"cols": [
+"North_Pitch_fs"
+],
+"region": "M3b",
+"verts": 376,
+"status": "review",
+"overlaps": [
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
+]
+},
+"fs_goal_nets": {
+"cols": [
+"North_Pitch_fs"
+],
+"region": "M3b",
+"verts": 32,
+"status": "review",
+"overlaps": [
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
+]
+},
+"fs_lines": {
+"cols": [
+"North_Pitch_fs"
+],
+"region": "M3b",
+"verts": 2130,
+"status": "review",
+"overlaps": [
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED"
+]
+},
+"fs_turf": {
+"cols": [
+"North_Pitch_fs"
+],
+"region": "M3b",
+"verts": 8658,
+"status": "review",
+"overlaps": [
+"fu_deck_base_strip",
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED",
+"T_RedMaple_L1_0373"
+]
+},
+"fse_front_walkway": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 910,
+"status": "review",
+"overlaps": [
+"T_RedMaple_L1_0397"
+]
+},
+"fse_press_box": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 72,
+"status": "review",
+"overlaps": [
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fse_stand_entry_steps": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 56,
+"status": "clean",
+"overlaps": []
+},
+"fse_stand_rails": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 6112,
+"status": "review",
+"overlaps": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fse_stand_risers": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 832,
+"status": "review",
+"overlaps": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fse_stand_seating": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 1872,
+"status": "review",
+"overlaps": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fse_stand_under_pad": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 2720,
+"status": "review",
+"overlaps": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fse_stand_understructure": {
+"cols": [
+"North_SoccerStandsEast_fs"
+],
+"region": "M3b",
+"verts": 3864,
+"status": "review",
+"overlaps": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+]
+},
+"fst_front_walkway": {
+"cols": [
+"North_SoccerStandsSouth_ft"
+],
+"region": "M3b",
+"verts": 1796,
+"status": "review",
+"overlaps": [
+"eu_rhd_north_retaining_wall",
+"fu_deck_base_strip"
+]
+},
+"fst_stand_entry_steps": {
+"cols": [
+"North_SoccerStandsSouth_ft"
+],
+"region": "M3b",
+"verts": 56,
+"status": "clean",
+"overlaps": []
+},
+"ft_ballstop_net": {
+"cols": [
+"North_PitchFence_ft"
+],
+"region": "M3b",
+"verts": 20,
+"status": "clean",
+"overlaps": []
+},
+"ft_fence_chainlink": {
+"cols": [
+"North_PitchFence_ft"
+],
+"region": "M3b",
+"verts": 300,
+"status": "review",
+"overlaps": [
+"fu_deck_base_strip",
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED",
+"T_RedMaple_L1_0373",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448"
+]
+},
+"ft_fence_posts_rails": {
+"cols": [
+"North_PitchFence_ft"
+],
+"region": "M3b",
+"verts": 3322,
+"status": "review",
+"overlaps": [
+"fu_deck_base_strip",
+"PZ_Feliciano_SW_DTM_edge_feather_UNVERIFIED",
+"T_RedMaple_L1_0373",
+"T_RedMaple_L1_0397",
+"T_RedMaple_L1_0448"
+]
+},
+"ft_light_pole_SW": {
+"cols": [
+"North_PitchLights_ft"
+],
+"region": "M3b",
+"verts": 280,
+"status": "clean",
+"overlaps": []
+},
+"fu_light_pole_NW": {
+"cols": [
+"North_PitchNorth_fu"
+],
+"region": "M3b",
+"verts": 280,
+"status": "clean",
+"overlaps": []
+},
+"fu_windscreen": {
+"cols": [
+"North_PitchNorth_fu"
+],
+"region": "M3b",
+"verts": 1080,
+"status": "clean",
+"overlaps": []
+},
+"fu_windscreen_hems": {
+"cols": [
+"North_PitchNorth_fu"
+],
+"region": "M3b",
+"verts": 160,
+"status": "clean",
+"overlaps": []
+},
+"fu_windscreen_posts": {
+"cols": [
+"North_PitchNorth_fu"
+],
+"region": "M3b",
+"verts": 1536,
+"status": "clean",
+"overlaps": []
+},
+"gb_grass_slope_points": {
+"cols": [
+"North_RHD_gb"
+],
+"region": "M3b",
+"verts": 2142,
+"status": "review",
+"overlaps": [
+"fo_cogen_body",
+"fo_cogen_facade",
+"gb_cogen_paving",
+"WS74_cogen_lot_asphalt_ortho2020_UNVERIFIED_edges"
+]
+},
+"gb_panzer_footprint_underpatch": {
+"cols": [
+"North_RHD_gb"
+],
+"region": "M3b",
+"verts": 1563,
+"status": "clean",
+"overlaps": []
+},
+"gd_grass_police_lawn_points": {
+"cols": [
+"North_PoliceLawn_gd"
+],
+"region": "M3b",
+"verts": 31694,
+"status": "review",
+"overlaps": [
+"ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+"fc_rhd_ramp_edges",
+"fd_rhd_ramp_barrier_cab",
+"fd_rhd_ramp_barrier_curb",
+"fd_rhd_ramp_barrier_post",
+"fe_rhd_bay_edge_beams"
+]
+},
+"ge_grass_terrace_points": {
+"cols": [
+"North_PoliceSouth_ge"
+],
+"region": "M3b",
+"verts": 6173,
+"status": "clean",
+"overlaps": []
+},
+"ge_police_south_walk": {
+"cols": [
+"North_PoliceSouth_ge"
+],
+"region": "M3b",
+"verts": 1267,
+"status": "review",
+"overlaps": [
+"Red Hawk W core (stair tower, red-tile hip roof (ortho); LiDAR "
+]
+},
+"ge_police_terrace_bed": {
+"cols": [
+"North_PoliceSouth_ge"
+],
+"region": "M3b",
+"verts": 435,
+"status": "clean",
+"overlaps": []
+},
+"ge_police_terrace_walls": {
+"cols": [
+"North_PoliceSouth_ge"
+],
+"region": "M3b",
+"verts": 368,
+"status": "clean",
+"overlaps": []
+},
+"gl_cogen_shed_roof": {
+"cols": [
+"North_CogenShed_gl"
+],
+"region": "M3b",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"gl_cogen_shed_walls": {
+"cols": [
+"North_CogenShed_gl"
+],
+"region": "M3b",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"Greenhouse_Gable_ShadeGlazed_MSU": {
+"cols": [
+"North_Greenhouse_20261014n"
+],
+"region": "M3a",
+"verts": 854,
+"status": "clean",
+"overlaps": []
+},
+"Ice Arena L0 south strip (LiDAR 115.45 m flat; outline UNVERIFI": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 24,
+"status": "clean",
+"overlaps": []
+},
+"Ice Arena L1 gable (ridge 120.18 m / eave 118.52 m; gable vs ba": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 39,
+"status": "clean",
+"overlaps": []
+},
+"Ice Arena L1 main walls (LiDAR eave 118.52 m; outline UNVERIFIE": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 12,
+"status": "clean",
+"overlaps": []
+},
+"IceArena_RTU_00 (LiDAR; type UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JO Walk station east stair to south (OSM 313032757 + ortho 2020": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 1211,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp crossover slab in median gap": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp E edge wall (DSM u 16.5; 0.25 m UNVERIFIED)": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp E low-end shadow band": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp E up-ramp slab (DSM 2017; 17.5 m wide, 4.2 %; thic": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp median wall N (DSM u -1.5; 1.1 m UNVERIFIED)": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp median wall S (DSM u -1.5; 1.1 m UNVERIFIED)": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp W down-ramp slab (DSM 2017; 15.5 m wide, 4.2 %; th": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp W edge wall (DSM edge; 0.25 m UNVERIFIED)": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck ramp W low-end shadow band": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck top-slab edge beam + barrier over E ramp low end (UNVER": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JQ Deck top-slab edge beam + barrier over W ramp low end (UNVER": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"JR2 Crossing at OSM 287712280, moved onto the ortho 2020 crossw": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 49,
+"status": "clean",
+"overlaps": []
+},
+"JR2 Crosswalk bars at OSM 287712280 (ortho 2020 stripes; count/": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 12,
+"status": "clean",
+"overlaps": []
+},
+"JR2 Walk crossing to steps 1433339917 foot (OSM 287712280/14333": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 70,
+"status": "clean",
+"overlaps": []
+},
+"JR2 Walk OSM 287712278 island edge, station NW, clipped at nort": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 105,
+"status": "clean",
+"overlaps": []
+},
+"JS Curb reveal road side of JR2 walk OSM 287712278 (ortho 2020 ": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 175,
+"status": "clean",
+"overlaps": []
+},
+"JS Walk joints on JO east walk OSM 313032757 (5 ft, UNVERIFIED)": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 1150,
+"status": "clean",
+"overlaps": []
+},
+"JS Walk joints on JR2 walk crossing to steps 1433339917 (5 ft, ": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 70,
+"status": "clean",
+"overlaps": []
+},
+"JS Walk joints on JR2 walk OSM 287712278 (5 ft, UNVERIFIED)": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 110,
+"status": "clean",
+"overlaps": []
+},
+"JS3 Drop-off loop asphalt road side of JS curb (ortho 2020; dra": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 618,
+"status": "clean",
+"overlaps": []
+},
+"JT Drop-off/road asphalt gap fill by crosswalk + station walk (": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 1958,
+"status": "clean",
+"overlaps": []
+},
+"JU2 Crosswalk-end sliver fill (0.25 m gap cells, LiDAR +1.5 cm;": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 84,
+"status": "clean",
+"overlaps": []
+},
+"JV Crossing NE-end hairline sliver fill (0.1 m gap cells, LiDAR": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 24,
+"status": "clean",
+"overlaps": []
+},
+"JW Asphalt north-end feather past the y 1115 cap (ortho 2020 to": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 322,
+"status": "clean",
+"overlaps": []
+},
+"JY Asphalt notch fill JT/JW corner x-45.5 y1115 LiDAR+1.6cm": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 100,
+"status": "clean",
+"overlaps": []
+},
+"KH NJT clock tower (LiDAR 2017 footprint, local)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 5002,
+"status": "clean",
+"overlaps": []
+},
+"KH NJT clock tower arched window heads (kf, remapped)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 716,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck N face closure spandrel L1 (to KH tower)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 40,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck N face closure spandrel L2 (to KH tower)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 40,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck N face closure spandrel L3 (to KH tower)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 40,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck N face closure spandrel L4 (to KH tower)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 40,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck N face closure spandrel L5 (to KH tower)": {
+"cols": [
+"North_assets3_placed_20261013"
+],
+"region": "M3a",
+"verts": 40,
+"status": "clean",
+"overlaps": []
+},
+"KL NJT deck slab infill strips (deck edge to KH tower west wall": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 48,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena membrane lap seams (ridge-parallel 3.05 m; spacing ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 108,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU A condensing unit (cells x-72..-67, y664..667) ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 80,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU B tall AHU (cells x-76..-75, y667..672) (LiDAR ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 32,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU C exhaust fan (cell -69,670) (LiDAR 2017; type ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 48,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU D condensing unit (cells x-68..-65, y674..676) ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 64,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU E condensing unit (cells x-76..-71, y675..679) ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 96,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena RTU_00 curb (to sloped roof; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"KM IceArena wall-top metal coping (profile UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 48,
+"status": "clean",
+"overlaps": []
+},
+"KN IceArena red roof 0 (LiDAR 2017 gable, ridge 118.42; materia": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 32,
+"status": "clean",
+"overlaps": []
+},
+"KN IceArena red roof 0 bay walls (LiDAR 2017; UNVERIFIED facade": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 10,
+"status": "clean",
+"overlaps": []
+},
+"KN IceArena red roof 1 (LiDAR 2017 lean-to, shed vs gable UNVER": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 16,
+"status": "clean",
+"overlaps": []
+},
+"KN IceArena red roof 1 bay walls (LiDAR 2017; UNVERIFIED facade": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 8,
+"status": "clean",
+"overlaps": []
+},
+"KO IceArena east bay entrance storefront (generic; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 210,
+"status": "clean",
+"overlaps": []
+},
+"KO IceArena precast joints+reveal (3.05 m; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 480,
+"status": "clean",
+"overlaps": []
+},
+"KO IceArena west bay entrance storefront (generic; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 366,
+"status": "clean",
+"overlaps": []
+},
+"KP IceArena SSW drive-aisle asphalt (2020 ortho; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 4614,
+"status": "clean",
+"overlaps": []
+},
+"KP IceArena SSW walk + entry apron (2020 ortho; UNVERIFIED)": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 2656,
+"status": "clean",
+"overlaps": []
+},
+"KQ Lot 28S asphalt + ortho paint (OSM 313031565; UNVERIFIED)": {
+"cols": [
+"North_Greenhouse_20261014n"
+],
+"region": "M3a",
+"verts": 12689,
+"status": "clean",
+"overlaps": []
+},
+"KR Lot 28S stall stripes (2020 ortho trace; UNVERIFIED)": {
+"cols": [
+"North_Greenhouse_20261014n"
+],
+"region": "M3a",
+"verts": 2298,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena east storefront drip-end run-off streaks (decals 4 ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 20,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena east storefront head drip cap (bent metal; UNVERIFI": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 12,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena east storefront head grime wash (decal 4 mm; UNVERI": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 4,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena west storefront drip-end run-off streaks (decals 4 ": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 16,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena west storefront head drip cap (bent metal; UNVERIFI": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 12,
+"status": "clean",
+"overlaps": []
+},
+"KT IceArena west storefront head grime wash (decal 4 mm; UNVERI": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 4,
+"status": "clean",
+"overlaps": []
+},
+"KU IceArena east storefront jamb-side sill splash (decals 4 mm;": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 32,
+"status": "clean",
+"overlaps": []
+},
+"KU IceArena west storefront jamb-side sill splash (decals 4 mm;": {
+"cols": [
+"North_IceArena_20261014m"
+],
+"region": "M3a",
+"verts": 48,
+"status": "clean",
+"overlaps": []
+},
+"KV Lot28S island outline+hatch paint (ortho; UNVERIFIED)": {
+"cols": [
+"North_Greenhouse_20261014n"
+],
+"region": "M3a",
+"verts": 750,
+"status": "clean",
+"overlaps": []
+},
+"MSU Maintenance Building (OSM 232850495; BACKDROP massing, LiDA": {
+"cols": [
+"North_MaintenanceBldg_backdrop_gp"
+],
+"region": "M3b",
+"verts": 576,
+"status": "review",
+"overlaps": [
+"ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+"gb_cogen_paving"
+]
+},
+"NE Children's Center downpipes + straps + splash (UNVERIFIED)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 632,
+"status": "review",
+"overlaps": [
+"Children's Center entry door glass (photo)",
+"Children's Center entry doors, side lites, fan transom muntins ",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center entry projection walls (OSM + photo porch dep",
+"Children's Center pedestal face panels (photo)",
+"Children's Center porch columns x4 (photo: plain round white; U"
+]
+},
+"NE Children's Center gutters, white K-style (UNVERIFIED exc. W)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 440,
+"status": "clean",
+"overlaps": []
+},
+"NE Children's Center ridge/hip/rake caps, half-round (UNVERIFIE": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 13574,
+"status": "review",
+"overlaps": [
+"Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+"Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+"Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+"Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+]
+},
+"NE Children's Center valley flashing, galvanised (UNVERIFIED)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 2740,
+"status": "review",
+"overlaps": [
+"Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+"Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+"Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+"Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+]
+},
+"NJ Transit Deck": {
+"cols": [
+"North_parking_decks"
+],
+"region": "M3a",
+"verts": 1369,
+"status": "clean",
+"overlaps": []
+},
+"North_NEPlaza_gi": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 2069,
+"status": "review",
+"overlaps": [
+"eu_rhd_north_retaining_wall",
+"T_RedMaple_L1_0373",
+"T_RedMaple_L1_0397"
+]
+},
+"North_NEWalkCurveS_gk": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 330,
+"status": "review",
+"overlaps": [
+"T_RedMaple_L1_0373"
+]
+},
+"North_NEWalkEast_gk": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 432,
+"status": "clean",
+"overlaps": []
+},
+"SF north cap asphalt walk (ortho ring ~2.5 m)": {
+"cols": [
+"North_SpragueField_apron_go"
+],
+"region": "M3b",
+"verts": 964,
+"status": "clean",
+"overlaps": []
+},
+"SF north cap edge curb (ortho; APPROX 0.15 m)": {
+"cols": [
+"North_SpragueField_apron_go"
+],
+"region": "M3b",
+"verts": 964,
+"status": "clean",
+"overlaps": []
+}
+}
