@@ -5,7 +5,7 @@ export KEEPMOD="${KEEPMOD:-Roads_OSM Footpaths_OSM Context_skirt_3DEP_ortho_4km}
 F=${F:-montclair_state_ws240c.blend}; TAGM=${TAGM:-ws240c}; D=${D:-wip}; ONLY=${ONLY:-1234}
 CN="-230,60,850,1200"; CP="-480,-130,-150,540"
 [[ $ONLY == *1* ]] && srun "$CN" "${CAM1:-40.0,890.0,185.0,-80.0,1025.0,112.0,28}" ws240_oblique_NJT_deck_ramp_clock_tower_from_SE_${TAGM}_main_sub $F $D ws239/upd239.py
-[[ $ONLY == *2* ]] && srun "$CP" "${CAM2:--345.0,-35.0,121.75,-356.0,2.0,123.5,28}" ws240_eye_police_building_from_SE_College_Ave_${TAGM}_main_sub $F $D ws239/upd239.py
-[[ $ONLY == *3* ]] && srun "$CN" "${CAM3:--20.0,1110.0,108.4,-60.0,1050.0,118.0,28}" ws240_eye_NJT_deck_clock_tower_from_NE_${TAGM}_main_sub $F $D ws239/upd239.py
-[[ $ONLY == *4* ]] && srun "$CP" "${CAM4:--261.0,-51.5,126.3,-266.5,-42.0,127.6,35}" ws240_closeup_RHD_clearance_bar_dark_steel_${TAGM}_main_sub $F $D ws239/upd239.py
+[[ $ONLY == *2* ]] && srun "${C2:--420,-300,-60,60}" "${CAM2:--375.0,-5.0,120.5,-354.0,2.0,123.0,30}" ws240_eye_police_building_from_W_rail_corridor_${TAGM}_main_sub $F $D ws239/upd239.py
+[[ $ONLY == *3* ]] && srun "$CN" "${CAM3:--120.0,940.0,111.3,-80.0,1010.0,116.0,28}" ws240_eye_NJT_deck_ramp_clock_tower_from_S_${TAGM}_main_sub $F $D ws239/upd239.py
+[[ $ONLY == *4* ]] && srun "${C4:--320,-220,-90,-10}" "${CAM4:--261.0,-51.5,126.3,-266.5,-42.0,127.6,35}" ws240_closeup_RHD_clearance_bar_dark_steel_${TAGM}_main_sub $F $D ws239/upd239.py
 true
