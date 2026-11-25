@@ -1,0 +1,17 @@
+{
+"f243a": {
+"target": "WS243_stands_pitch_holdunder_target",
+"walls": [
+"WS243_edge_wall_fs_turf_UNVERIFIED",
+"WS243_edge_wall_fse_stand_under_pad_UNVERIFIED",
+"WS243_edge_wall_fr_stand_under_pad_UNVERIFIED",
+"WS243_edge_wall_fse_front_walkway_UNVERIFIED",
+"WS243_edge_wall_fr_front_walkway_UNVERIFIED",
+"WS243_edge_wall_fst_front_walkway_UNVERIFIED"
+],
+"sf_cap": [
+"SF north cap asphalt walk (ortho ring ~2.5 m)",
+"SF north cap edge curb (ortho; APPROX 0.15 m)"
+]
+}
+}

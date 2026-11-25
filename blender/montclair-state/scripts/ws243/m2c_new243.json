@@ -1,0 +1,41 @@
+{
+"kept": [
+"fr_front_walkway",
+"fr_stand_entry_steps",
+"fr_stand_rails",
+"fr_stand_risers",
+"fr_stand_seating",
+"fr_stand_under_pad",
+"fr_stand_understructure",
+"fs_goal_frames",
+"fs_goal_nets",
+"fs_lines",
+"fs_turf",
+"fse_front_walkway",
+"fse_press_box",
+"fse_stand_entry_steps",
+"fse_stand_rails",
+"fse_stand_risers",
+"fse_stand_seating",
+"fse_stand_under_pad",
+"fse_stand_understructure",
+"fst_front_walkway",
+"fst_stand_entry_steps",
+"ft_ballstop_net",
+"ft_fence_chainlink",
+"ft_fence_posts_rails",
+"ft_light_pole_SW",
+"fu_light_pole_NW",
+"fu_windscreen",
+"fu_windscreen_hems",
+"fu_windscreen_posts"
+],
+"dropped": [],
+"trees_removed": [
+"T_LondonPlane_L1_0462",
+"T_RedMaple_L1_0448",
+"T_RedMaple_L1_0451"
+],
+"pk_pushed": 1214,
+"report": "see LOG ws243 (overlap report: 0 hard conflicts, soft = tree canopies T_RedMaple_L1_0397/0451)"
+}
