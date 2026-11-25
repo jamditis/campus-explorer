@@ -1,0 +1,175 @@
+{
+"gb_grass_slope_points": {
+"cols": [
+"North_RHD_gb"
+],
+"region": "M3b",
+"verts": 2142,
+"status": "review",
+"overlaps": [
+"fo_cogen_body",
+"fo_cogen_facade",
+"gb_cogen_paving",
+"WS74_cogen_lot_asphalt_ortho2020_UNVERIFIED_edges"
+]
+},
+"gb_panzer_footprint_underpatch": {
+"cols": [
+"North_RHD_gb"
+],
+"region": "M3b",
+"verts": 1563,
+"status": "clean",
+"overlaps": []
+},
+"gd_grass_police_lawn_points": {
+"cols": [
+"North_PoliceLawn_gd"
+],
+"region": "M3b",
+"verts": 31694,
+"status": "review",
+"overlaps": [
+"ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+"fc_rhd_ramp_edges",
+"fd_rhd_ramp_barrier_cab",
+"fd_rhd_ramp_barrier_curb",
+"fd_rhd_ramp_barrier_post",
+"fe_rhd_bay_edge_beams"
+]
+},
+"ge_police_south_walk": {
+"cols": [
+"North_PoliceSouth_ge"
+],
+"region": "M3b",
+"verts": 1267,
+"status": "review",
+"overlaps": [
+"Red Hawk W core (stair tower, red-tile hip roof (ortho); LiDAR "
+]
+},
+"JO Walk station east stair to south (OSM 313032757 + ortho 2020": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 1211,
+"status": "deferred_ws242",
+"overlaps": [],
+"note": "dropped in ws242 (PK fill overlap / dependant / seat check); merge stands+pitch as a unit with PK treated as ground, regrade gk + SF cap; overlaps main JO3/JP stair (main wins)"
+},
+"JS Walk joints on JO east walk OSM 313032757 (5 ft, UNVERIFIED)": {
+"cols": [
+"North_terrain"
+],
+"region": "M3a",
+"verts": 1150,
+"status": "deferred_ws242",
+"overlaps": [],
+"note": "dropped in ws242 (PK fill overlap / dependant / seat check); merge stands+pitch as a unit with PK treated as ground, regrade gk + SF cap; overlaps main JO3/JP stair (main wins)"
+},
+"MSU Maintenance Building (OSM 232850495; BACKDROP massing, LiDA": {
+"cols": [
+"North_MaintenanceBldg_backdrop_gp"
+],
+"region": "M3b",
+"verts": 576,
+"status": "review",
+"overlaps": [
+"ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+"gb_cogen_paving"
+]
+},
+"NE Children's Center downpipes + straps + splash (UNVERIFIED)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 632,
+"status": "review",
+"overlaps": [
+"Children's Center entry door glass (photo)",
+"Children's Center entry doors, side lites, fan transom muntins ",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center entry projection walls (OSM + photo porch dep",
+"Children's Center pedestal face panels (photo)",
+"Children's Center porch columns x4 (photo: plain round white; U"
+]
+},
+"NE Children's Center gutters, white K-style (UNVERIFIED exc. W)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 440,
+"status": "clean",
+"overlaps": []
+},
+"NE Children's Center ridge/hip/rake caps, half-round (UNVERIFIE": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 13574,
+"status": "review",
+"overlaps": [
+"Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+"Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+"Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+"Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+]
+},
+"NE Children's Center valley flashing, galvanised (UNVERIFIED)": {
+"cols": [
+"NE_ChildrenCenter_roof_finish_20261030ne"
+],
+"region": "M3a",
+"verts": 2740,
+"status": "review",
+"overlaps": [
+"Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+"Children's Center entry pediment, arch piers + vault, porch cei",
+"Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+"Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+"Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+"Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+]
+},
+"North_NEPlaza_gi": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 2069,
+"status": "review",
+"overlaps": [
+"eu_rhd_north_retaining_wall",
+"T_RedMaple_L1_0373",
+"T_RedMaple_L1_0397"
+]
+},
+"North_NEWalkCurveS_gk": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 330,
+"status": "review",
+"overlaps": [
+"T_RedMaple_L1_0373"
+]
+},
+"North_NEWalkEast_gk": {
+"cols": [
+"North_terrain"
+],
+"region": "M3b",
+"verts": 432,
+"status": "deferred_ws243",
+"overlaps": [],
+"note": "floats up to 1.06 m over main LiDAR ground; draping would LOWER paving (rule: raise only) -> rebuild from OSM on main ground instead"
+}
+}
