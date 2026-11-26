@@ -1,0 +1,136 @@
+{
+ "note": "ws254: North_NEWalkCurveS_gk -> drop; North_NEPlaza_gi -> deferred; ge_police_south_walk -> review. ws246: m2c_next245 minus two items: the NE Children's Center gutters are already in main (local object, merged earlier; queue entry was stale), and gb_panzer_footprint_underpatch (north-file ground patch under the Panzer footprint, x -374..-326, y -82..-46) is dropped as redundant: main already models Panzer and its ground (main design wins). Next = the review items, overlaps checked in Blender first.",
+ "queue": [
+  {
+   "name": "North_NEWalkCurveS_gk",
+   "status": "drop",
+   "verts": 330,
+   "region": "M3b",
+   "overlaps": [
+    "T_RedMaple_L1_0373"
+   ],
+   "ws254": "ws254 rev254: 238/310 samples 0-9 cm UNDER main evaluated terrain and 218/310 within 0.4 m of an existing main OSM walk/road -> duplicate of main walk; main wins"
+  },
+  {
+   "name": "MSU Maintenance Building (OSM 232850495; BACKDROP massing, LiDA",
+   "status": "review",
+   "verts": 576,
+   "region": "M3b",
+   "overlaps": [
+    "ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+    "gb_cogen_paving"
+   ]
+  },
+  {
+   "name": "NE Children's Center downpipes + straps + splash (UNVERIFIED)",
+   "status": "review",
+   "verts": 632,
+   "region": "M3a",
+   "overlaps": [
+    "Children's Center entry door glass (photo)",
+    "Children's Center entry doors, side lites, fan transom muntins ",
+    "Children's Center entry pediment, arch piers + vault, porch cei",
+    "Children's Center entry projection walls (OSM + photo porch dep",
+    "Children's Center pedestal face panels (photo)",
+    "Children's Center porch columns x4 (photo: plain round white; U"
+   ]
+  },
+  {
+   "name": "ge_police_south_walk",
+   "status": "review",
+   "verts": 1267,
+   "region": "M3b",
+   "overlaps": [
+    "Red Hawk W core (stair tower, red-tile hip roof (ortho); LiDAR "
+   ],
+   "ws254": "ws254 rev254: inconclusive (main base terrain has no faces under it in a library-load probe; check with the north-merged patches loaded)"
+  },
+  {
+   "name": "North_NEPlaza_gi",
+   "status": "deferred",
+   "verts": 2069,
+   "region": "M3b",
+   "overlaps": [
+    "eu_rhd_north_retaining_wall",
+    "T_RedMaple_L1_0373",
+    "T_RedMaple_L1_0397"
+   ],
+   "ws254": "ws254 rev254: floats > 0.3 m over main terrain on 1100/1977 samples (p95 1.82 m), 344 samples overlap main OSM walks -> does not fit main ground; needs a regrade/rebuild, not a merge"
+  },
+  {
+   "name": "gb_grass_slope_points",
+   "status": "review",
+   "verts": 2142,
+   "region": "M3b",
+   "overlaps": [
+    "fo_cogen_body",
+    "fo_cogen_facade",
+    "gb_cogen_paving",
+    "WS74_cogen_lot_asphalt_ortho2020_UNVERIFIED_edges"
+   ]
+  },
+  {
+   "name": "NE Children's Center valley flashing, galvanised (UNVERIFIED)",
+   "status": "review",
+   "verts": 2740,
+   "region": "M3a",
+   "overlaps": [
+    "Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+    "Children's Center entry pediment, arch piers + vault, porch cei",
+    "Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+    "Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+    "Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+    "Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+   ]
+  },
+  {
+   "name": "NE Children's Center ridge/hip/rake caps, half-round (UNVERIFIE",
+   "status": "review",
+   "verts": 13574,
+   "region": "M3a",
+   "overlaps": [
+    "Children's Center bell-cote (asset BellCote_RedTile_ChildrensCe",
+    "Children's Center entry pediment, arch piers + vault, porch cei",
+    "Children's Center lettering \"BEN SAMUELS\" (photo; font DejaVu S",
+    "Children's Center lettering \"CHILDREN'S CENTER\" (photo; font De",
+    "Children's Center ridge louvered monitors x3 (nf; DSM blobs + g",
+    "Children's Center roof E cross wing (gable end ESE per LiDAR; U"
+   ]
+  },
+  {
+   "name": "gd_grass_police_lawn_points",
+   "status": "review",
+   "verts": 31694,
+   "region": "M3b",
+   "overlaps": [
+    "ce_rhd_retaining_wall (grade from LiDAR; wall finish UNVERIFIED",
+    "fc_rhd_ramp_edges",
+    "fd_rhd_ramp_barrier_cab",
+    "fd_rhd_ramp_barrier_curb",
+    "fd_rhd_ramp_barrier_post",
+    "fe_rhd_bay_edge_beams"
+   ]
+  },
+  {
+   "name": "North_NEWalkEast_gk",
+   "status": "deferred_ws243",
+   "verts": 432,
+   "region": "M3b",
+   "overlaps": []
+  },
+  {
+   "name": "JS Walk joints on JO east walk OSM 313032757 (5 ft, UNVERIFIED)",
+   "status": "deferred_ws242",
+   "verts": 1150,
+   "region": "M3a",
+   "overlaps": []
+  },
+  {
+   "name": "JO Walk station east stair to south (OSM 313032757 + ortho 2020",
+   "status": "deferred_ws242",
+   "verts": 1211,
+   "region": "M3a",
+   "overlaps": []
+  }
+ ]
+}
