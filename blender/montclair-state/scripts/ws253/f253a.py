@@ -55,7 +55,11 @@ if 'WS253_W63d_Feliciano_E_walk_and_stairs_UNVERIFIED' not in bpy.data.objects:
     for (a,b,k,za,zb,nr) in SEG:
         if k=='st':
             r=(zb-za)/nr; t=(b-a)/nr
-            for kk in range(nr): box(bm,XW,XE,a+kk*t,(b if kk==nr-1 else a+(kk+1)*t+0.02),133.70,za+(kk+1)*r)
+            for kk in range(nr):
+                y0k=a+kk*t; y1k=(b if kk==nr-1 else a+(kk+1)*t+0.02); zk=za+(kk+1)*r
+                if a==163.8 and zk<134.66:  # ws253g (Codex P2): ws252's raised walk (x -191..-189.6, top 134.66) ends at y 163.8 -> continue it at 134.66 beside the first treads
+                    box(bm,XW,-191.0,y0k,y1k,133.70,zk); box(bm,-191.0,XE,y0k,y1k,133.70,134.66)
+                else: box(bm,XW,XE,y0k,y1k,133.70,zk)
         else:
             n=max(1,int(round((b-a)/0.5))); ys=[a+(b-a)*i/n for i in range(n+1)]; xw=XW_LAST if zb is None else XW
             T=[(bmw.verts.new((xw,y,top_at(y)[0])),bmw.verts.new((XE,y,top_at(y)[0]))) for y in ys]
@@ -115,7 +119,7 @@ if 'WS253_W63d_Feliciano_E_walk_and_stairs_UNVERIFIED' not in bpy.data.objects:
         bm.faces.new([top[0,j+1],bot[0,j+1],bot[0,j],top[0,j]]); bm.faces.new([top[nx,j],bot[nx,j],bot[nx,j+1],top[nx,j+1]])
     obj('WS253_W63d_Feliciano_E_recess_apron_raise_only_UNVERIFIED',bm,[M_WALK])
     # (3) wide diagonal walk (draped on the evaluated ground + 6 cm, 0.5 m bisect grid, 0.3 m skirt)
-    POLY=[(XC,172.85),(-183.9,166.6),(-184.0,158.75),(-182.5,158.75),(-182.5,160.0),(-177.5,160.0),(-177.5,166.0),(XC,178.25)]
+    POLY=[(XE,172.85),(-183.9,166.6),(-184.0,158.75),(-182.5,158.75),(-182.5,160.0),(-177.5,160.0),(-177.5,166.0),(XC,178.25),(XC,176.4),(XE,176.4)]  # ws253g (Codex P2): W edge on the walk's E edge (x -189.5) where no cheek stands (y 172.85..176.4)
     bm=bmesh.new(); vs=[bm.verts.new((x,y,0)) for x,y in POLY]; f=bm.faces.new(vs)
     for gx in np.arange(-189.0,-177.5,0.5):
         g=bm.verts[:]+bm.edges[:]+bm.faces[:]; r=bmesh.ops.bisect_plane(bm,geom=g,plane_co=(gx,0,0),plane_no=(1,0,0))
