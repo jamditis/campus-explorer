@@ -1,0 +1,17 @@
+# ws249 runbook (Nov 26, 2026, 6:36–~7:2x AM ET) — W62h soccer field W embankment on 2023 LiDAR; W62i SE berm corner
+
+Main before: ws248g (sha daa3b77f…). Backup montclair_state_pre_20261126ws249.blend = ws248g. MAIN = ws249f (promoted 7:05:01 AM ET, sha 1bdcf156…; ws249d was main 6:47:57–6:55:42 AM ET, ws249e 6:55:42–7:05:01 AM ET; see sha249.txt).
+
+1. `e249.py` (eval Terrain_LiDAR_DTM_1m vs ws248 LiDAR grids, whole x −320…−140 window): main terrain has no data for x < −254; other flags N of the stand → UNIFY W63 (not touched).
+2. `las249.py` / `las249_17.py`: 1 m class-2 grids for x −340…−250, y −20…220 from 2023 J5D5 + J5D6 (g1m_w23.npy) and 2017 J5D5 + J5D6 (g1m_w17.npy); box only, never committed. 2023 − 2017 on the slope: median 0.15 m, p95 0.41.
+3. `w249.py`: ground objects over the W side (base meshes): the slope = PK_Feliciano_west_DTM_fill_UNVERIFIED, up to 3 m off (slope line ~5 m out). Turf (fs_turf) itself matches LiDAR (median −0.05).
+4. `pk249.py`: PK evaluated vs LiDAR (before/after); `t249.py` builds the two targets (t249w.json, t249se.json; 3×3 nanmean, filled, 4 m feather, attr w249).
+5. `f249a.py` (→ ws249a): WS249_W_slope_LiDAR_terrain_snap on PK (index 0) + WS249_SE_berm_LiDAR_terrain_snap on Terrain_LiDAR_DTM_1m (after the WS248 snap). PK |d| > 0.5 m: 433 → 75.
+6. `h249.py` + `f249b.py` (→ ws249b): SE LiDAR patch WS249_SE_berm_LiDAR2023_ground_patch_1m + fan-face delete. 131 hole samples: the Field-on-Domain(FACE) position test = face CENTRE inside the box, not all corners.
+7. `f249c.py` (→ ws249c): patch widened to x −186…−168, y 42…72, box −201…−169 / 44.2…71; `f249d.py` (→ ws249d): Capture Attribute on POINT → true all-corner test. `v249.py`: holes 0; >0.3 m 266 → 179, <−0.3 m 918 → 152 (residual = the ws248 patch's smoothing at the berm toe, ≤ 0.78 m).
+8. `o249.py`: only fu_light_pole_NW stands on the changed slope (base 0.68 m under the new grade; left). `s249.py` / `s249r.py`: no skirt/M3b over PK; PK never over the turf; turf over PK ≤ 0.27 m (was 1.75).
+9. Test renders (jobwip249.sh, D=test): the ws249d W-embankment view had a dark crack at the slope foot (M3b under LiDAR) → `f249e.py` (→ ws249e) puts the same snap on M3b. Before/after: renders/test/20261126-0649_ws249_before_eye_W_embankment… / 0650_ws249_after_e_eye_W_embankment…; SE: 0653_ws249_before_eye_E_stand_SE_berm… / 0652_ws249_after_eye_E_stand_SE_berm….
+10. WIPs: jobwip249.sh (EXTRAJ=extra249.json = extra248 + the WS249 patch + targets; KEEPMOD adds PK). The SE subset peaks ~8.5 GB RSS.
+11. `f249f.py` (→ ws249f): t249.py had put each LiDAR cell mean at the cell CORNER, not its centre (half-cell shift ≈ 0.3 m on the 0.6 m/m slopes); both targets moved +0.5 m in x and y. (The e249/pk249/v249 probes sample the cell that contains a corner point, so their numbers carry the same half-cell bias: PK |d| > 0.3 reads 167 → 222 after the fix although the surface is now placed right.)
+12. `k249.py` + `f249g.py` (→ ws249g, DISCARDED): sinking 155 ws248 patch vertices on the berm toe under the dense terrain turned the soft toe crease into a sharper, pale V-shaped fold in the SE eye view (renders/test/20261126-0703_ws249_test_g_…). Main stays ws249f; the toe keeps the ws248 patch's smoothed shape (≤ 0.76 m over the raw 1 m cell).
+13. Final WIPs re-rendered from ws249f (jobwip249.sh TAGM=ws249f, CAM3 from the NW); the ws249e set is kept in renders/test as test-grade.
