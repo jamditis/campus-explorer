@@ -1,0 +1,14 @@
+# ws250 runbook (Nov 26, 2026, 8:33–~9:3x AM ET) — UNIFY W63: lawn N of Dickson Hall / E of Feliciano on 2023 LiDAR
+
+Main before: ws249f (sha 1bdcf156…). Backup montclair_state_pre_20261126ws250.blend = ws249f. Final chain: main ws249f + `f250p.py` → ws250q.
+
+1. `bbox250.py`: fresh object bbox dump of main (bbox250.json; box only). University Hall is NOT in main (held back since ws218); `uh250.py` reads its footprint from north/montclair_north.blend read-only: x −199…−116, y 221…308. All ws250 edits stay at y ≤ 212.
+2. `p250.py` (TAGP/NAMES/F env; one object per run — Terrain + Footpaths + Roads together got watchdog-killed): evaluated Terrain_LiDAR_DTM_1m vs 2023 class-2 1 m grid (ws248 g1m_23; 2017 agrees +0.12 m everywhere here). Lawn N of Dickson 0.6–1.3 m LOW; Feliciano/Dickson passage up to +2.2 m HIGH. Footpaths_OSM rides the terrain (+5 cm, OO_redrape raycasts the evaluated terrain). LiDAR trees (T_LondonPlane_L1_0537, T_RedMaple_L1_0544) stood ~0.8 m above the grass.
+3. `fa250.py` / `d250.py`: the ground there is big PB fan faces (50–375 m²) spanning Dickson's footprint and reaching x −77.
+4. DISCARDED (kept as record): `t250.py` + `f250a.py` (→ ws250a, vertex snap: corners only, tilted planes worse in places), `f250b/c.py` (→ ws250b/c, separate + subdivide level 4 + re-snap: heights right, but dark straight crease lines in the eye view), `f250d.py` (weld before subdivide: no change), `f250e.py` (drop the boundary hold: no change), `f250f.py` (Blur Z: softer, still there), `f250g.py` (triangulate first: fine ribbing everywhere). `st250.py`/`st250b.py`/`tr250.py`/`ly250.py`/`rl250.py` probes: the fan n-gons have collinear vertices and subdivide into folded zero-width quads (6.6 m × ~0) whose corner angles wreck the smooth normals.
+5. `las250.py`: 2023 J5D6 class-2 1 m grid x −160…−100, y 140…230 (g1m_e23.npy; box only, never committed) so the patch can run east to Calcia's west side.
+6. `h250.py` (read-only on main): raise-only patch, 1 m grid x −192…−110, y 161…212: z = max(old, old + (LiDAR − old)·w) + 0.02 (w 0 → 1 over 4 m from the edge); quads with no vertex raised > 5 cm dropped; 0.3 m skirts; 'ortho' UV by affine fit (max residual 0.0016). 2,773 top quads, raise max 1.36 m, mean 0.67 m.
+7. `f250p.py` (CHAIN via ws208/merge208.py → ws250q): patch object WS250_W63_lawn_LiDAR2023_ground_patch_1m (hidden from render, NORTH_MERGE collection) joined into Terrain_LiDAR_DTM_1m by GN WS250_W63_LiDAR_patch_join_terrain right after WS249_SE_berm_LiDAR_terrain_snap.
+8. `p250b.py` (wider box + combined grid): lawn core |d| > 0.3 m 569 → 23 of 836; Footpaths_OSM − ground +0.006…+0.09 m. `o250.py`: Lamp_acorn_031 base 0.36 m under the raised grass; trees ≤ 0.3 m sunk (fine).
+9. WIPs: `jobwip250.sh` (EXTRAJ = extra250.json: post-bbox205 objects in x −240…−90, y 100…250 + the patch).
+OPEN: W63b passage (x −192…−178, y 142…170) up to +2.2 m (raise-only can't lower).
