@@ -1,0 +1,2 @@
+885dcc0972bbd68e40bbb126aa3a8cfff550c0c8314473dd7131d3966cbb3d5d  montclair_state.blend
+ws246a = ws245a + f246a (bank lawn ortho-UV remap); promoted 12:52:01 AM ET Nov 26
