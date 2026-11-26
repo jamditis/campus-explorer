@@ -30,12 +30,12 @@ if jm is None:
         return n.outputs[0]
     f=M('FRACT',M('DIVIDE',sp.outputs['Y'],1.524))
     d=M('MULTIPLY',M('MINIMUM',f,M('SUBTRACT',1.0,f)),1.524)            # metres to the nearest joint
-    mask=M('LESS_THAN',d,0.007)                                          # ~14 mm saw cut
+    mask=M('LESS_THAN',d,0.011)                                          # ~22 mm read width (cut + dirt line; 14 mm vanished at WIP res)
     # tooled edge band 4 cm in from each long edge (common on poured walks; reads as the slab edge)
-    u=sp.outputs['X']; edge=M('MAXIMUM',M('LESS_THAN',M('ABSOLUTE',M('SUBTRACT',u,0.06)),0.006),M('LESS_THAN',M('ABSOLUTE',M('SUBTRACT',u,2.74)),0.006))
+    u=sp.outputs['X']; edge=M('MAXIMUM',M('LESS_THAN',M('ABSOLUTE',M('SUBTRACT',u,0.06)),0.008),M('LESS_THAN',M('ABSOLUTE',M('SUBTRACT',u,2.74)),0.008))
     mk=M('MAXIMUM',mask,edge)
     mx=N.new('ShaderNodeMix'); mx.data_type='RGBA'; mx.blend_type='MULTIPLY'
-    Lk.new(M('MULTIPLY',mk,0.75),mx.inputs['Factor']); Lk.new(src,mx.inputs[6]); mx.inputs[7].default_value=(0.42,0.40,0.37,1)
+    Lk.new(M('MULTIPLY',mk,0.9),mx.inputs['Factor']); Lk.new(src,mx.inputs[6]); mx.inputs[7].default_value=(0.30,0.29,0.27,1)
     Lk.new(mx.outputs[2],bs.inputs['Base Color'])
     bp=N.new('ShaderNodeBump'); bp.invert=True; bp.inputs['Strength'].default_value=0.35; bp.inputs['Distance'].default_value=0.004
     Lk.new(mk,bp.inputs['Height'])

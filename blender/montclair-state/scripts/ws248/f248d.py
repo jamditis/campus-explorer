@@ -1,5 +1,5 @@
 # ws248 W62g pass 3 (CHAIN on ws248c): instead of sinking the fan, DELETE the big fan faces (area > 1.5 m2) that lie wholly
-# inside the patch box (x -226.5..-185.5, y 43.5..136.5) in the WS248 snap group (faces only; dense 1 m terrain stays, snapped
+# inside the patch box shrunk 0.5 m (x -225.5..-186.5, y 44.5..135.5; ws248f: the first box left 0.5 m holes at the patch edges) in the WS248 snap group (faces only; dense 1 m terrain stays, snapped
 # to LiDAR); the LiDAR patch fills the hole. Undo f248c's 0.3 m target lowering (dense terrain = exact LiDAR, patch +2 cm).
 import bpy
 TAG='F248D'; MN='WS248_E_stand_LiDAR_terrain_snap'
@@ -17,7 +17,7 @@ if 'WS248_del_fan' not in N:
         c=N.new('FunctionNodeCompare'); c.data_type='FLOAT'; c.operation=op; L.new(sock,c.inputs[0]); c.inputs[1].default_value=val; return c.outputs[0]
     def AND(a,b):
         n_=N.new('FunctionNodeBooleanMath'); n_.operation='AND'; L.new(a,n_.inputs[0]); L.new(b,n_.inputs[1]); return n_.outputs[0]
-    inb=AND(AND(cmp(sp.outputs['X'],'GREATER_THAN',-226.5),cmp(sp.outputs['X'],'LESS_THAN',-185.5)),AND(cmp(sp.outputs['Y'],'GREATER_THAN',43.5),cmp(sp.outputs['Y'],'LESS_THAN',136.5)))
+    inb=AND(AND(cmp(sp.outputs['X'],'GREATER_THAN',-225.5),cmp(sp.outputs['X'],'LESS_THAN',-186.5)),AND(cmp(sp.outputs['Y'],'GREATER_THAN',44.5),cmp(sp.outputs['Y'],'LESS_THAN',135.5)))
     ar=N.new('GeometryNodeInputMeshFaceArea'); big=cmp(ar.outputs[0],'GREATER_THAN',1.5)
     # point bool read on the face domain = all corners true
     ev=N.new('GeometryNodeFieldOnDomain'); ev.domain='FACE'; ev.data_type='BOOLEAN'; L.new(inb,ev.inputs[0])
