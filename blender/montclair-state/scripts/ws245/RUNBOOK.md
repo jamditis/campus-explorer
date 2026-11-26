@@ -1,0 +1,8 @@
+# ws245 runbook (Nov 25, 2026, 10:29–~11:2x PM ET) — W62b east-bank grade + east pad NE corner
+
+Main before: ws244a (sha f755f1c2…). Backup montclair_state_pre_20261125ws245.blend = ws244a. Copy ws245a = MAIN (promoted 10:44:39 PM ET, sha 9060747b…, see sha245.txt).
+
+1. `f245a.py` (→ ws245a): rebuild WS243_stands_pitch_holdunder_target from the TOP faces only of the turf/pads/walkways/steps (the stand pads are closed slabs, so their top outline was never a boundary and f244a grew no margin along them), regrow the flat 1.5 m margin, add flat corner fans at every convex corner, and add a separate sloped target WS245_E_bank_grade_target_UNVERIFIED (6 m wide, rising 0.45 m per m, east-bank edges only) with its own lower-only GN `WS245_E_bank_terrain_grade` on every ground stack. That GN casts UP from 30 m below, so where ring quads overlap the LOWEST one wins (a downward ray picked the highest and held the bank up). Run: `GATE=3000 CHAIN=ws245/f245a.py OUTN=montclair_state_ws245a.blend bash scripts/ws245/run245.sh`.
+2. Probe (evaluated grounds, subset): `C=-280,-190,80,180 F=montclair_state_ws245a.blend GATE=3500 bash scripts/ws245/jobprobe245.sh` → scripts/ws245/probe245a.out (seat check + 1 m slope grid over x −240…−196, y 95…174, render grounds only). The wider ws244 cull (−420,−200,−60,220) got watchdog-killed at ~3.4 GB available.
+3. Name rule: subset renders keep a ground GN only if its name matches subrend234's terrain regex (band_to_DTM|terrain|_cut|clamp|…), so new ground GNs need "terrain" in the modifier name, and new hidden targets must be listed in EXTRAJ (scripts/ws245/extra245.json).
+4. WIPs: `GATE=3000 bash scripts/ws245/jobwip245.sh`; shots 3 and 4 were re-run with tighter culls (see LOG) after watchdog kills.
