@@ -1,6 +1,6 @@
 # ws249 runbook (Nov 26, 2026, 6:36–~7:2x AM ET) — W62h soccer field W embankment on 2023 LiDAR; W62i SE berm corner
 
-Main before: ws248g (sha daa3b77f…). Backup montclair_state_pre_20261126ws249.blend = ws248g. MAIN = ws249e (promoted 6:55:42 AM ET, sha d9b35074…; ws249d was main 6:47:57–6:55:42 AM ET; see sha249.txt).
+Main before: ws248g (sha daa3b77f…). Backup montclair_state_pre_20261126ws249.blend = ws248g. MAIN = ws249f (promoted 7:05:01 AM ET, sha 1bdcf156…; ws249d was main 6:47:57–6:55:42 AM ET, ws249e 6:55:42–7:05:01 AM ET; see sha249.txt).
 
 1. `e249.py` (eval Terrain_LiDAR_DTM_1m vs ws248 LiDAR grids, whole x −320…−140 window): main terrain has no data for x < −254; other flags N of the stand → UNIFY W63 (not touched).
 2. `las249.py` / `las249_17.py`: 1 m class-2 grids for x −340…−250, y −20…220 from 2023 J5D5 + J5D6 (g1m_w23.npy) and 2017 J5D5 + J5D6 (g1m_w17.npy); box only, never committed. 2023 − 2017 on the slope: median 0.15 m, p95 0.41.
@@ -12,3 +12,6 @@ Main before: ws248g (sha daa3b77f…). Backup montclair_state_pre_20261126ws249.
 8. `o249.py`: only fu_light_pole_NW stands on the changed slope (base 0.68 m under the new grade; left). `s249.py` / `s249r.py`: no skirt/M3b over PK; PK never over the turf; turf over PK ≤ 0.27 m (was 1.75).
 9. Test renders (jobwip249.sh, D=test): the ws249d W-embankment view had a dark crack at the slope foot (M3b under LiDAR) → `f249e.py` (→ ws249e) puts the same snap on M3b. Before/after: renders/test/20261126-0649_ws249_before_eye_W_embankment… / 0650_ws249_after_e_eye_W_embankment…; SE: 0653_ws249_before_eye_E_stand_SE_berm… / 0652_ws249_after_eye_E_stand_SE_berm….
 10. WIPs: jobwip249.sh (EXTRAJ=extra249.json = extra248 + the WS249 patch + targets; KEEPMOD adds PK). The SE subset peaks ~8.5 GB RSS.
+11. `f249f.py` (→ ws249f): t249.py had put each LiDAR cell mean at the cell CORNER, not its centre (half-cell shift ≈ 0.3 m on the 0.6 m/m slopes); both targets moved +0.5 m in x and y. (The e249/pk249/v249 probes sample the cell that contains a corner point, so their numbers carry the same half-cell bias: PK |d| > 0.3 reads 167 → 222 after the fix although the surface is now placed right.)
+12. `k249.py` + `f249g.py` (→ ws249g, DISCARDED): sinking 155 ws248 patch vertices on the berm toe under the dense terrain turned the soft toe crease into a sharper, pale V-shaped fold in the SE eye view (renders/test/20261126-0703_ws249_test_g_…). Main stays ws249f; the toe keeps the ws248 patch's smoothed shape (≤ 0.76 m over the raw 1 m cell).
+13. Final WIPs re-rendered from ws249f (jobwip249.sh TAGM=ws249f, CAM3 from the NW); the ws249e set is kept in renders/test as test-grade.

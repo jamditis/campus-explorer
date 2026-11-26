@@ -2,6 +2,7 @@
 #  W  = soccer field W slope (PK_Feliciano_west_DTM_fill_UNVERIFIED was up to 3 m off; the slope line sat ~5 m east/west of the real one)
 #       x -340..-282, y 92..216 from g1m_w23 (2023 J5D5+J5D6), 2017 fallback g1m_w17 if present
 #  SE = SE berm corner of the east stand (ws248 residual) x -206..-172, y 40..74 from ws248 g1m_23 (2017 fallback)
+# NOTE (ws249f): vertices below sit at cell CORNERS; f249f.py shifts the targets +0.5 m to the cell centres.
 # 3x3 nanmean, nan cells filled by iterative neighbour mean; weight = 1 in the core, linear 4 m feather to 0 at the box edge.
 import numpy as np, json, os, sys
 D='scripts/ws249/'
