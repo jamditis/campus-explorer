@@ -11,3 +11,6 @@ ws257d + `../ws258/f258a.py` → ws259a (Footpaths_OSM 15,869 → 15,802 faces, 
 3. Renders: `jobwip259.sh` (subrend234, terrain GN on, CROPM 40, EXTRAJ extra259.json for the new strips). batch1 = BEFORE (main ws257d) close-up + ws259a views.
 4. Probes: `probe259c/d/f.py` (subset CHAINs, exit before render) and `probe259e.py` (merge208 CHAIN, no save): ground beside the WS103 walk → new UNIFY W64
    (no ground object W of the walk's S half except the skirt, pushed under by its GN; UNVERIFIED whether the full scene shows a hole).
+5. W64 follow-up: `probe259g.py` (FULL main, all modifiers, VmHWM 7.6 GB): only the skirt (117.4–118.2) W of the walk's S half, 2.2–2.4 m below its edge, so it is a real hole.
+   `las259.py` / `las259b.py` (geo venv /workspace/opt/geo/bin/python3; J5D6 for x ≥ −268, J5D5 W of it) → prep/ws259_w64/dtm259.npy (box only): verge level
+   with the walk, then a bank to ~118.7 m. `probe259h.py` (1 m full-scene mask via scene.ray_cast) was too slow (killed at 10 min). Next: build the BVH from evaluated meshes.
