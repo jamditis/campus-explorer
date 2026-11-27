@@ -1,6 +1,6 @@
 # ws265b (merge208 CHAIN, after f265a): the ws265a WIPs (eye from S, close-up) showed bald grey patches inside the fill = samples
 # rejected by the luminance test (ortho 0.55–0.85 = sun-bleached lawn spots, ~10% of the W-centre). Second pass = f265a with the
-# luminance cut at 0.85 (still drops the white band along the deck face, lum > 0.9), deficit measured against ALL current points.
+# luminance cut at 0.85 (z from the probe samples, no modifier evaluation) (still drops the white band along the deck face, lum > 0.9), deficit measured against ALL current points.
 # ws265 (merge208 CHAIN): police flat lawn. probe265a (eval265a.json, 0.35 m jittered grid on main's EVALUATED ground) shows the
 # merged north grass is an L (N band + strip along Red Hawk Deck); the rest of the same lawn (WS68 ground W-centre, and the
 # M3b west-rail-corridor DTM W of it) reads as flat grey-green ortho with no blades. Same ortho tone as under the existing grass
@@ -53,28 +53,18 @@ for j in range(NY):
             t=min(1,max(0,(de-0.3)/3.0)); t2=min(1,max(0,(db-0.5)/1.0)); k=t*t*(3-2*t)*(t2*t2*(3-2*t2))
             if rng.random()<k: new.append((x,y))
 print(TAG,'candidates',len(new),flush=True)
-# snap on the evaluated ground (modifiers on only for meshes meeting the box)
-def meets(o,m=2):
-    bb=[o.matrix_world@Vector(c) for c in o.bound_box]
-    return not (max(v.x for v in bb)<x0-m or min(v.x for v in bb)>x1+m or max(v.y for v in bb)<y0-m or min(v.y for v in bb)>y1+m)
-on=[]
-for o in bpy.data.objects:
-    if o.type=='MESH' and meets(o) and o!=G:
-        for m in o.modifiers:
-            if not m.show_viewport: m.show_viewport=True; on.append((o,m))
-dg=bpy.context.evaluated_depsgraph_get(); sc=bpy.context.scene; P=[]; drop=0
+# low-memory snap (ws265b retry; the evaluated snap was killed by the watchdog with the host balloon at ~3.3 GB available):
+# z = inverse-distance mean of the 4 nearest probe265a ground samples (0.35 m grid on the EVALUATED ground) - 2 cm; a point is
+# dropped if its nearest sample is > 0.4 m away or any of the 4 is not WS68/M3b ground.
+gidx=[k for k,r in enumerate(R) if r[2] and r[2].startswith(GOOD)]; kg=KDTree(len(gidx))
+for n,k in enumerate(gidx): kg.insert((R[k][0],R[k][1],0),n)
+kg.balance(); P=[]; drop=0; on=[]
 for x,y in new:
-    o0=Vector((x,y,200)); hit=None
-    for k in range(40):
-        r=sc.ray_cast(dg,o0,Vector((0,0,-1)))
-        if not r[0]: break
-        ob=r[4]
-        if not (ob.name.startswith(('T_','TREE','MID_canopy','gd_grass')) or ob.hide_render): hit=r; break
-        o0=r[1]+Vector((0,0,-0.0005))
-    if hit and hit[4].name.startswith(GOOD): P.append((x,y,hit[1].z-0.01))
-    else: drop+=1
-for o,m in on: m.show_viewport=False
-print(TAG,'snapped',len(P),'dropped',drop,'mods toggled back',len(on),flush=True)
+    nn=kg.find_n((x,y,0),4)
+    if not nn or nn[0][2]>0.4 or any(kb.find((x,y,0))[2]<0.5 for _ in [0]): drop+=1; continue
+    w=[1/max(d,0.02) for _,_,d in nn]; z=sum(wi*R[gidx[i]][3] for wi,(_,i,_) in zip(w,nn))/sum(w)
+    P.append((x,y,z-0.02))
+print(TAG,'snapped (IDW of probe samples)',len(P),'dropped',drop,flush=True)
 # append verts + copy point attributes from random existing points
 attrs=[a for a in me.attributes if a.domain=='POINT' and a.name!='position' and not a.name.startswith('.')]
 vals={}

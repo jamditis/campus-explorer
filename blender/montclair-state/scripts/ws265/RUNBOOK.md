@@ -1,7 +1,7 @@
 # ws265 runbook (Fri Nov 27, 2026, 2:38 → ~3:30 PM ET) — W69 police flat lawn: grass fill to the existing core density
 
 Main before: ws264c (sha ec502c3a…). Backup montclair_state_pre_20261127ws265.blend = ws264c. Chain via `run265.sh`
-(= ws264/run264.sh with F265/P265/C265 tags; ws208/merge208.py, base meshes): ws264c + `f265a.py` → ws265a = MAIN.
+(= ws264/run264.sh with F265/P265/C265 tags; ws208/merge208.py, base meshes): ws264c + `f265a.py` → ws265a; + `f265b.py` → ws265b = MAIN.
 
 1. `probe265a.py` (merge208 CHAIN, no save; modifiers re-enabled only on meshes meeting the W263 mask box x −354.68…−323.43,
    y −7.61…35.64): 11,160 jittered 0.35 m ray samples on the evaluated scene → eval265a.json (x, y, top, z, normal z, ortho RGB
@@ -19,6 +19,8 @@ Main before: ws264c (sha ec502c3a…). Backup montclair_state_pre_20261127ws265.
 4. WIPs `jobwip265.sh` (subrend234, terrain GN on, crop259, EXTRAJ ws262/extra262p.json + KEEPMOD grass points): oblique from SW
    high, eye from W (same camera as ws264), eye from S across the fill, close-up of blades over the soil layer.
 5. Self-review of the ws265a WIPs (eye from S, close-up): bald grey patches inside the fill = samples rejected by the 0.55 luminance
-   cut (ortho 0.55–0.85 = sun-bleached lawn spots, ~10% of the W-centre). `f265b.py` (second pass, cut at 0.85, deficit against all
-   46,037 points; 4,980 candidates) was killed by the MemAvailable watchdog at 1.16 GB during the evaluated snap (host memory balloon
-   back at ~3.3 GB available) → NOT applied, no staging file saved. Main stays ws265a; rerun f265b when MemAvailable ≥ ~6 GB.
+   cut (ortho 0.55–0.85 = sun-bleached lawn spots, ~10% of the W-centre). `f265b.py` = second pass with the cut at 0.85 (the white
+   band along the deck face is > 0.9), deficit against all 46,037 points: 4,980 points. First try snapped on the evaluated ground and
+   was killed by the MemAvailable watchdog at 1.16 GB (host memory balloon back at ~3.3 GB available; nothing saved). Retry snaps
+   z = inverse-distance mean of the 4 nearest probe265a ground samples − 2 cm (no modifier evaluation; peak 1.9 GB) →
+   ws265b (51,017 points; mask rebuilt as //data/ws265/police_grass_density265b.png) = MAIN.
