@@ -9,3 +9,7 @@ EP=$PWD/scripts/ws262/extra262p.json
 [[ $ONLY == *3* ]] && EXTRAJ=$EP srun "${CU3:--400,-300,-80,40}" "${CAM3:--333.0,3.0,125.1,-341.0,-4.0,124.2,26}" ${P}_eye_police_east_face_foundation_edge_from_E_${TAGM}_main_sub $F $D "ws239/upd239.py $CH"
 [[ $ONLY == *4* ]] && EXTRAJ=$EP srun "${CU4:--400,-300,-80,40}" "${CAM4:--337.0,7.5,124.4,-341.5,3.0,123.7,35}" ${P}_closeup_police_foundation_trimmed_grass_edge_${TAGM}_main_sub $F $D "ws239/upd239.py $CH"
 true
+# 5 = W68 close-up (same camera as the ws264 close-up), main ws266b
+EW=$PWD/scripts/ws266/extra266.json
+[[ $ONLY == *5* ]] && EXTRAJ=$EW srun "${CU5:--226,-206,-214,-196}" "${CAM5:--222.5,-203.5,124.3,-217.8,-200.9,122.75,30}" ${P}_closeup_Chapin_W_stair_foot_W68_pit_infill_${TAGM}_main_sub $F $D $CH
+true
