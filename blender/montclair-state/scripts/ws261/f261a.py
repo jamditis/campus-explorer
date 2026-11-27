@@ -18,7 +18,7 @@ for p in me.polygons:
     if cr.length>1e-9 and abs(cr.normalized().z)>0.96: ps.append(p.vertices[:])
 bt=BVHTree.FromPolygons(vs,ps)
 tv=np.array(sorted({i for p in ps for i in p})); xy=np.array([[vs[i].x,vs[i].y] for i in tv])
-mu=xy.mean(0); U,S,Vt=np.linalg.svd(xy-mu,full_matrices=False); ax=Vt[0]; nx=np.array([-ax[1],ax[0]])
+mu=xy.mean(0); _U,_sv,Vt=np.linalg.svd(xy-mu,full_matrices=False); ax=Vt[0]; nx=np.array([-ax[1],ax[0]])
 uv=np.stack([(xy-mu)@ax,(xy-mu)@nx],1)
 print(TAG,TN,'top faces',len(ps),'axis %.3f %.3f'%tuple(ax),'u %.2f..%.2f'%(uv[:,0].min(),uv[:,0].max()),flush=True)
 us=np.arange(uv[:,0].min()+0.25,uv[:,0].max(),0.5); C=[];Wd=[]
