@@ -68,6 +68,8 @@ git config user.email "6799804+jamditis@users.noreply.github.com"
 - Run `node --test`. `node tools/viewer-test/smoke.mjs` is an optional browser check (needs Playwright; 20 minutes or more where WebGL runs in software). Test locally with `python3 -m http.server 8000`. No console errors.
 - The viewer must not present a guess as a fact. Names come from OpenStreetMap, positions from the model's State Plane frame, sunlight from the solar position. Mesh names in the tiles are joined by the exporter and do not identify what you click on.
 
+**Flows:** [docs/STATE-MACHINES.md](docs/STATE-MACHINES.md) describes every viewer and pipeline flow as it is now. A PR that changes a flow rewrites its section there in the same PR, in the present tense only: delete dead states and drop the issue's in-flight mark when the work lands; no history, "previously" or migration notes (git holds the past).
+
 ## Code review and CI
 
 `.github/workflows/ci.yml` (`checks`) runs three required jobs on every PR, with no path filters so they always report:
