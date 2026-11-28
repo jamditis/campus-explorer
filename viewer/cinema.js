@@ -16,7 +16,8 @@ const LOAD_WAIT_MS = 5000;    // longest wait at a cut for the tiles under the n
 export function createCinema(app) {
   const { camera, controls, canvas } = app;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let running = false, token = 0, shot = null, t0 = 0, groundY = 0, before = null;
+  let running = false, token = 0, shot = null, t0 = 0, groundY = 0, groundKnown = true, before = null;
+  let asked = 0; // a start request; a newer request or any input on the view cancels a start still waiting
 
   const root = document.createElement('div');
   root.className = 'cine'; root.hidden = true;
@@ -57,7 +58,10 @@ export function createCinema(app) {
         if (spots.every(([x, z]) => app.world.isLoaded(x, z)) || performance.now() >= until) break;
         await sleep(200); if (my !== token) return;
       }
-      if (s.ground) groundY = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
+      // the ground under the shot; if its tiles are not in yet, the campus floor for now and the real ground when
+      // they arrive (onFrame)
+      groundKnown = !s.ground || app.world.isLoaded(s.ground[0], s.ground[1]);
+      if (s.ground) groundY = (groundKnown ? app.world.groundAt(s.ground[0], s.ground[1]) : null) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
       const when = lightFor(s); if (when) app.setTime(when);
       caption.textContent = s.caption;
       shot = s; t0 = performance.now(); apply(poseAt(s, 0, groundY, calm)); app.invalidate();
@@ -67,16 +71,26 @@ export function createCinema(app) {
     stop();
   }
 
-  function onFrame() {
+  let groundCheck = 0;
+  function onFrame({ time }) {
     if (!shot) return;
+    if (!groundKnown && time - groundCheck > 250) {
+      groundCheck = time;
+      if (app.world.isLoaded(shot.ground[0], shot.ground[1])) {
+        groundKnown = true;
+        groundY = app.world.groundAt(shot.ground[0], shot.ground[1]) ?? groundY;
+      }
+    }
     apply(poseAt(shot, (performance.now() - t0) / 1000, groundY, calm)); // the loop redraws because the camera moved
   }
 
   async function start() {
     if (running) return;
-    // a walk still finding its ground has no place to come back to yet (player.position is stale until it lands)
-    while (app.state.mode === 'walk' && app.player.busy) await sleep(200);
-    if (running) return;
+    const my = ++asked;
+    // a walk still finding its ground has no place to come back to yet (player.position is stale until it lands);
+    // input on the view, a move another module asks for or a mode change while waiting cancels the start
+    while (app.state.mode === 'walk' && app.player.busy) { await sleep(200); if (my !== asked) return; }
+    if (running || my !== asked) return;
     if (!app.state.ready) { app.toast('The campus is still loading'); return; }
     app.cancelFly('cinema');
     before = {
@@ -117,14 +131,14 @@ export function createCinema(app) {
   }
 
   // anything the user does to the view stops the film
-  const userInput = () => stop();
+  const userInput = () => { asked++; stop(); };
   for (const type of ['pointerdown', 'wheel', 'touchstart']) canvas.addEventListener(type, userInput, { passive: true });
-  addEventListener('keydown', e => { if (running && e.key === 'Escape') stop(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') { asked++; if (running) stop(); } });
   addEventListener('resize', () => { if (running) size(); });
   app.on('frame', onFrame);
-  app.on('fly', ({ by }) => { if (by !== 'cinema') stop(); });
+  app.on('fly', ({ by }) => { if (by !== 'cinema') { asked++; stop(); } });
   // a mode key (2, 3) during the film: the user takes the view in that mode
-  app.on('mode', ({ mode }) => { if (running && mode !== 'orbit') stop({ keepView: true }); });
+  app.on('mode', ({ mode }) => { if (!running) asked++; else if (mode !== 'orbit') stop({ keepView: true }); });
 
   return { start, stop: () => stop(), get running() { return running; } };
 }
