@@ -99,13 +99,107 @@
    ],
    "roof": "flat",
    "top": 127.0,
+   "parapet": 0.7,
    "style": "shed",
    "floors": 1,
    "wall": "#c9c5bb",
    "trim": "#9b9890",
-   "roof_colour": "#bdbdb8",
-   "evidence": "lidar2017 (outline fitted to the roof returns, deck median 126.3 m, rim 127.0 m); ortho2020; osm 233913195",
-   "unverified": "wall colour and finish; no windows or doors read; the lower west part seen in the ortho is not in the LiDAR"
+   "roof_colour": "#d6d6d2",
+   "evidence": "lidar2017 (outline fitted to the roof returns, deck median 126.3 m, rim 127.0 m); ortho2020 (light roof membrane); osm 233913195",
+   "unverified": "wall colour and finish; no doors, louvres or windows: no photograph was available; the light patch west of it in the ortho is tree canopy in the LiDAR (multiple returns), not a wing"
+  },
+  {
+   "name": "TV_bldg_roof_unit_S",
+   "ring": [
+    [
+     -269.14,
+     541.4
+    ],
+    [
+     -268.03,
+     544.62
+    ],
+    [
+     -270.86,
+     545.6
+    ],
+    [
+     -271.97,
+     542.38
+    ]
+   ],
+   "roof": "flat",
+   "base": 126.3,
+   "top": 128.8,
+   "parapet": 0.0,
+   "style": "shed",
+   "wall": "#c4c6c4",
+   "trim": "#a9aba9",
+   "roof_colour": "#b8bab8",
+   "evidence": "lidar2017 (returns over the roof deck, clustered at 0.5 m)",
+   "unverified": "kind of unit; sides squared to the building"
+  },
+  {
+   "name": "TV_bldg_roof_unit_N",
+   "ring": [
+    [
+     -269.18,
+     553.19
+    ],
+    [
+     -268.04,
+     556.5
+    ],
+    [
+     -271.82,
+     557.81
+    ],
+    [
+     -272.96,
+     554.5
+    ]
+   ],
+   "roof": "flat",
+   "base": 126.3,
+   "top": 128.1,
+   "parapet": 0.0,
+   "style": "shed",
+   "wall": "#c4c6c4",
+   "trim": "#a9aba9",
+   "roof_colour": "#b8bab8",
+   "evidence": "lidar2017 (returns over the roof deck, clustered at 0.5 m)",
+   "unverified": "kind of unit; sides squared to the building"
+  },
+  {
+   "name": "TV_bldg_roof_unit_NW",
+   "ring": [
+    [
+     -272.83,
+     555.42
+    ],
+    [
+     -272.25,
+     557.12
+    ],
+    [
+     -273.57,
+     557.58
+    ],
+    [
+     -274.15,
+     555.88
+    ]
+   ],
+   "roof": "flat",
+   "base": 126.3,
+   "top": 127.9,
+   "parapet": 0.0,
+   "style": "shed",
+   "wall": "#c4c6c4",
+   "trim": "#a9aba9",
+   "roof_colour": "#b8bab8",
+   "evidence": "lidar2017 (returns over the roof deck, clustered at 0.5 m)",
+   "unverified": "kind of unit; sides squared to the building"
   }
  ],
  "points": [
