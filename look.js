@@ -392,7 +392,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   const macroUniform = { value: 1 };
 
   // --- far view: tree canopy where the USFS canopy cover map (viewer/canopy.webp) puts it, on the far ground and
-  // over the far houses. The map's 60 m cells give the cover share; near, crowns come from value noise at 9 m
+  // over the far houses. The map's 60 m cells give the cover share; near, crowns come from noise at 9 m cells
   // thresholded so the covered area matches the map (farview-math.js crownShare); far, a pixel takes the share
   // itself. Not within 150 m of the camera (the modelled trees are there). The colour is a summer canopy green
   // (UNVERIFIED tone, set by eye against the modelled trees). Changes albedo only, so it is lit like the ground
@@ -426,18 +426,16 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         .replace('#include <common>', `#include <common>
           uniform sampler2D canopyMap; uniform vec4 canopyBox; varying vec3 vCaPos; varying vec3 vCaNrm;
           float caHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-          float caNoise(vec2 p) {
-            vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
-            return mix(mix(caHash(i), caHash(i + vec2(1.0, 0.0)), f.x), mix(caHash(i + vec2(0.0, 1.0)), caHash(i + 1.0), f.x), f.y);
-          }`)
+`)
         .replace('#include <alphamap_fragment>', `{
             vec2 cuv = (vCaPos.xz - canopyBox.xy) / canopyBox.zw;
             float caNear = smoothstep(150.0, 600.0, length(vCaPos - cameraPosition));
             if (caNear > 0.0 && cuv.x > 0.0 && cuv.y > 0.0 && cuv.x < 1.0 && cuv.y < 1.0) {
               float cover = texture2D(canopyMap, cuv).r; // percent * 2.55 / 255: the cover share
+              // crown noise (farview-math.js crownNoise): one evenly spread value per 9 m cell, so the threshold
+              // below covers the map's share, its edges broken by finer cells
               vec2 q = vCaPos.xz / 9.0;
-              float n = 0.65 * caNoise(q) + 0.35 * caNoise(q * 2.7 + 13.1);
-              n = clamp((n - 0.5) * 1.6 + 0.5, 0.0, 1.0); // spread the sum back over 0 to 1
+              float n = clamp(caHash(floor(q)) + 0.14 * (caHash(floor(q * 2.3 + 5.1)) - 0.5), 0.0, 1.0);
               float detail = 1.0 - smoothstep(0.6, 2.5, length(fwidth(q)));
               ${houses ? `
               vec3 Nw = normalize(vCaNrm);

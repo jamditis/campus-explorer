@@ -22,3 +22,18 @@ export function crownShare(cover, n, detail) {
   const crowns = cover <= 0 ? 0 : cover >= 1 ? 1 : x * x * (3 - 2 * x);
   return crowns * detail + cover * (1 - detail);
 }
+
+// The shader's hash, mirrored so the crown noise's spread can be checked here
+const fract = x => x - Math.floor(x);
+export const caHash = (x, y) => fract(Math.sin(x * 127.1 + y * 311.7) * 43758.5453);
+
+/**
+ * Crown noise at a ground point (viewer x, z), 0 to 1, as the canopy chunk computes it: one evenly spread
+ * random value per 9 m cell (so thresholding at 1 - cover covers the cover share), its edges broken by
+ * +-0.07 of finer noise. Value noise alone bunches round 0.5 and covered too little of thin canopy.
+ */
+export function crownNoise(x, z) {
+  const qx = x / 9, qz = z / 9;
+  const wob = caHash(Math.floor(qx * 2.3 + 5.1), Math.floor(qz * 2.3 + 5.1)) - 0.5;
+  return Math.min(1, Math.max(0, caHash(Math.floor(qx), Math.floor(qz)) + 0.14 * wob));
+}

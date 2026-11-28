@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { CANOPY, canopyUv, crownShare } from '../viewer/farview-math.js';
+import { CANOPY, canopyUv, crownShare, crownNoise } from '../viewer/farview-math.js';
 
 test('the canopy box is canopy.json\'s Blender box in the viewer frame', () => {
   const meta = JSON.parse(readFileSync(new URL('../viewer/canopy.json', import.meta.url)));
@@ -24,5 +24,13 @@ test('crowns cover the share the map gives, near and far', () => {
     for (let i = 0; i < N; i++) sum += crownShare(cover, (i + 0.5) / N, 1); // evenly spread noise
     assert.ok(Math.abs(sum / N - cover) < 0.01, `near ${cover}: ${sum / N}`);
     assert.equal(crownShare(cover, 0.3, 0), cover, 'far: the share itself');
+  }
+});
+
+test('the shader\'s crown noise, thresholded, covers the map\'s share', () => {
+  for (const cover of [0.1, 0.2, 0.5, 0.8, 0.9]) {
+    let sum = 0, n = 0;
+    for (let x = 0; x < 6000; x += 7.3) for (let z = 0; z < 6000; z += 7.9) { sum += crownShare(cover, crownNoise(x + 1500, z - 900), 1); n++; }
+    assert.ok(Math.abs(sum / n - cover) < 0.02, `cover ${cover}: crowns ${(sum / n).toFixed(3)}`);
   }
 });
