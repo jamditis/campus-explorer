@@ -83,5 +83,24 @@ class Published(unittest.TestCase):
             self.assertTrue(v["y0"] <= r["y"] < v["y1"])
 
 
+class Exported(unittest.TestCase):
+    """An interior plan reaches viewer/rooms.json only once its objects are in the tiles."""
+
+    FLOORS = [dict(name="T_F1"), dict(name="T_F2")]
+
+    def test_any_one_object_of_any_floor_is_enough(self):
+        self.assertTrue(build_rooms.exported(self.FLOORS, {"SW_T_F2_slab_UNVERIFIED", "x"}))
+
+    def test_a_plan_without_objects_in_the_tiles_is_left_out(self):
+        self.assertFalse(build_rooms.exported(self.FLOORS, {"SW_T_F10_slab", "SW_CCOM_F1_piers"}))
+
+    def test_no_tiles_no_volumes(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as empty:
+            out = build_rooms.build(tiles=empty)
+        self.assertEqual((out["volumes"], out["rooms"]), ([], []))
+
+
 if __name__ == "__main__":
     unittest.main()

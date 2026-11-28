@@ -1,0 +1,300 @@
+{
+ "zone": "sc_interior",
+ "notes": "Student Center (main model, Void's .blend): a rough interior overlay from the OSM outline, the LiDAR and the university's floor list. No public floor plan: the room layout is the generator's (rough.py), with no toilets and no room labels.",
+ "rough": [
+  {
+   "name": "STCT",
+   "building": "Student Center",
+   "osm": "way/313026743",
+   "osm_building": "university",
+   "shell": "main",
+   "method": "overlay",
+   "outline": [
+    [
+     36.93,
+     315.87
+    ],
+    [
+     28.22,
+     295.33
+    ],
+    [
+     34.42,
+     292.71
+    ],
+    [
+     27.41,
+     276.68
+    ],
+    [
+     20.96,
+     278.91
+    ],
+    [
+     14.57,
+     263.86
+    ],
+    [
+     13.71,
+     261.83
+    ],
+    [
+     -1.89,
+     268.46
+    ],
+    [
+     -0.38,
+     272.0
+    ],
+    [
+     3.51,
+     281.2
+    ],
+    [
+     -0.5,
+     282.88
+    ],
+    [
+     -1.47,
+     280.6
+    ],
+    [
+     -4.26,
+     281.77
+    ],
+    [
+     -1.04,
+     289.33
+    ],
+    [
+     -17.7,
+     296.36
+    ],
+    [
+     -20.74,
+     289.2
+    ],
+    [
+     -23.14,
+     290.21
+    ],
+    [
+     -21.94,
+     293.03
+    ],
+    [
+     -25.94,
+     294.73
+    ],
+    [
+     -30.17,
+     284.78
+    ],
+    [
+     -33.02,
+     278.08
+    ],
+    [
+     -48.22,
+     284.51
+    ],
+    [
+     -45.69,
+     290.43
+    ],
+    [
+     -40.51,
+     302.61
+    ],
+    [
+     -39.37,
+     305.28
+    ],
+    [
+     -44.13,
+     307.28
+    ],
+    [
+     -37.01,
+     324.02
+    ],
+    [
+     -32.44,
+     322.08
+    ],
+    [
+     -30.59,
+     326.42
+    ],
+    [
+     -24.08,
+     341.71
+    ],
+    [
+     -7.64,
+     334.76
+    ],
+    [
+     -8.2,
+     333.45
+    ],
+    [
+     -7.57,
+     333.18
+    ],
+    [
+     -6.78,
+     332.85
+    ],
+    [
+     -4.5,
+     338.24
+    ],
+    [
+     21.02,
+     327.48
+    ],
+    [
+     18.51,
+     321.56
+    ],
+    [
+     20.2,
+     320.84
+    ],
+    [
+     20.96,
+     322.6
+    ]
+   ],
+   "wall": 0.5,
+   "slab": 0.6,
+   "levels": [
+    {
+     "level": 1,
+     "floor": 137.2
+    },
+    {
+     "level": 2,
+     "floor": 140.8
+    },
+    {
+     "level": 3,
+     "floor": 145.4,
+     "outline": [
+      [
+       -42.78,
+       307.11
+      ],
+      [
+       24.46,
+       278.68
+      ],
+      [
+       30.61,
+       293.23
+      ],
+      [
+       -36.62,
+       321.66
+      ]
+     ]
+    },
+    {
+     "level": 4,
+     "floor": 149.0,
+     "outline": [
+      [
+       -42.78,
+       307.11
+      ],
+      [
+       24.46,
+       278.68
+      ],
+      [
+       30.61,
+       293.23
+      ],
+      [
+       -36.62,
+       321.66
+      ]
+     ]
+    }
+   ],
+   "roof": 152.0,
+   "spines": [
+    [
+     [
+      -37.4,
+      313.41
+     ],
+     [
+      25.23,
+      286.93
+     ]
+    ]
+   ],
+   "depth": 7.5,
+   "entrances": [
+    {
+     "at": [
+      -6.0,
+      291.2
+     ],
+     "level": 2,
+     "evidence": "campus accessibility map 2026-08-26 (automatic door), south face; courtyard between the two stair towers (ortho 2020); ground 140.76 (NJ LiDAR EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    },
+    {
+     "at": [
+      -7.9,
+      334.1
+     ],
+     "level": 2,
+     "evidence": "campus accessibility map 2026-08-26 (automatic door), north face towards Quad Road; ground 140.46 (NJ LiDAR EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    }
+   ],
+   "cores": [
+    {
+     "kind": "stair",
+     "at": [
+      -36.02,
+      312.82
+     ],
+     "size": [
+      3.0,
+      6.0
+     ],
+     "angle": -22.92
+    },
+    {
+     "kind": "stair",
+     "at": [
+      23.85,
+      287.51
+     ],
+     "size": [
+      3.0,
+      6.0
+     ],
+     "angle": -22.92
+    },
+    {
+     "kind": "lift",
+     "at": [
+      -1.86,
+      300.99
+     ],
+     "size": [
+      2.4,
+      2.4
+     ],
+     "angle": -22.92
+    }
+   ],
+   "evidence": "outline OSM way/313026743; 4 floors from inside.montclair.edu/campus-life-and-recreation/student-center (4 floors and what is on each) (1st: pub, bookstore, ID office; 2nd: ballrooms, cafeteria, information desk; 3rd: Commuter Commons; 4th: Dean of Students, meeting rooms); entrances from the campus accessibility map 2026-08-26 (automatic door); floors 3 and 4 only in the tall block, the LiDAR surface at 152.7 (the wings stop at 145.5); two towers to 155.5 flank the south courtyard (3.7 by 8.8 m, likely stairs), in notches of the OSM outline and so outside the shell this overlay fills: not built; level 1 at the south ground (136.9), level 2 at both doors (140.5 to 140.8)",
+   "unverified": "floor heights 3 and 4, the shell's inner face (0.5 m inside the OSM line), the corridor along the tall block and every room wall, the stairs at the ends of the tall block and the lift (the map shows an elevator route but no position), entrance positions to about 5 m"
+  }
+ ]
+}
