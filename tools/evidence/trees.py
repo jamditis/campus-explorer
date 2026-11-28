@@ -177,7 +177,7 @@ def main():
         # the same 2.5 m margin as the plan's own buildings: a roof edge leans in the survey
         keep_out += [geom.offset(_ccw(r), -2.5, True) for r in mapped_buildings(osm)]
     # a lattice tower returns like a tall crown: no trees within 9 m of one
-    towers = [q["at"] for q in lay["points"] if q["kind"] == "pylon"]
+    towers = [q["at"] for q in lay["points"] if q["kind"] in ("pylon", "mast")]
     taken = existing(Path(args[args.index("--existing") + 1])) if "--existing" in args else set()
     meta = json.loads((data / "ortho2020.json").read_text())
     ortho = np.asarray(Image.open(data / "ortho2020.png").convert("RGB")).astype(float)

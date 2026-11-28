@@ -233,7 +233,7 @@ def primitives(m):
 POINT_KINDS = {
     "lamp", "light_pole", "sign", "gate", "flasher", "goalpost", "scoreboard", "bench",
     "bike_rack", "ticket_machine", "mini_high", "utility_pole", "pylon", "foul_pole",
-    "soccer_goal", "tree",
+    "soccer_goal", "tree", "mast",
 }  # fmt: skip
 
 

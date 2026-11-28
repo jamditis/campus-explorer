@@ -302,13 +302,36 @@ def _unloop(ring):
     return ring
 
 
+def grow_into(name, areas=None):
+    """The other areas' footprints that area `name` may grow into (grow_shared). An area added
+    beside published ones sets `"neighbours_keep_cuts": true` in its supersede rules: it alone
+    cuts past the edges it shares with them, and they do not grow into it, so their rules (and the
+    marks their cuts left in the published tiles) stay what they were and the new area can be
+    applied to those tiles. Without it every neighbour's grown outline, and so its rules' hash,
+    changes, and supersede.mjs refuses every tile the neighbour cut until the main and north
+    tiles are exported again. `areas` (name -> plan folder) defaults to every area."""
+    areas = areas if areas is not None else {d.name: d for d in layout.areas()}
+    out = []
+    for other, d in areas.items():
+        foot = layout.load(d)["footprint"]
+        if other == name or not foot:
+            continue
+        f = d / "footprint.json"
+        if f.exists() and json.loads(f.read_text())["supersede"].get("neighbours_keep_cuts"):
+            continue
+        out.append(foot)
+    return out
+
+
 def area_rules(plan_dir, chosen, others=()):
     """One area's entry in the rules file: footprint and patterns, or volumes, or both. `others`
-    are the other areas' footprints: where the area's rules ask for `overlap`, along an edge
-    shared with one the cut reaches OVERLAP into it (grow_shared)."""
+    are the other areas' footprints (grow_into): where the area's rules ask for `overlap`, along
+    an edge shared with one the cut reaches OVERLAP into it (grow_shared)."""
     rules = json.loads(Path(plan_dir / "footprint.json").read_text())["supersede"]
     out = dict(name=plan_dir.name, skip=not chosen)
     foot = layout.load(plan_dir)["footprint"]
+    if rules.get("neighbours_keep_cuts") and not rules.get("overlap"):
+        raise ValueError(f"{plan_dir.name}: neighbours_keep_cuts needs overlap (it alone cuts)")
     if foot:
         out.update(
             # opt-in (`"overlap": true`): moving a run can shorten the run beside it at a sharp or
@@ -332,11 +355,11 @@ def main():
     args = sys.argv[1:]
     out = []
     chosen = {d.name for d in layout.areas(args)}
-    feet = {d.name: layout.load(d)["footprint"] for d in layout.areas()}
+    areas = {d.name: d for d in layout.areas()}
     for plan_dir in layout.areas():
         if not (plan_dir / "footprint.json").exists():
             continue  # interiors only: the area owns no ground and replaces nothing
-        others = [f for name, f in feet.items() if name != plan_dir.name and f]
+        others = grow_into(plan_dir.name, areas)
         r = area_rules(plan_dir, plan_dir.name in chosen, others)
         out.append(r)
         print(
