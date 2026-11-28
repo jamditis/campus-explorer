@@ -39,7 +39,28 @@ stateDiagram-v2
 
 **Share links** (`viewer/permalink.js`, `viewer/ui.js:176-203`): the hash holds mode, camera, target, time and labels. It is applied on `scene:ready` (`viewer/ui.js:55`) and on `hashchange` (`viewer/ui.js:203`); a fly or walk link sets the pose and then calls `setMode`. The hash is written 700 ms after the last camera, sun, mode or labels change (`viewer/ui.js:178`). The walk view (first or third) is not in the link.
 
-**In flight (#132, loj-cewayfind):** GPS and compass walk mode with routes and a navigation display.
+**Follow me** (`viewer/follow.js`): in walk mode the phone's GPS and compass drive the walker.
+
+- **State:** `active`, `starting` (the iOS motion prompt is open), `placing` (the first teleport is waiting for tiles), `placed`, `shown` (the view shows where the user is), `gen` (a token that every start and stop bumps), and `player.guide` (`{ x, z, look }`, `viewer/player.js`).
+- **Events in:** the button (start or stop); geolocation fixes (`watchPosition`); orientation events; `mode` (leaving walk stops it); `fly` (a move to a place clears `shown` when not active).
+- **Effects:** while `player.guide` is set, `player.step` glides toward it with no collision instead of reading the sticks; the compass sets `player.yaw` and `player.pitch` each frame. While `app.follow.private` (`active` or `shown`), `viewer/ui.js` writes no view into the address bar.
+
+```mermaid
+stateDiagram-v2
+  [*] --> off
+  off --> starting: tap (iOS asks for motion access)
+  starting --> off: tap, or walk mode left (gen changed)
+  starting --> waiting: prompt answered, still in walk
+  off --> waiting: tap (no prompt)
+  waiting --> placing: first fix on campus, accuracy 80 m or better
+  waiting --> waiting: fix off campus or weak (says how far / waits)
+  placing --> following: teleport, then the lowest surface there
+  placing --> off: tap or walk mode left (cancelMove of its own teleport)
+  following --> off: tap or walk mode left
+  waiting --> off: tap, walk mode left, or location refused
+```
+
+A late answer never starts anything: each await is followed by a `gen` check. **In flight (#132, loj-cewayfind):** routes and a navigation display (slices 2 to 4).
 **In flight (#119 and PR #140, a4k-ceopt; door leaves from the export, a4k-cebldg):** entrance doors that open for the walker in walk mode.
 
 ### View tools: tour, measure, film, hunt
