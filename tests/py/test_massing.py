@@ -89,7 +89,16 @@ class Roofs(unittest.TestCase):
         # a narrow mansard, its slopes steeper than 45 degrees; an L-shaped one with a reflex corner
         self._eaves_ok([(0, 0), (30, 0), (30, 2), (0, 2)], "hip", 18.0, 12.0)
         ell = [(0, 0), (30, 0), (30, 2), (15, 2), (15, 4), (0, 4)]
-        self._eaves_ok(ell, "hip", 18.0, 12.0, convex=False)
+        _slopes, eaves = self._eaves_ok(ell, "hip", 18.0, 12.0, convex=False)
+        # at the reflex corner (15, 2) the two strips end on its bisector: they do not overlap
+        near = [f for f in eaves if any(math.dist(q[:2], (15, 2)) < 1e-6 for q in f)]
+        self.assertEqual(len(near), 2)
+        overlap = 0.0
+        for x in range(15, 18):  # sample the square past the corner on a 0.1 m grid
+            for y in range(20, 30):
+                pt = (15 + (x - 15 + 0.05) * 0.333, 2 + (y - 20 + 0.05) * 0.1)
+                overlap += sum(geom.inside([q[:2] for q in f], *pt) for f in near) > 1
+        self.assertEqual(overlap, 0)
 
     def test_an_overhang_leaves_a_mansard_top_and_its_wells_alone(self):
         ring = [(0, 0), (20, 0), (20, 20), (10, 26), (0, 20)]

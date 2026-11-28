@@ -111,6 +111,21 @@ def overhang_roof(ring, faces, overhang):
         ln = math.hypot(bx - ax, by - ay)
         norm.append(((by - ay) / ln, -(bx - ax) / ln))  # outward: right of an anticlockwise run
 
+    def miter(c):  # the corner of the outline moved out, at ring corner c
+        a, b = norm[(c - 1) % n], norm[c]
+        k = overhang / (1 + a[0] * b[0] + a[1] * b[1])
+        return (ring[c][0] + (a[0] + b[0]) * k, ring[c][1] + (a[1] + b[1]) * k)
+
+    def reflex(c):
+        a, b = norm[(c - 1) % n], norm[c]
+        return a[0] * b[1] - a[1] * b[0] <= 0
+
+    def moved(p, i):  # a strip's outer point: out square to its edge, or at a reflex corner's
+        for c in (i, (i + 1) % n):  # miter, so the two strips meet on its bisector
+            if reflex(c) and math.dist(p[:2], ring[c]) < 1e-6:
+                return miter(c)
+        return (p[0] + norm[i][0] * overhang, p[1] + norm[i][1] * overhang)
+
     def on_edge(p, i):
         (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
         return _seg_dist(p[:2], (ax, ay), (bx, by)) < 1e-6
@@ -122,9 +137,7 @@ def overhang_roof(ring, faces, overhang):
             p, q = face[k], face[(k + 1) % len(face)]
             for i in range(n):
                 if on_edge(p, i) and on_edge(q, i) and math.dist(p[:2], q[:2]) > 1e-6:
-                    nx, ny = norm[i]
-                    p2 = (p[0] + nx * overhang, p[1] + ny * overhang)
-                    q2 = (q[0] + nx * overhang, q[1] + ny * overhang)
+                    p2, q2 = moved(p, i), moved(q, i)
                     out.append(_up([p, q, (*q2, z(*q2)), (*p2, z(*p2))]))
                     for c, end in ((i, p), ((i + 1) % n, q)):
                         if math.dist(end[:2], ring[c]) < 1e-6:
@@ -133,15 +146,13 @@ def overhang_roof(ring, faces, overhang):
         a, b = (c - 1) % n, c
         if (a, c) not in owner or (b, c) not in owner:
             continue
-        if norm[a][0] * norm[b][1] - norm[a][1] * norm[b][0] <= 0:
-            continue  # a reflex corner: the two strips overlap there, there is no gap to fill
+        if reflex(c):
+            continue  # the two strips meet on the corner's bisector: no gap to fill
         (za, na), (zb, nb) = owner[(a, c)], owner[(b, c)]
         cx, cy = ring[c]
         ea = (cx + norm[a][0] * overhang, cy + norm[a][1] * overhang)
         eb = (cx + norm[b][0] * overhang, cy + norm[b][1] * overhang)
-        dot = norm[a][0] * norm[b][0] + norm[a][1] * norm[b][1]
-        m = (cx + (norm[a][0] + norm[b][0]) * overhang / (1 + dot),
-             cy + (norm[a][1] + norm[b][1]) * overhang / (1 + dot))  # fmt: skip
+        m = miter(c)
         corner = (cx, cy, za(cx, cy))
         # where the planes meet, in plan: the line through the corner along the cross product
         dx = na[1] * nb[2] - na[2] * nb[1]

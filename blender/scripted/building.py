@@ -234,11 +234,13 @@ def _canopy(name, p, ring, kind, tops, slopes, ground, roof_hex):
     b = kit.Builder(name)
     sheet = kit.mat("metal", "roof_" + roof_hex[1:], kit.srgb(roof_hex), 0.5, 0.3)
     steel = kit.mat("metal", "canopy_steel", kit.srgb("#8d9195"), 0.5, 0.7)
+    soffit = p.get("soffit")  # the slab's underside in the plan's soffit colour, if it gives one
+    under_mat = kit.mat("paint", "soffit_" + soffit[1:], kit.srgb(soffit), 0.8) if soffit else steel
     faces = slopes or [[(q[0], q[1], p["top"]) for q in ring]]
     for face in faces:
         b.faces(face, [tuple(range(len(face)))], sheet)
         under = [(x, y, z - 0.2) for x, y, z in face]
-        b.faces(under, [tuple(range(len(face) - 1, -1, -1))], steel)
+        b.faces(under, [tuple(range(len(face) - 1, -1, -1))], under_mat)
         m = len(face)
         rim = face + under
         b.faces(rim, [((i + 1) % m, i, m + i, m + (i + 1) % m) for i in range(m)], steel)
@@ -301,8 +303,8 @@ def part(lay_part, name, ground, image_dir=None):
     base = p["base"] if "base" in p else min(ground(x, y) for x, y in samples) - 0.6
     # wide eaves (`overhang`): faces that carry each roof face past the walls in its own plane
     eaves = massing.overhang_roof(ring, slopes, p["overhang"]) if p.get("overhang") else []
-    if eaves and kind == "flat":
-        raise ValueError(f"{name}: an overhang needs a pitched roof")
+    if p.get("overhang") and kind not in ("gable", "hip"):
+        raise ValueError(f"{name}: an overhang needs a gable or hip roof (or a mansard)")
     if p.get("open"):
         return _canopy(name, p, ring, kind, tops, slopes + eaves, ground, hexes["roof"])
     b = kit.Builder(name)
@@ -367,7 +369,7 @@ def part(lay_part, name, ground, image_dir=None):
             cap = slopes.pop()
             _deck(b, [q[:2] for q in cap], p["top"], wells, sheet, trim)
         if eaves:
-            _soffit(b, eaves, ring, p.get("soffit", hexes["trim"]))
+            _soffit(b, eaves, ring, p.get("soffit", hexes["trim"]), p["overhang"])
         for face in slopes + eaves:
             b.faces(face, [tuple(range(len(face)))], sheet)
     wall_top = min(tops) - (p.get("parapet", PARAPET.get(style, 0.4)) if kind == "flat" else 0.0)
@@ -390,7 +392,7 @@ def part(lay_part, name, ground, image_dir=None):
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
 
 
-def _soffit(b, eaves, ring, colour, depth=0.15):
+def _soffit(b, eaves, ring, colour, overhang, depth=0.15):
     """The underside of the eaves (massing.overhang_roof): each face again `depth` lower, facing
     down, and a fascia along the roof's outer edge (eave edges only one face has, off the wall
     line)."""
@@ -410,7 +412,8 @@ def _soffit(b, eaves, ring, colour, depth=0.15):
     for face in eaves:
         for i in range(len(face)):
             a, c = face[i], face[(i + 1) % len(face)]
-            outside = all(min(massing._seg_dist(q[:2], *w) for w in walls) > 0.05 for q in (a, c))
+            far = min(0.05, overhang / 2)  # off the wall line, even for a narrow overhang
+            outside = all(min(massing._seg_dist(q[:2], *w) for w in walls) > far for q in (a, c))
             if count[key(a, c)] == 1 and outside:
                 q = [c, a, (a[0], a[1], a[2] - depth), (c[0], c[1], c[2] - depth)]
                 b.faces(q, [(0, 1, 2, 3)], mat)
