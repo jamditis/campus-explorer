@@ -55,6 +55,28 @@ test('streets cost more than footways of the same length', () => {
 test('a place without entrances routes to the nearest path', () => {
   const goals = goalsFor(block, { osm: 'node/5', x: 95, z: 45, r: 0 });
   assert.equal(goals.length, 1); assert.equal(goals[0].mapped, false);
+  assert.deepEqual([goals[0].x, goals[0].z], [100, 45]);
+});
+
+test('a scrap of path nearer than the connected one does not hide the route', () => {
+  // a 10 m scrap at z = 1 next to the walker, and the real path at z = 5 leading to the hall
+  const g = parsePaths({
+    nodes: [0, 1, 10, 1, 0, 5, 100, 5],
+    edges: [[0, 1, 0, 0], [2, 3, 0, 0]],
+    entrances: [{ osm: 'way/3', node: 3 }],
+  });
+  const r = route(g, { x: 5, z: 0 }, { osm: 'way/3', x: 100, z: 5 });
+  assert.ok(r); near(r.offPath, 5, 1e-9, 'starts on the connected path'); near(r.length, 95, 1e-9, 'length');
+});
+
+test('a place with no entrance ends at the nearest point on the path, not a far node', () => {
+  // the path runs 0 -> 100 along z = 0; the lot sits beside x = 70
+  const g = parsePaths({ nodes: [0, 0, 100, 0], edges: [[0, 1, 0, 0]] });
+  const r = route(g, { x: 0, z: 0 }, { osm: 'way/7', x: 70, z: 10, r: 5 });
+  near(r.length, 70, 1e-9, 'stops beside the lot');
+  assert.deepEqual(r.points.at(-1), [70, 0]);
+  // walker already beside it: nothing to walk
+  near(route(g, { x: 70, z: 1 }, { osm: 'way/7', x: 70, z: 10, r: 5 }).length, 0, 1e-9, 'there');
 });
 
 test('walking minutes', () => {

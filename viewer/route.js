@@ -24,8 +24,10 @@ export function createRoute(app) {
   box.append(open, pick, card);
   const input = pick.querySelector('.route-search'), list = pick.querySelector('.route-results'), free = pick.querySelector('.route-stepfree');
 
-  let graph = null, loading = null, current = null, line = null;
-  const loadGraph = () => loading ??= fetch('./viewer/paths.json').then(r => r.json()).then(j => (graph = parsePaths(j))).catch(() => (graph = null));
+  let graph = null, loading = null, current = null, line = null, ask = 0;
+  // a failed fetch is not kept, so the next try fetches again
+  const loadGraph = () => loading ??= fetch('./viewer/paths.json').then(r => r.json()).then(j => (graph = parsePaths(j)))
+    .catch(() => { loading = null; return (graph = null); });
 
   function showPick(on) {
     pick.hidden = !on; open.setAttribute('aria-expanded', on);
@@ -64,7 +66,7 @@ export function createRoute(app) {
 
   function draw() {
     if (line) { scene.remove(line); line.geometry.dispose(); line = null; }
-    if (!current) return;
+    if (!current) { app.invalidate(); return; }
     const geo = new THREE.BufferGeometry().setFromPoints(drape(current.route.points));
     line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: '#2f80ed', depthTest: false, transparent: true }));
     line.name = 'route-line'; line.renderOrder = 3; line.frustumCulled = false;
@@ -78,6 +80,7 @@ export function createRoute(app) {
     if (r.steps) notes.push('Has stairs');
     if (r.steep) notes.push('Has steep stretches');
     if (stepFree) notes.push('Step-free');
+    if (r.offPath > 8) notes.push(`Starts at the nearest ${stepFree ? 'step-free ' : ''}path, ${Math.round(r.offPath)} m from you`);
     card.replaceChildren(
       text(`To ${place.name}`, 'route-to'),
       text(`${Math.round(r.length)} m · ${walkMinutes(r.length)} min walk`, 'route-len'),
@@ -90,7 +93,9 @@ export function createRoute(app) {
 
   /** Route from the walker to `place`. Resolves the route, or null when there is none. */
   async function go(place, { stepFree = free.checked } = {}) {
+    const my = ++ask;
     await loadGraph();
+    if (my !== ask) return null; // cleared, or left walk mode, while the map loaded
     if (!graph) { app.toast('The path map did not load.'); return null; }
     const from = player.guide ?? player.position;
     const r = findRoute(graph, { x: from.x, z: from.z }, place, { stepFree });
@@ -107,7 +112,7 @@ export function createRoute(app) {
   }
 
   function clear() {
-    current = null; draw(); card.hidden = true; card.replaceChildren(); app.emit('route', null);
+    ask++; current = null; draw(); card.hidden = true; card.replaceChildren(); app.emit('route', null);
   }
 
   // heights fill in as tiles arrive
