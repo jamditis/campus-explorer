@@ -85,3 +85,31 @@ test('a far version is kept only when it draws clearly less than its full tile',
   assert.equal(farWorthIt({ tris: 5000, draws: 3 }, { tris: 0, draws: 0 }), false); // empty
   assert.equal(farWorthIt({ tris: 0, draws: 0 }, { tris: 0, draws: 0 }), false);
 });
+
+test('keepSkyline puts back whole the tall pieces simplifying cut down, and only those', async () => {
+  const { keepSkyline } = await import('../tools/web-export/pack.mjs');
+  const P = [], I = [];
+  const quad = (x0, y0, x1, y1) => { const b = P.length / 3; P.push(x0, y0, 0, x1, y0, 0, x1, y1, 0, x0, y1, 0); I.push(b, b + 1, b + 2, b, b + 2, b + 3); return b; };
+  quad(0, 0, 0.6, 21.6); // antenna, triangles 0-1
+  const post = quad(10, 0, 10.3, 3); // a 3 m post, triangles 2-3: under `tall`
+  quad(20, 0, 30, 10); // a wall, triangles 4-5: kept by the simplifier
+  const id = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+  const J = new Uint32Array(I.slice(12, 18)); // the simplifier dropped the antenna and the post
+  const { indices, restored } = keepSkyline(new Float32Array(P), new Uint32Array(I), J, id);
+  assert.equal(restored, 1);
+  assert.deepEqual([...indices], [...I.slice(12, 18), ...I.slice(0, 6)]); // what was kept, then the antenna
+  assert.ok(![...indices].some(v => v >= post && v < post + 4)); // the short post stays out
+  // a piece cut down by less than `drop` stays as simplified; nothing to put back returns J itself
+  const same = keepSkyline(new Float32Array(P), new Uint32Array(I), new Uint32Array(I), id);
+  assert.equal(same.restored, 0);
+});
+
+test('keepSkyline joins vertices that meet: a hard-edged piece is one piece', async () => {
+  const { keepSkyline } = await import('../tools/web-export/pack.mjs');
+  // two 3 m panels stacked into a 6 m column, with their own vertices (a hard edge at y 3); the top panel is gone
+  const P = new Float32Array([0, 0, 0, 1, 0, 0, 1, 3, 0, 0, 3, 0, 0, 3, 0, 1, 3, 0, 1, 6, 0, 0, 6, 0]);
+  const I = new Uint32Array([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]);
+  const { indices, restored } = keepSkyline(P, I, I.slice(0, 6), [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+  assert.equal(restored, 1);
+  assert.deepEqual([...indices], [...I]);
+});
