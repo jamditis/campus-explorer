@@ -159,7 +159,7 @@ stateDiagram-v2
 1. **Gate** before every Blender start: no `.lock` from the hourly sessions, no other Blender, enough free memory (`gate`, `:36-39`). It only checks the locks; it does not take them. It waits with no time limit.
 2. **Plan** (unless `SKIP_PLAN=1`): `plan_chunks.py` in Blender, then `make_chunks.py` (`:40-44`). The main run writes `source.txt` for the north run (`:45`).
 3. **Prune** (full build): delete published and raw tiles that left the plan (`:47-57`).
-4. **Export** each tile with `export_web.py` under the watchdog (`:58-67`).
+4. **Export** each tile with `export_web.py` under the watchdog (`:58-67`). Object and mesh custom properties are dropped before the glTF write, except `door` on objects named `DOOR_*` (entrance leaves from `building.door_leaves`), which goes out as node extras; each leaf's materials carry a `door_leaf` extra, so optimize's dedup and join keep every leaf a node of its own for the viewer (#119).
 5. **Per tile:** leaf tint, tree instancing, optimize, compact; far version to `lod/` for `t_` tiles.
 6. **Land cover** (main, when its inputs exist), **supersede** (when any `sw_*.glb` exists, `:111`): cut other sources' ground under the scripted footprints; tiles cut under older rules stop the run (`supersede.mjs:494-497`).
 7. **Shared files:** `share_tex` writes `tex/`, `share_geo` writes `geo/` (`:156-157`), `tree_points` adds tree stand-ins to the far versions (`:158-159`).

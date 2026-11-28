@@ -202,10 +202,184 @@ def _curtain(b, ring, cw, hexes):
         b.faces(q, [(0, 1, 2, 3)], reveal)
     b.faces([pt(s0, z0, -back), pt(s1, z0, -back), pt(s1, z1, -back), pt(s0, z1, -back)],
             [(0, 1, 2, 3)], glass)  # fmt: skip
-    for off in (-back + 0.03, -back - 0.03):  # the grid on both faces of the glass
+    for off in (-back + 0.01, -back - 0.01):  # the grid on both faces of the glass
         for bs0, bs1, bz0, bz1 in massing.curtain_bars(s0, s1, z0, z1, cw["cols"], cw["rows"]):
             q = [pt(bs0, bz0, off), pt(bs1, bz0, off), pt(bs1, bz1, off), pt(bs0, bz1, off)]
             b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+
+
+def _arch(b, ring, aw, hexes, wall):
+    """A round-arched opening (`arches`: `at`, `to` on one wall line, `z0` the sill, `z1` the
+    crown, `cols`, `rows`, `frame` colour, `glass` false for an open arch such as a belfry,
+    `bands` [[z0, z1], ...] opaque panels in the frame colour across the glazing): the
+    wall pieces over the head (spandrels), reveals round the jambs and along the head, and, when
+    glazed, one pane set back with a frame of mullions, transoms and a curved head bar."""
+    ((i, s0, s1, z0, z1),) = [
+        (e, *h) for e, hs in massing.edge_openings(ring, [aw]).items() for h in hs
+    ]
+    a, bb = ring[i][:2], ring[(i + 1) % len(ring)][:2]
+    length = math.dist(a, bb)
+    u = ((bb[0] - a[0]) / length, (bb[1] - a[1]) / length)
+    n = (u[1], -u[0])
+    depth, back = aw.get("reveal", 0.3), aw.get("glass_back", 0.12)
+    reveal = kit.mat("plaster", "reveal_" + hexes["wall"][1:], kit.srgb(hexes["wall"]), 0.9)
+
+    def pt(s, z, off):  # along the wall, height, out (+) or in (-)
+        return (a[0] + u[0] * s + n[0] * off, a[1] + u[1] * s + n[1] * off, z)
+
+    for poly in massing.arch_spandrels(s0, s1, z1):  # wall the rectangular cut took over the head
+        b.faces([pt(x, z, 0.0) for x, z in poly], [tuple(range(len(poly)))], wall)
+    head = massing.arch_curve(s0, s1, z1)
+    spring = head[0][1]
+    for sx, sy in ((s0, 1), (s1, -1)):  # jamb reveals up to the springing line
+        q = [pt(sx, z0, 0), pt(sx, z0, -depth), pt(sx, spring, -depth), pt(sx, spring, 0)]
+        b.faces(q if sy > 0 else q[::-1], [(0, 1, 2, 3)], reveal)
+    b.faces([pt(s0, z0, 0), pt(s1, z0, 0), pt(s1, z0, -depth), pt(s0, z0, -depth)][::-1],
+            [(0, 1, 2, 3)], reveal)  # fmt: skip
+    for (sa, za), (sb, zb) in zip(head, head[1:], strict=False):  # the head's soffit
+        b.faces([pt(sa, za, 0), pt(sa, za, -depth), pt(sb, zb, -depth), pt(sb, zb, 0)],
+                [(0, 1, 2, 3)], reveal)  # fmt: skip
+    if not aw.get("glass", True):
+        return
+    glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
+    pane = massing.arch_outline(s0, s1, z0, z1)
+    b.faces([pt(x, z, -back) for x, z in pane], [tuple(range(len(pane)))], glass)
+    fhex = aw.get("frame", "#33291f")
+    frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    for bz0, bz1 in aw.get("bands", ()):  # an opaque panel across the opening (a transom band)
+        for off in (-back + 0.015, -back - 0.015):
+            q = [pt(s0, bz0, off), pt(s1, bz0, off), pt(s1, bz1, off), pt(s0, bz1, off)]
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+    rects, bars = massing.arch_bars(s0, s1, z0, z1, aw.get("cols", 3), aw.get("rows", 4))
+    w = 0.08
+    for off in (-back + 0.01, -back - 0.01):  # on both faces of the glass
+        for bs0, bs1, bz0, bz1 in rects:
+            q = [pt(bs0, bz0, off), pt(bs1, bz0, off), pt(bs1, bz1, off), pt(bs0, bz1, off)]
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+        cs, r = (s0 + s1) / 2, (s1 - s0) / 2
+        for (sa, za), (sb, zb) in bars:  # the head: a band w wide just inside the curve
+            ia = (cs + (sa - cs) * (r - w) / r, spring + (za - spring) * (r - w) / r)
+            ib = (cs + (sb - cs) * (r - w) / r, spring + (zb - spring) * (r - w) / r)
+            q = [pt(sa, za, off), pt(*ia, off), pt(*ib, off), pt(sb, zb, off)]
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+
+
+def _on_wall(ring, opening):
+    """The edge an opening (`at`, `to`) lies on: (edge start, direction, outward normal, s0, s1)."""
+    ((i, s0, s1, _z0, _z1),) = [
+        (e, *h)
+        for e, hs in massing.edge_openings(ring, [dict(opening, z0=0.0, z1=0.0)]).items()
+        for h in hs
+    ]
+    a, bb = ring[i][:2], ring[(i + 1) % len(ring)][:2]
+    length = math.dist(a, bb)
+    u = ((bb[0] - a[0]) / length, (bb[1] - a[1]) / length)
+    return a, u, (u[1], -u[0]), s0, s1
+
+
+def _storefront(b, ring, dr, hexes):
+    """The fixed part of an entrance (`doors`: `at`, `to`, `z0` the sill, `z1` the head, `frame`,
+    `leaves`): reveals round the opening, a head bar, and glass with a frame in every stretch the
+    leaves leave open (sidelights, the panel between pairs). The leaves are objects of their own
+    (door_leaves)."""
+    a, u, n, s0, s1 = _on_wall(ring, dr)
+    z0, z1, back = dr["z0"], dr["z1"], dr.get("glass_back", 0.12)
+    reveal = kit.mat("plaster", "reveal_" + hexes["wall"][1:], kit.srgb(hexes["wall"]), 0.9)
+    fhex = dr.get("frame", "#592d28")
+    frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
+
+    def pt(s, z, off):
+        return (a[0] + u[0] * s + n[0] * off, a[1] + u[1] * s + n[1] * off, z)
+
+    for sx, sy in ((s0, 1), (s1, -1)):
+        q = [pt(sx, z0, 0), pt(sx, z0, -0.3), pt(sx, z1, -0.3), pt(sx, z1, 0)]
+        b.faces(q if sy > 0 else q[::-1], [(0, 1, 2, 3)], reveal)
+    leaves = sorted(
+        tuple(sorted(_on_wall(ring, lf)[3:5])) for lf in dr.get("leaves", ())
+    )
+    gaps, at = [], s0
+    for la, lb in leaves:
+        if la - at > 0.02:
+            gaps.append((at, la))
+        at = lb
+    if s1 - at > 0.02:
+        gaps.append((at, s1))
+    f = 0.08
+    for ga, gb in gaps:
+        b.faces([pt(ga, z0, -back), pt(gb, z0, -back), pt(gb, z1, -back), pt(ga, z1, -back)],
+                [(0, 1, 2, 3)], glass)  # fmt: skip
+        for off in (-back + 0.01, -back - 0.01):
+            bars = ((ga, ga + f, z0, z1), (gb - f, gb, z0, z1), (ga, gb, z0, z0 + 0.2))
+            for ra, rb, rz0, rz1 in bars:
+                q = [pt(ra, rz0, off), pt(rb, rz0, off), pt(rb, rz1, off), pt(ra, rz1, off)]
+                b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+    for off in (-back + 0.01, -back - 0.01):  # the head bar over the whole opening
+        q = [pt(s0, z1 - f, off), pt(s1, z1 - f, off), pt(s1, z1, off), pt(s0, z1, off)]
+        b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+
+
+def door_leaves(lay_part, building_id):
+    """The swinging leaves of a part's entrance (`doors.leaves`: `name` (starting DOOR_), `at`,
+    `to`, `hinge` "at" or "to", `pair`) as objects of their own, each a glass leaf in a frame with
+    a pull, carrying a `door` custom property for the viewer (#119): id (one per pair; the leaves
+    of a pair open together), building, kind swing, hinge [x, y, z] and axis in Blender world
+    coordinates, and `open` (degrees about the axis that turn the leaf out of the building). Each
+    leaf has materials of its own (told apart by a `door_leaf` extra, since the export's dedup
+    ignores names), so the export's join keeps it a node of its own."""
+    dr = lay_part.get("doors")
+    if not dr:
+        return []
+    ring = geom.expand(lay_part["ring"], True)
+    if geom.area(ring) < 0:
+        ring = ring[::-1]
+    z0, z1, back = dr["z0"], dr["z1"] - 0.1, dr.get("glass_back", 0.12)
+    fhex = dr.get("frame", "#592d28")
+    out = []
+    for lf in dr["leaves"]:
+        a, u, n, s0, s1 = _on_wall(ring, lf)
+        tag = lf["name"].lower()
+        frame = kit.mat("metal", tag + "_frame", kit.srgb(fhex), 0.5)
+        glass = kit.mat("glass", tag + "_glass", kit.srgb("#2b3640"), 0.15)
+        steel = kit.mat("metal", tag + "_pull", kit.srgb("#b7b9bb"), 0.35)
+        for m in (frame, glass, steel):  # the export's dedup ignores names; an extra keeps it apart
+            m["door_leaf"] = lf["name"]
+
+        def pt(s, z, off, a=a, u=u, n=n):
+            return (a[0] + u[0] * s + n[0] * off, a[1] + u[1] * s + n[1] * off, z)
+
+        b = kit.Builder("SW_" + lf["name"])  # renamed to its DOOR_ name below (viewer #119)
+        pane = [pt(s0, z0, -back), pt(s1, z0, -back), pt(s1, z1, -back), pt(s0, z1, -back)]
+        b.faces(pane, [(0, 1, 2, 3)], glass)
+        f = 0.1
+        # which end of the leaf (s0 < s1 along the wall) is the hinge: the end its `hinge` names
+        named = lf[lf.get("hinge", "at")]
+        s_named = (named[0] - a[0]) * u[0] + (named[1] - a[1]) * u[1]
+        hinge_s = s0 if abs(s_named - s0) < abs(s_named - s1) else s1
+        free = s1 if hinge_s == s0 else s0  # the meeting stile carries the pull
+        for off in (-back + 0.02, -back - 0.02):
+            bars = ((s0, s0 + f, z0, z1), (s1 - f, s1, z0, z1), (s0, s1, z1 - f, z1),
+                    (s0, s1, z0, z0 + 0.25))  # fmt: skip
+            for ra, rb, rz0, rz1 in bars:
+                q = [pt(ra, rz0, off), pt(rb, rz0, off), pt(rb, rz1, off), pt(ra, rz1, off)]
+                b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+            ps = free - 0.18 if free == s1 else free + 0.18
+            po = off * 1.6  # the pull stands off the leaf
+            q = [pt(ps - 0.02, z0 + 0.9, po), pt(ps + 0.02, z0 + 0.9, po),
+                 pt(ps + 0.02, z0 + 1.6, po), pt(ps - 0.02, z0 + 1.6, po)]  # fmt: skip
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], steel)
+        ob = b.finish(recalc=False)
+        ob.name = lf["name"]
+        hinge, angle = massing.door_swing(
+            pt(hinge_s, 0, -back)[:2], pt(free, 0, -back)[:2], "at", n
+        )
+        ob["door"] = {
+            "id": f"{building_id}_{lf['pair']}", "building": building_id, "kind": "swing",
+            "hinge": [round(hinge[0], 3), round(hinge[1], 3), round(z0, 3)], "axis": [0, 0, 1],
+            "open": angle,
+        }  # fmt: skip
+        out.append(ob)
+    return out
 
 
 def _deck_levels(b, part, ring, top, ground, band, void):
@@ -314,7 +488,8 @@ def part(lay_part, name, ground, image_dir=None):
     ]
     # a deck's ramp is a slab in the well of its deck: walls of its own would lie in the faces of
     # the well's walls
-    cuts = list(p.get("openings", ())) + list(p.get("curtains", ()))
+    cuts = list(p.get("openings", ())) + list(p.get("curtains", ())) + list(p.get("arches", ()))
+    cuts += [p["doors"]] if p.get("doors") else []
     holes = massing.edge_openings(ring, cuts) if cuts else {}
     # a window of the grid never crosses an opening or a curtain wall
     cells = massing.clear_of(_recessed_cells(p, ring, tops, ground), holes)
@@ -345,6 +520,13 @@ def part(lay_part, name, ground, image_dir=None):
                 overhang=r.get("overhang"),
             ):  # fmt: skip
                 b.faces(face, [tuple(range(len(face)))], tile)
+            if r.get("soffit"):  # the underside of the overhang and a fascia board
+                sof = kit.mat("wood", "soffit_" + r["soffit"][1:], kit.srgb(r["soffit"]), 0.8)
+                for face in massing.ring_soffits(
+                    ring, p["top"], r["crest"], r["crest_in"], r.get("flat_edges", ()),
+                    overhang=r.get("overhang"),
+                ):  # fmt: skip
+                    b.faces(face, [tuple(range(len(face)))], sof)
             if r.get("caps"):  # ridge and hip caps, a darker tile
                 cap = kit.mat("rooftile", "cap_" + r["caps"][1:], kit.srgb(r["caps"]), 0.75)
                 for verts, faces in massing.ring_caps(
@@ -387,6 +569,10 @@ def part(lay_part, name, ground, image_dir=None):
         _windows(b, p, ring, wall_top, local, glass, holes)
     for cw in p.get("curtains", ()):
         _curtain(b, ring, cw, hexes)
+    for aw in p.get("arches", ()):
+        _arch(b, ring, aw, hexes, wall)
+    if p.get("doors"):
+        _storefront(b, ring, p["doors"], hexes)
     if p.get("sheets"):
         _sheet_uvs(b, deck, p["sheets"][0])
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
@@ -435,4 +621,5 @@ def build(lay, terrain, name_of):
     for p in lay["buildings"]:
         if "top" in p:
             out.append(part(p, name_of(p) + "_UNVERIFIED", terrain.at, lay.get("image_dir")))
+            out += door_leaves(p, p.get("doors", {}).get("building", "building"))
     return out

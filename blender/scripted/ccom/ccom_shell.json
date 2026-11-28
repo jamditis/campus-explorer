@@ -1,6 +1,6 @@
 {
  "zone": "ccom_shell",
- "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). REVISED 2026-11-20 (lead): the main model's walls, window units (without their fake-room boxes), eave course, soffit and downspouts are adopted on the west, south and north faces (adopt.json); this part builds walls only on the east band (east of model x 17.9, where the main model had lowered them a storey), with recessed windows of the main model's type (reveal, sill, frame with mullion and transom) on the three floor levels (UNVERIFIED rows until Joe's east photo), a tile eave course flush on the east walls (no overhang there, Joe 2026-10-14), and the ring roof for the whole building (0.86 m overhang on the other free walls, ridge and hip caps). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom. REVISED 2026-11-28 (east and south faces, Joe: 'disjointed'): the east band's windows took floor levels 134.85, 137.40 and 141.85 with a 0.9 m sill, so its rows stood 0.8 and 1.05 m above the adopted south windows (glass 137.5..140.1 and 141.7..144.3, read off the published tiles) and its basement row ran into the floor 1 row as one 5.2 m window with the slab across it; the rows are now given outright (windows.rows): the adopted south rows, and a basement row 135.3..137.0 where the ground allows it (UNVERIFIED). Ring: the crest stood 6.8, 7.0 and 10.5 m in on the three parallel east walls (edges 3, 5, 7) and the crest band ended 7.3, 7.5 and 11 m in, so the bands met with vertical steps; LiDAR profiles square to each wall (middle 60 %, 90th percentile in 0.7 m strips) rise from 147.6..147.9 at the wall to 150.8..151.1 within 5..6 m on edges 2, 3, 5, 7 and 8; edges 0 to 5 now take 6.0 / 6.5 m, the north-east block (edges 6, 7, 8: 10.8 m between edges 6 and 8) 5.0 / 5.3 m, so its two bands do not fold over each other. Edges 8 and 9 had no ring (taken as walls shared with Life Hall), but the LiDAR rises from 148.0 at the wall to 151.0 5.5 m in on edge 8 and to 150.2..150.9 from 2 m in on edge 9, while outside them Life Hall's roofs stand at 144.5..146.2 and 141.3: both take the ring now (7.0 / 7.8 m on edge 9, as on the north wing's west wall), with no overhang, under the adopted barrel tile eave course on the wall top (147.9..148.2; on edge 8 only west of x 17.9, so edge 8 also takes the scripted eave course, which runs under the adopted one for those 5.3 m).",
+ "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). REVISED 2026-11-20 (lead): the main model's walls, window units (without their fake-room boxes), eave course, soffit and downspouts are adopted on the west, south and north faces (adopt.json); this part builds walls only on the east band (east of model x 17.9, where the main model had lowered them a storey), with recessed windows of the main model's type (reveal, sill, frame with mullion and transom) on the three floor levels (UNVERIFIED rows until Joe's east photo), a tile eave course flush on the east walls (no overhang there, Joe 2026-10-14), and the ring roof for the whole building (0.86 m overhang on the other free walls, ridge and hip caps). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom. REVISED 2026-11-28 (east and south faces, Joe: 'disjointed'): the east band's windows took floor levels 134.85, 137.40 and 141.85 with a 0.9 m sill, so its rows stood 0.8 and 1.05 m above the adopted south windows (glass 137.5..140.1 and 141.7..144.3, read off the published tiles) and its basement row ran into the floor 1 row as one 5.2 m window with the slab across it; the rows are now given outright (windows.rows): the adopted south rows, and a basement row 135.3..137.0 where the ground allows it (UNVERIFIED). Ring: the crest stood 6.8, 7.0 and 10.5 m in on the three parallel east walls (edges 3, 5, 7) and the crest band ended 7.3, 7.5 and 11 m in, so the bands met with vertical steps; LiDAR profiles square to each wall (middle 60 %, 90th percentile in 0.7 m strips) rise from 147.6..147.9 at the wall to 150.8..151.1 within 5..6 m on edges 2, 3, 5, 7 and 8; edges 0 to 5 now take 6.0 / 6.5 m, the north-east block (edges 6, 7, 8: 10.8 m between edges 6 and 8) 5.0 / 5.3 m, so its two bands do not fold over each other. Edges 8 and 9 had no ring (taken as walls shared with Life Hall), but the LiDAR rises from 148.0 at the wall to 151.0 5.5 m in on edge 8 and to 150.2..150.9 from 2 m in on edge 9, while outside them Life Hall's roofs stand at 144.5..146.2 and 141.3: both take the ring now (7.0 / 7.8 m on edge 9, as on the north wing's west wall), with no overhang, under the adopted barrel tile eave course on the wall top (147.9..148.2; on edge 8 only west of x 17.9, so edge 8 also takes the scripted eave course, which runs under the adopted one for those 5.3 m). REBUILT 2026-11-28 (shell, CCOM rebuild PR 1): every face is scripted now; the main model's walls, window units, eave course, soffit, downspouts, tower, entry arch and gable, and the newsroom's west bay and south windows are no longer adopted. West facade: round-arched windows (engine `arches`); the tower and the entry gable are parts of their own; dark soffits under the overhangs (ring_roof `soffit`); recessed windows on the south and east faces and the north end.",
  "buildings": [
   {
    "name": "CCOM_main",
@@ -122,14 +122,12 @@
    "no_windows": [
     0,
     1,
-    2,
     6,
     8,
     9,
     10,
     11,
     12,
-    13,
     14,
     15,
     16,
@@ -138,188 +136,6 @@
     19
    ],
    "openings": [
-    {
-     "at": [
-      -24.058,
-      -12.683
-     ],
-     "to": [
-      -11.771,
-      -15.689
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -11.771,
-      -15.689
-     ],
-     "to": [
-      -12.379,
-      -18.186
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      12.622,
-      10.736
-     ],
-     "to": [
-      17.571,
-      32.009
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      17.571,
-      32.009
-     ],
-     "to": [
-      12.624,
-      33.081
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      12.624,
-      33.081
-     ],
-     "to": [
-      13.018,
-      35.034
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      13.018,
-      35.034
-     ],
-     "to": [
-      -0.258,
-      39.392
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -0.258,
-      39.392
-     ],
-     "to": [
-      -10.761,
-      41.654
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -10.761,
-      41.654
-     ],
-     "to": [
-      -14.704,
-      24.129
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -16.462,
-      17.044
-     ],
-     "to": [
-      -18.682,
-      17.564
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -18.682,
-      17.564
-     ],
-     "to": [
-      -20.926,
-      8.148
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -20.926,
-      8.148
-     ],
-     "to": [
-      -19.115,
-      7.593
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -19.115,
-      7.593
-     ],
-     "to": [
-      -24.058,
-      -12.683
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "wall adopted from the main model (School of Communication and Media walls)"
-    },
-    {
-     "at": [
-      -12.379,
-      -18.186
-     ],
-     "to": [
-      17.897,
-      -25.556
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "south wall adopted up to x 17.9 (the main model's walls are a storey low east of it)"
-    },
-    {
-     "at": [
-      17.897,
-      9.533
-     ],
-     "to": [
-      12.622,
-      10.736
-     ],
-     "z0": 133.0,
-     "z1": 148.0,
-     "why": "north edge adopted west of x 17.9"
-    },
     {
      "at": [
       -14.708,
@@ -332,6 +148,32 @@
      "z0": 133.0,
      "z1": 148.0,
      "why": "the adopted tower's east face"
+    },
+    {
+     "at": [
+      4.772,
+      -22.355
+     ],
+     "to": [
+      7.92,
+      -23.121
+     ],
+     "z0": 133.0,
+     "z1": 140.55,
+     "why": "loading dock roll-up door (adopted, jf3)"
+    },
+    {
+     "at": [
+      8.911,
+      -23.362
+     ],
+     "to": [
+      9.999,
+      -23.626
+     ],
+     "z0": 133.0,
+     "z1": 139.75,
+     "why": "loading dock personnel door (adopted, jf3)"
     }
    ],
    "ring_roof": {
@@ -410,7 +252,9 @@
      5,
      6,
      7,
-     8
+     8,
+     9,
+     12
     ],
     "flat_edges": [
      10,
@@ -420,7 +264,8 @@
      16,
      17,
      18
-    ]
+    ],
+    "soffit": "#3b2b21"
    },
    "evidence": "osm way 1188721159; lidar2017 raw points; ortho2020; main model materials",
    "unverified": "window grid (the east band's rows follow the adopted south windows; its basement row, 135.3..137.0, is a guess); crest shape (one plane from the wall top to a crest 6 m in, 5 m on the north-east block, where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands; edge 12 (north end) keeps no ring although the LiDAR has one there: a ring on it would need a cap in edge 11's plane that cuts through edge 9's ring",
@@ -441,7 +286,488 @@
      "frame": "#592d28",
      "why": "the east bay's tall window (Joe's photos ccom_f1_east_photo1/5_joe_20261128: dark red mullion grid about 4 lights by 3, sill about 0.6 m over the floor, top well above the lounge ceiling, in a double-height bay); its width from the floor 1 sign, which draws this stretch of the wall as glazing (building v 5.8..10.4); sill 138.3 (floor 137.7 + 0.6), top 144.3 (the adopted south windows' head) and the 4 x 3 grid: UNVERIFIED; the bay's side walls are plain (photo 5: white walls, a dark steel door on one side), so edge 6, the bay's south wall, has no windows"
     }
-   ]
+   ],
+   "arches": [
+    {
+     "at": [
+      -19.944,
+      4.193
+     ],
+     "to": [
+      -20.655,
+      1.278
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -20.868,
+      0.404
+     ],
+     "to": [
+      -21.578,
+      -2.511
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -21.791,
+      -3.385
+     ],
+     "to": [
+      -22.502,
+      -6.3
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -22.715,
+      -7.175
+     ],
+     "to": [
+      -23.426,
+      -10.089
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -10.981,
+      40.678
+     ],
+     "to": [
+      -11.639,
+      37.752
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -11.859,
+      36.776
+     ],
+     "to": [
+      -12.517,
+      33.849
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -12.737,
+      32.873
+     ],
+     "to": [
+      -13.395,
+      29.947
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -13.615,
+      28.971
+     ],
+     "to": [
+      -14.273,
+      26.044
+     ],
+     "z0": 138.0,
+     "z1": 145.8,
+     "cols": 3,
+     "rows": 5,
+     "frame": "#33291f",
+     "why": "round-arched windows of the west facade (public photos 2017: three to four tall arched windows each side of the tower and entry, dark mullions, small-pane heads); count, width 3.0 m, sill 138.0 and crown 145.8 from the main model's bay glazing: UNVERIFIED"
+    },
+    {
+     "at": [
+      -19.377,
+      14.646
+     ],
+     "to": [
+      -20.722,
+      9.004
+     ],
+     "z0": 139.85,
+     "z1": 146.5,
+     "cols": 7,
+     "rows": 7,
+     "frame": "#592d28",
+     "why": "the two-storey arched main entry (Joe's lobby photos: an arched-top window grid in dark red frames over two pairs of double doors); size from the main model's archivolt; the door pairs stay the main model's; from the doors' head up (the doors and sidelights below: `doors`); the solid maroon band 140.29..141.06 across it is the main model's transom panel, taken from the entrance photos (ni_build)",
+     "bands": [
+      [
+       140.29,
+       141.06
+      ]
+     ]
+    }
+   ],
+   "doors": {
+    "building": "ccom_main",
+    "at": [
+     -19.377,
+     14.646
+    ],
+    "to": [
+     -20.722,
+     9.004
+    ],
+    "z0": 137.45,
+    "z1": 139.85,
+    "frame": "#592d28",
+    "leaves": [
+     {
+      "name": "DOOR_ccom_main_B1_UNVERIFIED",
+      "at": [
+       -19.53,
+       14.004
+      ],
+      "to": [
+       -19.769,
+       13.002
+      ],
+      "hinge": "at",
+      "pair": "B"
+     },
+     {
+      "name": "DOOR_ccom_main_B2_UNVERIFIED",
+      "at": [
+       -20.008,
+       12.0
+      ],
+      "to": [
+       -19.769,
+       13.002
+      ],
+      "hinge": "at",
+      "pair": "B"
+     },
+     {
+      "name": "DOOR_ccom_main_A1_UNVERIFIED",
+      "at": [
+       -20.126,
+       11.504
+      ],
+      "to": [
+       -20.353,
+       10.55
+      ],
+      "hinge": "at",
+      "pair": "A"
+     },
+     {
+      "name": "DOOR_ccom_main_A2_UNVERIFIED",
+      "at": [
+       -20.581,
+       9.597
+      ],
+      "to": [
+       -20.353,
+       10.55
+      ],
+      "hinge": "at",
+      "pair": "A"
+     }
+    ],
+    "why": "the main entrance: two pairs of glass doors in dark red frames under the arched window (Joe's lobby photos), sidelights either side and a fixed panel between the pairs; the leaves' places from the main model's push-bar brackets, their 2.3 m height a guess; leaves swing out, a pair opens together (viewer #119)"
+   }
+  },
+  {
+   "name": "CCOM_tower",
+   "ring": [
+    [
+     -20.016,
+     18.233
+    ],
+    [
+     -13.244,
+     16.587
+    ],
+    [
+     -11.599,
+     23.359
+    ],
+    [
+     -18.371,
+     25.005
+    ]
+   ],
+   "roof": "hip",
+   "top": 157.8,
+   "eave": 155.65,
+   "style": "civic",
+   "wall": "#f3efe7",
+   "trim": "#592d28",
+   "roof_colour": "#eaccc5",
+   "floors": 1,
+   "no_windows": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "arches": [
+    {
+     "at": [
+      -18.687,
+      17.91
+     ],
+     "to": [
+      -17.959,
+      17.733
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -16.994,
+      17.499
+     ],
+     "to": [
+      -16.266,
+      17.321
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -15.302,
+      17.087
+     ],
+     "to": [
+      -14.573,
+      16.91
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -12.921,
+      17.916
+     ],
+     "to": [
+      -12.744,
+      18.644
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -12.51,
+      19.609
+     ],
+     "to": [
+      -12.333,
+      20.337
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -12.099,
+      21.302
+     ],
+     "to": [
+      -11.922,
+      22.03
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -12.928,
+      23.682
+     ],
+     "to": [
+      -13.656,
+      23.859
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -14.621,
+      24.093
+     ],
+     "to": [
+      -15.349,
+      24.271
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -16.313,
+      24.505
+     ],
+     "to": [
+      -17.042,
+      24.682
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -18.694,
+      23.676
+     ],
+     "to": [
+      -18.871,
+      22.948
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -19.105,
+      21.983
+     ],
+     "to": [
+      -19.282,
+      21.255
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -19.516,
+      20.29
+     ],
+     "to": [
+      -19.693,
+      19.562
+     ],
+     "z0": 151.2,
+     "z1": 154.6,
+     "glass": false,
+     "why": "belfry opening"
+    },
+    {
+     "at": [
+      -19.005,
+      22.396
+     ],
+     "to": [
+      -19.382,
+      20.842
+     ],
+     "z0": 138.2,
+     "z1": 144.9,
+     "cols": 2,
+     "rows": 6,
+     "frame": "#33291f",
+     "why": "the tower's tall arched window (public photos)"
+    }
+   ],
+   "unverified": "footprint and heights from the main model's tower (OSM + LiDAR, top 157.4 in the LiDAR); belfry openings three per face, 0.75 m wide, 151.2..154.6 (the main model's belfry band); the tall west window 1.6 m wide, 138.2..144.9"
+  },
+  {
+   "name": "CCOM_entry_gable",
+   "ring": [
+    [
+     -20.953,
+     8.128
+    ],
+    [
+     -15.822,
+     6.881
+    ],
+    [
+     -13.532,
+     16.307
+    ],
+    [
+     -18.662,
+     17.554
+    ]
+   ],
+   "roof": "gable",
+   "top": 150.8,
+   "eave": 148.0,
+   "ridge_angle": -13.66,
+   "base": 147.8,
+   "style": "civic",
+   "wall": "#f3efe7",
+   "trim": "#592d28",
+   "roof_colour": "#eaccc5",
+   "floors": 1,
+   "no_windows": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "unverified": "the entry bay's gable over the porch, ridge square to the facade at 150.8, eaves 148.0, running 5.3 m back (the main model's gable roof); the medallion is not built"
   }
  ]
 }

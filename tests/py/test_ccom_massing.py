@@ -200,7 +200,11 @@ class CcomShellPlan(unittest.TestCase):
         ring = [tuple(p) for p in self.part["ring"]]
         self.assertGreater(geom.area(ring), 2000)
         ops = massing.edge_openings(ring, self.part["openings"])
-        self.assertEqual(sorted(ops), list(range(0, 3)) + list(range(8, 20)))
+        # the loading dock's two doors on the south wall, and the tower's line (its own part)
+        self.assertEqual(sorted(ops), [2, 15])
+        arches = massing.edge_openings(ring, self.part["arches"])
+        self.assertEqual(sorted(arches), [14, 17, 19])  # west facade windows and the main entry
+        self.assertEqual(sorted(massing.edge_openings(ring, self.part["curtains"])), [7])
 
     def test_the_ring_roof_stays_inside_the_walls_and_below_the_crest(self):
         ring = [tuple(p) for p in self.part["ring"]]
@@ -243,3 +247,72 @@ class CurtainWalls(unittest.TestCase):
         shell = json.loads((PLAN / "ccom" / "ccom_shell.json").read_text())["buildings"][0]
         holes = massing.edge_openings(shell["ring"], shell["curtains"])
         self.assertEqual(list(holes), [7])
+
+
+class Arches(unittest.TestCase):
+    @staticmethod
+    def area(poly):
+        return sum(
+            x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(poly, poly[1:] + poly[:1], strict=True)
+        ) / 2
+
+    def test_opening_and_spandrels_fill_the_cut_rectangle(self):
+        s0, s1, z0, z1 = 2.0, 5.0, 1.0, 8.0
+        hole = massing.arch_outline(s0, s1, z0, z1, n=48)
+        left, right = massing.arch_spandrels(s0, s1, z1, n=48)
+        for poly in (hole, left, right):
+            self.assertGreater(self.area(poly), 0)  # anticlockwise
+        total = self.area(hole) + self.area(left) + self.area(right)
+        self.assertAlmostEqual(total, (s1 - s0) * (z1 - z0), places=6)
+        r = (s1 - s0) / 2  # the opening is a rectangle up to the springing line and a half disc
+        self.assertAlmostEqual(self.area(hole), (s1 - s0) * (z1 - r - z0) + math.pi * r * r / 2, 1)
+
+    def test_bars_stay_inside_the_opening(self):
+        s0, s1, z0, z1 = 0.0, 3.0, 0.0, 7.0
+        rects, head = massing.arch_bars(s0, s1, z0, z1, cols=3, rows=5)
+        r, spring = 1.5, 5.5
+        for sa, sb, _za, zb in rects:
+            self.assertGreaterEqual(sa, s0 - 1e-9)
+            self.assertLessEqual(sb, s1 + 1e-9)
+            for s in (sa, sb):  # every bar's top stays under the head
+                d = min(abs(s - 1.5), r)
+                self.assertLessEqual(zb, spring + math.sqrt(r * r - d * d) + 0.05)
+        self.assertEqual(len(head), 12)
+
+
+class Soffits(unittest.TestCase):
+    def test_only_overhanging_edges_get_a_soffit_and_a_fascia(self):
+        faces = massing.ring_soffits(SQ, 10.0, 13.0, 6.0, overhang=[0.8, 0, 0.8, 0])
+        self.assertEqual(len(faces), 4)
+        low = 10.0 - 0.8 * 3.0 / 6.0
+        soffit = faces[0]
+        self.assertTrue(all(abs(z - low) < 1e-9 for _x, _y, z in soffit))
+        self.assertAlmostEqual(min(z for f in faces for _x, _y, z in f), low - 0.22)
+
+    def test_no_overhang_no_soffit(self):
+        self.assertEqual(massing.ring_soffits(SQ, 10.0, 13.0, 6.0), [])
+
+
+class Doors(unittest.TestCase):
+    def test_a_leaf_turns_out_of_the_building(self):
+        # a wall facing south (outward normal -y), a leaf from x 0 to 1 hinged at x 0:
+        # +90 degrees would turn it north, into the building, so it opens by -90
+        hinge, angle = massing.door_swing((0, 0), (1, 0), "at", (0, -1))
+        self.assertEqual((hinge, angle), ((0, 0), -90))
+        hinge, angle = massing.door_swing((0, 0), (1, 0), "to", (0, -1))
+        self.assertEqual((hinge, angle), ((1, 0), 90))
+
+    def test_every_ccom_leaf_lies_inside_its_entrance_and_pairs_open_together(self):
+        shell = json.loads((PLAN / "ccom" / "ccom_shell.json").read_text())["buildings"][0]
+        dr = shell["doors"]
+        span = massing.edge_openings(shell["ring"], [dr])
+        ((edge, (s0, s1, _z0, _z1)),) = [(e, h[0]) for e, h in span.items()]
+        pairs = {}
+        for lf in dr["leaves"]:
+            self.assertTrue(lf["name"].startswith("DOOR_"))
+            found = massing.edge_openings(shell["ring"], [dict(lf, z0=0, z1=1)])
+            ((e, (a, b, _za, _zb)),) = [(k, h[0]) for k, h in found.items()]
+            self.assertEqual(e, edge)
+            self.assertTrue(s0 - 1e-6 <= a < b <= s1 + 1e-6)
+            pairs.setdefault(lf["pair"], []).append(lf)
+        self.assertTrue(all(len(v) == 2 for v in pairs.values()))
