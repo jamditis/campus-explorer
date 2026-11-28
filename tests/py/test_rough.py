@@ -51,7 +51,7 @@ def crosses(s, t):
     return d1 * d2 <= 0 and d3 * d4 <= 0 and not (d1 == d2 == 0)
 
 
-def walkable(test, f, route, label):
+def walkable(test, f, route, label, blocks=()):
     """The route from the corridor to the door stays in the floor until it reaches the lining's
     opening at the door, and no wall but the lining crosses it."""
     legs = list(zip(route, route[1:], strict=False))
@@ -74,6 +74,12 @@ def walkable(test, f, route, label):
             continue
         for leg in legs:
             test.assertFalse(crosses(leg, (p["p"], p["q"])), f"{label}: {w['name']}")
+    for b in blocks:  # no stair or lift stands in the way
+        ring = b["ring"]
+        for leg in legs:
+            for side in zip(ring, ring[1:] + ring[:1], strict=True):
+                test.assertFalse(crosses(leg, side), f"{label}: {b['name']}")
+            test.assertFalse(geom.inside(ring, *leg[0]), f"{label}: {b['name']}")
 
 
 def rough_entries():
@@ -274,7 +280,28 @@ class Options(unittest.TestCase):
         ((level, route),) = rough.routes(r)
         self.assertEqual(len(route), 3)
         f = rough.floors(r)[0]
-        walkable(self, f, route, "west door")
+        walkable(self, f, route, "west door", f["blocks"])
+
+    def test_a_way_in_that_leaves_the_floor_is_refused(self):
+        u_shape = [[0, 0], [40, 0], [40, 40], [30, 40], [30, 10], [10, 10], [10, 40], [0, 40]]
+        r = dict(
+            BAR,
+            outline=u_shape,
+            spines=[[[5, 15], [5, 35]]],
+            cores=[dict(kind="stair", at=[5, 5])],
+            entrances=[dict(at=[40.3, 35], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "leaves the floor"):
+            rough.floors(r)
+
+    def test_a_way_in_through_a_lift_is_refused(self):
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59.4, 10]]],
+            cores=[dict(kind="stair", at=[10, 15]), dict(kind="lift", at=[30, 4])],
+        )
+        with self.assertRaisesRegex(ValueError, "passes a lift"):
+            rough.floors(r)
 
     def test_a_core_outside_an_upper_level_is_refused(self):
         upper = [[0, 0], [60, 0], [60, 12], [0, 12]]
@@ -346,4 +373,10 @@ class Plans(unittest.TestCase):
                     self.assertTrue(geom.inside(f["inside"], *lab["at"]), f"{plan}: {lab}")
             by_level = {f["level"]: f for f in floors}
             for level, route in rough.routes(r):
-                walkable(self, by_level[level], route, f"{plan}: entrance on level {level}")
+                walkable(
+                    self,
+                    by_level[level],
+                    route,
+                    f"{plan}: entrance on level {level}",
+                    floors[0]["blocks"],
+                )

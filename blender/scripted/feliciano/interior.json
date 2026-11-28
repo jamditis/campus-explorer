@@ -378,7 +378,7 @@
     {
      "kind": "lift",
      "at": [
-      -219.0,
+      -214.0,
       200.0
      ],
      "angle": 0.0
@@ -401,7 +401,7 @@
     }
    ],
    "evidence": "outline OSM way/375626230; 6 storeys, 143,000 sq ft (patch.com/new-jersey/verona/msu-dedicates-66-million-school-business-building-essex-county); entrances and the elevator mark from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM footways; level 1 at the west, south and north ground (133.8 to 134.0), level 2 at the east ground (138.7), the roof steps from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) (144 to 148 at the west edge, 155 to 158, main 158 to 165)",
-   "unverified": "levels 3 to 6 (equal storeys to the roof), the corridor and every room wall, the stairs, entrance positions to about 5 m; the atrium, the 150-seat lecture hall and the trading floor are not placed: no public source gives their position"
+   "unverified": "levels 3 to 6 (equal storeys to the roof), the corridor and every room wall, the stairs, entrance positions to about 5 m, the lift (5 m east of the map's mark, beside the hall from the north door); the atrium, the 150-seat lecture hall and the trading floor are not placed: no public source gives their position"
   }
  ]
 }

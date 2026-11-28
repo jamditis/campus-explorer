@@ -245,7 +245,9 @@ def _lobby(entrance, spines, inside):
             )
             for s in (1, -1)
         ]
-        return dict(out, rings=[_rect(on, near, LOBBY / 2)], sides=sides, route=[on, door])
+        return dict(
+            out, rings=[_rect(on, near, LOBBY / 2)], sides=sides, route=[on, door], foot=foot
+        )
     stand = (foot[0] + inward[0] * LOBBY / 2, foot[1] + inward[1] * LOBBY / 2)
     outside = (foot[0] - inward[0] * REACH, foot[1] - inward[1] * REACH)
     rings, sides = [_rect(outside, stand, LOBBY / 2)], []
@@ -272,7 +274,32 @@ def _lobby(entrance, spines, inside):
                     s,
                 )
             )
-    return dict(out, rings=rings, sides=sides, route=[on, stand, door])
+    return dict(out, rings=rings, sides=sides, route=[on, stand, door], foot=foot)
+
+
+def _blocked(lob, inside, cores):
+    """Why the walk in from an entrance (`lob["route"]`) is not clear, or None: it must stay in
+    the floor up to the door's opening and pass no stair or lift."""
+    legs = [
+        leg for leg in zip(lob["route"], lob["route"][1:], strict=False) if math.dist(*leg) > 0.01
+    ]
+    for k, leg in enumerate(legs):
+        part = rooms.clip(leg, inside=inside)
+        if not part or math.dist(part[0][0], leg[0]) > 0.01:
+            return "starts outside the floor"
+        if k < len(legs) - 1 and math.dist(part[0][1], leg[1]) > 0.01:
+            return "leaves the floor: give a corridor nearer to it"
+        if k == len(legs) - 1 and math.dist(part[0][1], lob["foot"]) > ENTRANCE / 2:
+            return "leaves the floor before its door: give a corridor nearer to it"
+        for c in cores:
+            free = rooms.clip(leg, keep_out=[c["ring"]])
+            if (
+                len(free) != 1
+                or math.dist(free[0][0], leg[0]) > 0.01
+                or math.dist(free[0][1], leg[1]) > 0.01
+            ):
+                return f"passes a {c['kind']}: move it or the corridor"
+    return None
 
 
 def _spines(r, building):
@@ -399,6 +426,10 @@ def floors(r):
     entrances = r.get("entrances", [])
     lobbies = [dict(_lobby(e, spines, rings[e["level"]][1]), level=e["level"]) for e in entrances]
     cores = _cores(r, ends, spines, lobbies)
+    for e, lob in zip(entrances, lobbies, strict=True):
+        why = _blocked(lob, rings[e["level"]][1], cores)
+        if why:
+            raise ValueError(f"{name}: the way in from the entrance at {e['at']} {why}")
     levels = r["levels"]
     top = r["roof"]
     out = []
