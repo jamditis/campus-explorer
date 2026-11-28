@@ -23,3 +23,8 @@ Main before: ws268c (sha 2f536070…). Backup montclair_state_pre_20261127ws269.
 6. `f269b.py` (run269.sh on ws269a) -> ws269b = MAIN (saved 10:50:31 PM ET, promoted 10:50:40 PM ET): island tree moved onto the LiDAR
    crown, trunk (−350.0, −38.0) on the island axis, 12 m; renamed WS269_tree_Lot33_island_LiDAR2023_h12m_UNVERIFIEDspecies.
    WIPs re-rendered from ws269b (cams269.sh EXTRA updated to the new name).
+7. Codex review (PR #103, AGENTS.md rule 7 — markings are paint): `mkmask269.py` rasterizes the 31 strokes to world-XY mask tiles
+   (data/ws269_mask_tiles.json, 3 tiles, 3 cm/px, anti-aliased; tile PNGs stay on the box, packed into the .blend). `f269c.py` (on ws269b)
+   gives the WS268 paving its own copy of its asphalt material (WS269_CollegeAve_Lot33_asphalt_painted, so other roads keep theirs),
+   mixes the mask into Base Color (paint colour from es_rhd_stall_paint_worn, coverage 0.9) and Roughness (0.6), and deletes the
+   WS269_W72b paint strip object -> ws269c = MAIN (saved 10:56:11 PM ET, promoted 10:57:59 PM ET). WIPs re-rendered from ws269c.

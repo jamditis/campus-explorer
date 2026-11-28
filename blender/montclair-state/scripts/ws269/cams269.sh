@@ -1,2 +1,2 @@
-export EXTRA="WS268_W72_CollegeAve_Lot33_paving_UNVERIFIED WS269_W72b_CollegeAve_Lot33_paint_ortho2020_UNVERIFIED WS269_W72b_Lot33_tree_island_curb_ortho2020_UNVERIFIED WS269_W72b_Lot33_tree_island_mulch_UNVERIFIED WS269_tree_Lot33_island_LiDAR2023_h12m_UNVERIFIEDspecies"
+export EXTRA="WS268_W72_CollegeAve_Lot33_paving_UNVERIFIED WS269_W72b_Lot33_tree_island_curb_ortho2020_UNVERIFIED WS269_W72b_Lot33_tree_island_mulch_UNVERIFIED WS269_tree_Lot33_island_LiDAR2023_h12m_UNVERIFIEDspecies"
 export CAM1="-392.0,-78.0,138.0,-350.0,-36.0,120.0,32" CAM2="-378.0,-31.0,120.3,-340.0,-39.0,120.6,30" CAM3="-325.0,-50.0,123.5,-360.0,-28.0,121.5,30" CAM4="-352.0,-31.0,121.8,-347.0,-38.5,120.2,30"
