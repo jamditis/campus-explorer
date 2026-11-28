@@ -1,0 +1,12 @@
+{
+  "name": "campus-explorer-web-export",
+  "private": true,
+  "description": "Node tools of the web export and the site build (site.sh): the same versions as the export box",
+  "dependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0",
+    "sharp": "0.35.5"
+  }
+}
