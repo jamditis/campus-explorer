@@ -20,5 +20,7 @@ export const shadowReach = half => half * (1 + SHADOW_SLACK);
  */
 export function shadowMoves(focus, last, half, lastHalf, dirty) {
   if (!last || half !== lastHalf || dirty || focus.y !== last.y) return true;
-  return Math.max(Math.abs(focus.x - last.x), Math.abs(focus.z - last.z)) > half * SHADOW_SLACK;
+  // the drift's length, not each axis: the shadow camera is turned toward the sun, and a drift moves its centre
+  // along either of its axes by no more than its length
+  return Math.hypot(focus.x - last.x, focus.z - last.z) > half * SHADOW_SLACK;
 }

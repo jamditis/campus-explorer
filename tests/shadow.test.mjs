@@ -12,7 +12,8 @@ test('the shadow area is 0.9 x the view distance, 45 to 700 m, in steps of 1.25'
 
 test('the box stays while the focus drifts inside the slack, and moves past it', () => {
   const last = { x: 0, y: 100, z: 0 }, half = 48, slack = half * SHADOW_SLACK; // 3 m
-  assert.equal(shadowMoves({ x: 2.9, y: 100, z: -2.9 }, last, half, half, false), false);
+  assert.equal(shadowMoves({ x: 2.9, y: 100, z: 0 }, last, half, half, false), false);
+  assert.equal(shadowMoves({ x: 2.2, y: 100, z: -2.2 }, last, half, half, false), true); // 3.1 m on the diagonal
   assert.equal(shadowMoves({ x: 3.1, y: 100, z: 0 }, last, half, half, false), true);
   assert.equal(shadowMoves({ x: 0, y: 100, z: -slack - 0.01 }, last, half, half, false), true);
 });
