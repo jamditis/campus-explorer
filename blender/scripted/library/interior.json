@@ -1,0 +1,565 @@
+{
+ "zone": "library_interior",
+ "notes": "Sprague Library (main model, Void's .blend): a rough interior overlay of the main and second levels from the university's public floor maps. Open floors (stacks and reading areas), with the stair and lift cores, restrooms and main desks where the maps put them. Nothing of the main model's shell is cut: the overlay stands inside it.",
+ "rough": [
+  {
+   "name": "LIBR",
+   "building": "Sprague Library",
+   "osm": "way/313021863",
+   "osm_building": "yes",
+   "shell": "main",
+   "method": "overlay",
+   "outline": [
+    [
+     -100.83,
+     77.28
+    ],
+    [
+     -111.79,
+     30.89
+    ],
+    [
+     -91.23,
+     26.06
+    ],
+    [
+     -96.98,
+     1.72
+    ],
+    [
+     -103.8,
+     3.32
+    ],
+    [
+     -105.75,
+     -4.9
+    ],
+    [
+     -99.17,
+     -6.44
+    ],
+    [
+     -100.08,
+     -10.29
+    ],
+    [
+     -77.55,
+     -15.58
+    ],
+    [
+     -76.69,
+     -11.92
+    ],
+    [
+     -58.83,
+     -16.11
+    ],
+    [
+     -47.72,
+     30.91
+    ],
+    [
+     -50.96,
+     31.68
+    ],
+    [
+     -50.18,
+     35.09
+    ],
+    [
+     -42.64,
+     68.46
+    ],
+    [
+     -49.93,
+     70.91
+    ],
+    [
+     -51.17,
+     65.64
+    ]
+   ],
+   "wall": 0.6,
+   "slab": 0.8,
+   "open": true,
+   "levels": [
+    {
+     "level": 1,
+     "floor": 137.9
+    },
+    {
+     "level": 2,
+     "floor": 142.1,
+     "outline": [
+      [
+       -100.03,
+       77.46
+      ],
+      [
+       -48.53,
+       65.02
+      ],
+      [
+       -51.13,
+       55.12
+      ],
+      [
+       -54.58,
+       55.95
+      ],
+      [
+       -60.3,
+       34.2
+      ],
+      [
+       -45.89,
+       30.72
+      ],
+      [
+       -58.83,
+       -16.11
+      ],
+      [
+       -76.69,
+       -11.92
+      ],
+      [
+       -77.55,
+       -15.58
+      ],
+      [
+       -100.08,
+       -10.29
+      ],
+      [
+       -99.17,
+       -6.44
+      ],
+      [
+       -105.75,
+       -4.9
+      ],
+      [
+       -103.8,
+       3.32
+      ],
+      [
+       -96.98,
+       1.72
+      ],
+      [
+       -90.52,
+       25.44
+      ],
+      [
+       -112.32,
+       30.7
+      ]
+     ]
+    }
+   ],
+   "roof": 145.4,
+   "entrances": [
+    {
+     "at": [
+      -51.5,
+      35.29
+     ],
+     "level": 1,
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28) ('ENTRANCE', east side beside Cafe Diem); campus accessibility map 2026-08-26 (automatic door)"
+    }
+   ],
+   "cores": [
+    {
+     "kind": "stair",
+     "at": [
+      -74.4,
+      67.8
+     ],
+     "size": [
+      3.4,
+      4.2
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "stair",
+     "at": [
+      -106.84,
+      41.59
+     ],
+     "size": [
+      3.4,
+      4.2
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "stair",
+     "at": [
+      -72.12,
+      26.13
+     ],
+     "size": [
+      3.0,
+      4.6
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "stair",
+     "at": [
+      -101.5,
+      -1.6
+     ],
+     "size": [
+      3.6,
+      6.0
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "stair",
+     "at": [
+      -52.79,
+      27.89
+     ],
+     "size": [
+      2.6,
+      3.4
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "lift",
+     "at": [
+      -87.41,
+      31.75
+     ],
+     "size": [
+      2.4,
+      2.4
+     ],
+     "angle": -13.2
+    },
+    {
+     "kind": "lift",
+     "at": [
+      -74.77,
+      17.52
+     ],
+     "size": [
+      2.4,
+      2.4
+     ],
+     "angle": -13.2
+    }
+   ],
+   "toilets": [
+    {
+     "level": 1,
+     "ring": [
+      [
+       -90.3,
+       24.74
+      ],
+      [
+       -82.3,
+       22.81
+      ],
+      [
+       -84.36,
+       14.96
+      ],
+      [
+       -92.37,
+       16.89
+      ]
+     ],
+     "door": [
+      -83.57,
+      17.98
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "ring": [
+      [
+       -65.67,
+       59.65
+      ],
+      [
+       -60.98,
+       58.52
+      ],
+      [
+       -61.62,
+       56.11
+      ],
+      [
+       -66.3,
+       57.24
+      ]
+     ],
+     "door": [
+      -63.96,
+      56.67
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "ring": [
+      [
+       -62.72,
+       53.93
+      ],
+      [
+       -59.64,
+       53.19
+      ],
+      [
+       -60.46,
+       50.04
+      ],
+      [
+       -63.54,
+       50.79
+      ]
+     ],
+     "door": [
+      -63.13,
+      52.36
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "ring": [
+      [
+       -85.71,
+       32.24
+      ],
+      [
+       -82.51,
+       31.47
+      ],
+      [
+       -83.21,
+       28.81
+      ],
+      [
+       -86.41,
+       29.58
+      ]
+     ],
+     "door": [
+      -84.81,
+      29.2
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "ring": [
+      [
+       -101.36,
+       36.02
+      ],
+      [
+       -95.82,
+       34.68
+      ],
+      [
+       -97.72,
+       27.43
+      ],
+      [
+       -103.27,
+       28.77
+      ]
+     ],
+     "door": [
+      -98.65,
+      35.37
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "ring": [
+      [
+       -90.68,
+       28.3
+      ],
+      [
+       -86.0,
+       27.17
+      ],
+      [
+       -86.63,
+       24.76
+      ],
+      [
+       -91.31,
+       25.89
+      ]
+     ],
+     "door": [
+      -88.34,
+      27.74
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "ring": [
+      [
+       -90.49,
+       25.04
+      ],
+      [
+       -82.11,
+       23.02
+      ],
+      [
+       -84.24,
+       14.93
+      ],
+      [
+       -92.61,
+       16.95
+      ]
+     ],
+     "door": [
+      -83.44,
+      17.95
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    }
+   ],
+   "rooms": [
+    {
+     "level": 1,
+     "number": "Front desk",
+     "at": [
+      -61.63,
+      29.13
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Access Services 127",
+     "at": [
+      -53.9,
+      23.66
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Cafe Diem",
+     "at": [
+      -53.53,
+      52.48
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Classroom 110",
+     "at": [
+      -61.32,
+      62.72
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Printing and laptop lending 132",
+     "at": [
+      -63.46,
+      15.69
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Public computers",
+     "at": [
+      -75.37,
+      53.64
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Commuter study",
+     "at": [
+      -82.89,
+      5.61
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 1,
+     "number": "Reading room",
+     "at": [
+      -87.46,
+      -8.32
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "number": "Classroom 203",
+     "at": [
+      -62.19,
+      58.43
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "number": "Dean's office 210",
+     "at": [
+      -107.0,
+      33.53
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "number": "Special Collections 218",
+     "at": [
+      -79.95,
+      26.74
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "number": "Archives reading room 219",
+     "at": [
+      -63.59,
+      23.17
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    },
+    {
+     "level": 2,
+     "number": "Quiet study",
+     "at": [
+      -87.88,
+      -9.89
+     ],
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+    }
+   ],
+   "evidence": "outline OSM way/313021863; plan positions from the university's main- and second-level library maps registered to the OSM outline by an affine fit on 6 corners (rms 0.55 m, worst 0.82 m; the second-level map is drawn 10 px higher, checked on 7 cores); level 1 at the east entrance's LiDAR ground (NJ 2017/2023 EPT, 137.86); roof deck from the LiDAR surface (146.0)",
+   "unverified": "level 2 height, slab and ceiling depth, the shell's inner face (0.6 m inside the OSM line), core and toilet sizes and door sides; the lower level is not built (its map has its own outline, not registered yet)"
+  }
+ ]
+}

@@ -10,6 +10,7 @@ from pathlib import Path
 
 import geom
 import marks
+import rough
 
 # water lies over soft ground (a pond in a gravel yard) and under paving (a walk across it wins)
 LAYER = {
@@ -131,8 +132,10 @@ def load(plan_dir):
             out["lifts"].append(dict(lift, zone=zone, ring=geom.expand(lift["ring"], True)))
         for q in plan.get("points", []):
             check_point(q)
-        for key in ("points", "stands", "fences", "buildings", "interiors"):
+        for key in ("points", "stands", "fences", "buildings"):
             out[key].extend(dict(p, zone=zone) for p in plan.get(key, []))
+        # floors from plans and rough floors from footprints and levels (rough.py)
+        out["interiors"].extend(dict(p, zone=zone) for p in rough.expand(plan))
         if plan.get("adopt"):
             out["adopt"].append(dict(plan["adopt"], zone=zone))
         out["volumes"].extend((plan.get("supersede") or {}).get("volumes", []))

@@ -1,6 +1,7 @@
 """Build viewer/rooms.json: room numbers and the volumes of the buildings that have a real interior.
 
-Reads every scripted interior plan (blender/scripted/<area>/interior.json) through the plan's own
+Reads every scripted interior plan (blender/scripted/<area>/interior.json, its rough entries made
+into floors by blender/scripted/rough.py) through the plan's own
 label rule (blender/scripted/rooms.py `labels`), so no Blender is needed. Each area with an
 interior gives one volume: the floor outline, from the lowest floor up to the top of the shell
 building that holds it (the highest ceiling when there is none), with the floor levels and the
@@ -25,6 +26,7 @@ SCRIPTED = ROOT / "blender" / "scripted"
 sys.path.insert(0, str(SCRIPTED))
 
 import rooms  # noqa: E402
+import rough  # noqa: E402
 
 # The university's own short names (Joe's usage and the building's signs), for search
 SHORT = {"College of Communication and Media": "CCOM"}
@@ -100,7 +102,7 @@ def build(scripted=SCRIPTED, places_file=ROOT / "viewer" / "places.json"):
         rooms=[],
     )
     for plan in sorted(Path(scripted).glob("*/interior.json")):
-        floors = json.loads(plan.read_text()).get("interiors", [])
+        floors = rough.expand(json.loads(plan.read_text()))
         if not floors:
             continue
         buildings = []
