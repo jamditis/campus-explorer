@@ -1,16 +1,12 @@
 // Walking directions in walk mode: pick a building or place, get a route along the campus paths to its
 // entrance (viewer/paths.json, A* in route-math.js). Starts from the walker: the GPS position when
-// follow me is on, else wherever they stand in the model.
-import * as THREE from 'three';
+// follow me is on, else wherever they stand in the model. viewer/nav.js draws the route and guides.
 import { searchPlaces } from './places.js';
 import { parsePaths, route as findRoute, walkMinutes } from './route-math.js';
 
-const DRAPE_M = 3;    // the route line gets a point at least this often, so it follows the ground
-const LIFT = 0.12;    // metres above the ground, clear of the paving
-
 /** Builds the destination picker. Returns { go(place), clear(), get current }. Emits `route` with { route, place, stepFree } or null. */
 export function createRoute(app) {
-  const { scene, world, player } = app;
+  const { player } = app;
   const box = document.querySelector('.follow') ?? document.getElementById('overlay');
   const open = document.createElement('button');
   open.type = 'button'; open.className = 'follow-btn route-open'; open.setAttribute('aria-expanded', 'false');
@@ -24,7 +20,7 @@ export function createRoute(app) {
   box.append(open, pick, card);
   const input = pick.querySelector('.route-search'), list = pick.querySelector('.route-results'), free = pick.querySelector('.route-stepfree');
 
-  let graph = null, loading = null, current = null, line = null, ask = 0;
+  let graph = null, loading = null, current = null, ask = 0;
   // a failed fetch is not kept, so the next try fetches again
   const loadGraph = () => loading ??= fetch('./viewer/paths.json').then(r => r.json()).then(j => (graph = parsePaths(j)))
     .catch(() => { loading = null; return (graph = null); });
@@ -45,33 +41,6 @@ export function createRoute(app) {
     }));
   };
   input.onkeydown = e => { if (e.key === 'Enter') list.querySelector('button')?.click(); if (e.key === 'Escape') showPick(false); };
-
-  function drape(points) {
-    const out = [];
-    let y = player.position.y;
-    for (let k = 0; k < points.length; k++) {
-      const [x1, z1] = points[k];
-      const [x0, z0] = k ? points[k - 1] : points[k];
-      const n = k ? Math.max(1, Math.ceil(Math.hypot(x1 - x0, z1 - z0) / DRAPE_M)) : 1;
-      for (let i = k ? 1 : 0; i <= n; i++) {
-        const t = k ? i / n : 1, x = x0 + (x1 - x0) * t, z = z0 + (z1 - z0) * t;
-        const g = world.groundAt(x, z, y + 8);
-        if (g !== null) y = g;
-        out.push(new THREE.Vector3(x, y + LIFT, z));
-        if (!k) break;
-      }
-    }
-    return out;
-  }
-
-  function draw() {
-    if (line) { scene.remove(line); line.geometry.dispose(); line = null; }
-    if (!current) { app.invalidate(); return; }
-    const geo = new THREE.BufferGeometry().setFromPoints(drape(current.route.points));
-    line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: '#2f80ed', depthTest: false, transparent: true }));
-    line.name = 'route-line'; line.renderOrder = 3; line.frustumCulled = false;
-    scene.add(line); app.invalidate();
-  }
 
   function describe() {
     const { route: r, place, stepFree } = current;
@@ -102,23 +71,21 @@ export function createRoute(app) {
     const from = player.guide ?? player.position;
     const r = findRoute(graph, { x: from.x, z: from.z }, place, { stepFree });
     if (!r) {
-      current = null; draw();
+      current = null;
       const none = stepFree ? `No step-free route to ${place.name} on the path map.` : `No route to ${place.name}: you are away from the campus paths.`;
       card.hidden = false; card.replaceChildren(text(none), clearButton());
       app.emit('route', null); return null;
     }
     current = { route: r, place, stepFree };
-    draw(); describe(); card.hidden = false;
+    describe(); card.hidden = false;
     app.emit('route', current);
     return r;
   }
 
   function clear() {
-    ask++; current = null; draw(); card.hidden = true; card.replaceChildren(); app.emit('route', null);
+    ask++; current = null; card.hidden = true; card.replaceChildren(); app.emit('route', null);
   }
 
-  // heights fill in as tiles arrive
-  app.on('tile', () => { if (current) draw(); });
   app.on('mode', ({ mode }) => { if (mode !== 'walk') { showPick(false); clear(); } });
 
   return { go, clear, get current() { return current; }, get graph() { return graph; }, loadGraph };
