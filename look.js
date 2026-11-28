@@ -149,8 +149,10 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   // from it: three 1-pixel renders of the environment sky and a read back, only when the sky is baked again.
   // Drawn straight to the screen, three mixes fog after tone mapping and sRGB encoding, so the colours are
   // tone mapped and encoded as the screen shows the sky; on High the scene goes to a linear target and the
-  // output pass maps it afterwards, so there they stay linear (applyHaze). The probe is half float, as three's
-  // PMREMGenerator targets are (the environment light already needs a GPU that can render to half float).
+  // output pass maps it afterwards, so there they stay linear (applyHaze). The probe is half float: an 8-bit
+  // target would clip the sky at 1. A GPU that cannot render to half float keeps the fixed horizon colours the
+  // viewer used before the probe, with no tint toward the sun (fixedHorizon), instead of black haze.
+  const floatProbe = renderer.extensions.has('EXT_color_buffer_float') || renderer.extensions.has('EXT_color_buffer_half_float');
   const probe = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType });
   const probeCam = new THREE.PerspectiveCamera(1, 1, 0.1, 2000), probePx = new Uint16Array(4);
   const half = THREE.DataUtils.fromHalfFloat, LIFT = Math.tan(THREE.MathUtils.degToRad(1));
@@ -161,7 +163,16 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     return [half(probePx[0]), half(probePx[1]), half(probePx[2])];
   }
   let hazeShown = null, hazeLinear = null; // hazeColours() for the screen and for the linear target
+  const FIXED = [new THREE.Color('#0b101c'), new THREE.Color('#c6d4e1'), new THREE.Color('#dcb9a0')]; // night, day, dusk
+  function fixedHorizon() {
+    const day = smooth(-5, 8, elevation), low = 1 - smooth(2, 25, elevation), shown = {};
+    const c = FIXED[0].clone().lerp(FIXED[1], day).lerp(FIXED[2], low * day * 0.6);
+    c.getRGB(shown, THREE.SRGBColorSpace);
+    hazeLinear = { away: [c.r, c.g, c.b], tint: [0, 0, 0], power: 4 };
+    hazeShown = { away: [shown.r, shown.g, shown.b], tint: [0, 0, 0], power: 4 };
+  }
   function sampleHorizon() {
+    if (!floatProbe) { fixedHorizon(); applyHaze(); return; }
     const was = renderer.getRenderTarget();
     let sx = sunDir.x, sz = sunDir.z; const l = Math.hypot(sx, sz);
     if (l > 1e-6) { sx /= l; sz /= l; } else { sx = 0; sz = -1; }
