@@ -118,6 +118,105 @@
     "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign",
     "positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign; studio wall thickness as drawn (0.35 to 0.5 m)"
    ]
+  },
+  {
+   "id": "library",
+   "building": "Sprague Library",
+   "short": "",
+   "ring": [
+    [
+     -100.56,
+     -76.69
+    ],
+    [
+     -111.25,
+     -31.46
+    ],
+    [
+     -90.69,
+     -26.64
+    ],
+    [
+     -96.6,
+     -1.63
+    ],
+    [
+     -103.41,
+     -3.23
+    ],
+    [
+     -105.36,
+     4.99
+    ],
+    [
+     -99.17,
+     6.44
+    ],
+    [
+     -100.08,
+     10.29
+    ],
+    [
+     -77.55,
+     15.58
+    ],
+    [
+     -76.54,
+     11.27
+    ],
+    [
+     -59.45,
+     15.28
+    ],
+    [
+     -48.49,
+     -31.09
+    ],
+    [
+     -51.74,
+     -31.86
+    ],
+    [
+     -50.96,
+     -35.27
+    ],
+    [
+     -50.7,
+     -36.44
+    ],
+    [
+     -56.84,
+     -37.83
+    ],
+    [
+     -49.52,
+     -70.21
+    ],
+    [
+     -50.05,
+     -70.39
+    ],
+    [
+     -51.29,
+     -65.14
+    ]
+   ],
+   "y0": 137.9,
+   "y1": 145.4,
+   "ceiling": 145.4,
+   "levels": [
+    {
+     "floor": 1,
+     "y": 137.9
+    },
+    {
+     "floor": 2,
+     "y": 142.1
+    }
+   ],
+   "unverified": [
+    "level 2 height, slab and ceiling depth, core and toilet sizes and door sides; the lower level is not built (its map has its own outline, not registered yet)"
+   ]
   }
  ],
  "rooms": [
