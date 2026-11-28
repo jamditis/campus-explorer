@@ -80,6 +80,123 @@ def roof(ring, kind, top, eave=None, ridge_angle=None):
     return tops, slopes + [q], []
 
 
+OVERHANG_CORNERS = (60.0, 120.0)  # degrees: the convex corners an overhang's corner fill is for
+
+
+def _plane(face):
+    """z(x, y) of the plane of a roof face (Newell normal; a roof face is never vertical)."""
+    nx = ny = nz = 0.0
+    for i, (x0, y0, z0) in enumerate(face):
+        x1, y1, z1 = face[(i + 1) % len(face)]
+        nx += (y0 - y1) * (z0 + z1)
+        ny += (z0 - z1) * (x0 + x1)
+        nz += (x0 - x1) * (y0 + y1)
+    cx, cy, cz = (sum(q[k] for q in face) / len(face) for k in range(3))
+    return (lambda x, y: cz - (nx * (x - cx) + ny * (y - cy)) / nz), (nx, ny, nz)
+
+
+def _up(poly):
+    """A face wound anticlockwise seen from above (facing up)."""
+    return poly if geom.area([q[:2] for q in poly]) > 0 else poly[::-1]
+
+
+def overhang_roof(ring, faces, overhang):
+    """The faces that carry a pitched roof `overhang` metres past its walls (wide eaves and
+    rakes), each in the plane of the roof face it continues, so every face keeps its own pitch:
+    a strip outside every face edge that lies on the wall line, and at each corner of the
+    outline the gap between two strips, split where the two faces' planes meet (faces of
+    different pitch join without a step). Faces off the wall line (a mansard's flat top, the
+    edges of a roof well) get nothing. `ring` anticlockwise; returns the new faces, facing up."""
+    n, out = len(ring), []
+    norm = []
+    for i in range(n):
+        (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
+        ln = math.hypot(bx - ax, by - ay)
+        norm.append(((by - ay) / ln, -(bx - ax) / ln))  # outward: right of an anticlockwise run
+    for c in range(n):  # the corner fill is made for square-ish corners: refuse the others
+        a, b = norm[(c - 1) % n], norm[c]
+        if a[0] * b[1] - a[1] * b[0] > 0:  # convex
+            inside = 180.0 - math.degrees(math.acos(max(-1.0, min(1.0, a[0] * b[0] + a[1] * b[1]))))
+            if not OVERHANG_CORNERS[0] <= inside <= OVERHANG_CORNERS[1]:
+                raise ValueError(
+                    f"an overhang needs convex corners of {OVERHANG_CORNERS[0]:.0f} to "
+                    f"{OVERHANG_CORNERS[1]:.0f} degrees; the corner at {tuple(ring[c])} is "
+                    f"{inside:.0f}"
+                )
+
+    def miter(c):  # the corner of the outline moved out, at ring corner c
+        a, b = norm[(c - 1) % n], norm[c]
+        k = overhang / (1 + a[0] * b[0] + a[1] * b[1])
+        return (ring[c][0] + (a[0] + b[0]) * k, ring[c][1] + (a[1] + b[1]) * k)
+
+    def reflex(c):
+        a, b = norm[(c - 1) % n], norm[c]
+        return a[0] * b[1] - a[1] * b[0] <= 0
+
+    def moved(p, i):  # a strip's outer point: out square to its edge, or at a reflex corner's
+        for c in (i, (i + 1) % n):  # miter, so the two strips meet on its bisector
+            if reflex(c) and math.dist(p[:2], ring[c]) < 1e-6:
+                return miter(c)
+        return (p[0] + norm[i][0] * overhang, p[1] + norm[i][1] * overhang)
+
+    def on_edge(p, i):
+        (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
+        return _seg_dist(p[:2], (ax, ay), (bx, by)) < 1e-6
+
+    owner = {}  # (ring edge, ring corner at its start or end) -> plane of the face over it
+    for face in faces:
+        z, _nrm = _plane(face)
+        for k in range(len(face)):
+            p, q = face[k], face[(k + 1) % len(face)]
+            for i in range(n):
+                if on_edge(p, i) and on_edge(q, i) and math.dist(p[:2], q[:2]) > 1e-6:
+                    p2, q2 = moved(p, i), moved(q, i)
+                    out.append(_up([p, q, (*q2, z(*q2)), (*p2, z(*p2))]))
+                    for c, end in ((i, p), ((i + 1) % n, q)):
+                        if math.dist(end[:2], ring[c]) < 1e-6:
+                            owner[(i, c)] = (z, _nrm)
+    for c in range(n):  # the corner between edge c - 1 (ending at c) and edge c (starting at c)
+        a, b = (c - 1) % n, c
+        if (a, c) not in owner or (b, c) not in owner:
+            continue
+        if reflex(c):
+            continue  # the two strips meet on the corner's bisector: no gap to fill
+        (za, na), (zb, nb) = owner[(a, c)], owner[(b, c)]
+        cx, cy = ring[c]
+        ea = (cx + norm[a][0] * overhang, cy + norm[a][1] * overhang)
+        eb = (cx + norm[b][0] * overhang, cy + norm[b][1] * overhang)
+        m = miter(c)
+        corner = (cx, cy, za(cx, cy))
+        # where the planes meet, in plan: the line through the corner along the cross product
+        dx = na[1] * nb[2] - na[2] * nb[1]
+        dy = na[2] * nb[0] - na[0] * nb[2]
+        split = m
+        if math.hypot(dx, dy) > 1e-9:
+            if dx * (m[0] - cx) + dy * (m[1] - cy) < 0:
+                dx, dy = -dx, -dy
+            best = None
+            for e, nrm in ((ea, norm[a]), (eb, norm[b])):  # the strip's outer line it reaches
+                den = dx * nrm[0] + dy * nrm[1]
+                if den > 1e-12:
+                    t = overhang / den
+                    if best is None or t < best[0]:
+                        best = (t, e)
+            if best:
+                split = (cx + dx * best[0], cy + dy * best[0])
+        def on_line(q, e, nrm):  # on the strip's outer line through e
+            return abs((q[0] - e[0]) * nrm[0] + (q[1] - e[1]) * nrm[1]) < 1e-6
+
+        if math.dist(split, m) < 1e-9:
+            pa, pb = [ea, m], [m, eb]
+        elif on_line(split, ea, norm[a]):  # the meeting line leaves through edge a's side
+            pa, pb = [ea, split], [split, m, eb]
+        else:
+            pa, pb = [ea, m, split], [split, eb]
+        out.append(_up([corner, *[(*q, za(*q)) for q in pa]]))
+        out.append(_up([(cx, cy, zb(cx, cy)), *[(*q, zb(*q)) for q in pb]]))
+    return out
+
+
 def mansard(ring, rise):
     """The outline moved in by `rise` (a 45 degree slope), or by less where the part is too narrow
     for that: halved until the inner outline keeps its sense and a tenth of the area.
