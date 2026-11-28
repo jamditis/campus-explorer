@@ -52,7 +52,7 @@ export function createSky(app) {
   const stars = new THREE.Points(new THREE.BufferGeometry(), starMat);
   stars.name = 'stars'; stars.frustumCulled = false; stars.visible = false; stars.renderOrder = -1; stars.matrixAutoUpdate = false;
   group.add(stars);
-  let starCount = 0, starsWanted = false;
+  let starCount = 0, starsWanted = false, starsLoading = false;
   async function loadStars() {
     try {
       const doc = await (await fetch('./viewer/stars.json')).json();
@@ -68,7 +68,7 @@ export function createSky(app) {
       g.setAttribute('tint', new THREE.BufferAttribute(tint, 3));
       g.setAttribute('bright', new THREE.BufferAttribute(bright, 1));
       starCount = n; place(); app.invalidate();
-    } catch (e) { console.warn('stars did not load', e); }
+    } catch (e) { console.warn('stars did not load', e); } finally { starsLoading = false; } // a later time change tries again
   }
 
   // ---- moon: a camera-facing disc lit from the sun's direction, so its phase and the side it is lit from are right ----
@@ -131,7 +131,7 @@ export function createSky(app) {
     // stars
     const k = starsShown(el);
     starsWanted ||= k > 0;
-    if (starsWanted && !starCount && !loadStars.started) { loadStars.started = true; loadStars(); }
+    if (starsWanted && !starCount && !starsLoading) { starsLoading = true; loadStars(); }
     const m = equatorialToHorizon(date, CAMPUS.lat, CAMPUS.lon);
     turn.set(m[0], m[1], m[2], 0, m[3], m[4], m[5], 0, m[6], m[7], m[8], 0, 0, 0, 0, 1).premultiply(toViewer);
     stars.matrix.copy(turn); stars.matrixWorldNeedsUpdate = true;
