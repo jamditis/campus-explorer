@@ -1,6 +1,6 @@
 {
  "zone": "ccom_shell",
- "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). REVISED 2026-11-20 (lead): the main model's walls, window units (without their fake-room boxes), eave course, soffit and downspouts are adopted on the west, south and north faces (adopt.json); this part builds walls only on the east band (east of model x 17.9, where the main model had lowered them a storey), with recessed windows of the main model's type (reveal, sill, frame with mullion and transom) on the three floor levels (UNVERIFIED rows until Joe's east photo), a tile eave course flush on the east walls (no overhang there, Joe 2026-10-14), and the ring roof for the whole building (0.86 m overhang on the other free walls, ridge and hip caps). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom.",
+ "notes": "Shell of the College of Communication and Media (CCOM), replacing the main model's walls, roof, eaves and windows (the export takes those out of the main tiles: footprint.json). Outline: OSM way 1188721159, which the main model's walls follow exactly, with the porch and without the tower (the tower is adopted from the main model). Heights from the 2017 3DEP LiDAR raw points: eave 147.5..148.0 at the wall line all round, including the east band that the main model had lowered to one storey at 143.1 (sessions 20261014y/z); tiled ring rising to a crest of 150.3..151.1, 6 m in on the south, 7 m on the east and west and 10.5 m on the north-east wall (whose slope runs on to the east crest), a narrow crest band (0.5..0.8 m), then the flat roof at 147.5..147.6; no ring along the walls shared with Life Hall (the flat roof runs up to them) nor along the porch and the tower. The ground falls from 137.2 on the west to 134.6 on the east: a walk-out basement on the east. Colours: wall and trim from the main model's materials (Wall_SCM_precast, Mullion_mahogany), roof tile from the 2020 ortho. Window grid from the main model's shader grid (win_pitch 3.4, win_w and win_h 2.6, sill 0.9), set on the floor levels 134.85 (east basement, from the main model's east rooms), 137.40 and 141.85: UNVERIFIED (no photo of the east or south facade). Openings: the porch's west face holds the adopted arched entrance window wall; the newsroom's west wall and its south wall at the notch are the adopted newsroom bay and south walls (mw, mx); the tower's east face is the adopted tower; two loading dock doors on the south wall are adopted (jf3). REVISED 2026-11-20 (lead): the main model's walls, window units (without their fake-room boxes), eave course, soffit and downspouts are adopted on the west, south and north faces (adopt.json); this part builds walls only on the east band (east of model x 17.9, where the main model had lowered them a storey), with recessed windows of the main model's type (reveal, sill, frame with mullion and transom) on the three floor levels (UNVERIFIED rows until Joe's east photo), a tile eave course flush on the east walls (no overhang there, Joe 2026-10-14), and the ring roof for the whole building (0.86 m overhang on the other free walls, ridge and hip caps). Edges, in ring order: 0 notch wall (b -18) against the Morehead connector; 1 notch wall (a -7.7); 2 south wall; 3 east step south; 4 east step; 5 east wall; 6 north-east step; 7 north-east wall; 8 north edge of the east part (Life Hall); 9 north wing east wall (Life Hall); 10 north end (Life Hall); 11 north end step (Life Hall); 12 north end (Life Hall); 13 north end, west part; 14 north wing west wall; 15 tower's east face (the adopted tower); 16 porch north; 17 porch west: the entrance window wall; 18 porch south; 19 west wall of the newsroom. REVISED 2026-11-28 (east and south faces, Joe: 'disjointed'): the east band's windows took floor levels 134.85, 137.40 and 141.85 with a 0.9 m sill, so its rows stood 0.8 and 1.05 m above the adopted south windows (glass 137.5..140.1 and 141.7..144.3, read off the published tiles) and its basement row ran into the floor 1 row as one 5.2 m window with the slab across it; the rows are now given outright (windows.rows): the adopted south rows, and a basement row 135.3..137.0 where the ground allows it (UNVERIFIED). Ring: the crest stood 6.8, 7.0 and 10.5 m in on the three parallel east walls (edges 3, 5, 7) and the crest band ended 7.3, 7.5 and 11 m in, so the bands met with vertical steps; LiDAR profiles square to each wall (middle 60 %, 90th percentile in 0.7 m strips) rise from 147.6..147.9 at the wall to 150.8..151.1 within 5..6 m on edges 2, 3, 5, 7 and 8; edges 0 to 5 now take 6.0 / 6.5 m, the north-east block (edges 6, 7, 8: 10.8 m between edges 6 and 8) 5.0 / 5.3 m, so its two bands do not fold over each other. Edges 8 and 9 had no ring (taken as walls shared with Life Hall), but the LiDAR rises from 148.0 at the wall to 151.0 5.5 m in on edge 8 and to 150.2..150.9 from 2 m in on edge 9, while outside them Life Hall's roofs stand at 144.5..146.2 and 141.3: both take the ring now (7.0 / 7.8 m on edge 9, as on the north wing's west wall), with no overhang, under the adopted barrel tile eave course on the wall top (147.9..148.2; on edge 8 only west of x 17.9, so edge 8 also takes the scripted eave course, which runs under the adopted one for those 5.3 m).",
  "buildings": [
   {
    "name": "CCOM_main",
@@ -100,10 +100,19 @@
     "height": 2.6,
     "spacing": 3.4,
     "sill": 0.9,
-    "levels": [
-     134.85,
-     137.4,
-     141.85
+    "rows": [
+     [
+      135.3,
+      137.0
+     ],
+     [
+      137.5,
+      140.1
+     ],
+     [
+      141.7,
+      144.3
+     ]
     ],
     "reveal": 0.3,
     "glass_back": 0.12,
@@ -330,13 +339,13 @@
      6.0,
      6.0,
      6.0,
-     6.8,
      6.0,
+     6.0,
+     6.0,
+     5.0,
+     5.0,
+     5.0,
      7.0,
-     6.0,
-     10.5,
-     0,
-     0,
      0,
      0,
      0,
@@ -352,13 +361,13 @@
      6.5,
      6.5,
      6.5,
-     7.3,
      6.5,
-     7.5,
      6.5,
-     11.0,
-     0,
-     0,
+     6.5,
+     5.3,
+     5.3,
+     5.3,
+     7.8,
      0,
      0,
      0,
@@ -399,11 +408,10 @@
      4,
      5,
      6,
-     7
+     7,
+     8
     ],
     "flat_edges": [
-     8,
-     9,
      10,
      11,
      12,
@@ -414,7 +422,7 @@
     ]
    },
    "evidence": "osm way 1188721159; lidar2017 raw points; ortho2020; main model materials",
-   "unverified": "window grid and floor levels; crest shape (one plane 147.7 -> 151.1 over 6.8 m where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands"
+   "unverified": "window grid (the east band's rows follow the adopted south windows; its basement row, 135.3..137.0, is a guess); crest shape (one plane from the wall top to a crest 6 m in, 5 m on the north-east block, where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands; edge 12 (north end) keeps no ring although the LiDAR has one there: a ring on it would need a cap in edge 11's plane that cuts through edge 9's ring"
   }
  ]
 }

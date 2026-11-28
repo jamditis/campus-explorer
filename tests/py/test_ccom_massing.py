@@ -2,12 +2,14 @@
 roof with a crest set in from the walls and no slope on listed edges, wall openings, window rows at
 given floor levels."""
 
+import json
 import math
 import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "blender" / "scripted"))
+PLAN = Path(__file__).resolve().parents[2] / "blender" / "scripted"
+sys.path.insert(0, str(PLAN))
 
 import geom  # noqa: E402
 import massing  # noqa: E402
@@ -139,7 +141,8 @@ class WindowCells(unittest.TestCase):
 class WindowLevels(unittest.TestCase):
     def test_rows_stand_on_the_given_floors_and_skip_rows_below_ground(self):
         rows = massing.window_rows(147.7, 137.2, 2.6, 0.9, levels=[134.85, 137.40, 141.85])
-        self.assertEqual(rows, [137.40 + 0.9, 141.85 + 0.9])
+        self.assertEqual([z0 for z0, _ in rows], [137.40 + 0.9, 141.85 + 0.9])
+        self.assertTrue(all(abs(z1 - z0 - 2.6) < 1e-9 for z0, z1 in rows))
         rows = massing.window_rows(147.7, 134.6, 2.6, 0.9, levels=[134.85, 137.40, 141.85])
         self.assertEqual(len(rows), 3)
 
@@ -147,11 +150,29 @@ class WindowLevels(unittest.TestCase):
         h = massing.storey(12.0, 0.0, 3)
         self.assertEqual(
             massing.window_rows(12.0, 0.0, 1.5, 0.9, floors=3, storey_h=h),
-            [12.0 - (f + 1) * h + 0.9 for f in range(3)],
+            [(12.0 - (f + 1) * h + 0.9, 12.0 - (f + 1) * h + 2.4) for f in range(3)],
         )
 
     def test_a_row_whose_head_passes_the_wall_top_is_left_out(self):
-        self.assertEqual(massing.window_rows(10.0, 0.0, 2.6, 0.9, levels=[0.0, 7.0]), [0.9])
+        self.assertEqual(
+            massing.window_rows(10.0, 0.0, 2.6, 0.9, levels=[0.0, 7.0]), [(0.9, 0.9 + 2.6)]
+        )
+
+    def test_explicit_rows_keep_their_own_heights_and_the_same_ground_rule(self):
+        rows = [(135.3, 137.0), (137.5, 140.1), (141.7, 144.3)]
+        self.assertEqual(massing.window_rows(147.8, 134.6, 2.6, 0.9, rows=rows), rows)
+        # a higher ground drops the basement row; rows win over levels
+        got = massing.window_rows(147.8, 136.7, 2.6, 0.9, levels=[134.85], rows=rows)
+        self.assertEqual(got, rows[1:])
+
+    def test_ccom_east_rows_line_up_with_the_adopted_south_windows(self):
+        shell = json.loads((PLAN / "ccom" / "ccom_shell.json").read_text())["buildings"][0]
+        rows = shell["windows"]["rows"]
+        # the adopted window units on the south face: glass 137.5..140.1 and 141.7..144.3
+        self.assertIn([137.5, 140.1], rows)
+        self.assertIn([141.7, 144.3], rows)
+        for (_a0, a1), (b0, _b1) in zip(rows, rows[1:], strict=False):
+            self.assertLess(a1, b0)  # rows never run into each other
 
 
 class PlanRings(unittest.TestCase):
