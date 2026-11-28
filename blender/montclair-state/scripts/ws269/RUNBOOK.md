@@ -17,3 +17,9 @@ Main before: ws268c (sha 2f536070…). Backup montclair_state_pre_20261127ws269.
      (−347.5, −38.4) under the ortho crown (~11 m across).
    No terrain or paving vertices edited.
 4. WIPs: `jobwip269.sh` with `source cams269.sh` (EXTRA lists the paving + the four new objects; they are not in ws205/bbox205.json).
+5. `las269.py` (geo venv with laspy; 2023 J5D6 + J5D5 tiles, x −362…−305, y −60…−25): class-1 canopy W of x −335 peaks at 11.9 m
+   over ground at (−349.5, −36.5), crown x −354…−347, y −34…−44; a second, larger canopy x −324…−305, y −40…−60 (S of the road, E end of
+   the lot; not built — no island visible under it in the ortho).
+6. `f269b.py` (run269.sh on ws269a) -> ws269b = MAIN (saved 10:50:31 PM ET, promoted 10:50:40 PM ET): island tree moved onto the LiDAR
+   crown, trunk (−350.0, −38.0) on the island axis, 12 m; renamed WS269_tree_Lot33_island_LiDAR2023_h12m_UNVERIFIEDspecies.
+   WIPs re-rendered from ws269b (cams269.sh EXTRA updated to the new name).
