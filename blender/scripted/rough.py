@@ -202,17 +202,18 @@ def _cores(r, ends, spines, lobbies):
 
 
 def _lobby(entrance, spines):
-    """Clear zone from an entrance to the middle of the nearest corridor: the corridor wall on the
-    entrance's side stops at it, the far one runs on."""
+    """Clear zone from the middle of the nearest corridor to an entrance and REACH past it: square
+    to the corridor for an entrance beside it, along it for one beyond its end. The corridor wall on
+    the entrance's side stops at it, the far one runs on."""
     i, on, along = _nearest(spines, entrance["at"])
     p, q = spines[i]
     u = _unit(p, q)
-    side = 1 if (u[0] * (entrance["at"][1] - p[1]) - u[1] * (entrance["at"][0] - p[0])) > 0 else -1
-    n = (-u[1] * side, u[0] * side)  # towards the entrance
-    far = on
     door = entrance["at"]
-    reach = abs((door[0] - on[0]) * n[0] + (door[1] - on[1]) * n[1]) + REACH
-    near = (on[0] + n[0] * reach, on[1] + n[1] * reach)
+    side = 1 if (u[0] * (door[1] - p[1]) - u[1] * (door[0] - p[0])) > 0 else -1
+    gap = math.dist(on, door)
+    n = _unit(on, door) if gap > 0.01 else (-u[1] * side, u[0] * side)  # towards the entrance
+    far = on
+    near = (on[0] + n[0] * (gap + REACH), on[1] + n[1] * (gap + REACH))
     return dict(
         spine=i,
         side=side,
@@ -220,6 +221,7 @@ def _lobby(entrance, spines):
         ring=_rect(far, near, LOBBY / 2),
         near=near,
         far=far,
+        across=(n[1] * side, -n[0] * side),  # the corridor's direction for a lobby square to it
     )
 
 
@@ -325,6 +327,10 @@ def floors(r):
             if geom.area(outline) < 0:
                 outline = outline[::-1]
             inside, lining = inset(outline, wall), inset(outline, wall + LINING / 2)
+        # a core runs from the lowest floor to the roof, so it must stand inside every level
+        for c in cores:
+            if not all(geom.inside(inside, x, y) for x, y in c["ring"]):
+                raise ValueError(f"{name}: a {c['kind']} core is outside level {lv['level']}")
         ceiling = levels[k + 1]["floor"] - r.get("slab", SLAB) if k + 1 < len(levels) else top
         here = [lob for lob in lobbies if lob["level"] == lv["level"]]
         toilets = [t for t in r.get("toilets", []) if t["level"] == lv["level"]]
@@ -390,14 +396,13 @@ def floors(r):
         for lob in here:
             if open_floor:
                 break
-            p, q = spines[lob["spine"]]
-            u = _unit(p, q)
+            w = lob["across"]
             for sgn in (1, -1):
                 a = (
-                    lob["near"][0] + u[0] * sgn * LOBBY / 2,
-                    lob["near"][1] + u[1] * sgn * LOBBY / 2,
+                    lob["near"][0] + w[0] * sgn * LOBBY / 2,
+                    lob["near"][1] + w[1] * sgn * LOBBY / 2,
                 )
-                b = (lob["far"][0] + u[0] * sgn * LOBBY / 2, lob["far"][1] + u[1] * sgn * LOBBY / 2)
+                b = (lob["far"][0] + w[0] * sgn * LOBBY / 2, lob["far"][1] + w[1] * sgn * LOBBY / 2)
                 walls += _runs(
                     f"SW_{tag}_lobby_{'a' if sgn > 0 else 'b'}",
                     a,
