@@ -409,7 +409,7 @@ export function createWorld(app, prepare, release = () => {}) {
     ray.set(origin, dir); ray.near = 0;
     _cand.length = 0;
     for (const c of colliders) {
-      if ((builtOnly && !c.mesh.geometry.boundsTree) || (bigOnly && !c.big)) continue;
+      if ((builtOnly && !c.mesh.geometry.boundsTree) || (bigOnly && !c.big) || c.mesh.userData.doorOpen) continue;
       let enter = 0;
       if (!c.box.containsPoint(origin)) {
         if (!ray.ray.intersectBox(c.box, _p)) continue;
@@ -459,7 +459,7 @@ export function createWorld(app, prepare, release = () => {}) {
     _box.makeEmpty().expandByPoint(a).expandByPoint(b).expandByScalar(radius);
     let touched = false;
     for (const c of colliders) {
-      if (!c.box.intersectsBox(_box)) continue;
+      if (!c.box.intersectsBox(_box) || c.mesh.userData.doorOpen) continue; // an open door lets the walker through (doors.js)
       const bvh = ensureBVH(c), mw = c.mesh.matrixWorld;
       _inv.copy(mw).invert();
       const s = mw.getMaxScaleOnAxis(), r = radius / s;
