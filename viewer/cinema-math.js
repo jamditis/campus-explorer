@@ -6,9 +6,9 @@
 const DEG = Math.PI / 180;
 // Midtown Manhattan from the campus: bearing 124 degrees (true; grid north is 0.2 degrees off, not worth it here)
 const EAST = [Math.sin(124 * DEG), 0, -Math.cos(124 * DEG)];
-// A target `d` metres ahead along `dir`, `drop` metres lower per kilometre. Targets stay within 300 m: the lite
-// profile keeps the tiles nearest the orbit target in memory, so a far target would let the foreground go.
-const toward = (p, dir, drop, d = 300) => [p[0] + dir[0] * d, p[1] - drop * d / 1000, p[2] + dir[2] * d];
+// A target `d` metres ahead along `dir`, `drop` metres lower per kilometre. The skyline shots keep theirs 120 m
+// out: the lite profile keeps the nine tiles nearest the orbit target, so a far target lets the foreground go.
+const toward = (p, dir, drop, d = 120) => [p[0] + dir[0] * d, p[1] - drop * d / 1000, p[2] + dir[2] * d];
 
 /** Light for a shot: 'golden' is 35 minutes before sunset, 'night' 100 minutes after, on the date shown. */
 export const LIGHT = { golden: -35, night: 100 };

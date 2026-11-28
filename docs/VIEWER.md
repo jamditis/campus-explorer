@@ -364,10 +364,11 @@ at rest) from one pose to another in orbit mode, so every target sits below its 
 flight limit (`tests/cinema.test.mjs` checks both). At each cut the view fades to black, the tiles under the next
 shot are asked for first (up to 5 s), the light changes and the caption names the place. The letterbox bars (2.39:1),
 the fade and the caption are page elements, so the mode adds nothing to draw; the only cost is the light change at a
-cut (one environment bake). Targets stay within 300 m of the camera: the lite profile keeps the tiles nearest the
-orbit target, so a far target would let the foreground go. With `prefers-reduced-motion` each shot holds its last
+cut (one environment bake). The skyline shots keep their targets 120 m ahead of the camera, and each cut asks for
+the tiles under the camera and the target first: the lite profile keeps the nine tiles nearest the orbit target, so
+a far target would let the foreground go. With `prefers-reduced-motion` each shot holds its last
 pose. Any input on the view, Esc, the Stop button, or a camera move another module asks for stops it and gives back
-the pose, the navigation mode (fly looks from the old camera; walk stands on the floor under the old eye), the light
+the pose, the navigation mode (fly looks from the old camera; walk stands where the walker stood), the light
 and the panel. A mode key (2, 3) during the film stops it too and leaves the view to that mode.
 
 ## Moving to a place

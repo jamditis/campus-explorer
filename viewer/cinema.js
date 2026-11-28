@@ -2,14 +2,12 @@
 // golden-hour and night light from the real sunset of the date shown, and a caption naming the place. The
 // bars, fades and captions are page elements, so the mode costs nothing to draw. Any input on the view, a
 // camera move another module asks for, or Esc stops it and gives the view, the light and the panel back.
-import * as THREE from 'three';
 import { CAMPUS } from './geo.js';
 import { sunTimes } from './sun.js';
 import { SHOTS, poseAt, lightOffset, letterbox } from './cinema-math.js';
 
 const FADE_MS = 700;          // each half of a cut (to black, from black)
 const LOAD_WAIT_MS = 5000;    // longest wait at a cut for the tiles under the next shot
-const EYE = 1.65;             // walk mode's eye height (player.js)
 
 /**
  * @param app the shared app object (see docs/VIEWER.md)
@@ -48,12 +46,13 @@ export function createCinema(app) {
     const my = ++token;
     for (const s of SHOTS) {
       await black(true); if (my !== token) return;
-      if (s.ground) {
-        app.world.prioritize(s.ground[0], s.ground[1]);
-        const until = performance.now() + LOAD_WAIT_MS;
-        while (!app.world.isLoaded(s.ground[0], s.ground[1]) && performance.now() < until) { await sleep(200); if (my !== token) return; }
-        groundY = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
-      }
+      // the tiles under the camera and its target first (the lite profile keeps only those near the target)
+      const p0 = poseAt(s, 0, 0), spots = [[p0.position[0], p0.position[2]], [p0.target[0], p0.target[2]]];
+      if (s.ground) spots.push(s.ground);
+      for (const [x, z] of spots) app.world.prioritize(x, z);
+      const until = performance.now() + LOAD_WAIT_MS;
+      while (!spots.every(([x, z]) => app.world.isLoaded(x, z)) && performance.now() < until) { await sleep(200); if (my !== token) return; }
+      if (s.ground) groundY = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
       const when = lightFor(s); if (when) app.setTime(when);
       caption.textContent = s.caption;
       shot = s; t0 = performance.now(); apply(poseAt(s, 0, groundY, calm)); app.invalidate();
@@ -72,7 +71,11 @@ export function createCinema(app) {
     if (running) return;
     if (!app.state.ready) { app.toast('The campus is still loading'); return; }
     app.cancelFly('cinema');
-    before = { position: camera.position.clone(), quaternion: camera.quaternion.clone(), target: controls.target.clone(), date: app.time.date, preset: app.time.preset, mode: app.state.mode };
+    before = {
+      position: camera.position.clone(), quaternion: camera.quaternion.clone(), target: controls.target.clone(),
+      date: app.time.date, preset: app.time.preset, mode: app.state.mode,
+      walker: app.state.mode === 'walk' ? app.player.position.clone() : null, // the feet, not the eye or a third-person camera
+    };
     const go = () => {
       running = true; root.hidden = false; size();
       document.body.classList.add('cinema'); controls.enabled = false;
@@ -96,7 +99,7 @@ export function createCinema(app) {
       camera.quaternion.copy(b.quaternion); // fly and walk look along the camera, not at the orbit target
       // back to the mode the film started from: fly looks from the camera; walk stands on the floor under the eye
       if (b.mode === 'fly') app.setMode('fly');
-      else if (b.mode === 'walk') app.setMode('walk', { at: new THREE.Vector3(b.position.x, b.position.y - EYE, b.position.z) });
+      else if (b.mode === 'walk') app.setMode('walk', { at: b.walker }); // where the walker stood (third person: not the camera)
     }
     app.invalidate(); app.emit('cinema', { running: false });
   }
