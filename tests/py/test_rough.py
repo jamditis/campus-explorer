@@ -323,6 +323,31 @@ class Check(unittest.TestCase):
         for tag in ("dormitory", "apartments"):
             self.assertIn("housing", " ".join(rough.check(dict(BAR, osm_building=tag))))
 
+    def test_a_dining_hall_in_housing_gets_its_open_dining_floor_and_entrance_only(self):
+        hall = dict(
+            BAR,
+            osm_building="dormitory",
+            use="dining",
+            open=True,
+            levels=[dict(level=1, floor=100.0)],
+            roof=104.0,
+        )
+        self.assertEqual(rough.check(hall), [])
+        (f,) = rough.floors(hall)
+        self.assertEqual([w["name"] for w in f["walls"]], ["SW_T_F1_lining_UNVERIFIED"])
+        self.assertEqual(len(f["walls"][0]["openings"]), 1)
+        self.assertEqual((f["blocks"], f["rooms"]), ([], []))
+        self.assertEqual(rough.routes(hall), [])
+        for extra, word in (
+            (dict(levels=BAR["levels"], roof=112.0), "dining floor only"),
+            (dict(open=False), "open"),
+            (dict(cores=[dict(kind="stair", at=[20, 15])]), "no cores"),
+            (dict(spines=[[[0.6, 10], [59.4, 10]]]), "no spines"),
+            (dict(rooms=[dict(level=1, number="101", at=[30, 5], evidence="sign")]), "no rooms"),
+            (dict(use="flats"), "use is"),
+        ):
+            self.assertIn(word, " ".join(rough.check(dict(hall, **extra))), word)
+
     def test_a_usable_entry_has_no_problems(self):
         self.assertEqual(rough.check(BAR), [])
 

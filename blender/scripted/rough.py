@@ -347,6 +347,8 @@ def routes(r):
     building = [tuple(p[:2]) for p in r["outline"]]
     if geom.area(building) < 0:
         building = building[::-1]
+    if r.get("use") == "dining":
+        return []  # an open dining floor: no corridor to walk from
     _ends, spines = _spines(r, building)
     rings = _outlines(r, building)
     return [
@@ -381,8 +383,19 @@ def check(r):
         out.append(f"{r['name']}: levels must rise")
     if r["roof"] - levels[-1] < 2.4:
         out.append(f"{r['name']}: the top floor is under 2.4 m high")
-    if r["osm_building"] in HOUSING:
+    use = r.get("use")
+    if use not in (None, "dining"):
+        out.append(f"{r['name']}: use is 'dining' or not given")
+    if r["osm_building"] in HOUSING and use != "dining":
         out.append(f"{r['name']}: housing gets no interior (AGENTS.md)")
+    if use == "dining":  # AGENTS.md rule 16: the public dining floor and its entrance, nothing more
+        if len(r["levels"]) != 1:
+            out.append(f"{r['name']}: a dining hall gets its dining floor only")
+        if not (r.get("open") or r["levels"][0].get("open")):
+            out.append(f"{r['name']}: a dining floor is open: no corridors or rooms")
+        for key in ("cores", "spines", "rooms"):
+            if r.get(key):
+                out.append(f"{r['name']}: a dining hall gets no {key}")
     if r.get("method", "overlay") not in ("overlay", "supersede"):
         out.append(f"{r['name']}: method is overlay or supersede")
     names = {lv["level"] for lv in r["levels"]}
@@ -420,13 +433,18 @@ def floors(r):
     building = [tuple(p[:2]) for p in r["outline"]]
     if geom.area(building) < 0:
         building = building[::-1]
-    ends, spines = _spines(r, building)
+    dining = r.get("use") == "dining"  # no corridors, stairs or lifts: nothing leads to rooms
+    ends, spines = ([], []) if dining else _spines(r, building)
     rings = _outlines(r, building)
     corridors = [_rect(*s, corridor / 2) for s in spines]
     entrances = r.get("entrances", [])
-    lobbies = [dict(_lobby(e, spines, rings[e["level"]][1]), level=e["level"]) for e in entrances]
-    cores = _cores(r, ends, spines, lobbies)
-    for e, lob in zip(entrances, lobbies, strict=True):
+    lobbies = [
+        dict(_lobby(e, spines, rings[e["level"]][1]), level=e["level"])
+        for e in entrances
+        if not dining
+    ]
+    cores = [] if dining else _cores(r, ends, spines, lobbies)
+    for e, lob in zip(entrances if lobbies else [], lobbies, strict=True):
         why = _blocked(lob, rings[e["level"]][1], cores)
         if why:
             raise ValueError(f"{name}: the way in from the entrance at {e['at']} {why}")
