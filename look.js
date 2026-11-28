@@ -10,7 +10,7 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
-import { inVolume, nearVolumes, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
+import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 export { fixTone, fixCat };
 
 // metres per texture repeat, and how strongly the texture modulates the model's own colour
@@ -494,19 +494,17 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           varying vec3 vGiPos; varying vec3 vGiNrm;
           float giHash(vec3 c) { return fract(sin(dot(c, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
           bool giIn = false; float giFres = 0.0;
-          ${vol ? `uniform vec2 giRing[${GI_P}]; uniform vec4 giVol[${GI_V}]; uniform int giN;
+          ${vol ? `${GI_GLSL}
           // inside a volume's ring (or within GROW of it) and its height range (grown too): rooms-math inVolume
           bool giInside(vec3 p) {
             const float GROW = ${GLASS_GROW.toFixed(2)};
-            for (int v = 0; v < ${GI_V}; v++) {
-              if (v >= giN) break;
-              vec4 b = giVol[v];
-              if (p.y < b.z - GROW || p.y > b.w + GROW) continue;
-              int s = int(b.x), n = int(b.y);
+            for (int v = 0; v < giN; v++) {
+              vec4 b = giAt(v), bx = giAt(${VOL_TEX_W} + v);
+              if (p.y < b.z - GROW || p.y > b.w + GROW || p.x < bx.x || p.z < bx.y || p.x > bx.z || p.z > bx.w) continue;
+              int s = ${3 * VOL_TEX_W} + int(b.x), n = int(b.y);
               bool odd = false; float d2 = 1e9;
-              for (int i = 0; i < ${GI_P}; i++) {
-                if (i >= n) break;
-                vec2 a = giRing[s + i], c = giRing[s + (i + 1) % n];
+              for (int i = 0; i < n; i++) {
+                vec2 a = giAt(s + i).xy, c = giAt(s + (i + 1) % n).xy;
                 if ((a.y > p.z) != (c.y > p.z) && p.x < a.x + (p.z - a.y) * (c.x - a.x) / (c.y - a.y)) odd = !odd;
                 vec2 u = c - a; float t = clamp(dot(p.xz - a, u) / max(dot(u, u), 1e-9), 0.0, 1.0);
                 vec2 e = p.xz - a - u * t; d2 = min(d2, dot(e, e));
@@ -558,13 +556,18 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   // Within INTERIOR_REACH of a volume, meshes whose centre lies in it (grown by GLASS_GROW) are not
   // screen-size culled; glass meshes that reach into it get a copy of their material that draws the part
   // inside it as real glass (decided per pixel, so a mesh the export joined across buildings works too).
-  const GI_P = 64, GI_V = 4; // ring points and volumes the glass shader holds
+  // All volumes go to the shaders in one float texture (rooms-math packVolumes): uniform arrays held only 4 volumes
+  // and 64 ring points, and every volume past those lost its glass. Each volume is tested by its box first, so a
+  // pixel pays the ring test only for the volume it may be in.
+  const GI_GLSL = `uniform highp sampler2D giTex; uniform int giN;
+          vec4 giAt(int i) { return texelFetch(giTex, ivec2(i % ${VOL_TEX_W}, i / ${VOL_TEX_W}), 0); }`;
+  const giTexture = pack => {
+    const t = new THREE.DataTexture(pack.data, pack.width, pack.height, THREE.RGBAFormat, THREE.FloatType);
+    t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t;
+  };
   const giUniforms = {
-    giRing: { value: Array.from({ length: GI_P }, () => new THREE.Vector2()) },
-    giVol: { value: Array.from({ length: GI_V }, () => new THREE.Vector4()) },
+    giTex: { value: giTexture(packVolumes([])) },
     giN: { value: 0 },
-    inBox: { value: Array.from({ length: GI_V }, () => new THREE.Vector4()) }, // x0, z0, x1, z1 of each ring
-    inTop: { value: new Array(GI_V).fill(0) }, // each volume's highest interior ceiling
     inLight: { value: new THREE.Color(1, 0.95, 0.86).multiplyScalar(INTERIOR_LIGHT) },
   };
   let interiors = [];
@@ -575,15 +578,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       const xs = v.ring.map(p => p[0]), zs = v.ring.map(p => p[1]), g = GLASS_GROW;
       return { ...v, box: new THREE.Box3(new THREE.Vector3(Math.min(...xs) - g, v.y0 - g, Math.min(...zs) - g), new THREE.Vector3(Math.max(...xs) + g, v.y1 + g, Math.max(...zs) + g)) };
     });
-    let at = 0, n = 0;
-    for (const v of interiors) {
-      if (n === GI_V || at + v.ring.length > GI_P) { console.warn('interior volume left out of the glass rule:', v.id); continue; }
-      v.ring.forEach((p, i) => giUniforms.giRing.value[at + i].set(p[0], p[1]));
-      giUniforms.inBox.value[n].set(v.box.min.x, v.box.min.z, v.box.max.x, v.box.max.z);
-      giUniforms.inTop.value[n] = v.ceiling ?? v.y1;
-      giUniforms.giVol.value[n++].set(at, v.ring.length, v.y0, v.y1); at += v.ring.length;
-    }
-    giUniforms.giN.value = n;
+    const pack = packVolumes(interiors);
+    giUniforms.giTex.value.dispose(); giUniforms.giTex.value = giTexture(pack); giUniforms.giN.value = pack.n;
     for (const root of decorated) claim(root);
     cull(true); shadowDirty = true; onChange();
   }
@@ -621,19 +617,16 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vInPos; varying vec3 vInNrm;
-          uniform vec2 giRing[${GI_P}]; uniform vec4 giVol[${GI_V}]; uniform int giN;
-          uniform vec4 inBox[${GI_V}]; uniform float inTop[${GI_V}]; uniform vec3 inLight;
+          ${GI_GLSL} uniform vec3 inLight;
           bool inLitAt(vec3 p, float ny) { // rooms-math interiorLit
-            for (int v = 0; v < ${GI_V}; v++) {
-              if (v >= giN) break;
-              vec4 b = giVol[v], bx = inBox[v];
+            for (int v = 0; v < giN; v++) {
+              vec4 b = giAt(v), bx = giAt(${VOL_TEX_W} + v);
               if (p.y < b.z - 0.3 || p.y > b.w || (p.y > b.w - 0.5 && ny > -0.5) || p.x < bx.x || p.z < bx.y || p.x > bx.z || p.z > bx.w) continue;
-              if (ny > 0.5 && p.y > inTop[v] + 0.5) continue;
-              int s = int(b.x), n = int(b.y);
+              if (ny > 0.5 && p.y > giAt(${2 * VOL_TEX_W} + v).x + 0.5) continue;
+              int s = ${3 * VOL_TEX_W} + int(b.x), n = int(b.y);
               bool odd = false; float d2 = 1e9;
-              for (int i = 0; i < ${GI_P}; i++) {
-                if (i >= n) break;
-                vec2 a = giRing[s + i], c = giRing[s + (i + 1) % n];
+              for (int i = 0; i < n; i++) {
+                vec2 a = giAt(s + i).xy, c = giAt(s + (i + 1) % n).xy;
                 if ((a.y > p.z) != (c.y > p.z) && p.x < a.x + (p.z - a.y) * (c.x - a.x) / (c.y - a.y)) odd = !odd;
                 vec2 u = c - a; float t = clamp(dot(p.xz - a, u) / max(dot(u, u), 1e-9), 0.0, 1.0);
                 vec2 e = p.xz - a - u * t; d2 = min(d2, dot(e, e));

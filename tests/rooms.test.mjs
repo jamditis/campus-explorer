@@ -164,3 +164,22 @@ test('the sight pass settles while the camera stands in a room', () => {
   assert.equal(sightPending(ids, memo, 1, -1), true); // outside every room it would still wait
   assert.equal(sightPending([], memo, 5), false);
 });
+
+test('packVolumes puts every volume and every ring point in the texture, past the old 4 volumes and 64 points', async () => {
+  const { packVolumes, VOL_TEX_W } = await import('../viewer/rooms-math.js');
+  const sq = (x, z, s, n = 4) => Array.from({ length: n }, (_, i) => [x + s * Math.cos(i * 2 * Math.PI / n), z + s * Math.sin(i * 2 * Math.PI / n)]);
+  const vols = Array.from({ length: 12 }, (_, k) => ({ ring: sq(k * 100, 0, 10, 30), y0: 100 + k, y1: 120 + k, ceiling: 118 + k }));
+  const W = 8, p = packVolumes(vols, 1, W); // a narrow texture: ring points run over several rows
+  assert.equal(p.n, 8); // no more volumes than a row holds
+  const big = packVolumes(vols);
+  assert.equal(big.n, 12); assert.equal(big.width, VOL_TEX_W);
+  const at = i => [...big.data.subarray(i * 4, i * 4 + 4)];
+  const W2 = big.width;
+  // volume 11: ring from point 330, 30 points, heights; its box grown by 1 m; its ceiling; its first ring point
+  assert.deepEqual(at(11), [330, 30, 111, 131]);
+  const b = at(W2 + 11); assert.ok(Math.abs(b[0] - (1100 - 11)) < 1e-3 && Math.abs(b[2] - (1100 + 11)) < 1e-3);
+  assert.equal(at(2 * W2 + 11)[0], 129);
+  const r = at(3 * W2 + 330); assert.ok(Math.abs(r[0] - 1110) < 1e-3 && Math.abs(r[1]) < 1e-3);
+  assert.equal(big.height, 3 + Math.ceil(360 / W2));
+  assert.equal(packVolumes([]).n, 0);
+});
