@@ -58,6 +58,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `tools/web-export/share_geo.mjs`, `geoshare.mjs`, `inst_filter.mjs` | Store geometry that several files carry byte for byte (the tree meshes) once under `models/main/geo/`; instance transforms through meshopt's exponential and quaternion filters, every vertex within 1 mm |
 | `tools/teaser/` | The teaser film: storyboard, frame capture from the viewer, 3D titles, grade, sound mix. Film, frames and audio stay outside the repository |
 | `tools/web-export/farcut.mjs`, `skyline.mjs`, `skirt.mjs`, `drop_zero.mjs` | Far field: a skyline stand-in for buildings past 10 km, a lighter far ground, empty triangles dropped |
+| `tools/web-export/tree_points.mjs`, `treepoints.mjs` | Stand-ins for each tile's instanced trees, written into its far version, so a tile not in memory (lite profile) still shows its trees |
 
 ## Git identity
 

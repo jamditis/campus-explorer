@@ -40,7 +40,9 @@ export function createScenery(app) {
   /** Called by the world for every tile, and for every far version, before it joins the scene. */
   function prepare(root, tile, { far = false } = {}) {
     app.look.decorate(root);
-    if (far) return;
+    // a far version carries stand-ins for its tile's instanced trees (tools/web-export/tree_points.mjs), drawn
+    // while the full tile is not in memory
+    if (far) { if (root.userData.trees?.length) trees.addPoints(tile.file, root.userData.trees, tile.state !== 'ready'); return; }
     if (tile.file === 'far_houses.glb') root.traverse(o => { if (o.material) { o.material.envMapIntensity = 0.25; o.material.roughness = 0.95; } });
     if (tile.file === 'skirt.glb' && manifest?.landcover) applyLandcover(root, base + manifest.landcover.file, manifest.landcover.half);
   }
@@ -137,10 +139,11 @@ export function createScenery(app) {
   // trees.add refreshes the tree instances itself. No redraw is asked for here: the world asks for a lazy one,
   // and an immediate redraw (with a fresh shadow map) for every arriving tile holds up loading on a slow GPU.
   app.on('tile', ({ tile }) => {
-    trees.add(tile.root);
+    trees.add(tile.root); trees.showPoints(tile.file, false);
     // the new tile may be the ground under the camera: let the grass check ask again (one cheap ray, no redraw)
     grassTries = 0; grassRetry = performance.now() + GRASS_RETRY_MS;
   });
+  app.on('tile:gone', ({ tile }) => { trees.showPoints(tile.file, true); app.look.invalidateShadows(); app.invalidate(); });
   app.on('scene:complete', () => {
     const my = run;
     if (app.world.budget !== Infinity) return; // lite profile: the ground under far trees is not in memory

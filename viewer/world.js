@@ -52,7 +52,7 @@ export function createWorld(app, prepare, release = () => {}) {
     textures.release(root); // a shared texture goes with the last tile that uses it
   }
   function dispose() {
-    abort?.abort(); abort = null; clearInterval(watch);
+    abort?.abort(); abort = null; clearInterval(watch); clearTimeout(lodTimer); lodTimer = 0;
     free(group); textures.clear(); texSeen = new Set();
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
     tiles = []; colliders = []; lods = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
@@ -212,26 +212,45 @@ export function createWorld(app, prepare, release = () => {}) {
   // tile while the tile is not in memory: under a memory budget (phones) the evicted tiles stay in view that way.
   // Instanced trees stay with the full tile: trees.js culls and swaps those per instance. Collision and picks
   // always use the full tiles. Far versions load nearest-first once the first round of tiles is in, and stay.
-  // A far version has no instanced trees, so a tile outside a memory budget shows none (trees.js needs the full
-  // tile; per-tile tree points from the export would fix it, docs/ROADMAP.md "Performance").
+  // A far version has no instanced trees; it carries stand-ins for them instead (scene extras `trees`, scenery.js).
   const LOD_DIST = { low: 260, medium: 420, high: 650 };
-  const LOD_TRIES = 3, LOD_RETRY_MS = 20000; // a far version that failed to load is tried again, a few times
+  const LOD_RETRY_MS = 20000, LOD_RETRY_MAX_MS = 300000; // a far version that failed is tried again, each wait twice the last, up to 5 min
+  const LOD_FETCH_MS = 60000; // a far-version download that takes longer fails (and is tried again): no pass can hang
+  let lodTimer = 0, lodRetrying = 0; // the scene token of the retry pass that is running
+  // One timer and one retry pass at a time for all failed far versions, each at its own wait: a connection that
+  // drops makes every far version fail, and their retries must not all download at once when it comes back.
+  function retryLater(my) {
+    if (lodTimer || my !== token) return;
+    const due = tiles.filter(t => t.lod && !t.far && !t.farLoading && t.farFails).map(t => t.farWait);
+    if (!due.length) return;
+    lodTimer = setTimeout(async () => {
+      lodTimer = 0;
+      if (my !== token || lodRetrying === my) return; // the running retry pass calls retryLater when it ends
+      lodRetrying = my;
+      try { await loadLods(my); } finally { if (lodRetrying === my) lodRetrying = 0; }
+      retryLater(my);
+    }, Math.max(0, Math.min(...due) - performance.now()));
+  }
   let lods = [], lodLast = 0;
   async function loadLods(my) {
     app.focus(_focus);
     for (const tile of orderTiles(tiles.filter(t => t.lod), { x: _focus.x, z: _focus.z })) {
       if (my !== token) return;
-      if (tile.far || tile.farLoading || tile.farFails >= LOD_TRIES) continue; // loadAll can start a second pass while this one runs
+      if (tile.far || tile.farLoading || tile.farWait > performance.now()) continue; // loadAll can start a second pass while this one runs
       tile.farLoading = true;
       let root;
       try {
-        const res = await fetch(base + tile.lod, { signal: abort.signal });
+        const signal = AbortSignal.any && AbortSignal.timeout ? AbortSignal.any([abort.signal, AbortSignal.timeout(LOD_FETCH_MS)]) : abort.signal;
+        const res = await fetch(base + tile.lod, { signal });
         if (!res.ok) throw new Error(`${tile.lod}: HTTP ${res.status}`);
         const path = base + dirOf(tile.lod);
         const g = await loader.parseAsync(await res.arrayBuffer(), path); dropUnmaterialled(g); root = g.scene;
         shareTextures(g, root, path);
       } catch (e) {
         tile.farLoading = false; tile.farFails = (tile.farFails ?? 0) + 1;
+        const wait = Math.min(LOD_RETRY_MAX_MS, LOD_RETRY_MS * 2 ** (tile.farFails - 1));
+        tile.farWait = performance.now() + wait;
+        retryLater(my);
         if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e);
         continue;
       }
@@ -244,8 +263,6 @@ export function createWorld(app, prepare, release = () => {}) {
       lods.push({ tile, lo: root, box: new THREE.Box3().setFromObject(root), root: null, hi: [], far: null });
       if (updateLods(true)) app.invalidate();
     }
-    // a pass ends with every tile it took either in or failed; one still loading belongs to another pass, which checks at its own end
-    if (tiles.some(t => t.lod && !t.far && !t.farLoading && t.farFails < LOD_TRIES)) setTimeout(() => { if (my === token) loadLods(my); }, LOD_RETRY_MS);
   }
   /** Swap full tiles and far versions for the camera position and what is in memory. Returns true when something changed. */
   function updateLods(force = false) {
@@ -274,7 +291,8 @@ export function createWorld(app, prepare, release = () => {}) {
     app.focus(_focus);
     const set = new Set(orderTiles(tiles.filter(t => t.center), { x: _focus.x, z: _focus.z }).slice(0, budget + slack));
     // a tile with no far version has nothing to stand in for it, so it stays. The export leaves a far version out
-    // only where it would save under a fifth (farWorthIt in pack.mjs), so such a tile is about as light as one.
+    // where it would be empty or keep 80 % or more of the tile's plain triangles and draw calls (farWorthIt in
+    // pack.mjs); instanced trees are not counted there. The 8 such tiles today hold 1.4 MB.
     for (const t of tiles) if (t.center && !t.lod) set.add(t);
     for (const t of urgent) set.add(t);
     return set;
