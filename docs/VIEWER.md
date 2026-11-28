@@ -57,7 +57,9 @@ trees.js            Per-instance culling of instanced trees, two middle versions
 viewer/input.js     Keyboard, pointer lock, touch sticks and gamepad -> one intent object
 viewer/player.js    Fly and walk movement, collision, first and third person camera
 viewer/follow.js    Follow me: the phone's GPS position and compass drive walk mode
-viewer/route.js     Walking directions: pick a place, route along viewer/paths.json from the walker, draw the route
+viewer/route.js     Walking directions: pick a place, route along viewer/paths.json from the walker
+viewer/nav.js       Navigation HUD: glowing route ribbon on the ground, direction arrow, next turn, distance and time, arrival
+viewer/nav-math.js  Pure. Progress along a route, its turns and their words, the arrow's angle
 viewer/route-math.js Pure. The path graph, snapping to it, A* to a place's entrances, walking time
 viewer/follow-math.js Pure. Phone orientation to a view direction, GPS fixes to a smooth track, magnetic declination
 viewer/camera.js    Eased camera moves (flyTo)
@@ -426,7 +428,11 @@ In walk mode the "Use my location" button (top left) lets the phone drive the wa
 
 ## Walking directions
 
-In walk mode "Go to a place" (under "Use my location") opens a search over `app.places` (`searchPlaces`). Choosing a place routes from the walker: the GPS point when follow me is on (`player.guide`), else where they stand. `route-math.js` snaps the start onto the nearest usable edge within 120 m (part way along it; if that piece of path cannot reach the place, the next of the six nearest edges), then runs A* to the place's entrances from `paths.json` (a place with none, such as a lot or a field, ends at the nearest point on a path beside it). When the route starts more than 8 m from the walker, the card says how far. Streets count 1.25 times their length, so a footway is preferred where one runs alongside. The step-free box leaves out steps and steep edges; if nothing is left, it says there is no step-free route on the path map. The card gives the walk in metres and minutes at 1.3 m/s, and says when the entrance is guessed (UNVERIFIED), when the route has stairs or steep stretches. The route line is drawn on the ground every 3 m at the surface under it and redrawn as tiles arrive. The graph is fetched the first time the picker opens (29 kB gzipped). Leaving walk mode clears the route.
+In walk mode "Go to a place" (under "Use my location") opens a search over `app.places` (`searchPlaces`). Choosing a place routes from the walker: the GPS point when follow me is on (`player.guide`), else where they stand. `route-math.js` snaps the start onto the nearest usable edge within 120 m (part way along it; if that piece of path cannot reach the place, the next of the six nearest edges), then runs A* to the place's entrances from `paths.json` (a place with none, such as a lot or a field, ends at the nearest point on a path beside it). When the route starts more than 8 m from the walker, the card says how far. Streets count 1.25 times their length, so a footway is preferred where one runs alongside. The step-free box leaves out steps and steep edges; if nothing is left, it says there is no step-free route on the path map. The card gives the walk in metres and minutes at 1.3 m/s, and says when the entrance is guessed (UNVERIFIED), when the route has stairs or steep stretches. The graph is fetched the first time the picker opens (29 kB gzipped). Leaving walk mode clears the route.
+
+### Navigation HUD
+
+`viewer/nav.js` follows the `route` event. The route is a ribbon 1.4 m wide on the ground (a point every 2 m at the surface under it, 0.1 m up, rebuilt as tiles arrive) with a soft blue glow and white chevrons every 2.5 m pointing the way: one mesh, one 64 px canvas texture, additive blending, no clock (a still view is not redrawn). The part already walked is cut off with the draw range. The card under the buttons shows an arrow that points at the route 12 m ahead relative to the view, the next turn (`turns` in `nav-math.js`: bends the same way within 6 m add up, a bend the other way is a turn of its own, under 30 degrees is no turn; "Slight", "Turn" or "Sharp" left or right) with its distance, and the distance and minutes left; the text updates five times a second. Progress is searched only up to 40 m past the last position on the route, so GPS noise near a later, parallel stretch does not skip ahead. Within 10 m of the entrance itself it says you have arrived. More than 25 m off the route (plus the GPS accuracy when follow me is on) for 3 s routes again from where the walker is.
 
 ## Flight limit
 

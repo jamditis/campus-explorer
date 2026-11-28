@@ -169,5 +169,7 @@ export function createFollow(app) {
     start, stop, get active() { return active; },
     /** True from the first fix until the view moves to a place (a `fly` event): until then the view shows where the user is. */
     get private() { return active || shown; },
+    /** Metres, the last fix's accuracy (0 when off). */
+    get accuracy() { return active ? accuracy : 0; },
   };
 }
