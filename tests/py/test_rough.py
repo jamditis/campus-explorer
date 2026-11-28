@@ -348,8 +348,32 @@ class Options(unittest.TestCase):
         ((_level, route),) = rough.routes(r)
         f = rough.floors(r)[0]
         walkable(self, f, route, "west door", f["blocks"])
-        stairs = [b for b in f["blocks"] if "stair" in b["name"].lower()]
-        self.assertEqual(len(stairs), 2)
+        cores = [b["ring"] for b in f["blocks"]]
+        self.assertEqual(len(cores), 3)  # two stairs and the lift, none in another
+        for i, a in enumerate(cores):
+            for b in cores[i + 1 :]:
+                self.assertFalse(rough._overlap(a, b))
+
+    def test_a_stair_that_steps_aside_fits_every_level(self):
+        upper = [[0, 0], [60, 0], [60, 14.1], [0, 14.1]]
+        r = dict(
+            BAR,
+            levels=[*BAR["levels"][:2], dict(level=3, floor=108.0, outline=upper)],
+            entrances=[dict(at=[-0.5, 10], level=1)],
+        )
+        ((_level, route),) = rough.routes(r)
+        fs = rough.floors(r)
+        self.assertEqual(len(fs), 3)
+        walkable(self, fs[0], route, "west door", fs[0]["blocks"])
+
+    def test_a_door_on_its_corridor_needs_no_walk(self):
+        r = dict(
+            BAR,
+            spines=[[[0.475, 10], [59, 10]]],
+            cores=[dict(kind="stair", at=[20, 15])],
+            entrances=[dict(at=[0.475, 10], level=1)],
+        )
+        self.assertEqual(len(rough.floors(r)), 3)
 
     def test_a_way_in_through_a_lift_is_refused(self):
         r = dict(
