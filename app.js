@@ -9,6 +9,7 @@ import { createScenery } from './viewer/scenery.js';
 import { createSky } from './viewer/sky.js';
 import { createInput } from './viewer/input.js';
 import { createPlayer } from './viewer/player.js';
+import { createDoors } from './viewer/doors.js';
 import { createCamera } from './viewer/camera.js';
 import { createUI } from './viewer/ui.js';
 import { CAMPUS, convergenceDeg, gridToTrueBearing } from './viewer/geo.js';
@@ -67,9 +68,10 @@ let frameMs = 16, lazyAt = 0, drew = false; // smoothed time of a drawn frame; w
 app.look = createLook(renderer, scene, camera, () => app.invalidate());
 const nightSky = createSky(app);
 const scenery = createScenery(app);
-app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); });
+app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); app.doors.forget(root); });
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
+app.doors = createDoors(app); // entrance doors that open in walk mode
 const cam = createCamera(app);
 /** Ease the camera to a pose. `by` names the module that asked, so others can tell their own moves from a new one. */
 /**

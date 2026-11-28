@@ -395,6 +395,13 @@ export function createWorld(app, prepare, release = () => {}) {
   function home(at) { app.home ??= new THREE.Vector3(at.x, 0, at.z); }
 
   // ---- collision ----
+  /** Bring the collision boxes of the meshes under `obj` to where they are now (doors.js, after a leaf moved). */
+  function refit(obj) {
+    obj.updateMatrixWorld(true);
+    for (const c of colliders) {
+      for (let p = c.mesh; p; p = p.parent) if (p === obj) { c.box.copy(c.mesh.geometry.boundingBox).applyMatrix4(c.mesh.matrixWorld); break; }
+    }
+  }
   function ensureBVH(c) {
     const g = c.mesh.geometry;
     if (!g.boundsTree) g.boundsTree = withFullRange(g, () => new MeshBVH(g, { strategy: CENTER, maxLeafTris: 12, indirect: true }));
@@ -412,7 +419,7 @@ export function createWorld(app, prepare, release = () => {}) {
     ray.set(origin, dir); ray.near = 0;
     _cand.length = 0;
     for (const c of colliders) {
-      if ((builtOnly && !c.mesh.geometry.boundsTree) || (bigOnly && !c.big)) continue;
+      if ((builtOnly && !c.mesh.geometry.boundsTree) || (bigOnly && !c.big) || c.mesh.userData.doorOpen) continue;
       let enter = 0;
       if (!c.box.containsPoint(origin)) {
         if (!ray.ray.intersectBox(c.box, _p)) continue;
@@ -462,7 +469,7 @@ export function createWorld(app, prepare, release = () => {}) {
     _box.makeEmpty().expandByPoint(a).expandByPoint(b).expandByScalar(radius);
     let touched = false;
     for (const c of colliders) {
-      if (!c.box.intersectsBox(_box)) continue;
+      if (!c.box.intersectsBox(_box) || c.mesh.userData.doorOpen) continue; // an open door lets the walker through (doors.js)
       const bvh = ensureBVH(c), mw = c.mesh.matrixWorld;
       _inv.copy(mw).invert();
       const s = mw.getMaxScaleOnAxis(), r = radius / s;
@@ -528,7 +535,7 @@ export function createWorld(app, prepare, release = () => {}) {
   return {
     load, loadAll, dispose, raycast, groundAt, pick, pushOut, warm,
     get budget() { return budget; },
-    updateLods, get lods() { return lods.length; },
+    updateLods, refit, get lods() { return lods.length; },
     get tiles() { return tiles; },
     get group() { return group; },
     get progress() { return progress; },
