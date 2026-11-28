@@ -649,8 +649,8 @@ def ring_soffits(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, fa
 def ring_eave_trim(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, spacing=0.75):
     """The eave trim under a ring roof's overhang (ring_roof's arguments): rafter tails (boxes
     from the wall line out to the eave edge, every `spacing` metres, 0.12 wide and 0.18 deep under
-    the soffit) and a barrel tile course along the eave edge (0.3 wide, 0.2 high). Returns
-    (rafters, course), each a list of (verts, faces)."""
+    the soffit; none where the soffit tapers back to the wall) and a barrel tile course along the
+    eave edge (0.3 wide, 0.2 high). Returns (rafters, course), each a list of (verts, faces)."""
     ring = [tuple(p[:2]) for p in ring]
     n = len(ring)
     flat = set(flat_edges)
@@ -670,9 +670,13 @@ def ring_eave_trim(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, 
         length = math.hypot(bx - ax, by - ay)
         ux, uy = (bx - ax) / length, (by - ay) / length
         nx, ny = uy, -ux  # outward
+        # the soffit under this edge: a trapezoid that tapers to the wall where a flat edge meets it
+        quad = [ring[i], outer[i], outer[j], ring[j]]
         for k in range(1, int(length / spacing)):
             sx, sy = ax + ux * k * spacing, ay + uy * k * spacing
-            tip = (sx + nx * ov[i], sy + ny * ov[i], low - 0.18)
+            tip = (sx + nx * ov[i] * 0.98, sy + ny * ov[i] * 0.98, low - 0.18)
+            if not geom.inside(quad, tip[0], tip[1]):
+                continue  # a tail there would stick out past the roof
             rafters.append(_beam((sx, sy, low - 0.18), tip, 0.12, 0.18))
         course.append(_beam((*outer[i], low), (*outer[j], low), 0.3, 0.2))
     return rafters, course
