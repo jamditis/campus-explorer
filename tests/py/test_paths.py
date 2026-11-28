@@ -37,6 +37,12 @@ class Slope(unittest.TestCase):
         # a steady 10 % ramp
         self.assertAlmostEqual(bpaths.steepest(pts, [100, 101, 102, 103, 104]), 10.0)
 
+    def test_short_edge_measured_end_to_end(self):
+        # 4 m with a 1.15 m rise is 28.75 %; under 2 m counts as level; a missing height is unknown
+        self.assertAlmostEqual(bpaths.steepest([(0.0, 0.0), (4.0, 0.0)], [100, 101.15]), 28.75)
+        self.assertEqual(bpaths.steepest([(0.0, 0.0), (1.5, 0.0)], [100, 101]), 0.0)
+        self.assertIsNone(bpaths.steepest([(0.0, 0.0), (4.0, 0.0)], [100, None]))
+
     def test_resample_keeps_ends(self):
         s = bpaths.resample([(0.0, 0.0), (25.0, 0.0)], 10.0)
         self.assertEqual(s, [(0.0, 0.0), (10.0, 0.0), (20.0, 0.0), (25.0, 0.0)])
@@ -46,6 +52,14 @@ class Shapes(unittest.TestCase):
     def test_simplify_drops_straight_points(self):
         pts = [(0, 0), (5, 0.1), (10, 0), (10, 10)]
         self.assertEqual(bpaths.simplify(pts, 0.6), [0, 2, 3])
+
+    def test_a_path_through_a_corner_enters(self):
+        square = [(0, 0), (10, 0), (10, 10), (0, 10)]
+        box = (0, 10, 0, 10)
+        # cuts the corner: middle outside the square, but it crosses two walls
+        self.assertTrue(bpaths.enters((-2, 4), (4, -2), square, box))
+        # ends at the wall (a door): not inside
+        self.assertFalse(bpaths.enters((-5, 5), (0, 5), square, box))
 
     def test_inside(self):
         square = [(0, 0), (10, 0), (10, 10), (0, 10)]
@@ -61,7 +75,7 @@ class Published(unittest.TestCase):
         for a, b, flags, grade in d["edges"]:
             self.assertTrue(0 <= a < n and 0 <= b < n and a != b)
             self.assertEqual(flags & ~15, 0)
-            self.assertGreaterEqual(grade, 0)
+            self.assertGreaterEqual(grade, -1)  # -1: no DEM height there
         places = json.loads((ROOT / "viewer" / "places.json").read_text())["places"]
         osm = {p["osm"] for p in places}
         for e in d["entrances"]:

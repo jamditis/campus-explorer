@@ -13,7 +13,8 @@ Usage:
 Output (three.js metres, the frame of places.json):
     nodes      flat [x0, z0, x1, z1, ...], 0.1 m
     edges      [[a, b, flags, grade], ...]  flags: 1 steps, 2 steep, 4 street, 8 crossing
-               grade: steepest 20 m stretch along the edge, percent, rounded (0 on bridges)
+               grade: steepest 20 m stretch along the edge (end to end when shorter), percent,
+               rounded; 0 on bridges; -1 where the DEM gave no height (unknown)
     entrances  [{"osm": "way/..", "node": i, "mapped": bool}, ...] for every building in places.json
                that the graph reaches; mapped is false where no entrance is in OSM and the point is
                a footway dead end or path point at the outline, else the nearest path (UNVERIFIED)
@@ -34,6 +35,7 @@ import math
 import sys
 import tempfile
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -60,6 +62,7 @@ SIMPLIFY_M = 0.6  # shape points closer than this to the straight run are droppe
 STEEP_PCT = 8.33  # 1:12, the steepest ramp the ADA standards allow
 GRADE_STEP_M = 10.0  # heights are sampled this far apart along each path
 GRADE_RUN_M = 20.0  # slope is measured over stretches this long
+SHORT_RUN_M = 2.0  # shorter edges count as level
 MIN_PIECE_M = 60.0  # disconnected pieces shorter than this in total are dropped
 ENTRANCE_REACH_M = 25.0  # how far from a building outline a path may be to count as its way in
 DOOR_M = 6.0  # a path dead end this close to a building outline is taken as a door (UNVERIFIED)
@@ -154,6 +157,16 @@ def inside(p, ring) -> bool:
     return hit
 
 
+def crosses(a, b, c, d) -> bool:
+    """True when segments ab and cd cross inside both (touching at an end does not count)."""
+
+    def side(p, q, r):
+        return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+
+    d1, d2, d3, d4 = side(c, d, a), side(c, d, b), side(a, b, c), side(a, b, d)
+    return d1 * d2 < 0 and d3 * d4 < 0
+
+
 def drop_indoors(edges: dict, local: dict, data: bp.OsmData, way_of: dict) -> dict:
     """Drop edges that run inside a building outline, unless OSM maps them as a passage through it.
     Routes end at a building's entrance (and AGENTS.md rule 16 bars any route inside housing)."""
@@ -171,14 +184,21 @@ def drop_indoors(edges: dict, local: dict, data: bp.OsmData, way_of: dict) -> di
             kept[key] = (flags, shape)
             continue
         pts = [local[n] for n in shape]
-        mids = [((a[0] + b[0]) / 2, (a[1] + b[1]) / 2) for a, b in zip(pts, pts[1:], strict=False)]
-        if not any(
-            x0 <= m[0] <= x1 and z0 <= m[1] <= z1 and inside(m, ring)
-            for m in mids
-            for x0, x1, z0, z1, ring in rings
-        ):
+        segs = list(zip(pts, pts[1:], strict=False))
+        if not any(enters(a, b, ring, box) for a, b in segs for *box, ring in rings):
             kept[key] = (flags, shape)
     return kept
+
+
+def enters(a, b, ring, box) -> bool:
+    """True when segment ab runs inside a building outline: its middle is inside, or it crosses
+    a wall."""
+    x0, x1, z0, z1 = box
+    if max(a[0], b[0]) < x0 or min(a[0], b[0]) > x1 or max(a[1], b[1]) < z0 or min(a[1], b[1]) > z1:
+        return False
+    if inside(((a[0] + b[0]) / 2, (a[1] + b[1]) / 2), ring):
+        return True
+    return any(crosses(a, b, c, d) for c, d in zip(ring, ring[1:] + ring[:1], strict=False))
 
 
 def simplify(points: list[tuple[float, float]], tol: float) -> list[int]:
@@ -265,11 +285,20 @@ class Heights:
                     "f": "json",
                 }
             ).encode()
-            req = urllib.request.Request(DEM, data=form, headers={"User-Agent": bp.USER_AGENT})
-            with urllib.request.urlopen(req, timeout=120) as resp:
-                body = resp.read()
-            self.last = time.monotonic()
-            file.write_bytes(body)
+            body = b"{}"
+            for attempt in range(3):
+                req = urllib.request.Request(DEM, data=form, headers={"User-Agent": bp.USER_AGENT})
+                try:
+                    with urllib.request.urlopen(req, timeout=120) as resp:
+                        body = resp.read()
+                except (urllib.error.URLError, TimeoutError) as err:
+                    print(f"DEM request failed ({err}), retrying", file=sys.stderr)
+                    body = b"{}"
+                self.last = time.monotonic()
+                if self._complete(body, len(pts)):
+                    file.write_bytes(body)  # only a full answer is cached
+                    break
+                time.sleep(2 * (attempt + 1))
             print(f"sampled {len(pts)} heights", file=sys.stderr)
         values: list[float | None] = [None] * len(pts)
         for s in json.loads(body).get("samples", []):
@@ -278,6 +307,20 @@ class Heights:
             except (KeyError, TypeError, ValueError):
                 pass
         return values
+
+    @staticmethod
+    def _complete(body: bytes, n: int) -> bool:
+        """A DEM answer with a numeric height for every point (no ArcGIS error object)."""
+        try:
+            got = json.loads(body)
+            ok = {
+                s["locationId"]
+                for s in got.get("samples", [])
+                if float(s["value"]) == float(s["value"])
+            }
+        except (ValueError, KeyError, TypeError):
+            return False
+        return "error" not in got and ok == set(range(n))
 
 
 def resample(pts: list[tuple[float, float]], step: float) -> list[tuple[float, float]]:
@@ -297,24 +340,29 @@ def resample(pts: list[tuple[float, float]], step: float) -> list[tuple[float, f
     return out
 
 
-def steepest(samples: list[tuple[float, float]], heights: list[float | None]) -> float:
-    """Steepest grade in percent over any GRADE_RUN_M of path (shorter edges: end to end).
-    The window keeps one noisy DEM cell (a wall, a kerb) from marking a level path steep."""
+def steepest(samples: list[tuple[float, float]], heights: list[float | None]) -> float | None:
+    """Steepest grade in percent over any GRADE_RUN_M of path; an edge shorter than that is
+    measured end to end (down to SHORT_RUN_M). The window keeps one noisy DEM cell (a wall, a
+    kerb) from marking a level path steep. None when the heights needed are missing: unknown."""
     along = [0.0]
     for p, q in zip(samples, samples[1:], strict=False):
         along.append(along[-1] + math.dist(p, q))
-    best = 0.0
+    if along[-1] < GRADE_RUN_M:
+        if along[-1] < SHORT_RUN_M:
+            return 0.0  # too short to have a slope worth routing around
+        if heights[0] is None or heights[-1] is None:
+            return None
+        return abs(heights[-1] - heights[0]) / along[-1] * 100
+    best, measured = 0.0, False
     j = 0
     for i in range(len(samples)):
         while j < len(samples) - 1 and along[j] - along[i] < GRADE_RUN_M:
             j += 1
-        run = along[j] - along[i]
-        if run < GRADE_STEP_M * 0.5 or heights[i] is None or heights[j] is None:
+        if along[j] - along[i] < GRADE_RUN_M or heights[i] is None or heights[j] is None:
             continue
-        best = max(best, abs(heights[j] - heights[i]) / run * 100)
-        if j == len(samples) - 1:
-            break
-    return best
+        best = max(best, abs(heights[j] - heights[i]) / (along[j] - along[i]) * 100)
+        measured = True
+    return best if measured else None
 
 
 def outline(data: bp.OsmData, osm: str) -> list[tuple[float, float]] | None:
@@ -400,12 +448,12 @@ def main(argv: list[str] | None = None) -> int:
         h = values[at : at + len(s)]
         at += len(s)
         grade = 0.0 if lifted else steepest(s, h)
-        if grade > STEEP_PCT and not flags & 1:
+        if grade is not None and grade > STEEP_PCT and not flags & 1:
             flags |= 2
         ids = [node(n) for n in keep]
         # the grade applies to the whole OSM edge; each simplified piece carries it
         for a, b in zip(ids, ids[1:], strict=False):
-            out_edges.append([a, b, flags, round(grade)])
+            out_edges.append([a, b, flags, -1 if grade is None else round(grade)])
 
     # entrances: OSM entrance nodes on each building's outline, else the nearest graph node to it
     degree = [0] * len(nodes)
