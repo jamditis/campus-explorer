@@ -203,9 +203,10 @@ the campus, the ridges round it and east past Manhattan (`viewer/canopy.json` re
 texture lookup in the shaders of the far ground (the 4 km skirt, the far 3DEP ground out to 29 km, the lite profile's
 flat disc) and of the far houses:
 
-- **Ground.** Near (a pixel still sees 9 m), crowns are where a noise value, one evenly spread value per 9 m cell
-  with its edges broken by finer cells (`crownNoise`), is above `1 - cover`, so the covered area matches the map
-  (`tests/farview.test.mjs` checks it over 600,000 points); far, the pixel takes the cover share (`crownShare`). Crowns are a summer canopy green
+- **Ground.** Near (a pixel still sees 9 m), crowns are where two octaves of value noise at 9 m (`crownNoise`) lie
+  above the noise's own `1 - cover` quantile (`NOISE_Q`, measured at every 5 %: value noise bunches round 0.5, so
+  `1 - cover` itself covered 14 % for a 20 % cell), so the covered area matches the map (`tests/farview.test.mjs`);
+  far, the pixel takes the cover share (`crownShare`). Crowns are a summer canopy green
   with some yellower ones; the open ground between them goes toward a grey-brown suburb mean (roofs, roads and lawn),
   more where there are fewer trees. UNVERIFIED colours, set by eye. Nothing within 150 m of the camera (the modelled
   trees are there), full from 600 m.

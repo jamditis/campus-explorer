@@ -12,7 +12,7 @@ import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
 import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
-import { CANOPY } from './viewer/farview-math.js';
+import { CANOPY, NOISE_Q } from './viewer/farview-math.js';
 export { fixTone, fixCat };
 
 // --- haze (aerial perspective) for every material that takes fog: see haze-math.js transmittance ---
@@ -426,21 +426,30 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         .replace('#include <common>', `#include <common>
           uniform sampler2D canopyMap; uniform vec4 canopyBox; varying vec3 vCaPos; varying vec3 vCaNrm;
           float caHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+          float caNoise(vec2 p) {
+            vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(caHash(i), caHash(i + vec2(1.0, 0.0)), f.x), mix(caHash(i + vec2(0.0, 1.0)), caHash(i + 1.0), f.x), f.y);
+          }
+          const float caQ[21] = float[](${NOISE_Q.map(v => v.toFixed(4)).join(', ')});
+          float caQuantile(float u) { // farview-math.js noiseQuantile
+            float t = clamp(u, 0.0, 1.0) * 20.0; int i = min(19, int(floor(t)));
+            return mix(caQ[i], caQ[i + 1], t - float(i));
+          }
 `)
         .replace('#include <alphamap_fragment>', `{
             vec2 cuv = (vCaPos.xz - canopyBox.xy) / canopyBox.zw;
             float caNear = smoothstep(150.0, 600.0, length(vCaPos - cameraPosition));
             if (caNear > 0.0 && cuv.x > 0.0 && cuv.y > 0.0 && cuv.x < 1.0 && cuv.y < 1.0) {
               float cover = texture2D(canopyMap, cuv).r; // percent * 2.55 / 255: the cover share
-              // crown noise (farview-math.js crownNoise): one evenly spread value per 9 m cell, so the threshold
-              // below covers the map's share, its edges broken by finer cells
+              // crown noise (farview-math.js crownNoise): two octaves of value noise at 9 m, rounded crowns
               vec2 q = vCaPos.xz / 9.0;
-              float n = clamp(caHash(floor(q)) + 0.14 * (caHash(floor(q * 2.3 + 5.1)) - 0.5), 0.0, 1.0);
+              float n = 0.65 * caNoise(q) + 0.35 * caNoise(q * 2.7 + 13.1);
               float detail = 1.0 - smoothstep(0.6, 2.5, length(fwidth(q)));
               ${houses ? `
               vec3 Nw = normalize(vCaNrm);
               float share = cover * (abs(Nw.y) < 0.5 ? 0.75 : 0.35); // walls sink into the trees more than roofs` : `
-              float s = 0.12, lo = 1.0 - cover - s, x = clamp((n - lo) / (2.0 * s), 0.0, 1.0);
+              // above the noise's own (1 - cover) quantile, so the crowns cover the map's share (crownShare)
+              float x = clamp((n - caQuantile(1.0 - cover) + 0.02) / 0.04, 0.0, 1.0);
               float crowns = cover <= 0.0 ? 0.0 : cover >= 1.0 ? 1.0 : x * x * (3.0 - 2.0 * x);
               float share = crowns * detail + cover * (1.0 - detail);
               // the open ground between the trees of a suburb is roofs, roads and lawn, not all lawn: from afar a

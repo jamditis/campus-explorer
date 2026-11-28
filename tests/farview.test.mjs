@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { CANOPY, canopyUv, crownShare, crownNoise } from '../viewer/farview-math.js';
+import { CANOPY, canopyUv, crownShare, crownNoise, NOISE_Q } from '../viewer/farview-math.js';
 
 test('the canopy box is canopy.json\'s Blender box in the viewer frame', () => {
   const meta = JSON.parse(readFileSync(new URL('../viewer/canopy.json', import.meta.url)));
@@ -18,19 +18,14 @@ test('map coordinates: row 0 is the north edge, outside is null', () => {
   assert.ok(Math.abs(u - 10000 / 31980) < 1e-12 && Math.abs(v - 10000 / 30000) < 1e-12);
 });
 
-test('crowns cover the share the map gives, near and far', () => {
-  for (const cover of [0, 0.2, 0.5, 0.8, 1]) {
-    let sum = 0; const N = 2000;
-    for (let i = 0; i < N; i++) sum += crownShare(cover, (i + 0.5) / N, 1); // evenly spread noise
-    assert.ok(Math.abs(sum / N - cover) < 0.01, `near ${cover}: ${sum / N}`);
+test('the noise quantiles match the noise, and crowns over it cover the map\'s share near and far', () => {
+  const v = [];
+  for (let x = 3000; x < 9000; x += 7.3) for (let z = -4000; z < 2000; z += 7.9) v.push(crownNoise(x, z));
+  const sorted = [...v].sort((a, b) => a - b);
+  for (let k = 1; k < 20; k++) assert.ok(Math.abs(sorted[Math.round((k / 20) * (sorted.length - 1))] - NOISE_Q[k]) < 0.01, `quantile ${k * 5} %`);
+  for (const cover of [0.05, 0.2, 0.5, 0.8, 0.95]) {
+    const near = v.reduce((s, n) => s + crownShare(cover, n, 1), 0) / v.length;
+    assert.ok(Math.abs(near - cover) < 0.02, `cover ${cover}: crowns ${near.toFixed(3)}`);
     assert.equal(crownShare(cover, 0.3, 0), cover, 'far: the share itself');
-  }
-});
-
-test('the shader\'s crown noise, thresholded, covers the map\'s share', () => {
-  for (const cover of [0.1, 0.2, 0.5, 0.8, 0.9]) {
-    let sum = 0, n = 0;
-    for (let x = 0; x < 6000; x += 7.3) for (let z = 0; z < 6000; z += 7.9) { sum += crownShare(cover, crownNoise(x + 1500, z - 900), 1); n++; }
-    assert.ok(Math.abs(sum / n - cover) < 0.02, `cover ${cover}: crowns ${(sum / n).toFixed(3)}`);
   }
 });
