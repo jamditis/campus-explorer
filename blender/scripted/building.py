@@ -173,6 +173,41 @@ def _recessed(b, part, cells, hexes):
         b.faces(sv, [(0, 1, 2, 3), (3, 2, 5, 4)], sill)
 
 
+def _curtain(b, ring, cw, hexes):
+    """A curtain wall in its opening (`curtains`: `at`, `to` on one wall line, `z0`, `z1`, `cols`,
+    `rows`, `frame` colour, `reveal`): reveals, one glass pane set back and a grid of frame bars
+    splitting it into cols x rows lights, seen from both sides."""
+    ((i, s0, s1, z0, z1),) = [
+        (e, *h) for e, hs in massing.edge_openings(ring, [cw]).items() for h in hs
+    ]
+    a, bb = ring[i][:2], ring[(i + 1) % len(ring)][:2]
+    length = math.dist(a, bb)
+    u = ((bb[0] - a[0]) / length, (bb[1] - a[1]) / length)
+    n = (u[1], -u[0])
+    depth, back = cw.get("reveal", 0.3), cw.get("glass_back", 0.12)
+    reveal = kit.mat("plaster", "reveal_" + hexes["wall"][1:], kit.srgb(hexes["wall"]), 0.9)
+    fhex = cw.get("frame", "#592d28")
+    frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
+
+    def pt(s, z, off):  # along the wall, height, out (+) or in (-)
+        return (a[0] + u[0] * s + n[0] * off, a[1] + u[1] * s + n[1] * off, z)
+
+    for q in (
+        [pt(s0, z0, 0), pt(s0, z0, -depth), pt(s0, z1, -depth), pt(s0, z1, 0)],
+        [pt(s1, z0, -depth), pt(s1, z0, 0), pt(s1, z1, 0), pt(s1, z1, -depth)],
+        [pt(s0, z1, 0), pt(s0, z1, -depth), pt(s1, z1, -depth), pt(s1, z1, 0)],
+        [pt(s1, z0, 0), pt(s1, z0, -depth), pt(s0, z0, -depth), pt(s0, z0, 0)],
+    ):
+        b.faces(q, [(0, 1, 2, 3)], reveal)
+    b.faces([pt(s0, z0, -back), pt(s1, z0, -back), pt(s1, z1, -back), pt(s0, z1, -back)],
+            [(0, 1, 2, 3)], glass)  # fmt: skip
+    for off in (-back + 0.03, -back - 0.03):  # the grid on both faces of the glass
+        for bs0, bs1, bz0, bz1 in massing.curtain_bars(s0, s1, z0, z1, cw["cols"], cw["rows"]):
+            q = [pt(bs0, bz0, off), pt(bs1, bz0, off), pt(bs1, bz1, off), pt(bs0, bz1, off)]
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
+
+
 def _deck_levels(b, part, ring, top, ground, band, void):
     """Open parking levels: a dark opening between spandrel bands, columns every 9 m."""
     levels = part.get("levels", 4)
@@ -273,8 +308,10 @@ def part(lay_part, name, ground, image_dir=None):
     ]
     # a deck's ramp is a slab in the well of its deck: walls of its own would lie in the faces of
     # the well's walls
-    holes = massing.edge_openings(ring, p["openings"]) if p.get("openings") else {}
-    cells = _recessed_cells(p, ring, tops, ground)
+    cuts = list(p.get("openings", ())) + list(p.get("curtains", ()))
+    holes = massing.edge_openings(ring, cuts) if cuts else {}
+    # a window of the grid never crosses an opening or a curtain wall
+    cells = massing.clear_of(_recessed_cells(p, ring, tops, ground), holes)
     for c in cells:  # recessed windows are openings too
         holes.setdefault(c["edge"], []).append((c["s0"], c["s1"], c["z0"], c["z1"]))
     if holes:  # walls cut round the openings (a flat-topped part: one top per edge)
@@ -340,6 +377,8 @@ def part(lay_part, name, ground, image_dir=None):
     elif p.get("windows"):
         glass = kit.mat("glass", "window", kit.srgb("#2b3640"), 0.15)
         _windows(b, p, ring, wall_top, local, glass, holes)
+    for cw in p.get("curtains", ()):
+        _curtain(b, ring, cw, hexes)
     if p.get("sheets"):
         _sheet_uvs(b, deck, p["sheets"][0])
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads

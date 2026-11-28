@@ -123,6 +123,7 @@
     0,
     1,
     2,
+    6,
     8,
     9,
     10,
@@ -422,7 +423,25 @@
     ]
    },
    "evidence": "osm way 1188721159; lidar2017 raw points; ortho2020; main model materials",
-   "unverified": "window grid (the east band's rows follow the adopted south windows; its basement row, 135.3..137.0, is a guess); crest shape (one plane from the wall top to a crest 6 m in, 5 m on the north-east block, where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands; edge 12 (north end) keeps no ring although the LiDAR has one there: a ring on it would need a cap in edge 11's plane that cuts through edge 9's ring"
+   "unverified": "window grid (the east band's rows follow the adopted south windows; its basement row, 135.3..137.0, is a guess); crest shape (one plane from the wall top to a crest 6 m in, 5 m on the north-east block, where the LiDAR has 25..30 deg); colours; the flat roof's edge along the porch, where the adopted gable stands; edge 12 (north end) keeps no ring although the LiDAR has one there: a ring on it would need a cap in edge 11's plane that cuts through edge 9's ring",
+   "curtains": [
+    {
+     "at": [
+      32.65,
+      -1.966
+     ],
+     "to": [
+      33.764,
+      2.497
+     ],
+     "z0": 138.3,
+     "z1": 144.3,
+     "cols": 4,
+     "rows": 3,
+     "frame": "#592d28",
+     "why": "the east bay's tall window (Joe's photos ccom_f1_east_photo1/5_joe_20261128: dark red mullion grid about 4 lights by 3, sill about 0.6 m over the floor, top well above the lounge ceiling, in a double-height bay); its width from the floor 1 sign, which draws this stretch of the wall as glazing (building v 5.8..10.4); sill 138.3 (floor 137.7 + 0.6), top 144.3 (the adopted south windows' head) and the 4 x 3 grid: UNVERIFIED; the bay's side walls are plain (photo 5: white walls, a dark steel door on one side), so edge 6, the bay's south wall, has no windows"
+    }
+   ]
   }
  ]
 }
