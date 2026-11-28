@@ -177,3 +177,28 @@ export function sightPass(ids, memo, cast, { budget = 12, here = -1 } = {}) {
 export function sightPending(ids, memo, from, here = -1) {
   return ids.some(id => id !== here && (memo.get(id)?.pass ?? 0) < from);
 }
+
+/** Texels per row of the volume texture (packVolumes); also the most volumes it holds. */
+export const VOL_TEX_W = 256;
+
+/**
+ * Every volume packed for the shaders (look.js), as RGBA float texels in rows of VOL_TEX_W, so the count is limited
+ * only by the texture (256 volumes, any number of ring points), not by shader uniform slots. Texel index i lies at
+ * (i % W, floor(i / W)). Texel v: ring start, ring length, y0, y1. Texel W + v: the ring's box grown by `grow`
+ * (x0, z0, x1, z1). Texel 2W + v: ceiling. Texel 3W + k: ring point k (x, z). Returns { data, width, height, n }.
+ */
+export function packVolumes(volumes, grow = GLASS_GROW, W = VOL_TEX_W) {
+  const vs = volumes.slice(0, W), points = vs.reduce((s, v) => s + v.ring.length, 0);
+  const height = 3 + Math.max(1, Math.ceil(points / W)), data = new Float32Array(W * height * 4);
+  const put = (i, a, b, c, d) => data.set([a, b, c, d], i * 4);
+  let at = 0;
+  vs.forEach((v, k) => {
+    const xs = v.ring.map(p => p[0]), zs = v.ring.map(p => p[1]);
+    put(k, at, v.ring.length, v.y0, v.y1);
+    put(W + k, Math.min(...xs) - grow, Math.min(...zs) - grow, Math.max(...xs) + grow, Math.max(...zs) + grow);
+    put(2 * W + k, v.ceiling ?? v.y1, 0, 0, 0);
+    v.ring.forEach((p, j) => put(3 * W + at + j, p[0], p[1], 0, 0));
+    at += v.ring.length;
+  });
+  return { data, width: W, height, n: vs.length };
+}
