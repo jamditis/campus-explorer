@@ -132,3 +132,9 @@ test('finishMetal restores satin metalness and roughness after a concrete overwr
   assert.equal(bin.metalness, 1);
   assert.equal(bin.roughness, 0.32);
 });
+
+test('fixTone gives the skyline stand-in a plain grey; the far haze adds the blue', () => {
+  const c = { r: 0.42, g: 0.47, b: 0.53, multiplyScalar() { return this; } };
+  fixTone('BD_skyline_silhouette_STANDIN_haze', c, false);
+  assert.deepEqual([c.r, c.g, c.b], [0.24, 0.24, 0.24]);
+});

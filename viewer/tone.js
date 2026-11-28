@@ -18,6 +18,10 @@ const AUTHORED = {
 };
 
 const TURF = [0.03, 0.12, 0.04]; // COLOUR["turf"] in blender/scripted/ground.py (UNVERIFIED tone)
+// The skyline stand-in (tools/web-export/farcut.mjs) was exported pale blue: haze painted into the colour. The
+// viewer's far haze (look.js) now does that per distance and time of day, so it gets a plain city grey
+// (UNVERIFIED: a mean of glass, stone and steel facades, chosen by eye).
+const SKYLINE = [0.24, 0.24, 0.24];
 
 function setColor(color, rgb) {
   if (typeof color.setRGB === 'function') color.setRGB(rgb[0], rgb[1], rgb[2]);
@@ -26,6 +30,7 @@ function setColor(color, rgb) {
 
 export function fixTone(name, color, hasMap) {
   if (hasMap || !color) return color;
+  if (/skyline_silhouette/i.test(name)) { setColor(color, SKYLINE); return color; }
   if (/granite/i.test(name) && /curb/i.test(name)) {
     const l = lum(color);
     if (l > 0.5) color.multiplyScalar(0.44); // Granite002A mean ~0.44 linear
