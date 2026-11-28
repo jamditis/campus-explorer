@@ -57,27 +57,47 @@ class Roofs(unittest.TestCase):
         self.assertTrue(all(len(f) == 3 for f in slopes))
         self.assertEqual({p for f in slopes for p in f if p[2] == 54.0}, {(5.0, 5.0, 54.0)})
 
+    def _eaves_ok(self, ring, kind, top, eave, ridge_angle=None, d=1.0, convex=True):
+        _tops, slopes, _gables = massing.roof(ring, kind, top, eave, ridge_angle)
+        eaves = massing.overhang_roof(ring, slopes, d)
+        self.assertTrue(eaves, kind)
+        for face in eaves:
+            self.assertGreater(normal_z(face), 0, "faces up")
+            # each eave face lies in the plane of a roof face it touches along the wall line
+            fits = []
+            for s_face in slopes:
+                z, _n = massing._plane(s_face)
+                fits.append(max(abs(z(x, y) - q) for x, y, q in face))
+            self.assertLess(min(fits), 1e-6, f"{kind}: an eave face leaves its roof plane")
+        # where eave faces meet off the wall line they meet at one height: no step
+        heights = {}
+        for face in eaves:
+            for x, y, z in face:
+                heights.setdefault((round(x, 5), round(y, 5)), []).append(z)
+        for zs in heights.values():
+            self.assertLess(max(zs) - min(zs), 1e-6, kind)
+        if convex:  # roof and eaves together cover the outline moved out, once
+            plan = sum(abs(geom.area([q[:2] for q in f])) for f in slopes + eaves)
+            self.assertAlmostEqual(plan, abs(geom.area(geom.offset(ring, -d, True))), 6)
+        return slopes, eaves
+
     def test_an_overhang_carries_each_face_out_in_its_own_plane(self):
         for kind in ("hip", "gable"):
-            _tops, slopes, _gables = massing.roof(RECT, kind, 18.0, 12.0)
-            wide = massing.overhang_roof(RECT, kind, 18.0, 12.0, 1.5)
-            self.assertEqual(len(wide), len(slopes), kind)
-            for face, big in zip(slopes, wide, strict=True):
-                (ax, ay, az), (bx, by, bz), (cx, cy, cz) = big[:3]
-                nx = (by - ay) * (cz - az) - (bz - az) * (cy - ay)
-                ny = (bz - az) * (cx - ax) - (bx - ax) * (cz - az)
-                nz = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)
-                for x, y, z in face:  # the wall-top roof lies in the wide one's plane
-                    off = nx * (x - ax) + ny * (y - ay) + nz * (z - az)
-                    self.assertAlmostEqual(off / math.hypot(nx, ny, nz), 0.0, 6, kind)
-            # the ridge stays at the top, the eave drops by the overhang times the pitch (6/5)
-            zs = [q[2] for face in wide for q in face]
-            self.assertAlmostEqual(max(zs), 18.0)
-            self.assertAlmostEqual(min(zs), 12.0 - 1.5 * 6.0 / 5.0)
+            self._eaves_ok(RECT, kind, 18.0, 12.0)
+        # a hip with its ridge across the short side: long and end faces of different pitch
+        self._eaves_ok(RECT, "hip", 18.0, 12.0, ridge_angle=90)
+        # a narrow mansard, its slopes steeper than 45 degrees; an L-shaped one with a reflex corner
+        self._eaves_ok([(0, 0), (30, 0), (30, 2), (0, 2)], "hip", 18.0, 12.0)
+        ell = [(0, 0), (30, 0), (30, 2), (15, 2), (15, 4), (0, 4)]
+        self._eaves_ok(ell, "hip", 18.0, 12.0, convex=False)
 
-    def test_an_overhang_needs_a_pitched_roof(self):
-        with self.assertRaises(ValueError):
-            massing.overhang_roof(RECT, "shed", 14.0, 12.0, 1.0)
+    def test_an_overhang_leaves_a_mansard_top_and_its_wells_alone(self):
+        ring = [(0, 0), (20, 0), (20, 20), (10, 26), (0, 20)]
+        slopes, eaves = self._eaves_ok(ring, "hip", 30.0, 26.0)
+        cap = slopes[-1]
+        for face in eaves:  # nothing reaches in to the flat top
+            for x, y, _z in face:
+                self.assertFalse(geom.inside([q[:2] for q in cap], x, y))
 
     def test_shed_is_high_on_the_left_of_the_ridge_direction(self):
         tops, slopes, _g = massing.roof(RECT, "shed", 53.0, eave=50.0, ridge_angle=0.0)

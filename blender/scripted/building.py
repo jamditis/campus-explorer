@@ -264,8 +264,12 @@ def part(lay_part, name, ground, image_dir=None):
     # walls go 0.6 m into the lowest ground round the part, or stand on another part's roof
     samples = [q[:2] for q in geom.resample(ring, 2.0, True)]
     base = p["base"] if "base" in p else min(ground(x, y) for x, y in samples) - 0.6
+    # wide eaves (`overhang`): faces that carry each roof face past the walls in its own plane
+    eaves = massing.overhang_roof(ring, slopes, p["overhang"]) if p.get("overhang") else []
+    if eaves and kind == "flat":
+        raise ValueError(f"{name}: an overhang needs a pitched roof")
     if p.get("open"):
-        return _canopy(name, p, ring, kind, tops, slopes, ground, hexes["roof"])
+        return _canopy(name, p, ring, kind, tops, slopes + eaves, ground, hexes["roof"])
     b = kit.Builder(name)
     n = len(ring)
     v = [(q[0], q[1], base) for q in ring] + [
@@ -325,14 +329,9 @@ def part(lay_part, name, ground, image_dir=None):
                 raise ValueError(f"{name}: wells need a flat roof or a mansard top")
             cap = slopes.pop()
             _deck(b, [q[:2] for q in cap], p["top"], wells, sheet, trim)
-        if p.get("overhang"):  # wide eaves: the faces carried past the walls, a soffit under them
-            if wells:
-                raise ValueError(f"{name}: an overhang and wells do not go together")
-            slopes = massing.overhang_roof(
-                ring, kind, p["top"], p["eave"], p["overhang"], p.get("ridge_angle")
-            )
-            _soffit(b, slopes, p.get("soffit", hexes["trim"]))
-        for face in slopes:
+        if eaves:
+            _soffit(b, eaves, ring, p.get("soffit", hexes["trim"]))
+        for face in slopes + eaves:
             b.faces(face, [tuple(range(len(face)))], sheet)
     wall_top = min(tops) - (p.get("parapet", PARAPET.get(style, 0.4)) if kind == "flat" else 0.0)
 
@@ -352,23 +351,28 @@ def part(lay_part, name, ground, image_dir=None):
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
 
 
-def _soffit(b, faces, colour, depth=0.15):
-    """The underside of an overhanging roof: each face again `depth` lower, facing down, and a
-    fascia round the roof's outer edge (the edges only one face has)."""
+def _soffit(b, eaves, ring, colour, depth=0.15):
+    """The underside of the eaves (massing.overhang_roof): each face again `depth` lower, facing
+    down, and a fascia along the roof's outer edge (eave edges only one face has, off the wall
+    line)."""
     mat = kit.mat("paint", "soffit_" + colour[1:], kit.srgb(colour), 0.8)
     count = {}
-    for face in faces:
+
+    def key(a, c):
+        return tuple(sorted((tuple(round(v, 4) for v in a), tuple(round(v, 4) for v in c))))
+
+    for face in eaves:
         under = [(x, y, z - depth) for x, y, z in face]
         b.faces(under, [tuple(range(len(face) - 1, -1, -1))], mat)
         for i in range(len(face)):
-            a, c = face[i], face[(i + 1) % len(face)]
-            key = tuple(sorted((tuple(round(v, 4) for v in a), tuple(round(v, 4) for v in c))))
-            count[key] = count.get(key, 0) + 1
-    for face in faces:
+            k = key(face[i], face[(i + 1) % len(face)])
+            count[k] = count.get(k, 0) + 1
+    walls = [(ring[i], ring[(i + 1) % len(ring)]) for i in range(len(ring))]
+    for face in eaves:
         for i in range(len(face)):
             a, c = face[i], face[(i + 1) % len(face)]
-            key = tuple(sorted((tuple(round(v, 4) for v in a), tuple(round(v, 4) for v in c))))
-            if count[key] == 1:
+            outside = all(min(massing._seg_dist(q[:2], *w) for w in walls) > 0.05 for q in (a, c))
+            if count[key(a, c)] == 1 and outside:
                 q = [c, a, (a[0], a[1], a[2] - depth), (c[0], c[1], c[2] - depth)]
                 b.faces(q, [(0, 1, 2, 3)], mat)
 
