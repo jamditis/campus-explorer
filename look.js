@@ -12,6 +12,7 @@ import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
 import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
+import { CANOPY, NOISE_Q } from './viewer/farview-math.js';
 export { fixTone, fixCat };
 
 // --- haze (aerial perspective) for every material that takes fog: see haze-math.js transmittance ---
@@ -389,6 +390,89 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     paintUniforms.pMap.value = maps; paintUniforms.pBox.value = boxes; paintUniforms.pN.value = paint.length;
   }
   const macroUniform = { value: 1 };
+
+  // --- far view: tree canopy where the USFS canopy cover map (viewer/canopy.webp) puts it, on the far ground and
+  // over the far houses. The map's 60 m cells give the cover share; near, crowns come from noise at 9 m cells
+  // thresholded so the covered area matches the map (farview-math.js crownShare); far, a pixel takes the share
+  // itself. Not within 150 m of the camera (the modelled trees are there). The colour is a summer canopy green
+  // (UNVERIFIED tone, set by eye against the modelled trees). Changes albedo only, so it is lit like the ground
+  const CANOPY_U = {
+    canopyOn: { value: 0 }, // 1 once the map has loaded: until then (or if it fails) the ground keeps its own look
+    canopyMap: { value: EMPTY },
+    canopyBox: { value: new THREE.Vector4(CANOPY.box[0], CANOPY.box[1], CANOPY.box[2] - CANOPY.box[0], CANOPY.box[3] - CANOPY.box[1]) },
+  };
+  function loadCanopy() {
+    if (CANOPY_U.canopyMap.value !== EMPTY) return;
+    const t = loader.load(CANOPY.file, () => { CANOPY_U.canopyOn.value = 1; onChange(); },
+      undefined, e => { console.warn('canopy map did not load', e); CANOPY_U.canopyMap.value = EMPTY; }); // a later tile tries again
+    t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.anisotropy = 4;
+    CANOPY_U.canopyMap.value = t;
+  }
+  /** Draw canopy over a far-ground material, or (houses) sink a far-house material into it. */
+  function canopy(m, houses = false) {
+    if (!m || m.userData.canopy) return;
+    m.userData.canopy = true; loadCanopy();
+    const base = m.onBeforeCompile, key = m.customProgramCacheKey.call(m);
+    m.onBeforeCompile = (sh, r) => {
+      base.call(m, sh, r);
+      Object.assign(sh.uniforms, CANOPY_U);
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCaPos; varying vec3 vCaNrm;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vec4 caW = vec4(transformed, 1.0); vec3 caN = objectNormal;
+          #ifdef USE_INSTANCING
+            caW = instanceMatrix * caW; caN = mat3(instanceMatrix) * caN;
+          #endif
+          vCaPos = (modelMatrix * caW).xyz; vCaNrm = mat3(modelMatrix) * caN;`);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          uniform sampler2D canopyMap; uniform vec4 canopyBox; uniform float canopyOn; varying vec3 vCaPos; varying vec3 vCaNrm;
+          float caHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+          float caNoise(vec2 p) {
+            vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(caHash(i), caHash(i + vec2(1.0, 0.0)), f.x), mix(caHash(i + vec2(0.0, 1.0)), caHash(i + 1.0), f.x), f.y);
+          }
+          const float caQ[21] = float[](${NOISE_Q.map(v => v.toFixed(4)).join(', ')});
+          float caQuantile(float u) { // farview-math.js noiseQuantile
+            float t = clamp(u, 0.0, 1.0) * 20.0; int i = min(19, int(floor(t)));
+            return mix(caQ[i], caQ[i + 1], t - float(i));
+          }
+`)
+        .replace('#include <alphamap_fragment>', `{
+            vec2 cuv = (vCaPos.xz - canopyBox.xy) / canopyBox.zw;
+            float caNear = canopyOn * smoothstep(150.0, 600.0, length(vCaPos - cameraPosition));
+            if (caNear > 0.0 && cuv.x > 0.0 && cuv.y > 0.0 && cuv.x < 1.0 && cuv.y < 1.0) {
+              float cover = texture2D(canopyMap, cuv).r; // percent * 2.55 / 255: the cover share
+              // crown noise (farview-math.js crownNoise): two octaves of value noise at 9 m, rounded crowns
+              vec2 q = vCaPos.xz / 9.0;
+              float n = 0.65 * caNoise(q) + 0.35 * caNoise(q * 2.7 + 13.1);
+              float detail = 1.0 - smoothstep(0.6, 2.5, length(fwidth(q)));
+              // water (blue in the land cover map) keeps its colour: no crowns, no suburb tint (the 60 m canopy cells
+              // blur the shore, so a pond can sample some cover from the land round it)
+              float caWater = ${houses ? '0.0' : 'smoothstep(0.0, 0.03, diffuseColor.b - max(diffuseColor.r, diffuseColor.g))'};
+              ${houses ? `
+              vec3 Nw = normalize(vCaNrm);
+              float share = cover * (abs(Nw.y) < 0.5 ? 0.75 : 0.35); // walls sink into the trees more than roofs` : `
+              // above the noise's own (1 - cover) quantile, so the crowns cover the map's share (crownShare)
+              float x = clamp((n - caQuantile(1.0 - cover) + 0.02) / 0.04, 0.0, 1.0);
+              float crowns = cover <= 0.0 ? 0.0 : cover >= 1.0 ? 1.0 : x * x * (3.0 - 2.0 * x);
+              float share = crowns * detail + cover * (1.0 - detail);
+              // the open ground between the trees of a suburb is roofs, roads and lawn, not all lawn: from afar a
+              // grey-brown (UNVERIFIED mean, set by eye), more of it where there are fewer trees
+              diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.085, 0.080, 0.068), 0.5 * (1.0 - cover) * caNear * (1.0 - caWater));`}
+              vec3 green = vec3(0.030, 0.046, 0.020) * (0.75 + 0.5 * mix(0.5, n, detail));
+              green = mix(green, vec3(0.040, 0.044, 0.022), caHash(floor(vCaPos.xz / 23.0)) * 0.5); // some crowns yellower
+              diffuseColor.rgb = mix(diffuseColor.rgb, green, share * caNear * (1.0 - caWater));
+            }
+          }
+          #include <alphamap_fragment>`);
+    };
+    m.customProgramCacheKey = () => key + (houses ? '_canopyH' : '_canopyG');
+    m.needsUpdate = true;
+  }
+
+  canopy(farGround.material); // lite profile's flat far ground
+
 
   function texturize(m, cat) {
     const def = CATS[cat]; if (!def || m.userData.tp) return;
@@ -943,6 +1027,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         }
         // after texturize, which sets the shader hook that this one chains
         if (/skyline_silhouette/i.test(m.name) || /^(far_houses|HouseProxy_(Brick|Siding))/i.test(m.name)) cityLights(m, /skyline/i.test(m.name));
+        if (/farfield_ortho/i.test(m.name)) canopy(m); // the far 3DEP ground out to 29 km
+        if (/^(far_houses|HouseProxy_)/i.test(m.name)) canopy(m, true);
       }
     });
     register(root);
@@ -954,7 +1040,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function forget(root) { items = items.filter(it => it.root !== root); decorated.delete(root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
   function reset() { items = []; decorated.clear(); lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, setMoon, resize, reset, sun, setInteriors,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, setMoon, resize, reset, sun, setInteriors, canopy,
     interiorUniforms: giUniforms, // tests: giN 0 switches the per-pixel volume tests off
     haze: HAZE, nightSky: NIGHT_SKY, // tests and tuning
     invalidateShadows() { shadowDirty = true; },

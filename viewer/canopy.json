@@ -1,0 +1,19 @@
+{
+ "source": "USFS Tree Canopy Cover (NLCD), via MRLC; public domain",
+ "year": 2023,
+ "frame": "Blender metres from the EPSG:6527 origin; x east, y grid north",
+ "box": [
+  -10000.0,
+  -20000.0,
+  21980.0,
+  10000.0
+ ],
+ "cell": 60.0,
+ "size": [
+  533,
+  500
+ ],
+ "rows": "north to south",
+ "value": "canopy percent * 2.55",
+ "mean_percent": 21.9
+}
