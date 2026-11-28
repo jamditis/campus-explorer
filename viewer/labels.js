@@ -232,9 +232,10 @@ export function createLabels(app) {
     }),
   ];
   if (app.places?.length) build();
-  // after the click's handlers have opened or closed the panel
+  // after the click's or key's handlers have opened or closed the panel (Escape closes the route picker)
   const onClick = () => setTimeout(readBlocked, 50);
   addEventListener('click', onClick, true);
+  addEventListener('keyup', onClick, true);
   readBlocked();
   document.fonts?.ready.then(() => { measure(true); dirty = true; });
 
@@ -246,6 +247,7 @@ export function createLabels(app) {
       clearTimeout(highlightTimer);
       for (const off of offs) off();
       removeEventListener('click', onClick, true);
+      removeEventListener('keyup', onClick, true);
       layer.remove(); labels = [];
     },
   };
