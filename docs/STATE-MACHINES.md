@@ -81,7 +81,24 @@ stateDiagram-v2
   noroute --> none: Clear or walk mode left
 ```
 
-**In flight (#132, loj-cewayfind):** the navigation display (slice 4).
+**Navigation display** (`viewer/nav.js`, `viewer/nav-math.js`): follows the `route` event.
+
+- **State:** `nav` (`{ line, turns, place, stepFree, s, seg, along }` or null), `arrived`, `offSince` (when the walker first went off the route).
+- **Each frame in walk mode:** progress along the route (`progress`, searched only up to 40 m past `s`), the walked part of the ribbon hidden (draw range), the card text and arrow updated five times a second.
+
+```mermaid
+stateDiagram-v2
+  [*] --> idle
+  idle --> guiding: route event with a route
+  guiding --> guiding: next turn passed / new route
+  guiding --> rerouting: more than 25 m (plus GPS accuracy) off the route for 3 s
+  rerouting --> guiding: route.go from here
+  rerouting --> idle: no route from here
+  guiding --> arrived: within 10 m of the entrance
+  arrived --> guiding: new route
+  guiding --> idle: route null (Clear, walk mode left)
+  arrived --> idle: route null
+```
 **In flight (#119 and PR #140, a4k-ceopt; door leaves from the export, a4k-cebldg):** entrance doors that open for the walker in walk mode.
 
 ### View tools: tour, measure, film, hunt
