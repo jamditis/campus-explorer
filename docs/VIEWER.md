@@ -208,7 +208,7 @@ flat disc) and of the far houses:
   `1 - cover` itself covered 14 % for a 20 % cell), so the covered area matches the map (`tests/farview.test.mjs`);
   far, the pixel takes the cover share (`crownShare`). Crowns are a summer canopy green
   with some yellower ones; the open ground between them goes toward a grey-brown suburb mean (roofs, roads and lawn),
-  more where there are fewer trees, except water (blue in the land cover map), which keeps its colour. UNVERIFIED colours, set by eye. Nothing within 150 m of the camera (the modelled
+  more where there are fewer trees. Water (blue in the land cover map) keeps its colour: no crowns, no tint. UNVERIFIED colours, set by eye. Nothing within 150 m of the camera (the modelled
   trees are there), full from 600 m.
 - **Far houses** take the canopy colour by the cover share where they stand, walls more than roofs, so they sink into
   the trees instead of standing on a lawn.

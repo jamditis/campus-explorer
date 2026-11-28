@@ -447,6 +447,9 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
               vec2 q = vCaPos.xz / 9.0;
               float n = 0.65 * caNoise(q) + 0.35 * caNoise(q * 2.7 + 13.1);
               float detail = 1.0 - smoothstep(0.6, 2.5, length(fwidth(q)));
+              // water (blue in the land cover map) keeps its colour: no crowns, no suburb tint (the 60 m canopy cells
+              // blur the shore, so a pond can sample some cover from the land round it)
+              float caWater = ${houses ? '0.0' : 'smoothstep(0.0, 0.03, diffuseColor.b - max(diffuseColor.r, diffuseColor.g))'};
               ${houses ? `
               vec3 Nw = normalize(vCaNrm);
               float share = cover * (abs(Nw.y) < 0.5 ? 0.75 : 0.35); // walls sink into the trees more than roofs` : `
@@ -456,12 +459,10 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
               float share = crowns * detail + cover * (1.0 - detail);
               // the open ground between the trees of a suburb is roofs, roads and lawn, not all lawn: from afar a
               // grey-brown (UNVERIFIED mean, set by eye), more of it where there are fewer trees
-              // water (blue in the land cover map, no trees in the canopy map) keeps its colour
-              float caWater = smoothstep(0.0, 0.03, diffuseColor.b - max(diffuseColor.r, diffuseColor.g));
               diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.085, 0.080, 0.068), 0.5 * (1.0 - cover) * caNear * (1.0 - caWater));`}
               vec3 green = vec3(0.030, 0.046, 0.020) * (0.75 + 0.5 * mix(0.5, n, detail));
               green = mix(green, vec3(0.040, 0.044, 0.022), caHash(floor(vCaPos.xz / 23.0)) * 0.5); // some crowns yellower
-              diffuseColor.rgb = mix(diffuseColor.rgb, green, share * caNear);
+              diffuseColor.rgb = mix(diffuseColor.rgb, green, share * caNear * (1.0 - caWater));
             }
           }
           #include <alphamap_fragment>`);
