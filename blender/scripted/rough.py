@@ -386,8 +386,11 @@ def _blocked(lob, inside, lining, cores):
     to spare and pass no stair or lift."""
     route = lob["route"]
     legs = [leg for leg in zip(route, route[1:], strict=False) if math.dist(*leg) > 0.01]
-    if not legs:
-        return None  # the door is on the corridor: no walk to clear
+    if not legs:  # the door is on the corridor: no walk, but no stair or lift may stand on it
+        for c in cores:
+            if geom.inside(inset(c["ring"], -0.01), *route[-1]):
+                return f"stands in a {c['kind']}: move it or the corridor"
+        return None
     for k, leg in enumerate(legs):
         part = rooms.clip(leg, inside=inside)
         if not part or math.dist(part[0][0], leg[0]) > 0.01:
@@ -546,6 +549,10 @@ def floors(r):
         if not dining
     ]
     cores = [] if dining else _cores(r, ends, spines, lobbies, rings)
+    for i, a in enumerate(cores):  # solid stairs and lifts may not stand in one another
+        for b in cores[i + 1 :]:
+            if _overlap(a["ring"], b["ring"]):
+                raise ValueError(f"{name}: a {a['kind']} and a {b['kind']} overlap: move one")
     for e, lob in zip(entrances if lobbies else [], lobbies, strict=True):
         why = _blocked(lob, *rings[e["level"]][1:], cores)
         if why:

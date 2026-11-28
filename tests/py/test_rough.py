@@ -375,6 +375,29 @@ class Options(unittest.TestCase):
         )
         self.assertEqual(len(rough.floors(r)), 3)
 
+    def test_a_door_inside_a_stair_is_refused(self):
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59, 10]]],
+            cores=[dict(kind="stair", at=[3.5, 10])],
+            entrances=[dict(at=[0.6, 10], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "stands in a stair"):
+            rough.floors(r)
+
+    def test_overlapping_cores_are_refused(self):
+        # a narrow bar: the default stair finds no clear side and the lift stands in it
+        r = dict(
+            BAR,
+            outline=[[0, 0], [60, 0], [60, 9], [0, 9]],
+            entrances=[dict(at=[7, -0.5], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "overlap"):
+            rough.floors(r)
+        r = dict(BAR, cores=[dict(kind="stair", at=[20, 15]), dict(kind="lift", at=[21, 15])])
+        with self.assertRaisesRegex(ValueError, "overlap"):
+            rough.floors(r)
+
     def test_a_way_in_through_a_lift_is_refused(self):
         r = dict(
             BAR,
