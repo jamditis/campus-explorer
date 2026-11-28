@@ -109,3 +109,13 @@ export function starsShown(sunElevation) {
   const t = Math.min(1, Math.max(0, (sunElevation + 12) / 8));
   return 1 - t * t * (3 - 2 * t);
 }
+
+/**
+ * How strong the night sky's light dome is toward a bearing (degrees from true north), as the sky shader in look.js
+ * draws it: a broad glow toward Midtown Manhattan (124 degrees), a bright core over it and a weaker one over Newark
+ * and its airport (168 degrees), so the two cities show as two peaks with a dip between. About 1 toward Manhattan.
+ */
+export function domeShape(bearing) {
+  const c = d => Math.max(Math.cos((bearing - d) * Math.PI / 180), 0);
+  return 0.5 * c(124) ** 1.5 + 0.5 * c(124) ** 20 + 0.45 * c(168) ** 20;
+}

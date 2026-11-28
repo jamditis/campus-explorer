@@ -336,8 +336,9 @@ following the camera; a still view is not redrawn.
   formula. Its dark patches are a rough sketch of the maria (UNVERIFIED shapes). By day only its lit part shows,
   pale. It brightens the night sky with its lit fraction (`look.setMoon`).
 - **Light dome** (`look.js`, the sky shader). The night sky over Montclair is never black: a warm glow low in every
-  direction over a dark blue zenith, in two lobes: wide and strongest toward Midtown Manhattan (bearing 124 degrees),
-  weaker toward Newark and its airport (168 degrees), standing higher over the cities. UNVERIFIED colours and
+  direction over a dark blue zenith, in two peaks with a dip between (`domeShape` in `viewer/sky-math.js`): a broad
+  glow and a bright core toward Midtown Manhattan (bearing 124 degrees), a weaker core over Newark and its airport (168
+  degrees), standing higher over the cities. UNVERIFIED colours and
   strengths, set by eye. The environment sky has it too, so night reflections and the haze colour follow.
 - **City lights.** The far houses (`far_houses.glb`, the house proxies in `context.glb`) light windows on their walls
   (3 m bays, 2.8 m storeys) one by one as it gets dark, up to one in four, from the sun 2 degrees up to 6 down. The

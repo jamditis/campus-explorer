@@ -158,7 +158,10 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           vec2 nH = direction.xz; float nL = length( nH );
           vec2 nD = nL > 1e-4 ? nH / nL : vec2( 0.0 );
           // two lobes: Manhattan (wide, strongest) and Newark with its airport, south of it
-          float nToward = max( pow( max( dot( nD, glowDir.xz ), 0.0 ), 1.5 ), 0.6 * pow( max( dot( nD, vec2( ${GLOW_DIR2[0].toFixed(4)}, ${GLOW_DIR2[2].toFixed(4)} ) ), 0.0 ), 2.0 ) );
+          // a broad glow toward Manhattan, a bright core over it and one over Newark, 44 degrees apart: two
+          // peaks with a dip between (each core falls to half within about 15 degrees)
+          float nM = max( dot( nD, glowDir.xz ), 0.0 ), nN = max( dot( nD, vec2( ${GLOW_DIR2[0].toFixed(4)}, ${GLOW_DIR2[2].toFixed(4)} ) ), 0.0 );
+          float nToward = 0.5 * pow( nM, 1.5 ) + 0.5 * pow( nM, 20.0 ) + 0.45 * pow( nN, 20.0 ); // sky-math.js domeShape
           float nLow = exp( - nEl / ( 0.09 + 0.05 * nToward ) );                      // the dome stands higher over the cities
           vec3 nCol = vec3( 0.0035, 0.0055, 0.0125 ) * ( 1.0 + 1.5 * moonK )          // zenith: dark blue, brighter under a full moon
                     + vec3( 0.03, 0.021, 0.014 ) * nLow * ( 0.55 + 1.9 * nToward ); // light dome, warm, mostly east

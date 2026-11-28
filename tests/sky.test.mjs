@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { gmstDeg, equatorialToHorizon, altAz, moonPosition, starBrightness, starColor, starsShown } from '../viewer/sky-math.js';
+import { gmstDeg, equatorialToHorizon, altAz, moonPosition, starBrightness, starColor, starsShown, domeShape } from '../viewer/sky-math.js';
 import { sunPosition } from '../viewer/sun.js';
 
 const near = (a, b, tol, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg ?? ''} ${a} vs ${b} (tol ${tol})`);
@@ -82,4 +82,13 @@ test('stars fade in from civil dusk to nautical dusk', () => {
   assert.equal(starsShown(-12), 1);
   assert.equal(starsShown(-40), 1);
   near(starsShown(-8), 0.5, 1e-12);
+});
+
+test('the light dome has two peaks, Manhattan and Newark, with a dip between', () => {
+  const at = b => domeShape(b);
+  near(at(124), 1, 0.01);
+  for (const b of [118, 130]) assert.ok(at(b) < at(124), `Manhattan peak at ${b}`);
+  for (const b of [160, 176]) assert.ok(at(b) < at(168), `Newark peak at ${b}`);
+  assert.ok(at(146) < at(168) && at(168) < at(124), 'a dip between, Newark weaker');
+  assert.ok(at(300) === 0 && at(20) < 0.05, 'little or none away from the cities');
 });
