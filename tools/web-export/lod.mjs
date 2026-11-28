@@ -1,5 +1,6 @@
 // Far-distance version of a campus tile: drops instanced nodes (trees, repeated assets: the viewer keeps the full
 // tile's instances), interiors and meshes smaller than MIN m, then simplifies what is left without tearing it. usage: node lod.mjs in.glb out.glb
+// A piece the simplifying cut down (a mast's antenna, goalposts) is put back whole (pack.mjs keepSkyline).
 // Its images are half size per side (pack.mjs farImageSize); normals are 8-bit octahedral, as in the full tile.
 // A far version that keeps 80 % or more of both the tile's plain triangles and its draw calls, or nothing at all, is
 // not written (and an old one is removed): the viewer then draws the full tile at every distance (pack.mjs farWorthIt).
@@ -8,7 +9,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { weld, prune, dedup, meshopt, getBounds, compactPrimitive, dequantize, compressTexture } from '@gltf-transform/functions';
 import { MeshoptSimplifier, MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import sharp from 'sharp';
-import { farImageSize, farWorthIt } from './pack.mjs';
+import { farImageSize, farWorthIt, keepSkyline } from './pack.mjs';
 import { keepShared, sharedRefs } from './tex.mjs';
 import { writeFileSync, rmSync } from 'node:fs';
 const [inp, out] = process.argv.slice(2);
@@ -49,10 +50,11 @@ await doc.transform(prune(), dedup(), dequantize(), weld());
 // topology-preserving simplification (seams, hard edges and borders stay, so walls don't tear), with an error
 // bound in metres sized for viewing from a few hundred metres away; 'Prune' also removes small disconnected
 // pieces (tile courses, mullions, rails) that would vanish at that distance anyway
-let before = 0, after = 0;
-const meshScale = new Map();
+let before = 0, after = 0, restored = 0;
+const meshScale = new Map(), meshWorld = new Map();
 for (const node of root.listNodes()) {
   const m = node.getMesh(); if (!m) continue;
+  if (!meshWorld.has(m)) meshWorld.set(m, node.getWorldMatrix());
   const w = node.getWorldMatrix(); const s = Math.cbrt(Math.abs(w[0] * (w[5] * w[10] - w[6] * w[9]) - w[4] * (w[1] * w[10] - w[2] * w[9]) + w[8] * (w[1] * w[6] - w[2] * w[5]))) || 1;
   meshScale.set(m, Math.max(meshScale.get(m) || 0, s));
 }
@@ -60,7 +62,9 @@ for (const mesh of root.listMeshes()) for (const prim of mesh.listPrimitives()) 
   const idx = prim.getIndices(), pos = prim.getAttribute('POSITION'); if (!idx || !pos || prim.getMode() !== 4) continue;
   const P = new Float32Array(pos.getArray()), I = new Uint32Array(idx.getArray());
   const errLocal = ERR_M / (meshScale.get(mesh) || 1);
-  const [J] = MeshoptSimplifier.simplify(I, P, 3, Math.max(3, Math.floor(I.length * RATIO / 3) * 3), errLocal, ['ErrorAbsolute', 'Prune']);
+  const [S] = MeshoptSimplifier.simplify(I, P, 3, Math.max(3, Math.floor(I.length * RATIO / 3) * 3), errLocal, ['ErrorAbsolute', 'Prune']);
+  // pieces that simplifying cut down (a mast, goalposts) come back whole, so the skyline stays
+  const { indices: J, restored: r } = keepSkyline(P, I, S, meshWorld.get(mesh)); restored += r;
   before += I.length / 3; after += J.length / 3;
   if (J.length < 3) { prim.dispose(); continue; }
   idx.setArray(J); compactPrimitive(prim);
@@ -80,7 +84,7 @@ for (const t of root.listTextures()) {
   const size = t.getSize(), want = size && farImageSize(size);
   if (want && (want[0] !== size[0] || want[1] !== size[1])) await compressTexture(t, { encoder: sharp, targetFormat: 'webp', resize: want });
 }
-console.log('tris', before, '->', after);
+console.log('tris', before, '->', after, 'pieces kept whole', restored);
 // an image left as it was (64 px or less) still names its shared file, from the far version's folder
 writeFileSync(out, keepShared(await io.writeBinary(doc), sharedRefs(uris, inp, out)));
 console.log('lod', inp.split('/').pop(), 'dropped nodes', dropped);

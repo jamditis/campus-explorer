@@ -116,3 +116,36 @@ export function farWorthIt(full, far, keep = 0.8) {
   if (!far.tris) return false;
   return far.tris < keep * full.tris || far.draws < keep * full.draws;
 }
+
+/**
+ * Put back the pieces that simplifying cut down: a far version must keep the skyline. Simplifying to half a metre
+ * collapses a part narrower than that, so a TV mast lost its top 21.6 m, goalposts 6 m and a pavilion 15 m.
+ * A piece is a connected part of the mesh (vertices joined where they meet, so hard edges do not split it). One
+ * at least `tall` metres high (world y)
+ * whose top in `J` (the simplified triangles) is `drop` metres or more below its top in `I` (or gone) gets all its
+ * own triangles back, in place of what was left of it. P: positions (xyz), m: world matrix (16, column-major).
+ * Returns the triangle indices and how many pieces came back.
+ */
+export function keepSkyline(P, I, J, m, tall = 4, drop = 1) {
+  const n = P.length / 3, parent = new Int32Array(n).map((_, i) => i);
+  const find = i => { while (parent[i] !== i) i = parent[i] = parent[parent[i]]; return i; };
+  // vertices at the same place join (to the millimetre): a hard edge or a UV seam splits vertices but not a piece
+  const at = new Map();
+  for (let v = 0; v < n; v++) {
+    const k = `${Math.round(P[v * 3] * 1000)},${Math.round(P[v * 3 + 1] * 1000)},${Math.round(P[v * 3 + 2] * 1000)}`;
+    if (at.has(k)) parent[find(v)] = find(at.get(k)); else at.set(k, v);
+  }
+  for (let t = 0; t < I.length; t += 3) { const a = find(I[t]); parent[find(I[t + 1])] = a; parent[find(I[t + 2])] = a; }
+  const y = new Float64Array(n);
+  for (let v = 0; v < n; v++) y[v] = m[1] * P[v * 3] + m[5] * P[v * 3 + 1] + m[9] * P[v * 3 + 2] + m[13];
+  const top = new Map(), low = new Map(), kept = new Map();
+  for (const v of I) { const r = find(v); top.set(r, Math.max(top.get(r) ?? -Infinity, y[v])); low.set(r, Math.min(low.get(r) ?? Infinity, y[v])); }
+  for (const v of J) { const r = find(v); kept.set(r, Math.max(kept.get(r) ?? -Infinity, y[v])); }
+  const back = new Set();
+  for (const [r, t] of top) if (t - low.get(r) >= tall && t - (kept.get(r) ?? -Infinity) >= drop) back.add(r);
+  if (!back.size) return { indices: J, restored: 0 };
+  const out = [];
+  for (let t = 0; t < J.length; t += 3) if (!back.has(find(J[t]))) out.push(J[t], J[t + 1], J[t + 2]);
+  for (let t = 0; t < I.length; t += 3) if (back.has(find(I[t]))) out.push(I[t], I[t + 1], I[t + 2]);
+  return { indices: Uint32Array.from(out), restored: back.size };
+}
