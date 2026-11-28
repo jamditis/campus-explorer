@@ -2,12 +2,14 @@
 // golden-hour and night light from the real sunset of the date shown, and a caption naming the place. The
 // bars, fades and captions are page elements, so the mode costs nothing to draw. Any input on the view, a
 // camera move another module asks for, or Esc stops it and gives the view, the light and the panel back.
+import * as THREE from 'three';
 import { CAMPUS } from './geo.js';
 import { sunTimes } from './sun.js';
 import { SHOTS, poseAt, lightOffset, letterbox } from './cinema-math.js';
 
 const FADE_MS = 700;          // each half of a cut (to black, from black)
 const LOAD_WAIT_MS = 5000;    // longest wait at a cut for the tiles under the next shot
+const EYE = 1.65;             // walk mode's eye height (player.js)
 
 /**
  * @param app the shared app object (see docs/VIEWER.md)
@@ -70,7 +72,7 @@ export function createCinema(app) {
     if (running) return;
     if (!app.state.ready) { app.toast('The campus is still loading'); return; }
     app.cancelFly('cinema');
-    before = { position: camera.position.clone(), target: controls.target.clone(), date: app.time.date, preset: app.time.preset, mode: app.state.mode };
+    before = { position: camera.position.clone(), quaternion: camera.quaternion.clone(), target: controls.target.clone(), date: app.time.date, preset: app.time.preset, mode: app.state.mode };
     const go = () => {
       running = true; root.hidden = false; size();
       document.body.classList.add('cinema'); controls.enabled = false;
@@ -80,15 +82,21 @@ export function createCinema(app) {
     if (app.state.mode !== 'orbit') app.setMode('orbit').then(go); else go();
   }
 
-  function stop() {
+  /** Stop the film. `keepView`: the user has taken the view (a mode key): give back the light and panel only. */
+  function stop({ keepView = false } = {}) {
     if (!running) return;
     running = false; token++; shot = null;
     fade.classList.remove('on'); root.hidden = true;
     document.body.classList.remove('cinema'); controls.enabled = app.state.mode === 'orbit';
     if (before) {
-      if (before.preset) app.resetTime(); else app.setTime(before.date);
-      camera.position.copy(before.position); controls.target.copy(before.target); controls.update();
-      before = null;
+      const b = before; before = null;
+      if (b.preset) app.resetTime(); else app.setTime(b.date);
+      if (keepView) { app.invalidate(); app.emit('cinema', { running: false }); return; }
+      camera.position.copy(b.position); controls.target.copy(b.target); controls.update();
+      camera.quaternion.copy(b.quaternion); // fly and walk look along the camera, not at the orbit target
+      // back to the mode the film started from: fly looks from the camera; walk stands on the floor under the eye
+      if (b.mode === 'fly') app.setMode('fly');
+      else if (b.mode === 'walk') app.setMode('walk', { at: new THREE.Vector3(b.position.x, b.position.y - EYE, b.position.z) });
     }
     app.invalidate(); app.emit('cinema', { running: false });
   }
@@ -100,6 +108,8 @@ export function createCinema(app) {
   addEventListener('resize', () => { if (running) size(); });
   app.on('frame', onFrame);
   app.on('fly', ({ by }) => { if (by !== 'cinema') stop(); });
+  // a mode key (2, 3) during the film: the user takes the view in that mode
+  app.on('mode', ({ mode }) => { if (running && mode !== 'orbit') stop({ keepView: true }); });
 
-  return { start, stop, get running() { return running; } };
+  return { start, stop: () => stop(), get running() { return running; } };
 }
