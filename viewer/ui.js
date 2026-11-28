@@ -232,6 +232,7 @@ export function createUI(app) {
     measure: () => { if (!tools.measure) return; if (!tools.measure.active) { tools.tour?.stop(); if (app.state.mode !== 'orbit') app.setMode('orbit'); } tools.measure.setActive(!tools.measure.active); },
     tour: () => { if (!tools.tour) return; if (tools.tour.running) tools.tour.stop(); else { tools.measure?.setActive(false); if (app.state.mode !== 'orbit') app.setMode('orbit'); tools.tour.start(); } },
     hunt: () => { if (!tools.hunt) return; if (tools.hunt.active) tools.hunt.stop(); else tools.hunt.start(); },
+    cinema: () => { if (!tools.cinema) return; if (tools.cinema.running) tools.cinema.stop(); else { tools.tour?.stop(); tools.measure?.setActive(false); tools.cinema.start(); } },
     photo, share,
     help: () => { const d = $('help-dialog'); if (d.open) d.close(); else d.showModal(); },
   };
@@ -241,6 +242,7 @@ export function createUI(app) {
   app.on('measure', ({ active }) => press('tool-measure', active));
   app.on('tour', ({ running }) => press('tool-tour', running));
   app.on('hunt', ({ active }) => press('tool-hunt', active));
+  app.on('cinema', ({ running }) => press('tool-cinema', running));
 
   async function loadTools() {
     if (tools.loading) return; tools.loading = true;
@@ -251,6 +253,7 @@ export function createUI(app) {
     await Promise.all([
       load('hud', import('./hud.js'), 'createHud'), load('labels', import('./labels.js'), 'createLabels'), load('tour', import('./tour.js'), 'createTour'),
       load('measure', import('./measure.js'), 'createMeasure'), load('hunt', import('./hunt.js'), 'createHunt'),
+      load('cinema', import('./cinema.js'), 'createCinema'),
     ]);
     press('tool-labels', tools.labels?.visible); press('tool-map', tools.hud?.map);
     if (wantLabels !== undefined && tools.labels && tools.labels.visible !== wantLabels) tools.labels.setVisible(wantLabels);
@@ -295,7 +298,7 @@ export function createUI(app) {
   const KEYS = {
     Digit1: () => app.setMode('orbit'), Digit2: () => app.setMode('fly'), Digit3: () => app.setMode('walk'),
     KeyO: () => app.overview(), KeyT: () => app.topView(), KeyL: toggles.labels, KeyM: toggles.map, KeyR: toggles.measure,
-    KeyG: toggles.tour, KeyH: toggles.hunt, KeyP: photo, KeyK: share, KeyF: fullscreen,
+    KeyG: toggles.tour, KeyH: toggles.hunt, KeyN: toggles.cinema, KeyP: photo, KeyK: share, KeyF: fullscreen,
     KeyV: () => { if (app.state.mode === 'walk') app.setView(app.state.view === 'first' ? 'third' : 'first'); },
     BracketLeft: () => nudgeSun(-15), BracketRight: () => nudgeSun(15),
     Slash: e => { if (e.shiftKey) toggles.help(); else { if (document.pointerLockElement) document.exitPointerLock(); box.focus(); box.select(); } },

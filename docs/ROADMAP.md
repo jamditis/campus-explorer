@@ -74,6 +74,7 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 - [x] Export refresh: `SCENE=main bash tools/web-export/build_web.sh` then `SCENE=north ...` (north merges against main's plan); prunes stale tiles, fails without publishing on any export error
 - [x] Sprague Library and Café Diem: every object in `north/sprague_cafe_src.blend` is already in the main file at the same coordinates, so it ships with the main tiles
 - [x] Place names, search, labels, minimap, guided tour and landmark hunt (names and positions from OpenStreetMap)
+- [x] Film mode: eased camera shots at golden hour and after dark between letterbox bars, at the real sunset of the date shown (docs/VIEWER.md "Film")
 - [x] Georeferenced readout (latitude, longitude, NAVD88 elevation), compass, scale bar and measuring tool
 - [ ] Per-object names and evidence notes in the viewer: the exporter joins meshes by material, so a clicked surface cannot be traced to its Blender object. Export a `places`-style index of objects (name, bounds, UNVERIFIED flag) from Blender before joining
 - [ ] Lawn grass particle systems (excluded from the export today; needs the instanced-grass item above)

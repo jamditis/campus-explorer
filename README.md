@@ -55,6 +55,7 @@ The campus is one scene. The nearest tiles load first and the rest stream in whi
 - **Real sunlight.** Pick a date and time: the sun sits where it really is over the campus. After dark the lamps glow.
 - **Measure.** Click points on the model for distance, horizontal run, height difference, slope and bearing. The readout at the bottom gives latitude, longitude and NAVD88 elevation. These are model values, not survey values.
 - **Tour and hunt.** A guided tour of the main buildings, and a landmark hunt to play on foot.
+- **Film.** A short film (N): the campus and the view toward Manhattan at golden hour, eye level by Susan A. Cole Hall, and the skyline after dark, at the real sunset of the date shown, between letterbox bars.
 - **Share.** The address bar always holds a link to the exact view; Photo saves a picture.
 
 The viewer draws only when something changes, redraws shadows only when they move, and lowers the resolution while the view is moving on a slow GPU. Quality has three levels.

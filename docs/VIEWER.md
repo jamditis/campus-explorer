@@ -57,6 +57,8 @@ viewer/input.js     Keyboard, pointer lock, touch sticks and gamepad -> one inte
 viewer/player.js    Fly and walk movement, collision, first and third person camera
 viewer/camera.js    Eased camera moves (flyTo)
 viewer/tour.js      Guided tour
+viewer/cinema.js    Film mode: plays the shots of cinema-math.js between letterbox bars
+viewer/cinema-math.js Pure. The film's shots, easing, poses along a shot, letterbox size
 viewer/hud.js       Compass, scale bar, position readout, minimap
 viewer/labels.js    Place labels drawn over the 3D view
 viewer/measure.js   Distance and height measuring tool
@@ -124,6 +126,7 @@ app = {
 | `player:status` | `{ text }` | Walk mode status line (empty string clears it). |
 | `stats` | `{ fps, triangles, scale }` | Once a second. |
 | `toast` | `{ text }` | A short message for the user. |
+| `cinema` | `{ running }` | Film mode started or stopped. |
 
 ### Drawing on demand
 
@@ -351,6 +354,18 @@ following the camera; a still view is not redrawn.
   in the sun's colour, in window rows that fade to their mean where a pixel spans several. UNVERIFIED: the stand-in
   is a curtain with no facades, so which towers glint is a hash of bearing, not data; it stands for the west-facing
   glass of Manhattan that mirrors a low western sun toward New Jersey.
+
+## Film
+
+`viewer/cinema.js` (Film, key N) plays the fixed shots of `viewer/cinema-math.js`: the campus from the south-east,
+the hilltop view toward Manhattan, eye level by Susan A. Cole Hall (all 35 minutes before the real sunset of the
+date shown) and the skyline 100 minutes after sunset. Each shot is an eased move (smootherstep, starting and ending
+at rest) from one pose to another in orbit mode, so every target sits below its camera and every camera inside the
+flight limit (`tests/cinema.test.mjs` checks both). At each cut the view fades to black, the tiles under the next
+shot are asked for first (up to 5 s), the light changes and the caption names the place. The letterbox bars (2.39:1),
+the fade and the caption are page elements, so the mode adds nothing to draw; the only cost is the light change at a
+cut (one environment bake). With `prefers-reduced-motion` each shot holds its last pose. Any input on the view, Esc,
+the Stop button, or a camera move another module asks for stops it and gives back the pose, the light and the panel.
 
 ## Moving to a place
 

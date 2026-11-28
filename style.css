@@ -307,3 +307,17 @@ body.shoot>:not(#viewer){display:none!important}
   .touch-buttons{bottom:calc(50px + env(safe-area-inset-bottom,0px))}
   .tour-card{bottom:calc(46px + env(safe-area-inset-bottom,0px))}
 }
+
+/* film mode (viewer/cinema.js): letterbox bars, a fade at each cut, the caption in the lower bar */
+body.cinema>:not(#viewer):not(#overlay):not(#toast){display:none!important}
+body.cinema #overlay>:not(.cine){display:none!important}
+.cine{position:fixed;inset:0;pointer-events:none;z-index:30}
+.cine-bar{position:absolute;left:0;right:0;background:#000}
+.cine-top{top:0}
+.cine-bottom{bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4vw}
+.cine-caption{margin:0;color:#e8e4da;font-size:clamp(14px,1.6vw,20px);letter-spacing:.04em}
+.cine-stop{pointer-events:auto;background:transparent;color:#cfcac0;border:1px solid #555;border-radius:var(--radius);padding:4px 10px;font:inherit;font-size:13px}
+.cine-stop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cine-fade{position:absolute;inset:0;background:#000;opacity:0;transition:opacity .7s ease}
+.cine-fade.on{opacity:1}
+@media (prefers-reduced-motion: reduce){.cine-fade{transition:opacity 1s linear}}

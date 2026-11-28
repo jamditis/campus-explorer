@@ -1,0 +1,105 @@
+// Film mode: plays the shots of cinema-math.js full screen between letterbox bars, with a fade at each cut,
+// golden-hour and night light from the real sunset of the date shown, and a caption naming the place. The
+// bars, fades and captions are page elements, so the mode costs nothing to draw. Any input on the view, a
+// camera move another module asks for, or Esc stops it and gives the view, the light and the panel back.
+import { CAMPUS } from './geo.js';
+import { sunTimes } from './sun.js';
+import { SHOTS, poseAt, lightOffset, letterbox } from './cinema-math.js';
+
+const FADE_MS = 700;          // each half of a cut (to black, from black)
+const LOAD_WAIT_MS = 5000;    // longest wait at a cut for the tiles under the next shot
+
+/**
+ * @param app the shared app object (see docs/VIEWER.md)
+ * @returns {{ start(): void, stop(): void, readonly running: boolean }}
+ */
+export function createCinema(app) {
+  const { camera, controls, canvas } = app;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let running = false, token = 0, shot = null, t0 = 0, groundY = 0, before = null;
+
+  const root = document.createElement('div');
+  root.className = 'cine'; root.hidden = true;
+  root.innerHTML = `<div class="cine-bar cine-top"></div><div class="cine-bar cine-bottom"><p class="cine-caption" aria-live="polite"></p>
+    <button type="button" class="cine-stop">Stop film</button></div><div class="cine-fade"></div>`;
+  (document.getElementById('overlay') || document.body).appendChild(root);
+  const fade = root.querySelector('.cine-fade'), caption = root.querySelector('.cine-caption');
+  root.querySelector('.cine-stop').addEventListener('click', () => stop());
+
+  function size() {
+    const h = letterbox(innerWidth, innerHeight);
+    for (const bar of root.querySelectorAll('.cine-bar')) bar.style.height = `${Math.max(h, 44)}px`;
+  }
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const black = on => { fade.classList.toggle('on', on); return sleep(calm ? FADE_MS * 1.5 : FADE_MS); };
+
+  function lightFor(s) {
+    const off = lightOffset(s); if (off === null) return null;
+    const { sunset } = sunTimes(app.time.date, CAMPUS.lat, CAMPUS.lon);
+    return sunset ? new Date(sunset.getTime() + off * 60000) : null;
+  }
+  function apply(p) {
+    camera.position.set(...p.position); controls.target.set(...p.target); camera.lookAt(controls.target);
+  }
+
+  async function run() {
+    const my = ++token;
+    for (const s of SHOTS) {
+      await black(true); if (my !== token) return;
+      if (s.ground) {
+        app.world.prioritize(s.ground[0], s.ground[1]);
+        const until = performance.now() + LOAD_WAIT_MS;
+        while (!app.world.isLoaded(s.ground[0], s.ground[1]) && performance.now() < until) { await sleep(200); if (my !== token) return; }
+        groundY = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
+      }
+      const when = lightFor(s); if (when) app.setTime(when);
+      caption.textContent = s.caption;
+      shot = s; t0 = performance.now(); apply(poseAt(s, 0, groundY, calm)); app.invalidate();
+      await black(false); if (my !== token) return;
+      await sleep(s.seconds * 1000 - FADE_MS); if (my !== token) return;
+    }
+    stop();
+  }
+
+  function onFrame() {
+    if (!shot) return;
+    apply(poseAt(shot, (performance.now() - t0) / 1000, groundY, calm)); // the loop redraws because the camera moved
+  }
+
+  function start() {
+    if (running) return;
+    if (!app.state.ready) { app.toast('The campus is still loading'); return; }
+    app.cancelFly('cinema');
+    before = { position: camera.position.clone(), target: controls.target.clone(), date: app.time.date, preset: app.time.preset, mode: app.state.mode };
+    const go = () => {
+      running = true; root.hidden = false; size();
+      document.body.classList.add('cinema'); controls.enabled = false;
+      app.emit('cinema', { running: true });
+      run();
+    };
+    if (app.state.mode !== 'orbit') app.setMode('orbit').then(go); else go();
+  }
+
+  function stop() {
+    if (!running) return;
+    running = false; token++; shot = null;
+    fade.classList.remove('on'); root.hidden = true;
+    document.body.classList.remove('cinema'); controls.enabled = app.state.mode === 'orbit';
+    if (before) {
+      if (before.preset) app.resetTime(); else app.setTime(before.date);
+      camera.position.copy(before.position); controls.target.copy(before.target); controls.update();
+      before = null;
+    }
+    app.invalidate(); app.emit('cinema', { running: false });
+  }
+
+  // anything the user does to the view stops the film
+  const userInput = () => stop();
+  for (const type of ['pointerdown', 'wheel', 'touchstart']) canvas.addEventListener(type, userInput, { passive: true });
+  addEventListener('keydown', e => { if (running && e.key === 'Escape') stop(); });
+  addEventListener('resize', () => { if (running) size(); });
+  app.on('frame', onFrame);
+  app.on('fly', ({ by }) => { if (by !== 'cinema') stop(); });
+
+  return { start, stop, get running() { return running; } };
+}
