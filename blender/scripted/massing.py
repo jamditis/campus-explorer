@@ -620,7 +620,7 @@ def door_swing(a, b, hinge_at, outward):
     return h, 90 * sign
 
 
-def ring_soffits(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, fascia=0.22):
+def ring_soffits(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, fascia=0.35):
     """Under a ring roof's overhang (ring_roof's arguments): for each sloped edge that overhangs,
     a flat soffit from the wall line out to the eave edge at the eave edge's height, and a fascia
     `fascia` deep down the outer edge. Faces of (x, y, z), each anticlockwise seen from outside
@@ -644,6 +644,42 @@ def ring_soffits(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, fa
         faces.append([(*outer[i], low - fascia), (*outer[j], low - fascia), (*outer[j], low),
                       (*outer[i], low)])  # fmt: skip
     return faces
+
+
+def ring_eave_trim(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, spacing=0.75):
+    """The eave trim under a ring roof's overhang (ring_roof's arguments): rafter tails (boxes
+    from the wall line out to the eave edge, every `spacing` metres, 0.12 wide and 0.18 deep under
+    the soffit; none where the soffit tapers back to the wall) and a barrel tile course along the
+    eave edge (0.3 wide, 0.2 high). Returns (rafters, course), each a list of (verts, faces)."""
+    ring = [tuple(p[:2]) for p in ring]
+    n = len(ring)
+    flat = set(flat_edges)
+    ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    if not any(ov):
+        return [], []
+    outer = inset(ring, [-v for v in ov])
+    rafters, course = [], []
+    for i in range(n):
+        j = (i + 1) % n
+        if ov[i] <= 0:
+            continue
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        (ax, ay), (bx, by) = ring[i], ring[j]
+        length = math.hypot(bx - ax, by - ay)
+        ux, uy = (bx - ax) / length, (by - ay) / length
+        nx, ny = uy, -ux  # outward
+        # the soffit under this edge: a trapezoid that tapers to the wall where a flat edge meets it
+        quad = [ring[i], outer[i], outer[j], ring[j]]
+        for k in range(1, int(length / spacing)):
+            sx, sy = ax + ux * k * spacing, ay + uy * k * spacing
+            tip = (sx + nx * ov[i] * 0.98, sy + ny * ov[i] * 0.98, low - 0.18)
+            if not geom.inside(quad, tip[0], tip[1]):
+                continue  # a tail there would stick out past the roof
+            rafters.append(_beam((sx, sy, low - 0.18), tip, 0.12, 0.18))
+        course.append(_beam((*outer[i], low), (*outer[j], low), 0.3, 0.2))
+    return rafters, course
 
 
 def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.15, overhang=None):

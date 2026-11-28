@@ -430,13 +430,19 @@
      "cols": 7,
      "rows": 7,
      "frame": "#592d28",
-     "why": "the two-storey arched main entry (Joe's lobby photos: an arched-top window grid in dark red frames over two pairs of double doors); size from the main model's archivolt; the door pairs stay the main model's; from the doors' head up (the doors and sidelights below: `doors`); the solid maroon band 140.29..141.06 across it is the main model's transom panel, taken from the entrance photos (ni_build)",
+     "why": "the two-storey arched main entry (Joe's lobby photos: an arched-top window grid in dark red frames over two pairs of double doors); size from the main model's archivolt; the door pairs stay the main model's; from the doors' head up (the doors and sidelights below: `doors`); the solid maroon band 140.29..141.06 across it is the main model's transom panel, taken from the entrance photos (ni_build); the tan surround round the arch is the main model's archivolt and jambs (0.45 m wide, 0.12 m proud: UNVERIFIED)",
      "bands": [
       [
        140.29,
        141.06
       ]
-     ]
+     ],
+     "surround": {
+      "width": 0.45,
+      "depth": 0.12,
+      "colour": "#c9b48c",
+      "z0": 137.45
+     }
     }
    ],
    "doors": {
@@ -729,7 +735,10 @@
      "why": "the tower's tall arched window (public photos)"
     }
    ],
-   "unverified": "footprint and heights from the main model's tower (OSM + LiDAR, top 157.4 in the LiDAR); belfry openings three per face, 0.75 m wide, 151.2..154.6 (the main model's belfry band); the tall west window 1.6 m wide, 138.2..144.9"
+   "unverified": "footprint and heights from the main model's tower (OSM + LiDAR, top 157.4 in the LiDAR); belfry openings three per face, 0.75 m wide, 151.2..154.6 (the main model's belfry band); the tall west window 1.6 m wide, 138.2..144.9; its tile pyramid carries 0.5 m eaves with a dark soffit (the main model's hip eave fascia and soffit)",
+   "roof_material": "tile",
+   "overhang": 0.5,
+   "soffit": "#3b2b21"
   },
   {
    "name": "CCOM_entry_gable",
@@ -767,7 +776,10 @@
     2,
     3
    ],
-   "unverified": "the entry bay's gable over the porch, ridge square to the facade at 150.8, eaves 148.0, running 5.3 m back (the main model's gable roof); the medallion is not built"
+   "unverified": "the entry bay's gable over the porch, ridge square to the facade at 150.8, eaves 148.0, running 5.3 m back (the main model's gable roof); the medallion is not built; its tile roof carries 0.6 m eaves with a dark soffit (the main model's gable eave returns)",
+   "roof_material": "tile",
+   "overhang": 0.6,
+   "soffit": "#3b2b21"
   }
  ]
 }
