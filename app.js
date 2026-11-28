@@ -265,7 +265,7 @@ function clampView() {
 // ---- idle sway: trees move in the wind while the view is still (look.js sway). A slow redraw loop, 14 frames a
 // second (8 on the lite profile), that stops 2 minutes after the last input, while the tab is hidden, and on a
 // phone whose battery is low and not charging (Battery API, where there is one). Any input starts it again. ----
-const SWAY_FPS = app.lite ? 8 : 14, SWAY_IDLE_MS = 120000;
+const swayFps = () => (app.lite ? 8 : 14), SWAY_IDLE_MS = 120000; // app.lite is set at start, after this
 let swayUntil = performance.now() + SWAY_IDLE_MS, swayLow = false, swayAt = 0;
 let swayFrame = false; // this frame is drawn only for the sway: no forced cull, no fresh shadow map
 const wake = () => { swayUntil = performance.now() + SWAY_IDLE_MS; };
@@ -304,7 +304,8 @@ function loop(now) {
   // the sway clock runs with every drawn frame; while still, a slow idle redraw keeps the trees moving
   if (app.look.swaying) {
     if (changed || dirty > 0) { swayAt = now; app.look.setSway(now / 1000); }
-    else if (app.swayIdle() && now - swayAt >= 1000 / SWAY_FPS) { swayAt = now; app.look.setSway(now / 1000); dirty = 1; swayFrame = true; }
+    // not while a lazy redraw is pending: tiles streaming in on a slow GPU are drawn in batches (invalidate)
+    else if (!lazyAt && app.swayIdle() && now - swayAt >= 1000 / swayFps()) { swayAt = now; app.look.setSway(now / 1000); dirty = 1; swayFrame = true; }
   }
   const settle = moving && !changed; // the camera just stopped: one sharp frame with fresh culling
   moving = changed;

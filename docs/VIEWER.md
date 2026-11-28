@@ -287,16 +287,19 @@ Scenery runs only when the camera moved: `scenery.js` refreshes the tree level o
 ### Tree sway
 
 Leaves move in the wind, in the vertex shader of every leaf material (`look.js` `sway`): no per-tree work in JS and
-no extra draw. An instanced tree's crown bends by up to 1.2 cm per metre of height above its trunk base, in two
-slow beats, each tree in its own phase from its position; every leaf card also flutters 1 cm, faster. Plain tree
+no extra draw. An instanced tree's crown bends by up to 1.2 cm per metre of height above the crown's lowest leaves,
+in two slow beats, each tree in its own phase from its position; every leaf card also flutters 1 cm, faster. Tile
+positions are quantized, so heights and offsets are worked out in metres in world space and turned back into the
+mesh's own space. Plain tree
 meshes (copies joined into one mesh) only flutter. The shadow map is not redrawn for it, so shadows stay still.
 
 The clock (`look.setSway`) advances with every frame the loop draws anyway (moving, film, tour) and, while the view
 is still, in an idle loop in `app.js`: a redraw 14 times a second (8 on the lite profile) that stops 2 minutes after
 the last input (pointer, wheel, key, touch), while the tab is hidden, and on the lite profile when the Battery API
 reports a battery at or under 20 % and not charging. Any input starts it again. A frame drawn only for the sway does
-not force the screen-size cull or a new shadow map. With `prefers-reduced-motion` the sway is off and the idle loop
-never runs. Cost: each idle frame is one full redraw of the view (on the lite profile at eye level by Susan A. Cole
+not force the screen-size cull or a new shadow map, and none is drawn while a lazy redraw is pending (tiles
+streaming in on a slow GPU are still drawn in batches). With `prefers-reduced-motion` the sway is off and the idle
+loop never runs; a change of that setting is followed at once. Cost: each idle frame is one full redraw of the view (on the lite profile at eye level by Susan A. Cole
 Hall: 498 draw calls, 2.8 M triangles), where before a still view drew nothing.
 
 ### Trees and shrubs
