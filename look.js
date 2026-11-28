@@ -12,6 +12,7 @@ import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
 import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 import { acesFilmic, toSrgb, hazeColours } from './viewer/haze-math.js';
+import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
 export { fixTone, fixCat };
 
 // --- haze (aerial perspective) for every material that takes fog: see haze-math.js transmittance ---
@@ -24,7 +25,7 @@ export { fixTone, fixCat };
 export const HAZE_RGB = [0, 0.33, 0.58]; // the far haze's length in green and blue is shorter by these shares
 export const HAZE = {
   tint: { value: { x: 0, y: 0, z: 0 } },     // toward-the-sun horizon colour minus fogColor (display sRGB)
-  sun: { value: { x: 0, y: 0, z: -1 } },     // the sun's bearing as a horizontal unit vector (world); y 1: linear target
+  sun: { value: { x: 0, y: 0, z: -1 } },     // the sun's bearing as a horizontal unit vector (world); y: see applyHaze
   shape: { value: { x: 0.7, y: 24000, z: 4, w: 1 } }, // far amount, far length in red (m), tint power, HAZE_RGB share
 };
 THREE.ShaderChunk.fog_pars_vertex = '#ifdef USE_FOG\n\tvarying float vFogDepth;\n\tvarying vec3 vFogPos;\n#endif';
@@ -33,6 +34,20 @@ THREE.ShaderChunk.fog_pars_fragment = `#ifdef USE_FOG
   uniform vec3 fogColor; uniform float fogDensity;
   uniform vec3 hazeTint; uniform vec3 hazeSun; uniform vec4 hazeShape;
   varying float vFogDepth; varying vec3 vFogPos;
+  // three's ACES filmic and sRGB encoding (haze-math.js acesFilmic, toSrgb) and their inverses (acesFilmicInverse)
+  vec3 hzOut( vec3 c ) {
+    c = ${glslMat3(ACES_IN)} * ( c * hazeSun.y / 0.6 );
+    c = ( c * ( c + 0.0245786 ) - 0.000090537 ) / ( c * ( 0.983729 * c + 0.4329510 ) + 0.238081 );
+    c = clamp( ${glslMat3(ACES_OUT)} * c, 0.0, 1.0 );
+    return mix( c * 12.92, 1.055 * pow( c, vec3( 1.0 / 2.4 ) ) - 0.055, step( vec3( 0.0031308 ), c ) );
+  }
+  vec3 hzIn( vec3 d ) {
+    vec3 y = mix( d / 12.92, pow( ( d + 0.055 ) / 1.055, vec3( 2.4 ) ), step( vec3( 0.04045 ), d ) );
+    y = clamp( ${glslMat3(invert3(ACES_OUT))} * y, 0.0, 0.999 );
+    vec3 a = 1.0 - 0.983729 * y, b = 0.0245786 - 0.4329510 * y, c = - ( 0.000090537 + 0.238081 * y );
+    vec3 v = ( - b + sqrt( max( b * b - 4.0 * a * c, 0.0 ) ) ) / ( 2.0 * a );
+    return ${glslMat3(invert3(ACES_IN))} * v * 0.6 / hazeSun.y;
+  }
 #endif`;
 THREE.ShaderChunk.fog_fragment = `#ifdef USE_FOG
   {
@@ -40,13 +55,15 @@ THREE.ShaderChunk.fog_fragment = `#ifdef USE_FOG
     // the far haze clears red light more slowly than blue, so far ridges and towers turn blue-grey (HAZE_RGB)
     vec3 fogLen = max( hazeShape.y, 1.0 ) * ( 1.0 - hazeShape.w * vec3( 0.0, ${HAZE_RGB[1]}, ${HAZE_RGB[2]} ) );
     vec3 fogT = max( vec3( exp( - fogDensity * fogDensity * fogDist * fogDist ) ), hazeShape.x * exp( - fogDist / fogLen ) );
-    // on a linear target (High) the mix happens before tone mapping and encoding, where the same share of haze
-    // looks heavier over a dark surface: 1 - (1 - t)^2.2 keeps it as the screen-space mix shows it
-    if ( hazeSun.y > 0.5 ) fogT = 1.0 - pow( 1.0 - fogT, vec3( 2.2 ) );
+
     vec3 fogW = ( vec4( vFogPos, 0.0 ) * viewMatrix ).xyz; // view to world direction
     float fogH = length( fogW.xz );
     float fogA = fogH > 1e-6 ? 0.5 + 0.5 * dot( fogW.xz / fogH, hazeSun.xz ) : 0.5;
-    gl_FragColor.rgb = mix( fogColor + hazeTint * pow( fogA, hazeShape.z ), gl_FragColor.rgb, fogT );
+    vec3 fogC = fogColor + hazeTint * pow( fogA, hazeShape.z );
+    // High draws to a linear target that the output pass tone maps and encodes afterwards (hazeSun.y is then the
+    // exposure): mix as the screen does, after both, and undo them, so every quality level shows the same haze
+    if ( hazeSun.y > 0.0 ) gl_FragColor.rgb = hzIn( mix( hzOut( fogC ), hzOut( gl_FragColor.rgb ), fogT ) );
+    else gl_FragColor.rgb = mix( fogC, gl_FragColor.rgb, fogT );
   }
 #endif`;
 for (const lib of Object.values(THREE.ShaderLib)) {
@@ -132,19 +149,16 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   // from it: three 1-pixel renders of the environment sky and a read back, only when the sky is baked again.
   // Drawn straight to the screen, three mixes fog after tone mapping and sRGB encoding, so the colours are
   // tone mapped and encoded as the screen shows the sky; on High the scene goes to a linear target and the
-  // output pass maps it afterwards, so there they stay linear (applyHaze). The probe is half float where the
-  // GPU can render to it (EXT_color_buffer_float or _half_float), else 8-bit: the sky is clipped at 1 and
-  // night values are coarse, which still gives the haze the sky's colour.
-  const floatProbe = renderer.extensions.has('EXT_color_buffer_float') || renderer.extensions.has('EXT_color_buffer_half_float');
-  const probe = new THREE.WebGLRenderTarget(1, 1, { type: floatProbe ? THREE.HalfFloatType : THREE.UnsignedByteType });
-  const probeCam = new THREE.PerspectiveCamera(1, 1, 0.1, 2000), probePx = floatProbe ? new Uint16Array(4) : new Uint8Array(4);
+  // output pass maps it afterwards, so there they stay linear (applyHaze). The probe is half float, as three's
+  // PMREMGenerator targets are (the environment light already needs a GPU that can render to half float).
+  const probe = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType });
+  const probeCam = new THREE.PerspectiveCamera(1, 1, 0.1, 2000), probePx = new Uint16Array(4);
   const half = THREE.DataUtils.fromHalfFloat, LIFT = Math.tan(THREE.MathUtils.degToRad(1));
-  const probeValue = i => (floatProbe ? half(probePx[i]) : probePx[i] / 255);
   function skyAt(x, z) {
     probeCam.lookAt(x, LIFT, z);
     renderer.setRenderTarget(probe); renderer.render(envScene, probeCam);
     renderer.readRenderTargetPixels(probe, 0, 0, 1, 1, probePx);
-    return [probeValue(0), probeValue(1), probeValue(2)];
+    return [half(probePx[0]), half(probePx[1]), half(probePx[2])];
   }
   let hazeShown = null, hazeLinear = null; // hazeColours() for the screen and for the linear target
   function sampleHorizon() {
@@ -165,7 +179,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     scene.fog.color.copy(HORIZON); // FogExp2 keeps its own copy of the colour
     Object.assign(HAZE.tint.value, { x: h.tint[0], y: h.tint[1], z: h.tint[2] });
     HAZE.shape.value.z = h.power;
-    HAZE.sun.value.y = linear ? 1 : 0;
+    HAZE.sun.value.y = linear ? renderer.toneMappingExposure : 0; // the fog chunk's output transform on High
   }
   // the sky light is a saturated cyan; with it at 0.3 shaded white stucco read teal (rgb ~102,112,117 on screen).
   // Less of it and a neutral hemisphere fill keep shade cool but closer to grey

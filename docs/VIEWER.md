@@ -203,10 +203,10 @@ anything compiles. Pure parts and tests: `viewer/haze-math.js`.
 - **What colour.** The sky's own colour 1 degree above the horizon, toward the sun, square to it and away from it:
   three 1-pixel renders of the environment sky, read back each time the environment is baked again (the sun moved by
   more than 1.7 degrees). Drawn straight to the screen, three mixes fog after tone mapping, so the colours are tone
-  mapped and encoded as the screen shows the sky; on High the scene goes to a linear target and the output pass maps
-  it afterwards, so there they stay linear, and the share of haze becomes `1 - (1 - t)^2.2` (a mix before tone
-  mapping looks heavier over dark surfaces than the same mix on screen). The probe is half float where the GPU can render to it, else 8-bit (the
-  sky clipped at 1, night values coarse). The
+  mapped and encoded as the screen shows the sky. On High the scene goes to a linear target and the output pass maps
+  it afterwards: there the colours stay linear, and the fog chunk mixes after three's ACES and sRGB encoding and
+  undoes both (`hzOut`, `hzIn`; `acesFilmicInverse` in haze-math.js), so every quality level shows the same haze.
+  The probe is half float, as three's PMREMGenerator targets are (the environment light already needs it). The
   shader draws `away + (toward - away) * ((1 + cos a) / 2)^p`, `a` the angle between the line of sight and the sun's
   bearing, `p` fitted so that square to the sun matches too. At golden hour the haze glows toward the sun and is
   blue-grey away from it, and the far haze is never brighter than the sky behind it.
