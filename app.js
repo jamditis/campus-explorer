@@ -264,6 +264,22 @@ function clampView() {
   if (app.state.mode === 'orbit') controls.target.copy(clampToLimit(controls.target, app.limit));
 }
 
+// ---- idle sway: trees move in the wind while the view is still (look.js sway). A slow redraw loop, 14 frames a
+// second (8 on the lite profile), that stops 2 minutes after the last input, while the tab is hidden, and on a
+// phone whose battery is low and not charging (Battery API, where there is one). Any input starts it again. ----
+const swayFps = () => (app.lite ? 8 : 14), SWAY_IDLE_MS = 120000; // app.lite is set at start, after this
+let swayUntil = performance.now() + SWAY_IDLE_MS, swayLow = false, swayAt = 0;
+let swayFrame = false; // this frame is drawn only for the sway: no forced cull, no fresh shadow map
+const wake = () => { swayUntil = performance.now() + SWAY_IDLE_MS; };
+for (const type of ['pointerdown', 'pointermove', 'wheel', 'keydown', 'touchstart']) addEventListener(type, wake, { passive: true });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) wake(); });
+navigator.getBattery?.().then(b => {
+  const check = () => { swayLow = app.lite && !b.charging && b.level <= 0.2; };
+  check(); b.addEventListener('levelchange', check); b.addEventListener('chargingchange', check);
+}).catch(() => {});
+/** True while the idle sway loop runs (tests and the stats line). */
+app.swayIdle = () => app.look.swaying && !document.hidden && !swayLow && performance.now() < swayUntil;
+
 // ---- frame loop: draw only when something changed ----
 const lastCam = new Float64Array(18); let moving = false, fov = 50, last = performance.now(), frames = 0, acc = 0;
 function cameraChanged() {
@@ -287,10 +303,17 @@ function loop(now) {
   if (Math.abs(fov - want) > 0.05) { fov += (want - fov) * (1 - Math.exp(-dt * 6)); camera.fov = fov; camera.updateProjectionMatrix(); }
   const changed = cameraChanged();
   if (changed) { lastMove = now; app.emit('camera'); }
+  // the sway clock runs with every drawn frame; while still, a slow idle redraw keeps the trees moving
+  if (app.look.swaying) {
+    if (changed || dirty > 0) { swayAt = now; app.look.setSway(now / 1000); }
+    // not while a lazy redraw is pending: tiles streaming in on a slow GPU are drawn in batches (invalidate)
+    else if (!lazyAt && app.swayIdle() && now - swayAt >= 1000 / swayFps()) { swayAt = now; app.look.setSway(now / 1000); dirty = 1; swayFrame = true; }
+  }
   const settle = moving && !changed; // the camera just stopped: one sharp frame with fresh culling
   moving = changed;
   if (changed || settle || dirty > 0) {
-    app.look.update(mode === 'orbit' ? controls.target : null, settle || dirty > 0);
+    app.look.update(mode === 'orbit' ? controls.target : null, settle || (dirty > 0 && !swayFrame));
+    swayFrame = false;
     app.look.render(changed);
     if (dirty > 0) dirty--;
     drew = true; lazyAt = 0; // this draw shows whatever a lazy request was waiting for

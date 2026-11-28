@@ -113,6 +113,10 @@ const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field 
 // the night sky's light dome is strongest toward Midtown Manhattan (40.754 N, 73.984 W): bearing 124 degrees
 // from the campus, as a horizontal unit vector in the viewer frame (x east, -z north)
 const GLOW_DIR = [Math.sin(124 * Math.PI / 180), 0, -Math.cos(124 * Math.PI / 180)];
+// tree sway (leaf materials): the clock in seconds, and the strength (0 off, as under reduced motion)
+const CALM = matchMedia('(prefers-reduced-motion: reduce)');
+const SWAY = { time: { value: 0 }, k: { value: CALM.matches ? 0 : 1 } };
+CALM.addEventListener?.('change', () => { SWAY.k.value = CALM.matches ? 0 : 1; }); // followed live
 const CITY = { value: 0 }; // city lights after dark, 0 by day to 1 at night (shared by the materials that show them)
 // the sunset glint on the skyline's glass: the low sun's colour times how strongly it shows (0 unless the sun is low in the west)
 const GLINT = { value: new THREE.Color(0, 0, 0) };
@@ -363,6 +367,47 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     tops.name = 'tower_tops'; tops.frustumCulled = false; tops.visible = CITY.value > 0.02; tops.material.opacity = CITY.value;
     scene.add(tops);
   }
+
+  // --- tree sway: leaves move in the wind, in the vertex shader only (no per-tree work in JS). An instanced tree's
+  // crown bends with its height above the trunk base, each tree in its own phase; every leaf also flutters a few
+  // centimetres. app.js advances the clock while frames run anyway and in a slow idle loop. Shadows stay still
+  // (the shadow map is drawn only when something changes) ---
+  /** `floor`: the lowest leaf height in the mesh's own (quantized) space, where the crown starts to bend. */
+  function sway(m, floor = 0) {
+    if (!m || m.userData.sway) return;
+    m.userData.sway = true;
+    const base = m.onBeforeCompile, key = m.customProgramCacheKey.call(m);
+    m.onBeforeCompile = (sh, r) => {
+      base.call(m, sh, r);
+      sh.uniforms.swayT = SWAY.time; sh.uniforms.swayK = SWAY.k; sh.uniforms.swayFloor = { value: floor };
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nuniform float swayT; uniform float swayK; uniform float swayFloor;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          if (swayK > 0.0) {
+            // tile positions are quantized: the node (and instance) transform decodes them, so heights and offsets are
+            // worked out in metres in world space and turned back into the mesh's own space (rotation and scale)
+            #ifdef USE_INSTANCING
+              mat3 swM = mat3(modelMatrix) * mat3(instanceMatrix);
+              vec3 swBase = (modelMatrix * (instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0))).xyz;
+              float swH = max(transformed.y - swayFloor, 0.0) * length(swM[1]); // metres above the crown's lowest point
+            #else
+              mat3 swM = mat3(modelMatrix);
+              vec3 swBase = (modelMatrix * vec4(transformed, 1.0)).xyz;
+              float swH = 0.0;
+            #endif
+            float swPh = dot(swBase.xz, vec2(0.071, 0.053));
+            // the crown bends: 1.2 cm per metre of height at most, in two slow beats; leaves flutter 1 cm, faster
+            vec2 swBend = vec2(sin(swayT * 0.9 + swPh), sin(swayT * 0.67 + swPh * 1.3)) * 0.012 * swH;
+            float swF = sin(swayT * 3.1 + dot(transformed, vec3(1.7, 2.3, 1.1)) + swPh) * 0.01;
+            vec3 swW = vec3(swBend.x + swF, 0.4 * swF, swBend.y - swF) * swayK; // world metres
+            transformed += transpose(swM) * swW / max(dot(swM[0], swM[0]), 1e-12);
+          }`);
+    };
+    m.customProgramCacheKey = () => key + '_sway';
+    m.needsUpdate = true;
+  }
+  /** Advance the sway clock (seconds). */
+  function setSway(t) { SWAY.time.value = t % 3600; }
 
   // --- lamps glow after dark: one additive sprite per lamp instance, no real lights ---
   const glowTex = (() => {
@@ -1079,6 +1124,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           texturize(m, cat);
           finishMetal(m.name || '', m);
         }
+        if (m.userData.leaf) sway(m, (o.geometry.boundingBox ?? (o.geometry.computeBoundingBox(), o.geometry.boundingBox)).min.y);
         // after texturize, which sets the shader hook that this one chains
         if (/skyline_silhouette/i.test(m.name) || /^(far_houses|HouseProxy_(Brick|Siding))/i.test(m.name)) cityLights(m, /skyline/i.test(m.name));
         if (/farfield_ortho/i.test(m.name)) canopy(m); // the far 3DEP ground out to 29 km
@@ -1095,7 +1141,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function forget(root) { items = items.filter(it => it.root !== root); decorated.delete(root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
   function reset() { items = []; decorated.clear(); lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, setMoon, resize, reset, sun, setInteriors, canopy,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, setMoon, setSway, resize, reset, sun, setInteriors, canopy,
+    get swaying() { return SWAY.k.value > 0; }, swayUniforms: SWAY, // tests: k 0 turns the sway off
     interiorUniforms: giUniforms, // tests: giN 0 switches the per-pixel volume tests off
     haze: HAZE, nightSky: NIGHT_SKY, // tests and tuning
     invalidateShadows() { shadowDirty = true; },
