@@ -46,13 +46,14 @@
      539.88
     ]
    ],
+   "ring_roof": {"crest": 144.05, "crest_in": 0.5, "inner_in": 0.7, "colour": "#8c2b2f"},
    "roof": "flat",
    "top": 143.45,
    "style": "deck",
    "floors": 7,
    "levels": 8,
-   "wall": "#cbbfa8",
-   "trim": "#e4ddcd",
+   "wall": "#eeece6",
+   "trim": "#eeece6",
    "markings": [
     {
      "name": "NE_bldg_CarParc_Diem_roof_stalls_W_wall_row",
@@ -248,8 +249,8 @@
    "eave": 139.01,
    "ridge_angle": 158.4,
    "style": "deck",
-   "wall": "#cbbfa8",
-   "trim": "#e4ddcd",
+   "wall": "#eeece6",
+   "trim": "#eeece6",
    "markings": [
     {
      "name": "NE_bldg_CarParc_Diem_roof_stalls_row2_E_half",
@@ -316,10 +317,10 @@
    "roof": "flat",
    "top": 143.4,
    "base": 142.35,
-   "wall": "#e4ddcd",
-   "trim": "#e4ddcd",
-   "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles)",
-   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed"
+   "wall": "#eeece6",
+   "trim": "#eeece6",
+   "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles); photos https://www.pci.org/ProjectProfile?ID=276848 (photos 2 and 4)",
+   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed; white precast from the photographs"
   },
   {
    "name": "NE_bldg_CarParc_Diem_ramp_wall_E",
@@ -344,103 +345,58 @@
    "roof": "flat",
    "top": 143.4,
    "base": 142.35,
-   "wall": "#e4ddcd",
-   "trim": "#e4ddcd",
-   "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles)",
-   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed"
+   "wall": "#eeece6",
+   "trim": "#eeece6",
+   "evidence": "lidar2017 (wall returns 143.3-144.0 m along both long edges of the ramp bay, about 1.1 m above the roof slab, from end to end of the bay); ortho2020 (dark lines with light poles); photos https://www.pci.org/ProjectProfile?ID=276848 (photos 2 and 4)",
+   "unverified": "wall 0.3 m thick (the returns spread over 1-1.5 m, light poles included), standing on the roof deck (142.35 m, the LiDAR slab); colour guessed; white precast from the photographs"
   },
   {
    "name": "NE_bldg_CarParc_Diem_stair_tower_SW",
-   "ring": [
-    [
-     11.89,
-     523.35
-    ],
-    [
-     16.94,
-     536.11
-    ],
-    [
-     7.43,
-     539.88
-    ],
-    [
-     2.38,
-     527.11
-    ]
-   ],
+   "ring": [[11.22, 524.91], [15.82, 536.55], [7.43, 539.88], [2.82, 528.23]],
+   "windows": {"width": 1.5, "height": 1.9, "spacing": 1.9, "rows": [[145.3, 147.2]], "style": "recessed", "frame": "#7a2a2c"},
    "roof": "hip",
    "top": 149.74,
-   "eave": 146.95,
+   "eave": 147.6,
+   "overhang": 1.2,
    "style": "deck",
    "floors": 8,
-   "wall": "#cbbfa8",
-   "trim": "#e4ddcd",
-   "roof_colour": "#9a4b35",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
-   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+   "wall": "#eeece6",
+   "trim": "#eeece6",
+   "roof_colour": "#8c2b2f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds); photos https://www.pci.org/ProjectProfile?ID=276848 (photos 2 and 4)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed; white precast and red standing-seam hip roofs from the photographs; eaves 1.2 m deep (estimated): the walls facing out stand that far inside the LiDAR roof edge (the wall against the deck stays on it), the wall top raised so the roof planes stay the measured ones; the glazed lantern under the eave is one band of red-framed windows; the tall arched stair windows, balconies and curved parapets are not modelled"
   },
   {
    "name": "NE_bldg_CarParc_Diem_stair_tower_SE",
-   "ring": [
-    [
-     47.52,
-     619.24
-    ],
-    [
-     51.62,
-     629.58
-    ],
-    [
-     40.32,
-     634.06
-    ],
-    [
-     36.23,
-     623.72
-    ]
-   ],
+   "ring": [[46.4, 619.68], [50.06, 628.91], [39.88, 632.94], [36.23, 623.72]],
+   "windows": {"width": 1.5, "height": 1.9, "spacing": 1.9, "rows": [[144.42, 146.32]], "style": "recessed", "frame": "#7a2a2c"},
    "roof": "hip",
    "top": 149.03,
-   "eave": 146.08,
+   "eave": 146.72,
+   "overhang": 1.2,
    "style": "deck",
    "floors": 8,
-   "wall": "#cbbfa8",
-   "trim": "#e4ddcd",
-   "roof_colour": "#9a4b35",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
-   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+   "wall": "#eeece6",
+   "trim": "#eeece6",
+   "roof_colour": "#8c2b2f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds); photos https://www.pci.org/ProjectProfile?ID=276848 (photos 2 and 4)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed; white precast and red standing-seam hip roofs from the photographs; eaves 1.2 m deep (estimated): the walls facing out stand that far inside the LiDAR roof edge (the wall against the deck stays on it), the wall top raised so the roof planes stay the measured ones; the glazed lantern under the eave is one band of red-framed windows; the tall arched stair windows, balconies and curved parapets are not modelled"
   },
   {
    "name": "NE_bldg_CarParc_Diem_stair_tower_NE",
-   "ring": [
-    [
-     3.5,
-     641.34
-    ],
-    [
-     5.8,
-     647.13
-    ],
-    [
-     -3.76,
-     650.92
-    ],
-    [
-     -6.05,
-     645.12
-    ]
-   ],
+   "ring": [[3.5, 641.34], [5.36, 646.01], [-3.09, 649.36], [-4.93, 644.68]],
+   "windows": {"width": 1.5, "height": 1.9, "spacing": 1.9, "rows": [[144.04, 145.94]], "style": "recessed", "frame": "#7a2a2c"},
    "roof": "hip",
    "top": 147.21,
-   "eave": 145.8,
+   "eave": 146.34,
+   "overhang": 1.2,
    "style": "deck",
    "floors": 8,
-   "wall": "#cbbfa8",
-   "trim": "#e4ddcd",
-   "roof_colour": "#9a4b35",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds)",
-   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed"
+   "wall": "#eeece6",
+   "trim": "#eeece6",
+   "roof_colour": "#8c2b2f",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); https://www.pci.org/ProjectProfile?ID=276848 (rounded stair and elevator towers, tile surrounds); photos https://www.pci.org/ProjectProfile?ID=276848 (photos 2 and 4)",
+   "unverified": "tower plan drawn square although the source speaks of rounded forms; colours guessed; white precast and red standing-seam hip roofs from the photographs; eaves 1.2 m deep (estimated): the walls facing out stand that far inside the LiDAR roof edge (the wall against the deck stays on it), the wall top raised so the roof planes stay the measured ones; the glazed lantern under the eave is one band of red-framed windows; the tall arched stair windows, balconies and curved parapets are not modelled"
   },
   {
    "name": "NE_bldg_Dinallo_west_wing",

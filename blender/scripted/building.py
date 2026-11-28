@@ -127,7 +127,10 @@ def _recessed_cells(p, ring, tops, ground):
         return []
     skip = set(p.get("no_windows", ()))
     edges = [i for i in range(len(ring)) if i not in skip]
-    wall_top = min(tops) - p.get("parapet", PARAPET.get(p.get("style", "shed"), 0.4))
+    # a parapet stands only round a flat roof (as for the walls in `part`)
+    flat = p.get("roof", "flat") == "flat"
+    parapet = p.get("parapet", PARAPET.get(p.get("style", "shed"), 0.4)) if flat else 0.0
+    wall_top = min(tops) - parapet
     return massing.window_cells(
         ring, ground, wall_top, w["width"], w["height"], w["spacing"], w.get("sill", 0.9),
         w.get("levels"), edges, rows=w.get("rows"),
