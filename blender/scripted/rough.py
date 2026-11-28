@@ -229,14 +229,14 @@ def _cores(r, ends, spines, lobbies, rings):
         for end, sign in ((p, 1), (q, -1)):
             at = (end[0] + sign * u[0] * STAIR[0] / 2, end[1] + sign * u[1] * STAIR[0] / 2)
             # a door at the corridor's end: the stair steps aside, beside the corridor's end, to
-            # a side where it fits every level and meets no lift
+            # a side where it fits every level and meets no lift or stair placed before it
             across = corridor / 2 + STAIR[1] / 2
             for off in (0.0, across, -across):
                 ring = _box((at[0] - u[1] * off, at[1] + u[0] * off), u, *STAIR)
                 if (
                     not any(_crosses(leg, ring) for leg in walks)
                     and all(geom.inside(g, *v) for g in rooms_in for v in ring)
-                    and not any(_overlap(ring, c["ring"]) for c in lifts)
+                    and not any(_overlap(ring, c["ring"]) for c in lifts + out)
                 ):
                     break
             else:

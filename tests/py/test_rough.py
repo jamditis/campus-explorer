@@ -385,6 +385,15 @@ class Options(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "stands in a stair"):
             rough.floors(r)
 
+    def test_default_stairs_of_two_close_corridors_step_apart(self):
+        r = dict(BAR, entrances=[], spines=[[[1, 8], [59, 8]], [[1, 10.9], [59, 10.9]]])
+        fs = rough.floors(r)
+        cores = [b["ring"] for b in fs[0]["blocks"]]
+        self.assertEqual(len(cores), 4)
+        for i, a in enumerate(cores):
+            for b in cores[i + 1 :]:
+                self.assertFalse(rough._overlap(a, b))
+
     def test_overlapping_cores_are_refused(self):
         # a narrow bar: the default stair finds no clear side and the lift stands in it
         r = dict(
