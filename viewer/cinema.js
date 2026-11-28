@@ -49,9 +49,14 @@ export function createCinema(app) {
       // the tiles under the camera and its target first (the lite profile keeps only those near the target)
       const p0 = poseAt(s, 0, 0), spots = [[p0.position[0], p0.position[2]], [p0.target[0], p0.target[2]]];
       if (s.ground) spots.push(s.ground);
-      for (const [x, z] of spots) app.world.prioritize(x, z);
       const until = performance.now() + LOAD_WAIT_MS;
-      while (!spots.every(([x, z]) => app.world.isLoaded(x, z)) && performance.now() < until) { await sleep(200); if (my !== token) return; }
+      // asked again on every check: a tile leaves the urgent list when it starts loading, and the lite profile's
+      // rebalance (around the old shot's target) could drop it before the check sees it
+      for (;;) {
+        for (const [x, z] of spots) app.world.prioritize(x, z);
+        if (spots.every(([x, z]) => app.world.isLoaded(x, z)) || performance.now() >= until) break;
+        await sleep(200); if (my !== token) return;
+      }
       if (s.ground) groundY = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
       const when = lightFor(s); if (when) app.setTime(when);
       caption.textContent = s.caption;
@@ -67,11 +72,12 @@ export function createCinema(app) {
     apply(poseAt(shot, (performance.now() - t0) / 1000, groundY, calm)); // the loop redraws because the camera moved
   }
 
-  function start() {
+  async function start() {
+    if (running) return;
+    // a walk still finding its ground has no place to come back to yet (player.position is stale until it lands)
+    while (app.state.mode === 'walk' && app.player.busy) await sleep(200);
     if (running) return;
     if (!app.state.ready) { app.toast('The campus is still loading'); return; }
-    // a walk still finding its ground has no place to come back to yet (player.position is stale until it lands)
-    if (app.state.mode === 'walk' && app.player.busy) { app.toast('One moment: the walk is still finding the ground'); return; }
     app.cancelFly('cinema');
     before = {
       position: camera.position.clone(), quaternion: camera.quaternion.clone(), target: controls.target.clone(),
