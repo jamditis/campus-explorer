@@ -1,0 +1,165 @@
+{
+ "zone": "nursing_interior",
+ "notes": "School of Nursing/The Graduate School (main model, Void's .blend): a rough interior overlay from the footprint, the storeys and the few features public sources place: corridors, rooms, stairs and lifts are generic and UNVERIFIED. Nothing of the main model's shell is cut: the overlay stands inside it.",
+ "rough": [
+  {
+   "name": "NURS",
+   "building": "School of Nursing/The Graduate School",
+   "osm": "way/313026395",
+   "osm_building": "university",
+   "shell": "main",
+   "method": "overlay",
+   "outline": [
+    [
+     -97.08,
+     278.25
+    ],
+    [
+     -97.68,
+     268.71
+    ],
+    [
+     -96.08,
+     268.61
+    ],
+    [
+     -96.22,
+     266.53
+    ],
+    [
+     -97.36,
+     248.47
+    ],
+    [
+     -97.47,
+     246.78
+    ],
+    [
+     -98.96,
+     246.88
+    ],
+    [
+     -99.57,
+     237.2
+    ],
+    [
+     -91.22,
+     236.68
+    ],
+    [
+     -69.86,
+     235.33
+    ],
+    [
+     -69.25,
+     244.91
+    ],
+    [
+     -70.4,
+     244.98
+    ],
+    [
+     -70.28,
+     246.86
+    ],
+    [
+     -69.72,
+     255.68
+    ],
+    [
+     -69.17,
+     264.18
+    ],
+    [
+     -69.01,
+     266.76
+    ],
+    [
+     -67.53,
+     266.66
+    ],
+    [
+     -66.91,
+     276.35
+    ]
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "floor": 140.2
+    },
+    {
+     "level": 2,
+     "floor": 143.8
+    },
+    {
+     "level": 3,
+     "floor": 147.4
+    },
+    {
+     "level": 4,
+     "floor": 151.0
+    }
+   ],
+   "roof": 154.6,
+   "spines": [
+    [
+     [
+      -84.17,
+      242.8
+     ],
+     [
+      -82.41,
+      270.76
+     ]
+    ]
+   ],
+   "cores": [
+    {
+     "kind": "stair",
+     "at": [
+      -84.36,
+      239.8
+     ],
+     "angle": 86.39
+    },
+    {
+     "kind": "stair",
+     "at": [
+      -82.22,
+      273.76
+     ],
+     "angle": 86.39
+    },
+    {
+     "kind": "lift",
+     "at": [
+      -81.4,
+      248.64
+     ],
+     "angle": 86.39
+    }
+   ],
+   "entrances": [
+    {
+     "at": [
+      -96.21,
+      266.69
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), accessible entrance on the west face; OSM footway way/313026403 ends there; ground 139.9 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    },
+    {
+     "at": [
+      -69.16,
+      264.29
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), accessible entrance on the east face; OSM footway way/313026405 ends there; ground 140.1 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    }
+   ],
+   "evidence": "outline OSM way/313026395; a four-storey, 49,000 sq ft building, three floors for nursing clinical training (Clarke Caton Hintz, clarkecatonhintz.com/project/montclair-state-university-partridge-hall/); entrances from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM footway ends at the west and east jogs; level 1 at the published shell's entrance landings (138.55 to 140.2, 'TY Partridge entrance steps+landings'), the ground round it 139.9 to 140.15 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m)); the top ceiling under the shell's window glass top (154.26, 'WS26_Partridge_window_glass') and eave (157.85)",
+   "unverified": "levels 2 to 4 (equal storeys from level 1 to under the eave), the corridor (the long axis), every room wall, the stairs and the lift (the generator's defaults: no public source places them), entrance positions to about 3 m; the simulation rooms, skills lab and tiered lecture halls are not placed: no public source gives their positions"
+  }
+ ]
+}
