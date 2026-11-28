@@ -80,25 +80,97 @@ def roof(ring, kind, top, eave=None, ridge_angle=None):
     return tops, slopes + [q], []
 
 
-def overhang_roof(ring, kind, top, eave, overhang, ridge_angle=None):
-    """The faces of a gable or hip roof carried `overhang` metres past its walls on every edge
-    (wide eaves and rakes). The outline moves out by the overhang and the eave drops by the
-    overhang times the pitch, so every face keeps its plane and the ridge stays where it was:
-    the roof that `roof` gives for the walls is the middle of this one. Gable walls stay on the
-    wall line (use `roof`'s gables). Returns the faces, as `roof` gives its slopes."""
-    if kind not in ("gable", "hip"):
-        raise ValueError(f"an overhang needs a gable or hip roof, not {kind}")
-    n = len(ring)
-    if n == 4:  # the run from an eave to the ridge: half the side across the ridge
-        k = _pair(ring, ridge_angle)
-        a, b = ring[(k + 1) % 4], ring[(k + 2) % 4]
-        run = math.hypot(b[0] - a[0], b[1] - a[1]) / 2
-    else:  # a mansard's slopes rise at 45 degrees (`mansard`)
-        run = top - eave
-    drop = overhang * (top - eave) / run
-    out = geom.offset(ring, -overhang, True)  # anticlockwise: to the right is outward
-    _tops, slopes, _gables = roof(out, kind, top, eave - drop, ridge_angle)
-    return slopes
+def _plane(face):
+    """z(x, y) of the plane of a roof face (Newell normal; a roof face is never vertical)."""
+    nx = ny = nz = 0.0
+    for i, (x0, y0, z0) in enumerate(face):
+        x1, y1, z1 = face[(i + 1) % len(face)]
+        nx += (y0 - y1) * (z0 + z1)
+        ny += (z0 - z1) * (x0 + x1)
+        nz += (x0 - x1) * (y0 + y1)
+    cx, cy, cz = (sum(q[k] for q in face) / len(face) for k in range(3))
+    return (lambda x, y: cz - (nx * (x - cx) + ny * (y - cy)) / nz), (nx, ny, nz)
+
+
+def _up(poly):
+    """A face wound anticlockwise seen from above (facing up)."""
+    return poly if geom.area([q[:2] for q in poly]) > 0 else poly[::-1]
+
+
+def overhang_roof(ring, faces, overhang):
+    """The faces that carry a pitched roof `overhang` metres past its walls (wide eaves and
+    rakes), each in the plane of the roof face it continues, so every face keeps its own pitch:
+    a strip outside every face edge that lies on the wall line, and at each corner of the
+    outline the gap between two strips, split where the two faces' planes meet (faces of
+    different pitch join without a step). Faces off the wall line (a mansard's flat top, the
+    edges of a roof well) get nothing. `ring` anticlockwise; returns the new faces, facing up."""
+    n, out = len(ring), []
+    norm = []
+    for i in range(n):
+        (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
+        ln = math.hypot(bx - ax, by - ay)
+        norm.append(((by - ay) / ln, -(bx - ax) / ln))  # outward: right of an anticlockwise run
+
+    def on_edge(p, i):
+        (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
+        return _seg_dist(p[:2], (ax, ay), (bx, by)) < 1e-6
+
+    owner = {}  # (ring edge, ring corner at its start or end) -> plane of the face over it
+    for face in faces:
+        z, _nrm = _plane(face)
+        for k in range(len(face)):
+            p, q = face[k], face[(k + 1) % len(face)]
+            for i in range(n):
+                if on_edge(p, i) and on_edge(q, i) and math.dist(p[:2], q[:2]) > 1e-6:
+                    nx, ny = norm[i]
+                    p2 = (p[0] + nx * overhang, p[1] + ny * overhang)
+                    q2 = (q[0] + nx * overhang, q[1] + ny * overhang)
+                    out.append(_up([p, q, (*q2, z(*q2)), (*p2, z(*p2))]))
+                    for c, end in ((i, p), ((i + 1) % n, q)):
+                        if math.dist(end[:2], ring[c]) < 1e-6:
+                            owner[(i, c)] = (z, _nrm)
+    for c in range(n):  # the corner between edge c - 1 (ending at c) and edge c (starting at c)
+        a, b = (c - 1) % n, c
+        if (a, c) not in owner or (b, c) not in owner:
+            continue
+        if norm[a][0] * norm[b][1] - norm[a][1] * norm[b][0] <= 0:
+            continue  # a reflex corner: the two strips overlap there, there is no gap to fill
+        (za, na), (zb, nb) = owner[(a, c)], owner[(b, c)]
+        cx, cy = ring[c]
+        ea = (cx + norm[a][0] * overhang, cy + norm[a][1] * overhang)
+        eb = (cx + norm[b][0] * overhang, cy + norm[b][1] * overhang)
+        dot = norm[a][0] * norm[b][0] + norm[a][1] * norm[b][1]
+        m = (cx + (norm[a][0] + norm[b][0]) * overhang / (1 + dot),
+             cy + (norm[a][1] + norm[b][1]) * overhang / (1 + dot))  # fmt: skip
+        corner = (cx, cy, za(cx, cy))
+        # where the planes meet, in plan: the line through the corner along the cross product
+        dx = na[1] * nb[2] - na[2] * nb[1]
+        dy = na[2] * nb[0] - na[0] * nb[2]
+        split = m
+        if math.hypot(dx, dy) > 1e-9:
+            if dx * (m[0] - cx) + dy * (m[1] - cy) < 0:
+                dx, dy = -dx, -dy
+            best = None
+            for e, nrm in ((ea, norm[a]), (eb, norm[b])):  # the strip's outer line it reaches
+                den = dx * nrm[0] + dy * nrm[1]
+                if den > 1e-12:
+                    t = overhang / den
+                    if best is None or t < best[0]:
+                        best = (t, e)
+            if best:
+                split = (cx + dx * best[0], cy + dy * best[0])
+        def on_line(q, e, nrm):  # on the strip's outer line through e
+            return abs((q[0] - e[0]) * nrm[0] + (q[1] - e[1]) * nrm[1]) < 1e-6
+
+        if math.dist(split, m) < 1e-9:
+            pa, pb = [ea, m], [m, eb]
+        elif on_line(split, ea, norm[a]):  # the meeting line leaves through edge a's side
+            pa, pb = [ea, split], [split, m, eb]
+        else:
+            pa, pb = [ea, m, split], [split, eb]
+        out.append(_up([corner, *[(*q, za(*q)) for q in pa]]))
+        out.append(_up([(cx, cy, zb(cx, cy)), *[(*q, zb(*q)) for q in pb]]))
+    return out
 
 
 def mansard(ring, rise):
