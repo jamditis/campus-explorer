@@ -17,11 +17,15 @@ files; the public dining floor of a dining hall in housing may stay.
 2. North file: frozen until Void returns, so checked on the published tiles instead (models/main at 83be40e):
    - `glbnames275.py`: node, mesh and material names in every n_ tile. Only University Hall's UH_win_room_* window shader
      (academic) and a station stair.
-   - `house16.mjs` (run from /workspace/nj-scenes/web/tools for gltf-transform and the meshopt decoder; tiles at 2b87835):
-     every vertex of every t_, n_t_ and sw_t_ tile inside a housing outline, by building and material. Outlines: each housing
-     place in viewer/places.json as its full circle + 2 m, and each ring in blender/scripted/village/v_buildings.json (Hawk
-     Crossings, Fenwick, Williams, Paul, Basie and the rest of the Village). Inside the housing outlines: brick, trim, roof,
-     glass, lawn, paving and tree materials only.
+   - `house16.mjs` (run from /workspace/nj-scenes/web/tools for gltf-transform and the meshopt decoder; tiles at 2b87835+):
+     geometry of every t_, n_t_ and sw_t_ tile inside a housing outline, by building and material. Outlines: each housing place
+     in viewer/places.json as its full circle + 2 m; each ring in blender/scripted/village/v_buildings.json (Hawk Crossings,
+     Fenwick, Williams, Paul, Basie, ...); the Dinallo and Machuga Heights rings in blender/scripted/northeast/ne_buildings.json;
+     the circles in housing275.json (adds Webster Hall, tagged university in places.json). Plain meshes vertex by vertex,
+     instanced meshes (trees, lights, chairs) by each instance's origin. Inside the housing outlines: brick, trim, roof, glass,
+     lawn, paving, joint, fascia and tree materials only; Machuga's dining wing (Sam's Place, the rule 16 exception) shows none
+     either. The Ben Samuels Children's Center (in housing275.json, but a childcare centre, not housing) has its own
+     North_ChildCtr_room_interior window shader, allowed.
    - Stone Hall's circle (r + 2 m = 50.9 m) reaches Richardson Hall's glass tower in t_0_1: QU_int_* (blinds, ceiling panels,
      carpet, terrazzo, partitions, walls) and QU_kit lounge seating. QU is Richardson's prefix (QU_Richardson_interior_hint;
      academic, OSM way 313027426, 68 m from Stone Hall's centre).
