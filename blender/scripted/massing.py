@@ -398,21 +398,23 @@ def edge_openings(ring, openings):
     return out
 
 
-def window_rows(wall_top, ground, tall, sill, levels=None, floors=1, storey_h=None):
-    """Sill heights of the window rows on one bay. With `levels` (floor heights), a row stands on
-    each floor that is at least 0.4 m above the ground there and whose head stays under the wall
-    top. Without, rows are counted down from the wall top in storeys of `storey_h`, stopping at the
-    first one below the ground (the old rule)."""
-    if levels is not None:
-        return [
-            lv + sill for lv in levels if lv + sill >= ground + 0.4 and lv + sill + tall <= wall_top
-        ]
+def window_rows(wall_top, ground, tall, sill, levels=None, floors=1, storey_h=None, rows=None):
+    """(bottom, top) of the window rows on one bay. `rows` gives each row's bottom and top
+    (NAVD88 metres: rows read off a neighbouring facade, so the two line up); with `levels`
+    (floor heights) a row `tall` high stands `sill` above each floor. Either way a row is kept when
+    its bottom is at least 0.4 m above the ground there and its top under the wall top. Without
+    both, rows are counted down from the wall top in storeys of `storey_h`, stopping at the first
+    one below the ground (the old rule)."""
+    if rows is None and levels is not None:
+        rows = [(lv + sill, lv + sill + tall) for lv in levels]
+    if rows is not None:
+        return [(z0, z1) for z0, z1 in rows if z0 >= ground + 0.4 and z1 <= wall_top]
     out = []
     for f in range(floors):
         z0 = wall_top - (f + 1) * storey_h + sill
         if z0 < ground + 0.4:
             break
-        out.append(z0)
+        out.append((z0, z0 + tall))
     return out
 
 
@@ -458,9 +460,9 @@ def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.
     return out
 
 
-def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, edges):
-    """Window openings on the listed edges of an anticlockwise outline: one per bay and floor
-    level (massing.bays, massing.window_rows), as {edge, s0, s1, z0, z1, a, u, n}: the edge's start
+def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, edges, rows=None):
+    """Window openings on the listed edges of an anticlockwise outline: one per bay and row
+    (massing.bays, massing.window_rows), as {edge, s0, s1, z0, z1, a, u, n}: the edge's start
     point, its direction and outward normal, and the opening along it."""
     out = []
     n = len(ring)
@@ -471,8 +473,8 @@ def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, e
         nrm = (u[1], -u[0])
         for s in bays(length, spacing):
             g = ground(a[0] + u[0] * s, a[1] + u[1] * s)
-            for z0 in window_rows(wall_top, g, height, sill, levels):
-                out.append(dict(edge=i, s0=s - width / 2, s1=s + width / 2, z0=z0, z1=z0 + height,
+            for z0, z1 in window_rows(wall_top, g, height, sill, levels, rows=rows):
+                out.append(dict(edge=i, s0=s - width / 2, s1=s + width / 2, z0=z0, z1=z1,
                                 a=a, u=u, n=nrm))  # fmt: skip
     return out
 

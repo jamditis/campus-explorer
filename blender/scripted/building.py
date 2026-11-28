@@ -95,9 +95,9 @@ def _flat_roof(b, ring, top, drop, cap, deck, wells=()):
 
 
 def _windows(b, part, ring, wall_top, ground, glass, holes=None):
-    """Rows of windows on every wall long enough for a bay: counted down from the wall top, or on
-    the floors given in `windows.levels`. No window on an edge in `no_windows` or across an
-    opening (`holes`: {edge: [(s0, s1, z0, z1)]})."""
+    """Rows of windows on every wall long enough for a bay: counted down from the wall top, on the
+    floors given in `windows.levels`, or at the heights given in `windows.rows`. No window on an
+    edge in `no_windows` or across an opening (`holes`: {edge: [(s0, s1, z0, z1)]})."""
     w = part["windows"]
     floors = part.get("floors", 1)
     low = min(ground(*p) for p in ring)
@@ -113,12 +113,11 @@ def _windows(b, part, ring, wall_top, ground, glass, holes=None):
                 continue
             g = ground(a[0] + u[0] * s, a[1] + u[1] * s)
             rows = massing.window_rows(
-                wall_top, g, tall, sill, w.get("levels"), floors=floors, storey_h=h
-            )
-            for z0 in rows:
-                _panel(
-                    b, a, u, nrm, s - wide / 2, s + wide / 2, z0, min(z0 + tall, wall_top), glass
-                )
+                wall_top, g, tall, sill, w.get("levels"), floors=floors, storey_h=h,
+                rows=w.get("rows"),
+            )  # fmt: skip
+            for z0, z1 in rows:
+                _panel(b, a, u, nrm, s - wide / 2, s + wide / 2, z0, min(z1, wall_top), glass)
 
 
 def _recessed_cells(p, ring, tops, ground):
@@ -131,7 +130,7 @@ def _recessed_cells(p, ring, tops, ground):
     wall_top = min(tops) - p.get("parapet", PARAPET.get(p.get("style", "shed"), 0.4))
     return massing.window_cells(
         ring, ground, wall_top, w["width"], w["height"], w["spacing"], w.get("sill", 0.9),
-        w.get("levels"), edges,
+        w.get("levels"), edges, rows=w.get("rows"),
     )  # fmt: skip
 
 
