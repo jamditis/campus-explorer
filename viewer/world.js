@@ -215,12 +215,13 @@ export function createWorld(app, prepare, release = () => {}) {
   // A far version has no instanced trees, so a tile outside a memory budget shows none (trees.js needs the full
   // tile; per-tile tree points from the export would fix it, docs/ROADMAP.md "Performance").
   const LOD_DIST = { low: 260, medium: 420, high: 650 };
+  const LOD_TRIES = 3, LOD_RETRY_MS = 20000; // a far version that failed to load is tried again, a few times
   let lods = [], lodLast = 0;
   async function loadLods(my) {
     app.focus(_focus);
     for (const tile of orderTiles(tiles.filter(t => t.lod), { x: _focus.x, z: _focus.z })) {
       if (my !== token) return;
-      if (tile.far || tile.farLoading) continue; // loadAll can start a second pass while this one runs
+      if (tile.far || tile.farLoading || tile.farFails >= LOD_TRIES) continue; // loadAll can start a second pass while this one runs
       tile.farLoading = true;
       let root;
       try {
@@ -229,7 +230,11 @@ export function createWorld(app, prepare, release = () => {}) {
         const path = base + dirOf(tile.lod);
         const g = await loader.parseAsync(await res.arrayBuffer(), path); dropUnmaterialled(g); root = g.scene;
         shareTextures(g, root, path);
-      } catch (e) { tile.farLoading = false; if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; } // loadAll tries it again
+      } catch (e) {
+        tile.farLoading = false; tile.farFails = (tile.farFails ?? 0) + 1;
+        if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e);
+        continue;
+      }
       if (my !== token) { free(root); return; }
       root.name = `lod_${tile.file.replace('.glb', '').split('/').pop()}`;
       strip(root); // the far version carries the same objects as the full tile
@@ -239,6 +244,8 @@ export function createWorld(app, prepare, release = () => {}) {
       lods.push({ tile, lo: root, box: new THREE.Box3().setFromObject(root), root: null, hi: [], far: null });
       if (updateLods(true)) app.invalidate();
     }
+    // a pass ends with every tile it took either in or failed; one still loading belongs to another pass, which checks at its own end
+    if (tiles.some(t => t.lod && !t.far && !t.farLoading && t.farFails < LOD_TRIES)) setTimeout(() => { if (my === token) loadLods(my); }, LOD_RETRY_MS);
   }
   /** Swap full tiles and far versions for the camera position and what is in memory. Returns true when something changed. */
   function updateLods(force = false) {

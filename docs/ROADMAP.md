@@ -103,7 +103,7 @@ The browser merge rules live in `tools/web-export/make_chunks.py` (merge mode). 
 - [x] Per-instance culling for instanced trees (frustum and distance), with low-poly crown impostors past 220 / 420 / 700 m (Low / Medium / High) out to 2.6 km
 - [x] Unused vertex data dropped from tiles (`tools/web-export/compact.mjs`): `gltf-transform optimize --instance` left a second, unreferenced copy of every instance transform in the files
 - [ ] Decimated copies of buildings for far tiles
-- [x] Phones (lite profile): only the nine tiles nearest the view stay in memory; far tiles are unloaded as the view moves
+- [x] Phones (lite profile): only the nine tiles nearest the view (and the few with no far version) stay in memory; far tiles are unloaded as the view moves
 - [x] Phones: show the far versions (`lod/`, 18.9 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
 - [ ] Phones: tree stand-ins for the tiles outside the memory budget. Far versions carry no instanced trees and `trees.js` builds its stand-ins from full tiles, so a lite tile that is not in memory shows no instanced trees; needs per-tile tree points from the export (like `far_trees.bin`)
 - [x] Trees used 2 to 4 times in a tile are instances (`tree_instance.mjs`), instance rotations are packed as 16-bit values, far versions carry half-size images
