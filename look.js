@@ -11,7 +11,6 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
 import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
-import { acesFilmic, toSrgb, hazeColours } from './viewer/haze-math.js';
 import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
 export { fixTone, fixCat };
 
