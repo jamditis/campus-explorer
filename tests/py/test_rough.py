@@ -40,6 +40,42 @@ def mid(p):
     return ((p["p"][0] + p["q"][0]) / 2, (p["p"][1] + p["q"][1]) / 2)
 
 
+def crosses(s, t):
+    """Do segments s and t ((x, y), (x, y)) cross or touch?"""
+
+    def turn(a, b, c):
+        return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+
+    (a, b), (c, d) = s, t
+    d1, d2, d3, d4 = turn(c, d, a), turn(c, d, b), turn(a, b, c), turn(a, b, d)
+    return d1 * d2 <= 0 and d3 * d4 <= 0 and not (d1 == d2 == 0)
+
+
+def walkable(test, f, route, label):
+    """The route from the corridor to the door stays in the floor until it reaches the lining's
+    opening at the door, and no wall but the lining crosses it."""
+    legs = list(zip(route, route[1:], strict=False))
+    for k, leg in enumerate(legs):
+        inside = rooms.clip(leg, inside=f["inside"])
+        test.assertTrue(inside, label)
+        test.assertLess(math.dist(inside[0][0], leg[0]), 1e-6, label)
+        if k < len(legs) - 1:
+            test.assertLess(math.dist(inside[0][1], leg[1]), 1e-6, f"{label}: leaves the floor")
+    exit_ = rooms.clip(legs[-1], inside=f["inside"])[0][1]
+    (lining,) = [w for w in f["walls"] if "lining" in w["name"]]
+    gaps = [
+        ((o["at"][0] + o["to"][0]) / 2, (o["at"][1] + o["to"][1]) / 2) for o in lining["openings"]
+    ]
+    test.assertLess(
+        min(math.dist(exit_, g) for g in gaps), rough.ENTRANCE, f"{label}: misses the door"
+    )
+    for w, p in pieces(f):
+        if "lining" in w["name"]:
+            continue
+        for leg in legs:
+            test.assertFalse(crosses(leg, (p["p"], p["q"])), f"{label}: {w['name']}")
+
+
 def rough_entries():
     for plan in sorted(SCRIPTED.glob("*/*.json")):
         for r in json.loads(plan.read_text()).get("rough", []):
@@ -227,6 +263,19 @@ class Options(unittest.TestCase):
             if "lining" not in w["name"]:
                 self.assertFalse(geom.inside(hall, *mid(p)), w["name"])
 
+    def test_a_door_beside_the_corridor_end_gets_a_porch_and_a_hall(self):
+        # the straight line from the corridor's end to the door would run along the end wall
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59.4, 10]]],
+            cores=[dict(kind="stair", at=[20, 15]), dict(kind="lift", at=[30, 15])],
+            entrances=[dict(at=[-0.3, 17.5], level=1)],
+        )
+        ((level, route),) = rough.routes(r)
+        self.assertEqual(len(route), 3)
+        f = rough.floors(r)[0]
+        walkable(self, f, route, "west door")
+
     def test_a_core_outside_an_upper_level_is_refused(self):
         upper = [[0, 0], [60, 0], [60, 12], [0, 12]]
         r = dict(
@@ -295,3 +344,6 @@ class Plans(unittest.TestCase):
                         self.assertTrue(geom.inside(f["inside"], x, y), f"{plan}: {b['name']}")
                 for lab in f["rooms"]:
                     self.assertTrue(geom.inside(f["inside"], *lab["at"]), f"{plan}: {lab}")
+            by_level = {f["level"]: f for f in floors}
+            for level, route in rough.routes(r):
+                walkable(self, by_level[level], route, f"{plan}: entrance on level {level}")
