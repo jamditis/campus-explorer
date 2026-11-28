@@ -178,6 +178,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     if (l > 1e-6) { sx /= l; sz /= l; } else { sx = 0; sz = -1; }
     const lin = [skyAt(sx, sz), skyAt(-sz, sx), skyAt(-sx, -sz)];
     renderer.setRenderTarget(was);
+    // the sky is never pure black: all zeros means the GPU could not read half float back
+    if (lin.every(c => c[0] === 0 && c[1] === 0 && c[2] === 0)) { fixedHorizon(); applyHaze(); return; }
     hazeLinear = hazeColours(...lin);
     hazeShown = hazeColours(...lin.map(c => toSrgb(acesFilmic(c, renderer.toneMappingExposure))));
     Object.assign(HAZE.sun.value, { x: sx, z: sz });
