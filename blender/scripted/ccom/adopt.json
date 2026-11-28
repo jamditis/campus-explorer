@@ -1,6 +1,6 @@
 {
  "zone": "ccom_adopt",
- "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20).",
+ "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20). REVISED 2026-11-28 (Joe's photos of the east end): the main model's east bay and its chairs are moved to the east facade (groups east_bay, east_bay_furniture); the daylight card that stood for its window is dropped (the shell has the window: ccom_shell.json curtains).",
  "adopt": {
   "file": "montclair_state_20261118i.blend",
   "sha256": "4e6abcb4df8507be13677fc653e7643827a1dceac2ed8ebb8513902837aef67b",
@@ -413,14 +413,6 @@
      "NG chevron bench back",
      "NG chevron bench base",
      "NG chevron bench seat",
-     "NG double-height N wall",
-     "NG double-height NW jog wall",
-     "NG double-height S wall over connector",
-     "NG double-height maroon window frame",
-     "NG double-height maroon window glass",
-     "NG east balcony glass rail",
-     "NG east balcony handrail",
-     "NG east daylight card behind glass UNVERIFIED",
      "NG hallway N maroon doors 0 centre stile",
      "NG hallway N maroon doors 0 frame",
      "NG hallway N maroon doors 0 frosted glass",
@@ -434,9 +426,6 @@
      "NG hallway S maroon doors 1 frame",
      "NG hallway S maroon doors 1 frosted glass",
      "NG landing S glass rail",
-     "NG maroon window mullion 0",
-     "NG maroon window mullion 1",
-     "NG maroon window transom",
      "NG stair top landing",
      "NH 1F hallway ceiling diffuser 0 core",
      "NH 1F hallway ceiling diffuser 0 frame",
@@ -592,7 +581,6 @@
      "NO chair legs (N classroom chair r1 t1 -0.45 seat)",
      "NO chair legs (N classroom chair r1 t2 +0.45 seat)",
      "NO chair legs (N classroom chair r1 t2 -0.45 seat)",
-     "NP 2F east balcony walnut fascia (UNVERIFIED)",
      "NP horn-strobe 1F hallway N wall (UNVERIFIED)",
      "NP horn-strobe 1F hallway S wall (UNVERIFIED)",
      "NP horn-strobe 2F back hallway W wall (UNVERIFIED)",
@@ -642,10 +630,6 @@
      "NP sprinkler atrium 05 (UNVERIFIED)",
      "NP sprinkler atrium 06 (UNVERIFIED)",
      "NP sprinkler atrium 07 (UNVERIFIED)",
-     "NP sprinkler double-height east 22 (UNVERIFIED)",
-     "NP sprinkler double-height east 23 (UNVERIFIED)",
-     "NP sprinkler double-height east 24 (UNVERIFIED)",
-     "NP sprinkler double-height east 25 (UNVERIFIED)",
      "NS atrium ottoman 0 plinth shadow gap (UNVERIFIED)",
      "NS atrium ottoman 0 top welt (UNVERIFIED)",
      "NS atrium ottoman 1 plinth shadow gap (UNVERIFIED)",
@@ -831,22 +815,6 @@
      "OB 2F stool 6 back posts (UNVERIFIED)",
      "OB 2F stool 6 oak back (UNVERIFIED)",
      "OB 2F stool 6 oak seat (UNVERIFIED)",
-     "OC 1F blue tub chair 0 arms (UNVERIFIED)",
-     "OC 1F blue tub chair 0 back (UNVERIFIED)",
-     "OC 1F blue tub chair 0 base (UNVERIFIED)",
-     "OC 1F blue tub chair 0 legs (UNVERIFIED)",
-     "OC 1F blue tub chair 0 seat cushion (UNVERIFIED)",
-     "OC 1F blue tub chair 1 arms (UNVERIFIED)",
-     "OC 1F blue tub chair 1 back (UNVERIFIED)",
-     "OC 1F blue tub chair 1 base (UNVERIFIED)",
-     "OC 1F blue tub chair 1 legs (UNVERIFIED)",
-     "OC 1F blue tub chair 1 seat cushion (UNVERIFIED)",
-     "OC 1F blue tub chair 2 arms (UNVERIFIED)",
-     "OC 1F blue tub chair 2 back (UNVERIFIED)",
-     "OC 1F blue tub chair 2 base (UNVERIFIED)",
-     "OC 1F blue tub chair 2 legs (UNVERIFIED)",
-     "OC 1F blue tub chair 2 seat cushion (UNVERIFIED)",
-     "OC 1F rug east zone (UNVERIFIED)",
      "OC 1F rug hallway (UNVERIFIED)",
      "OC 1F stainless bin body (UNVERIFIED)",
      "OC 1F stainless bin lid (UNVERIFIED)",
@@ -985,6 +953,162 @@
       "colour": "#d99a2b"
      }
     }
+   },
+   {
+    "name": "east_bay",
+    "objects": [
+     "NG double-height N wall",
+     "NG double-height NW jog wall",
+     "NG double-height S wall over connector",
+     "NG double-height maroon window frame",
+     "NG double-height maroon window glass",
+     "NG maroon window mullion 0",
+     "NG maroon window mullion 1",
+     "NG maroon window transom",
+     "NG east balcony glass rail",
+     "NG east balcony handrail",
+     "NP 2F east balcony walnut fascia (UNVERIFIED)",
+     "NP sprinkler double-height east 22 (UNVERIFIED)",
+     "NP sprinkler double-height east 23 (UNVERIFIED)",
+     "NP sprinkler double-height east 24 (UNVERIFIED)",
+     "NP sprinkler double-height east 25 (UNVERIFIED)"
+    ],
+    "transform": {
+     "rotate_z_deg": -13.7,
+     "about": [
+      0.0,
+      0.0
+     ],
+     "translate": [
+      18.901,
+      -7.335,
+      0.0
+     ]
+    },
+    "clip": [
+     {
+      "ring": [
+       [
+        -24.058,
+        -12.683
+       ],
+       [
+        -11.771,
+        -15.689
+       ],
+       [
+        -12.379,
+        -18.186
+       ],
+       [
+        18.987,
+        -25.811
+       ],
+       [
+        20.853,
+        -18.155
+       ],
+       [
+        24.876,
+        -19.136
+       ],
+       [
+        28.573,
+        -3.97
+       ],
+       [
+        31.944,
+        -4.792
+       ],
+       [
+        34.565,
+        5.706
+       ],
+       [
+        12.622,
+        10.736
+       ],
+       [
+        17.571,
+        32.009
+       ],
+       [
+        12.624,
+        33.081
+       ],
+       [
+        13.018,
+        35.034
+       ],
+       [
+        -0.258,
+        39.392
+       ],
+       [
+        -10.761,
+        41.654
+       ],
+       [
+        -14.704,
+        24.129
+       ],
+       [
+        -16.462,
+        17.044
+       ],
+       [
+        -18.682,
+        17.564
+       ],
+       [
+        -20.926,
+        8.148
+       ],
+       [
+        -19.115,
+        7.593
+       ]
+      ],
+      "keep": "inside"
+     }
+    ],
+    "why": "the main model's double-height east bay (balcony rail and fascia, the bay's walls, the floor 2 interior window, sprinklers) stood at the end of a short hallway, building u 9.3..13.1, with a grey daylight card for its window; Joe's photos (ccom_f1_east_photo1..5_joe_20261128) put it at the east facade at the end of one long lounge, and the floor 2 sign shades the north-east block (u 29.0..31.7, v 3.9..11.9) open to below: moved 19.3 m east along the building (after T1) so the balcony edge meets the floor 2 slab's edge at u 28.6; clipped to the shell. Which wall holds the floor 2 interior window (the photo looking west shows it on the west side, right of the balcony) is UNVERIFIED",
+    "unverified": "placed by inference: moved 19.3 m east from where the main model had it, to the bay Joe's photos and the floor 2 sign show; which wall holds the floor 2 interior window is a guess"
+   },
+   {
+    "name": "east_bay_furniture",
+    "objects": [
+     "OC 1F blue tub chair 0 arms (UNVERIFIED)",
+     "OC 1F blue tub chair 0 back (UNVERIFIED)",
+     "OC 1F blue tub chair 0 base (UNVERIFIED)",
+     "OC 1F blue tub chair 0 legs (UNVERIFIED)",
+     "OC 1F blue tub chair 0 seat cushion (UNVERIFIED)",
+     "OC 1F blue tub chair 1 arms (UNVERIFIED)",
+     "OC 1F blue tub chair 1 back (UNVERIFIED)",
+     "OC 1F blue tub chair 1 base (UNVERIFIED)",
+     "OC 1F blue tub chair 1 legs (UNVERIFIED)",
+     "OC 1F blue tub chair 1 seat cushion (UNVERIFIED)",
+     "OC 1F blue tub chair 2 arms (UNVERIFIED)",
+     "OC 1F blue tub chair 2 back (UNVERIFIED)",
+     "OC 1F blue tub chair 2 base (UNVERIFIED)",
+     "OC 1F blue tub chair 2 legs (UNVERIFIED)",
+     "OC 1F blue tub chair 2 seat cushion (UNVERIFIED)",
+     "OC 1F rug east zone (UNVERIFIED)"
+    ],
+    "transform": {
+     "rotate_z_deg": -13.7,
+     "about": [
+      0.0,
+      0.0
+     ],
+     "translate": [
+      18.512,
+      -7.24,
+      0.0
+     ]
+    },
+    "why": "the blue tub chairs along the east window (Joe's photos 1 and 5) and the bay's rug, moved with the bay (18.9 m: the chairs' backs 0.1 m off the wall)",
+    "unverified": "moved with the bay; the chairs' exact places are a guess"
    },
    {
     "name": "walls",

@@ -218,3 +218,28 @@ class CcomShellPlan(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CurtainWalls(unittest.TestCase):
+    def test_a_window_cell_across_an_opening_is_left_out(self):
+        cells = [
+            dict(edge=7, s0=1.0, s1=3.0, z0=138.0, z1=140.0),
+            dict(edge=7, s0=4.0, s1=6.0, z0=138.0, z1=140.0),
+            dict(edge=7, s0=4.0, s1=6.0, z0=135.3, z1=137.0),  # under the opening: kept
+            dict(edge=5, s0=4.0, s1=6.0, z0=138.0, z1=140.0),  # another edge: kept
+        ]
+        holes = {7: [(2.9, 7.5, 138.3, 144.3)]}
+        self.assertEqual(massing.clear_of(cells, holes), [cells[2], cells[3]])
+
+    def test_bars_split_the_opening_into_equal_lights(self):
+        bars = massing.curtain_bars(0.0, 4.0, 0.0, 6.0, cols=4, rows=3, bar=0.1)
+        self.assertEqual(len(bars), 4 + 3 + 2)
+        mullions = sorted((a + b) / 2 for a, b, za, zb in bars if zb - za == 6.0 and b - a < 1)
+        self.assertEqual(mullions, [0.05, 1.0, 2.0, 3.0, 3.95])
+        transoms = sorted((za + zb) / 2 for a, b, za, zb in bars if b - a == 4.0)
+        self.assertEqual(transoms, [0.05, 2.0, 4.0, 5.95])
+
+    def test_the_ccom_east_bay_window_lies_on_the_east_wall(self):
+        shell = json.loads((PLAN / "ccom" / "ccom_shell.json").read_text())["buildings"][0]
+        holes = massing.edge_openings(shell["ring"], shell["curtains"])
+        self.assertEqual(list(holes), [7])

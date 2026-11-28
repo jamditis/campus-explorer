@@ -29,7 +29,7 @@ MAX_NAME = 63  # bytes: Blender cuts longer names
 TRANSFORM_KEYS = {"rotate_z_deg", "about", "translate"}
 GROUP_KEYS = {
     "name", "objects", "transform", "text", "clip", "swap_instances", "place", "materials", "fix",
-    "why",
+    "why", "unverified",
 }  # fmt: skip
 
 
@@ -52,13 +52,16 @@ def _cut(text, size):
     return text.encode()[:size].decode(errors="ignore")
 
 
-def adopt_name(name, taken):
-    """The build's name for source object `name`: `SW_adopt_<name>`. One that is too long, or
-    already taken, is cut and ends with a short hash of the whole source name (the same every
-    run), and with `_UNVERIFIED` when the source name carried that label (or the start of it)."""
+def adopt_name(name, taken, unverified=False):
+    """The build's name for source object `name`: `SW_adopt_<name>`, with `_UNVERIFIED` added when
+    the group places it by inference (`unverified`). One that is too long, or already taken, is
+    cut and ends with a short hash of the whole source name (the same every run), and with
+    `_UNVERIFIED` when the source name carried that label (or the start of it) or the group does."""
     full = PREFIX + name
     label = "UNVERI" in name.upper()
     whole = not label or "UNVERIFIED" in name.upper()  # Blender may have cut the label already
+    if unverified and not label:
+        full, label = full + "_UNVERIFIED", True
     if len(full.encode()) <= MAX_NAME and full not in taken and whole:
         return full
     for n in range(6, 41):
@@ -372,7 +375,7 @@ def build(plan, path, coll):
         ob.constraints.clear()
         ob.animation_data_clear()  # no driver or action may move it back
         ob.matrix_world = Matrix(group_matrix(g.get("transform"))) @ world
-        new = adopt_name(name, taken)
+        new = adopt_name(name, taken, bool(g.get("unverified")))
         taken.add(new)
         ob.name = new
         ob["adopt_source"] = name
