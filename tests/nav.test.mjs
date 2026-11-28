@@ -18,7 +18,7 @@ test('progress along the line and the distance off it', () => {
   near(L.length, 180, 1e-9, 'length');
   const p = progress(L, 3, -40);
   near(p.s, 40, 1e-9, 's'); near(p.off, 3, 1e-9, 'off'); assert.equal(p.seg, 0);
-  near(progress(L, 25, -104).s, 125, 1e-9, 'on the second leg');
+  near(progress(L, 25, -104, 1, 100).s, 125, 1e-9, 'on the second leg');
   assert.deepEqual(pointAt(L, 110), [10, -100]);
   assert.deepEqual(pointAt(L, 999), [50, -130]);
 });
@@ -26,7 +26,20 @@ test('progress along the line and the distance off it', () => {
 test('progress does not jump back on a route that doubles back', () => {
   // out 50 m east and back 50 m west, 2 m to the side
   const U = polyline([[0, 0], [50, 0], [50, -2], [0, -2]]);
-  near(progress(U, 10, -2, 2).s, 52 + 40, 1e-9, 'on the way back');
+  near(progress(U, 10, -2, 2, 52).s, 52 + 40, 1e-9, 'on the way back');
+});
+
+test('noise near a later parallel stretch does not skip ahead', () => {
+  // out 100 m north, 4 m east, back 100 m south: a fix 3 m east of the first leg is nearer the return leg
+  const P = polyline([[0, 0], [0, -100], [4, -100], [4, 0]]);
+  const p = progress(P, 3, -40, 0, 30);
+  assert.equal(p.seg, 0); near(p.s, 40, 1e-9, 'still on the way out');
+});
+
+test('a right then a left close together are two turns', () => {
+  const Z = polyline([[0, 0], [0, -50], [3, -50], [3, -100]]);
+  const t = turns(Z);
+  assert.equal(t.length, 2); assert.ok(t[0].angle > 0 && t[1].angle < 0);
 });
 
 test('turns and their words', () => {

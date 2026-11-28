@@ -21,11 +21,13 @@ export function polyline(points) {
 
 /**
  * Where (x, z) is along the line: { s (metres from the start), off (metres from the line), seg }.
- * Segments from `from` - 1 on are searched, so a route that doubles back does not jump ahead or back.
+ * Only segments from `from` - 1 that start within `ahead` metres of `s` (the last progress) are searched,
+ * so GPS noise near a later, parallel stretch of the route does not skip the walker ahead, and a route
+ * that doubles back does not jump back.
  */
-export function progress(line, x, z, from = 0) {
-  let best = { s: 0, off: Infinity, seg: 0 };
-  for (let i = Math.max(0, from - 1); i < line.pts.length - 1; i++) {
+export function progress(line, x, z, from = 0, s = 0, ahead = 40) {
+  let best = { s, off: Infinity, seg: from };
+  for (let i = Math.max(0, from - 1); i < line.pts.length - 1 && line.at[i] <= s + ahead; i++) {
     const [ax, az] = line.pts[i], [bx, bz] = line.pts[i + 1];
     const dx = bx - ax, dz = bz - az, len2 = dx * dx + dz * dz;
     const t = len2 > 0 ? Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / len2)) : 0;
@@ -50,7 +52,7 @@ export function pointAt(line, s) {
 
 /**
  * The turns along the line: [{ s, angle }] where angle is the change of direction in degrees (+ right).
- * Bends within MERGE_M of each other add up into one turn at their middle; under TURN_DEG is no turn.
+ * Bends the same way within MERGE_M of each other add up into one turn at their middle; under TURN_DEG is no turn.
  */
 export function turns(line) {
   const { pts, at } = line, out = [];
@@ -62,7 +64,8 @@ export function turns(line) {
   }
   for (let i = 0; i < bends.length;) {
     let j = i, sum = bends[i].angle;
-    while (j + 1 < bends.length && bends[j + 1].s - bends[j].s < MERGE_M) sum += bends[++j].angle;
+    // a bend in the same direction close by is part of the same turn; one the other way is a turn of its own
+    while (j + 1 < bends.length && bends[j + 1].s - bends[j].s < MERGE_M && Math.sign(bends[j + 1].angle) === Math.sign(sum)) sum += bends[++j].angle;
     if (Math.abs(sum) >= TURN_DEG) out.push({ s: (bends[i].s + bends[j].s) / 2, angle: sum });
     i = j + 1;
   }

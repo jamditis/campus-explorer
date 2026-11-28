@@ -106,11 +106,12 @@ export function createNav(app) {
   function update(now, force = false) {
     if (!nav) return;
     const from = player.guide ?? player.position;
-    const p = progress(nav.line, from.x, from.z, nav.seg);
+    const p = progress(nav.line, from.x, from.z, nav.seg, nav.s);
     nav.s = p.s; nav.seg = p.seg;
     trim();
     const left = Math.max(0, nav.line.length - nav.s);
-    if (!arrived && (left < ARRIVE_M || Math.hypot(from.x - nav.line.pts.at(-1)[0], from.z - nav.line.pts.at(-1)[1]) < ARRIVE_M)) {
+    // arrival is the walker near the entrance itself, not a short route left from a point off to the side
+    if (!arrived && Math.hypot(from.x - nav.line.pts.at(-1)[0], from.z - nav.line.pts.at(-1)[1]) < ARRIVE_M) {
       arrived = true; hud.classList.add('arrived');
       stepEl.textContent = `You have arrived at ${nav.place.name}`; leftEl.textContent = 'Entrance nearby';
       app.toast(`You have arrived at ${nav.place.name}.`);
