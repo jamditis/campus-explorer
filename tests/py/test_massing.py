@@ -57,6 +57,28 @@ class Roofs(unittest.TestCase):
         self.assertTrue(all(len(f) == 3 for f in slopes))
         self.assertEqual({p for f in slopes for p in f if p[2] == 54.0}, {(5.0, 5.0, 54.0)})
 
+    def test_an_overhang_carries_each_face_out_in_its_own_plane(self):
+        for kind in ("hip", "gable"):
+            _tops, slopes, _gables = massing.roof(RECT, kind, 18.0, 12.0)
+            wide = massing.overhang_roof(RECT, kind, 18.0, 12.0, 1.5)
+            self.assertEqual(len(wide), len(slopes), kind)
+            for face, big in zip(slopes, wide, strict=True):
+                (ax, ay, az), (bx, by, bz), (cx, cy, cz) = big[:3]
+                nx = (by - ay) * (cz - az) - (bz - az) * (cy - ay)
+                ny = (bz - az) * (cx - ax) - (bx - ax) * (cz - az)
+                nz = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)
+                for x, y, z in face:  # the wall-top roof lies in the wide one's plane
+                    off = nx * (x - ax) + ny * (y - ay) + nz * (z - az)
+                    self.assertAlmostEqual(off / math.hypot(nx, ny, nz), 0.0, 6, kind)
+            # the ridge stays at the top, the eave drops by the overhang times the pitch (6/5)
+            zs = [q[2] for face in wide for q in face]
+            self.assertAlmostEqual(max(zs), 18.0)
+            self.assertAlmostEqual(min(zs), 12.0 - 1.5 * 6.0 / 5.0)
+
+    def test_an_overhang_needs_a_pitched_roof(self):
+        with self.assertRaises(ValueError):
+            massing.overhang_roof(RECT, "shed", 14.0, 12.0, 1.0)
+
     def test_shed_is_high_on_the_left_of_the_ridge_direction(self):
         tops, slopes, _g = massing.roof(RECT, "shed", 53.0, eave=50.0, ridge_angle=0.0)
         self.assertEqual(tops, [50.0, 50.0, 53.0, 53.0])  # ridge runs east: north side is high

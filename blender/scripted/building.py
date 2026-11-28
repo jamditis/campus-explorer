@@ -325,6 +325,13 @@ def part(lay_part, name, ground, image_dir=None):
                 raise ValueError(f"{name}: wells need a flat roof or a mansard top")
             cap = slopes.pop()
             _deck(b, [q[:2] for q in cap], p["top"], wells, sheet, trim)
+        if p.get("overhang"):  # wide eaves: the faces carried past the walls, a soffit under them
+            if wells:
+                raise ValueError(f"{name}: an overhang and wells do not go together")
+            slopes = massing.overhang_roof(
+                ring, kind, p["top"], p["eave"], p["overhang"], p.get("ridge_angle")
+            )
+            _soffit(b, slopes, p.get("soffit", hexes["trim"]))
         for face in slopes:
             b.faces(face, [tuple(range(len(face)))], sheet)
     wall_top = min(tops) - (p.get("parapet", PARAPET.get(style, 0.4)) if kind == "flat" else 0.0)
@@ -343,6 +350,27 @@ def part(lay_part, name, ground, image_dir=None):
     if p.get("sheets"):
         _sheet_uvs(b, deck, p["sheets"][0])
     return b.finish(recalc=False)  # every face here is wound by hand; panels are loose quads
+
+
+def _soffit(b, faces, colour, depth=0.15):
+    """The underside of an overhanging roof: each face again `depth` lower, facing down, and a
+    fascia round the roof's outer edge (the edges only one face has)."""
+    mat = kit.mat("paint", "soffit_" + colour[1:], kit.srgb(colour), 0.8)
+    count = {}
+    for face in faces:
+        under = [(x, y, z - depth) for x, y, z in face]
+        b.faces(under, [tuple(range(len(face) - 1, -1, -1))], mat)
+        for i in range(len(face)):
+            a, c = face[i], face[(i + 1) % len(face)]
+            key = tuple(sorted((tuple(round(v, 4) for v in a), tuple(round(v, 4) for v in c))))
+            count[key] = count.get(key, 0) + 1
+    for face in faces:
+        for i in range(len(face)):
+            a, c = face[i], face[(i + 1) % len(face)]
+            key = tuple(sorted((tuple(round(v, 4) for v in a), tuple(round(v, 4) for v in c))))
+            if count[key] == 1:
+                q = [c, a, (a[0], a[1], a[2] - depth), (c[0], c[1], c[2] - depth)]
+                b.faces(q, [(0, 1, 2, 3)], mat)
 
 
 def _sheet_uvs(b, material, sheet):

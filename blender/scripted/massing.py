@@ -80,6 +80,27 @@ def roof(ring, kind, top, eave=None, ridge_angle=None):
     return tops, slopes + [q], []
 
 
+def overhang_roof(ring, kind, top, eave, overhang, ridge_angle=None):
+    """The faces of a gable or hip roof carried `overhang` metres past its walls on every edge
+    (wide eaves and rakes). The outline moves out by the overhang and the eave drops by the
+    overhang times the pitch, so every face keeps its plane and the ridge stays where it was:
+    the roof that `roof` gives for the walls is the middle of this one. Gable walls stay on the
+    wall line (use `roof`'s gables). Returns the faces, as `roof` gives its slopes."""
+    if kind not in ("gable", "hip"):
+        raise ValueError(f"an overhang needs a gable or hip roof, not {kind}")
+    n = len(ring)
+    if n == 4:  # the run from an eave to the ridge: half the side across the ridge
+        k = _pair(ring, ridge_angle)
+        a, b = ring[(k + 1) % 4], ring[(k + 2) % 4]
+        run = math.hypot(b[0] - a[0], b[1] - a[1]) / 2
+    else:  # a mansard's slopes rise at 45 degrees (`mansard`)
+        run = top - eave
+    drop = overhang * (top - eave) / run
+    out = geom.offset(ring, -overhang, True)  # anticlockwise: to the right is outward
+    _tops, slopes, _gables = roof(out, kind, top, eave - drop, ridge_angle)
+    return slopes
+
+
 def mansard(ring, rise):
     """The outline moved in by `rise` (a 45 degree slope), or by less where the part is too narrow
     for that: halved until the inner outline keeps its sense and a tenth of the area.
