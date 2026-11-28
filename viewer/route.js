@@ -95,7 +95,9 @@ export function createRoute(app) {
   async function go(place, { stepFree = free.checked } = {}) {
     const my = ++ask;
     await loadGraph();
-    if (my !== ask) return null; // cleared, or left walk mode, while the map loaded
+    // the walker's position is stale until walk mode has put them on the ground
+    while (!player.guide && (!player.placed || player.busy) && my === ask && app.state.mode === 'walk') await new Promise(r => setTimeout(r, 150));
+    if (my !== ask) return null; // cleared, or left walk mode, while the map loaded or the walker landed
     if (!graph) { app.toast('The path map did not load.'); return null; }
     const from = player.guide ?? player.position;
     const r = findRoute(graph, { x: from.x, z: from.z }, place, { stepFree });

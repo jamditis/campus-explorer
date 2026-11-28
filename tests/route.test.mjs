@@ -79,6 +79,13 @@ test('a place with no entrance ends at the nearest point on the path, not a far 
   near(route(g, { x: 70, z: 1 }, { osm: 'way/7', x: 70, z: 10, r: 5 }).length, 0, 1e-9, 'there');
 });
 
+test('stairs on an edge the start only touches are not reported', () => {
+  // stairs 0 -> 1 listed first; the route from node 0 takes the level footway 0 -> 2
+  const g = parsePaths({ nodes: [0, 0, 0, -50, 50, 0], edges: [[0, 1, STEPS, 0], [0, 2, 0, 0]], entrances: [{ osm: 'way/4', node: 2 }] });
+  const r = route(g, { x: 0, z: 0 }, { osm: 'way/4', x: 50, z: 0 });
+  near(r.length, 50, 1e-9, 'footway'); assert.equal(r.steps, false);
+});
+
 test('walking minutes', () => {
   assert.equal(walkMinutes(10), 1);
   assert.equal(walkMinutes(780), 10);

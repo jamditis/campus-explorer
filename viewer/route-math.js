@@ -159,7 +159,10 @@ function search(g, start, goals, stepFree) {
     if (goal.node === undefined) points.push(end);
   }
   const ge = goal.edge !== undefined ? g.edges[goal.edge] : null;
-  const legs = [se, ...used, ...(ge ? [ge] : [])];
+  // the start and goal edges count only when part of them is walked (a start on a junction walks none)
+  const walked = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]) > 0.01;
+  const legs = [...(walked(points[0], points[1] ?? points[0]) ? [se] : []), ...used,
+    ...(ge && walked(points.at(-1), points.at(-2) ?? points.at(-1)) ? [ge] : [])];
   let length = 0, street = 0, steps = false, steep = false;
   for (let k = 1; k < points.length; k++) length += Math.hypot(points[k][0] - points[k - 1][0], points[k][1] - points[k - 1][1]);
   for (const e of used) if (e.flags & STREET) street += e.length;
