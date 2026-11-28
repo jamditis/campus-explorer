@@ -212,6 +212,8 @@ export function createWorld(app, prepare, release = () => {}) {
   // tile while the tile is not in memory: under a memory budget (phones) the evicted tiles stay in view that way.
   // Instanced trees stay with the full tile: trees.js culls and swaps those per instance. Collision and picks
   // always use the full tiles. Far versions load nearest-first once the first round of tiles is in, and stay.
+  // A far version has no instanced trees, so a tile outside a memory budget shows none (trees.js needs the full
+  // tile; per-tile tree points from the export would fix it, docs/ROADMAP.md "Performance").
   const LOD_DIST = { low: 260, medium: 420, high: 650 };
   let lods = [], lodLast = 0;
   async function loadLods(my) {
@@ -227,7 +229,7 @@ export function createWorld(app, prepare, release = () => {}) {
         const path = base + dirOf(tile.lod);
         const g = await loader.parseAsync(await res.arrayBuffer(), path); dropUnmaterialled(g); root = g.scene;
         shareTextures(g, root, path);
-      } catch (e) { if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; }
+      } catch (e) { tile.farLoading = false; if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; } // loadAll tries it again
       if (my !== token) { free(root); return; }
       root.name = `lod_${tile.file.replace('.glb', '').split('/').pop()}`;
       strip(root); // the far version carries the same objects as the full tile
@@ -264,6 +266,9 @@ export function createWorld(app, prepare, release = () => {}) {
     if (budget === Infinity) return null;
     app.focus(_focus);
     const set = new Set(orderTiles(tiles.filter(t => t.center), { x: _focus.x, z: _focus.z }).slice(0, budget + slack));
+    // a tile with no far version has nothing to stand in for it, so it stays. The export leaves a far version out
+    // only where it would save under a fifth (farWorthIt in pack.mjs), so such a tile is about as light as one.
+    for (const t of tiles) if (t.center && !t.lod) set.add(t);
     for (const t of urgent) set.add(t);
     return set;
   }
