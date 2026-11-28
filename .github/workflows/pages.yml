@@ -33,8 +33,9 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .lodcache
-          key: lod-${{ hashFiles('tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs') }}-${{ github.sha }}
-          restore-keys: lod-${{ hashFiles('tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs') }}-
+          # site.sh keys each far version by its tile and inputs too; this only picks which cache to restore
+          key: lod-${{ hashFiles('tools/web-export/site.sh', 'tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs', 'tools/web-export/package-lock.json') }}-${{ github.sha }}
+          restore-keys: lod-${{ hashFiles('tools/web-export/site.sh', 'tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs', 'tools/web-export/package-lock.json') }}-
       - name: Build the site
         run: tools/web-export/site.sh _site
       - name: Sizes
@@ -48,12 +49,13 @@ jobs:
             echo "| manifest total_bytes | $(python3 -c "import json;print(json.load(open('_site/models/main/manifest.json'))['total_bytes'])") |"
           } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@v5
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: _site
 
   deploy:
-    if: github.event_name != 'pull_request'
+    # only main is published: a manual run on another branch builds without deploying
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10

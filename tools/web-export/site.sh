@@ -30,7 +30,9 @@ node share_geo.mjs "$S" --embed | tail -1
 mkdir -p "$S/lod"
 
 # 3. far versions, from the cache when the tile and the tools are unchanged
-tools=$(cat lod.mjs pack.mjs tex.mjs | sha256sum | cut -c1-16)
+LOD_ARGS="RATIO=0.1 ERR_M=0.5"  # the far-version settings build_web.sh uses
+# the cache key covers everything a far version depends on: settings, scripts and the pinned packages
+tools=$( (echo "$LOD_ARGS"; cat lod.mjs pack.mjs tex.mjs package-lock.json) | sha256sum | cut -c1-16)
 built=0 cached=0
 for f in "$S"/*.glb; do
   c=$(basename "$f")
@@ -39,7 +41,7 @@ for f in "$S"/*.glb; do
   if [ -e "$key.glb" ]; then cp "$key.glb" "$S/lod/$c"; cached=$((cached + 1))
   elif [ -e "$key.none" ]; then cached=$((cached + 1))  # lod.mjs wrote none: the tile draws at every distance
   else
-    RATIO=0.1 ERR_M=0.5 node lod.mjs "$f" "$S/lod/$c" >/dev/null
+    env $LOD_ARGS node lod.mjs "$f" "$S/lod/$c" >/dev/null
     if [ -e "$S/lod/$c" ]; then cp "$S/lod/$c" "$key.glb"; else touch "$key.none"; fi
     built=$((built + 1))
   fi
@@ -51,6 +53,6 @@ ls "$S"/lod/*.glb >/dev/null 2>&1 && node drop_zero.mjs "$S"/lod/*.glb | tail -1
 node share_tex.mjs "$S" | tail -1
 node share_geo.mjs "$S" | tail -1
 node tree_points.mjs "$S"
-OUT=$S KEEP_SOURCES=1 python3 manifest.py
+OUT=$S KEEP_SOURCES=1 TZ=America/New_York python3 manifest.py  # its times are written as ET
 find "$S" -size +95M | grep . && { echo "site: a file over 95 MB" >&2; exit 1; }
 say "done: $(du -sh "$OUT" | cut -f1), models/main $(du -sh "$S" | cut -f1)"
