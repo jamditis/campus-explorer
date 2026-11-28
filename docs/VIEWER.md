@@ -348,8 +348,9 @@ following the camera; a still view is not redrawn.
   landmark's bearing (`towerTop`), shown with the city lights. One draw. UNVERIFIED colours (the Empire State
   Building's change for events).
 - **Sunset glint.** With the sun under 10 degrees and west of the campus, one tower in three in the skyline blazes
-  in the sun's colour, in window rows: the stand-in faces the campus, so its west faces mirror a low western sun
-  toward it.
+  in the sun's colour, in window rows that fade to their mean where a pixel spans several. UNVERIFIED: the stand-in
+  is a curtain with no facades, so which towers glint is a hash of bearing, not data; it stands for the west-facing
+  glass of Manhattan that mirrors a low western sun toward New Jersey.
 
 ## Moving to a place
 

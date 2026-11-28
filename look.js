@@ -304,7 +304,9 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
             // facade facing west mirrors a sun low in the west toward it): one tower in three, in window rows
             float b = atan(vCiPos.x, -vCiPos.z);
             float glass = step(0.66, ciHash(vec2(floor(b / 0.0026), 11.0)));
-            float row = 0.55 + 0.45 * step(0.5, fract(vCiPos.y / 4.0));
+            // window rows of 4 m, faded to their mean where a pixel spans several (most views of a skyline 20 km off)
+            float rowY = vCiPos.y / 4.0;
+            float row = mix(0.55 + 0.45 * step(0.5, fract(rowY)), 0.775, clamp(fwidth(rowY) * 2.0 - 0.5, 0.0, 1.0));
             totalEmissiveRadiance += glint * glass * row;
           }` : ''}
           if (cityK > 0.0) {
