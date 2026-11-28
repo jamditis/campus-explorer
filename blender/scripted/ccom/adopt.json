@@ -1,6 +1,6 @@
 {
  "zone": "ccom_adopt",
- "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20). REVISED 2026-11-28 (Joe's photos of the east end): the main model's east bay and its chairs are moved to the east facade (groups east_bay, east_bay_furniture); the daylight card that stood for its window is dropped (the shell has the window: ccom_shell.json curtains).",
+ "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20). REVISED 2026-11-28 (Joe's photos of the east end): the main model's east bay and its chairs are moved to the east facade (groups east_bay, east_bay_furniture); the daylight card that stood for its window is dropped (the shell has the window: ccom_shell.json curtains). REBUILT 2026-11-28 (shell): the main model's facade groups (walls, windows, eave_course, soffit, downspouts) and 50 exterior objects (tower except its lettering, entry arch, glazing and gable, the newsroom's west bay and south windows, wall patches round the dock doors) are no longer adopted: ccom_shell.json builds them; the main entrance's door hardware (46 objects: pulls, push bars, closers, rails, transom panel) goes with it: the shell builds the doors (`doors`, leaves as DOOR_ccom_main_* objects); the LED sign on the floor 2 ledge is dropped (Joe: there is no bridge, the ledge is the floor 2 slab's edge; the sign is not confirmed).",
  "adopt": {
   "file": "montclair_state_20261118i.blend",
   "sha256": "4e6abcb4df8507be13677fc653e7643827a1dceac2ed8ebb8513902837aef67b",
@@ -34,8 +34,6 @@
      "CCM office water bottles (na)",
      "CCM office white wall skins (na)",
      "CCM office wood-top desks (na)",
-     "CCOM atrium arch frame",
-     "CCOM atrium glass (arched, 7x10 grid)",
      "CCOM atrium mullion h10",
      "CCOM atrium mullion h11",
      "CCOM atrium mullion h12",
@@ -71,28 +69,7 @@
      "CCOM door stile -1-0.95",
      "CCOM door stile -10.0",
      "CCOM door stile -10.95",
-     "CCOM entrance arch ring (inner tier)",
-     "CCOM entrance archivolt + jambs (tan, mt)",
-     "CCOM entrance gable medallion boss (mt)",
-     "CCOM entrance gable medallion ring (mt)",
-     "CCOM entrance gable rake fascia N (mt)",
-     "CCOM entrance gable rake fascia S (mt)",
-     "CCOM entrance gable roof tiles N (mt)",
-     "CCOM entrance gable roof tiles S (mt)",
-     "CCOM entrance gable wall (stucco, mt)",
-     "CCOM entrance inner tier +1",
-     "CCOM entrance inner tier -1",
-     "CCOM entrance keystone",
-     "CCOM entrance pier +1",
-     "CCOM entrance pier -1",
-     "CCOM entrance spandrel (outer)",
      "CCOM entrance threshold",
-     "CCOM gable eave end cap S gutter (mu)",
-     "CCOM gable eave return N fascia+soffit box (mu)",
-     "CCOM gable eave return N tile cap (mu)",
-     "CCOM gable eave return S fascia+soffit box (mu)",
-     "CCOM gable eave return S tile cap (mu)",
-     "CCOM gable valley flashing N (mu)",
      "CCOM newsroom U cubicle partitions (mw)",
      "CCOM newsroom U desks (white, mw)",
      "CCOM newsroom anchor desk (mw)",
@@ -101,10 +78,6 @@
      "CCOM newsroom back mezzanine slab + fascia (mw)",
      "CCOM newsroom back offices frames (mw, maroon)",
      "CCOM newsroom back offices glass fronts (mw)",
-     "CCOM newsroom bay glass (mw)",
-     "CCOM newsroom bay mullion grid (mw, maroon)",
-     "CCOM newsroom bay sills (mw)",
-     "CCOM newsroom bay wall (mw)",
      "CCOM newsroom cable protector ramp (mz)",
      "CCOM newsroom camera floor cables (my)",
      "CCOM newsroom ceiling wire cable tray + hangers (mz)",
@@ -133,11 +106,6 @@
      "CCOM newsroom set riser (mw)",
      "CCOM newsroom set riser nosing (my)",
      "CCOM newsroom softbox diffusers (mx, emissive)",
-     "CCOM newsroom south blackout shades (mx)",
-     "CCOM newsroom south glass (mx)",
-     "CCOM newsroom south mullion grid (mx, maroon)",
-     "CCOM newsroom south sills (mx)",
-     "CCOM newsroom south wall (mx)",
      "CCOM newsroom studio ceiling (open, dark, mw)",
      "CCOM newsroom studio ceiling light panels (mw)",
      "CCOM newsroom studio floor (raised access, mw)",
@@ -147,16 +115,6 @@
      "CCOM newsroom upper white band (mw)",
      "CCOM newsroom video wall bezel (my)",
      "CCOM newsroom video wall content (my, generic)",
-     "CCOM tower 4a belfry openings (UNVERIFIED N/E)",
-     "CCOM tower 4a cast-stone base",
-     "CCOM tower 4a hip eave fascia + soffit",
-     "CCOM tower 4a hip roof tiles",
-     "CCOM tower 4a lettering COLLEGE OF",
-     "CCOM tower 4a lettering COMMUNICATION AND MEDIA",
-     "CCOM tower 4a shaft (one volume, OSM+LiDAR)",
-     "CCOM tower 4a tall arched window frame",
-     "CCOM tower 4a tall arched window glass",
-     "CCOM tower 4a trim (belfry band, arch surrounds)",
      "CCOM_equip_persdoor_20261014jf3",
      "CCOM_equip_persdoor_frame_20261014jf3",
      "CCOM_equip_persdoor_jamb-13.4_20261014jf3",
@@ -180,50 +138,10 @@
      "CCOM_equip_rolldoor_slat7_20261014jf3",
      "CCOM_equip_rolldoor_slat8_20261014jf3",
      "CCOM_equip_rolldoor_slat9_20261014jf3",
-     "CCOM_equip_wallback_CCOM_win_062_r0_-14.5_20261014jf3",
-     "CCOM_equip_wallback_CCOM_win_064_r0_-18.8_20261014jf3",
-     "CCOM_equip_wallhead_CCOM_win_062_r0_-14.5_20261014jf3",
-     "CCOM_equip_wallpatch_CCOM_win_062_r0_0_20261014jf3",
-     "CCOM_equip_wallpatch_CCOM_win_062_r0_1_20261014jf3",
-     "CCOM_equip_wallpatch_CCOM_win_066_r0_0_20261014jf3",
      "Campus building ID sign panel (UNVERIFIED)",
      "Campus sign posts (UNVERIFIED position)",
-     "NH door leaf 0 bottom rail (maroon)",
-     "NH door leaf 1 bottom rail (maroon)",
-     "NH door leaf 2 bottom rail (maroon)",
-     "NH door leaf 3 bottom rail (maroon)",
      "NH door pair 0 inside saddle (bronze)",
      "NH door pair 1 inside saddle (bronze)",
-     "NH entrance N inner jamb lining (white, UNVERIFIED)",
-     "NH entrance S inner jamb lining (white, UNVERIFIED)",
-     "NH entrance soffit drop fascia (UNVERIFIED)",
-     "NH entrance soffit over front glazing (UNVERIFIED)",
-     "NI door head frame centre (fixed panel between pairs)",
-     "NI door leaf 0 outside pull",
-     "NI door leaf 0 pull standoff z138.38",
-     "NI door leaf 0 pull standoff z138.92",
-     "NI door leaf 0 push bar (inside)",
-     "NI door leaf 0 push bar bracket y10.46",
-     "NI door leaf 0 push bar bracket y9.79",
-     "NI door leaf 1 outside pull",
-     "NI door leaf 1 pull standoff z138.38",
-     "NI door leaf 1 pull standoff z138.92",
-     "NI door leaf 1 push bar (inside)",
-     "NI door leaf 1 push bar bracket y10.72",
-     "NI door leaf 1 push bar bracket y11.39",
-     "NI door leaf 2 outside pull",
-     "NI door leaf 2 pull standoff z138.38",
-     "NI door leaf 2 pull standoff z138.92",
-     "NI door leaf 2 push bar (inside)",
-     "NI door leaf 2 push bar bracket y12.22",
-     "NI door leaf 2 push bar bracket y12.90",
-     "NI door leaf 3 outside pull",
-     "NI door leaf 3 pull standoff z138.38",
-     "NI door leaf 3 pull standoff z138.92",
-     "NI door leaf 3 push bar (inside)",
-     "NI door leaf 3 push bar bracket y13.15",
-     "NI door leaf 3 push bar bracket y13.82",
-     "NI door transom panel (maroon, photo usgbc_03)",
      "NI transom joint IN y10.59",
      "NI transom joint IN y11.52",
      "NI transom joint IN y12.10",
@@ -234,25 +152,9 @@
      "NI transom joint OUT y13.03",
      "NI transom mid reveal IN",
      "NI transom mid reveal OUT",
-     "NI window bar h6 stub N (outside doors)",
-     "NI window bar h6 stub S (outside doors)",
-     "NI window bar h7 stub N (outside doors)",
-     "NI window bar h7 stub S (outside doors)",
      "NO EXIT sign housing over front doors (inside, UNVERIFIED)",
      "NO EXIT sign letters E face",
      "NO EXIT sign letters W face",
-     "NS front door leaf 0 closer arm (UNVERIFIED)",
-     "NS front door leaf 0 closer track shoe (UNVERIFIED)",
-     "NS front door leaf 0 overhead closer body (UNVERIFIED)",
-     "NS front door leaf 1 closer arm (UNVERIFIED)",
-     "NS front door leaf 1 closer track shoe (UNVERIFIED)",
-     "NS front door leaf 1 overhead closer body (UNVERIFIED)",
-     "NS front door leaf 2 closer arm (UNVERIFIED)",
-     "NS front door leaf 2 closer track shoe (UNVERIFIED)",
-     "NS front door leaf 2 overhead closer body (UNVERIFIED)",
-     "NS front door leaf 3 closer arm (UNVERIFIED)",
-     "NS front door leaf 3 closer track shoe (UNVERIFIED)",
-     "NS front door leaf 3 overhead closer body (UNVERIFIED)",
      "dd_SOUTH0_ceiling_tile",
      "dd_SOUTH0_ch_0_+0.00_b_legs_dX_dZ",
      "dd_SOUTH0_ch_0_+0.00_b_shell_dY_dZ",
@@ -344,6 +246,26 @@
     ]
    },
    {
+    "name": "tower_lettering",
+    "objects": [
+     "CCOM tower 4a lettering COLLEGE OF",
+     "CCOM tower 4a lettering COMMUNICATION AND MEDIA"
+    ],
+    "transform": {
+     "rotate_z_deg": 0.0,
+     "about": [
+      0.0,
+      0.0
+     ],
+     "translate": [
+      -0.0486,
+      0.0118,
+      0.0
+     ]
+    },
+    "why": "the tower's lettering, moved 5 cm out of the scripted tower's west face (it stood up to 6 cm inside it)"
+   },
+   {
     "name": "atrium",
     "objects": [
      "NG 1F hallway LED 0",
@@ -389,8 +311,6 @@
      "NG atrium red wall maroon doors 1 frame",
      "NG atrium red wall maroon doors 1 frosted glass",
      "NG atrium wide stair wood clad",
-     "NG bridge LED sign MONTCLAIR STATE UNIVERSITY",
-     "NG bridge LED sign panel",
      "NG bridge W glass rail",
      "NG bridge W handrail",
      "NG bridge fascia wood",
@@ -1109,313 +1029,6 @@
     },
     "why": "the blue tub chairs along the east window (Joe's photos 1 and 5) and the bay's rug, moved with the bay (18.9 m: the chairs' backs 0.1 m off the wall)",
     "unverified": "moved with the bay; the chairs' exact places are a guess"
-   },
-   {
-    "name": "walls",
-    "objects": [
-     "School of Communication and Media walls"
-    ],
-    "clip": [
-     {
-      "ring": [
-       [
-        17.9,
-        -35.0
-       ],
-       [
-        45.0,
-        -35.0
-       ],
-       [
-        45.0,
-        12.1
-       ],
-       [
-        17.9,
-        12.1
-       ]
-      ],
-      "keep": "outside"
-     }
-    ],
-    "why": "the main model's facade, carried over where its heights agree with the LiDAR (west, south and north walls follow the OSM ring; eaves within about 0.3 m at the wall line); east of model x 17.9 the walls were lowered a storey (session 20261014y): scripted there"
-   },
-   {
-    "name": "windows",
-    "objects": [
-     "CCOM_win_000_r0",
-     "CCOM_win_001_r0",
-     "CCOM_win_002_r0",
-     "CCOM_win_003_r0",
-     "CCOM_win_004_r1",
-     "CCOM_win_005_r0",
-     "CCOM_win_006_r1",
-     "CCOM_win_007_r0",
-     "CCOM_win_008_r1",
-     "CCOM_win_009_r0",
-     "CCOM_win_010_r1",
-     "CCOM_win_011_r0",
-     "CCOM_win_012_r1",
-     "CCOM_win_013_r0",
-     "CCOM_win_014_r1",
-     "CCOM_win_015_r0",
-     "CCOM_win_016_r1",
-     "CCOM_win_017_r0",
-     "CCOM_win_018_r1",
-     "CCOM_win_019_r0",
-     "CCOM_win_020_r1",
-     "CCOM_win_021_r0",
-     "CCOM_win_022_r1",
-     "CCOM_win_058_r0",
-     "CCOM_win_059_r1",
-     "CCOM_win_060_r0",
-     "CCOM_win_061_r1",
-     "CCOM_win_063_r1",
-     "CCOM_win_065_r1",
-     "CCOM_win_067_r1",
-     "CCOM_win_068_r0",
-     "CCOM_win_069_r1",
-     "CCOM_win_070_r0",
-     "CCOM_win_071_r1",
-     "CCOM_win_072_r0",
-     "CCOM_win_073_r1",
-     "CCOM_win_074_r0",
-     "CCOM_win_075_r1",
-     "CCOM_win_076_r0",
-     "CCOM_win_077_r1",
-     "CCOM_win_092_r0",
-     "CCOM_win_093_r1",
-     "CCOM_win_094_r0",
-     "CCOM_win_095_r1",
-     "CCOM_win_096_r0",
-     "CCOM_win_097_r1",
-     "CCOM_win_098_r0"
-    ],
-    "swap_instances": {
-     "CCOM_Win_Wing_A": "CCOM_Win_Wing_A_lit_dd",
-     "CCOM_Win_Wing_A_corner_dT": "CCOM_Win_Wing_A_lit_dd"
-    },
-    "why": "window units of the west, south and north faces (reveal, sill, frame, glass) without their 3 m fake-room boxes"
-   },
-   {
-    "name": "eave_course",
-    "objects": [
-     "School of Communication and Media barrel tile eave course"
-    ],
-    "clip": [
-     {
-      "ring": [
-       [
-        17.9,
-        -35.0
-       ],
-       [
-        45.0,
-        -35.0
-       ],
-       [
-        45.0,
-        12.1
-       ],
-       [
-        17.9,
-        12.1
-       ]
-      ],
-      "keep": "outside"
-     }
-    ],
-    "transform": {
-     "rotate_z_deg": 0.0,
-     "about": [
-      0.0,
-      0.0
-     ],
-     "translate": [
-      0.0,
-      0.0,
-      0.4
-     ]
-    },
-    "why": "tile eave course, raised 0.4 m to sit on the scripted roof edge (the LiDAR edge is 0.2 to 0.9 m above the main model's)"
-   },
-   {
-    "name": "soffit",
-    "objects": [
-     "School of Communication and Media eave soffit + fascia + rafter"
-    ],
-    "clip": [
-     {
-      "ring": [
-       [
-        17.9,
-        -35.0
-       ],
-       [
-        45.0,
-        -35.0
-       ],
-       [
-        45.0,
-        12.1
-       ],
-       [
-        17.9,
-        12.1
-       ]
-      ],
-      "keep": "outside"
-     }
-    ],
-    "fix": "ccom_adopt_fixes:apply",
-    "transform": {
-     "rotate_z_deg": 0.0,
-     "about": [
-      0.0,
-      0.0
-     ],
-     "translate": [
-      0.0,
-      0.0,
-      0.64
-     ]
-    },
-    "why": "soffit, fascia and rafter tails, raised 0.64 m under the scripted overhang"
-   },
-   {
-    "name": "downspouts",
-    "objects": [
-     "Downspouts (3f)",
-     "Downspout boots + drain grates (3g, CCOM)",
-     "Downspout cleanout plugs brass (3h, CCOM)",
-     "Downspout splash blocks (3f)",
-     "Eave drip / moss streaks on stucco (3g)"
-    ],
-    "clip": [
-     {
-      "ring": [
-       [
-        -25.52,
-        -12.33
-       ],
-       [
-        -24.06,
-        -12.68
-       ],
-       [
-        -11.77,
-        -15.69
-       ],
-       [
-        -12.38,
-        -18.19
-       ],
-       [
-        -12.73,
-        -19.64
-       ],
-       [
-        18.62,
-        -27.27
-       ],
-       [
-        24.1,
-        -28.63
-       ],
-       [
-        29.67,
-        -5.78
-       ],
-       [
-        33.04,
-        -6.6
-       ],
-       [
-        36.02,
-        5.34
-       ],
-       [
-        34.56,
-        5.71
-       ],
-       [
-        12.62,
-        10.74
-       ],
-       [
-        17.57,
-        32.01
-       ],
-       [
-        12.62,
-        33.08
-       ],
-       [
-        13.02,
-        35.03
-       ],
-       [
-        -0.26,
-        39.39
-       ],
-       [
-        0.06,
-        40.86
-       ],
-       [
-        -11.9,
-        43.43
-       ],
-       [
-        -15.83,
-        25.96
-       ],
-       [
-        -19.39,
-        26.86
-       ],
-       [
-        -21.74,
-        17.62
-       ],
-       [
-        -20.4,
-        16.83
-       ],
-       [
-        -22.71,
-        7.13
-       ],
-       [
-        -20.91,
-        6.57
-       ]
-      ],
-      "keep": "inside"
-     },
-     {
-      "ring": [
-       [
-        17.9,
-        -35.0
-       ],
-       [
-        45.0,
-        -35.0
-       ],
-       [
-        45.0,
-        12.1
-       ],
-       [
-        17.9,
-        12.1
-       ]
-      ],
-      "keep": "outside"
-     }
-    ],
-    "why": "downspouts, boots, plugs, splash blocks and drip streaks on the adopted faces (campus-wide objects: only the part round CCOM)"
    },
    {
     "name": "sign",

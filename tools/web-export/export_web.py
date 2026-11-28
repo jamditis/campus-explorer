@@ -562,9 +562,13 @@ json.dump(AV, open(cache_p, "w"))
 print("WEB materials", stats, flush=True)
 json.dump(LEAFT, open(OUT + ".leaf.json", "w"))
 json.dump(sorted(PAINT), open(OUT + ".paint.json", "w"))
-# only material categories go out as glTF extras: drop object/mesh custom properties
+# only material categories go out as glTF extras: drop object/mesh custom properties, except the
+# `door` of a DOOR_* leaf (blender/scripted/building.py door_leaves), which the viewer reads from
+# the node's extras to swing the leaf (#119)
 for idb in list(bpy.data.objects) + list(bpy.data.meshes):
     for k in list(idb.keys()):
+        if k == "door" and isinstance(idb, bpy.types.Object) and idb.name.startswith("DOOR_"):
+            continue
         try:
             del idb[k]
         except Exception:

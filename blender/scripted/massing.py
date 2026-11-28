@@ -468,6 +468,67 @@ def _area3(pts):
     return x, y, z
 
 
+def arch_curve(s0, s1, z1, n=12):
+    """The round head of an arched opening from s0 to s1 whose crown is at z1: a semicircle
+    (radius (s1 - s0) / 2) from the left springing point over the top to the right one, as
+    n + 1 points (s, z)."""
+    r = (s1 - s0) / 2
+    cs, spring = s0 + r, z1 - r
+    return [
+        (cs - r * math.cos(math.pi * k / n), spring + r * math.sin(math.pi * k / n))
+        for k in range(n + 1)
+    ]
+
+
+def arch_outline(s0, s1, z0, z1, n=12):
+    """An arched opening as one anticlockwise polygon (s, z): the sill from s0 to s1 at z0, the
+    jambs up to the springing line, and the semicircular head with its crown at z1."""
+    head = arch_curve(s0, s1, z1, n)
+    return [(s0, z0), (s1, z0)] + head[::-1]
+
+
+def arch_spandrels(s0, s1, z1, n=12):
+    """The two pieces of wall between an arch's head and the rectangle (s0..s1, up to z1) the wall
+    was cut by: polygons (s, z), anticlockwise, left then right."""
+    head = arch_curve(s0, s1, z1, n)
+    half = n // 2  # head[half] is the crown, at z1
+    left = [*head[: half + 1], (s0, z1)]  # springing point, up the head to the crown, the corner
+    right = [*head[half:], (s1, z1)]  # the crown, down the head to the right springing, the corner
+    return [_ccw(left), _ccw(right)]
+
+
+def _ccw(poly):
+    """The polygon (s, z) wound anticlockwise."""
+    a = sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(poly, poly[1:] + poly[:1], strict=True))
+    return poly if a > 0 else poly[::-1]
+
+
+def arch_bars(s0, s1, z0, z1, cols, rows, bar=0.08, n=12):
+    """The frame of an arched window: rectangles (sa, sb, za, zb) for the sill, the jambs up to
+    the springing line, `cols - 1` mullions and `rows - 1` transoms (each cut where it meets the
+    head), and the head as `n` straight bars (pairs of points (s, z)) along the semicircle."""
+    r = (s1 - s0) / 2
+    cs, spring = s0 + r, z1 - r
+
+    def top_at(s):  # the head's height above s
+        d = min(abs(s - cs), r)
+        return spring + math.sqrt(max(0.0, r * r - d * d))
+
+    rects = [(s0, s1, z0, z0 + bar), (s0, s0 + bar, z0, spring), (s1 - bar, s1, z0, spring)]
+    for k in range(1, cols):
+        s = s0 + (s1 - s0) * k / cols
+        rects.append((s - bar / 2, s + bar / 2, z0, top_at(s)))
+    for k in range(1, rows):
+        z = z0 + (z1 - z0) * k / rows
+        if z <= spring:
+            rects.append((s0, s1, z - bar / 2, z + bar / 2))
+        else:  # a transom in the head spans only the width of the arch at that height
+            half = math.sqrt(max(0.0, r * r - (z - spring) ** 2))
+            rects.append((cs - half, cs + half, z - bar / 2, z + bar / 2))
+    head = arch_curve(s0, s1, z1, n)
+    return rects, list(zip(head, head[1:], strict=False))
+
+
 def wall_pieces(length, z0, z1, openings):
     """A wall face `length` long from z0 to z1 as rectangles (s0, s1, za, zb) that leave out the
     `openings` (s0, s1, za, zb) along it: full-height strips between openings, and the parts below
@@ -545,6 +606,44 @@ def _beam(p, q, width, height):
     verts = b + [(x, y, z + height) for x, y, z in b]
     faces = [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
     return verts, faces
+
+
+def door_swing(a, b, hinge_at, outward):
+    """How a swinging leaf from `a` to `b` (wall-line points, metres) opens: the hinge point (the
+    end named by `hinge_at`, "at" or "to") and the signed angle (degrees, anticlockwise about +z
+    seen from above) that turns the leaf a quarter turn out of the wall towards `outward` (the
+    wall's outward normal)."""
+    h, f = (a, b) if hinge_at == "at" else (b, a)
+    dx, dy = f[0] - h[0], f[1] - h[1]
+    turned = (-dy, dx)  # the leaf's direction after +90 degrees
+    sign = 1 if turned[0] * outward[0] + turned[1] * outward[1] > 0 else -1
+    return h, 90 * sign
+
+
+def ring_soffits(ring, eave, crest_z, crest_in, flat_edges=(), overhang=None, fascia=0.22):
+    """Under a ring roof's overhang (ring_roof's arguments): for each sloped edge that overhangs,
+    a flat soffit from the wall line out to the eave edge at the eave edge's height, and a fascia
+    `fascia` deep down the outer edge. Faces of (x, y, z), each anticlockwise seen from outside
+    (the soffit from below)."""
+    ring = [tuple(p[:2]) for p in ring]
+    n = len(ring)
+    flat = set(flat_edges)
+    ci = list(crest_in) if isinstance(crest_in, list | tuple) else [crest_in] * n
+    ov = list(overhang) if isinstance(overhang, list | tuple) else [overhang or 0.0] * n
+    ov = [0.0 if i in flat else ov[i] for i in range(n)]
+    if not any(ov):
+        return []
+    outer = inset(ring, [-v for v in ov])
+    faces = []
+    for i in range(n):
+        j = (i + 1) % n
+        if ov[i] <= 0:
+            continue
+        low = eave - ov[i] * (crest_z - eave) / ci[i]
+        faces.append([(*ring[i], low), (*outer[i], low), (*outer[j], low), (*ring[j], low)])
+        faces.append([(*outer[i], low - fascia), (*outer[j], low - fascia), (*outer[j], low),
+                      (*outer[i], low)])  # fmt: skip
+    return faces
 
 
 def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.15, overhang=None):
