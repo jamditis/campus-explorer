@@ -110,7 +110,7 @@ stateDiagram-v2
 - **Shared files:** textures under `tex/` are loaded once per URL and sampler and counted per tile root (`createTextureShare`, `viewer/texshare.js:39`); freeing a tile skips shared textures. Geometry packs under `geo/` are buffer files that the loader fetches per tile.
 - **Failure:** a full tile that fails stays `'error'`, and `isLoaded` counts it as loaded (`viewer/world.js:538`) ([#142](https://github.com/jamditis/campus-explorer/issues/142)).
 
-**In flight (#136, a4k-ceopt):** generated files (manifest, `geo/`, `lod/`, tiles) out of git, and Pages built from an Actions workflow. When it lands, the deploy section below and the manifest source change.
+- **Source:** `manifest.json` is built with the site (pipeline: site build), not committed; a local checkout has none until `tools/web-export/site.sh` has run, and the viewer-test tools serve `_site/`.
 
 ### Interiors and the glass rule
 
@@ -143,7 +143,8 @@ stateDiagram-v2
   export --> pr: build_web.sh writes models/main
   pr --> review: CI green
   review --> merged: one review pass
-  merged --> live: Pages serves main
+  merged --> built: site workflow builds _site from main
+  built --> live: deploy-pages publishes it
 ```
 
 ### Scripted build (`blender/scripted`)
@@ -161,16 +162,26 @@ stateDiagram-v2
 2. **Plan** (unless `SKIP_PLAN=1`): `plan_chunks.py` in Blender, then `make_chunks.py` (`:40-44`). The main run writes `source.txt` for the north run (`:45`).
 3. **Prune** (full build): delete published and raw tiles that left the plan (`:47-57`).
 4. **Export** each tile with `export_web.py` under the watchdog (`:58-67`). Object and mesh custom properties are dropped before the glTF write, except `door` on objects named `DOOR_*` (entrance leaves from `building.door_leaves`), which goes out as node extras; each leaf's materials carry a `door_leaf` extra, so optimize's dedup and join keep every leaf a node of its own for the viewer (#119).
-5. **Per tile:** leaf tint, tree instancing, optimize, compact; far version to `lod/` for `t_` tiles.
+5. **Per tile:** leaf tint, tree instancing, optimize, compact.
 6. **Land cover** (main, when its inputs exist), **supersede** (when any `sw_*.glb` exists, `:111`): cut other sources' ground under the scripted footprints; tiles cut under older rules stop the run (`supersede.mjs:494-497`).
-7. **Shared files:** `share_tex` writes `tex/`, `share_geo` writes `geo/` (`:156-157`), `tree_points` adds tree stand-ins to the far versions (`:158-159`).
-8. **Manifest** (`:160`), then the 95 MB check (`:161`).
+7. **Far field and filters** on the published tiles: far cut, skirt, zero-area triangles, instance filters, far trees.
+8. **Sources:** `manifest.py` with `SOURCES_ONLY=1` writes `models/main/sources.json` (snapshot labels and the superseded-ground list), then the 95 MB check.
 
-Every stage writes into `models/main` in place; the manifest comes last ([#146](https://github.com/jamditis/campus-explorer/issues/146)).
+Every stage writes into `models/main` in place. Each committed tile is final and carries its own images and geometry. Far versions, shared images and geometry, tree stand-ins and `manifest.json` are not committed (`.gitignore`): the site build makes them (below).
 
-### Manifest (`models/main/manifest.json`)
+### Site build (`tools/web-export/site.sh`, `.github/workflows/pages.yml`)
 
-Written by `tools/web-export/manifest.py:58-77`: `tiles[]` (`file`, `bytes`, `center` for `t_` tiles, `lod`, `tex`), `paint`, `source_saved`, `source_version`, `sources`, `landcover`, `far_trees`, `hide`, `exported`, `tex` (shared file sizes), `total_bytes`. Read by `viewer/world.js` (tiles, hide, tex, lod), `app.js` (paint, landcover), `viewer/scenery.js` (landcover, far_trees) and `viewer/ui.js:46-50` (source snapshot line). Each export run rewrites the whole file; tile PRs regenerate it on the rebased branch.
+1. **Copy** the served files from git into `_site/` (everything but `blender/`, `tools/`, `tests/`, `docs/`, `notes/`, `tasks/` and the markdown files).
+2. **Embed** any shared images and geometry back into the tiles (none once tiles are committed whole).
+3. **Far versions:** `lod.mjs` per `t_` tile, cached in `.lodcache/` by tile hash, settings, scripts and pinned packages (`actions/cache` keeps it between runs); then zero-area triangles.
+4. **Share** images (`share_tex`) and geometry (`share_geo`), add tree stand-ins (`tree_points`), write `manifest.json` (`manifest.py`, `KEEP_SOURCES=1`: labels from `sources.json`).
+5. **Check** no file is over 95 MB.
+
+A run takes about 2 minutes on a4000 from an empty cache; with the cache, only changed tiles rebuild their far versions. A tile PR touches only its tiles and `sources.json`, so two tile PRs on different tiles do not collide.
+
+### Manifest (`models/main/manifest.json`, built)
+
+Written into `_site/` by `tools/web-export/manifest.py` in the site build, never committed: `tiles[]` (`file`, `bytes`, `center` for `t_` tiles, `lod`, `tex`), `paint`, `source_saved`, `source_version`, `sources`, `landcover`, `far_trees`, `hide`, `exported`, `tex` (shared file sizes), `total_bytes`. Read by `viewer/world.js` (tiles, hide, tex, lod), `app.js` (paint, landcover), `viewer/scenery.js` (landcover, far_trees) and `viewer/ui.js:46-50` (source snapshot line). Each export run rewrites the whole file; tile PRs regenerate it on the rebased branch.
 
 ### Review, merge and deploy
 
@@ -186,12 +197,10 @@ stateDiagram-v2
   ci_green --> pr_open: a required check fails, push a fix
 ```
 
-- **Checks:** `.github/workflows/ci.yml` runs `lint`, `viewer` and `repo-guard` on every PR and push to `main` (`ci.yml:3`, `:19`, `:44`, `:78`). `viewer` runs the unit tests and `tools/ci/check_viewer_refs.py` (`ci.yml:68`), which fails when the manifest names a file that is not there. `blender-smoke` and CodeQL run but do not gate.
+- **Checks:** `.github/workflows/ci.yml` runs `lint`, `viewer` and `repo-guard` on every PR and push to `main` (`ci.yml:3`, `:19`, `:44`, `:78`). `viewer` runs the unit tests and `tools/ci/check_viewer_refs.py` (`ci.yml:68`). The `site` workflow builds the whole site on every PR and fails when a step of the build fails. `blender-smoke` and CodeQL run but do not gate.
 - **Review:** one independent review pass per PR, by a model from a different provider than the author. Real bugs found in that pass are fixed in the same PR; other findings are listed in the PR body. No second verify round. Codex connector threads are handled per AGENTS.md rule 12.
 - **Merge:** a PR is ready for merge when CI is green and the one review is done, at a named head SHA. The coordinator merges.
-- **Deploy:** GitHub Pages serves the `main` branch as it is (`.nojekyll` at the root; no Pages workflow). A merge goes live a minute or two later. No step between merge and live checks the site.
-
-**In flight (#136, a4k-ceopt):** Pages from an Actions workflow that builds the generated files.
+- **Deploy:** the `site` workflow builds `_site/` from `main` after each push and publishes it with `actions/deploy-pages` (Pages source: GitHub Actions). Only `refs/heads/main` deploys; a newer push cancels a queued build. A merge goes live when its build ends.
 
 ### Daily model release
 
@@ -215,7 +224,7 @@ Each line: what decides a state without naming it, where, and the issue.
 | Contradictory | `build_web.sh:47-57`, `:160`; `supersede.mjs:482-497`; `README.md` "Refreshing the viewer" step 1 | The README says a failed tile stops the build before anything is published; the export writes in place | [#146](https://github.com/jamditis/campus-explorer/issues/146) |
 | Implicit | `build_web.sh:39` | `gate()` waits on lock files with no limit and no message, and never takes the locks itself | [#146](https://github.com/jamditis/campus-explorer/issues/146) |
 | Implicit | `build_web.sh:111` | Whether supersede runs depends on `sw_*.glb` existing | none: the sw tiles always exist while scripted areas do |
-| Implicit | `manifest.py:55-57` | `hide` comes from north's `clip.json` if that file exists, else the old manifest | none: the north merge moves into main (ROADMAP "One scene") |
+| Implicit | `manifest.py:55-57` | `hide` comes from north's `clip.json` if that file exists, else `sources.json` | none: the north merge moves into main (ROADMAP "One scene") |
 | Contradictory | `CLAUDE.md` viewer index vs `supersede.py:30`; `share_tex.mjs:5`; `blender/scripted/README.md:34`; `README.md:40` | Stale numbers, order and commands | [#147](https://github.com/jamditis/campus-explorer/issues/147) |
 | Duplicated | `viewer/permalink.js:5`, `:69`, `:110-111` | A scene field (`s=main|north`) for a viewer with one scene | [#147](https://github.com/jamditis/campus-explorer/issues/147) |
 | Implicit | `viewer/permalink.js:81`, `viewer/ui.js:197-199` | A link without `l` turns labels off and stores that | none: by design (`encodeView` writes `l=1` only when on) |

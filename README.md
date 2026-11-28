@@ -12,8 +12,8 @@ This is a work in progress, not a survey or an as-built record. Anything inferre
 index.html, app.js, look.js,    Static three.js viewer (no build step), served by GitHub Pages
 style.css, viewer/              (viewer/ holds the modules; see docs/VIEWER.md)
 trees.js                        Per-tree level of detail (near trees in full, middle versions with fewer twigs, far trees as simple crowns)
-models/main/                    The campus as meshopt-compressed GLB tiles (160 m squares), their far
-                                versions in lod/, and manifest.json
+models/main/                    The campus as meshopt-compressed GLB tiles (160 m squares) and sources.json;
+                                the site build (tools/web-export/site.sh) adds far versions, shared files, manifest
 vendor/                         three.js r170, GLTF loader, meshopt decoder, three-mesh-bvh (MIT)
 blender/
   smoke_test.py                 Headless Blender check that CI runs on a tiny generated scene
@@ -44,7 +44,8 @@ The `.blend` models are not in git. Each day's model is attached to a [GitHub Re
 Open the live link, or run it locally:
 
 ```sh
-python3 -m http.server 8000
+npm ci --prefix tools/web-export && tools/web-export/site.sh   # builds _site/: far versions, shared files, manifest
+python3 -m http.server 8000 --directory _site
 # then open http://localhost:8000/
 ```
 
@@ -72,9 +73,9 @@ The viewer draws only when something changes, redraws shadows only when they mov
 
 On the modelling box, read-only against the `.blend` files, between modelling sessions (the script waits for the scene lock):
 
-1. Run `SCENE=main SOURCE_VERSION=<session id> SOURCE_SAVED="<main save time, ET>" bash tools/web-export/build_web.sh` from this checkout, then the same with `SCENE=north`. Point it at a frozen copy of the main file (for example `montclair_state_ws214c.blend`) so a session can't change it mid-export. Before every Blender process it waits for the scene `.lock` to be free, for no other Blender, and for the memory gate. It plans tiles, exports each tile, fixes leaf UVs and tints, optimizes with gltf-transform (meshopt, webp, join, instance, no palette), composes the paint layers and writes `models/main/manifest.json` (one manifest for the whole campus; the north run skips anything main already has and clips north terrain to where main has none). Any failed tile stops the build before anything is published; tiles no longer in the plan are pruned.
+1. Run `SCENE=main SOURCE_VERSION=<session id> SOURCE_SAVED="<main save time, ET>" bash tools/web-export/build_web.sh` from this checkout, then the same with `SCENE=north`. Point it at a frozen copy of the main file (for example `montclair_state_ws214c.blend`) so a session can't change it mid-export. Before every Blender process it waits for the scene `.lock` to be free, for no other Blender, and for the memory gate. It plans tiles, exports each tile, fixes leaf UVs and tints, optimizes with gltf-transform (meshopt, webp, join, instance, no palette), composes the paint layers and writes `models/main/sources.json` (snapshot labels; the north run skips anything main already has and clips north terrain to where main has none). Far versions, shared images and geometry and `manifest.json` are not committed: the site build makes them. Any failed tile stops the build before anything is published; tiles no longer in the plan are pruned.
 2. Leave `textures/` alone unless you are changing the CC0 set (credits in `textures/CREDITS.md`).
-3. Take the standard before/after screenshots with `node tools/viewer-test/shoot.mjs <outdir>` (needs Playwright with Chromium). `node tools/viewer-test/smoke.mjs` is an optional browser check of every mode and tool.
+3. Build the site with `tools/web-export/site.sh` (the viewer-test tools serve `_site/` when it exists), then take the standard before/after screenshots with `node tools/viewer-test/shoot.mjs <outdir>` (needs Playwright with Chromium). `node tools/viewer-test/smoke.mjs` is an optional browser check of every mode and tool.
 4. Commit `models/` (and any viewer changes) on a branch and open a PR. The `site` workflow (`.github/workflows/pages.yml`) builds the site from `main` after the merge with `tools/web-export/site.sh` (far versions, shared images and geometry, tree stand-ins, manifest) and deploys it to Pages; on a PR it builds without deploying. Run `npm ci --prefix tools/web-export && tools/web-export/site.sh` to build the same `_site/` locally.
 
 The exporter keeps only images on an allowlist and refuses anything named ortho, naip, aerial, photo or mask. The paint layers are composed from the model's own authored line-work tiles and are written as `paint_*.webp`.

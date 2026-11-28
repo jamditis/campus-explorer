@@ -1,8 +1,8 @@
+import { campusTiles } from './campus-tiles.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { SHOTS, poseAt, ease, letterbox, lightOffset } from '../viewer/cinema-math.js';
 import { flightLimit, clampToLimit } from '../viewer/flight-math.js';
-import { readFileSync } from 'node:fs';
 
 test('ease starts and ends at rest', () => {
   assert.equal(ease(0), 0); assert.equal(ease(1), 1); assert.equal(ease(-1), 0); assert.equal(ease(2), 1);
@@ -22,8 +22,7 @@ test('every shot runs from its first pose to its last, over the ground it names'
 });
 
 test('orbit mode can show every frame: the target is below the camera and the camera inside the flight limit', () => {
-  const manifest = JSON.parse(readFileSync(new URL('../models/main/manifest.json', import.meta.url)));
-  const limit = flightLimit(manifest.tiles, { skirtHalf: manifest.landcover?.half ?? 2000, floorY: 100 });
+  const limit = flightLimit(campusTiles(), { skirtHalf: 2000, floorY: 100 }); // the skirt's half-width (manifest landcover.half)
   for (const s of SHOTS) for (let k = 0; k <= 10; k++) {
     const p = poseAt(s, (s.seconds * k) / 10, 130);
     assert.ok(p.target[1] < p.position[1], `${s.caption} at ${k}/10`);

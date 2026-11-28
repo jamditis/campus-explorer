@@ -1,5 +1,7 @@
-# writes models/main/manifest.json (one unified campus) (tile list with centres for nearest-first loading, sizes,
-# paint layers, snapshot time ET).  env: OUT, SCENE, FILE, SOURCE_VERSION, SOURCE_SAVED, TILE
+# writes models/main/manifest.json (one unified campus: tile list with centres for nearest-first loading, sizes,
+# paint layers, snapshot labels) for site.sh, or with SOURCES_ONLY=1 only models/main/sources.json (labels and the
+# superseded-ground list, committed) for build_web.sh.  env: OUT, SCENE, FILE, SOURCE_VERSION, SOURCE_SAVED, TILE,
+# KEEP_SOURCES, SOURCES_ONLY
 import datetime
 import glob
 import json
@@ -42,7 +44,13 @@ def label(key):
     return v if v is not None else (os.environ.get(key, "") if scene == "main" else "")
 ver = label("SOURCE_VERSION")
 paint = json.load(open(S + "/paint.json")) if os.path.exists(S + "/paint.json") else []
-old = json.load(open(S + "/manifest.json")) if os.path.exists(S + "/manifest.json") else {}
+# labels and the superseded-ground list live in sources.json (committed); manifest.json is built by site.sh
+SRC_JSON = S + "/sources.json"
+old = {}
+for f in (SRC_JSON, S + "/manifest.json"):
+    if os.path.exists(f):
+        old = json.load(open(f))
+        break
 # one unified campus built from several source .blends: keep each one's snapshot label
 sources = old.get("sources") or {}
 if not sources and old.get("source_saved"):
@@ -57,6 +65,10 @@ head = sources.get("main", sources[scene])
 WN = os.environ.get("WORK_NORTH", "/workspace/nj-scenes/web/build/north")
 clip = json.load(open(WN + "/clip.json")) if os.path.exists(WN + "/clip.json") else {}
 hide = clip.get("hide_main", old.get("hide", []))
+if os.environ.get("SOURCES_ONLY") == "1":  # build_web.sh: the committed part only
+    json.dump(dict(sources=sources, hide=hide), open(SRC_JSON, "w"), indent=1)
+    print("sources", ", ".join(f"{k} {v.get('version') or v.get('saved')}" for k, v in sources.items()))
+    raise SystemExit(0)
 json.dump(
     dict(
         tiles=tiles,

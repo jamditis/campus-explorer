@@ -1,7 +1,7 @@
 // Shared helpers for the headless viewer checks: a static file server for the checkout and a
 // Chromium launch that renders WebGL in software, so the checks run on a machine with no GPU.
 import { createServer } from 'node:http';
-import { createReadStream, statSync } from 'node:fs';
+import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,7 +14,10 @@ const TYPES = {
 };
 
 /** Serve `root` on a free local port. Resolves { url, close }. */
-export function serve(root = ROOT) {
+// the built site (tools/web-export/site.sh) when there is one: far versions, shared files and the manifest are not in git
+const SITE = join(ROOT, '_site');
+export const SITE_ROOT = existsSync(join(SITE, 'models/main/manifest.json')) ? SITE : ROOT;
+export function serve(root = SITE_ROOT) {
   const server = createServer((req, res) => {
     const path = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^(\.\.[/\\])+/, '');
     let file = join(root, path);

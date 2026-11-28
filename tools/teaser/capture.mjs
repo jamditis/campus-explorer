@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, appendFileSync, writeF
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { open, serve, waitFor } from '../viewer-test/lib.mjs';
+import { open, serve, waitFor, SITE_ROOT } from '../viewer-test/lib.mjs';
 import { installSettle, settle } from './page.mjs';
 import { installGraphics } from './graphics.mjs';
 import { cameraAt, frameAt, presence, timeAt, timeline } from './path.mjs';
@@ -63,7 +63,7 @@ log(`${todo.length} frames to shoot of ${frames} (${width}x${height}, ${quality}
 if (!todo.length) process.exit(0);
 
 // --site DIR: serve a frozen copy of the viewer and its models, so a new export cannot change the film
-const site = resolve(opt('site', repo));
+const site = resolve(opt('site', SITE_ROOT)); // the built site (tools/web-export/site.sh) when there is one
 const server = await serve(site);
 log(`serving ${site}`);
 let browser = null, page = null, built = -1;
