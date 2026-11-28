@@ -9,7 +9,6 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 - [x] Procedural sky with matching image-based light, so glass and metal reflect something
 - [x] Sun shadows that follow the view (shadow box sized to view distance, texel-snapped)
 - [x] ACES filmic tone mapping and light exponential fog
-- [x] Aerial perspective: haze by distance along the line of sight, taking the sky's own colour toward and away from the sun, with a far term that keeps the far ground, the Palisades and the New York skyline in view as blue-grey shapes (docs/VIEWER.md "Haze")
 - [x] Sunlight from the real solar position for any date and time; lamps glow after dark
 - [x] Ambient occlusion (GTAO) on the High quality setting
 - [x] World-space CC0 textures per material category (asphalt, concrete, brick, stucco, roof tile, pavers, lawn, mulch, gravel, stone, metal, wood), tinted by the model's own colours, with a second large-scale layer to hide tiling
