@@ -759,27 +759,11 @@
   },
   {
    "name": "NE_bldg_Rec_Center_west_hall",
-   "ring": [
-    [
-     172.51,
-     602.34
-    ],
-    [
-     205.34,
-     598.31
-    ],
-    [
-     211.6,
-     649.33
-    ],
-    [
-     178.78,
-     653.36
-    ]
-   ],
+   "ring": [[173.62, 603.21], [204.47, 599.42], [210.49, 648.46], [179.65, 652.25]],
    "roof": "hip",
    "top": 155.33,
-   "eave": 148.71,
+   "eave": 149.11,
+   "overhang": 1.0,
    "style": "shed",
    "floors": 3,
    "wall": "#d8d3c6",
@@ -791,31 +775,15 @@
     "spacing": 6.0
    },
    "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
-   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; eaves 1.0 m deep (photographs show wide eaves; depth estimated): the walls stand that far inside the LiDAR roof edge and the eave height is the wall top, raised so the roof planes stay the measured ones"
   },
   {
    "name": "NE_bldg_Rec_Center_east_hall",
-   "ring": [
-    [
-     209.34,
-     615.29
-    ],
-    [
-     241.79,
-     602.64
-    ],
-    [
-     259.55,
-     648.19
-    ],
-    [
-     227.1,
-     660.85
-    ]
-   ],
+   "ring": [[210.63, 615.86], [241.22, 603.93], [258.26, 647.62], [227.67, 659.55]],
    "roof": "hip",
    "top": 155.66,
-   "eave": 148.72,
+   "eave": 149.12,
+   "overhang": 1.0,
    "style": "shed",
    "floors": 3,
    "wall": "#d8d3c6",
@@ -827,7 +795,7 @@
     "spacing": 6.0
    },
    "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
-   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; eaves 1.0 m deep (photographs show wide eaves; depth estimated): the walls stand that far inside the LiDAR roof edge and the eave height is the wall top, raised so the roof planes stay the measured ones"
   },
   {
    "name": "NE_bldg_Rec_Center_low_wing",
@@ -914,27 +882,11 @@
   },
   {
    "name": "NE_bldg_Rec_Center_south_west_pavilion",
-   "ring": [
-    [
-     191.45,
-     586.13
-    ],
-    [
-     200.33,
-     589.94
-    ],
-    [
-     196.62,
-     598.59
-    ],
-    [
-     187.74,
-     594.78
-    ]
-   ],
+   "ring": [[192.24, 588.1], [198.36, 590.73], [195.83, 596.62], [189.71, 593.99]],
    "roof": "hip",
    "top": 151.74,
-   "eave": 150.14,
+   "eave": 150.65,
+   "overhang": 1.5,
    "style": "shed",
    "floors": 3,
    "wall": "#d8d3c6",
@@ -942,7 +894,7 @@
    "roof_colour": "#a5543e",
    "windows": {"width": 1.8, "height": 1.4, "spacing": 2.3, "rows": [[148.3, 149.7]], "style": "recessed", "frame": "#6c2d34"},
    "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red hip roof); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
-   "unverified": "entrance or stair pavilion; plan angle from the LiDAR, colours guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; the red-framed clerestory band is from that photograph; its arched window and lettering are not modelled"
+   "unverified": "entrance or stair pavilion; plan angle from the LiDAR, colours guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; the red-framed clerestory band is from that photograph; its arched window and lettering are not modelled; eaves 1.5 m deep (photographs show wide eaves; depth estimated): the walls stand that far inside the LiDAR roof edge and the eave height is the wall top, raised so the roof planes stay the measured ones"
   },
   {
    "name": "NE_bldg_Rec_Center_east_lean_to",
@@ -978,34 +930,18 @@
   },
   {
    "name": "NE_bldg_Rec_Center_east_porch",
-   "ring": [
-    [
-     253.1,
-     609.49
-    ],
-    [
-     255.55,
-     615.76
-    ],
-    [
-     247.5,
-     618.9
-    ],
-    [
-     245.06,
-     612.62
-    ]
-   ],
+   "ring": [[252.76, 610.27], [254.77, 615.42], [247.84, 618.12], [245.84, 612.96]],
    "roof": "hip",
    "top": 146.66,
-   "eave": 145.2,
+   "eave": 145.46,
+   "overhang": 0.6,
    "style": "shed",
    "floors": 1,
    "wall": "#d8d3c6",
    "trim": "#bcb3a9",
    "roof_colour": "#a5543e",
    "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red roof at the east entrance); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
-   "unverified": "roof shape and eave guessed from a few LiDAR returns; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
+   "unverified": "roof shape and eave guessed from a few LiDAR returns; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; eaves 0.6 m deep (photographs show wide eaves; depth estimated): the walls stand that far inside the LiDAR roof edge and the eave height is the wall top, raised so the roof planes stay the measured ones"
   },
   {
    "name": "NE_bldg_Rec_Center_north_annex",
