@@ -780,18 +780,18 @@
    "roof": "hip",
    "top": 155.33,
    "eave": 148.71,
-   "style": "hall",
+   "style": "shed",
    "floors": 3,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
    "windows": {
     "width": 2.0,
     "height": 3.0,
     "spacing": 6.0
    },
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall)",
-   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed"
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_east_hall",
@@ -816,18 +816,18 @@
    "roof": "hip",
    "top": 155.66,
    "eave": 148.72,
-   "style": "hall",
+   "style": "shed",
    "floors": 3,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
    "windows": {
     "width": 2.0,
     "height": 3.0,
     "spacing": 6.0
    },
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall)",
-   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed"
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (red hip roofs); osm (Student Recreation Center); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/ (Spanish mission style, 78,000 sq ft, two levels with track); https://bendheim.com/?p=5357 (channel glass stair wall); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "ridge is short (hip roof read from LiDAR slopes); floors counted on the downhill north side; wall colour and windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_low_wing",
@@ -867,18 +867,18 @@
    ],
    "roof": "flat",
    "top": 147.86,
-   "style": "hall",
+   "style": "shed",
    "floors": 2,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
    "roof_colour": "#e9ece4",
    "windows": {
     "width": 2.0,
     "height": 2.4,
     "spacing": 4.5
    },
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (white flat roof); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/",
-   "unverified": "edges under the two hip halls are hidden and approximate; no parapet seen; windows guessed"
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (white flat roof); https://campusrecmag.com/montclair-state-university-the-student-recreation-center/; photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "edges under the two hip halls are hidden and approximate; no parapet seen; windows guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_south_canopy",
@@ -904,13 +904,13 @@
    "top": 146.1,
    "eave": 144.6,
    "ridge_angle": 23.2,
-   "style": "hall",
+   "style": "shed",
    "floors": 1,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (a 3 m band at 144-146 m along the south wall)",
-   "unverified": "read as a lean-to arcade or canopy along the south front; depth 3.2 m and roof colour guessed"
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (a 3 m band at 144-146 m along the south wall); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "read as a lean-to arcade or canopy along the south front; depth 3.2 m and roof colour guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_south_west_pavilion",
@@ -935,13 +935,14 @@
    "roof": "hip",
    "top": 151.74,
    "eave": 150.14,
-   "style": "hall",
+   "style": "shed",
    "floors": 3,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red hip roof)",
-   "unverified": "entrance or stair pavilion; plan angle from the LiDAR, colours guessed"
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
+   "windows": {"width": 1.8, "height": 1.4, "spacing": 2.3, "rows": [[148.3, 149.7]], "style": "recessed", "frame": "#6c2d34"},
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red hip roof); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "entrance or stair pavilion; plan angle from the LiDAR, colours guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts; the red-framed clerestory band is from that photograph; its arched window and lettering are not modelled"
   },
   {
    "name": "NE_bldg_Rec_Center_east_lean_to",
@@ -967,13 +968,13 @@
    "top": 143.35,
    "eave": 141.6,
    "ridge_angle": 68.7,
-   "style": "hall",
+   "style": "shed",
    "floors": 1,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (roof falls from 143.4 m at the hall wall to about 141.6 m); ortho2020",
-   "unverified": "single-pitch roof assumed from the LiDAR slope; colours guessed"
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights (roof falls from 143.4 m at the hall wall to about 141.6 m); ortho2020; photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "single-pitch roof assumed from the LiDAR slope; colours guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_east_porch",
@@ -998,13 +999,13 @@
    "roof": "hip",
    "top": 146.66,
    "eave": 145.2,
-   "style": "hall",
+   "style": "shed",
    "floors": 1,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
-   "roof_colour": "#86604f",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red roof at the east entrance)",
-   "unverified": "roof shape and eave guessed from a few LiDAR returns"
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
+   "roof_colour": "#a5543e",
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; ortho2020 (small red roof at the east entrance); photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "roof shape and eave guessed from a few LiDAR returns; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Rec_Center_north_annex",
@@ -1028,13 +1029,13 @@
    ],
    "roof": "flat",
    "top": 148.16,
-   "style": "hall",
+   "style": "shed",
    "floors": 3,
-   "wall": "#d6c6a6",
-   "trim": "#efe8d8",
+   "wall": "#d8d3c6",
+   "trim": "#bcb3a9",
    "roof_colour": "#e9ece4",
-   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights",
-   "unverified": "flat-roofed bay on the north wall; use and look guessed"
+   "evidence": "lidar2017 outline (wall lines fitted to roof-edge returns) and heights; photo https://inside.montclair.edu/sites/default/files/styles/920x920/public/2026-06/041420_2451_Campus%20Spring.jpg",
+   "unverified": "flat-roofed bay on the north wall; use and look guessed; cream stucco walls, a beige band and a red-brown clay tile roof follow the one public photograph (of the south-west pavilion) and are carried over unseen to the other parts"
   },
   {
    "name": "NE_bldg_Machuga_west_wing",

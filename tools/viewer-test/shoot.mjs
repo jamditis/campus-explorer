@@ -27,6 +27,7 @@ const VIEWS = [
   { name: 'tv_oblique', ground: [-280, -520], pose: [-385, 95, -415, -275, 0, -535] },       // TV Tower block and the Clove Road junction from the south-west
   { name: 'tv_mast', ground: [-247, -544], pose: [-470, 45, -330, -247, 95, -544] },        // the TV Tower mast, whole height, from the south-west
   { name: 'eye_clove_yb', ground: [-299.5, -492], pose: [-299.5, 1.65, -492, -262, 6, -552] }, // Clove Road / Yogi Berra Drive junction at eye level, looking north-east
+  { name: 'eye_rec_center', ground: [165, -560], pose: [165, 1.65, -560, 205, 12, -605] },    // Student Recreation Center's south-west pavilion at eye level
 ];
 
 const server = given ? null : await serve();
