@@ -3,7 +3,7 @@
 # 1-2.6 m (to 122.8 at the S edge) and then drop 2-4 m to WS60_terrain_edge_apron (118.2-118.7 at y -135), with a 0.5-0.8 m pit
 # at x -256...-253, y -130...-132. Real ground on both sides falls south (Terrain_LiDAR at x -248.5: 122.4 at y -126.5 ->
 # 119.0 at y -135.5; WS68 W of x -270: 118.9 -> 117.7). Fix: harmonic (Laplace) fill of the fill-only cells, boundaries = row
-# y -126 (kept), columns x -279 and -248.6 (kept), S row y -135 set onto the apron's top at the same x. Lawn only. UNVERIFIED
+# y -126 (kept), columns x -279 and -248.6 (kept; 1.4 m last interval weighted only at x -250), S row y -135 set onto the apron's top at the same x. Lawn only. UNVERIFIED
 # (no LiDAR returns in the cells; shape = smooth fall between measured neighbours).
 # Extended W to x -278: the S row stood 0.6-0.8 m above the apron there too.
 import bpy, numpy as np
@@ -36,7 +36,11 @@ free=[(x,y) for x in range(-278,-249) for y in range(-127,-135,-1)]
 for it in range(4000):
     mx=0
     for (x,y) in free:
-        n=(get(x-1,y)+get(x+1,y)*(1/1.4)+Z[(x,y+1)]+Z[(x,y-1)])/(3+1/1.4)  # E neighbour 1.4 m away
+        # 1 m grid except the last interval x -250 -> -248.6 (1.4 m): non-uniform second difference only there
+        # (d2z/dx2 ~ 2/(h1+h2) * ((zW-z)/h1 + (zE-z)/h2)); every other vertex uses the plain 4-neighbour average.
+        if x==-250: wW,wE=2/2.4,2/(2.4*1.4)
+        else: wW=wE=1.0
+        n=(wW*get(x-1,y)+wE*get(x+1,y)+Z[(x,y+1)]+Z[(x,y-1)])/(wW+wE+2)
         mx=max(mx,abs(n-Z[(x,y)])); Z[(x,y)]=n
     if mx<1e-4: break
 print(TAG,'iters',it,'res',mx,flush=True)
