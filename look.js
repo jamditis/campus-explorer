@@ -12,7 +12,8 @@ import { fixTone, finishMetal } from './viewer/tone.js';
 import { fixCat, isSeeThroughSolid, isClearGlass } from './viewer/cat.js';
 import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from './viewer/rooms-math.js';
 import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
-import { CANOPY, NOISE_Q } from './viewer/farview-math.js';
+import { CANOPY, NOISE_Q, LANDMARKS, towerTop } from './viewer/farview-math.js';
+import { latLonToLocal } from './viewer/geo.js';
 export { fixTone, fixCat };
 
 // --- haze (aerial perspective) for every material that takes fog: see haze-math.js transmittance ---
@@ -113,6 +114,10 @@ const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field 
 // from the campus, as a horizontal unit vector in the viewer frame (x east, -z north)
 const GLOW_DIR = [Math.sin(124 * Math.PI / 180), 0, -Math.cos(124 * Math.PI / 180)];
 const CITY = { value: 0 }; // city lights after dark, 0 by day to 1 at night (shared by the materials that show them)
+// the sunset glint on the skyline's glass: the low sun's colour times how strongly it shows (0 unless the sun is low in the west)
+const GLINT = { value: new THREE.Color(0, 0, 0) };
+// the second lobe of the night sky's light dome: Newark and its airport (40.735 N, 74.164 W), bearing 168 degrees
+const GLOW_DIR2 = [Math.sin(168 * Math.PI / 180), 0, -Math.cos(168 * Math.PI / 180)];
 const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 
 /** `onChange` is called when something drawn changed without the camera moving (a texture arrived). */
@@ -151,10 +156,12 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         if ( nightK > 0.0 ) {
           float nEl = max( direction.y, 0.0 );
           vec2 nH = direction.xz; float nL = length( nH );
-          float nToward = nL > 1e-4 ? max( dot( nH / nL, glowDir.xz ), 0.0 ) : 0.0;
-          float nLow = exp( - nEl / 0.09 );
+          vec2 nD = nL > 1e-4 ? nH / nL : vec2( 0.0 );
+          // two lobes: Manhattan (wide, strongest) and Newark with its airport, south of it
+          float nToward = max( pow( max( dot( nD, glowDir.xz ), 0.0 ), 1.5 ), 0.6 * pow( max( dot( nD, vec2( ${GLOW_DIR2[0].toFixed(4)}, ${GLOW_DIR2[2].toFixed(4)} ) ), 0.0 ), 2.0 ) );
+          float nLow = exp( - nEl / ( 0.09 + 0.05 * nToward ) );                      // the dome stands higher over the cities
           vec3 nCol = vec3( 0.0035, 0.0055, 0.0125 ) * ( 1.0 + 1.5 * moonK )          // zenith: dark blue, brighter under a full moon
-                    + vec3( 0.03, 0.021, 0.014 ) * nLow * ( 0.55 + 1.6 * nToward * nToward ); // light dome, warm, mostly east
+                    + vec3( 0.03, 0.021, 0.014 ) * nLow * ( 0.55 + 1.9 * nToward ); // light dome, warm, mostly east
           // three's sky never darkens at night (its night fade expects the sun 450 km away; this viewer passes a
           // unit vector, as three's own example does): its grey-brown night is dimmed under the glow
           retColor = retColor * ( 1.0 - 0.88 * nightK ) + nightK * nCol;
@@ -250,10 +257,13 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     CITY.value = 1 - smooth(-6, 2, elevation);
     sun.intensity = 2.7 * smooth(-1.5, 10, elevation);
     sun.color.copy(SUN_HIGH).lerp(SUN_LOW, low * 0.85);
+    // glint: the sun under 10 degrees, above the horizon, and west of the campus (the skyline is east)
+    GLINT.value.copy(sun.color).multiplyScalar(1.4 * smooth(-0.5, 1.5, elevation) * (1 - smooth(4, 10, elevation)) * smooth(0, 0.5, -sunDir.x));
     hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
     hemi.intensity = 0.3 + 0.4 * (1 - day);
     if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
     glow.visible = night > 0.02; glowMat.opacity = night;
+    if (tops) { tops.visible = CITY.value > 0.02; tops.material.opacity = CITY.value; }
     applyShadows(); shadowDirty = true;
   }
 
@@ -274,7 +284,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     const base = m.onBeforeCompile, key = m.customProgramCacheKey.call(m);
     m.onBeforeCompile = (sh, r) => {
       base.call(m, sh, r);
-      sh.uniforms.cityK = CITY;
+      sh.uniforms.cityK = CITY; sh.uniforms.glint = GLINT;
       sh.vertexShader = sh.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vCiPos; varying vec3 vCiNrm;')
         .replace('#include <begin_vertex>', `#include <begin_vertex>
@@ -285,31 +295,70 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           vCiPos = (modelMatrix * ciW).xyz; vCiNrm = mat3(modelMatrix) * ciN;`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
-          uniform float cityK; varying vec3 vCiPos; varying vec3 vCiNrm;
+          uniform float cityK; uniform vec3 glint; varying vec3 vCiPos; varying vec3 vCiNrm;
           float ciHash(vec2 c) { return fract(sin(dot(c, vec2(127.1, 311.7))) * 43758.5453); }`)
         .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          ${skyline ? `
+          if (glint.r > 0.0) {
+            // the low sun behind the campus blazes in the glass of some towers (the curtain faces the campus, so a
+            // facade facing west mirrors a sun low in the west toward it): one tower in three, in window rows
+            float b = atan(vCiPos.x, -vCiPos.z);
+            float glass = step(0.66, ciHash(vec2(floor(b / 0.0026), 11.0)));
+            // window rows of 4 m, faded to their mean where a pixel spans several (most views of a skyline 20 km off)
+            float rowY = vCiPos.y / 4.0;
+            float row = mix(0.55 + 0.45 * step(0.5, fract(rowY)), 0.775, clamp(fwidth(rowY) * 2.0 - 0.5, 0.0, 1.0));
+            totalEmissiveRadiance += glint * glass * row;
+          }` : ''}
           if (cityK > 0.0) {
             ${skyline ? `
-            // the skyline is a curtain seen from the campus: cells of 0.04 degrees of bearing by 12 m of height,
-            // about a pixel each; where a pixel covers many cells it takes their mean instead of flickering
-            vec2 c = vec2(atan(vCiPos.x, -vCiPos.z) / 0.0007, vCiPos.y / 12.0);
-            float lit = step(0.55, ciHash(floor(c))) * (0.6 + 0.8 * ciHash(floor(c) + 7.0));
+            // the skyline is a curtain seen from the campus: windows in cells of 0.04 degrees of bearing by 12 m of
+            // height (about a pixel each), grouped in towers of 0.15 degrees (50 m at 20 km) that are lit more or
+            // less, warm or cool. Windows come on one by one as it gets dark (cityK). Where a pixel covers many
+            // cells it takes their mean, so the speckle does not flicker; the towers' differences stay
+            float b = atan(vCiPos.x, -vCiPos.z);
+            vec2 c = vec2(b / 0.0007, vCiPos.y / 12.0);
+            float tower = ciHash(vec2(floor(b / 0.0026), 3.0));
+            float share = (0.2 + 0.45 * tower) * cityK;
+            float lit = step(1.0 - share, ciHash(floor(c))) * (0.6 + 0.8 * ciHash(floor(c) + 7.0));
+            vec3 tint = mix(vec3(1.0, 0.8, 0.55), vec3(0.85, 0.92, 1.0), step(0.62, ciHash(floor(c) + 3.1)));
             float blur = clamp(length(fwidth(c)) - 0.5, 0.0, 1.0);
-            totalEmissiveRadiance += vec3(1.0, 0.82, 0.6) * mix(lit, 0.36, blur) * 2.2 * cityK;` : `
-            // houses: windows on walls only, cells of 3 m by 2.8 m storeys, one in four lit
+            totalEmissiveRadiance += mix(tint * lit, vec3(1.0, 0.86, 0.68) * share, blur) * (0.5 + 1.5 * tower * tower) * 2.6;` : `
+            // houses: windows on walls only, cells of 3 m by 2.8 m storeys; they come on one by one as it gets
+            // dark, up to one in four
             vec3 n = normalize(vCiNrm);
             if (abs(n.y) < 0.5) {
               vec2 c = vec2(dot(vCiPos.xz, normalize(vec2(-n.z, n.x))) / 3.0, vCiPos.y / 2.8);
               vec2 f = fract(c);
               float win = step(0.3, f.x) * step(f.x, 0.7) * step(0.35, f.y) * step(f.y, 0.8);
-              float lit = step(0.75, ciHash(floor(c) + floor(vCiPos.xz / 40.0)));
+              float lit = step(1.0 - 0.25 * cityK, ciHash(floor(c) + floor(vCiPos.xz / 40.0)));
               float blur = clamp(length(fwidth(c)) - 0.4, 0.0, 1.0);
-              totalEmissiveRadiance += vec3(1.0, 0.78, 0.5) * mix(win * lit, 0.05, blur) * 1.6 * cityK;
+              totalEmissiveRadiance += vec3(1.0, 0.78, 0.5) * mix(win * lit, 0.05 * cityK, blur) * 1.6;
             }`}
           }`);
     };
     m.customProgramCacheKey = () => key + (skyline ? '_cityS' : '_cityH');
     m.needsUpdate = true;
+  }
+
+  // --- lit tower tops on the skyline after dark (farview-math.js LANDMARKS): one sprite each, at the highest point
+  // of the skyline stand-in along the landmark's bearing. One draw, shown with the city lights ---
+  let tops = null;
+  function addTowerTops(mesh) {
+    const p = mesh.geometry.attributes.position, v = new THREE.Vector3(), pos = new Float32Array(p.count * 3);
+    mesh.updateWorldMatrix(true, false);
+    for (let i = 0; i < p.count; i++) v.fromBufferAttribute(p, i).applyMatrix4(mesh.matrixWorld).toArray(pos, i * 3);
+    const at = [], col = [];
+    for (const l of LANDMARKS) {
+      const { x, z } = latLonToLocal(l.lat, l.lon), top = towerTop(pos, Math.atan2(x, -z) * 180 / Math.PI);
+      if (top) { at.push(...top); col.push(...l.color); }
+    }
+    if (!at.length) return;
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(at, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    tops?.removeFromParent();
+    tops = new THREE.Points(g, new THREE.PointsMaterial({ map: glowTex, size: 9, sizeAttenuation: false, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, toneMapped: false }));
+    tops.name = 'tower_tops'; tops.frustumCulled = false; tops.visible = CITY.value > 0.02; tops.material.opacity = CITY.value;
+    scene.add(tops);
   }
 
   // --- lamps glow after dark: one additive sprite per lamp instance, no real lights ---
@@ -729,11 +778,13 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function renderPlain(cam, target) {
     const fog = scene.fog, auto = sun.shadow.needsUpdate;
     const far = farGround.visible;
+    const topsOn = tops?.visible ?? false; if (tops) tops.visible = false;
     scene.fog = null; sky.visible = false; glow.visible = false; farGround.visible = false;
     // screen-size culling was decided for the main camera: show everything for this one, then cull again
     for (const it of items) if (!it.o.userData.treeLod) it.o.visible = true;
     renderer.setRenderTarget(target); renderer.render(scene, cam); renderer.setRenderTarget(null);
     scene.fog = fog; sky.visible = true; glow.visible = night > 0.02; farGround.visible = far; sun.shadow.needsUpdate = auto;
+    if (tops) tops.visible = topsOn;
     cull(true);
   }
   function fixMaterials(root) {
@@ -1031,6 +1082,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
         if (/^(far_houses|HouseProxy_)/i.test(m.name)) canopy(m, true);
       }
     });
+    root.traverse(o => { if (o.isMesh && /skyline_silhouette/i.test([].concat(o.material)[0]?.name || '')) addTowerTops(o); });
     register(root);
     decorated.add(root); claim(root);
     addLamps(root);
