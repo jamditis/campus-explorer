@@ -56,6 +56,9 @@ for p,n in zip(P,T):
     rv=0.15
     if CUT[0]-0.8<p.x<CUT[1]+0.8:
         t=min(1.0,max(0.0,min(p.x-(CUT[0]-0.8),(CUT[1]+0.8)-p.x)/0.8)); rv=0.15-0.13*t
+    # v4 (ws274d): reveal tapers to 2 cm over the last 1.2 m at both ends so the curb dies into the grade instead of a free end
+    te=min(p.x-X0,X1-p.x)
+    if te<1.2: rv=min(rv,0.02+0.13*max(0.0,te)/1.2)
     top=max(zf,zb)+rv
     vb0=bm.verts.new((p.x,p.y,top-0.40)); vb1=bm.verts.new((p.x,p.y,top))
     vf1=bm.verts.new((pf.x,pf.y,top)); vf0=bm.verts.new((pf.x,pf.y,zf-0.03))
