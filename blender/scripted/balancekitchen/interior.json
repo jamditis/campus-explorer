@@ -83,7 +83,7 @@
      "floor": 125.4
     }
    ],
-   "roof": 129.4,
+   "roof": 128.3,
    "entrances": [
     {
      "at": [
@@ -94,7 +94,7 @@
      "evidence": "OSM footway way/312845876 ends at the west jog; ground 125.37 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
     }
    ],
-   "evidence": "outline OSM way/312845862 (amenity=restaurant), joined to Freeman Hall; 'Freeman Dining Hall: Balance Kitchen provides all-you-care-to-eat dining' (university campus map (montclair.edu/campus-map)); one storey: the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) roof is 129 to 130.7 m over the whole outline and the published shell 'WS134_Balance_Kitchen_Freeman_dining_massing' tops out at 130.75; the floor at the west door's ground",
+   "evidence": "outline OSM way/312845862 (amenity=restaurant), joined to Freeman Hall; 'Freeman Dining Hall: Balance Kitchen provides all-you-care-to-eat dining' (university campus map (montclair.edu/campus-map)); one storey: the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) roof is 129 to 130.7 m over the whole outline and the published shell 'WS134_Balance_Kitchen_Freeman_dining_massing' tops out at 130.75; the floor at the west door's ground; the ceiling under the shell's lowest roof deck, the south strip (roof 128.75, deck 0.35 lower: blender/montclair-state/scripts/ws134/main134d.py), so the lining stays under every roof zone",
    "unverified": "the floor level (the ground falls to 121.8 on the east side, so a lower level may stand there: not built), the ceiling, the entrance position to about 3 m; no servery, kitchen or seating is placed: no public source gives their positions"
   }
  ]
