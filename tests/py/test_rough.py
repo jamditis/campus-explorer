@@ -164,12 +164,12 @@ class Options(unittest.TestCase):
         self.assertEqual([w["name"] for w in f["walls"]], ["SW_T_F1_lining_UNVERIFIED"])
         self.assertEqual(len(f["blocks"]), 3)
 
-    def test_toilets_where_the_evidence_puts_them_with_a_door_and_a_label(self):
+    def test_toilets_where_the_evidence_puts_them_with_a_door_and_no_label(self):
         ring = [[40, 11.2], [46, 11.2], [46, 17], [40, 17]]
         r = dict(BAR, toilets=[dict(level=2, ring=ring, door=[43, 11.2], evidence="sign")])
         f1, f2, _f3 = rough.floors(r)
         self.assertEqual(f1["rooms"], [])
-        self.assertEqual(f2["rooms"], [dict(number="Restrooms", at=[43.0, 14.1])])
+        self.assertEqual(f2["rooms"], [])
         (t,) = [w for w in f2["walls"] if "toilet" in w["name"]]
         (door,) = t["openings"]
         self.assertAlmostEqual((door["at"][0] + door["to"][0]) / 2, 43.0, places=1)
@@ -229,9 +229,17 @@ class Check(unittest.TestCase):
             roof=101.0,
             entrances=[dict(at=[30, -9], level=4)],
             toilets=[dict(level=1, ring=[[1, 1], [2, 1], [2, 2]])],
+            rooms=[dict(level=1, number="Front desk", at=[30, 5], evidence="sign")],
         )
         text = " ".join(rough.check(bad))
-        for word in ("rise", "2.4 m", "outside the outline", "level 4", "evidence"):
+        for word in (
+            "rise",
+            "2.4 m",
+            "outside the outline",
+            "level 4",
+            "evidence",
+            "not a room number",
+        ):
             self.assertIn(word, text)
         self.assertIn(
             "no roof", " ".join(rough.check({k: v for k, v in BAR.items() if k != "roof"}))

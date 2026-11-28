@@ -5,7 +5,7 @@ A plan's `rough` list holds one entry per building (README "rough interiors"). `
 turns it into one `interiors` floor per level: a slab at the level, an inner lining along the
 shell with an opening at each entrance, an entrance lobby from each entrance to the nearest
 corridor, corridors along `spines`, stair and lift cores, rooms as walls square to the corridor
-every `bay` metres with a door each, toilets only where the entry places them, and room labels
+every `bay` metres with a door each, toilets only where the entry places them, and room numbers
 only where the entry gives them. Every object is UNVERIFIED: only the footprint and the levels
 come from a source, and the entry says which.
 
@@ -269,6 +269,9 @@ def check(r):
             )
         if "evidence" not in t:
             out.append(f"{r['name']}: a toilet or room label needs its evidence")
+    for x in r.get("rooms", []):  # the viewer shows a label's last word and finds rooms by digits
+        if " " in x["number"] or not any(ch.isdigit() for ch in x["number"]):
+            out.append(f"{r['name']}: room label {x['number']!r} is not a room number")
     return out
 
 
@@ -403,8 +406,8 @@ def floors(r):
                     inside,
                     r.get("partition", rooms.WALL),
                 )
-        # toilets: a closed room with one door, where the entry's evidence puts them
-        labels = []
+        # toilets: a closed room with one door, where the entry's evidence puts them; no label (the
+        # viewer finds rooms by number only, and a toilet has none)
         for t, toilet in enumerate(toilets):
             ring = [tuple(p[:2]) for p in toilet["ring"]]
             path = closed_path(ring, [toilet["door"]] if "door" in toilet else [])
@@ -412,9 +415,7 @@ def floors(r):
             if "door" in toilet:
                 run["openings"] = [_door(path, toilet["door"], DOOR)]
             walls.append(run)
-            c = _centroid(ring if geom.area(ring) > 0 else ring[::-1])
-            labels.append(dict(number=toilet.get("label", "Restrooms"), at=_r([c])[0]))
-        labels += [
+        labels = [
             dict(number=x["number"], at=x["at"])
             for x in r.get("rooms", [])
             if x["level"] == lv["level"]
