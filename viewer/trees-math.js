@@ -15,3 +15,24 @@ export function farCells(a, cell = FAR_CELL) {
   }
   return out;
 }
+
+/**
+ * Floats per tree in a stand-in record: crown centre (3), crown half-size (3), trunk base (3), half the tree's
+ * height (1), leaf colour, linear RGB (3). World axes, metres. trees.js builds one per instance of a full tile;
+ * tools/web-export/tree_points.mjs writes them into a far version (scene extras `trees`) for a tile not in memory.
+ */
+export const STAND_IN = 13;
+
+/** The impostor of record `i` in `a`: crown centre and size, trunk base, height and width, culling radius, colour. */
+export function standIn(a, i = 0) {
+  const o = i * STAND_IN, sx = a[o + 3], sy = a[o + 4], sz = a[o + 5], cy = a[o + 1], by = a[o + 7];
+  return {
+    c: [a[o], cy, a[o + 2]],
+    s: [sx * 0.95, sy * 0.95, sz * 0.95],
+    base: [a[o + 6], by, a[o + 8]],
+    trunkH: Math.max(0.5, cy - sy * 0.6 - by),
+    trunkW: Math.max(0.12, Math.min(sx, sz) * 0.08),
+    rad: Math.max(sx, sy, sz, a[o + 9]),
+    col: [a[o + 10], a[o + 11], a[o + 12]],
+  };
+}

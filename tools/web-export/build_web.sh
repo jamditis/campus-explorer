@@ -155,6 +155,8 @@ else node share_tex.mjs $S --embed || fail "embed images"; fi
 cp $W/share_geo.mjs $W/geoshare.mjs $W/tex.mjs ./
 if [ "${SHARE_GEO:-1}" != 0 ]; then node share_geo.mjs $S || fail "share geometry"
 else node share_geo.mjs $S --embed || fail "embed geometry"; fi
+cp $W/tree_points.mjs $W/treepoints.mjs $W/tex.mjs $W/pack.mjs ./
+node tree_points.mjs $S || fail "tree stand-ins in the far versions"
 OUT=$S python3 $W/manifest.py || fail "manifest"
 find $S -size +95M | grep . && fail "file over 95 MB"
 ls -la $S; du -sh $S
