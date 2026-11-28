@@ -87,6 +87,8 @@ export function createWorld(app, prepare, release = () => {}) {
       const g = o.geometry; if (!g.boundingBox) g.computeBoundingBox();
       const tris = (g.index ? g.index.count : g.attributes.position.count) / 3;
       const box = g.boundingBox.clone().applyMatrix4(o.matrixWorld);
+      // a door leaf moves (doors.js): its box covers a swing about an edge or a slide of one leaf width
+      for (let p = o; p; p = p.parent) if (p.name.startsWith('DOOR_')) { const sz = box.getSize(_ms); box.expandByScalar(Math.max(sz.x, sz.y, sz.z)); break; }
       // `big`: wide and not tall, so ground, paving or a roof rather than a post or a bench (see raycast's bigOnly)
       const big = Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > 15 && box.max.y - box.min.y < 150;
       if (tris > SPLIT_TRIS && g.index) for (const part of splitByCell(o)) { part.big = big; colliders.push(part); }

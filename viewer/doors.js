@@ -21,6 +21,7 @@ export function createDoors(app) {
       o.matrixAutoUpdate = false;
       d.leaves.push({ o, door, root, base: o.matrixWorld.clone(), parentInv: o.parent ? o.parent.matrixWorld.clone().invert() : new THREE.Matrix4() });
       _box.makeEmpty(); for (const l of d.leaves) _box.expandByObject(l.o); _box.getCenter(d.at);
+      if (d.s > 0) pose(d); // a leaf that streams in while its door is open takes the door's pose and collision
     });
   }
   function remove(root) {
