@@ -210,7 +210,8 @@ def _curtain(b, ring, cw, hexes):
 
 def _arch(b, ring, aw, hexes, wall):
     """A round-arched opening (`arches`: `at`, `to` on one wall line, `z0` the sill, `z1` the
-    crown, `cols`, `rows`, `frame` colour, `glass` false for an open arch such as a belfry): the
+    crown, `cols`, `rows`, `frame` colour, `glass` false for an open arch such as a belfry,
+    `bands` [[z0, z1], ...] opaque panels in the frame colour across the glazing): the
     wall pieces over the head (spandrels), reveals round the jambs and along the head, and, when
     glazed, one pane set back with a frame of mullions, transoms and a curved head bar."""
     ((i, s0, s1, z0, z1),) = [
@@ -245,6 +246,10 @@ def _arch(b, ring, aw, hexes, wall):
     b.faces([pt(x, z, -back) for x, z in pane], [tuple(range(len(pane)))], glass)
     fhex = aw.get("frame", "#33291f")
     frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    for bz0, bz1 in aw.get("bands", ()):  # an opaque panel across the opening (a transom band)
+        for off in (-back + 0.015, -back - 0.015):
+            q = [pt(s0, bz0, off), pt(s1, bz0, off), pt(s1, bz1, off), pt(s0, bz1, off)]
+            b.faces(q if off > -back else q[::-1], [(0, 1, 2, 3)], frame)
     rects, bars = massing.arch_bars(s0, s1, z0, z1, aw.get("cols", 3), aw.get("rows", 4))
     w = 0.08
     for off in (-back + 0.01, -back - 0.01):  # on both faces of the glass

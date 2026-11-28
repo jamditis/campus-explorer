@@ -430,7 +430,13 @@
      "cols": 7,
      "rows": 7,
      "frame": "#592d28",
-     "why": "the two-storey arched main entry (Joe's lobby photos: an arched-top window grid in dark red frames over two pairs of double doors); size from the main model's archivolt; the door pairs stay the main model's; from the doors' head up (the doors and sidelights below: `doors`)"
+     "why": "the two-storey arched main entry (Joe's lobby photos: an arched-top window grid in dark red frames over two pairs of double doors); size from the main model's archivolt; the door pairs stay the main model's; from the doors' head up (the doors and sidelights below: `doors`); the solid maroon band 140.29..141.06 across it is the main model's transom panel, taken from the entrance photos (ni_build)",
+     "bands": [
+      [
+       140.29,
+       141.06
+      ]
+     ]
     }
    ],
    "doors": {
