@@ -65,6 +65,29 @@ test('a triangle that lies wholly below the level stays whole', () => {
   assert.deepEqual(cutVolume(Q, more, [0, 1, 2], region(SQ), 4).keep, [0, 1, 2]);
 });
 
+test('between two levels a door goes through a wall: the wall stays round it', () => {
+  // a wall along y = 5 from x -5 to 15, z 0..10; the ring takes x 0..10; the door band z 1..3.4
+  const P = pts([[-5, 5, 0], [15, 5, 0], [15, 5, 10], [-5, 5, 10]]), added = [];
+  const r = cutVolume(P, added, [0, 1, 2, 0, 2, 3], region(SQ), 1, 3.4);
+  near(area(P, r.keep), 20 * 10 - 10 * 2.4, 1e-3);
+  // no kept piece lies inside the opening
+  for (let t = 0; t < r.keep.length; t += 3) {
+    const c = [r.keep[t], r.keep[t + 1], r.keep[t + 2]].map(i => [P.X[i], P.Z[i]]);
+    const [x, z] = [(c[0][0] + c[1][0] + c[2][0]) / 3, (c[0][1] + c[1][1] + c[2][1]) / 3];
+    assert.ok(!(x > 1e-3 && x < 10 - 1e-3 && z > 1 + 1e-3 && z < 3.4 - 1e-3), `piece at ${x}, ${z} in the door`);
+  }
+});
+
+test('with only an upper level what lies above it stays', () => {
+  const P = pts([[2, 5, 0], [8, 5, 0], [8, 5, 10], [2, 5, 10]]), added = [];
+  const r = cutVolume(P, added, [0, 1, 2, 0, 2, 3], region(SQ), null, 4);
+  near(area(P, r.keep), 6 * 6, 1e-6);
+  for (const [, , z] of used(P, r.keep)) assert.ok(z >= 4 - 1e-9);
+  // wholly above it: whole
+  const Q = pts([[2, 2, 5], [4, 2, 5], [2, 4, 6]]), more = [];
+  assert.deepEqual(cutVolume(Q, more, [0, 1, 2], region(SQ), null, 4).keep, [0, 1, 2]);
+});
+
 test('a wall whose ends both lie inside keeps the part in a notch of the ring', () => {
   // a wall along y = 8 from x 1 to 9: both ends inside the U, the middle (x 4..6) in the notch
   const P = pts([[1, 8, 0], [9, 8, 0], [9, 8, 3], [1, 8, 3]]), added = [];

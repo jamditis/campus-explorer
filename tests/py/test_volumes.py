@@ -28,6 +28,10 @@ class Volumes(unittest.TestCase):
         self.assertEqual(v["keep"], ["(?i)lawn|walk"])
         self.assertNotIn("why", v)  # the reason is for people: it does not change the hash
 
+    def test_a_door_volume_keeps_both_levels(self):
+        v = supersede.check_volumes([dict(name="door", ring=SQ, above=140.2, below=142.6)])[0]
+        self.assertEqual((v["above"], v["below"]), (140.2, 142.6))
+
     def test_a_clockwise_ring_and_an_arc_corner_are_fine(self):
         v = supersede.check_volumes([dict(name="a", ring=[[0, 0], [0, 10], [10, 10, 2], [10, 0]])])
         self.assertGreater(len(v[0]["ring"]), 4)  # the arc is drawn as points
@@ -41,14 +45,18 @@ class Volumes(unittest.TestCase):
             dict(name="a", ring=SQ, meshes=["x"]),  # both
             dict(name="a"),  # neither
             dict(name="a", ring=SQ, drop="ground"),  # only "all"
-            dict(name="a", ring=SQ, below=3),  # unknown key
+            dict(name="a", ring=SQ, under=3),  # unknown key
+            dict(name="a", ring=SQ, above=5, below=3),  # a band upside down
+            dict(name="a", ring=SQ, below=True),
             dict(name="a", ring=SQ, keep=["(unclosed"]),
             dict(name="a", ring=SQ, above="146"),
             dict(name="a", ring=[[0, 0], [10, 0]]),
             dict(name="a", ring=[[0, 0], [10, 0], [0, 10], [10, 10]]),  # crosses itself
             # a spike: an offset ring's miter at the end of a shared wall (3.5 degrees)
-            dict(name="a", ring=[[29.67, -5.78], [33.05, -6.6], [41.65, 28.68], [34.56, 5.71],
-                                 [12.62, 10.74]]),  # fmt: skip
+            dict(
+                name="a",
+                ring=[[29.67, -5.78], [33.05, -6.6], [41.65, 28.68], [34.56, 5.71], [12.62, 10.74]],
+            ),  # fmt: skip
         ]
         for v in bad:
             with self.assertRaises(ValueError, msg=v):

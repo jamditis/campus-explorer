@@ -1,5 +1,5 @@
 // Pure geometry for supersede.mjs's volumes (an area that owns no ground, such as a building rebuilt by the scripted
-// build): take the part of a mesh that lies inside a ring (at any height, or only above a level) out of it, cutting
+// build): take the part of a mesh that lies inside a ring (at any height, or only above a level, below one, or between) out of it, cutting
 // every triangle the ring's walls or the level cross exactly there, so a wall or an eave that runs on past the ring
 // ends clean on it. No dependencies; unit-tested from node --test. build_web.sh copies it next to supersede.mjs.
 import { crossings, cornersIn, edgesCross, outsidePart } from './cut.mjs';
@@ -26,14 +26,15 @@ export function region(ring) {
 }
 
 /**
- * Cut the triangles `tris` (flat list of corner indices) by one volume: `reg` from region(), `above` a level or null.
+ * Cut the triangles `tris` (flat list of corner indices) by one volume: `reg` from region(), `above` and `below`
+ * levels or null (the volume is the band between them: a door through a wall).
  * `pts` holds the corners' model-frame positions { X, Y, Z } (arrays) and grows by the corners the cut adds; `added`
  * gets, for each added corner, its parents [[corner, weight], ...] (earlier corners, original or added), so every
  * vertex attribute can be interpolated the same way. Returns { keep: flat corner list, removed, cut }.
- * A triangle inside the ring (and above the level) goes; one that a wall of the ring or the level crosses keeps
+ * A triangle inside the ring (and between the levels) goes; one that a wall of the ring or a level crosses keeps
  * exactly its part outside the volume. Edges that two triangles share are cut at one shared new corner.
  */
-export function cutVolume(pts, added, tris, reg, above = null) {
+export function cutVolume(pts, added, tris, reg, above = null, below = null) {
   const { X, Y, Z } = pts, { ring, bx, within } = reg;
   const keep = [], memo = new Map(), inn = new Map();
   let removed = 0, cut = 0;
@@ -86,28 +87,40 @@ export function cutVolume(pts, added, tris, reg, above = null) {
     for (let j = 1; j < vs.length - 1; j++) keep.push(vs[s0], vs[(s0 + j) % vs.length], vs[(s0 + j + 1) % vs.length]);
     cut++;
   };
-  for (let t = 0; t < tris.length; t += 3) {
-    const a = tris[t], b = tris[t + 1], c = tris[t + 2];
-    if (above === null) { ringCut(a, b, c, 0); continue; }
-    const up = [a, b, c].map(i => Z[i] > above);
-    if (!up.some(Boolean)) { keep.push(a, b, c); continue; }
-    if (up.every(Boolean)) { ringCut(a, b, c, 0); continue; }
-    // split at the level: the part below stays, the part above is cut at the ring
-    const hi = [], lo = [], ids = [a, b, c];
-    for (let e = 0; e < 3; e++) {
-      const u = ids[e], v = ids[(e + 1) % 3];
+  // split a corner list (a convex polygon) at a level: [the part above, the part at or below]
+  const split = (ids, level) => {
+    const up = ids.map(i => Z[i] > level), hi = [], lo = [];
+    for (let e = 0; e < ids.length; e++) {
+      const u = ids[e], v = ids[(e + 1) % ids.length];
       (up[e] ? hi : lo).push(u);
-      if (up[e] !== up[(e + 1) % 3]) {
-        const [i, j] = u < v ? [u, v] : [v, u], s = (above - Z[i]) / (Z[j] - Z[i]);
-        const m = add('p' + pair(i, j), [[i, 1 - s], [j, s]]);
+      if (up[e] !== up[(e + 1) % ids.length]) {
+        const [i, j] = u < v ? [u, v] : [v, u], s = (level - Z[i]) / (Z[j] - Z[i]);
+        const m = add(`p${level}:` + pair(i, j), [[i, 1 - s], [j, s]]);
         hi.push(m); lo.push(m);
       }
     }
-    for (let j = 1; j < lo.length - 1; j++) keep.push(lo[0], lo[j], lo[j + 1]);
+    return [hi, lo];
+  };
+  const fan = (poly, f) => { for (let j = 1; j < poly.length - 1; j++) f(poly[0], poly[j], poly[j + 1]); };
+  const stay = (a, b, c) => keep.push(a, b, c);
+  const inRing = (a, b, c) => ringCut(a, b, c, 0);
+  for (let t = 0; t < tris.length; t += 3) {
+    const a = tris[t], b = tris[t + 1], c = tris[t + 2];
+    if (above === null && below === null) { ringCut(a, b, c, 0); continue; }
     const before = keep.length, done = removed + cut;
-    for (let j = 1; j < hi.length - 1; j++) ringCut(hi[0], hi[j], hi[j + 1], 0);
-    // the part above lies outside the ring after all: the triangle stays whole (its split corners go unused)
-    if (removed + cut === done && keep.length - before === 3 * (hi.length - 2)) { keep.length = before - 3 * (lo.length - 2); keep.push(a, b, c); }
+    // what lies above `below` stays; of the rest, what lies at or below `above` stays; the band between is cut
+    let band = [[a, b, c]];
+    if (below !== null) {
+      const [hi, lo] = split([a, b, c], below);
+      fan(hi, stay); band = lo.length >= 3 ? [lo] : [];
+    }
+    for (const poly of band) {
+      if (above === null) { fan(poly, inRing); continue; }
+      const [hi, lo] = split(poly, above);
+      fan(lo, stay); fan(hi, inRing);
+    }
+    // nothing went after all: the triangle stays whole (its split corners go unused)
+    if (removed + cut === done) { keep.length = before; keep.push(a, b, c); }
   }
   return { keep, removed, cut };
 }

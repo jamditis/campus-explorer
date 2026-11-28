@@ -19,7 +19,7 @@ import geom  # noqa: E402
 import layout  # noqa: E402
 import numpy as np  # noqa: E402
 
-VOLUME_KEYS = {"name", "ring", "meshes", "drop", "above", "keep", "why"}
+VOLUME_KEYS = {"name", "ring", "meshes", "drop", "above", "below", "keep", "why"}
 SHARPEST = 10.0  # degrees: a sharper ring corner is an offset's miter spike, not a wall
 # metres: along an edge it shares with another area, a footprint's cut reaches this far into the
 # other area. Two areas that both cut the far field on the same line left a sliver of it standing
@@ -58,8 +58,9 @@ def _check_ring(name, ring):
 
 def check_volumes(volumes):
     """The `volumes` of an area as supersede.mjs takes them; refuses what it cannot honour. A
-    volume is a `ring` (true-arc corners allowed; with `above`, only what lies above that level,
-    NAVD88 metres; `keep`, patterns on 'mesh name material name' that stay) or `meshes` (exact mesh
+    volume is a `ring` (true-arc corners allowed; with `above`, only what lies above that level;
+    with `below`, only what lies at or below it; with both, the band between, a door; NAVD88
+    metres; `keep`, patterns on 'mesh name material name' that stay) or `meshes` (exact mesh
     names, dropped whole). `drop` is "all". `why` is for people and is left out."""
     out, names = [], set()
     for v in volumes:
@@ -84,11 +85,14 @@ def check_volumes(volumes):
         ring = [(round(x, 3), round(y, 3)) for x, y in geom.expand(v["ring"], True)]
         _check_ring(name, ring)
         r.update(ring=[list(p) for p in ring], drop="all")
-        if "above" in v:
-            a = v["above"]
-            if isinstance(a, bool) or not isinstance(a, int | float) or not math.isfinite(a):
-                raise ValueError(f"volume {name!r}: above must be a height in metres")
-            r["above"] = float(a)
+        for key in ("above", "below"):
+            if key in v:
+                a = v[key]
+                if isinstance(a, bool) or not isinstance(a, int | float) or not math.isfinite(a):
+                    raise ValueError(f"volume {name!r}: {key} must be a height in metres")
+                r[key] = float(a)
+        if "above" in r and "below" in r and r["below"] <= r["above"]:
+            raise ValueError(f"volume {name!r}: below must lie over above")
         if "keep" in v:
             for k in v["keep"]:
                 try:

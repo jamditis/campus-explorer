@@ -83,11 +83,12 @@ The volumes say what of the other sources' tiles (main, north, context, skirt, f
   {"name": "inside", "ring": [[x, y], ...], "drop": "all", "why": "the building"},
   {"name": "band", "ring": [[x, y], ...], "drop": "all", "keep": ["(?i)terrain|lawn|walk|shrub"], "why": "eaves, gutters"},
   {"name": "shared_north", "ring": [[x, y], ...], "drop": "all", "above": 146.8, "why": "over the neighbour's roof"},
+  {"name": "door_east", "ring": [[x, y], ...], "drop": "all", "above": 137.95, "below": 140.3, "keep": ["(?i)terrain|walk"], "why": "the way in through the main model's wall"},
   {"name": "sign", "meshes": ["SCMSIGN"], "drop": "all", "why": "old lettering"}
 ]}
 ```
 
-- A `ring` volume takes out every triangle inside the ring, at any height, or with `above` (NAVD88 metres) only what lies above that level. A triangle that a wall of the ring or the level crosses is cut exactly there (`tools/web-export/volume.mjs`, on `cut.mjs`), so a wall or an eave that runs on into a neighbouring building ends clean on the ring. `keep` patterns (on "mesh name material name"; a leading `(?i)` ignores case) leave whole primitives alone. Instanced nodes (shrubs, repeated fittings) lose the instances whose origin lies inside, unless their mesh or material matches `keep`. Far-field trees inside a ring with no `keep` and no `above` go too.
+- A `ring` volume takes out every triangle inside the ring, at any height, or with `above` (NAVD88 metres) only what lies above that level, with `below` only what lies at or below it, and with both only the band between: a door through another model's wall, the wall above and below it left standing. A triangle that a wall of the ring or the level crosses is cut exactly there (`tools/web-export/volume.mjs`, on `cut.mjs`), so a wall or an eave that runs on into a neighbouring building ends clean on the ring. `keep` patterns (on "mesh name material name"; a leading `(?i)` ignores case) leave whole primitives alone. Instanced nodes (shrubs, repeated fittings) lose the instances whose origin lies inside, unless their mesh or material matches `keep`. Far-field trees inside a ring with no `keep` and no `above` go too.
 - A `meshes` volume drops meshes of exactly those names wherever they are. Mind that the exporter joins meshes by material, so a tile's mesh can carry more than its name says.
 - `supersede.py` refuses a ring that crosses itself or has a corner sharper than 10 degrees (the miter spike an offset ring gets at the end of a shared wall).
 - Marks work as for footprints: a done primitive, node and tile scene carry the area's hash (of all its volumes), a second run changes nothing, and a changed volume stops the run until the tiles are exported again.

@@ -65,7 +65,7 @@ const areas = AREAS.filter(rules => !rules.skip && rules.footprint).map(rules =>
 
 // ---------- volumes: an area that owns no ground (a building the scripted build rebuilds) ----------
 // Per volume, in order: a `ring` takes out the other sources' triangles inside it (at any height, or only above
-// `above`, model metres), cut exactly at the ring's walls and at the level (volume.mjs), except primitives whose
+// `above` and at or below `below`, model metres: a door through another model's wall), cut exactly at the ring's walls and at the level (volume.mjs), except primitives whose
 // 'mesh name material name' matches `keep`; instanced nodes whose origin lies inside lose those instances. `meshes`
 // drops meshes of exactly those names, wherever they are. Done primitives and nodes carry the area's hash in their
 // extras `superseded`, and so does the tile's scene, so a changed volume stops the run like a changed footprint.
@@ -73,7 +73,7 @@ const volumeAreas = AREAS.filter(rules => !rules.skip && rules.volumes).map(rule
   name: rules.name ?? '', RULES: hashOf(rules),
   vols: rules.volumes.map(v => ({
     name: v.name, meshes: new Set(v.meshes ?? []), reg: v.ring ? region(v.ring) : null,
-    above: v.above ?? null, keep: (v.keep ?? []).map(pattern),
+    above: v.above ?? null, below: v.below ?? null, keep: (v.keep ?? []).map(pattern),
   })),
 }));
 // metres: a corner the outline cut in a coarsely quantised mesh is stored at least this far inside the outline
@@ -189,7 +189,7 @@ function applyVolumes(doc, f, { name, RULES, vols }) {
       const labels = mesh.listPrimitives().map(label).join(' ');
       for (const v of vols) {
         if (!v.reg || v.keep.some(r => r.test(labels)) || !node.getMesh()) continue;
-        const n = dropInstances(node, w, ([x, y, z]) => v.reg.within(x, y) && (v.above === null || z > v.above));
+        const n = dropInstances(node, w, ([x, y, z]) => v.reg.within(x, y) && (v.above === null || z > v.above) && (v.below === null || z <= v.below));
         if (n) { tally(st, v.name, labels, 'instances', n); mark(node, RULES); changed = true; }
       }
       continue;
@@ -222,7 +222,7 @@ function applyVolumes(doc, f, { name, RULES, vols }) {
       let tris = Array.from(prim.getIndices().getArray()), any = false;
       for (const v of todo) {
         if (!boxMeets([x0, y0], [x1, y1], v.reg.bx)) continue;
-        const r = cutVolume(pts, added, tris, v.reg, v.above);
+        const r = cutVolume(pts, added, tris, v.reg, v.above, v.below);
         if (!r.removed && !r.cut) continue;
         tally(st, v.name, lab, 'removed', r.removed); tally(st, v.name, lab, 'cut', r.cut);
         tris = r.keep; any = true;
@@ -484,7 +484,7 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.glb') && !f.startsWith
 // far-field trees: [x, y, z, crown radius, height] in viewer axes
 const ft = `${dir}/far_trees.bin`;
 // (and inside a volume's ring that keeps nothing and has no level)
-const treeRings = volumeAreas.flatMap(a => a.vols.filter(v => v.reg && v.above === null && !v.keep.length).map(v => v.reg));
+const treeRings = volumeAreas.flatMap(a => a.vols.filter(v => v.reg && v.above === null && v.below === null && !v.keep.length).map(v => v.reg));
 for (const { within } of [...areas, ...treeRings]) if (existsSync(ft)) {
   const raw = readFileSync(ft); // a small file's Buffer is a view into a shared pool: copy exactly its bytes
   const a = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length - (raw.length % 4))), keep = [];
