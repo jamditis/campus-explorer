@@ -11,48 +11,48 @@
    "method": "overlay",
    "outline": [
     [
-     100.57,
-     153.28
+     100.82,
+     153.88
     ],
     [
      78.47,
      162.25
     ],
     [
-     67.88,
-     166.56
+     68.24,
+     166.42
     ],
     [
-     82.86,
-     204.03
+     83.23,
+     203.91
     ],
     [
-     90.19,
-     218.61
+     90.3,
+     217.98
     ],
     [
-     102.01,
-     214.01
+     101.72,
+     213.54
     ],
     [
-     103.53,
-     216.48
+     103.24,
+     216.01
     ],
     [
-     130.31,
-     205.13
+     130.11,
+     204.62
     ],
     [
      126.82,
      196.36
     ],
     [
-     129.3,
-     194.85
+     128.59,
+     195.28
     ],
     [
-     116.79,
-     164.79
+     116.04,
+     165.11
     ],
     [
      115.12,
@@ -73,28 +73,28 @@
      "floor": 143.1,
      "outline": [
       [
-       102.9,
-       152.3
+       103.15,
+       152.91
       ],
       [
-       67.88,
-       166.56
+       68.13,
+       167.18
       ],
       [
        82.86,
        204.03
       ],
       [
-       90.19,
-       218.61
+       89.87,
+       217.96
       ],
       [
-       102.01,
-       214.01
+       102.15,
+       213.18
       ],
       [
-       103.53,
-       216.48
+       104.04,
+       216.26
       ],
       [
        125.51,
@@ -107,28 +107,28 @@
      "floor": 147.45,
      "outline": [
       [
-       94.57,
-       155.71
+       94.78,
+       156.23
       ],
       [
-       67.88,
-       166.56
+       68.09,
+       167.08
       ],
       [
        82.86,
        204.03
       ],
       [
-       90.19,
-       218.61
+       89.87,
+       217.96
       ],
       [
-       102.01,
-       214.01
+       102.15,
+       213.18
       ],
       [
-       103.53,
-       216.48
+       104.04,
+       216.26
       ],
       [
        125.51,
@@ -149,28 +149,28 @@
      "floor": 151.8,
      "outline": [
       [
-       94.57,
-       155.71
+       94.78,
+       156.23
       ],
       [
-       67.88,
-       166.56
+       68.09,
+       167.08
       ],
       [
        82.86,
        204.03
       ],
       [
-       90.19,
-       218.61
+       89.87,
+       217.96
       ],
       [
-       102.01,
-       214.01
+       102.15,
+       213.18
       ],
       [
-       103.53,
-       216.48
+       104.04,
+       216.26
       ],
       [
        125.51,
@@ -191,28 +191,28 @@
      "floor": 156.15,
      "outline": [
       [
-       94.57,
-       155.71
+       94.78,
+       156.23
       ],
       [
-       67.88,
-       166.56
+       68.09,
+       167.08
       ],
       [
        82.86,
        204.03
       ],
       [
-       90.19,
-       218.61
+       89.87,
+       217.96
       ],
       [
-       102.01,
-       214.01
+       102.15,
+       213.18
       ],
       [
-       103.53,
-       216.48
+       104.04,
+       216.26
       ],
       [
        125.51,
@@ -245,8 +245,8 @@
    "entrances": [
     {
      "at": [
-      76.99,
-      189.34
+      77.35,
+      189.2
      ],
      "level": 1,
      "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), automatic door on the west face; ground 137.1 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
@@ -294,7 +294,7 @@
      "angle": 67.6
     }
    ],
-   "evidence": "outline OSM way/313026393; 5 storeys, 107,500 sq ft (www.langan.com/portfolio/montclair-state-university-cels); a central atrium joins the floors with a monumental stair (university news, search result); entrances and the elevator position from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM; storey heights from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) roofs (143.15, 147.65, eave 160.5) and the published shell's window boxes (level 1 137.2 to 142.8)",
+   "evidence": "outline OSM way/313026393; 5 storeys, 107,500 sq ft (www.langan.com/portfolio/montclair-state-university-cels); a central atrium joins the floors with a monumental stair (university news, search result); entrances and the elevator position from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM; storey heights from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) roofs (143.15, 147.65, eave 160.5) and the published shell's window boxes (level 1 137.2 to 142.8); outlines moved onto the published shell's outer face at each level's door height where they stood 0.3 m or more off it (tiles of 2026-11-28; an upper floor only comes in)",
    "unverified": "levels 3 to 5 (equal storeys between 143.1 and the eave), the corridor and every room wall, the two stairs, entrance positions to about 5 m; the atrium and its monumental stair are not placed: no public source gives their position"
   }
  ]

@@ -31,20 +31,20 @@
      166.18
     ],
     [
-     -197.94,
-     166.06
+     -198.99,
+     165.83
     ],
     [
      -213.01,
      167.11
     ],
     [
-     -218.07,
-     167.41
+     -219.9,
+     167.52
     ],
     [
-     -217.67,
-     174.01
+     -219.5,
+     174.12
     ],
     [
      -255.13,
@@ -187,12 +187,12 @@
        217.62
       ],
       [
-       -203.44,
-       222.08
+       -203.53,
+       220.66
       ],
       [
-       -193.75,
-       221.49
+       -193.84,
+       220.07
       ],
       [
        -194.03,
@@ -237,12 +237,12 @@
        217.62
       ],
       [
-       -203.44,
-       222.08
+       -203.54,
+       220.46
       ],
       [
-       -193.75,
-       221.49
+       -193.85,
+       219.87
       ],
       [
        -194.03,
@@ -279,12 +279,12 @@
        217.62
       ],
       [
-       -203.44,
-       222.08
+       -203.54,
+       220.45
       ],
       [
-       -193.75,
-       221.49
+       -193.85,
+       219.86
       ],
       [
        -194.03,
@@ -321,12 +321,12 @@
        217.62
       ],
       [
-       -203.44,
-       222.08
+       -203.54,
+       220.46
       ],
       [
-       -193.75,
-       221.49
+       -193.85,
+       219.87
       ],
       [
        -194.03,
@@ -400,7 +400,7 @@
      "angle": 0.0
     }
    ],
-   "evidence": "outline OSM way/375626230; 6 storeys, 143,000 sq ft (patch.com/new-jersey/verona/msu-dedicates-66-million-school-business-building-essex-county); entrances and the elevator mark from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM footways; level 1 at the west, south and north ground (133.8 to 134.0), level 2 at the east ground (138.7), the roof steps from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) (144 to 148 at the west edge, 155 to 158, main 158 to 165)",
+   "evidence": "outline OSM way/375626230; 6 storeys, 143,000 sq ft (patch.com/new-jersey/verona/msu-dedicates-66-million-school-business-building-essex-county); entrances and the elevator mark from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM footways; level 1 at the west, south and north ground (133.8 to 134.0), level 2 at the east ground (138.7), the roof steps from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) (144 to 148 at the west edge, 155 to 158, main 158 to 165); outlines moved onto the published shell's outer face at each level's door height where they stood 0.3 m or more off it (tiles of 2026-11-28; an upper floor only comes in)",
    "unverified": "levels 3 to 6 (equal storeys to the roof), the corridor and every room wall, the stairs, entrance positions to about 5 m, the lift (5 m east of the map's mark, beside the hall from the north door); the atrium, the 150-seat lecture hall and the trading floor are not placed: no public source gives their position"
   }
  ]

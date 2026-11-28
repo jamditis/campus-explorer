@@ -11,28 +11,28 @@
    "method": "overlay",
    "outline": [
     [
-     -100.83,
-     77.28
+     -100.56,
+     76.69
     ],
     [
-     -111.79,
-     30.89
+     -111.25,
+     31.46
     ],
     [
-     -91.23,
-     26.06
+     -90.69,
+     26.64
     ],
     [
-     -96.98,
-     1.72
+     -96.6,
+     1.63
     ],
     [
-     -103.8,
-     3.32
+     -103.41,
+     3.23
     ],
     [
-     -105.75,
-     -4.9
+     -105.36,
+     -4.99
     ],
     [
      -99.17,
@@ -47,39 +47,39 @@
      -15.58
     ],
     [
-     -76.69,
-     -11.92
+     -76.54,
+     -11.27
     ],
     [
-     -58.83,
-     -16.11
+     -59.45,
+     -15.28
     ],
     [
-     -47.72,
-     30.91
+     -48.49,
+     31.09
+    ],
+    [
+     -51.74,
+     31.86
     ],
     [
      -50.96,
-     31.68
+     35.27
     ],
     [
-     -50.18,
-     35.09
+     -43.52,
+     68.19
     ],
     [
-     -42.64,
-     68.46
+     -50.05,
+     70.39
     ],
     [
-     -49.93,
-     70.91
-    ],
-    [
-     -51.17,
-     65.64
+     -51.29,
+     65.14
     ]
    ],
-   "wall": 0.6,
+   "wall": 0.2,
    "slab": 0.8,
    "open": true,
    "levels": [
@@ -92,16 +92,16 @@
      "floor": 142.1,
      "outline": [
       [
-       -100.03,
-       77.46
+       -100.19,
+       76.86
       ],
       [
-       -48.53,
-       65.02
+       -50.59,
+       64.88
       ],
       [
-       -51.13,
-       55.12
+       -53.03,
+       55.58
       ],
       [
        -54.58,
@@ -112,48 +112,48 @@
        34.2
       ],
       [
-       -45.89,
-       30.72
+       -47.39,
+       31.08
       ],
       [
-       -58.83,
-       -16.11
+       -60.15,
+       -15.11
       ],
       [
-       -76.69,
-       -11.92
+       -76.54,
+       -11.27
       ],
       [
        -77.55,
        -15.58
       ],
       [
-       -100.08,
-       -10.29
+       -97.69,
+       -10.85
       ],
       [
-       -99.17,
-       -6.44
+       -96.78,
+       -7.0
       ],
       [
-       -105.75,
-       -4.9
+       -105.36,
+       -4.99
       ],
       [
-       -103.8,
-       3.32
+       -103.41,
+       3.23
       ],
       [
        -96.98,
        1.72
       ],
       [
-       -90.52,
-       25.44
+       -90.25,
+       26.42
       ],
       [
-       -112.32,
-       30.7
+       -112.06,
+       31.68
       ]
      ]
     }
@@ -522,8 +522,8 @@
      "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Room 223)"
     }
    ],
-   "evidence": "outline OSM way/313021863; plan positions from the university's main- and second-level library maps registered to the OSM outline by an affine fit on 6 corners (rms 0.55 m, worst 0.82 m; the second-level map is drawn 10 px higher, checked on 7 cores); level 1 at the east entrance's LiDAR ground (NJ 2017/2023 EPT, 137.86); roof deck from the LiDAR surface (146.0)",
-   "unverified": "level 2 height, slab and ceiling depth, the shell's inner face (0.6 m inside the OSM line), core and toilet sizes and door sides; the lower level is not built (its map has its own outline, not registered yet)"
+   "evidence": "outline OSM way/313021863, moved onto the published shell's outer face at door height (tiles of 2026-11-28; the shell is a single face here, so the wall is 0.2 m); plan positions from the university's main- and second-level library maps registered to the OSM outline by an affine fit on 6 corners (rms 0.55 m, worst 0.82 m; the second-level map is drawn 10 px higher, checked on 7 cores); level 1 at the east entrance's LiDAR ground (NJ 2017/2023 EPT, 137.86); roof deck from the LiDAR surface (146.0)",
+   "unverified": "level 2 height, slab and ceiling depth, core and toilet sizes and door sides; the lower level is not built (its map has its own outline, not registered yet)"
   }
  ]
 }

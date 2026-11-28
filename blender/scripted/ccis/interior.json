@@ -81,12 +81,12 @@
      "floor": 138.6,
      "outline": [
       [
-       15.57,
-       223.7
+       15.22,
+       223.64
       ],
       [
-       24.37,
-       243.99
+       24.09,
+       244.11
       ],
       [
        41.42,
@@ -367,7 +367,7 @@
      "angle": 66.56
     }
    ],
-   "evidence": "outline OSM way/313024779; 4 storeys after the added floor (Clarke Caton Hintz, clarkecatonhintz.com/project/montclair-state-university-mallory-hall/); entrances from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map); the 4-storey block from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) surface (154 to 157 m), the south wing and the west jogs one storey (roofs 140.7 to 145; published shell 'Center for Computing and Information Science roof (LiDAR)' 140.73 to 156.92), so level 1 leaves out the west jogs and levels 2 to 4 are the tall block only; level 1 at the doors' ground (138.4 to 138.6)",
+   "evidence": "outline OSM way/313024779; 4 storeys after the added floor (Clarke Caton Hintz, clarkecatonhintz.com/project/montclair-state-university-mallory-hall/); entrances from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map); the 4-storey block from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) surface (154 to 157 m), the south wing and the west jogs one storey (roofs 140.7 to 145; published shell 'Center for Computing and Information Science roof (LiDAR)' 140.73 to 156.92), so level 1 leaves out the west jogs and levels 2 to 4 are the tall block only; level 1 at the doors' ground (138.4 to 138.6); outlines moved onto the published shell's outer face at each level's door height where they stood 0.3 m or more off it (tiles of 2026-11-28; an upper floor only comes in)",
    "unverified": "levels 2 to 4 (equal storeys between the doors' ground and the roof), the corridor along the tall block and every room wall, the stairs and the lift (the map shows an elevator route, no position), entrance positions to about 5 m; the 145-seat amphitheater is not placed"
   }
  ]
