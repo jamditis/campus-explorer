@@ -390,7 +390,11 @@ the tiles under the camera and the target first: the lite profile keeps the nine
 a far target would let the foreground go. With `prefers-reduced-motion` each shot holds its last
 pose. Any input on the view, Esc, the Stop button, or a camera move another module asks for stops it and gives back
 the pose, the navigation mode (fly looks from the old camera; walk stands where the walker stood), the light
-and the panel. A mode key (2, 3) during the film stops it too and leaves the view to that mode.
+and the panel. A mode key (2, 3) during the film stops it too and leaves the view to that mode. Started while
+a walk is still landing, the film waits for it (input on the view, Esc or another camera move cancels the wait). A
+shot whose ground tiles were not all in at the cut starts on whatever surface is there (else the campus floor) and
+eases to the real ground over about a second when they arrive (checked four times a second); a held shot under
+reduced motion keeps its pose.
 
 ## Moving to a place
 
