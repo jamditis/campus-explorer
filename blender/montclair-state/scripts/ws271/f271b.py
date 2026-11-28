@@ -1,7 +1,7 @@
 # ws271b (merge208 CHAIN, on ws271a): UNIFY #4 Sprague grandstand lawn — seam step between WS68_RHD_ground_northDTM (W of x -249)
 # and Terrain_LiDAR_DTM_1m (E of it). probe271d/e (first-hit grid, modifiers on, hidden helpers excluded) found Terrain_LiDAR
 # standing 0.3-0.7 m above WS68 at the seam for y -121...-131 (the ws86 hump-to-DTM feather never reached x -249), which reads
-# from the air as a straight crease/facet line. New GN modifier WS271_grandstand_seam_feather_lower_only (right after WS86):
+# from the air as a straight crease/facet line. New GN modifier WS271_grandstand_seam_terrain_feather_lower_only (right after WS86):
 # per vertex, delta = min(0, zWS68(-249.5, y) - zTerrain(-248.5, y)); offset z by delta * smoothstep weight (1 at the seam ->
 # 0 at x -243.6), tapered to 0 at y -136/-119. Lower only, lawn only (no paving/walks in the band; probe271e). Not a raise.
 import bpy, numpy as np, bmesh
@@ -11,7 +11,7 @@ TAG='F271B'; OB=bpy.data.objects
 ter=OB['Terrain_LiDAR_DTM_1m']; A=[o for o in OB if o.name.startswith('WS68_RHD_ground_northDTM')][0]
 print(TAG,'A',A.name[:40],'identity',ter.matrix_world==Matrix.Identity(4),A.matrix_world==Matrix.Identity(4),flush=True)
 assert ter.matrix_world==Matrix.Identity(4) and A.matrix_world==Matrix.Identity(4)
-NG='WS271_grandstand_seam_feather_lower_only'
+NG='WS271_grandstand_seam_terrain_feather_lower_only'   # 'terrain' in the name keeps it ON in subrend234 subset renders (TRX regex)
 ng=bpy.data.node_groups.new(NG,'GeometryNodeTree')
 ng.interface.new_socket('Geometry',in_out='INPUT',socket_type='NodeSocketGeometry')
 ng.interface.new_socket('Geometry',in_out='OUTPUT',socket_type='NodeSocketGeometry')
@@ -59,7 +59,9 @@ def hz(t,x,y):
     r=t.ray_cast(Vector((x,y,300)),Vector((0,0,-1))); return r[0].z if r[0] else np.nan
 for y in np.arange(-120.5,-136,-1.0):
     print(TAG,'y',y,'A(-249.5)',round(hz(TA,-249.5,y),2),'T(-248.5)',round(hz(TB,-248.5,y),2),'T(-246)',round(hz(TB,-246,y),2),'T(-243)',round(hz(TB,-243,y),2),flush=True)
-mod.show_viewport=False
 for o in (ter,A):
     for m in o.modifiers: m.show_viewport=False
-mod.show_viewport=False
+# merge208 restores only the modifiers it switched off at load (_OFF); register the new one so poke_restore turns its
+# viewport (Realtime) bit back on before the save, like the other terrain modifiers (pattern of the ws260 scripts).
+_OFF.append((ter.name,mod.name))
+print(TAG,'registered for viewport restore',mod.name,flush=True)

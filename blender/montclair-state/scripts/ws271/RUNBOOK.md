@@ -15,10 +15,15 @@ Main before: ws270b (sha f8b019d9…). Backup montclair_state_pre_20261128ws271.
    `probe271d.py` (first-hit grid with modifiers on for objects in the window, render-hidden helpers excluded; peak 7.6 GB):
    the grandstand lawn is two grounds — WS68_RHD_ground_northDTM W of x −249, Terrain_LiDAR_DTM_1m E — Terrain 0.3–0.7 m higher at
    the seam for y −121…−131.
-4. `f271b.py` (on ws271a) → ws271b = MAIN (saved 2:55:52 AM ET, promoted 2:57:48 AM ET): new GN modifier
-   WS271_grandstand_seam_feather_lower_only on Terrain_LiDAR_DTM_1m right after WS86: delta = min(0, zWS68(−249.5, y) − zTerrain(−248.5, y)),
+4. `f271b.py` (on ws271a) → ws271b (saved 2:55:52 AM ET, promoted 2:57:48 AM ET), then after the Codex review → ws271c = MAIN
+   (saved 3:06:32 AM ET, promoted 3:08:21 AM ET, sha256 e4364f10…): new GN modifier
+   WS271_grandstand_seam_terrain_feather_lower_only on Terrain_LiDAR_DTM_1m right after WS86: delta = min(0, zWS68(−249.5, y) − zTerrain(−248.5, y)),
    offset z by delta × smoothstep(x −249.6 → −243.6) × y-taper (−136…−134 / −121…−119). Seam step after: ≤ 6 cm for y −120…−131.
-   Lower only; lawn only (no paving/walks in the band).
+   Lower only; lawn only (no paving/walks in the band). ws271b had two faults found in review: the new modifier was saved with
+   its viewport (Realtime) bit off because merge208 only restores modifiers in _OFF, and its name did not match subrend234's
+   terrain regex, so subset renders dropped it. ws271c registers it in _OFF (POKE208 restored 1180) and puts 'terrain' in the
+   name; the ws271c grandstand render differs from ws271b only along the seam (x 271–281 px), as expected.
 5. Renders: `jobwip271.sh` (Lot 33 cams, terrain GN on via subrend234 + KEEPMOD, crop259) and `gs271.sh` (grandstand cams, GATE 8000,
    peak 6.4 GB). Before/after: renders/test/20261128-0243_…ws270b_before… vs …ws271a… (SW corner close-up);
-   renders/test/20261128-0250_…ws271a_sub vs 20261128-0256_…ws271b_sub (grandstand from S, high).
+   renders/test/20261128-0250_…ws271a_sub vs 20261128-0306_…ws271c_sub (grandstand from S, high; the 0256 ws271b render
+   did not include the modifier).
