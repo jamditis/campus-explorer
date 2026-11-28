@@ -45,7 +45,7 @@ export function createRoute(app) {
   function describe() {
     const { route: r, place, stepFree } = current;
     const notes = [];
-    if (!r.goal.mapped) notes.push('Entrance guessed from the path map (UNVERIFIED)');
+    if (!r.goal.mapped) notes.push('Entrance approximate');
     if (r.steps) notes.push('Has stairs');
     if (r.steep) notes.push('Has steep stretches');
     if (stepFree) notes.push('Step-free');

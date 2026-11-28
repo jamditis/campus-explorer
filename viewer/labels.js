@@ -19,7 +19,7 @@ const CONFIRMS = 3;         // hits needed before a place stops being asked
 const HIGHLIGHT_MS = 6000;
 const ROOM_ABOVE = 2.1;      // room numbers: metres above their floor, about a door head
 const ROOM_TITLE = 'Room number from the floor sign. Position UNVERIFIED: read off an evacuation plan.';
-const BLOCKERS = '#top, #panel'; // fixed interface cards that cover the view
+const BLOCKERS = '#top, #panel, .follow'; // fixed interface cards that cover the view (.follow holds the route and navigation cards)
 
 /**
  * Create the place labels.
@@ -221,6 +221,7 @@ export function createLabels(app) {
     // the label font size changes at the phone breakpoint, so sizes are read again on resize
     app.on('resize', ({ width: w, height: h }) => { width = w; height = h; measure(true); readBlocked(); }),
     app.on('mode', () => setTimeout(readBlocked)),
+    app.on('route', () => setTimeout(readBlocked)), // the route card and navigation card open and close
     app.on('place', ({ place }) => {
       highlight(place);
       highlightTimer = setTimeout(() => { if (highlighted === place || highlighted?.osm === place?.osm) highlight(null); }, HIGHLIGHT_MS);
@@ -231,9 +232,10 @@ export function createLabels(app) {
     }),
   ];
   if (app.places?.length) build();
-  // after the click's handlers have opened or closed the panel
+  // after the click's or key's handlers have opened or closed the panel (Escape closes the route picker)
   const onClick = () => setTimeout(readBlocked, 50);
   addEventListener('click', onClick, true);
+  addEventListener('keyup', onClick, true);
   readBlocked();
   document.fonts?.ready.then(() => { measure(true); dirty = true; });
 
@@ -245,6 +247,7 @@ export function createLabels(app) {
       clearTimeout(highlightTimer);
       for (const off of offs) off();
       removeEventListener('click', onClick, true);
+      removeEventListener('keyup', onClick, true);
       layer.remove(); labels = [];
     },
   };
