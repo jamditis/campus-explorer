@@ -249,6 +249,8 @@ def _arch(b, ring, aw, hexes, wall):
     b.faces([pt(x, z, -back) for x, z in pane], [tuple(range(len(pane)))], glass)
     fhex = aw.get("frame", "#33291f")
     frame = kit.mat("metal", "frame_" + fhex[1:], kit.srgb(fhex), 0.5)
+    if aw.get("surround"):  # a raised band round the jambs and the head (an archivolt)
+        _arch_surround(b, pt, s0, s1, z0, z1, aw["surround"])
     for bz0, bz1 in aw.get("bands", ()):  # an opaque panel across the opening (a transom band)
         for off in (-back + 0.015, -back - 0.015):
             q = [pt(s0, bz0, off), pt(s1, bz0, off), pt(s1, bz1, off), pt(s0, bz1, off)]
@@ -278,6 +280,26 @@ def _on_wall(ring, opening):
     length = math.dist(a, bb)
     u = ((bb[0] - a[0]) / length, (bb[1] - a[1]) / length)
     return a, u, (u[1], -u[0]), s0, s1
+
+
+def _arch_surround(b, pt, s0, s1, z0, z1, sur):
+    """A band `width` wide standing `depth` proud of the wall round an arched opening: up each
+    jamb from the sill (or from the surround's own `z0`, below a door) and over the head, with
+    its outer and inner edges closed."""
+    w, d = sur.get("width", 0.45), sur.get("depth", 0.1)
+    mat = kit.mat("stone", "surround_" + sur["colour"][1:], kit.srgb(sur["colour"]), 0.7)
+    inner = massing.arch_curve(s0, s1, z1)
+    outer = massing.arch_curve(s0 - w, s1 + w, z1 + w)
+    # the inner and outer edges of the whole band, from the left foot over the top to the right
+    foot = sur.get("z0", z0)  # the jambs may run on below the arch, down beside a door
+    ein = [(s0, foot), *inner, (s1, foot)]
+    eout = [(s0 - w, foot), *outer, (s1 + w, foot)]
+    for (ia, ib), (oa, ob) in zip(
+        zip(ein, ein[1:], strict=False), zip(eout, eout[1:], strict=False), strict=True
+    ):
+        b.faces([pt(*ia, d), pt(*oa, d), pt(*ob, d), pt(*ib, d)], [(0, 1, 2, 3)], mat)  # the face
+        b.faces([pt(*oa, 0), pt(*ob, 0), pt(*ob, d), pt(*oa, d)], [(0, 1, 2, 3)], mat)  # outer side
+        b.faces([pt(*ib, 0), pt(*ia, 0), pt(*ia, d), pt(*ib, d)], [(0, 1, 2, 3)], mat)  # inner side
 
 
 def _storefront(b, ring, dr, hexes):
@@ -530,6 +552,16 @@ def part(lay_part, name, ground, image_dir=None):
                     overhang=r.get("overhang"),
                 ):  # fmt: skip
                     b.faces(face, [tuple(range(len(face)))], sof)
+                rafters, course = massing.ring_eave_trim(
+                    ring, p["top"], r["crest"], r["crest_in"], r.get("flat_edges", ()),
+                    overhang=r.get("overhang"),
+                )  # fmt: skip
+                for verts, faces in rafters:
+                    b.faces(verts, [tuple(f) for f in faces], sof)
+                chex = r.get("caps", r["colour"])  # caps are optional: the course takes the roof's
+                ctile = kit.mat("rooftile", "cap_" + chex[1:], kit.srgb(chex), 0.75)
+                for verts, faces in course:
+                    b.faces(verts, [tuple(f) for f in faces], ctile)
             if r.get("caps"):  # ridge and hip caps, a darker tile
                 cap = kit.mat("rooftile", "cap_" + r["caps"][1:], kit.srgb(r["caps"]), 0.75)
                 for verts, faces in massing.ring_caps(
@@ -544,6 +576,8 @@ def part(lay_part, name, ground, image_dir=None):
     else:
         # a deck's sloped slab (a ramp bay) is concrete; other pitched roofs are sheet metal
         look = ("concrete", 0.85, 0.0) if style == "deck" else ("metal", 0.55, 0.2)
+        if p.get("roof_material") == "tile":  # a clay tile roof, textured as the ring roofs are
+            look = ("rooftile", 0.75, 0.0)
         sheet = kit.mat(look[0], "roof_" + hexes["roof"][1:], kit.srgb(hexes["roof"]), *look[1:])
         if p.get("sheets"):  # a deck's ramp painted by the plan (layout.roof_paint, paint.py)
             sheet = deck = sheet_material("concrete", p["sheets"][0], image_dir)

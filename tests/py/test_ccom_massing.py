@@ -287,10 +287,19 @@ class Soffits(unittest.TestCase):
         low = 10.0 - 0.8 * 3.0 / 6.0
         soffit = faces[0]
         self.assertTrue(all(abs(z - low) < 1e-9 for _x, _y, z in soffit))
-        self.assertAlmostEqual(min(z for f in faces for _x, _y, z in f), low - 0.22)
+        self.assertAlmostEqual(min(z for f in faces for _x, _y, z in f), low - 0.35)
 
     def test_no_overhang_no_soffit(self):
         self.assertEqual(massing.ring_soffits(SQ, 10.0, 13.0, 6.0), [])
+        self.assertEqual(massing.ring_eave_trim(SQ, 10.0, 13.0, 6.0), ([], []))
+
+    def test_rafter_tails_and_a_tile_course_under_each_overhang(self):
+        rafters, course = massing.ring_eave_trim(SQ, 10.0, 13.0, 6.0, overhang=[0.8, 0, 0.8, 0])
+        self.assertEqual(len(course), 2)  # one course per overhanging edge
+        self.assertEqual(len(rafters), 2 * (int(20.0 / 0.75) - 1))
+        low = 10.0 - 0.8 * 3.0 / 6.0
+        for verts, _faces in rafters:  # tucked under the soffit
+            self.assertTrue(all(z <= low + 1e-9 for _x, _y, z in verts))
 
 
 class Doors(unittest.TestCase):
