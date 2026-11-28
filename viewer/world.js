@@ -140,6 +140,7 @@ export function createWorld(app, prepare, release = () => {}) {
       try { await renderer.compileAsync(root, camera, scene); } catch { /* compiled on first draw instead */ }
       if (my !== token) { free(root); release(root); return; }
       group.add(root); tile.root = root; tile.state = 'ready';
+      if (tile.far) updateLods(true); // hide the far version that stood in for it
       if (tile.center) expandBounds(root);
       addColliders(root, tile);
       warmIdle(); // collision near the view gets ready in idle time, so picks and the elevation readout do not wait
@@ -207,15 +208,21 @@ export function createWorld(app, prepare, release = () => {}) {
   // ---- far versions of tiles (LOD) ----
   // A tile can ship a far version (lod/<tile>.glb from tools/web-export/lod.mjs: no instances, small parts or
   // interiors, about 0.5 m error). Past a distance set by the quality level, the full tile's plain meshes move
-  // to layer 2 (not drawn, no shadows) and the far version takes layer 0. Instanced trees stay with the full
-  // tile: trees.js culls and swaps those per instance. Collision and picks always use the full tiles.
-  // Far versions load after the full campus is in, and never while a memory budget is evicting tiles.
+  // to layer 2 (not drawn, no shadows) and the far version takes layer 0. A far version also stands in for its
+  // tile while the tile is not in memory: under a memory budget (phones) the evicted tiles stay in view that way.
+  // Instanced trees stay with the full tile: trees.js culls and swaps those per instance. Collision and picks
+  // always use the full tiles. Far versions load nearest-first once the first round of tiles is in, and stay.
+  // A far version has no instanced trees, so a tile outside a memory budget shows none (trees.js needs the full
+  // tile; per-tile tree points from the export would fix it, docs/ROADMAP.md "Performance").
   const LOD_DIST = { low: 260, medium: 420, high: 650 };
+  const LOD_TRIES = 3, LOD_RETRY_MS = 20000; // a far version that failed to load is tried again, a few times
   let lods = [], lodLast = 0;
   async function loadLods(my) {
-    for (const tile of tiles) {
-      if (my !== token || budget !== Infinity) return;
-      if (!tile.lod || tile.far || tile.state !== 'ready') continue;
+    app.focus(_focus);
+    for (const tile of orderTiles(tiles.filter(t => t.lod), { x: _focus.x, z: _focus.z })) {
+      if (my !== token) return;
+      if (tile.far || tile.farLoading || tile.farFails >= LOD_TRIES) continue; // loadAll can start a second pass while this one runs
+      tile.farLoading = true;
       let root;
       try {
         const res = await fetch(base + tile.lod, { signal: abort.signal });
@@ -223,25 +230,34 @@ export function createWorld(app, prepare, release = () => {}) {
         const path = base + dirOf(tile.lod);
         const g = await loader.parseAsync(await res.arrayBuffer(), path); dropUnmaterialled(g); root = g.scene;
         shareTextures(g, root, path);
-      } catch (e) { if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e); continue; }
-      if (my !== token || tile.state !== 'ready') { free(root); return; }
-      root.name = `lod_${tile.root.name}`;
+      } catch (e) {
+        tile.farLoading = false; tile.farFails = (tile.farFails ?? 0) + 1;
+        if (e.name !== 'AbortError') console.warn('far version did not load', tile.lod, e);
+        continue;
+      }
+      if (my !== token) { free(root); return; }
+      root.name = `lod_${tile.file.replace('.glb', '').split('/').pop()}`;
       strip(root); // the far version carries the same objects as the full tile
       prepare(root, tile, { far: true });
-      const hi = [];
-      tile.root.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) hi.push(o); });
       root.traverse(o => { if (o.isMesh) { o.userData.hidden = o.userData.lod = true; o.layers.set(2); } });
       group.add(root); tile.far = root;
-      lods.push({ hi, lo: root, box: new THREE.Box3().setFromObject(tile.root), far: false });
+      lods.push({ tile, lo: root, box: new THREE.Box3().setFromObject(root), root: null, hi: [], far: null });
       if (updateLods(true)) app.invalidate();
     }
+    // a pass ends with every tile it took either in or failed; one still loading belongs to another pass, which checks at its own end
+    if (tiles.some(t => t.lod && !t.far && !t.farLoading && t.farFails < LOD_TRIES)) setTimeout(() => { if (my === token) loadLods(my); }, LOD_RETRY_MS);
   }
-  /** Swap full tiles and far versions for the camera position. Returns true when something changed. */
+  /** Swap full tiles and far versions for the camera position and what is in memory. Returns true when something changed. */
   function updateLods(force = false) {
     const now = performance.now(); if (!force && now - lodLast < 250) return false; lodLast = now;
     const reach = LOD_DIST[app.look.quality] ?? LOD_DIST.medium; let changed = false;
     for (const l of lods) {
-      const far = l.box.distanceToPoint(camera.position) > reach;
+      const root = l.tile.state === 'ready' ? l.tile.root : null;
+      if (root !== l.root) { // the full tile came into memory or left it
+        l.root = root; l.hi = []; l.far = null;
+        root?.traverse(o => { if (o.isMesh && !o.isInstancedMesh && !o.userData.treeLod) l.hi.push(o); });
+      }
+      const far = !root || l.box.distanceToPoint(camera.position) > reach;
       if (far === l.far) continue;
       l.far = far; changed = true;
       for (const o of l.hi) o.layers.set(far ? 2 : 0);
@@ -257,6 +273,9 @@ export function createWorld(app, prepare, release = () => {}) {
     if (budget === Infinity) return null;
     app.focus(_focus);
     const set = new Set(orderTiles(tiles.filter(t => t.center), { x: _focus.x, z: _focus.z }).slice(0, budget + slack));
+    // a tile with no far version has nothing to stand in for it, so it stays. The export leaves a far version out
+    // only where it would save under a fifth (farWorthIt in pack.mjs), so such a tile is about as light as one.
+    for (const t of tiles) if (t.center && !t.lod) set.add(t);
     for (const t of urgent) set.add(t);
     return set;
   }
@@ -264,6 +283,7 @@ export function createWorld(app, prepare, release = () => {}) {
     group.remove(tile.root); free(tile.root); release(tile.root);
     colliders = colliders.filter(c => c.tile !== tile);
     tile.root = null; tile.state = 'queued'; progress.tiles--; progress.loaded -= tile.bytes;
+    if (tile.far) updateLods(true); // its far version stands in
     app.emit('tile:gone', { tile });
   }
   async function pump(my) {
@@ -339,7 +359,7 @@ export function createWorld(app, prepare, release = () => {}) {
     if (my !== token) return;
     app.emit('scene:complete');
     if (budget !== Infinity) watch = setInterval(() => rebalance(my), 600);
-    else loadLods(my);
+    loadLods(my);
   }
   /** Drop the memory budget and load every tile. */
   async function loadAll() {

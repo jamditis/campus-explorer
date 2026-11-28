@@ -103,8 +103,9 @@ The browser merge rules live in `tools/web-export/make_chunks.py` (merge mode). 
 - [x] Per-instance culling for instanced trees (frustum and distance), with low-poly crown impostors past 220 / 420 / 700 m (Low / Medium / High) out to 2.6 km
 - [x] Unused vertex data dropped from tiles (`tools/web-export/compact.mjs`): `gltf-transform optimize --instance` left a second, unreferenced copy of every instance transform in the files
 - [ ] Decimated copies of buildings for far tiles
-- [x] Phones (lite profile): only the nine tiles nearest the view stay in memory; far tiles are unloaded as the view moves
-- [ ] Phones: show the far versions (`lod/`, 41 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
+- [x] Phones (lite profile): only the nine tiles nearest the view (and the few with no far version) stay in memory; far tiles are unloaded as the view moves
+- [x] Phones: show the far versions (`lod/`, 18.9 MB for the whole campus) of the tiles outside the memory budget, so the lite profile still shows the full campus
+- [ ] Phones: tree stand-ins for the tiles outside the memory budget. Far versions carry no instanced trees and `trees.js` builds its stand-ins from full tiles, so a lite tile that is not in memory shows no instanced trees; needs per-tile tree points from the export (like `far_trees.bin`)
 - [x] Trees used 2 to 4 times in a tile are instances (`tree_instance.mjs`), instance rotations are packed as 16-bit values, far versions carry half-size images
 - [x] Share repeated images between tiles (`share_tex.mjs`, `viewer/texshare.js`): each image is stored once under `models/main/tex/` (192 files, 2.5 MB) and the tiles point at it; the published tiles carry no repeated embedded image
 - [x] Two middle levels of detail for trees between the full mesh and the crown impostor, and thinned shrub leaf cards past 35 / 45 / 60 m (docs/VIEWER.md "Trees and shrubs"; viewer only, no new download): bark reordered by piece, thin twigs left out by draw range. Tree and shrub triangles drawn at Medium (sw16 tiles, counted with the viewer's rules): eye level by Cole Hall 7.0 M to 3.6 M, the overview 6.5 M to 2.7 M; at High 10.0 M to 5.2 M and 13.0 M to 5.2 M
