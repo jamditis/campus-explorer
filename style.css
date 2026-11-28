@@ -330,3 +330,19 @@ body.cinema #overlay>:not(.cine){display:none!important}
 .follow-note{font-weight:400;font-size:11px;opacity:.8}
 .follow-info{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:3px 8px;font:12px/1.3 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums;max-width:min(260px,calc(100vw - 24px))}
 .follow-info:empty{display:none}
+/* Walking directions from viewer/route.js: under the follow button. */
+.route-pick,.route-card{pointer-events:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px;width:min(300px,calc(100vw - 24px));font:13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.route-pick[hidden],.route-card[hidden]{display:none}
+.route-row{display:flex;gap:6px}
+.route-search{flex:1;min-width:0;font:16px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:8px;border:1px solid var(--line);border-radius:8px}
+.route-close{width:40px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:20px;cursor:pointer}
+.route-free{display:flex;gap:6px;align-items:center;margin:8px 2px;color:var(--muted);font-size:12px}
+.route-results{list-style:none;margin:0;padding:0;max-height:40vh;overflow:auto}
+.route-results button{display:block;width:100%;text-align:left;padding:10px 8px;border:0;border-top:1px solid var(--line);background:none;font:inherit;color:var(--ink);cursor:pointer}
+.route-results button:hover,.route-results button:focus-visible{background:color-mix(in srgb,#2f80ed 10%,transparent)}
+.route-card{display:flex;flex-direction:column;gap:3px}
+.route-to{font-weight:600}
+.route-len{font-variant-numeric:tabular-nums}
+.route-notes{color:var(--muted);font-size:12px}
+.route-clear{align-self:flex-start;margin-top:4px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);font:inherit;cursor:pointer}
+.route-close:focus-visible,.route-clear:focus-visible,.route-search:focus-visible{outline:2px solid var(--accent);outline-offset:1px}

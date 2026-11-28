@@ -13,6 +13,7 @@ import { createDoors } from './viewer/doors.js';
 import { createCamera } from './viewer/camera.js';
 import { createUI } from './viewer/ui.js';
 import { createFollow } from './viewer/follow.js';
+import { createRoute } from './viewer/route.js';
 import { CAMPUS, convergenceDeg, gridToTrueBearing } from './viewer/geo.js';
 import { sunPosition, zonedDate } from './viewer/sun.js';
 import { parseRooms, roomPlaces, walkStartY } from './viewer/rooms-math.js';
@@ -332,6 +333,7 @@ const phone = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, 
 app.lite = params.has('lite') ? params.get('lite') !== '0' : phone || (navigator.deviceMemory ?? 8) <= 2;
 const ui = createUI(app);
 app.follow = createFollow(app);
+app.route = createRoute(app);
 app.setQuality(params.get('quality') || saved || (phone ? 'low' : 'medium'));
 app.resetTime();
 resize();

@@ -57,6 +57,8 @@ trees.js            Per-instance culling of instanced trees, two middle versions
 viewer/input.js     Keyboard, pointer lock, touch sticks and gamepad -> one intent object
 viewer/player.js    Fly and walk movement, collision, first and third person camera
 viewer/follow.js    Follow me: the phone's GPS position and compass drive walk mode
+viewer/route.js     Walking directions: pick a place, route along viewer/paths.json from the walker, draw the route
+viewer/route-math.js Pure. The path graph, snapping to it, A* to a place's entrances, walking time
 viewer/follow-math.js Pure. Phone orientation to a view direction, GPS fixes to a smooth track, magnetic declination
 viewer/camera.js    Eased camera moves (flyTo)
 viewer/tour.js      Guided tour
@@ -84,6 +86,7 @@ app = {
   input,             // see viewer/input.js
   player,            // see viewer/player.js. player.guide = { x, z, look } makes walk mode glide to (x, z) (follow me)
   follow,            // viewer/follow.js: { start(), stop(), active }
+  route,             // viewer/route.js: { go(place, { stepFree }), clear(), current, graph }
   places,            // array from viewer/places.json, limited to places a tile covers (set before the `places` event)
   rooms, roomPlaces, // viewer/rooms.json parsed ({ volumes, rooms }), and its rooms as places (kind `room`); set before `places`
   state,             // { mode: 'orbit'|'fly'|'walk', view: 'first'|'third', ready, complete }
@@ -131,6 +134,7 @@ app = {
 | `stats` | `{ fps, triangles, scale }` | Once a second. |
 | `toast` | `{ text }` | A short message for the user. |
 | `cinema` | `{ running }` | Film mode started or stopped. |
+| `route` | `{ route, place, stepFree }` or null | Walking directions were set or cleared (viewer/route.js). |
 
 ### Drawing on demand
 
@@ -419,6 +423,10 @@ In walk mode the "Use my location" button (top left) lets the phone drive the wa
 - `nodes`: flat `[x0, z0, x1, z1, ...]`, 0.1 m, in the frame of `places.json`.
 - `edges`: `[a, b, flags, grade]`. Flags: 1 steps, 2 steep, 4 street, 8 crossing. `grade` is the steepest 20 m stretch along the OSM edge in percent (end to end for an edge under 20 m, and over the last 20 m before its end; under 2 m is level), from the USGS 3DEP 1 m bare-earth DEM sampled every 10 m (0 on bridges and tunnels, where the DEM is not the walking surface; -1 where the DEM gave no height, which is unknown, not level). Only a complete DEM answer is cached; a failed, partial or unreadable one is tried three times, then those heights are unknown. Steeper than 8.33 % (1:12, the ADA ramp limit) sets the steep flag. A DEM cell on a wall or kerb can still read steep: the grade is evidence, not a survey.
 - `entrances`: `{ osm, node, mapped }` for each building in `places.json` the graph reaches. OSM maps no entrances on the campus yet (Nov. 2026), so every one is `mapped: false`: a footway dead end within 6 m of the outline, or a path point within 3 m of it, else the nearest point on a path within 25 m, which splits that edge (UNVERIFIED). An `entrance=*` node on the outline in OSM replaces the guesses for that building the next time the file is built.
+
+## Walking directions
+
+In walk mode "Go to a place" (under "Use my location") opens a search over `app.places` (`searchPlaces`). Choosing a place routes from the walker: the GPS point when follow me is on (`player.guide`), else where they stand. `route-math.js` snaps the start onto the nearest usable edge within 120 m (part way along it), then runs A* to the place's entrances from `paths.json` (a place with none, such as a lot or a field, ends at the nearest path point). Streets count 1.25 times their length, so a footway is preferred where one runs alongside. The step-free box leaves out steps and steep edges; if nothing is left, it says there is no step-free route on the path map. The card gives the walk in metres and minutes at 1.3 m/s, and says when the entrance is guessed (UNVERIFIED), when the route has stairs or steep stretches. The route line is drawn on the ground every 3 m at the surface under it and redrawn as tiles arrive. The graph is fetched the first time the picker opens (29 kB gzipped). Leaving walk mode clears the route.
 
 ## Flight limit
 
