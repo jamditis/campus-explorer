@@ -26,9 +26,10 @@ Every tile uses the same origin, whichever Blender file it came from. Grid north
 index.html          Static page: canvas, panel, import map
 style.css           All styles (one file)
 app.js              Entry. Builds the renderer and the `app` object, runs the frame loop, wires modules
-look.js             Sky, sun, shadows, fog, world-space textures, paint, screen-size culling, quality levels
+look.js             Sky, sun, shadows, haze (fog), world-space textures, paint, screen-size culling, quality levels
 viewer/geo.js       Pure. Local metres <-> EPSG:6527 <-> WGS84 latitude/longitude, grid convergence, formatting
 viewer/sun.js       Pure. Solar azimuth and elevation for an instant and a place (NOAA equations)
+viewer/haze-math.js Pure. Aerial perspective: how much colour survives a distance, the haze colour from the sky
 viewer/schedule.js  Pure. Tile load order for a focus point and view direction
 viewer/texshare.js  Pure. Shared tile images: URI resolution, one texture per image across tiles, their bytes
 viewer/permalink.js Pure. View state <-> URL hash
@@ -182,10 +183,41 @@ Every tile carries its own copy of each tree mesh it plants (the instanced `Tree
 What is not the campus: `skirt.glb` (the 4 km 3DEP ground), `context.glb` (campus terrain, roads and paths, the far
 3DEP ground `BD_farfield_3DEP_ortho` out to 29 km, the mid-distance houses, street trees and canopy out to 10 km, and
 the skyline), `n_context.glb`, `sw_context.glb`, `far_houses.glb`, `far_trees.bin` and `landcover.webp`. Three
-facts set what of it can be seen. The fog (`look.js`, FogExp2 0.00027) leaves 31 % of a surface's own colour at
-4 km, 7 % at 6 km and under 0.1 % past 10 km. The camera's far plane (`app.js`) is 20 km. The flight limit keeps
-the camera within about 2.5 km of the origin. So past 10 km only an outline against the sky shows, and a 30 m wide
-building there is under 3 px wide at the walk view's 68 degrees on a 1080 px screen.
+facts set what of it can be seen. The haze (see "Haze" below) leaves 75 % of a surface's own colour at 2 km, 59 %
+in red and 47 % in blue at 4 km, 30 % and 10 % at 20 km (before it, 31 % at 4 km and nothing past 10 km). The camera's far plane (`app.js`) is 33 km. The flight limit keeps the
+camera within about 2.5 km of the origin. So past 10 km the ground, the ridges and the skyline show as blue-grey
+shapes, and a 30 m wide building there is under 3 px wide at the walk view's 68 degrees on a 1080 px screen.
+
+### Haze
+
+Every material that takes fog draws the same aerial perspective; `look.js` replaces three's fog chunks once, before
+anything compiles. Pure parts and tests: `viewer/haze-math.js`.
+
+- **How much.** The share of a surface's colour that survives a distance `d` (along the line of sight, not view
+  depth, so the sides of a wide view are not clearer than its middle) is the larger of the near haze
+  `exp(-(0.00027 d)^2)` (the FogExp2 the viewer had before) and the far haze
+  `0.7 exp(-d / L)`, with `L` 24 km in red, 16 km in green and 10 km in blue (`HAZE`, `HAZE_RGB`); the far haze
+  takes over at about 2.5 km. Blue clears
+  first, so the far ground, the Palisades and the skyline turn blue-grey with distance instead of fading to one flat
+  colour. UNVERIFIED: the lengths are set by eye against the standard views, for a clear day.
+- **What colour.** The sky's own colour 1 degree above the horizon, toward the sun, square to it and away from it:
+  three 1-pixel renders of the environment sky, read back each time the environment is baked again (the sun moved by
+  more than 1.7 degrees). Drawn straight to the screen, three mixes fog after tone mapping, so the colours are tone
+  mapped and encoded as the screen shows the sky. On High the scene goes to a linear target and the output pass maps
+  it afterwards: there the away colour stays linear, and the fog chunk mixes after three's ACES and sRGB encoding (the
+  tint toward the sun is in screen colours on every level) and undoes both (`hzOut`, `hzIn`; `acesFilmicInverse` in haze-math.js), so every quality level shows the same haze.
+  The probe is half float (8 bits would clip the sky at 1); a GPU that cannot render to half float, or read it
+  back (all three samples come back zero), keeps the fixed horizon colours the viewer used before (day, dusk and
+  night, no tint toward the sun). The
+  shader draws `away + (toward - away) * ((1 + cos a) / 2)^p`, `a` the angle between the line of sight and the sun's
+  bearing, `p` fitted so that square to the sun matches too. At golden hour the haze glows toward the sun and is
+  blue-grey away from it, and the far haze is never brighter than the sky behind it.
+- **Cost.** A few more operations per pixel in every fogged material and no extra draw. The three values the shader
+  needs (`hazeTint`, `hazeSun`, `hazeShape`) are shared by reference with every built-in material (a uniform value
+  that is a plain object survives three's per-material copy of its library uniforms), so moving the sun recompiles
+  nothing. A custom `ShaderMaterial` with `fog: true` would need them in its own uniforms; there is none today.
+- The skyline stand-in was exported with haze painted into its colour (pale blue); `tone.js` gives it a plain grey
+  (UNVERIFIED) so the haze is not counted twice.
 
 The export applies four steps to the published files (`build_web.sh`, after supersede, before the shared images):
 
