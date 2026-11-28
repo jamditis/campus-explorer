@@ -27,6 +27,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `viewer/scenery.js`, `trees.js` | Tree level of detail, far trees, land cover, grass tufts near the camera |
 | `viewer/player.js` | Fly and walk movement and collision |
 | `viewer/doors.js` | Entrance doors (`DOOR_*` leaves from the build) that open for the walker in walk mode |
+| `viewer/follow.js` | Follow me: phone GPS and compass drive walk mode (position never leaves the device) |
 | `viewer/input.js` | Keyboard, pointer lock, touch sticks, gamepad |
 | `viewer/camera.js`, `viewer/tour.js` | Eased camera moves; guided tour |
 | `viewer/hud.js`, `viewer/labels.js` | Compass, scale bar, position readout, minimap; place labels |

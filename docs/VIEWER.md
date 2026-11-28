@@ -55,6 +55,8 @@ trees.js            Per-instance culling of instanced trees, two middle versions
                     middle versions of plain trees, thinned shrub leaf cards
 viewer/input.js     Keyboard, pointer lock, touch sticks and gamepad -> one intent object
 viewer/player.js    Fly and walk movement, collision, first and third person camera
+viewer/follow.js    Follow me: the phone's GPS position and compass drive walk mode
+viewer/follow-math.js Pure. Phone orientation to a view direction, GPS fixes to a smooth track, magnetic declination
 viewer/camera.js    Eased camera moves (flyTo)
 viewer/tour.js      Guided tour
 viewer/cinema.js    Film mode: plays the shots of cinema-math.js between letterbox bars
@@ -79,7 +81,8 @@ app = {
   look,              // see look.js
   world,             // see viewer/world.js
   input,             // see viewer/input.js
-  player,            // see viewer/player.js
+  player,            // see viewer/player.js. player.guide = { x, z, look } makes walk mode glide to (x, z) (follow me)
+  follow,            // viewer/follow.js: { start(), stop(), active }
   places,            // array from viewer/places.json, limited to places a tile covers (set before the `places` event)
   rooms, roomPlaces, // viewer/rooms.json parsed ({ volumes, rooms }), and its rooms as places (kind `room`); set before `places`
   state,             // { mode: 'orbit'|'fly'|'walk', view: 'first'|'third', ready, complete }
@@ -399,6 +402,14 @@ reduced motion keeps its pose.
 ## Moving to a place
 
 Search results, place labels, the landmark hunt and the guided tour fly to a place through `app.placePose` and `app.flyTo(pose, { land: true })`; the minimap keeps the current camera offset and lands too. The first guess of the ground uses collision that is already built (it never stalls a frame), else the full lookup where the tiles are in, else the campus floor (`bounds.min.y + 20`; far-field ground wider than 1 km does not count toward `bounds`, `inCampusBox`: the north model's `BD_farfield_3DEP_ortho` reaches y -54 and had put that floor 150 m underground). That guess is often wrong: far from the view the collision is not built and the tiles may not be in, and before this rule a camera framed on the floor fallback could end under a hill or a roof. On arrival the landing step waits for the tiles under the target and the camera, builds their collision, and applies `landPose` (`viewer/pose-math.js`): a target off the ground moves to the highest surface there and the camera moves with it; a camera less than `CLEARANCE` (3 m) above the highest surface under it is lifted. A new move cancels it. Permalinks, the overview and the top view are poses, not places: they are not landed.
+
+## Follow me
+
+In walk mode the "Use my location" button (top left) lets the phone drive the walker (`viewer/follow.js`). It reads `navigator.geolocation.watchPosition` (high accuracy) and the compass. **The position stays on the device:** nothing stores, logs or sends it; the button says so.
+
+- **Position.** Each fix goes through `latLonToLocal` (`geo.js`) into a constant-velocity Kalman filter (`createTrack` in `follow-math.js`, the fix's accuracy as its noise), so a ±5 m jitter does not shake the view. The first fix uses `player.teleport` (waits for the tiles there); after that `player.guide` holds the filtered point and walk mode eases toward it (rate 3/s) with no wall collision, since GPS crosses what the model gets wrong. The eye stays 1.65 m over the surface under the walker (a ground ray from 1.5 m above the feet). A fix with accuracy worse than 80 m is not used. A fix more than 150 m outside the campus tiles leaves the walker where they are and says how far away the user is. A blue ring on the ground shows the accuracy radius.
+- **Heading.** Held up, the view looks where the back of the phone points; held flat, where its top edge points (`phoneView`: the W3C rotation matrix of alpha, beta, gamma). Pitch follows the tilt (-60 to 45 degrees). Android sends `deviceorientationabsolute` (alpha from north); iOS sends a relative alpha plus `webkitCompassHeading`, so the offset between them is learned and eased, only while the phone is clearly flat or clearly upright. Both report magnetic north; `DECLINATION` (-12.4 degrees, WMM2025 for the campus in late 2026) turns it into true north, then the grid convergence into the viewer's yaw. Heading eases at 10/s, half that for turns under 1.5 degrees, so a still phone does not shimmer. iOS asks for motion access only from a tap (`DeviceOrientationEvent.requestPermission` runs first in the button handler). With no compass the user turns by dragging as usual.
+- Tapping the button again, or leaving walk mode, stops it and clears the watch.
 
 ## Flight limit
 
