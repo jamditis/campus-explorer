@@ -30,7 +30,7 @@ export function createFollow(app) {
   ring.name = 'follow-accuracy'; ring.visible = false; ring.renderOrder = 2; scene.add(ring);
 
   const track = createTrack();
-  let active = false, watch = null, placing = false, placed = false, accuracy = 0;
+  let active = false, starting = false, shown = false, gen = 0, watch = null, placing = false, placed = false, accuracy = 0;
   let heading = null, pitch = null, wantHeading = null, wantPitch = 0, offset = null, lastOrient = 0;
   const orientEvent = 'ondeviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation';
 
@@ -75,14 +75,25 @@ export function createFollow(app) {
     if (!placed && !placing) place(s.x, s.z);
   }
 
+  /** The lowest surface at (x, z): a person with a phone is on the ground or the ground floor, not on a roof. */
+  function lowestAt(x, z) {
+    let y = app.world.groundAt(x, z), low = y;
+    for (let i = 0; i < 8 && y !== null; i++) { y = app.world.groundAt(x, z, y - 0.3); if (y !== null) low = y; }
+    return low;
+  }
+
   async function place(x, z) {
+    const my = gen;
     placing = true;
     try {
-      const ok = await player.teleport(x, z);
-      if (!active) return;
-      if (ok) { placed = true; player.guide = { x, z, look: wantHeading === null }; }
+      let ok = await player.teleport(x, z);
+      if (my !== gen) return;
+      const low = ok ? lowestAt(x, z) : null;
+      if (low !== null && low < player.position.y - 1) ok = await player.teleport(x, z, low);
+      if (my !== gen) return;
+      if (ok) { placed = true; shown = true; player.guide = { x, z, look: wantHeading === null }; }
       else if (ok === false) say('No ground in the model here yet');
-    } finally { placing = false; }
+    } finally { if (my === gen) placing = false; }
   }
 
   function onError(err) {
@@ -93,14 +104,19 @@ export function createFollow(app) {
   }
 
   async function start() {
-    if (active) return;
+    if (active || starting) return;
     if (!('geolocation' in navigator)) { app.toast('This browser cannot read your location.'); return; }
-    // iOS asks for motion access only from a tap, so this comes before anything else awaits
-    const ask = window.DeviceOrientationEvent?.requestPermission;
-    if (typeof ask === 'function') {
-      try { if (await ask.call(DeviceOrientationEvent) !== 'granted') app.toast('Without motion access the view will not turn with your phone. Drag to look around.'); }
-      catch { /* not from a tap, or refused */ }
-    }
+    const my = ++gen; starting = true;
+    try {
+      // iOS asks for motion access only from a tap, so this comes before anything else awaits
+      const ask = window.DeviceOrientationEvent?.requestPermission;
+      if (typeof ask === 'function') {
+        try { if (await ask.call(DeviceOrientationEvent) !== 'granted') app.toast('Without motion access the view will not turn with your phone. Drag to look around.'); }
+        catch { /* not from a tap, or refused */ }
+      }
+    } finally { starting = false; }
+    // the user may have left walk mode or tapped stop while the prompt was open
+    if (my !== gen || app.state.mode !== 'walk') return;
     active = true; placed = false; track.reset(); heading = pitch = wantHeading = offset = null;
     button.setAttribute('aria-pressed', 'true'); button.classList.add('on');
     label.textContent = 'Following you'; note.textContent = 'Tap to stop';
@@ -110,6 +126,8 @@ export function createFollow(app) {
   }
 
   function stop() {
+    gen++;
+    if (placing) { player.cancelMove(); placing = false; }
     if (watch !== null) navigator.geolocation.clearWatch(watch);
     watch = null; active = false; placed = false; track.reset();
     removeEventListener(orientEvent, onOrient);
@@ -119,14 +137,16 @@ export function createFollow(app) {
     say(''); app.invalidate();
   }
 
-  button.onclick = () => (active ? stop() : start());
+  button.onclick = () => (active || starting ? stop() : start());
+  // a move to a place, the overview or a share link takes the view away from the user's position
+  app.on('fly', () => { if (!active) shown = false; });
   // sit under the header, whose height changes with the screen width (it wraps on a phone)
   function placeBox() {
     const bottom = document.getElementById('top')?.getBoundingClientRect().bottom ?? 0;
     box.style.top = `${Math.round(Math.max(0, bottom)) + 8}px`;
   }
   app.on('resize', placeBox);
-  app.on('mode', ({ mode }) => { box.hidden = mode !== 'walk'; placeBox(); if (mode !== 'walk' && active) stop(); });
+  app.on('mode', ({ mode }) => { box.hidden = mode !== 'walk'; placeBox(); if (mode !== 'walk' && (active || starting)) stop(); });
 
   app.on('frame', ({ dt }) => {
     if (!active || !placed || !player.guide) return;
