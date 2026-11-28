@@ -129,12 +129,10 @@ def build_graph(data: bp.OsmData, tiles: list):
             if n in joints or n == nds[-1]:
                 a, b = run[0], run[-1]
                 if a != b:
-                    key = (a, b) if a < b else (b, a)
-                    shape = run if a < b else run[::-1]
-                    old = edges.get(key)
-                    if old is None or (old[0] & 4 and not flags & 4):
-                        edges[key] = (flags, shape)
-                        way_of[key] = wid
+                    # two ways between the same junctions (stairs and a ramp) both stay
+                    key = ((a, b) if a < b else (b, a)) + (len(edges),)
+                    edges[key] = (flags, run if a < b else run[::-1])
+                    way_of[key] = wid
                 run = [n]
     # clip: both ends on the campus tiles (with build_places' margin)
     local = {n: bp.to_local(*data.nodes[n]) for e in edges.values() for n in e[1]}
@@ -170,13 +168,34 @@ def crosses(a, b, c, d) -> bool:
 def drop_indoors(edges: dict, local: dict, data: bp.OsmData, way_of: dict) -> dict:
     """Drop edges that run inside a building outline, unless OSM maps them as a passage through it.
     Routes end at a building's entrance (and AGENTS.md rule 16 bars any route inside housing)."""
-    rings = []
+    buildings = []  # (box, outer rings, inner rings)
+
+    def add(outers, inners):
+        rings = [[bp.to_local(*data.nodes[n]) for n in r] for r in outers + inners]
+        if not outers or any(len(r) < 3 for r in rings):
+            return
+        xs = [q[0] for r in rings for q in r]
+        zs = [q[1] for r in rings for q in r]
+        box = (min(xs), max(xs), min(zs), max(zs))
+        buildings.append((box, rings[: len(outers)], rings[len(outers) :]))
+
     for wid, tags in data.way_tags.items():
         nds = data.ways[wid]
         if "building" in tags and len(nds) > 3 and all(n in data.nodes for n in nds):
-            ring = [bp.to_local(*data.nodes[n]) for n in nds]
-            xs, zs = [q[0] for q in ring], [q[1] for q in ring]
-            rings.append((min(xs), max(xs), min(zs), max(zs), ring))
+            add([nds], [])
+    for rid, tags in data.relation_tags.items():
+        if "building" not in tags or tags.get("type") != "multipolygon":
+            continue
+        members = data.relations[rid]
+        ways = {
+            role: [
+                data.ways[r] for t, r, rl in members if t == "way" and rl == role and r in data.ways
+            ]
+            for role in ("outer", "inner")
+        }
+        outers, inners = bp.join_rings(ways["outer"]), bp.join_rings(ways["inner"])
+        if all(n in data.nodes for r in outers + inners for n in r):
+            add(outers, inners)
     kept = {}
     for key, (flags, shape) in edges.items():
         tags = data.way_tags.get(way_of[key], {})
@@ -185,20 +204,23 @@ def drop_indoors(edges: dict, local: dict, data: bp.OsmData, way_of: dict) -> di
             continue
         pts = [local[n] for n in shape]
         segs = list(zip(pts, pts[1:], strict=False))
-        if not any(enters(a, b, ring, box) for a, b in segs for *box, ring in rings):
+        if not any(enters(a, b, b_) for a, b in segs for b_ in buildings):
             kept[key] = (flags, shape)
     return kept
 
 
-def enters(a, b, ring, box) -> bool:
-    """True when segment ab runs inside a building outline: its middle is inside, or it crosses
-    a wall."""
-    x0, x1, z0, z1 = box
+def enters(a, b, building) -> bool:
+    """True when segment ab runs inside a building: its middle is inside an outer ring and not in a
+    courtyard (inner ring), or it crosses any wall."""
+    (x0, x1, z0, z1), outers, inners = building
     if max(a[0], b[0]) < x0 or min(a[0], b[0]) > x1 or max(a[1], b[1]) < z0 or min(a[1], b[1]) > z1:
         return False
-    if inside(((a[0] + b[0]) / 2, (a[1] + b[1]) / 2), ring):
+    mid = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+    if any(inside(mid, r) for r in outers) and not any(inside(mid, r) for r in inners):
         return True
-    return any(crosses(a, b, c, d) for c, d in zip(ring, ring[1:] + ring[:1], strict=False))
+    return any(
+        crosses(a, b, c, d) for r in outers + inners for c, d in zip(r, r[1:] + r[:1], strict=False)
+    )
 
 
 def simplify(points: list[tuple[float, float]], tol: float) -> list[int]:
@@ -227,7 +249,7 @@ def simplify(points: list[tuple[float, float]], tol: float) -> list[int]:
 def drop_small_pieces(edges: dict, local: dict) -> dict:
     """Keep connected pieces whose total length is at least MIN_PIECE_M."""
     adj: dict[int, list] = {}
-    for a, b in edges:
+    for a, b, _ in edges:
         adj.setdefault(a, []).append(b)
         adj.setdefault(b, []).append(a)
     piece: dict[int, int] = {}
@@ -242,7 +264,7 @@ def drop_small_pieces(edges: dict, local: dict) -> dict:
                     piece[m] = start
                     todo.append(m)
     length: dict[int, float] = {}
-    for (a, _b), (_f, shape) in edges.items():
+    for (a, _b, _), (_f, shape) in edges.items():
         pts = [local[n] for n in shape]
         length[piece[a]] = length.get(piece[a], 0) + sum(
             math.dist(p, q) for p, q in zip(pts, pts[1:], strict=False)
@@ -301,7 +323,11 @@ class Heights:
                 time.sleep(2 * (attempt + 1))
             print(f"sampled {len(pts)} heights", file=sys.stderr)
         values: list[float | None] = [None] * len(pts)
-        for s in json.loads(body).get("samples", []):
+        try:
+            samples = json.loads(body).get("samples", [])
+        except (ValueError, AttributeError):
+            samples = []  # not JSON after every retry: these heights are unknown
+        for s in samples:
             try:
                 values[s["locationId"]] = float(s["value"])
             except (KeyError, TypeError, ValueError):
@@ -362,6 +388,13 @@ def steepest(samples: list[tuple[float, float]], heights: list[float | None]) ->
             continue
         best = max(best, abs(heights[j] - heights[i]) / (along[j] - along[i]) * 100)
         measured = True
+    # a window that ends at the last sample, which may fall between the 10 m steps
+    k = next(
+        (i for i in range(len(samples) - 1, -1, -1) if along[-1] - along[i] >= GRADE_RUN_M), None
+    )
+    if k is not None and heights[k] is not None and heights[-1] is not None:
+        best = max(best, abs(heights[-1] - heights[k]) / (along[-1] - along[k]) * 100)
+        measured = True
     return best if measured else None
 
 
@@ -390,6 +423,44 @@ def point_segment(p, a, b) -> float:
     dx, dz = b[0] - ax, b[1] - az
     t = max(0.0, min(1.0, ((p[0] - ax) * dx + (p[1] - az) * dz) / ((dx * dx + dz * dz) or 1e-9)))
     return math.hypot(p[0] - ax - t * dx, p[1] - az - t * dz)
+
+
+def nearest_on_edges(nodes, edges, ring, segs, near):
+    """(edge index, t) of the point on an edge nearest the outline within ENTRANCE_REACH_M, or None.
+    Candidates per edge: its ends and the feet of the outline's corners on it."""
+    cx, cz, reach = near
+    best, dist = None, ENTRANCE_REACH_M
+    for k, (a, b, _f, _g) in enumerate(edges):
+        (ax, az), (bx, bz) = nodes[a], nodes[b]
+        if min(ax, bx) > cx + reach or max(ax, bx) < cx - reach:
+            continue
+        if min(az, bz) > cz + reach or max(az, bz) < cz - reach:
+            continue
+        dx, dz = bx - ax, bz - az
+        len2 = dx * dx + dz * dz or 1e-9
+        for t in [0.0, 1.0] + [((vx - ax) * dx + (vz - az) * dz) / len2 for vx, vz in ring]:
+            t = max(0.0, min(1.0, t))
+            p = (ax + t * dx, az + t * dz)
+            d = min(point_segment(p, c, e) for c, e in segs)
+            if d < dist:
+                best, dist = (k, t), d
+    return best
+
+
+def split_edge(nodes, edges, k, t) -> int:
+    """The node at t along edge k: an end within 1 m, else a new node that splits the edge."""
+    a, b, flags, grade = edges[k]
+    length = math.dist(nodes[a], nodes[b])
+    if t * length < 1:
+        return a
+    if (1 - t) * length < 1:
+        return b
+    (ax, az), (bx, bz) = nodes[a], nodes[b]
+    nodes.append((ax + t * (bx - ax), az + t * (bz - az)))
+    m = len(nodes) - 1
+    edges[k] = [a, m, flags, grade]
+    edges.append([m, b, flags, grade])
+    return m
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -479,17 +550,22 @@ def main(argv: list[str] | None = None) -> int:
             continue
         # a footway that stops at the wall is most likely a way in: every such dead end within
         # DOOR_M of the outline, and every path point that touches the wall (WALL_M); with none,
-        # the nearest graph node within ENTRANCE_REACH_M
-        best, dist, ends = None, ENTRANCE_REACH_M, []
+        # the nearest point on a path within ENTRANCE_REACH_M
+        ends = []
+        reach = b["r"] + ENTRANCE_REACH_M
         for i, p in enumerate(nodes):
-            if abs(p[0] - b["x"]) > b["r"] + dist or abs(p[1] - b["z"]) > b["r"] + dist:
+            if abs(p[0] - b["x"]) > reach or abs(p[1] - b["z"]) > reach:
                 continue
             d = min(point_segment(p, a, c) for a, c in segs)
-            if d < (DOOR_M if degree[i] == 1 else WALL_M):
+            if d < (DOOR_M if i < len(degree) and degree[i] == 1 else WALL_M):
                 ends.append(i)
-            if d < dist:
-                best, dist = i, d
-        for i in ends or ([best] if best is not None else []):
+        if not ends:
+            # the nearest point on any path, part way along an edge if need be (a long straight
+            # path keeps few shape points after simplifying): split the edge there
+            at = nearest_on_edges(nodes, out_edges, ring, segs, (b["x"], b["z"], reach))
+            if at is not None:
+                ends.append(split_edge(nodes, out_edges, *at))
+        for i in ends:
             entrances.append({"osm": b["osm"], "node": i, "mapped": False})
 
     fetched = sorted(fetcher.fetched_dates)

@@ -43,6 +43,19 @@ class Slope(unittest.TestCase):
         self.assertEqual(bpaths.steepest([(0.0, 0.0), (1.5, 0.0)], [100, 101]), 0.0)
         self.assertIsNone(bpaths.steepest([(0.0, 0.0), (4.0, 0.0)], [100, None]))
 
+    def test_end_window_reaches_the_last_sample(self):
+        # samples at 0, 10, 20, 25 m: the 3 m rise at the end is 12 % over the last 25 m
+        pts = [(0.0, 0.0), (10.0, 0.0), (20.0, 0.0), (25.0, 0.0)]
+        self.assertAlmostEqual(bpaths.steepest(pts, [100, 100, 100, 103]), 12.0)
+
+    def test_split_edge_part_way(self):
+        nodes = [(0.0, 0.0), (100.0, 0.0)]
+        edges = [[0, 1, 0, 3]]
+        self.assertEqual(bpaths.split_edge(nodes, edges, 0, 0.4), 2)
+        self.assertEqual(nodes[2], (40.0, 0.0))
+        self.assertEqual(edges, [[0, 2, 0, 3], [2, 1, 0, 3]])
+        self.assertEqual(bpaths.split_edge(nodes, edges, 0, 0.001), 0)
+
     def test_resample_keeps_ends(self):
         s = bpaths.resample([(0.0, 0.0), (25.0, 0.0)], 10.0)
         self.assertEqual(s, [(0.0, 0.0), (10.0, 0.0), (20.0, 0.0), (25.0, 0.0)])
@@ -55,11 +68,14 @@ class Shapes(unittest.TestCase):
 
     def test_a_path_through_a_corner_enters(self):
         square = [(0, 0), (10, 0), (10, 10), (0, 10)]
-        box = (0, 10, 0, 10)
+        hall = ((0, 10, 0, 10), [square], [])
         # cuts the corner: middle outside the square, but it crosses two walls
-        self.assertTrue(bpaths.enters((-2, 4), (4, -2), square, box))
+        self.assertTrue(bpaths.enters((-2, 4), (4, -2), hall))
         # ends at the wall (a door): not inside
-        self.assertFalse(bpaths.enters((-5, 5), (0, 5), square, box))
+        self.assertFalse(bpaths.enters((-5, 5), (0, 5), hall))
+        # a path inside a courtyard (inner ring) is outdoors
+        yard = [(4, 4), (6, 4), (6, 6), (4, 6)]
+        self.assertFalse(bpaths.enters((4.5, 5), (5.5, 5), ((0, 10, 0, 10), [square], [yard])))
 
     def test_inside(self):
         square = [(0, 0), (10, 0), (10, 10), (0, 10)]
