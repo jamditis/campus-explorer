@@ -36,6 +36,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `viewer/geo.js`, `sun.js`, `schedule.js`, `permalink.js`, `places.js`, `cat.js`, `tone.js`, `texshare.js`, `*-math.js` (`rooms`, `pose`, `flight`, ...) | Pure logic, unit tested in `tests/` |
 | `viewer/rooms.json` | Room numbers and interior volumes, built by `tools/places/build_rooms.py` from `blender/scripted/<area>/interior.json` |
 | `viewer/places.json` | Place names from OpenStreetMap, built by `tools/places/build_places.py` |
+| `viewer/paths.json` | Walkable path graph (OSM) with slopes (3DEP) and building entrances, built by `tools/places/build_paths.py` |
 
 ## Scripted builds index
 

@@ -60,7 +60,45 @@ stateDiagram-v2
   waiting --> off: tap, walk mode left, or location refused
 ```
 
-A late answer never starts anything: each await is followed by a `gen` check. **In flight (#132, loj-cewayfind):** routes and a navigation display (slices 2 to 4).
+A late answer never starts anything: each await is followed by a `gen` check.
+
+**Walking directions** (`viewer/route.js`, `viewer/route-math.js`): in walk mode "Go to a place" picks a place and routes from the walker (`player.guide` when follow me is on, else `player.position`) along `viewer/paths.json`.
+
+- **State:** `graph` (the parsed path map, fetched on first use), `loading` (its promise, dropped on failure so the next try fetches again), `current` (`{ route, place, stepFree }` or null), `ask` (a token bumped by each request and by `clear`).
+- **Events in:** a picked place (`go`); Clear; `mode` (leaving walk clears). A request that was cleared while the map loaded stops at its `ask` check.
+- **Event out:** `route { route, place, stepFree }` or `route null`.
+
+```mermaid
+stateDiagram-v2
+  [*] --> none
+  none --> loading: place picked, map not loaded
+  none --> routed: place picked, route found
+  loading --> routed: map in, route found
+  loading --> none: cleared or walk mode left (ask changed), or map failed
+  none --> noroute: no route (card says why)
+  routed --> routed: another place picked
+  routed --> none: Clear or walk mode left
+  noroute --> none: Clear or walk mode left
+```
+
+**Navigation display** (`viewer/nav.js`, `viewer/nav-math.js`): follows the `route` event.
+
+- **State:** `nav` (`{ line, turns, place, stepFree, s, seg, along }` or null), `arrived`, `offSince` (when the walker first went off the route).
+- **Each frame in walk mode:** progress along the route (`progress`, searched only up to 40 m past `s`), the walked part of the ribbon hidden (draw range), the card text and arrow updated five times a second.
+
+```mermaid
+stateDiagram-v2
+  [*] --> idle
+  idle --> guiding: route event with a route
+  guiding --> guiding: next turn passed / new route
+  guiding --> rerouting: more than 25 m (plus GPS accuracy) off the route for 3 s
+  rerouting --> guiding: route.go from here
+  rerouting --> idle: no route from here
+  guiding --> arrived: within 10 m of the entrance
+  arrived --> guiding: new route
+  guiding --> idle: route null (Clear, walk mode left)
+  arrived --> idle: route null
+```
 **In flight (#119 and PR #140, a4k-ceopt; door leaves from the export, a4k-cebldg):** entrance doors that open for the walker in walk mode.
 
 ### View tools: tour, measure, film, hunt
