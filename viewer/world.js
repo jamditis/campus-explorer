@@ -52,7 +52,7 @@ export function createWorld(app, prepare, release = () => {}) {
     textures.release(root); // a shared texture goes with the last tile that uses it
   }
   function dispose() {
-    abort?.abort(); abort = null; clearInterval(watch); clearTimeout(lodTimer); lodTimer = 0;
+    abort?.abort(); abort = null; clearInterval(watch); clearTimeout(lodTimer); lodTimer = 0; lodTimerAt = Infinity;
     free(group); textures.clear(); texSeen = new Set();
     scene.remove(group); group = new THREE.Group(); group.name = 'campus'; scene.add(group);
     tiles = []; colliders = []; lods = []; urgent.clear(); paused = false; resume = null; budget = Infinity; pumping = false;
@@ -216,15 +216,18 @@ export function createWorld(app, prepare, release = () => {}) {
   const LOD_DIST = { low: 260, medium: 420, high: 650 };
   const LOD_RETRY_MS = 20000, LOD_RETRY_MAX_MS = 300000; // a far version that failed is tried again, each wait twice the last, up to 5 min
   const LOD_FETCH_MS = 60000; // a far-version download that takes longer fails (and is tried again): no pass can hang
-  let lodTimer = 0, lodRetrying = 0; // the scene token of the retry pass that is running
+  let lodTimer = 0, lodTimerAt = Infinity, lodRetrying = 0; // the scene token of the retry pass that is running
   // One timer and one retry pass at a time for all failed far versions, each at its own wait: a connection that
   // drops makes every far version fail, and their retries must not all download at once when it comes back.
   function retryLater(my) {
-    if (lodTimer || my !== token) return;
+    if (my !== token) return;
     const due = tiles.filter(t => t.lod && !t.far && !t.farLoading && t.farFails).map(t => t.farWait);
     if (!due.length) return;
+    const at = Math.min(...due);
+    if (lodTimer && at >= lodTimerAt) return; // the timer set already comes first
+    clearTimeout(lodTimer); lodTimerAt = at;
     lodTimer = setTimeout(async () => {
-      lodTimer = 0;
+      lodTimer = 0; lodTimerAt = Infinity;
       if (my !== token || lodRetrying === my) return; // the running retry pass calls retryLater when it ends
       lodRetrying = my;
       try { await loadLods(my); } finally { if (lodRetrying === my) lodRetrying = 0; }
