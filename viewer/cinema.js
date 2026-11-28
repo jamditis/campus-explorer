@@ -70,6 +70,8 @@ export function createCinema(app) {
   function start() {
     if (running) return;
     if (!app.state.ready) { app.toast('The campus is still loading'); return; }
+    // a walk still finding its ground has no place to come back to yet (player.position is stale until it lands)
+    if (app.state.mode === 'walk' && app.player.busy) { app.toast('One moment: the walk is still finding the ground'); return; }
     app.cancelFly('cinema');
     before = {
       position: camera.position.clone(), quaternion: camera.quaternion.clone(), target: controls.target.clone(),
@@ -95,11 +97,15 @@ export function createCinema(app) {
       const b = before; before = null;
       if (b.preset) app.resetTime(); else app.setTime(b.date);
       if (keepView) { app.invalidate(); app.emit('cinema', { running: false }); return; }
-      camera.position.copy(b.position); controls.target.copy(b.target); controls.update();
-      camera.quaternion.copy(b.quaternion); // fly and walk look along the camera, not at the orbit target
-      // back to the mode the film started from: fly looks from the camera; walk stands on the floor under the eye
-      if (b.mode === 'fly') app.setMode('fly');
-      else if (b.mode === 'walk') app.setMode('walk', { at: b.walker }); // where the walker stood (third person: not the camera)
+      camera.position.copy(b.position); controls.target.copy(b.target);
+      if (b.mode === 'orbit') controls.update();
+      else {
+        // fly and walk: the camera as it was, not passed through orbit's limits (it may have looked up at the
+        // target); setMode switches before the next frame, so orbit never applies them
+        camera.quaternion.copy(b.quaternion);
+        if (b.mode === 'fly') app.setMode('fly');
+        else app.setMode('walk', { at: b.walker }); // where the walker stood (third person: not the camera)
+      }
     }
     app.invalidate(); app.emit('cinema', { running: false });
   }
