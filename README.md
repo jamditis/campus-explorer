@@ -96,6 +96,7 @@ The models are built from free public data. The source data is credited here but
 | The same two point clouds and the 2020 orthoimagery, fetched per area by `tools/evidence/fetch.py` | Scripted builds (`blender/scripted/`): ground heights, building outlines and roof heights, tree positions, the plan of roads, lots and fields | Public domain (USGS); NJ public data |
 | Public photographs of Montclair Heights station (Wikimedia Commons, CC BY-SA and CC0; subwaynut.com) and of Sprague Field (Montclair State athletics, May 2025 drone views) | Southwest build: what things look like (stand and press box form, field lettering, crossing gates, station fixtures). Looked at as reference only: no pixel of them is in the model or the repository | Their owners' rights are unchanged; not redistributed |
 | [ambientCG](https://ambientcg.com/) | PBR textures | CC0 |
+| [Yale Bright Star Catalogue](http://tdc-www.harvard.edu/catalogs/bsc5.html), 5th revised edition (Hoffleit and Warren 1991; CDS V/50) | The 892 stars brighter than magnitude 4.5 in the night sky (`viewer/stars.json`, `tools/sky/build_stars.py`) | Public domain |
 | Blender add-ons listed in [notes/ADDONS.md](notes/ADDONS.md) | Modelling helpers | GPL (not redistributed) |
 
 Reference photographs, including Joe's own campus photos, guide the modelling but are never committed. Where a photo disagrees with OSM, LiDAR or the ortho, the photo wins.

@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createLook } from './look.js';
 import { createWorld } from './viewer/world.js';
 import { createScenery } from './viewer/scenery.js';
+import { createSky } from './viewer/sky.js';
 import { createInput } from './viewer/input.js';
 import { createPlayer } from './viewer/player.js';
 import { createCamera } from './viewer/camera.js';
@@ -64,6 +65,7 @@ const SLOW_FRAME_MS = 80, LAZY_MAX_MS = 20000;
 let frameMs = 16, lazyAt = 0, drew = false; // smoothed time of a drawn frame; when a lazy redraw is due
 
 app.look = createLook(renderer, scene, camera, () => app.invalidate());
+const nightSky = createSky(app);
 const scenery = createScenery(app);
 app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); });
 app.input = createInput(canvas, document.getElementById('overlay'));
@@ -101,7 +103,7 @@ async function land(my) {
 /** Stop any camera move without touching the pose, for modules that place the camera themselves. */
 app.cancelFly = (by = null) => { app.emit('fly', { by }); cam.cancel(); };
 /** Draw the whole campus with another camera into `target` (the minimap). The main view's tree and size culling is undone for the picture. */
-app.renderPlain = (camera2, target) => { scenery.trees.showAll(); app.look.renderPlain(camera2, target); scenery.trees.update(true); };
+app.renderPlain = (camera2, target) => { scenery.trees.showAll(); nightSky.setVisible(false); app.look.renderPlain(camera2, target); nightSky.setVisible(true); scenery.trees.update(true); };
 
 // ---- sun ----
 /** Move the sun to its real position for an instant (a Date). `preset` marks the default light. */
@@ -315,5 +317,5 @@ window.__campus = {
   get loaded() { return app.state.complete; }, get ready() { return app.state.ready; },
   goto(x, y, z, tx, ty, tz) { if (app.state.mode !== 'orbit') app.setMode('orbit'); cam.cancel(); camera.position.set(x, y, z); controls.target.set(tx, ty, tz); controls.update(); app.invalidate(); },
   groundAt: (x, z) => app.world.groundAt(x, z),
-  trees: scenery.trees, get lods() { return app.world.lods; }, get grass() { return scenery.grass; },
+  trees: scenery.trees, sky: nightSky, get lods() { return app.world.lods; }, get grass() { return scenery.grass; },
 };

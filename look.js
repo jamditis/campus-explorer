@@ -108,6 +108,10 @@ const INTERIOR_LIGHT = 0.6;
 const MIN_SCALE = 0.5; // lowest resolution scale the governor may use while the view moves
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 const FILLER = /^(WS62_crown_|MID_street_trunk|Icosphere\.?001$)/; // far-field filler; glTF names drop the dot
+// the night sky's light dome is strongest toward Midtown Manhattan (40.754 N, 73.984 W): bearing 124 degrees
+// from the campus, as a horizontal unit vector in the viewer frame (x east, -z north)
+const GLOW_DIR = [Math.sin(124 * Math.PI / 180), 0, -Math.cos(124 * Math.PI / 180)];
+const CITY = { value: 0 }; // city lights after dark, 0 by day to 1 at night (shared by the materials that show them)
 const CROWN = new THREE.MeshStandardMaterial({ color: '#6b6a3c', roughness: .95 });
 
 /** `onChange` is called when something drawn changed without the camera moving (a texture arrived). */
@@ -133,6 +137,29 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   const envScene = new THREE.Scene(); const envSky = new Sky(); envSky.scale.setScalar(1000);
   Object.assign(envSky.material.uniforms, THREE.UniformsUtils.clone(u));
   envScene.add(envSky);
+  // --- the night sky: the glow of the region's lights (stronger toward New York) over a dark blue zenith, and
+  // the moon's light, added to the sky shader. Above Montclair the night sky is never black: the light dome of
+  // the New York area lights it from below (UNVERIFIED colours and strengths, set by eye). The environment sky
+  // gets it too, so night reflections and the haze colour (sampleHorizon) follow ---
+  const NIGHT_SKY = { nightK: { value: 0 }, glowDir: { value: new THREE.Vector3(...GLOW_DIR) }, moonK: { value: 0 } };
+  for (const m of [sky.material, envSky.material]) {
+    Object.assign(m.uniforms, NIGHT_SKY);
+    m.fragmentShader = m.fragmentShader
+      .replace('uniform vec3 up;', 'uniform vec3 up;\nuniform float nightK; uniform vec3 glowDir; uniform float moonK;')
+      .replace('gl_FragColor = vec4( retColor, 1.0 );', `
+        if ( nightK > 0.0 ) {
+          float nEl = max( direction.y, 0.0 );
+          vec2 nH = direction.xz; float nL = length( nH );
+          float nToward = nL > 1e-4 ? max( dot( nH / nL, glowDir.xz ), 0.0 ) : 0.0;
+          float nLow = exp( - nEl / 0.09 );
+          vec3 nCol = vec3( 0.0035, 0.0055, 0.0125 ) * ( 1.0 + 1.5 * moonK )          // zenith: dark blue, brighter under a full moon
+                    + vec3( 0.03, 0.021, 0.014 ) * nLow * ( 0.55 + 1.6 * nToward * nToward ); // light dome, warm, mostly east
+          // three's sky never darkens at night (its night fade expects the sun 450 km away; this viewer passes a
+          // unit vector, as three's own example does): its grey-brown night is dimmed under the glow
+          retColor = retColor * ( 1.0 - 0.88 * nightK ) + nightK * nCol;
+        }
+        gl_FragColor = vec4( retColor, 1.0 );`);
+  }
   const ground = new THREE.Mesh(new THREE.CircleGeometry(900, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#6b6456' }));
   // bounce from the ground: lawn, asphalt and stucco average out to a warm grey, not olive (olive plus blue sky
   // left every shaded wall cyan)
@@ -218,6 +245,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     u.sunPosition.value.copy(sunDir);
     const day = smooth(-5, 8, elevation), low = 1 - smooth(2, 25, elevation);
     night = 1 - smooth(-8, 0, elevation);
+    NIGHT_SKY.nightK.value = 1 - smooth(-10, -1, elevation);
+    CITY.value = 1 - smooth(-6, 2, elevation);
     sun.intensity = 2.7 * smooth(-1.5, 10, elevation);
     sun.color.copy(SUN_HIGH).lerp(SUN_LOW, low * 0.85);
     hemi.color.copy(SKY_NIGHT).lerp(SKY_DAY, day); hemi.groundColor.copy(SOIL_NIGHT).lerp(SOIL_DAY, day);
@@ -225,6 +254,61 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     if (!envTarget || envDir.angleTo(sunDir) > 0.03) bakeEnvironment();
     glow.visible = night > 0.02; glowMat.opacity = night;
     applyShadows(); shadowDirty = true;
+  }
+
+  /** The moon (viewer/sky.js): `k` its lit fraction times how far it is above the horizon, 0 to 1. Brightens the night sky. */
+  let moonK = 0;
+  function setMoon(k) {
+    if (Math.abs(k - moonK) < 0.01) return;
+    moonK = NIGHT_SKY.moonK.value = k;
+    if (NIGHT_SKY.nightK.value > 0) { bakeEnvironment(); onChange(); }
+  }
+
+  // --- city lights after dark: lit windows on the far houses and the skyline stand-in, drawn from a hash of
+  // world position (UNVERIFIED pattern, not data: which windows are lit is chosen at random, as for the fake
+  // rooms behind campus windows). No extra draws: the materials' own shaders, only while CITY is above 0 ---
+  function cityLights(m, skyline) {
+    if (m.userData.city) return;
+    m.userData.city = true;
+    const base = m.onBeforeCompile, key = m.customProgramCacheKey.call(m);
+    m.onBeforeCompile = (sh, r) => {
+      base.call(m, sh, r);
+      sh.uniforms.cityK = CITY;
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCiPos; varying vec3 vCiNrm;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vec4 ciW = vec4(transformed, 1.0); vec3 ciN = objectNormal;
+          #ifdef USE_INSTANCING
+            ciW = instanceMatrix * ciW; ciN = mat3(instanceMatrix) * ciN;
+          #endif
+          vCiPos = (modelMatrix * ciW).xyz; vCiNrm = mat3(modelMatrix) * ciN;`);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', `#include <common>
+          uniform float cityK; varying vec3 vCiPos; varying vec3 vCiNrm;
+          float ciHash(vec2 c) { return fract(sin(dot(c, vec2(127.1, 311.7))) * 43758.5453); }`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          if (cityK > 0.0) {
+            ${skyline ? `
+            // the skyline is a curtain seen from the campus: cells of 0.04 degrees of bearing by 12 m of height,
+            // about a pixel each; where a pixel covers many cells it takes their mean instead of flickering
+            vec2 c = vec2(atan(vCiPos.x, -vCiPos.z) / 0.0007, vCiPos.y / 12.0);
+            float lit = step(0.55, ciHash(floor(c))) * (0.6 + 0.8 * ciHash(floor(c) + 7.0));
+            float blur = clamp(length(fwidth(c)) - 0.5, 0.0, 1.0);
+            totalEmissiveRadiance += vec3(1.0, 0.82, 0.6) * mix(lit, 0.36, blur) * 2.2 * cityK;` : `
+            // houses: windows on walls only, cells of 3 m by 2.8 m storeys, one in four lit
+            vec3 n = normalize(vCiNrm);
+            if (abs(n.y) < 0.5) {
+              vec2 c = vec2(dot(vCiPos.xz, normalize(vec2(-n.z, n.x))) / 3.0, vCiPos.y / 2.8);
+              vec2 f = fract(c);
+              float win = step(0.3, f.x) * step(f.x, 0.7) * step(0.35, f.y) * step(f.y, 0.8);
+              float lit = step(0.75, ciHash(floor(c) + floor(vCiPos.xz / 40.0)));
+              float blur = clamp(length(fwidth(c)) - 0.4, 0.0, 1.0);
+              totalEmissiveRadiance += vec3(1.0, 0.78, 0.5) * mix(win * lit, 0.05, blur) * 1.6 * cityK;
+            }`}
+          }`);
+    };
+    m.customProgramCacheKey = () => key + (skyline ? '_cityS' : '_cityH');
+    m.needsUpdate = true;
   }
 
   // --- lamps glow after dark: one additive sprite per lamp instance, no real lights ---
@@ -857,6 +941,8 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           texturize(m, cat);
           finishMetal(m.name || '', m);
         }
+        // after texturize, which sets the shader hook that this one chains
+        if (/skyline_silhouette/i.test(m.name) || /^(far_houses|HouseProxy_(Brick|Siding))/i.test(m.name)) cityLights(m, /skyline/i.test(m.name));
       }
     });
     register(root);
@@ -868,9 +954,9 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   function forget(root) { items = items.filter(it => it.root !== root); decorated.delete(root); if (lamps.delete(root)) showLamps(); shadowDirty = true; }
   function reset() { items = []; decorated.clear(); lamps.clear(); showLamps(); farGround.visible = false; shadowDirty = true; }
   return {
-    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, resize, reset, sun, setInteriors,
+    applyQuality, update, render, renderPlain, decorate, forget, setFarGround, setPaint, setSun, setMoon, resize, reset, sun, setInteriors,
     interiorUniforms: giUniforms, // tests: giN 0 switches the per-pixel volume tests off
-    haze: HAZE,
+    haze: HAZE, nightSky: NIGHT_SKY, // tests and tuning
     invalidateShadows() { shadowDirty = true; },
     get quality() { return qName; }, get scale() { return applied; }, get night() { return night; },
   };
