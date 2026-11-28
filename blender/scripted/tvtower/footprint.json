@@ -1,0 +1,80 @@
+{
+ "zone": "tv_footprint",
+ "notes": "The ground this area owns: the TV Tower block west of the railway (OpenStreetMap way 233913195, 'university'), the transmitter building, the 177 m lattice mast and their yard, Clove Road from the Village's south edge to y 440 with its junction with Yogi Berra Drive, and Yogi Berra Drive west of the rail bridge. The webster area left this ground out (a footprint cannot cross the rail cutting) and so did the village area (its brief called the TV Tower group not campus ground; OpenStreetMap calls the building 'university'). Edges. North and west of the yard: the Village's outline exactly, vertex for vertex, from (-304.5, 539.88) on its edge across Clove Road to (-191.18, 599.5). East: 3.5 to 4 m west of the Montclair Line's ballast (the north model's), down to the bridge's west abutment; the rails, the cutting and the bridge stay the north model's. South-east: across Yogi Berra Drive square to it at the bridge deck's west end (x -265.5 on the north curb; the LiDAR's bridge-deck returns start at x -266 and there are no ground returns on the deck, so ground built past it falls into the cutting). South: 2.6 m south of the drive's south curb, 2 m east of the slip lane's east edge, then y 440 across Clove Road, and 2.5 m west of Clove Road's west edge (the houses west of it are not campus ground).",
+ "build_after": [
+  "village"
+ ],
+ "build_after_why": "Along the shared edge the area built first sets the heights of the vertices both meshes have; by name this area would come before the village and move its reviewed Clove Road and east walk to its own heights.",
+ "hold_neighbour_paving": true,
+ "hold_neighbour_paving_why": "The village's paving along the edge it now shares with this area (Clove Road, its east walk) keeps the bend its old edge samples (the north model's terrain) gave it: sharing the edge drops those samples. Its soft ground lets go and follows the LiDAR, as this area's does.",
+ "footprint": [
+  [
+   -340.75,
+   440.0
+  ],
+  [
+   -320.48,
+   440.0
+  ],
+  [
+   -305.87,
+   475.98
+  ],
+  [
+   -269.49,
+   460.53
+  ],
+  [
+   -264.33,
+   472.68
+  ],
+  [
+   -248.0,
+   478.0
+  ],
+  [
+   -235.0,
+   500.0
+  ],
+  [
+   -221.0,
+   530.0
+  ],
+  [
+   -208.0,
+   560.0
+  ],
+  [
+   -191.18,
+   599.5
+  ],
+  [
+   -272.6,
+   599.5
+  ],
+  [
+   -284.7,
+   535.0
+  ],
+  [
+   -304.5,
+   539.88
+  ]
+ ],
+ "supersede": {
+  "notes": "Patterns match 'mesh name material name' in the other sources' tiles. clip: their ground inside the footprint (from a dump of the published tiles): the north model's 1 m LiDAR terrain (North_ground_ortho2020: M3a/M3b seam meshes in context.glb, North_terrain_LiDAR_1m in n_context.glb) and the 4 km skirt; MH_ground_ortho2020 and BD_farfield_3DEP listed as in the neighbours, so that any of their ground under the outline goes too. The north model's trees, rails, catenary and anything else stay. neighbours_keep_cuts: the village (published) keeps its rules and the marks its cut left in the tiles; this area alone cuts 0.6 m past the edge they share.",
+  "clip": [
+   "Context_skirt",
+   "North_ground_ortho2020",
+   "North_terrain_LiDAR",
+   "MH_ground_ortho2020",
+   "BD_farfield_3DEP"
+  ],
+  "drop": [
+   "far_houses"
+  ],
+  "tuck": 0.5,
+  "overlap": true,
+  "neighbours_keep_cuts": true
+ }
+}

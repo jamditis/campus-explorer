@@ -1,0 +1,307 @@
+{
+ "zone": "tv_roads",
+ "notes": "Zone tv_roads: Clove Road from the Village's edge to y 440, its junction with Yogi Berra Drive and the drive west of the rail bridge. Frame: model metres, +X east, +Y grid north. Sources: the NJ 2020 ortho (0.15 m), read as brightness profiles across the roads every 3 m (asphalt, the concrete walks and the island curbs part cleanly; the leaf-off grass does not part from asphalt by colour), and the Village's Clove Road, whose ends this one meets. Clove Road's west edge is one line from the Village's end of it (-302.36, 538.84) to (-334, 452) (white edge line, 0.3 to 1 m off at five profiles); its east curb follows the east walk's west edge (x -301.2 south of y 521) and turns into the drive's north curb on an 8 m arc. Yogi Berra Drive: north curb fitted from x -296 to -248 (bearing -23 deg, 0.5 m rms), 7.6 m curb to curb (7.0 to 7.8 m measured). South of the junction two carriageways part round a long grass island: Clove Road on the west and a one-lane slip on the east (its east edge 4 to 5.5 m east of the island). Generator: scratchpad gen_tv.py (not in the repository); edit this file by hand from now on.",
+ "surfaces": [
+  {
+   "name": "TV_road_Clove_YB",
+   "kind": "asphalt",
+   "road": true,
+   "ring": [
+    [
+     -302.03,
+     539.75
+    ],
+    [
+     -338.2,
+     439.7
+    ],
+    [
+     -322.6,
+     439.7
+    ],
+    [
+     -306.6,
+     479.11,
+     6.0
+    ],
+    [
+     -268.47,
+     462.92
+    ],
+    [
+     -265.5,
+     469.92
+    ],
+    [
+     -301.2,
+     485.07,
+     8.0
+    ],
+    [
+     -301.2,
+     521.0,
+     30.0
+    ],
+    [
+     -294.2,
+     537.8
+    ]
+   ],
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "edges 0.5 m; the slip lane's south end runs on past y 440 under trees"
+  },
+  {
+   "name": "TV_island_Clove_N",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -306.57,
+     509.29,
+     1.25
+    ],
+    [
+     -310.57,
+     491.79,
+     1.25
+    ],
+    [
+     -308.03,
+     491.21,
+     1.25
+    ],
+    [
+     -304.03,
+     508.71,
+     1.25
+    ]
+   ],
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "2.6 m wide, ends rounded; grass or planting not told apart"
+  },
+  {
+   "name": "TV_island_Clove_S",
+   "kind": "lawn",
+   "layer": 3.5,
+   "ring": [
+    [
+     -316.6,
+     478.4,
+     1.5
+    ],
+    [
+     -319.4,
+     474.6,
+     3.0
+    ],
+    [
+     -331.4,
+     439.7
+    ],
+    [
+     -327.1,
+     439.7
+    ],
+    [
+     -313.7,
+     474.6,
+     3.0
+    ]
+   ],
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "nose shape; runs on south of the area"
+  }
+ ],
+ "strips": [
+  {
+   "name": "TV_walk_Clove_E_YB_N",
+   "kind": "concrete",
+   "centre": [
+    [
+     -293.09,
+     537.34
+    ],
+    [
+     -300.0,
+     520.75,
+     31.2
+    ],
+    [
+     -300.0,
+     485.92,
+     9.2
+    ],
+    [
+     -265.06,
+     471.07
+    ]
+   ],
+   "width": 2.4,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "width 2.0 to 2.5 m measured"
+  },
+  {
+   "name": "TV_walk_YB_S",
+   "kind": "concrete",
+   "centre": [
+    [
+     -298.0,
+     474.48
+    ],
+    [
+     -268.82,
+     462.1
+    ]
+   ],
+   "width": 1.6,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "a narrow concrete band west of x -270; width there a guess"
+  }
+ ],
+ "curbs": [
+  {
+   "name": "TV_curb_Clove_E_YB_N",
+   "path": [
+    [
+     -294.2,
+     537.8
+    ],
+    [
+     -301.2,
+     521.0,
+     30.0
+    ],
+    [
+     -301.2,
+     485.07,
+     8.0
+    ],
+    [
+     -265.5,
+     469.92
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "reveal not measured"
+  },
+  {
+   "name": "TV_curb_YB_S_slip_E",
+   "path": [
+    [
+     -268.47,
+     462.92
+    ],
+    [
+     -306.6,
+     479.11,
+     6.0
+    ],
+    [
+     -322.6,
+     439.7
+    ]
+   ],
+   "closed": false,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "reveal not measured"
+  },
+  {
+   "name": "TV_curb_island_N",
+   "path": [
+    [
+     -306.57,
+     509.29,
+     1.25
+    ],
+    [
+     -310.57,
+     491.79,
+     1.25
+    ],
+    [
+     -308.03,
+     491.21,
+     1.25
+    ],
+    [
+     -304.03,
+     508.71,
+     1.25
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "reveal not measured"
+  },
+  {
+   "name": "TV_curb_island_S",
+   "path": [
+    [
+     -316.6,
+     478.4,
+     1.5
+    ],
+    [
+     -319.4,
+     474.6,
+     3.0
+    ],
+    [
+     -331.4,
+     439.7
+    ],
+    [
+     -327.1,
+     439.7
+    ],
+    [
+     -313.7,
+     474.6,
+     3.0
+    ]
+   ],
+   "closed": true,
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "reveal not measured"
+  }
+ ],
+ "markings": [
+  {
+   "name": "TV_paint_YB_CL_N",
+   "type": "line",
+   "width": 0.1,
+   "colour": "yellow",
+   "path": [
+    [
+     -296.0,
+     478.86
+    ],
+    [
+     -266.0,
+     466.12
+    ]
+   ],
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "double yellow drawn as two lines 0.22 m apart; not resolved in the ortho"
+  },
+  {
+   "name": "TV_paint_YB_CL_S",
+   "type": "line",
+   "width": 0.1,
+   "colour": "yellow",
+   "path": [
+    [
+     -296.0,
+     478.62
+    ],
+    [
+     -266.0,
+     465.89
+    ]
+   ],
+   "evidence": "ortho2020 (brightness profiles across the roads every 3 m, 0.5 m steps)",
+   "unverified": "double yellow drawn as two lines 0.22 m apart; not resolved in the ortho"
+  }
+ ]
+}

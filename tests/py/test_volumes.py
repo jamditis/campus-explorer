@@ -149,7 +149,7 @@ class Volumes(unittest.TestCase):
             f = d / "footprint.json"
             if not f.exists() or not json.loads(f.read_text())["supersede"].get("overlap"):
                 continue
-            others = [g for k, g in feet.items() if k != d.name and g]
+            others = supersede.grow_into(d.name)
             r = supersede.area_rules(d, True, others)
             grown = [tuple(p) for p in r["footprint"]]
             self.assertNotEqual(grown, [tuple(round(v, 3) for v in p) for p in feet[d.name]])
@@ -165,8 +165,7 @@ class Volumes(unittest.TestCase):
         grown = {}
         for d in layout.areas():
             if d.name in feet:
-                others = [g for k, g in feet.items() if k != d.name]
-                rules = supersede.area_rules(d, True, others)
+                rules = supersede.area_rules(d, True, supersede.grow_into(d.name))
                 grown[d.name] = [tuple(p) for p in rules["footprint"]]
         h = supersede.OVERLAP / 2
         names = sorted(feet)
@@ -188,6 +187,20 @@ class Volumes(unittest.TestCase):
                     )
                     self.assertTrue(past, f"{k} / {o} at {(round(x, 2), round(y, 2))}")
                     t += 0.5
+
+    def test_an_area_added_beside_published_ones_leaves_their_rules_as_they_were(self):
+        # `neighbours_keep_cuts`: the neighbours' rules, and so the marks their cuts left in the
+        # published tiles, are the same as with the new area left out; the new area alone cuts
+        # past the edges it shares with them (test_every_edge_two_areas_share_is_cut_past_...)
+        areas = {d.name: d for d in layout.areas() if (d / "footprint.json").exists()}
+        rules = {k: json.loads((d / "footprint.json").read_text()) for k, d in areas.items()}
+        new = [k for k, r in rules.items() if r["supersede"].get("neighbours_keep_cuts")]
+        for k in new:
+            rest = {n: d for n, d in areas.items() if n != k}
+            for n, d in rest.items():
+                with_it = supersede.area_rules(d, True, supersede.grow_into(n, areas))
+                without = supersede.area_rules(d, True, supersede.grow_into(n, rest))
+                self.assertEqual(with_it, without, f"{k} changes {n}'s rules")
 
     def test_every_plan_volume_is_usable(self):
         for d in layout.areas():

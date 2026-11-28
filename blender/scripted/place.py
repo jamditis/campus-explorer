@@ -217,6 +217,9 @@ def points(lay, terrain):
             out.append(fixtures.soccer_goal(name, at, angle))
         elif kind == "pylon":
             out.append(fixtures.pylon(name, at, angle, **opt))
+        elif kind == "mast":
+            mast = dict(base=p["base_width"], top=p["top_width"], antenna=p.get("antenna", 0.0))
+            out.append(fixtures.mast(name, at, angle, p["height"], **mast))
         elif kind == "scoreboard":
             out.append(
                 fixtures.scoreboard(

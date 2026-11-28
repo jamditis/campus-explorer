@@ -52,6 +52,7 @@ def _m(key):
         "flasher": lambda: k("glass", "flasher_red", s("#b3160f"), rough=0.2),
         "arm_red": lambda: k("paint", "arm_red", s("#c4161c"), rough=0.4),
         "arm_white": lambda: k("paint", "arm_white", s("#f2f2f0"), rough=0.4),
+        "aviation_orange": lambda: k("paint", "aviation_orange", s("#e8541c"), rough=0.5),
         "weight": lambda: k("metal", "counterweight", s("#56595c"), rough=0.6, metal=0.5),
         "lamp": lambda: k("metal", "lamp_dark", s("#2a2a2c"), rough=0.5, metal=0.5),
         "lamp_lens": lambda: k("glass", "lamp_lens", s("#d8dcdf"), rough=0.15),
@@ -730,6 +731,51 @@ def pylon(name, at, angle, height=54.0, *, base=12.0, waist=2.3, arm=5.5, unveri
                 b.beam(P(u, side * w, z), tip, 0.12, 0.12, steel)
                 b.beam(P(u, side * w, z + 1.6), tip, 0.08, 0.08, steel)
             b.tube(tip, P(0, side * (w + arm), z - 2.2), 0.07, _m("insulator"), sides=6)
+    return b.finish()
+
+
+def mast_levels(height, base, top, bands):
+    """Panel levels of a mast (see mast): panels about as tall as the body is wide, at least 3 m,
+    and a level at every band edge, so each member lies in one band."""
+    edges = [height * k / bands for k in range(bands + 1)]
+    panels, z = [], 0.0
+    while z < height - 3.0:
+        z += max(3.0, base + (top - base) * z / height)
+        panels.append(z)
+    # a panel level within 0.5 m of a band edge gives way to it
+    return sorted(set(edges) | {z for z in panels if min(abs(z - e) for e in edges) >= 0.5})
+
+
+def mast(name, at, angle, height, *, base=12.0, top=2.0, antenna=0.0, bands=7, unverified=True):
+    """Self-supporting broadcast lattice mast: four legs that taper straight from `base` wide at
+    the ground to `top` wide at `height`, girts and X-bracing on every face, and an `antenna` pole
+    on top. Painted in `bands` equal bands of aviation orange and white, orange at both ends (the
+    FAA marking for a structure over 61 m, AC 70/7460-1). Height, base and top widths are LiDAR
+    sizes; the member sizes and the bracing pattern are typical ones, not measured."""
+    b, P = kit.Builder(_name(name, unverified)), kit.placer(at, angle)
+    paints = (_m("aviation_orange"), _m("arm_white"))
+
+    def paint(z):  # band 0 (at the ground) and the top band are orange
+        return paints[min(int(z / height * bands), bands - 1) % 2]
+
+    def half(z):
+        return (base + (top - base) * z / height) / 2
+
+    corners = ((1, 1), (-1, 1), (-1, -1), (1, -1))
+    levels = mast_levels(height, base, top, bands)
+    for z0, z1 in zip(levels, levels[1:], strict=False):
+        h0, h1, m = half(z0), half(z1), paint((z0 + z1) / 2)
+        leg = 0.2 + 0.4 * h0 / (base / 2)
+        for k, (cu, cv) in enumerate(corners):
+            nu, nv = corners[(k + 1) % 4]
+            b.beam(P(cu * h0, cv * h0, z0), P(cu * h1, cv * h1, z1), leg, leg, m)
+            b.beam(P(cu * h1, cv * h1, z1), P(nu * h1, nv * h1, z1), 0.12, 0.12, m)
+            b.beam(P(cu * h0, cv * h0, z0), P(nu * h1, nv * h1, z1), 0.1, 0.1, m)
+            b.beam(P(nu * h0, nv * h0, z0), P(cu * h1, cv * h1, z1), 0.1, 0.1, m)
+    if antenna > 0:
+        b.tube(P(0, 0, height), P(0, 0, height + antenna), 0.3, paints[0], radius1=0.15)
+    for cu, cv in corners:  # a concrete pier under each leg
+        b.box(P(cu * base / 2, cv * base / 2, -0.3), (1.2, 1.2, 0.8), _m("footing"), angle=angle)
     return b.finish()
 
 

@@ -24,6 +24,9 @@ const VIEWS = [
   { name: 'sw_station', ground: [-454, 266], pose: [-395, 45, 300, -456, 0, 262] },          // Montclair Heights station and its lot, from the east
   { name: 'sw_field', ground: [-336, 157], pose: [-430, 80, 250, -336, 0, 157] },            // Sprague Field from the south-west
   { name: 'eye_crossing', ground: [-415, 232], pose: [-415, 1.7, 232.5, -447, 2.2, 224.5] }, // Normal Avenue grade crossing at eye level
+  { name: 'tv_oblique', ground: [-280, -520], pose: [-385, 95, -415, -275, 0, -535] },       // TV Tower block and the Clove Road junction from the south-west
+  { name: 'tv_mast', ground: [-247, -544], pose: [-470, 45, -330, -247, 95, -544] },        // the TV Tower mast, whole height, from the south-west
+  { name: 'eye_clove_yb', ground: [-299.5, -492], pose: [-299.5, 1.65, -492, -262, 6, -552] }, // Clove Road / Yogi Berra Drive junction at eye level, looking north-east
 ];
 
 const server = given ? null : await serve();

@@ -1,0 +1,128 @@
+{
+ "zone": "tv_yard",
+ "notes": "Zone tv_yard: the TV Tower site east of Clove Road (OpenStreetMap way 233913195, building 'university', named TV Tower): the transmitter building, the lattice mast and the paved yard round them. Mast: the 2017 LiDAR has returns up its whole height (class 1 up to 210 m, class 18 'high noise' above), the highest at 296.6 m NAVD88 over ground at 119.9 m (177 m). Widths from the returns in 10 to 20 m slices (3rd to 97th percentile, about 0.5 m of footprint blur in them): 15.0 m at 4 to 15 m up, 11.3 m at 30 to 50 m, 8.2 m at 70 to 90 m, 5.2 m at 110 to 130 m, 2.4 m at 150 to 165 m, 1.8 m above: a body to about 275 m and an antenna above it. The slices' centres move 3.5 m from the bottom to the top (the lower ones take in the building and the fence), so the axis is the mean of the middle slices; which way the faces turn the returns do not tell. The 2020 ortho shows it painted in orange and white bands. The building: roof returns at 126.3 m (deck) to 127.1 m over ground at 120.8 to 121.2 m; the outline is fitted to them. The yard's outline is read from brightness scans of the ortho at 1 m and lies partly under tree shadow. Not modelled: the two trailers and the shed south-east of the mast (temporary looking, 3 to 4 m high), the fence round the north yard, the drive's mouth on Clove Road (it lies in the Village's ground, west of the shared edge). Generator: scratchpad gen_tv.py (not in the repository); edit this file by hand from now on.",
+ "surfaces": [
+  {
+   "name": "TV_yard",
+   "kind": "asphalt",
+   "grade": false,
+   "ring": [
+    [
+     -282.0,
+     543.5
+    ],
+    [
+     -281.5,
+     533.5
+    ],
+    [
+     -272.5,
+     531.0
+    ],
+    [
+     -272.5,
+     520.5
+    ],
+    [
+     -262.5,
+     520.5
+    ],
+    [
+     -262.5,
+     529.0
+    ],
+    [
+     -255.5,
+     533.5
+    ],
+    [
+     -254.0,
+     547.0
+    ],
+    [
+     -255.5,
+     560.0
+    ],
+    [
+     -262.0,
+     566.0
+    ],
+    [
+     -252.5,
+     568.5
+    ],
+    [
+     -252.5,
+     598.4
+    ],
+    [
+     -272.6,
+     598.4
+    ],
+    [
+     -274.0,
+     580.0
+    ],
+    [
+     -275.5,
+     566.5
+    ],
+    [
+     -280.5,
+     556.0
+    ]
+   ],
+   "evidence": "ortho2020 (brightness scans at 1 m)",
+   "unverified": "outline within about 1 m; under tree shadow on the south and east"
+  }
+ ],
+ "buildings": [
+  {
+   "name": "TV_bldg_transmitter",
+   "ring": [
+    [
+     -265.93,
+     537.41
+    ],
+    [
+     -259.09,
+     557.27
+    ],
+    [
+     -272.8,
+     561.99
+    ],
+    [
+     -279.64,
+     542.13
+    ]
+   ],
+   "roof": "flat",
+   "top": 127.0,
+   "style": "shed",
+   "floors": 1,
+   "wall": "#c9c5bb",
+   "trim": "#9b9890",
+   "roof_colour": "#bdbdb8",
+   "evidence": "lidar2017 (outline fitted to the roof returns, deck median 126.3 m, rim 127.0 m); ortho2020; osm 233913195",
+   "unverified": "wall colour and finish; no windows or doors read; the lower west part seen in the ortho is not in the LiDAR"
+  }
+ ],
+ "points": [
+  {
+   "name": "TV_mast",
+   "kind": "mast",
+   "at": [
+    -247.3,
+    543.8
+   ],
+   "angle": 34.0,
+   "height": 155.0,
+   "base_width": 15.0,
+   "top_width": 2.4,
+   "antenna": 21.6,
+   "evidence": "lidar2017 (returns up to 296.6 m NAVD88), ortho2020 (orange and white bands)",
+   "unverified": "four-legged square plan and the face angle; member sizes; seven bands assumed (FAA marking); axis within about 1.5 m"
+  }
+ ]
+}
