@@ -18,7 +18,7 @@ const CONFIRM_MS = 4000;    // wait between confirming lookups for a place that 
 const CONFIRMS = 3;         // hits needed before a place stops being asked
 const HIGHLIGHT_MS = 6000;
 const ROOM_ABOVE = 2.1;      // room numbers: metres above their floor, about a door head
-const ROOM_TITLE = 'Room number from the floor sign. Position UNVERIFIED: read off an evacuation plan.';
+const ROOM_TITLE = 'Room number from the building\'s signs or plans. Position UNVERIFIED: read off a building plan.';
 const BLOCKERS = '#top, #panel'; // fixed interface cards that cover the view
 
 /**
