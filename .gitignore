@@ -42,3 +42,7 @@ smoke-out/
 !.env.example
 *.pem
 *.key
+
+# Site build output (tools/web-export/site.sh) and its far-version cache
+_site/
+.lodcache/

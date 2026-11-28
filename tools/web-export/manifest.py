@@ -34,7 +34,6 @@ named = {f for t in tiles for f in t.get("tex", []) + t.get("lod_tex", [])}
 tex_sizes = {f: os.path.getsize(os.path.join(S, f)) for f in sorted(named)}
 order = {"skirt.glb": 0, "context.glb": 1, "n_context.glb": 1, "sw_context.glb": 1, "far_houses.glb": 1}
 tiles.sort(key=lambda t: (order.get(t["file"], 2), t["file"]))
-mt = datetime.datetime.fromtimestamp(os.path.getmtime(src))
 scene = os.environ.get("SCENE", "main")
 # SOURCE_VERSION_<SCENE> / SOURCE_SAVED_<SCENE> label one source; plain SOURCE_VERSION / SOURCE_SAVED label
 # main only, so a value exported for the main run cannot relabel the north model
@@ -42,14 +41,17 @@ def label(key):
     v = os.environ.get(f"{key}_{scene.upper()}")
     return v if v is not None else (os.environ.get(key, "") if scene == "main" else "")
 ver = label("SOURCE_VERSION")
-saved = label("SOURCE_SAVED") or mt.strftime("%B %-d, %Y, %-I:%M %p ET")
 paint = json.load(open(S + "/paint.json")) if os.path.exists(S + "/paint.json") else []
 old = json.load(open(S + "/manifest.json")) if os.path.exists(S + "/manifest.json") else {}
 # one unified campus built from several source .blends: keep each one's snapshot label
 sources = old.get("sources") or {}
 if not sources and old.get("source_saved"):
     sources["main"] = dict(saved=old["source_saved"], version=old.get("source_version", ""))
-sources[scene] = dict(saved=saved, version=ver, file=os.path.basename(src))
+# KEEP_SOURCES=1 (site.sh): the site build has no .blend, so the labels stay as the export left them
+if os.environ.get("KEEP_SOURCES") != "1" or scene not in sources:
+    mt = datetime.datetime.fromtimestamp(os.path.getmtime(src)) if os.path.exists(src) else None
+    saved = label("SOURCE_SAVED") or (mt.strftime("%B %-d, %Y, %-I:%M %p ET") if mt else "")
+    sources[scene] = dict(saved=saved, version=ver, file=os.path.basename(src))
 head = sources.get("main", sources[scene])
 # main ground meshes the north merge superseded (make_chunks writes them into the north work dir's clip.json)
 WN = os.environ.get("WORK_NORTH", "/workspace/nj-scenes/web/build/north")

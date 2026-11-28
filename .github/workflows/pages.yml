@@ -1,0 +1,70 @@
+name: site
+# Builds the site GitHub Pages serves from the committed files (tools/web-export/site.sh: far versions, shared
+# images and geometry, tree stand-ins, manifest) and deploys it from main. On a pull request it only builds, so a
+# tile PR proves the generated files still come out right without committing them (#136).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # one deploy at a time; a newer push to main replaces a queued one (each build covers everything merged so far)
+  group: site-${{ github.event_name == 'push' && 'main' || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: site
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Node tools of the export
+        run: npm ci --prefix tools/web-export
+      - name: Far versions from earlier builds
+        uses: actions/cache@v6
+        with:
+          path: .lodcache
+          # site.sh keys each far version by its tile and inputs too; this only picks which cache to restore
+          key: lod-${{ hashFiles('tools/web-export/site.sh', 'tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs', 'tools/web-export/package-lock.json') }}-${{ github.sha }}
+          restore-keys: lod-${{ hashFiles('tools/web-export/site.sh', 'tools/web-export/lod.mjs', 'tools/web-export/pack.mjs', 'tools/web-export/tex.mjs', 'tools/web-export/package-lock.json') }}-
+      - name: Build the site
+        run: tools/web-export/site.sh _site
+      - name: Sizes
+        run: |
+          {
+            echo "### Site build"
+            echo "| | bytes |"
+            echo "|---|---|"
+            echo "| whole site | $(du -sb _site | cut -f1) |"
+            for d in models/main models/main/lod models/main/geo models/main/tex; do echo "| $d | $(du -sb _site/$d | cut -f1) |"; done
+            echo "| manifest total_bytes | $(python3 -c "import json;print(json.load(open('_site/models/main/manifest.json'))['total_bytes'])") |"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          path: _site
+
+  deploy:
+    # only main is published: a manual run on another branch builds without deploying
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5
