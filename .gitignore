@@ -46,3 +46,9 @@ smoke-out/
 # Site build output (tools/web-export/site.sh) and its far-version cache
 _site/
 .lodcache/
+
+# Built by tools/web-export/site.sh into _site/, never committed (#136)
+models/main/lod/
+models/main/tex/
+models/main/geo/
+models/main/manifest.json

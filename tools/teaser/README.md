@@ -8,6 +8,7 @@ you name, never inside the repository.
 ```sh
 # 1. capture (hours: one software draw of the whole campus takes 20 to 45 s); resumable, run it again
 #    after a stop and it carries on from the last frame on disk. --step 12 first gives an animatic.
+tools/web-export/site.sh   # the viewer with its built models in _site/, which capture.mjs serves
 PYTHONPATH=<folder with fontTools> node tools/teaser/capture.mjs /tmp/teaser [--step 12] [--only travel]
 # 2. grade, letterbox, grain and encode: /tmp/teaser/teaser.mp4 (H.264, faststart, no sound)
 python3 tools/teaser/finish.py /tmp/teaser --fps 24

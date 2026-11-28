@@ -17,7 +17,10 @@ t0=$(date +%s); say() { echo "site: $* ($(( $(date +%s) - t0 )) s)"; }
 # 1. the served files: everything in git except sources, tools, tests and notes
 rm -rf "$OUT"; mkdir -p "$OUT" "$CACHE"
 cd "$R"
-git ls-files -z | grep -zvE '^(\.|blender/|tools/|tests/|docs/|notes/|tasks/|[^/]+\.md$|ruff\.toml$)' \
+# tracked files and new ones not yet committed (an export being looked at before its PR); not ignored ones
+git ls-files -z --cached --others --exclude-standard \
+  | grep -zvE '^(\.|blender/|tools/|tests/|docs/|notes/|tasks/|[^/]+\.md$|ruff\.toml$)' \
+  | while IFS= read -r -d '' f; do if [ -e "$f" ]; then printf '%s\0' "$f"; fi; done \
   | xargs -0 cp --parents -t "$OUT"
 touch "$OUT/.nojekyll"
 say "copied $(find "$OUT" -type f | wc -l) files"

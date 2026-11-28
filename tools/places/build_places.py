@@ -1,6 +1,6 @@
 """Build viewer/places.json, the named places the viewer labels and offers in search.
 
-Reads the tile centres from models/main/manifest.json (the whole campus is one scene),
+Reads the tile centres from the tile names in models/main (the whole campus is one scene),
 fetches OpenStreetMap data for the area they cover from the OSM API 0.6, keeps named
 buildings, car parks, sports grounds, stations and landmarks, and projects each one
 into the viewer's three.js frame with the same Transverse Mercator maths as
@@ -19,6 +19,7 @@ import argparse
 import datetime as dt
 import json
 import math
+import re
 import sys
 import tempfile
 import time
@@ -155,8 +156,13 @@ def from_local(x: float, z: float) -> tuple[float, float]:
 
 
 def load_tiles(repo: Path) -> list[tuple[float, float]]:
-    manifest = json.loads((repo / "models" / "main" / "manifest.json").read_text())
-    return sorted({tuple(t["center"]) for t in manifest["tiles"] if t.get("center")})
+    # the same rule as tools/web-export/manifest.py: tile <x>_<y> (160 m) -> centre in viewer x, z
+    out = set()
+    for f in (repo / "models" / "main").glob("*.glb"):
+        m = re.match(r"(?:n_|sw_)?t_(-?\d+)_(-?\d+)\.glb$", f.name)
+        if m:
+            out.add(((int(m[1]) + 0.5) * 160, -(int(m[2]) + 0.5) * 160))
+    return sorted(out)
 
 
 def covered(x: float, z: float, tiles: list) -> bool:

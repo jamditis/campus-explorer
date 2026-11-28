@@ -1,3 +1,4 @@
+import { campusTiles } from './campus-tiles.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -11,8 +12,8 @@ const TAG_KEYS = new Set(['building', 'building:levels', 'height', 'amenity', 'l
   'short_name', 'wikidata']);
 const TILE_HALF = 80;
 
-// One manifest holds the whole campus.
-const CENTRES = JSON.parse(readFileSync(new URL('models/main/manifest.json', root), 'utf8')).tiles.filter((t) => t.center).map((t) => t.center);
+// The whole campus is one set of tiles (centres from the tile names, as the built manifest has them).
+const CENTRES = campusTiles().map((t) => t.center);
 
 test('header', () => {
   assert.equal(data.source, 'OpenStreetMap contributors');

@@ -9,8 +9,9 @@
 #   ONLY   = "t_0_0 context" to rebuild some tiles; SKIP_PLAN=1 to reuse the last chunk plan
 #   REPACK=1 = run this version's compact and far-version steps on the other sources' published tiles too
 #   TREE_INSTANCE=0 leaves trees used 2 to 4 times in a tile to optimize (joined into one plain mesh), as before
-#   SHARE_TEX=0 keeps every image inside its tile instead of one shared copy in models/main/tex/ (share_tex.mjs)
-#   SHARE_GEO=0 keeps all geometry inside its tile instead of one shared copy in models/main/geo/ (share_geo.mjs)
+#   What several tiles share (far versions, shared images and geometry, tree stand-ins, manifest.json) is not
+#   committed: tools/web-export/site.sh makes it when the site is built (.github/workflows/pages.yml, #136).
+#   This script leaves each tile final and writes models/main/sources.json (snapshot labels, superseded ground).
 #   SOURCE_VERSION / SOURCE_SAVED = label shown in the viewer for main (default: file mtime); SOURCE_VERSION_NORTH /
 #   SOURCE_SAVED_NORTH label north. Plain SOURCE_* never relabel north
 # Read-only on the .blend. Waits for /workspace/nj-scenes/.lock and montclair-state/.lock to be free, for no other Blender, and for
@@ -86,15 +87,7 @@ for f in $B/raw/*.glb; do
   # optimize leaves an unused second copy of every instance transform in the file: drop it
   cp $W/compact.mjs $W/pack.mjs $W/tex.mjs ./; node compact.mjs $S/$C.glb || fail "compact $C"
   [ "${KEEP_RAW:-0}" = 1 ] || rm -f $f  # disk is tight: raw exports are large and rebuilt every run
-  # far-distance version of each campus tile (lod/<tile>.glb): instances and small parts dropped, rest
-  # simplified to ~0.5 m error without tearing; the viewer swaps to it past a quality-set distance
-  if [[ $C == t_* || $C == n_t_* || $C == sw_t_* ]]; then
-    mkdir -p $S/lod; cp $W/lod.mjs $W/pack.mjs $W/tex.mjs ./  # run from here so it resolves this folder's node_modules
-    RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
-  fi
 done
-# drop far versions whose tile is gone
-for f in $S/lod/*.glb; do [ -e "$f" ] && [ ! -e $S/$(basename $f) ] && { echo "prune stale $f"; rm -f "$f"; }; done
 [ $SCENE = main ] && { OUT=$S python3 $W/paint.py || fail "paint"; }
 # far-field land cover, trees and houses from OpenStreetMap (needs pyproj/shapely: GEO_PY) and the OSM
 # map tiles in $OSM (api.openstreetmap.org/api/0.6/map, ~1 km tiles over the 4 km skirt)
@@ -107,26 +100,20 @@ if [ $SCENE = main ] && [ -x "$GEO_PY" ] && ls $OSM/*.osm >/dev/null 2>&1; then
   [ -s $S/far_houses.glb ] || fail "far houses"; rm -f $WORK/far_houses.raw.glb
 fi
 # The southwest build owns the ground inside its footprint: take the other sources' ground out of their tiles
-# there (once per tile: a done tile is marked), then rebuild the far versions of the tiles that changed.
+# there (once per tile: a done tile is marked).
 if ls $S/sw_*.glb >/dev/null 2>&1; then
   python3 $W/../../blender/scripted/supersede.py $WORK/supersede.json ${SW_AREAS:+--areas $SW_AREAS} || fail "supersede rules"
-  cp $W/supersede.mjs $W/cut.mjs $W/volume.mjs $W/lod.mjs $W/pack.mjs $W/tex.mjs ./
+  cp $W/supersede.mjs $W/cut.mjs $W/volume.mjs $W/pack.mjs $W/tex.mjs ./
   node supersede.mjs $WORK/supersede.json $S > $WORK/supersede.out 2>&1; RC=$?; grep -E "^supersede|rror" $WORK/supersede.out
   [ $RC -eq 0 ] || fail "supersede (see $WORK/supersede.out)"
-  CHANGED=$(sed -n 's/^CHANGED //p' $WORK/supersede.out)
-  for f in $CHANGED; do
-    C=${f%.glb}; [[ $C == t_* || $C == n_t_* ]] || continue
-    RATIO=0.1 ERR_M=0.5 node lod.mjs $S/$C.glb $S/lod/$C.glb >/dev/null || fail "lod $C"
-  done
 fi
-# REPACK=1: the other sources' published tiles get this version's compact and far-version steps too (packed
-# instance rotations, half-size far images) without their .blend: both steps work on a published tile.
+# REPACK=1: the other sources' published tiles get this version's compact step too (packed instance rotations)
+# without their .blend: it works on a published tile.
 if [ "${REPACK:-0}" = 1 ]; then
-  cp $W/compact.mjs $W/lod.mjs $W/pack.mjs $W/tex.mjs ./
+  cp $W/compact.mjs $W/pack.mjs $W/tex.mjs ./
   for f in $S/*.glb; do
     C=$(basename $f .glb); [ -n "$PREFIX" ] && [[ $C == ${PREFIX}* ]] && continue
     node compact.mjs $f || fail "repack compact $C"
-    if [[ $C == t_* || $C == n_t_* ]]; then RATIO=0.1 ERR_M=0.5 node lod.mjs $f $S/lod/$C.glb >/dev/null || fail "repack lod $C"; fi
   done
 fi
 # Far field and empty triangles, on the published tiles (no .blend needed), so every run applies them again:
@@ -135,28 +122,15 @@ fi
 cp $W/farcut.mjs $W/skyline.mjs $W/skirt.mjs $W/drop_zero.mjs $W/zero.mjs $W/tex.mjs ./
 for f in $S/*context.glb; do node farcut.mjs $f || fail "far cut $(basename $f)"; done
 if [ -e $S/skirt.glb ]; then node skirt.mjs $S/skirt.glb || fail "skirt"; fi
-node drop_zero.mjs $S/*.glb $S/lod/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "zero-area triangles"
+node drop_zero.mjs $S/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "zero-area triangles"
 # instance transforms through the meshopt filters made for them (inst_filter.mjs: every vertex within 1 mm), after
 # the last step that writes tiles through gltf-transform, which stores them unfiltered
 cp $W/inst_filter.mjs $W/geoshare.mjs $W/pack.mjs $W/tex.mjs ./
 node inst_filter.mjs $S/*.glb | tail -1; [ "${PIPESTATUS[0]}" -eq 0 ] || fail "instance filters"
 # far trees under 4 px wide: fewer, wider crowns, same covered area (far_thin.py; a second run changes nothing)
 if [ -e $S/far_trees.bin ]; then python3 $W/far_thin.py $S/far_trees.bin || fail "far trees"; fi
-# Images two or more tiles carry (leaf textures, paint sheets in a tile and its far version) are stored once as
-# $S/tex/<content hash>.webp and the tiles refer to them by URI (share_tex.mjs, on every published tile, so it
-# needs no .blend). Last, because gltf-transform puts every image back into a GLB it writes. SHARE_TEX=0 puts
-# every image back inside its tile and removes tex/.
-cp $W/share_tex.mjs $W/tex.mjs ./
-if [ "${SHARE_TEX:-1}" != 0 ]; then node share_tex.mjs $S || fail "share images"
-else node share_tex.mjs $S --embed || fail "embed images"; fi
-# Compressed geometry two or more files carry byte for byte (each tile has its own copy of every tree mesh it plants)
-# is stored once as $S/geo/<name>.bin, one pack per set of files that use it, and the views point into it
-# (share_geo.mjs, after share_tex: both copy bytes and never decode). SHARE_GEO=0 leaves it inside every file.
-cp $W/share_geo.mjs $W/geoshare.mjs $W/tex.mjs ./
-if [ "${SHARE_GEO:-1}" != 0 ]; then node share_geo.mjs $S || fail "share geometry"
-else node share_geo.mjs $S --embed || fail "embed geometry"; fi
-cp $W/tree_points.mjs $W/treepoints.mjs $W/tex.mjs $W/pack.mjs ./
-node tree_points.mjs $S || fail "tree stand-ins in the far versions"
-OUT=$S python3 $W/manifest.py || fail "manifest"
+# Images and geometry stay inside each tile; site.sh shares them, builds the far versions and the manifest.
+# Here only the snapshot labels and the superseded ground list are written (models/main/sources.json).
+SOURCES_ONLY=1 OUT=$S python3 $W/manifest.py || fail "sources"
 find $S -size +95M | grep . && fail "file over 95 MB"
 ls -la $S; du -sh $S
