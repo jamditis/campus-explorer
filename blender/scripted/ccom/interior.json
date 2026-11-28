@@ -1,6 +1,6 @@
 {
  "zone": "ccom_interior",
- "notes": "Interior of the College of Communication and Media, rebuilt as a scripted area with the main model's sound interior adopted (adopt.json): keep-outs only for what is adopted (the newsroom with its back offices and mezzanine, the south corridor furniture, the atrium group moved square to the shell by T1). Floor 1 slabs reach the walls (the volume rule takes the other sources' ground out of the building). Open questions for Joe: the newsroom office stack (the sign has it about 2.5 m east), the east lounge level (left out: its floor 134.85 and ceiling 138.95 cross floor 1), the lab room (not modelled). College of Communication and Media (CCOM) interior, floors 1 and 2, from Joe's two evacuation floor plans (2026-11-20). Exterior walls, windows and roof: ccom_shell.json. Levels from the main model: floor 1 slabs 137.40 (south) and 137.70 (north), floor 2 slabs 141.85 with soffits at 141.45, floor 2 ceilings 144.86. Wall runs start at 137.30 so they meet both floor 1 levels. The sign plans are diagrams: positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign. The room 1000 block (south-west connector, two lifts, a stair) lies inside Morehead Hall's shell in the main model and is not built. The double-height lobby (Joe's photos 1000102886 and 1000102887) is the main model's atrium behind the west doors: its window wall, doors, wood panel wall, stair, glass balustrade, walk-off mat and cube seats exist there (turned 13.7 deg off the shell), so nothing of it is built here; its video wall is missing. Written by a scratch script from pixel positions; edit by hand from here.",
+ "notes": "Interior of the College of Communication and Media, rebuilt as a scripted area with the main model's sound interior adopted (adopt.json): keep-outs only for what is adopted (the newsroom with its back offices and mezzanine, the south corridor furniture, the atrium group moved square to the shell by T1). Floor 1 slabs reach the walls (the volume rule takes the other sources' ground out of the building). Open questions for Joe: the newsroom office stack (the sign has it about 2.5 m east), the east lounge level (left out: its floor 134.85 and ceiling 138.95 cross floor 1), the lab room (not modelled). College of Communication and Media (CCOM) interior, floors 1 and 2, from Joe's two evacuation floor plans (2026-11-20). Exterior walls, windows and roof: ccom_shell.json. Levels from the main model: floor 1 slabs 137.40 (south) and 137.70 (north), floor 2 slabs 141.85 with soffits at 141.45, floor 2 ceilings 144.86. Wall runs start at 137.30 so they meet both floor 1 levels. The sign plans are diagrams: positions from an evacuation sign, registered to the shell by an affine fit on 9 exterior corners: rms 0.83 m, worst 1.6 m; heights and door widths not on the sign. The room 1000 block (south-west connector, two lifts, a stair) lies inside Morehead Hall's shell in the main model and is not built. The double-height lobby (Joe's photos 1000102886 and 1000102887) is the main model's atrium behind the west doors: its window wall, doors, wood panel wall, stair, glass balustrade, walk-off mat and cube seats exist there (turned 13.7 deg off the shell), so nothing of it is built here; its video wall is missing. Written by a scratch script from pixel positions; edit by hand from here. REVISED 2026-11-28: the newsroom's office stack from Joe's floor signs (ccom_floor1/2_plan_joe_20261128), registered to the shell by a homography refined on the outline (floor 1 0.36 m, floor 2 0.50 m median wall-to-outline): floor 1 glass front at building u -8.5, east wall u -3.3, 1002A / 1002B1 / 1002B and 1002B2 / 1002B3 divided at v -1.9, -9.1, -12.3 (1002B and 1002B2 split at u -6.2); floor 2 rooms 2002..2012 between u -7.2 (glass to the newsroom's void) and -3.3, divided at v -13.0, -7.95, -2.85. The stack's north and south ends are held to the main model's newsroom walls (v 1.9 and -17.9; the signs have them 2.0 m and 1.0 m further north and south, within what the signs settle). Door positions and widths are not on the signs: one 0.9 m door per room, UNVERIFIED. The floor 2 rooms' east wall is put on floor 1's (u -3.3; the floor 2 sign has it at -2.3).",
  "interiors": [
   {
    "name": "CCOM_F1",
@@ -206,47 +206,47 @@
      "name": "newsroom",
      "ring": [
       [
-       -24.64,
-       -12.42
+       -24.633,
+       -12.434
       ],
       [
-       -9.95,
-       -16.0
+       -12.535,
+       -15.375
       ],
       [
-       -5.28,
-       3.18
+       -7.883,
+       3.768
       ],
       [
-       -19.97,
-       6.76
+       -19.957,
+       6.806
       ]
      ],
-     "objects": "MS_CCOM_newsroom_studio_*, MS_CCOM_back_rooms_furnish_20261030na, CCOM newsroom back offices (mw), adopted as is",
-     "why": "room 1002 with its back offices as the main model has them; the sign puts the office stack about 2.5 m further east (open question for Joe)"
+     "objects": "the newsroom studio as the main model has it: studio floor, ceiling, lighting grid, set, anchor desk, U desks, cameras, video wall, bay and south walls and glazing (adopt.json as_is), and its north and south walls (newsroom_walls)",
+     "why": "room 1002 (the studio) as the main model has it, up to the office stack's glass front at building u -8.5 (floor 1 sign); its back offices and mezzanine are left out and the stack is built here"
     },
     {
      "name": "south_corridor",
      "ring": [
       [
-       -11.34,
-       -18.65
+       -7.924,
+       -19.48
       ],
       [
-       14.21,
-       -24.87
+       14.231,
+       -24.864
       ],
       [
-       15.28,
-       -20.5
+       15.293,
+       -20.491
       ],
       [
-       -10.27,
-       -14.27
+       -6.862,
+       -15.107
       ]
      ],
      "objects": "CCOM_1f_interior_full_dd (dd_SOUTH0_*), adopted without its back wall",
-     "why": "furniture along the south wall in 1005 and 1005B"
+     "why": "furniture along the south wall in 1005 and 1005B; starts at the office stack's east wall (building u -3.1): none of its furniture stands further west, and the stack's walls must reach the newsroom's south wall"
     },
     {
      "name": "atrium_T1",
@@ -616,6 +616,173 @@
        ]
       }
      ]
+    },
+    {
+     "name": "SW_CCOM_F1_stack_E_UNVERIFIED",
+     "path": [
+      [
+       -7.434,
+       -16.614
+      ],
+      [
+       -2.758,
+       2.626
+      ]
+     ],
+     "thickness": 0.3
+    },
+    {
+     "name": "SW_CCOM_F1_stack_front_glazed_UNVERIFIED",
+     "path": [
+      [
+       -12.487,
+       -15.386
+      ],
+      [
+       -7.811,
+       3.854
+      ]
+     ],
+     "thickness": 0.06,
+     "glazed": true,
+     "openings": [
+      {
+       "at": [
+        -8.366,
+        1.57
+       ],
+       "to": [
+        -8.153,
+        2.445
+       ]
+      },
+      {
+       "at": [
+        -9.665,
+        -3.774
+       ],
+       "to": [
+        -9.452,
+        -2.9
+       ]
+      },
+      {
+       "at": [
+        -10.893,
+        -8.827
+       ],
+       "to": [
+        -10.68,
+        -7.953
+       ]
+      },
+      {
+       "at": [
+        -11.79,
+        -12.52
+       ],
+       "to": [
+        -11.578,
+        -11.645
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F1_stack_N_UNVERIFIED",
+     "path": [
+      [
+       -5.576,
+       3.31
+      ],
+      [
+       -2.758,
+       2.626
+      ]
+     ],
+     "thickness": 0.2
+    },
+    {
+     "name": "SW_CCOM_F1_stack_S_UNVERIFIED",
+     "path": [
+      [
+       -12.681,
+       -15.339
+      ],
+      [
+       -7.434,
+       -16.614
+      ]
+     ],
+     "thickness": 0.2
+    },
+    {
+     "name": "SW_CCOM_F1_1002A_S_UNVERIFIED",
+     "path": [
+      [
+       -8.708,
+       0.161
+      ],
+      [
+       -3.655,
+       -1.067
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1002B1_S_UNVERIFIED",
+     "path": [
+      [
+       -10.409,
+       -6.835
+      ],
+      [
+       -5.356,
+       -8.063
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1002B3_N_UNVERIFIED",
+     "path": [
+      [
+       -11.164,
+       -9.945
+      ],
+      [
+       -6.111,
+       -11.173
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F1_1002B_1002B2_UNVERIFIED",
+     "path": [
+      [
+       -8.929,
+       -10.488
+      ],
+      [
+       -8.174,
+       -7.378
+      ]
+     ],
+     "thickness": 0.15,
+     "openings": [
+      {
+       "at": [
+        -8.658,
+        -9.37
+       ],
+       "to": [
+        -8.445,
+        -8.496
+       ]
+      }
+     ]
     }
    ],
    "slabs": [
@@ -760,6 +927,31 @@
      "kind": "paint",
      "colour": "#d2cec6",
      "unverified": "level 137.70 from the main model's atrium terrazzo (dropped: this slab replaces it)"
+    },
+    {
+     "name": "SW_CCOM_F1_slab_stack_UNVERIFIED",
+     "ring": [
+      [
+       -12.487,
+       -15.386
+      ],
+      [
+       -7.337,
+       -16.638
+      ],
+      [
+       -2.661,
+       2.602
+      ],
+      [
+       -7.811,
+       3.854
+      ]
+     ],
+     "z0": 137.0,
+     "z1": 137.38,
+     "evidence": "floor 1 sign (the office stack 1002A..1002B3)",
+     "unverified": "the stack's floor: 2 cm under the studio floor (137.41) and slab_south (137.40) it overlaps, so it closes the 0.17 m crack between them and the strip at the stack's south end without flickering; its own level is a guess"
     }
    ],
    "blocks": [
@@ -1111,43 +1303,43 @@
     {
      "number": "1002",
      "at": [
-      -15.48,
-      -2.99
+      -15.549,
+      -3.425
      ]
     },
     {
      "number": "1002A",
      "at": [
-      -5.4,
-      0.35
+      -5.757,
+      1.296
      ]
     },
     {
      "number": "1002B1",
      "at": [
-      -6.87,
-      -5.03
+      -7.032,
+      -3.951
      ]
     },
     {
      "number": "1002B",
      "at": [
-      -9.51,
-      -9.53
+      -9.669,
+      -8.662
      ]
     },
     {
      "number": "1002B2",
      "at": [
-      -7.0,
-      -10.13
+      -7.143,
+      -9.276
      ]
     },
     {
      "number": "1002B3",
      "at": [
-      -9.06,
-      -13.45
+      -9.276,
+      -13.182
      ]
     },
     {
@@ -1426,24 +1618,24 @@
      "name": "newsroom_mezzanine",
      "ring": [
       [
-       -24.64,
-       -12.42
+       -24.633,
+       -12.434
       ],
       [
-       -9.95,
-       -16.0
+       -12.535,
+       -15.375
       ],
       [
-       -5.28,
-       3.18
+       -7.883,
+       3.768
       ],
       [
-       -19.97,
-       6.76
+       -19.957,
+       6.806
       ]
      ],
-     "objects": "MS_CCOM_newsroom_studio_* (double height), CCOM newsroom back mezzanine slab + fascia (mw), MS_CCM_office_interior_20261030na",
-     "why": "void over 1002 and the mezzanine offices as the main model has them (the sign's 2002..2012 lie about 2.5 m east: open question)"
+     "objects": "the newsroom's double-height volume over the studio: its lighting grid, cable trays and ceiling (adopt.json as_is)",
+     "why": "the newsroom's double-height volume up to the office stack (floor 2 sign: open to below west of u -7.2)"
     },
     {
      "name": "atrium_T1",
@@ -2198,6 +2390,147 @@
       ]
      ],
      "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_stack_E_UNVERIFIED",
+     "path": [
+      [
+       -7.434,
+       -16.614
+      ],
+      [
+       -2.758,
+       2.626
+      ]
+     ],
+     "thickness": 0.3,
+     "openings": [
+      {
+       "at": [
+        -6.973,
+        -14.72
+       ],
+       "to": [
+        -6.761,
+        -13.845
+       ]
+      },
+      {
+       "at": [
+        -5.793,
+        -9.861
+       ],
+       "to": [
+        -5.58,
+        -8.986
+       ]
+      },
+      {
+       "at": [
+        -4.588,
+        -4.905
+       ],
+       "to": [
+        -4.376,
+        -4.031
+       ]
+      },
+      {
+       "at": [
+        -3.431,
+        -0.144
+       ],
+       "to": [
+        -3.218,
+        0.731
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SW_CCOM_F2_stack_W_glazed_UNVERIFIED",
+     "path": [
+      [
+       -11.224,
+       -15.693
+      ],
+      [
+       -6.548,
+       3.547
+      ]
+     ],
+     "thickness": 0.06,
+     "glazed": true
+    },
+    {
+     "name": "SW_CCOM_F2_stack_N_UNVERIFIED",
+     "path": [
+      [
+       -5.576,
+       3.31
+      ],
+      [
+       -2.758,
+       2.626
+      ]
+     ],
+     "thickness": 0.2
+    },
+    {
+     "name": "SW_CCOM_F2_stack_S_UNVERIFIED",
+     "path": [
+      [
+       -11.224,
+       -15.693
+      ],
+      [
+       -7.434,
+       -16.614
+      ]
+     ],
+     "thickness": 0.2
+    },
+    {
+     "name": "SW_CCOM_F2_2002_2004_UNVERIFIED",
+     "path": [
+      [
+       -10.066,
+       -10.932
+      ],
+      [
+       -6.277,
+       -11.853
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2004_2006_UNVERIFIED",
+     "path": [
+      [
+       -8.874,
+       -6.025
+      ],
+      [
+       -5.084,
+       -6.946
+      ]
+     ],
+     "thickness": 0.15
+    },
+    {
+     "name": "SW_CCOM_F2_2006_2012_UNVERIFIED",
+     "path": [
+      [
+       -7.669,
+       -1.069
+      ],
+      [
+       -3.88,
+       -1.99
+      ]
+     ],
+     "thickness": 0.15
     }
    ],
    "slabs": [
@@ -2257,8 +2590,16 @@
        6.63
       ],
       [
-       -5.24,
-       3.19
+       -6.548,
+       3.547
+      ],
+      [
+       -11.224,
+       -15.693
+      ],
+      [
+       -9.941,
+       -16.005
       ]
      ],
      "z0": 141.45,
@@ -2267,7 +2608,7 @@
       "atrium_T1",
       "east_bay"
      ],
-     "unverified": "reaches the adopted 2F hallway slab (b 4.35) under the studios' north wall"
+     "unverified": "reaches the adopted 2F hallway slab (b 4.35) under the studios' north wall; extended under the office stack 2002..2012 (building u -7.2..-5.9, floor 2 sign)"
     },
     {
      "name": "SW_CCOM_F2_slab_old_bay_UNVERIFIED",
@@ -2304,29 +2645,29 @@
     {
      "number": "2002",
      "at": [
-      -9.21,
-      -13.42
+      -8.762,
+      -13.822
      ]
     },
     {
      "number": "2004",
      "at": [
-      -8.03,
-      -8.95
+      -7.581,
+      -8.963
      ]
     },
     {
      "number": "2006",
      "at": [
-      -6.69,
-      -3.89
+      -6.377,
+      -4.007
      ]
     },
     {
      "number": "2012",
      "at": [
-      -5.47,
-      0.69
+      -5.22,
+      0.754
      ]
     },
     {

@@ -1,6 +1,6 @@
 {
  "zone": "ccom_adopt",
- "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20). REVISED 2026-11-28 (Joe's photos of the east end): the main model's east bay and its chairs are moved to the east facade (groups east_bay, east_bay_furniture); the daylight card that stood for its window is dropped (the shell has the window: ccom_shell.json curtains).",
+ "notes": "Objects of the main model's College of Communication and Media taken into the scripted build from the 20261118i release (objects changed on Joe's box after that release are not in it). as_is: sound and square to the shell: newsroom with its back offices, mezzanine and furniture (kept where the main model has them: the floor signs put the office stack about 2.5 m further east: open question for Joe), south corridor furniture, entrance window wall, arch and doors, porch gable, tower, loading dock, the ID sign's panel and posts. atrium: the atrium, hallway, stair, wood panel wall, glass guards, cube seats, lights, signs, N classroom and 2F lounge, which the main model drew square to the model axes: turned -13.7 deg about the model origin and moved (0.150, -2.764) so they stand square to the shell and the stair centre lands on the floor 1 sign's stair (checked: no moved vertex outside the shell). sign: the ID sign's lettering, text set to the college's name (UNVERIFIED: no photo of the real sign). Left out: east lounge window tables (dV): they stand in the east lounge, partly outside the walls: 14 objects; east lounge (dc, fa, el, em, en): its floor 134.85 and ceiling 138.95 cross the scripted floor 1 at 137.40 (open question for Joe): 145 objects; dd_EAST0 basement room under 1020: its ceiling (137.45..137.53) stands above the scripted floor 1 (137.40); the east basement is an open question: 58 objects; replaced by SW_CCOM_F1_slab_north (137.70): 3 objects; replaced by SW_CCOM_lobby_south_wall_white (Joe's photo: white): 1 objects; replaced by SW_CCOM_lobby_walkoff_mat at the doors (after T1 it would lie 2.7 m off): 4 objects. Dropped (not listed): the east band's low roof plates, eaves and facade pieces, the computer lab (its room is an open question; not modelled), the NG connector and link, the dd_SOUTH0 back wall, fill floors, window units, people placeholders. Full study: decisions per object with reasons (agent ccm's report of 2026-11-20). REVISED 2026-11-28 (Joe's photos of the east end): the main model's east bay and its chairs are moved to the east facade (groups east_bay, east_bay_furniture); the daylight card that stood for its window is dropped (the shell has the window: ccom_shell.json curtains). REVISED 2026-11-28 (Joe: the interior must match his floor signs): the newsroom's back offices, mezzanine and floor 2 office (45 objects) are dropped and the studio's east wall is clipped off (group newsroom_walls); the signs' office stack (1002A..1002B3 on floor 1, 2002..2012 on floor 2) is built in interior.json, 4.4 m shallower than the main model's (the newsroom is open to below over the rest, floor 2 sign).",
  "adopt": {
   "file": "montclair_state_20261118i.blend",
   "sha256": "4e6abcb4df8507be13677fc653e7643827a1dceac2ed8ebb8513902837aef67b",
@@ -8,32 +8,6 @@
    {
     "name": "as_is",
     "objects": [
-     "CCM office 2x2 troffers (na, emissive)",
-     "CCM office abstract painting (na, generic, NOT the real artwork",
-     "CCM office cardboard boxes (na)",
-     "CCM office desk legs + rails (na, black steel)",
-     "CCM office file pedestals (na)",
-     "CCM office grey cubicle partitions (na)",
-     "CCM office keyboards (na)",
-     "CCM office laptops (na)",
-     "CCM office laser printer (na)",
-     "CCM office lateral file cabinet (na)",
-     "CCM office lay-in ceiling 2x2 ft grid (na)",
-     "CCM office mice, desk phone, power strip (na)",
-     "CCM office monitor bezels + stands (na)",
-     "CCM office monitor screens (na, generic content)",
-     "CCM office painting canvas edge (na)",
-     "CCM office partition top trim (na)",
-     "CCM office planters (na)",
-     "CCM office plants (na, low-poly fronds)",
-     "CCM office recycling bin (na, blue)",
-     "CCM office rubber cove base (na)",
-     "CCM office storage totes (na)",
-     "CCM office striped carpet (na)",
-     "CCM office trash bin (na)",
-     "CCM office water bottles (na)",
-     "CCM office white wall skins (na)",
-     "CCM office wood-top desks (na)",
      "CCOM atrium arch frame",
      "CCOM atrium glass (arched, 7x10 grid)",
      "CCOM atrium mullion h10",
@@ -49,20 +23,6 @@
      "CCOM atrium mullion v3",
      "CCOM atrium mullion v4",
      "CCOM atrium mullion v5",
-     "CCOM back rooms 2x2 troffers (emissive) (na)",
-     "CCOM back rooms black steel legs (na)",
-     "CCOM back rooms carpets (na)",
-     "CCOM back rooms cove base (na)",
-     "CCOM back rooms credenzas/files/bookcases (na)",
-     "CCOM back rooms lay-in ceilings (na)",
-     "CCOM back rooms monitor + TV bezels (na)",
-     "CCOM back rooms monitor screens (generic) (na)",
-     "CCOM back rooms planters (na)",
-     "CCOM back rooms plants (low-poly) (na)",
-     "CCOM back rooms shelf books (na)",
-     "CCOM back rooms wall TV screens (generic) (na)",
-     "CCOM back rooms white wall skins (na)",
-     "CCOM back rooms wood desk/table tops (na)",
      "CCOM door frame +1",
      "CCOM door frame -1",
      "CCOM door stile +1-0.95",
@@ -98,9 +58,6 @@
      "CCOM newsroom anchor desk (mw)",
      "CCOM newsroom anchor desk IFB packs + scripts (mz)",
      "CCOM newsroom anchor lav mics + IFB earpieces (nb)",
-     "CCOM newsroom back mezzanine slab + fascia (mw)",
-     "CCOM newsroom back offices frames (mw, maroon)",
-     "CCOM newsroom back offices glass fronts (mw)",
      "CCOM newsroom bay glass (mw)",
      "CCOM newsroom bay mullion grid (mw, maroon)",
      "CCOM newsroom bay sills (mw)",
@@ -111,8 +68,6 @@
      "CCOM newsroom central conference table (mw)",
      "CCOM newsroom desk monitor screens (my, generic)",
      "CCOM newsroom desk monitors (mw)",
-     "CCOM newsroom fascia TV row (mw)",
-     "CCOM newsroom fascia TV screens (my, generic)",
      "CCOM newsroom floor boxes (my)",
      "CCOM newsroom floor cable gaffer tape crossings (nd)",
      "CCOM newsroom floor cable gaffer tape worn lifted ends (nd)",
@@ -142,7 +97,6 @@
      "CCOM newsroom studio ceiling light panels (mw)",
      "CCOM newsroom studio floor (raised access, mw)",
      "CCOM newsroom studio lighting grid (mw)",
-     "CCOM newsroom studio side + back walls (mw)",
      "CCOM newsroom tray cables + drop to video wall (mz)",
      "CCOM newsroom upper white band (mw)",
      "CCOM newsroom video wall bezel (my)",
@@ -342,6 +296,36 @@
      "dd_SOUTH0_tbase_3_dZ",
      "dd_SOUTH0_tbase_6_ea"
     ]
+   },
+   {
+    "name": "newsroom_walls",
+    "objects": [
+     "CCOM newsroom studio side + back walls (mw)"
+    ],
+    "clip": [
+     {
+      "ring": [
+       [
+        -10.473,
+        -15.567
+       ],
+       [
+        -9.501,
+        -15.803
+       ],
+       [
+        -4.967,
+        2.854
+       ],
+       [
+        -5.938,
+        3.09
+       ]
+      ],
+      "keep": "outside"
+     }
+    ],
+    "why": "the newsroom's north and south walls stay; its full-height east wall at building u -6.0 goes, because the signs put the office stack's east wall 2.7 m further east (u -3.3), where interior.json builds it"
    },
    {
     "name": "atrium",

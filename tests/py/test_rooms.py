@@ -98,6 +98,26 @@ class CcomPlan(unittest.TestCase):
         cls.lay = layout.load(SCRIPTED / "ccom")
         cls.floors = cls.lay["interiors"]
 
+    def test_no_ring_crosses_itself(self):
+        # a slab or item ring is extruded as it is: a ring that doubles back makes a folded mesh
+        def side(p, q, r):
+            return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+
+        for f in self.floors:
+            for item in f["slabs"] + f.get("items", []) + f["blocks"] + f["solids"]:
+                r = item["ring"]
+                n = len(r)
+                for i in range(n):
+                    a, b = r[i], r[(i + 1) % n]
+                    for j in range(i + 2, n):
+                        if i == 0 and j == n - 1:
+                            continue
+                        c, d = r[j], r[(j + 1) % n]
+                        crossed = (
+                            side(a, b, c) * side(a, b, d) < 0 and side(c, d, a) * side(c, d, b) < 0
+                        )
+                        self.assertFalse(crossed, f"{item['name']}: edges {i} and {j} cross")
+
     def test_there_are_two_floors_with_levels_from_the_main_model(self):
         self.assertEqual(len(self.floors), 2)
         for f in self.floors:
