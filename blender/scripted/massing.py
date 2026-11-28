@@ -80,6 +80,9 @@ def roof(ring, kind, top, eave=None, ridge_angle=None):
     return tops, slopes + [q], []
 
 
+OVERHANG_CORNERS = (60.0, 120.0)  # degrees: the convex corners an overhang's corner fill is for
+
+
 def _plane(face):
     """z(x, y) of the plane of a roof face (Newell normal; a roof face is never vertical)."""
     nx = ny = nz = 0.0
@@ -110,6 +113,16 @@ def overhang_roof(ring, faces, overhang):
         (ax, ay), (bx, by) = ring[i], ring[(i + 1) % n]
         ln = math.hypot(bx - ax, by - ay)
         norm.append(((by - ay) / ln, -(bx - ax) / ln))  # outward: right of an anticlockwise run
+    for c in range(n):  # the corner fill is made for square-ish corners: refuse the others
+        a, b = norm[(c - 1) % n], norm[c]
+        if a[0] * b[1] - a[1] * b[0] > 0:  # convex
+            inside = 180.0 - math.degrees(math.acos(max(-1.0, min(1.0, a[0] * b[0] + a[1] * b[1]))))
+            if not OVERHANG_CORNERS[0] <= inside <= OVERHANG_CORNERS[1]:
+                raise ValueError(
+                    f"an overhang needs convex corners of {OVERHANG_CORNERS[0]:.0f} to "
+                    f"{OVERHANG_CORNERS[1]:.0f} degrees; the corner at {tuple(ring[c])} is "
+                    f"{inside:.0f}"
+                )
 
     def miter(c):  # the corner of the outline moved out, at ring corner c
         a, b = norm[(c - 1) % n], norm[c]

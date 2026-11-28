@@ -100,8 +100,18 @@ class Roofs(unittest.TestCase):
                 overlap += sum(geom.inside([q[:2] for q in f], *pt) for f in near) > 1
         self.assertEqual(overlap, 0)
 
+    def test_an_overhang_refuses_sharp_and_wide_convex_corners(self):
+        _t, slopes, _g = massing.roof(RECT, "hip", 18.0, 12.0)
+        self.assertTrue(massing.overhang_roof(RECT, slopes, 1.0))  # right angles: fine
+        sharp = [(0, 0), (30, 0), (2, 10)]
+        wide = [(0, 0), (10, 0), (20, 2), (30, 0), (30, 10), (0, 10)]
+        for ring in (sharp, wide):
+            _t, slopes, _g = massing.roof(ring, "hip", 18.0, 12.0)
+            with self.assertRaises(ValueError):
+                massing.overhang_roof(ring, slopes, 1.0)
+
     def test_an_overhang_leaves_a_mansard_top_and_its_wells_alone(self):
-        ring = [(0, 0), (20, 0), (20, 20), (10, 26), (0, 20)]
+        ring = [(0, 0), (30, 0), (30, 10), (15, 10), (15, 20), (0, 20)]
         slopes, eaves = self._eaves_ok(ring, "hip", 30.0, 26.0)
         cap = slopes[-1]
         for face in eaves:  # nothing reaches in to the flat top
