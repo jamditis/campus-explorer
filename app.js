@@ -66,7 +66,7 @@ let frameMs = 16, lazyAt = 0, drew = false; // smoothed time of a drawn frame; w
 
 app.look = createLook(renderer, scene, camera, () => app.invalidate());
 const scenery = createScenery(app);
-app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); });
+app.world = createWorld(app, scenery.prepare, root => { scenery.release(root); app.look.forget(root); app.doors.forget(root); });
 app.input = createInput(canvas, document.getElementById('overlay'));
 app.player = createPlayer(app);
 app.doors = createDoors(app); // entrance doors that open in walk mode

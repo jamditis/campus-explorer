@@ -8,8 +8,8 @@ import { doorFrom, wantsOpen, stepOpen, leafMove, DOOR_PASS } from './doors-math
 
 /** @param app the shared app object (docs/VIEWER.md) */
 export function createDoors(app) {
-  const doors = new Map(); // id -> { door, leaves: [{ o, root, base (world), parentInv }], at, s }
-  const _m = new THREE.Matrix4(), _box = new THREE.Box3(), _c = new THREE.Vector3(), _look = new THREE.Vector3();
+  const doors = new Map(); // id -> { leaves: [{ o, door (its own hinge or travel), root, base (world), parentInv }], at, s }
+  const _m = new THREE.Matrix4(), _box = new THREE.Box3(), _look = new THREE.Vector3();
 
   function add(root) {
     root.updateMatrixWorld(true);
@@ -17,19 +17,23 @@ export function createDoors(app) {
       if (!o.name.startsWith('DOOR_')) return;
       const door = doorFrom(o.userData.door); if (!door) return;
       let d = doors.get(door.id);
-      if (!d) doors.set(door.id, d = { door, leaves: [], at: new THREE.Vector3(), s: 0 });
+      if (!d) doors.set(door.id, d = { leaves: [], at: new THREE.Vector3(), s: 0 });
       o.matrixAutoUpdate = false;
-      d.leaves.push({ o, root, base: o.matrixWorld.clone(), parentInv: o.parent ? o.parent.matrixWorld.clone().invert() : new THREE.Matrix4() });
+      d.leaves.push({ o, door, root, base: o.matrixWorld.clone(), parentInv: o.parent ? o.parent.matrixWorld.clone().invert() : new THREE.Matrix4() });
       _box.makeEmpty(); for (const l of d.leaves) _box.expandByObject(l.o); _box.getCenter(d.at);
     });
   }
   function remove(root) {
-    for (const [id, d] of doors) { d.leaves = d.leaves.filter(l => l.root !== root); if (!d.leaves.length) doors.delete(id); }
+    for (const [id, d] of doors) {
+      const n = d.leaves.length; d.leaves = d.leaves.filter(l => l.root !== root);
+      if (!d.leaves.length) doors.delete(id);
+      else if (d.leaves.length !== n) { _box.makeEmpty(); for (const l of d.leaves) _box.expandByObject(l.o); _box.getCenter(d.at); }
+    }
   }
   function pose(d) {
-    _m.fromArray(leafMove(d.door, d.s));
     const open = d.s >= DOOR_PASS;
-    for (const l of d.leaves) {
+    for (const l of d.leaves) { // the leaves of a door open together, each about its own hinge or along its own travel
+      _m.fromArray(leafMove(l.door, d.s));
       l.o.matrix.copy(l.parentInv).multiply(_m).multiply(l.base); // local = parent⁻¹ · move · shut world
       l.o.matrixWorldNeedsUpdate = true;
       l.o.traverse(m => { if (m.isMesh) m.userData.doorOpen = open; });
@@ -49,12 +53,13 @@ export function createDoors(app) {
     if (moved) { app.look.invalidateShadows(); app.invalidate(); }
   }
   app.on('tile', ({ tile }) => add(tile.root));
-  app.on('tile:gone', ({ tile }) => remove(tile.root));
   app.on('scene:start', () => doors.clear());
   app.on('frame', ({ dt }) => step(dt));
   return {
     /** How far open (0 to 1) the door `id` is, or null when no loaded tile has it. */
     open: id => doors.get(id)?.s ?? null,
     get count() { return doors.size; },
+    /** Forget the leaves of a tile that was dropped from memory (world.js release, with the root itself). */
+    forget: remove,
   };
 }
