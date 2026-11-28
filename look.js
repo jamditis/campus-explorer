@@ -397,12 +397,14 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   // itself. Not within 150 m of the camera (the modelled trees are there). The colour is a summer canopy green
   // (UNVERIFIED tone, set by eye against the modelled trees). Changes albedo only, so it is lit like the ground
   const CANOPY_U = {
+    canopyOn: { value: 0 }, // 1 once the map has loaded: until then (or if it fails) the ground keeps its own look
     canopyMap: { value: EMPTY },
     canopyBox: { value: new THREE.Vector4(CANOPY.box[0], CANOPY.box[1], CANOPY.box[2] - CANOPY.box[0], CANOPY.box[3] - CANOPY.box[1]) },
   };
   function loadCanopy() {
     if (CANOPY_U.canopyMap.value !== EMPTY) return;
-    const t = loader.load(CANOPY.file, () => onChange());
+    const t = loader.load(CANOPY.file, () => { CANOPY_U.canopyOn.value = 1; onChange(); },
+      undefined, e => { console.warn('canopy map did not load', e); CANOPY_U.canopyMap.value = EMPTY; }); // a later tile tries again
     t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.anisotropy = 4;
     CANOPY_U.canopyMap.value = t;
   }
@@ -424,7 +426,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
           vCaPos = (modelMatrix * caW).xyz; vCaNrm = mat3(modelMatrix) * caN;`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
-          uniform sampler2D canopyMap; uniform vec4 canopyBox; varying vec3 vCaPos; varying vec3 vCaNrm;
+          uniform sampler2D canopyMap; uniform vec4 canopyBox; uniform float canopyOn; varying vec3 vCaPos; varying vec3 vCaNrm;
           float caHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
           float caNoise(vec2 p) {
             vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
@@ -438,7 +440,7 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
 `)
         .replace('#include <alphamap_fragment>', `{
             vec2 cuv = (vCaPos.xz - canopyBox.xy) / canopyBox.zw;
-            float caNear = smoothstep(150.0, 600.0, length(vCaPos - cameraPosition));
+            float caNear = canopyOn * smoothstep(150.0, 600.0, length(vCaPos - cameraPosition));
             if (caNear > 0.0 && cuv.x > 0.0 && cuv.y > 0.0 && cuv.x < 1.0 && cuv.y < 1.0) {
               float cover = texture2D(canopyMap, cuv).r; // percent * 2.55 / 255: the cover share
               // crown noise (farview-math.js crownNoise): two octaves of value noise at 9 m, rounded crowns
@@ -454,7 +456,9 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
               float share = crowns * detail + cover * (1.0 - detail);
               // the open ground between the trees of a suburb is roofs, roads and lawn, not all lawn: from afar a
               // grey-brown (UNVERIFIED mean, set by eye), more of it where there are fewer trees
-              diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.085, 0.080, 0.068), 0.5 * (1.0 - cover) * caNear);`}
+              // water (blue in the land cover map, no trees in the canopy map) keeps its colour
+              float caWater = smoothstep(0.0, 0.03, diffuseColor.b - max(diffuseColor.r, diffuseColor.g));
+              diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.085, 0.080, 0.068), 0.5 * (1.0 - cover) * caNear * (1.0 - caWater));`}
               vec3 green = vec3(0.030, 0.046, 0.020) * (0.75 + 0.5 * mix(0.5, n, detail));
               green = mix(green, vec3(0.040, 0.044, 0.022), caHash(floor(vCaPos.xz / 23.0)) * 0.5); // some crowns yellower
               diffuseColor.rgb = mix(diffuseColor.rgb, green, share * caNear);
