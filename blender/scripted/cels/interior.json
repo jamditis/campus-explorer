@@ -1,0 +1,301 @@
+{
+ "zone": "cels_interior",
+ "notes": "Center for Environmental and Life Sciences (main model, Void's .blend): a rough interior overlay from the footprint, the storeys and the few features public sources place: corridors, rooms, stairs and lifts are generic and UNVERIFIED. Nothing of the main model's shell is cut: the overlay stands inside it.",
+ "rough": [
+  {
+   "name": "CELS",
+   "building": "Center for Environmental and Life Sciences",
+   "osm": "way/313026393",
+   "osm_building": "university",
+   "shell": "main",
+   "method": "overlay",
+   "outline": [
+    [
+     100.57,
+     153.28
+    ],
+    [
+     78.47,
+     162.25
+    ],
+    [
+     67.88,
+     166.56
+    ],
+    [
+     82.86,
+     204.03
+    ],
+    [
+     90.19,
+     218.61
+    ],
+    [
+     102.01,
+     214.01
+    ],
+    [
+     103.53,
+     216.48
+    ],
+    [
+     130.31,
+     205.13
+    ],
+    [
+     126.82,
+     196.36
+    ],
+    [
+     129.3,
+     194.85
+    ],
+    [
+     116.79,
+     164.79
+    ],
+    [
+     115.12,
+     165.51
+    ],
+    [
+     108.89,
+     149.76
+    ]
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "floor": 137.4
+    },
+    {
+     "level": 2,
+     "floor": 143.1,
+     "outline": [
+      [
+       102.9,
+       152.3
+      ],
+      [
+       67.88,
+       166.56
+      ],
+      [
+       82.86,
+       204.03
+      ],
+      [
+       90.19,
+       218.61
+      ],
+      [
+       102.01,
+       214.01
+      ],
+      [
+       103.53,
+       216.48
+      ],
+      [
+       125.51,
+       207.16
+      ]
+     ]
+    },
+    {
+     "level": 3,
+     "floor": 147.45,
+     "outline": [
+      [
+       94.57,
+       155.71
+      ],
+      [
+       67.88,
+       166.56
+      ],
+      [
+       82.86,
+       204.03
+      ],
+      [
+       90.19,
+       218.61
+      ],
+      [
+       102.01,
+       214.01
+      ],
+      [
+       103.53,
+       216.48
+      ],
+      [
+       125.51,
+       207.16
+      ],
+      [
+       116.99,
+       186.49
+      ],
+      [
+       108.67,
+       189.91
+      ]
+     ]
+    },
+    {
+     "level": 4,
+     "floor": 151.8,
+     "outline": [
+      [
+       94.57,
+       155.71
+      ],
+      [
+       67.88,
+       166.56
+      ],
+      [
+       82.86,
+       204.03
+      ],
+      [
+       90.19,
+       218.61
+      ],
+      [
+       102.01,
+       214.01
+      ],
+      [
+       103.53,
+       216.48
+      ],
+      [
+       125.51,
+       207.16
+      ],
+      [
+       116.99,
+       186.49
+      ],
+      [
+       108.67,
+       189.91
+      ]
+     ]
+    },
+    {
+     "level": 5,
+     "floor": 156.15,
+     "outline": [
+      [
+       94.57,
+       155.71
+      ],
+      [
+       67.88,
+       166.56
+      ],
+      [
+       82.86,
+       204.03
+      ],
+      [
+       90.19,
+       218.61
+      ],
+      [
+       102.01,
+       214.01
+      ],
+      [
+       103.53,
+       216.48
+      ],
+      [
+       125.51,
+       207.16
+      ],
+      [
+       116.99,
+       186.49
+      ],
+      [
+       108.67,
+       189.91
+      ]
+     ]
+    }
+   ],
+   "roof": 160.0,
+   "spines": [
+    [
+     [
+      84.17,
+      160.64
+     ],
+     [
+      105.66,
+      212.79
+     ]
+    ]
+   ],
+   "entrances": [
+    {
+     "at": [
+      76.99,
+      189.34
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), automatic door on the west face; ground 137.1 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    },
+    {
+     "at": [
+      106.12,
+      150.93
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), automatic door at the south-east corner, where OSM steps way/552441862 end; ground 137.7 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    },
+    {
+     "at": [
+      78.27,
+      162.33
+     ],
+     "level": 1,
+     "evidence": "OSM footway way/1132693552 ends on the south face; ground 137.4 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    }
+   ],
+   "cores": [
+    {
+     "kind": "lift",
+     "at": [
+      101.72,
+      193.0
+     ],
+     "angle": 67.6
+    },
+    {
+     "kind": "stair",
+     "at": [
+      93.84,
+      165.74
+     ],
+     "angle": 67.6
+    },
+    {
+     "kind": "stair",
+     "at": [
+      104.13,
+      209.09
+     ],
+     "angle": 67.6
+    }
+   ],
+   "evidence": "outline OSM way/313026393; 5 storeys, 107,500 sq ft (www.langan.com/portfolio/montclair-state-university-cels); a central atrium joins the floors with a monumental stair (university news, search result); entrances and the elevator position from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map) and OSM; storey heights from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) roofs (143.15, 147.65, eave 160.5) and the published shell's window boxes (level 1 137.2 to 142.8)",
+   "unverified": "levels 3 to 5 (equal storeys between 143.1 and the eave), the corridor and every room wall, the two stairs, entrance positions to about 5 m; the atrium and its monumental stair are not placed: no public source gives their position"
+  }
+ ]
+}

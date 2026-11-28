@@ -40,6 +40,48 @@ def mid(p):
     return ((p["p"][0] + p["q"][0]) / 2, (p["p"][1] + p["q"][1]) / 2)
 
 
+def crosses(s, t):
+    """Do segments s and t ((x, y), (x, y)) cross or touch?"""
+
+    def turn(a, b, c):
+        return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+
+    (a, b), (c, d) = s, t
+    d1, d2, d3, d4 = turn(c, d, a), turn(c, d, b), turn(a, b, c), turn(a, b, d)
+    return d1 * d2 <= 0 and d3 * d4 <= 0 and not (d1 == d2 == 0)
+
+
+def walkable(test, f, route, label, blocks=()):
+    """The route from the corridor to the door stays in the floor until it reaches the lining's
+    opening at the door, and no wall but the lining crosses it."""
+    legs = list(zip(route, route[1:], strict=False))
+    for k, leg in enumerate(legs):
+        inside = rooms.clip(leg, inside=f["inside"])
+        test.assertTrue(inside, label)
+        test.assertLess(math.dist(inside[0][0], leg[0]), 1e-6, label)
+        if k < len(legs) - 1:
+            test.assertLess(math.dist(inside[0][1], leg[1]), 1e-6, f"{label}: leaves the floor")
+    exit_ = rooms.clip(legs[-1], inside=f["inside"])[0][1]
+    (lining,) = [w for w in f["walls"] if "lining" in w["name"]]
+    gaps = [
+        ((o["at"][0] + o["to"][0]) / 2, (o["at"][1] + o["to"][1]) / 2) for o in lining["openings"]
+    ]
+    test.assertLess(
+        min(math.dist(exit_, g) for g in gaps), rough.ENTRANCE, f"{label}: misses the door"
+    )
+    for w, p in pieces(f):
+        if "lining" in w["name"]:
+            continue
+        for leg in legs:
+            test.assertFalse(crosses(leg, (p["p"], p["q"])), f"{label}: {w['name']}")
+    for b in blocks:  # no stair or lift stands in the way
+        ring = b["ring"]
+        for leg in legs:
+            for side in zip(ring, ring[1:] + ring[:1], strict=True):
+                test.assertFalse(crosses(leg, side), f"{label}: {b['name']}")
+            test.assertFalse(geom.inside(ring, *leg[0]), f"{label}: {b['name']}")
+
+
 def rough_entries():
     for plan in sorted(SCRIPTED.glob("*/*.json")):
         for r in json.loads(plan.read_text()).get("rough", []):
@@ -191,23 +233,85 @@ class Options(unittest.TestCase):
         r = dict(
             BAR,
             outline=[[0, 0], [60, 0], [60, 20], [30, 20], [30, 45], [10, 45], [10, 20], [0, 20]],
-            spines=[[[0, 10], [60, 10]], [[20, 10], [20, 45]]],
+            spines=[[[0.6, 10], [59.4, 10]], [[20, 10], [20, 44.4]]],  # stairs inside the shell
         )
         f = rough.floors(r)[0]
-        first = rough._rect((6.4, 10), (53.6, 10), rough.CORRIDOR / 2 + rough.DEPTH)
+        first = rough._rect((6.6, 10), (53.4, 10), rough.CORRIDOR / 2 + rough.DEPTH)
         for w, p in pieces(f):
             if "room1" in w["name"]:
                 self.assertFalse(geom.inside(first, *mid(p)), w["name"])
 
     def test_a_level_with_its_own_outline_keeps_its_walls_and_slab_inside_it(self):
-        upper = [[0, 0], [60, 0], [60, 12], [0, 12]]
+        upper = [[0, 0], [60, 0], [60, 15], [0, 15]]  # holds the cores, not the north rooms
         r = dict(BAR, levels=[*BAR["levels"][:2], dict(level=3, floor=108.0, outline=upper)])
         f1, _f2, f3 = rough.floors(r)
         self.assertEqual(f3["outline"], upper)
-        self.assertLess(max(y for _, y in f3["slabs"][0]["ring"]), 12)
+        self.assertLess(max(y for _, y in f3["slabs"][0]["ring"]), 15)
         for w, p in pieces(f3):
-            self.assertLess(mid(p)[1], 12, w["name"])
+            self.assertLess(mid(p)[1], 15, w["name"])
         self.assertGreater(max(y for _, y in f1["slabs"][0]["ring"]), 19)
+
+    def test_an_entrance_beyond_the_corridor_end_gets_a_lobby_along_it(self):
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [40, 10]]],
+            cores=[dict(kind="stair", at=[20, 15]), dict(kind="lift", at=[30, 15])],
+            entrances=[dict(at=[60.3, 10], level=1)],
+        )
+        f = rough.floors(r)[0]
+        sides = [p for w, p in pieces(f) if "lobby" in w["name"]]
+        self.assertTrue(sides)
+        for p in sides:  # the lobby's side walls run along the corridor, either side of it
+            self.assertAlmostEqual(p["p"][1], p["q"][1], places=2)
+            self.assertAlmostEqual(abs(p["p"][1] - 10), rough.LOBBY / 2, places=2)
+        hall = [(40.1, 7.1), (59.4, 7.1), (59.4, 12.9), (40.1, 12.9)]
+        for w, p in pieces(f):
+            if "lining" not in w["name"]:
+                self.assertFalse(geom.inside(hall, *mid(p)), w["name"])
+
+    def test_a_door_beside_the_corridor_end_gets_a_porch_and_a_hall(self):
+        # the straight line from the corridor's end to the door would run along the end wall
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59.4, 10]]],
+            cores=[dict(kind="stair", at=[20, 15]), dict(kind="lift", at=[30, 15])],
+            entrances=[dict(at=[-0.3, 17.5], level=1)],
+        )
+        ((level, route),) = rough.routes(r)
+        self.assertEqual(len(route), 3)
+        f = rough.floors(r)[0]
+        walkable(self, f, route, "west door", f["blocks"])
+
+    def test_a_way_in_that_leaves_the_floor_is_refused(self):
+        u_shape = [[0, 0], [40, 0], [40, 40], [30, 40], [30, 10], [10, 10], [10, 40], [0, 40]]
+        r = dict(
+            BAR,
+            outline=u_shape,
+            spines=[[[5, 15], [5, 35]]],
+            cores=[dict(kind="stair", at=[5, 5])],
+            entrances=[dict(at=[40.3, 35], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "leaves the floor"):
+            rough.floors(r)
+
+    def test_a_way_in_through_a_lift_is_refused(self):
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59.4, 10]]],
+            cores=[dict(kind="stair", at=[10, 15]), dict(kind="lift", at=[30, 4])],
+        )
+        with self.assertRaisesRegex(ValueError, "passes a lift"):
+            rough.floors(r)
+
+    def test_a_core_outside_an_upper_level_is_refused(self):
+        upper = [[0, 0], [60, 0], [60, 12], [0, 12]]
+        r = dict(
+            BAR,
+            levels=[*BAR["levels"][:2], dict(level=3, floor=108.0, outline=upper)],
+            cores=[dict(kind="stair", at=[20, 15])],
+        )
+        with self.assertRaisesRegex(ValueError, "outside level 3"):
+            rough.floors(r)
 
     def test_a_short_spine_without_given_cores_is_refused(self):
         with self.assertRaises(ValueError):
@@ -267,3 +371,12 @@ class Plans(unittest.TestCase):
                         self.assertTrue(geom.inside(f["inside"], x, y), f"{plan}: {b['name']}")
                 for lab in f["rooms"]:
                     self.assertTrue(geom.inside(f["inside"], *lab["at"]), f"{plan}: {lab}")
+            by_level = {f["level"]: f for f in floors}
+            for level, route in rough.routes(r):
+                walkable(
+                    self,
+                    by_level[level],
+                    route,
+                    f"{plan}: entrance on level {level}",
+                    floors[0]["blocks"],
+                )

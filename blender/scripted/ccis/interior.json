@@ -1,0 +1,374 @@
+{
+ "zone": "ccis_interior",
+ "notes": "Center for Computing and Information Science (main model, Void's .blend): a rough interior overlay from the footprint, the storeys and the few features public sources place: corridors, rooms, stairs and lifts are generic and UNVERIFIED. Nothing of the main model's shell is cut: the overlay stands inside it.",
+ "rough": [
+  {
+   "name": "CCIS",
+   "building": "Center for Computing and Information Science",
+   "osm": "way/313024779",
+   "osm_building": "university",
+   "shell": "main",
+   "method": "overlay",
+   "outline": [
+    [
+     24.37,
+     243.99
+    ],
+    [
+     15.57,
+     223.7
+    ],
+    [
+     6.24,
+     222.14
+    ],
+    [
+     4.44,
+     217.7
+    ],
+    [
+     9.77,
+     209.66
+    ],
+    [
+     6.99,
+     203.26
+    ],
+    [
+     8.87,
+     202.45
+    ],
+    [
+     7.91,
+     200.26
+    ],
+    [
+     9.05,
+     199.78
+    ],
+    [
+     5.22,
+     190.94
+    ],
+    [
+     18.35,
+     185.3
+    ],
+    [
+     22.22,
+     194.22
+    ],
+    [
+     24.6,
+     193.19
+    ],
+    [
+     41.89,
+     233.09
+    ],
+    [
+     40.35,
+     234.2
+    ],
+    [
+     41.42,
+     236.67
+    ]
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "floor": 138.6,
+     "outline": [
+      [
+       15.57,
+       223.7
+      ],
+      [
+       24.37,
+       243.99
+      ],
+      [
+       41.42,
+       236.67
+      ],
+      [
+       40.35,
+       234.2
+      ],
+      [
+       41.89,
+       233.09
+      ],
+      [
+       24.6,
+       193.19
+      ],
+      [
+       22.22,
+       194.22
+      ],
+      [
+       18.35,
+       185.3
+      ],
+      [
+       5.22,
+       190.94
+      ],
+      [
+       9.05,
+       199.78
+      ],
+      [
+       7.91,
+       200.26
+      ],
+      [
+       8.87,
+       202.45
+      ],
+      [
+       6.99,
+       203.26
+      ],
+      [
+       9.77,
+       209.66
+      ],
+      [
+       8.88,
+       211.0
+      ],
+      [
+       14.3,
+       223.49
+      ]
+     ]
+    },
+    {
+     "level": 2,
+     "floor": 142.6,
+     "outline": [
+      [
+       15.57,
+       223.7
+      ],
+      [
+       24.37,
+       243.99
+      ],
+      [
+       41.42,
+       236.67
+      ],
+      [
+       40.35,
+       234.2
+      ],
+      [
+       41.89,
+       233.09
+      ],
+      [
+       24.6,
+       193.2
+      ],
+      [
+       7.97,
+       200.41
+      ],
+      [
+       8.87,
+       202.45
+      ],
+      [
+       6.99,
+       203.26
+      ],
+      [
+       9.77,
+       209.66
+      ],
+      [
+       8.88,
+       211.0
+      ],
+      [
+       14.3,
+       223.49
+      ]
+     ]
+    },
+    {
+     "level": 3,
+     "floor": 146.6,
+     "outline": [
+      [
+       15.57,
+       223.7
+      ],
+      [
+       24.37,
+       243.99
+      ],
+      [
+       41.42,
+       236.67
+      ],
+      [
+       40.35,
+       234.2
+      ],
+      [
+       41.89,
+       233.09
+      ],
+      [
+       24.6,
+       193.2
+      ],
+      [
+       7.97,
+       200.41
+      ],
+      [
+       8.87,
+       202.45
+      ],
+      [
+       6.99,
+       203.26
+      ],
+      [
+       9.77,
+       209.66
+      ],
+      [
+       8.88,
+       211.0
+      ],
+      [
+       14.3,
+       223.49
+      ]
+     ]
+    },
+    {
+     "level": 4,
+     "floor": 150.6,
+     "outline": [
+      [
+       15.57,
+       223.7
+      ],
+      [
+       24.37,
+       243.99
+      ],
+      [
+       41.42,
+       236.67
+      ],
+      [
+       40.35,
+       234.2
+      ],
+      [
+       41.89,
+       233.09
+      ],
+      [
+       24.6,
+       193.2
+      ],
+      [
+       7.97,
+       200.41
+      ],
+      [
+       8.87,
+       202.45
+      ],
+      [
+       6.99,
+       203.26
+      ],
+      [
+       9.77,
+       209.66
+      ],
+      [
+       8.88,
+       211.0
+      ],
+      [
+       14.3,
+       223.49
+      ]
+     ]
+    }
+   ],
+   "roof": 154.3,
+   "spines": [
+    [
+     [
+      14.98,
+      198.03
+     ],
+     [
+      33.04,
+      239.68
+     ]
+    ]
+   ],
+   "depth": 8.5,
+   "entrances": [
+    {
+     "at": [
+      9.05,
+      199.78
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), automatic door at the south-west end; ground 138.5 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    },
+    {
+     "at": [
+      30.17,
+      241.5
+     ],
+     "level": 1,
+     "evidence": "campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map), automatic door at the north end; ground 138.4 (NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m))"
+    }
+   ],
+   "cores": [
+    {
+     "kind": "stair",
+     "at": [
+      22.52,
+      198.46
+     ],
+     "angle": 66.56
+    },
+    {
+     "kind": "lift",
+     "at": [
+      24.35,
+      202.68
+     ],
+     "angle": 66.56
+    },
+    {
+     "kind": "stair",
+     "at": [
+      37.64,
+      233.33
+     ],
+     "angle": 66.56
+    }
+   ],
+   "evidence": "outline OSM way/313024779; 4 storeys after the added floor (Clarke Caton Hintz, clarkecatonhintz.com/project/montclair-state-university-mallory-hall/); entrances from the campus accessibility map 2026-08-26 (inside.montclair.edu/news/university-facilities-launches-new-campus-accessibility-map); the 4-storey block from the NJ LiDAR via USGS 3DEP EPT (tools/evidence/fetch.py lidar, 0.5 m) surface (154 to 157 m), the south wing and the west jogs one storey (roofs 140.7 to 145; published shell 'Center for Computing and Information Science roof (LiDAR)' 140.73 to 156.92), so level 1 leaves out the west jogs and levels 2 to 4 are the tall block only; level 1 at the doors' ground (138.4 to 138.6)",
+   "unverified": "levels 2 to 4 (equal storeys between the doors' ground and the roof), the corridor along the tall block and every room wall, the stairs and the lift (the map shows an elevator route, no position), entrance positions to about 5 m; the 145-seat amphitheater is not placed"
+  }
+ ]
+}
