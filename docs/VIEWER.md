@@ -130,7 +130,8 @@ app = {
 
 ### Drawing on demand
 
-The loop does not draw when nothing changed. If a module changes something visible that is not the camera (adds a mesh, moves a marker), it calls `app.invalidate()`. `app.invalidate(true)` is the lazy form for changes that can wait a moment, such as a tile that arrived: on a slow GPU the redraw is put off for a few frame times so that loading is not held up by drawing. DOM overlays do not need it.
+The loop does not draw when nothing changed, with one exception: the idle tree sway (see "Tree sway") redraws a
+still view 14 times a second (8 on the lite profile) for 2 minutes after the last input. If a module changes something visible that is not the camera (adds a mesh, moves a marker), it calls `app.invalidate()`. `app.invalidate(true)` is the lazy form for changes that can wait a moment, such as a tile that arrived: on a slow GPU the redraw is put off for a few frame times so that loading is not held up by drawing. DOM overlays do not need it.
 
 ## `world`
 
@@ -282,6 +283,21 @@ bits and the error does not add up. A rotation batch with quaternions off unit l
 filter stores unit quaternions, and normalizing one moves its card by more than 1 mm) keeps its 16-bit values.
 
 Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
+
+### Tree sway
+
+Leaves move in the wind, in the vertex shader of every leaf material (`look.js` `sway`): no per-tree work in JS and
+no extra draw. An instanced tree's crown bends by up to 1.2 cm per metre of height above its trunk base, in two
+slow beats, each tree in its own phase from its position; every leaf card also flutters 1 cm, faster. Plain tree
+meshes (copies joined into one mesh) only flutter. The shadow map is not redrawn for it, so shadows stay still.
+
+The clock (`look.setSway`) advances with every frame the loop draws anyway (moving, film, tour) and, while the view
+is still, in an idle loop in `app.js`: a redraw 14 times a second (8 on the lite profile) that stops 2 minutes after
+the last input (pointer, wheel, key, touch), while the tab is hidden, and on the lite profile when the Battery API
+reports a battery at or under 20 % and not charging. Any input starts it again. A frame drawn only for the sway does
+not force the screen-size cull or a new shadow map. With `prefers-reduced-motion` the sway is off and the idle loop
+never runs. Cost: each idle frame is one full redraw of the view (on the lite profile at eye level by Susan A. Cole
+Hall: 498 draw calls, 2.8 M triangles), where before a still view drew nothing.
 
 ### Trees and shrubs
 
