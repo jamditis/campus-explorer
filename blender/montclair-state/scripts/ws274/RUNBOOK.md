@@ -24,7 +24,10 @@ First session of the Nov 28 building day: College Ave / Lot 33 finish.
    extended from x −337 to −332, past the hatch to the red-roof building corner; self-review of the ws274b eye-from-E WIP) → ws274c =
    ws274c (saved 8:41:14 AM ET, promoted 8:41:15 AM ET, sha256 de547189…59f2; 105 curb rows, 1 raycast miss at the E end filled from
    the previous row), then with f274a v4 (reveal tapers to 2 cm over the last 1.2 m at both ends; the ws274c eye-from-E WIP showed
-   a free-standing curb end at x −332) → ws274d = MAIN (saved 8:44:39 AM ET, promoted 8:44:41 AM ET, sha256 9432970e…eeee). f274b rebuilds the
+   a free-standing curb end at x −332) → ws274d (saved 8:44:39 AM ET, promoted 8:44:41 AM ET, sha256 9432970e…eeee), then
+   with f274a v5 (Codex P1 on PR #108: the gutter's first sample at the E-end raycast miss fell back to a fixed 119.0 m, ~2 m under
+   the paving; it now carries the curb row's paving height, and the curb's own first-station fallback uses the back-line sample)
+   → ws274e = MAIN (saved 8:48:06 AM ET, promoted 8:48:07 AM ET, sha256 25675b66…9dbc). f274b rebuilds the
    curb/gutter with f274a v2 (no clamp → one straight smoothed run; curb drops to a 2 cm lip over x −358.6…−354.4 where the police
    S walk meets the road, 0.8 m transitions = curb cut, UNVERIFIED), curb material WS27_curb_concrete_UNVERIFIED (the College Ave
    curbs) and a gutter copy of it (WS274_gutter_pan_concrete_WS27tone, 0.82× darker, roughness 0.85); the ws269 island curb gets the

@@ -51,7 +51,9 @@ bm=bmesh.new(); rows=[]; miss=0
 for p,n in zip(P,T):
     pf=p+n*0.15; pg=p+n*0.60
     zf=pz(pf.x,pf.y); zb=pz(p.x+n.x*0.02,p.y+n.y*0.02)
-    if zf is None: miss+=1; zf=rows[-1][-1] if rows else 119.0
+    if zf is None:   # v5: previous row's paving height, or the back-line sample; never a fixed elevation
+        miss+=1; zf=rows[-1][4] if rows else zb
+    if zf is None: raise SystemExit('F274A no paving under the first curb station')
     if zb is None: zb=zf
     rv=0.15
     if CUT[0]-0.8<p.x<CUT[1]+0.8:
@@ -83,11 +85,12 @@ oc['ws274']='College Ave N curb along the police lawn; ortho 2020 light band; re
 print(TAG,'curb rows',len(rows),'miss',miss,'mat',mc and mc.name,flush=True)
 # ---- gutter pan: from the curb face 0.45 m into the road, +6 mm at the outer edge, dished -9 mm (net) mid
 bm=bmesh.new(); G=[]; gm=0
-for p,n in zip(P,T):
+for i,(p,n) in enumerate(zip(P,T)):
     row=[]
     for s,dz in ((0.15,0.006),(0.36,0.004),(0.60,0.006)):
         q=p+n*s; z=pz(q.x,q.y)
-        if z is None: gm+=1; z=row[-1].co.z-dz if row else 119.0
+        if z is None:   # v5 (ws274e, Codex P1 on PR #108): carry the curb row's paving height, never a fixed elevation
+            gm+=1; z=rows[i][4] if not row else row[-1].co.z-dz
         row.append(bm.verts.new((q.x,q.y,z+dz)))
     G.append(row)
 for r0,r1 in zip(G[:-1],G[1:]):
