@@ -30,7 +30,7 @@ export function createFollow(app) {
   ring.name = 'follow-accuracy'; ring.visible = false; ring.renderOrder = 2; scene.add(ring);
 
   const track = createTrack();
-  let active = false, starting = false, shown = false, gen = 0, watch = null, placing = false, placed = false, accuracy = 0;
+  let active = false, starting = false, shown = false, gen = 0, moveSeq = -1, watch = null, placing = false, placed = false, accuracy = 0;
   let heading = null, pitch = null, wantHeading = null, wantPitch = 0, offset = null, lastOrient = 0;
   // Android Chrome sends absolute readings on deviceorientationabsolute, and on deviceorientation with
   // absolute true when it has no relative sensor; iOS sends relative ones with webkitCompassHeading. Listen to both.
@@ -86,14 +86,15 @@ export function createFollow(app) {
 
   async function place(x, z) {
     const my = gen;
-    placing = true;
+    placing = true; shown = true; // the camera moves to the user's position from here on
     try {
-      let ok = await player.teleport(x, z);
+      let move = player.teleport(x, z); moveSeq = player.moveSeq;
+      let ok = await move;
       if (my !== gen) return;
       const low = ok ? lowestAt(x, z) : null;
-      if (low !== null && low < player.position.y - 1) ok = await player.teleport(x, z, low);
+      if (low !== null && low < player.position.y - 1) { move = player.teleport(x, z, low); moveSeq = player.moveSeq; ok = await move; }
       if (my !== gen) return;
-      if (ok) { placed = true; shown = true; player.guide = { x, z, look: wantHeading === null }; }
+      if (ok) { placed = true; player.guide = { x, z, look: wantHeading === null }; }
       else if (ok === false) say('No ground in the model here yet');
     } finally { if (my === gen) placing = false; }
   }
@@ -129,7 +130,7 @@ export function createFollow(app) {
 
   function stop() {
     gen++;
-    if (placing) { player.cancelMove(); placing = false; }
+    if (placing) { player.cancelMove(moveSeq); placing = false; }
     if (watch !== null) navigator.geolocation.clearWatch(watch);
     watch = null; active = false; placed = false; track.reset();
     for (const t of ORIENT) removeEventListener(t, onOrient);
@@ -166,5 +167,9 @@ export function createFollow(app) {
     ring.visible = true;
   });
 
-  return { start, stop, get active() { return active; } };
+  return {
+    start, stop, get active() { return active; },
+    /** True from the first fix until the view moves to a place (a `fly` event): until then the view shows where the user is. */
+    get private() { return active || shown; },
+  };
 }

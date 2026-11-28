@@ -180,8 +180,10 @@ export function createPlayer(app) {
   return {
     position, step, teleport, respawn, lookFromCamera,
     jump() { if (grounded && !busy) { vel.y = JUMP; grounded = false; } },
-    /** Cancel a teleport in progress without touching the walker (it resolves null). */
-    cancelMove() { seq++; busy = false; status(''); },
+    /** The current move's number: read it right after calling teleport to cancel that move later. */
+    get moveSeq() { return seq; },
+    /** Cancel the teleport numbered `n` if it is still the current one, without touching the walker (it resolves null). */
+    cancelMove(n) { if (n === seq) { seq++; busy = false; status(''); } },
     stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; placed = false; status(''); },
     refresh() { basis(); if (app.state.mode === 'walk') place(0); },
     get guide() { return guide; }, set guide(g) { guide = g; if (!g) vel.set(0, 0, 0); },
