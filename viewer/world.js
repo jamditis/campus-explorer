@@ -87,8 +87,6 @@ export function createWorld(app, prepare, release = () => {}) {
       const g = o.geometry; if (!g.boundingBox) g.computeBoundingBox();
       const tris = (g.index ? g.index.count : g.attributes.position.count) / 3;
       const box = g.boundingBox.clone().applyMatrix4(o.matrixWorld);
-      // a door leaf moves (doors.js): its box covers a swing about an edge or a slide of one leaf width
-      for (let p = o; p; p = p.parent) if (p.name.startsWith('DOOR_')) { const sz = box.getSize(_ms); box.expandByScalar(Math.max(sz.x, sz.y, sz.z)); break; }
       // `big`: wide and not tall, so ground, paving or a roof rather than a post or a bench (see raycast's bigOnly)
       const big = Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > 15 && box.max.y - box.min.y < 150;
       if (tris > SPLIT_TRIS && g.index) for (const part of splitByCell(o)) { part.big = big; colliders.push(part); }
@@ -394,6 +392,13 @@ export function createWorld(app, prepare, release = () => {}) {
   function home(at) { app.home ??= new THREE.Vector3(at.x, 0, at.z); }
 
   // ---- collision ----
+  /** Bring the collision boxes of the meshes under `obj` to where they are now (doors.js, after a leaf moved). */
+  function refit(obj) {
+    obj.updateMatrixWorld(true);
+    for (const c of colliders) {
+      for (let p = c.mesh; p; p = p.parent) if (p === obj) { c.box.copy(c.mesh.geometry.boundingBox).applyMatrix4(c.mesh.matrixWorld); break; }
+    }
+  }
   function ensureBVH(c) {
     const g = c.mesh.geometry;
     if (!g.boundsTree) g.boundsTree = withFullRange(g, () => new MeshBVH(g, { strategy: CENTER, maxLeafTris: 12, indirect: true }));
@@ -527,7 +532,7 @@ export function createWorld(app, prepare, release = () => {}) {
   return {
     load, loadAll, dispose, raycast, groundAt, pick, pushOut, warm,
     get budget() { return budget; },
-    updateLods, get lods() { return lods.length; },
+    updateLods, refit, get lods() { return lods.length; },
     get tiles() { return tiles; },
     get group() { return group; },
     get progress() { return progress; },

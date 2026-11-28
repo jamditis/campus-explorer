@@ -36,8 +36,8 @@ export function createDoors(app) {
     for (const l of d.leaves) { // the leaves of a door open together, each about its own hinge or along its own travel
       _m.fromArray(leafMove(l.door, d.s));
       l.o.matrix.copy(l.parentInv).multiply(_m).multiply(l.base); // local = parent⁻¹ · move · shut world
-      l.o.matrixWorldNeedsUpdate = true;
       l.o.traverse(m => { if (m.isMesh) m.userData.doorOpen = open; });
+      app.world.refit(l.o); // collision boxes follow the leaf (it updates the leaf's world matrices)
     }
   }
   function step(dt) {
