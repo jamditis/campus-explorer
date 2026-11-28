@@ -1,6 +1,6 @@
 {
  "zone": "library_interior",
- "notes": "Sprague Library (main model, Void's .blend): a rough interior overlay of the main and second levels from the university's public floor maps. Open floors (stacks and reading areas), with the stair and lift cores, restrooms and main desks where the maps put them. Nothing of the main model's shell is cut: the overlay stands inside it.",
+ "notes": "Sprague Library (main model, Void's .blend): a rough interior overlay of the main and second levels from the university's public floor maps. Open floors (stacks and reading areas), with the stair and lift cores, restrooms and numbered rooms where the maps put them. Nothing of the main model's shell is cut: the overlay stands inside it.",
  "rough": [
   {
    "name": "LIBR",
@@ -442,120 +442,84 @@
    "rooms": [
     {
      "level": 1,
-     "number": "Front desk",
-     "at": [
-      -61.63,
-      29.13
-     ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
-    },
-    {
-     "level": 1,
-     "number": "Access Services 127",
-     "at": [
-      -53.9,
-      23.66
-     ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
-    },
-    {
-     "level": 1,
-     "number": "Cafe Diem",
-     "at": [
-      -53.53,
-      52.48
-     ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
-    },
-    {
-     "level": 1,
-     "number": "Classroom 110",
+     "number": "110",
      "at": [
       -61.32,
       62.72
      ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28) (Classroom 110)"
     },
     {
      "level": 1,
-     "number": "Printing and laptop lending 132",
+     "number": "127",
+     "at": [
+      -53.9,
+      23.66
+     ],
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28) (Access Services 127)"
+    },
+    {
+     "level": 1,
+     "number": "132",
      "at": [
       -63.46,
       15.69
      ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28) (Printing and laptop lending 132)"
     },
     {
      "level": 1,
-     "number": "Public computers",
+     "number": "137",
      "at": [
-      -75.37,
-      53.64
+      -62.43,
+      5.16
      ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
-    },
-    {
-     "level": 1,
-     "number": "Commuter study",
-     "at": [
-      -82.89,
-      5.61
-     ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
-    },
-    {
-     "level": 1,
-     "number": "Reading room",
-     "at": [
-      -87.46,
-      -8.32
-     ],
-     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28)"
+     "evidence": "library-main-level-map (inside.montclair.edu/documents/library-main-level-map, fetched 2026-11-28) (Resource Sharing 137)"
     },
     {
      "level": 2,
-     "number": "Classroom 203",
+     "number": "203",
      "at": [
       -62.19,
       58.43
      ],
-     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Classroom 203)"
     },
     {
      "level": 2,
-     "number": "Dean's office 210",
+     "number": "210",
      "at": [
       -107.0,
       33.53
      ],
-     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Dean's office 210)"
     },
     {
      "level": 2,
-     "number": "Special Collections 218",
+     "number": "218",
      "at": [
       -79.95,
       26.74
      ],
-     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Special Collections 218)"
     },
     {
      "level": 2,
-     "number": "Archives reading room 219",
+     "number": "219",
      "at": [
       -63.59,
       23.17
      ],
-     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Archives reading room 219)"
     },
     {
      "level": 2,
-     "number": "Quiet study",
+     "number": "223",
      "at": [
-      -87.88,
-      -9.89
+      -77.17,
+      14.89
      ],
-     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28)"
+     "evidence": "library-2nd-floor-map (inside.montclair.edu/documents/library-2nd-floor-map, fetched 2026-11-28) (Room 223)"
     }
    ],
    "evidence": "outline OSM way/313021863; plan positions from the university's main- and second-level library maps registered to the OSM outline by an affine fit on 6 corners (rms 0.55 m, worst 0.82 m; the second-level map is drawn 10 px higher, checked on 7 cores); level 1 at the east entrance's LiDAR ground (NJ 2017/2023 EPT, 137.86); roof deck from the LiDAR surface (146.0)",

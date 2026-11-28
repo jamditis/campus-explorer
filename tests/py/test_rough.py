@@ -257,3 +257,5 @@ class Plans(unittest.TestCase):
                 for b in f["blocks"]:
                     for x, y in b["ring"]:
                         self.assertTrue(geom.inside(f["inside"], x, y), f"{plan}: {b['name']}")
+                for lab in f["rooms"]:
+                    self.assertTrue(geom.inside(f["inside"], *lab["at"]), f"{plan}: {lab}")

@@ -1,9 +1,9 @@
 """Build viewer/rooms.json: room numbers and the volumes of the buildings that have a real interior.
 
 Reads every scripted interior plan (blender/scripted/<area>/interior.json, its rough entries made
-into floors by blender/scripted/rough.py) through the plan's own
-label rule (blender/scripted/rooms.py `labels`), so no Blender is needed. Each area with an
-interior gives one volume: the floor outline, from the lowest floor up to the top of the shell
+into floors by blender/scripted/rough.py) whose objects are in the published tiles, through the
+plan's own label rule (blender/scripted/rooms.py `labels`), so no Blender is needed. Each area with
+an interior gives one volume: the floor outline, from the lowest floor up to the top of the shell
 building that holds it (the highest ceiling when there is none), with the floor levels and the
 highest interior ceiling. The building's name is the viewer place (viewer/places.json) that lies
 inside the outline.
@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import struct
 import sys
 from pathlib import Path
 
@@ -27,6 +28,24 @@ sys.path.insert(0, str(SCRIPTED))
 
 import rooms  # noqa: E402
 import rough  # noqa: E402
+
+
+def tile_names(tiles):
+    """Object names in the published tiles (`tiles`: models/main): each .glb's node names, read
+    from its JSON chunk only."""
+    out = set()
+    for f in sorted(Path(tiles).glob("**/*.glb")):
+        with open(f, "rb") as h:
+            size = struct.unpack("<I", h.read(20)[12:16])[0]
+            out.update(n.get("name", "") for n in json.loads(h.read(size)).get("nodes", []))
+    return out
+
+
+def exported(floors, names):
+    """Are an interior plan's objects in the tiles? interior.py names each floor's objects
+    SW_<floor name>_...; the exporter joins some of them, so any one of them is enough."""
+    return any(n.startswith(f"SW_{f['name']}_") for f in floors for n in names)
+
 
 # The university's own short names (Joe's usage and the building's signs), for search
 SHORT = {"College of Communication and Media": "CCOM"}
@@ -92,8 +111,14 @@ def area(name, floors, places, buildings, short=SHORT):
     return dict(volumes=[volume], rooms=out)
 
 
-def build(scripted=SCRIPTED, places_file=ROOT / "viewer" / "places.json"):
+def build(
+    scripted=SCRIPTED, places_file=ROOT / "viewer" / "places.json", tiles=ROOT / "models" / "main"
+):
+    """Volumes and rooms of every interior plan whose objects the tiles carry: a plan not yet built
+    and exported gives no volume and no room, so the viewer never names an interior it cannot
+    show."""
     places = json.loads(Path(places_file).read_text())["places"]
+    names = tile_names(tiles)
     out = dict(
         source="blender/scripted/<area>/interior.json: room numbers from the floor signs",
         builder="tools/places/build_rooms.py",
@@ -103,7 +128,7 @@ def build(scripted=SCRIPTED, places_file=ROOT / "viewer" / "places.json"):
     )
     for plan in sorted(Path(scripted).glob("*/interior.json")):
         floors = rough.expand(json.loads(plan.read_text()))
-        if not floors:
+        if not floors or not exported(floors, names):
             continue
         buildings = []
         for other in sorted(plan.parent.glob("*.json")):
