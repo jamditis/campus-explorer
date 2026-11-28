@@ -14,6 +14,7 @@ import { inVolume, nearVolumes, packVolumes, VOL_TEX_W, GLASS_GROW, EDGE } from 
 import { acesFilmic, toSrgb, hazeColours, ACES_IN, ACES_OUT, invert3, glslMat3 } from './viewer/haze-math.js';
 import { CANOPY, NOISE_Q, LANDMARKS, towerTop } from './viewer/farview-math.js';
 import { latLonToLocal } from './viewer/geo.js';
+import { shadowHalf, shadowReach, shadowMoves } from './viewer/shadow-math.js';
 export { fixTone, fixCat };
 
 // --- haze (aerial perspective) for every material that takes fog: see haze-math.js transmittance ---
@@ -800,18 +801,20 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
   const focus = new THREE.Vector3(), lastFocus = new THREE.Vector3(Infinity, 0, 0); let lastHalf = 0;
   /** Follow the view: shadow box, sky and culling. `settle` forces a cull (call it when the camera stops). */
   function update(target, settle = false) {
-    // shadow box follows what you look at; sized to the view distance in steps, snapped to texels
+    // shadow box follows what you look at; sized to the view distance in steps, snapped to texels, and moved
+    // only past a slack (viewer/shadow-math.js): each move redraws the shadow map, every frame while walking
     focus.copy(target ?? camera.position);
-    const dist = camera.position.distanceTo(focus);
-    const raw = THREE.MathUtils.clamp(dist * 0.9, 45, 700);
-    const half = 45 * Math.pow(1.25, Math.round(Math.log(raw / 45) / Math.log(1.25)));
+    const half = shadowHalf(camera.position.distanceTo(focus)), reach = shadowReach(half);
     const sc = sun.shadow.camera;
-    if (sc.right !== half) { sc.left = -half; sc.right = half; sc.top = half; sc.bottom = -half; sc.near = 10; sc.far = 4000; sc.updateProjectionMatrix(); }
-    const texel = (2 * half) / (q.shadows || 2048);
+    if (sc.right !== reach) { sc.left = -reach; sc.right = reach; sc.top = reach; sc.bottom = -reach; sc.near = 10; sc.far = 4000; sc.updateProjectionMatrix(); }
+    const texel = (2 * reach) / (q.shadows || 2048);
     focus.x = Math.round(focus.x / texel) * texel; focus.z = Math.round(focus.z / texel) * texel;
     focus.y = Math.round(focus.y / 4) * 4;
-    if (half !== lastHalf || !focus.equals(lastFocus)) { lastHalf = half; lastFocus.copy(focus); shadowDirty = true; }
-    sun.target.position.copy(focus); sun.position.copy(focus).addScaledVector(sunDir.y > 0.02 ? sunDir : _up, 1500);
+    if (shadowMoves(focus, isFinite(lastFocus.x) ? lastFocus : null, half, lastHalf, shadowDirty)) {
+      if (half !== lastHalf || !focus.equals(lastFocus)) shadowDirty = true;
+      lastHalf = half; lastFocus.copy(focus);
+    }
+    sun.target.position.copy(lastFocus); sun.position.copy(lastFocus).addScaledVector(sunDir.y > 0.02 ? sunDir : _up, 1500);
     sky.position.copy(camera.position);
     cull(settle);
     if (shadowDirty && sun.castShadow) { sun.shadow.needsUpdate = true; shadowDirty = false; }

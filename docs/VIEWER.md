@@ -283,7 +283,7 @@ the decoded values, and records them in the node's extras (`inst_bits`) so a lat
 bits and the error does not add up. A rotation batch with quaternions off unit length (some shrub leaf cards: the
 filter stores unit quaternions, and normalizing one moves its card by more than 1 mm) keeps its 16-bit values.
 
-Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map.
+Scenery runs only when the camera moved: `scenery.js` refreshes the tree level of detail, the far versions and the grass tufts at most four times a second, then asks for one redraw and a fresh shadow map. The shadow box itself follows the view only past a slack of 1/16 of its half-width, or with a shadow map redrawn anyway (`viewer/shadow-math.js`), so walking and flying do not redraw the shadow map on every frame.
 
 ### Tree sway
 

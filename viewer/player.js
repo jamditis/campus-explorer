@@ -109,6 +109,8 @@ export function createPlayer(app) {
       camera.position.set(position.x, eyeY + bob, position.z);
       camera.lookAt(_a.copy(camera.position).add(look));
     } else {
+      // the avatar casts a shadow: when it moves, the shadow map must follow (look.js redraws it only on request)
+      if (avatar.visible && (!avatar.position.equals(position) || avatar.rotation.y !== yaw)) app.look.invalidateShadows();
       avatar.position.copy(position); avatar.rotation.y = yaw;
       const head = _a.set(position.x, eyeY - 0.15, position.z);
       let back = 4.5;
