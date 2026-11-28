@@ -204,8 +204,8 @@ anything compiles. Pure parts and tests: `viewer/haze-math.js`.
   three 1-pixel renders of the environment sky, read back each time the environment is baked again (the sun moved by
   more than 1.7 degrees). Drawn straight to the screen, three mixes fog after tone mapping, so the colours are tone
   mapped and encoded as the screen shows the sky. On High the scene goes to a linear target and the output pass maps
-  it afterwards: there the colours stay linear, and the fog chunk mixes after three's ACES and sRGB encoding and
-  undoes both (`hzOut`, `hzIn`; `acesFilmicInverse` in haze-math.js), so every quality level shows the same haze.
+  it afterwards: there the away colour stays linear, and the fog chunk mixes after three's ACES and sRGB encoding (the
+  tint toward the sun is in screen colours on every level) and undoes both (`hzOut`, `hzIn`; `acesFilmicInverse` in haze-math.js), so every quality level shows the same haze.
   The probe is half float (8 bits would clip the sky at 1); a GPU that cannot render to half float keeps the fixed
   horizon colours the viewer used before (day, dusk and night, no tint toward the sun). The
   shader draws `away + (toward - away) * ((1 + cos a) / 2)^p`, `a` the angle between the line of sight and the sun's

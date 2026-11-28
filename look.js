@@ -24,7 +24,7 @@ export { fixTone, fixCat };
 // recompile; look.js sets them when the sun moves.
 export const HAZE_RGB = [0, 0.33, 0.58]; // the far haze's length in green and blue is shorter by these shares
 export const HAZE = {
-  tint: { value: { x: 0, y: 0, z: 0 } },     // toward-the-sun horizon colour minus fogColor (display sRGB)
+  tint: { value: { x: 0, y: 0, z: 0 } },     // toward-the-sun horizon colour minus the away colour (screen sRGB)
   sun: { value: { x: 0, y: 0, z: -1 } },     // the sun's bearing as a horizontal unit vector (world); y: see applyHaze
   shape: { value: { x: 0.7, y: 24000, z: 4, w: 1 } }, // far amount, far length in red (m), tint power, HAZE_RGB share
 };
@@ -59,11 +59,11 @@ THREE.ShaderChunk.fog_fragment = `#ifdef USE_FOG
     vec3 fogW = ( vec4( vFogPos, 0.0 ) * viewMatrix ).xyz; // view to world direction
     float fogH = length( fogW.xz );
     float fogA = fogH > 1e-6 ? 0.5 + 0.5 * dot( fogW.xz / fogH, hazeSun.xz ) : 0.5;
-    vec3 fogC = fogColor + hazeTint * pow( fogA, hazeShape.z );
+    vec3 fogTint = hazeTint * pow( fogA, hazeShape.z ); // toward the sun; in screen colours on every quality level
     // High draws to a linear target that the output pass tone maps and encodes afterwards (hazeSun.y is then the
     // exposure): mix as the screen does, after both, and undo them, so every quality level shows the same haze
-    if ( hazeSun.y > 0.0 ) gl_FragColor.rgb = hzIn( mix( hzOut( fogC ), hzOut( gl_FragColor.rgb ), fogT ) );
-    else gl_FragColor.rgb = mix( fogC, gl_FragColor.rgb, fogT );
+    if ( hazeSun.y > 0.0 ) gl_FragColor.rgb = hzIn( mix( hzOut( fogColor ) + fogTint, hzOut( gl_FragColor.rgb ), fogT ) );
+    else gl_FragColor.rgb = mix( fogColor + fogTint, gl_FragColor.rgb, fogT );
   }
 #endif`;
 for (const lib of Object.values(THREE.ShaderLib)) {
@@ -184,9 +184,11 @@ export function createLook(renderer, scene, camera, onChange = () => {}) {
     applyHaze();
   }
   function applyHaze() {
-    const linear = !!composer, h = linear ? hazeLinear : hazeShown;
+    const linear = !!composer, h = hazeShown;
     if (!h) return;
-    HORIZON.setRGB(...h.away, linear ? THREE.LinearSRGBColorSpace : THREE.SRGBColorSpace);
+    // the away colour as the target takes it (on High the chunk encodes it); the tint and its curve in screen
+    // colours on every level, so High and Medium show the same haze toward the sun
+    if (linear) HORIZON.setRGB(...hazeLinear.away, THREE.LinearSRGBColorSpace); else HORIZON.setRGB(...h.away, THREE.SRGBColorSpace);
     scene.fog.color.copy(HORIZON); // FogExp2 keeps its own copy of the colour
     Object.assign(HAZE.tint.value, { x: h.tint[0], y: h.tint[1], z: h.tint[2] });
     HAZE.shape.value.z = h.power;
