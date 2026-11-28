@@ -237,5 +237,22 @@ class Layout(unittest.TestCase):
             self.assertEqual(lay["volumes"][0]["name"], "inside")
 
 
+class InferredGroups(unittest.TestCase):
+    def test_a_group_placed_by_inference_labels_every_name(self):
+        self.assertEqual(
+            adopt.adopt_name("NG east balcony handrail", set(), unverified=True),
+            "SW_adopt_NG east balcony handrail_UNVERIFIED",
+        )
+
+    def test_a_name_that_carries_the_label_is_not_labelled_twice(self):
+        n = adopt.adopt_name("NP fascia (UNVERIFIED)", set(), unverified=True)
+        self.assertEqual(n.count("UNVERIFIED"), 1)
+
+    def test_a_long_name_keeps_the_label_after_its_hash(self):
+        n = adopt.adopt_name("NG double-height maroon window frame " * 3, set(), unverified=True)
+        self.assertTrue(n.endswith("_UNVERIFIED"))
+        self.assertLessEqual(len(n.encode()), adopt.MAX_NAME)
+
+
 if __name__ == "__main__":
     unittest.main()

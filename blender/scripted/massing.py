@@ -460,6 +460,34 @@ def ring_caps(ring, eave, crest_z, crest_in, flat_edges=(), width=0.3, height=0.
     return out
 
 
+def clear_of(cells, holes):
+    """The window cells that cross no opening: `holes` {edge: [(s0, s1, z0, z1)]} (a door, a
+    window wall, a curtain wall) take precedence over the window grid on their edge."""
+    return [
+        c
+        for c in cells
+        if not any(
+            c["s0"] < s1 and s0 < c["s1"] and c["z0"] < z1 and z0 < c["z1"]
+            for s0, s1, z0, z1 in holes.get(c["edge"], ())
+        )
+    ]
+
+
+def curtain_bars(s0, s1, z0, z1, cols, rows, bar=0.1):
+    """The frame of a curtain wall as rectangles (sa, sb, za, zb) along its wall: the outer frame,
+    `cols - 1` mullions and `rows - 1` transoms, all `bar` wide, splitting the opening into equal
+    lights."""
+    out = [(s0, s1, z0, z0 + bar), (s0, s1, z1 - bar, z1)]
+    out += [(s0, s0 + bar, z0, z1), (s1 - bar, s1, z0, z1)]
+    for k in range(1, cols):
+        s = s0 + (s1 - s0) * k / cols
+        out.append((s - bar / 2, s + bar / 2, z0, z1))
+    for k in range(1, rows):
+        z = z0 + (z1 - z0) * k / rows
+        out.append((s0, s1, z - bar / 2, z + bar / 2))
+    return out
+
+
 def window_cells(ring, ground, wall_top, width, height, spacing, sill, levels, edges, rows=None):
     """Window openings on the listed edges of an anticlockwise outline: one per bay and row
     (massing.bays, massing.window_rows), as {edge, s0, s1, z0, z1, a, u, n}: the edge's start

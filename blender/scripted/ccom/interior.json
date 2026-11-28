@@ -270,6 +270,61 @@
      ],
      "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
      "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
+    },
+    {
+     "name": "east_bay",
+     "ring": [
+      [
+       28.734,
+       -2.661
+      ],
+      [
+       32.33,
+       -3.535
+      ],
+      [
+       33.888,
+       2.878
+      ],
+      [
+       30.293,
+       3.752
+      ]
+     ],
+     "objects": [
+      "NG double-height N wall",
+      "NG double-height NW jog wall",
+      "NG double-height S wall over connector",
+      "NG double-height maroon window frame",
+      "NG double-height maroon window glass",
+      "NG maroon window mullion 0",
+      "NG maroon window mullion 1",
+      "NG maroon window transom",
+      "NG east balcony glass rail",
+      "NG east balcony handrail",
+      "NP 2F east balcony walnut fascia (UNVERIFIED)",
+      "NP sprinkler double-height east 22 (UNVERIFIED)",
+      "NP sprinkler double-height east 23 (UNVERIFIED)",
+      "NP sprinkler double-height east 24 (UNVERIFIED)",
+      "NP sprinkler double-height east 25 (UNVERIFIED)",
+      "OC 1F blue tub chair 0 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 0 back (UNVERIFIED)",
+      "OC 1F blue tub chair 0 base (UNVERIFIED)",
+      "OC 1F blue tub chair 0 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 0 seat cushion (UNVERIFIED)",
+      "OC 1F blue tub chair 1 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 1 back (UNVERIFIED)",
+      "OC 1F blue tub chair 1 base (UNVERIFIED)",
+      "OC 1F blue tub chair 1 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 1 seat cushion (UNVERIFIED)",
+      "OC 1F blue tub chair 2 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 2 back (UNVERIFIED)",
+      "OC 1F blue tub chair 2 base (UNVERIFIED)",
+      "OC 1F blue tub chair 2 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 2 seat cushion (UNVERIFIED)",
+      "OC 1F rug east zone (UNVERIFIED)"
+     ],
+     "why": "the double-height east bay moved from the main model (adopt.json east_bay, east_bay_furniture): no wall of this plan enters it"
     }
    ],
    "walls": [
@@ -699,7 +754,8 @@
      "z0": 137.3,
      "z1": 137.7,
      "under": [
-      "atrium_T1"
+      "atrium_T1",
+      "east_bay"
      ],
      "kind": "paint",
      "colour": "#d2cec6",
@@ -1411,6 +1467,61 @@
      ],
      "objects": "NG_CCOM_1F_open_floor_20261030ng, NH, NI, NJ, NK, NO, NP, NS, OC, OD, OE collections after transform T1",
      "why": "atrium, stair, hallway, N classroom and 2F lounge of the main model, moved square to the shell (T1); their room walls are rebuilt from the same positions"
+    },
+    {
+     "name": "east_bay",
+     "ring": [
+      [
+       28.734,
+       -2.661
+      ],
+      [
+       32.33,
+       -3.535
+      ],
+      [
+       33.888,
+       2.878
+      ],
+      [
+       30.293,
+       3.752
+      ]
+     ],
+     "objects": [
+      "NG double-height N wall",
+      "NG double-height NW jog wall",
+      "NG double-height S wall over connector",
+      "NG double-height maroon window frame",
+      "NG double-height maroon window glass",
+      "NG maroon window mullion 0",
+      "NG maroon window mullion 1",
+      "NG maroon window transom",
+      "NG east balcony glass rail",
+      "NG east balcony handrail",
+      "NP 2F east balcony walnut fascia (UNVERIFIED)",
+      "NP sprinkler double-height east 22 (UNVERIFIED)",
+      "NP sprinkler double-height east 23 (UNVERIFIED)",
+      "NP sprinkler double-height east 24 (UNVERIFIED)",
+      "NP sprinkler double-height east 25 (UNVERIFIED)",
+      "OC 1F blue tub chair 0 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 0 back (UNVERIFIED)",
+      "OC 1F blue tub chair 0 base (UNVERIFIED)",
+      "OC 1F blue tub chair 0 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 0 seat cushion (UNVERIFIED)",
+      "OC 1F blue tub chair 1 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 1 back (UNVERIFIED)",
+      "OC 1F blue tub chair 1 base (UNVERIFIED)",
+      "OC 1F blue tub chair 1 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 1 seat cushion (UNVERIFIED)",
+      "OC 1F blue tub chair 2 arms (UNVERIFIED)",
+      "OC 1F blue tub chair 2 back (UNVERIFIED)",
+      "OC 1F blue tub chair 2 base (UNVERIFIED)",
+      "OC 1F blue tub chair 2 legs (UNVERIFIED)",
+      "OC 1F blue tub chair 2 seat cushion (UNVERIFIED)",
+      "OC 1F rug east zone (UNVERIFIED)"
+     ],
+     "why": "the double-height east bay moved from the main model (adopt.json east_bay, east_bay_furniture): no wall of this plan enters it"
     }
    ],
    "walls": [
@@ -2153,9 +2264,38 @@
      "z0": 141.45,
      "z1": 141.85,
      "under": [
-      "atrium_T1"
+      "atrium_T1",
+      "east_bay"
      ],
      "unverified": "reaches the adopted 2F hallway slab (b 4.35) under the studios' north wall"
+    },
+    {
+     "name": "SW_CCOM_F2_slab_old_bay_UNVERIFIED",
+     "ring": [
+      [
+       10.004,
+       1.994
+      ],
+      [
+       13.891,
+       1.049
+      ],
+      [
+       15.544,
+       7.851
+      ],
+      [
+       11.657,
+       8.796
+      ]
+     ],
+     "z0": 141.45,
+     "z1": 141.85,
+     "evidence": "ccom_f1_east_photo2_joe_20261128 (one single-height lounge west of the bay); floor 2 sign",
+     "unverified": "floor 2 over the place the main model had its east bay (building u 9.3..13.1): the floor 2 sign shades no void there; edges from the adopted hallway slab and the scripted floor 2 slab",
+     "under": [
+      "atrium_T1"
+     ]
     }
    ],
    "blocks": [],
