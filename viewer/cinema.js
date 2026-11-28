@@ -58,10 +58,10 @@ export function createCinema(app) {
         if (spots.every(([x, z]) => app.world.isLoaded(x, z)) || performance.now() >= until) break;
         await sleep(200); if (my !== token) return;
       }
-      // the ground under the shot; if its tiles are not in yet, the campus floor for now and the real ground when
-      // they arrive (onFrame)
+      // the ground under the shot: whatever surface is in already (or the campus floor); if not every tile there is
+      // in yet, the shot eases to the real ground when they arrive (onFrame)
       groundKnown = !s.ground || app.world.isLoaded(s.ground[0], s.ground[1]);
-      if (s.ground) groundY = (groundKnown ? app.world.groundAt(s.ground[0], s.ground[1]) : null) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
+      if (s.ground) groundY = groundGoal = app.world.groundAt(s.ground[0], s.ground[1]) ?? (isFinite(app.bounds.min.y) ? app.bounds.min.y : 120);
       const when = lightFor(s); if (when) app.setTime(when);
       caption.textContent = s.caption;
       shot = s; t0 = performance.now(); apply(poseAt(s, 0, groundY, calm)); app.invalidate();
@@ -71,16 +71,19 @@ export function createCinema(app) {
     stop();
   }
 
-  let groundCheck = 0;
-  function onFrame({ time }) {
+  let groundCheck = 0, groundGoal = 0;
+  function onFrame({ dt, time }) {
     if (!shot) return;
     if (!groundKnown && time - groundCheck > 250) {
       groundCheck = time;
       if (app.world.isLoaded(shot.ground[0], shot.ground[1])) {
         groundKnown = true;
-        groundY = app.world.groundAt(shot.ground[0], shot.ground[1]) ?? groundY;
+        groundGoal = app.world.groundAt(shot.ground[0], shot.ground[1]) ?? groundGoal;
       }
     }
+    // a late ground correction eases in over about a second instead of jumping; a held shot (reduced motion) keeps
+    // its pose and takes the correction at the next cut
+    if (!calm && groundY !== groundGoal) groundY += (groundGoal - groundY) * Math.min(1, dt * 3);
     apply(poseAt(shot, (performance.now() - t0) / 1000, groundY, calm)); // the loop redraws because the camera moved
   }
 
