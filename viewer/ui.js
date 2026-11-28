@@ -174,7 +174,11 @@ export function createUI(app) {
     };
   }
   let hashTimer = 0, wantLabels; // label setting from a link, held until the labels tool has loaded
-  const writeHash = () => { if (app.state.ready) history.replaceState(null, '', `#${encodeView(currentView())}`); };
+  // while the walker stands where follow me put them, the view is the user's real position: the address holds no view
+  const writeHash = () => {
+    if (!app.state.ready) return;
+    history.replaceState(null, '', app.follow?.private ? location.pathname + location.search : `#${encodeView(currentView())}`);
+  };
   const scheduleHash = () => { clearTimeout(hashTimer); hashTimer = setTimeout(writeHash, 700); };
   app.on('camera', scheduleHash); app.on('sun', scheduleHash); app.on('mode', scheduleHash); app.on('labels', scheduleHash);
   /** Restore a decoded permalink. Returns false when it holds no camera pose. */
@@ -203,7 +207,7 @@ export function createUI(app) {
   addEventListener('hashchange', () => applyView(decodeView(location.hash)));
   async function share() {
     writeHash();
-    try { await navigator.clipboard.writeText(location.href); toast('Link to this view copied.'); }
+    try { await navigator.clipboard.writeText(location.href); toast(app.follow?.private ? 'Link copied. It leaves out your location.' : 'Link to this view copied.'); }
     catch { toast('Copy the address bar to share this view.'); }
   }
 

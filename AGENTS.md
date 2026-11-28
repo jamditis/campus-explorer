@@ -18,7 +18,7 @@ blender/scripted/              Scripted builds of whole areas from plan files, o
                                 Read its README.md before changing it
 blender/montclair-state/scripts Historical session scripts (bpy, one folder per session). Read, don't refactor
 tools/web-export/               Box-side export pipeline (paths assume the modelling box layout)
-tools/places/                   build_places.py writes viewer/places.json from OpenStreetMap
+tools/places/                   build_places.py writes viewer/places.json, build_paths.py viewer/paths.json, from OpenStreetMap
 tools/viewer-test/              Headless smoke test (smoke.mjs) and standard screenshots (shoot.mjs)
 tools/evidence/                 Fetch public evidence for an area and draw it with a grid (outputs stay outside the repo)
 tools/ci/                       repo_guard.py, check_viewer_refs.py

@@ -39,7 +39,66 @@ stateDiagram-v2
 
 **Share links** (`viewer/permalink.js`, `viewer/ui.js:176-203`): the hash holds mode, camera, target, time and labels. It is applied on `scene:ready` (`viewer/ui.js:55`) and on `hashchange` (`viewer/ui.js:203`); a fly or walk link sets the pose and then calls `setMode`. The hash is written 700 ms after the last camera, sun, mode or labels change (`viewer/ui.js:178`). The walk view (first or third) is not in the link.
 
-**In flight (#132, loj-cewayfind):** GPS and compass walk mode with routes and a navigation display.
+**Follow me** (`viewer/follow.js`): in walk mode the phone's GPS and compass drive the walker.
+
+- **State:** `active`, `starting` (the iOS motion prompt is open), `placing` (the first teleport is waiting for tiles), `placed`, `shown` (the view shows where the user is), `gen` (a token that every start and stop bumps), and `player.guide` (`{ x, z, look }`, `viewer/player.js`).
+- **Events in:** the button (start or stop); geolocation fixes (`watchPosition`); orientation events; `mode` (leaving walk stops it); `fly` (a move to a place clears `shown` when not active).
+- **Effects:** while `player.guide` is set, `player.step` glides toward it with no collision instead of reading the sticks; the compass sets `player.yaw` and `player.pitch` each frame. While `app.follow.private` (`active` or `shown`), `viewer/ui.js` writes no view into the address bar.
+
+```mermaid
+stateDiagram-v2
+  [*] --> off
+  off --> starting: tap (iOS asks for motion access)
+  starting --> off: tap, or walk mode left (gen changed)
+  starting --> waiting: prompt answered, still in walk
+  off --> waiting: tap (no prompt)
+  waiting --> placing: first fix on campus, accuracy 80 m or better
+  waiting --> waiting: fix off campus or weak (says how far / waits)
+  placing --> following: teleport, then the lowest surface there
+  placing --> off: tap or walk mode left (cancelMove of its own teleport)
+  following --> off: tap or walk mode left
+  waiting --> off: tap, walk mode left, or location refused
+```
+
+A late answer never starts anything: each await is followed by a `gen` check.
+
+**Walking directions** (`viewer/route.js`, `viewer/route-math.js`): in walk mode "Go to a place" picks a place and routes from the walker (`player.guide` when follow me is on, else `player.position`) along `viewer/paths.json`.
+
+- **State:** `graph` (the parsed path map, fetched on first use), `loading` (its promise, dropped on failure so the next try fetches again), `current` (`{ route, place, stepFree }` or null), `ask` (a token bumped by each request and by `clear`).
+- **Events in:** a picked place (`go`); Clear; `mode` (leaving walk clears). A request that was cleared while the map loaded stops at its `ask` check.
+- **Event out:** `route { route, place, stepFree }` or `route null`.
+
+```mermaid
+stateDiagram-v2
+  [*] --> none
+  none --> loading: place picked, map not loaded
+  none --> routed: place picked, route found
+  loading --> routed: map in, route found
+  loading --> none: cleared or walk mode left (ask changed), or map failed
+  none --> noroute: no route (card says why)
+  routed --> routed: another place picked
+  routed --> none: Clear or walk mode left
+  noroute --> none: Clear or walk mode left
+```
+
+**Navigation display** (`viewer/nav.js`, `viewer/nav-math.js`): follows the `route` event.
+
+- **State:** `nav` (`{ line, turns, place, stepFree, s, seg, along }` or null), `arrived`, `offSince` (when the walker first went off the route).
+- **Each frame in walk mode:** progress along the route (`progress`, searched only up to 40 m past `s`), the walked part of the ribbon hidden (draw range), the card text and arrow updated five times a second.
+
+```mermaid
+stateDiagram-v2
+  [*] --> idle
+  idle --> guiding: route event with a route
+  guiding --> guiding: next turn passed / new route
+  guiding --> rerouting: more than 25 m (plus GPS accuracy) off the route for 3 s
+  rerouting --> guiding: route.go from here
+  rerouting --> idle: no route from here
+  guiding --> arrived: within 10 m of the entrance
+  arrived --> guiding: new route
+  guiding --> idle: route null (Clear, walk mode left)
+  arrived --> idle: route null
+```
 **In flight (#119 and PR #140, a4k-ceopt; door leaves from the export, a4k-cebldg):** entrance doors that open for the walker in walk mode.
 
 ### View tools: tour, measure, film, hunt

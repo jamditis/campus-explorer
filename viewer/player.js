@@ -13,6 +13,7 @@ export function createPlayer(app) {
   const { camera, scene, world } = app;
   const position = new THREE.Vector3(), vel = new THREE.Vector3(), flyVel = new THREE.Vector3();
   let yaw = 0, pitch = 0, grounded = false, eyeY = 0, busy = false, flySpeed = 40, stride = 0, seq = 0;
+  let guide = null;   // { x, z, look } while viewer/follow.js steers: walk to (x, z); `look` lets the user turn
   let placed = false; // true once a teleport has put the walker on the ground; until then `position` is stale
   const going = new THREE.Vector3(); // where a teleport in progress is heading
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -99,6 +100,21 @@ export function createPlayer(app) {
     place(dt);
   }
 
+  /** Follow me: ease toward the guide point and stay on the ground there, without collision (GPS walks through what the model gets wrong). */
+  function glide(dt) {
+    if (busy) return;
+    const dx0 = guide.x - position.x, dz0 = guide.z - position.z, far = Math.hypot(dx0, dz0);
+    const k = far > 40 ? 1 : 1 - Math.exp(-dt * 3);
+    const nx = position.x + dx0 * k, nz = position.z + dz0 * k;
+    const hit = world.raycast(_o.set(nx, position.y + STEP + 1, nz), DOWN, STEP + 61);
+    if (hit) position.set(nx, hit.point.y, nz);
+    else { world.prioritize(nx, nz); position.x = nx; position.z = nz; } // tile not in yet: keep the height
+    const d = Math.hypot(dx0, dz0) * k;
+    vel.set(dt > 0 && far <= 40 ? dx0 * k / dt : 0, 0, dt > 0 && far <= 40 ? dz0 * k / dt : 0);
+    grounded = true; if (far <= 40) stride += d;
+    place(dt);
+  }
+
   function place(dt) {
     // smooth the eye over stairs and curbs; follow exactly in the air
     const target = position.y + EYE;
@@ -158,6 +174,7 @@ export function createPlayer(app) {
   }
 
   function step(dt, intent) {
+    if (guide && app.state.mode === 'walk') { if (guide.look) turn(intent); basis(); glide(dt); return; }
     turn(intent); basis();
     if (app.state.mode === 'fly') fly(dt, intent); else walk(dt, intent);
   }
@@ -165,8 +182,13 @@ export function createPlayer(app) {
   return {
     position, step, teleport, respawn, lookFromCamera,
     jump() { if (grounded && !busy) { vel.y = JUMP; grounded = false; } },
+    /** The current move's number: read it right after calling teleport to cancel that move later. */
+    get moveSeq() { return seq; },
+    /** Cancel the teleport numbered `n` if it is still the current one, without touching the walker (it resolves null). */
+    cancelMove(n) { if (n === seq) { seq++; busy = false; status(''); } },
     stop() { vel.set(0, 0, 0); flyVel.set(0, 0, 0); seq++; busy = false; placed = false; status(''); },
     refresh() { basis(); if (app.state.mode === 'walk') place(0); },
+    get guide() { return guide; }, set guide(g) { guide = g; if (!g) vel.set(0, 0, 0); },
     get yaw() { return yaw; }, set yaw(v) { yaw = v; },
     get pitch() { return pitch; }, set pitch(v) { pitch = v; },
     get grounded() { return grounded; }, get busy() { return busy; },

@@ -27,6 +27,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `viewer/scenery.js`, `trees.js` | Tree level of detail, far trees, land cover, grass tufts near the camera |
 | `viewer/player.js` | Fly and walk movement and collision |
 | `viewer/doors.js` | Entrance doors (`DOOR_*` leaves from the build) that open for the walker in walk mode |
+| `viewer/follow.js` | Follow me: phone GPS and compass drive walk mode (position never leaves the device) |
 | `viewer/input.js` | Keyboard, pointer lock, touch sticks, gamepad |
 | `viewer/camera.js`, `viewer/tour.js` | Eased camera moves; guided tour |
 | `viewer/hud.js`, `viewer/labels.js` | Compass, scale bar, position readout, minimap; place labels |
@@ -35,6 +36,7 @@ Contract and review checklist: [docs/VIEWER.md](docs/VIEWER.md). Run `node --tes
 | `viewer/geo.js`, `sun.js`, `schedule.js`, `permalink.js`, `places.js`, `cat.js`, `tone.js`, `texshare.js`, `*-math.js` (`rooms`, `pose`, `flight`, ...) | Pure logic, unit tested in `tests/` |
 | `viewer/rooms.json` | Room numbers and interior volumes, built by `tools/places/build_rooms.py` from `blender/scripted/<area>/interior.json` |
 | `viewer/places.json` | Place names from OpenStreetMap, built by `tools/places/build_places.py` |
+| `viewer/paths.json` | Walkable path graph (OSM) with slopes (3DEP) and building entrances, built by `tools/places/build_paths.py` |
 
 ## Scripted builds index
 
