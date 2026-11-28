@@ -31,6 +31,8 @@ DOOR = 0.9  # a room's door in the corridor wall
 STAIR = (6.0, 3.0)  # length along the corridor, width across it
 LIFT = (2.4, 2.4)
 REACH = 3.0  # an entrance may lie this far outside the outline (a porch, a step)
+PASS = 0.3  # a walk crosses the lining at least this far inside its door's opening's edges
+CLEAR = 1.0  # a hall round a corner keeps this far from the shell's inner face
 FAR = 1000.0  # a line long enough to cross any building, cut back to the shell
 # OSM building tags of housing: residence halls and apartments get exteriors only (AGENTS.md)
 HOUSING = {"dormitory", "apartments", "residential", "house", "detached", "semidetached_house"}
@@ -165,10 +167,34 @@ def _runs(name, p, q, keep, inside, thickness, doors=()):
     return out
 
 
-def _cores(r, ends, spines, lobbies):
+def _crosses(leg, ring):
+    """Does the segment `leg` pass through or into `ring`?"""
+    if math.dist(*leg) < 0.01:
+        return False
+    free = rooms.clip(leg, keep_out=[ring])
+    return (
+        len(free) != 1
+        or math.dist(free[0][0], leg[0]) > 0.01
+        or math.dist(free[0][1], leg[1]) > 0.01
+    )
+
+
+def _overlap(a, b):
+    """Do the convex rings `a` and `b` share any area (touching edges do not count)?"""
+    for ring in (a, b):
+        for p, q in zip(ring, ring[1:] + ring[:1], strict=True):
+            n = (-(q[1] - p[1]), q[0] - p[0])  # an axis square to this side
+            pa = [n[0] * x + n[1] * y for x, y in a]
+            pb = [n[0] * x + n[1] * y for x, y in b]
+            if max(pa) <= min(pb) + 1e-9 or max(pb) <= min(pa) + 1e-9:
+                return False
+    return True
+
+
+def _cores(r, ends, spines, lobbies, rings):
     """Stair and lift cores: the entry's own, or a stair at each end of each spine (`ends`: the
-    spines before they were cut back for the stairs) and a lift across the corridor from the
-    first lobby."""
+    spines before they were cut back for the stairs; beside the end when a way in passes there)
+    and a lift across the corridor from the first lobby."""
     if "cores" in r:
         out = []
         for c in r["cores"]:
@@ -182,13 +208,8 @@ def _cores(r, ends, spines, lobbies):
                 u = _unit(*spines[i])
             out.append(dict(kind=c["kind"], ring=_box(c["at"], u, *size)))
         return out
-    out = []
     corridor = r.get("corridor", CORRIDOR)
-    for p, q in ends:
-        u = _unit(p, q)
-        for end, sign in ((p, 1), (q, -1)):
-            at = (end[0] + sign * u[0] * STAIR[0] / 2, end[1] + sign * u[1] * STAIR[0] / 2)
-            out.append(dict(kind="stair", ring=_box(at, u, *STAIR)))
+    lifts = []
     if lobbies:
         lob = lobbies[0]
         p, q = spines[lob["spine"]]
@@ -197,8 +218,31 @@ def _cores(r, ends, spines, lobbies):
         off = -side * (corridor / 2 + LIFT[1] / 2)
         s = lob["along"]
         at = (p[0] + u[0] * s - u[1] * off, p[1] + u[1] * s + u[0] * off)
-        out.append(dict(kind="lift", ring=_box(at, u, *LIFT)))
-    return out
+        lifts.append(dict(kind="lift", ring=_box(at, u, *LIFT)))
+    # a stair stands inside the lining of every level, since it runs from the lowest to the roof
+    wall = r.get("wall", WALL)
+    rooms_in = [inset(outline, wall + LINING - 0.01) for outline, _in, _li in rings.values()]
+    walks = [leg for lob in lobbies for leg in zip(lob["route"], lob["route"][1:], strict=False)]
+    out = []
+    for p, q in ends:
+        u = _unit(p, q)
+        for end, sign in ((p, 1), (q, -1)):
+            at = (end[0] + sign * u[0] * STAIR[0] / 2, end[1] + sign * u[1] * STAIR[0] / 2)
+            # a door at the corridor's end: the stair steps aside, beside the corridor's end, to
+            # a side where it fits every level and meets no lift or stair placed before it
+            across = corridor / 2 + STAIR[1] / 2
+            for off in (0.0, across, -across):
+                ring = _box((at[0] - u[1] * off, at[1] + u[0] * off), u, *STAIR)
+                if (
+                    not any(_crosses(leg, ring) for leg in walks)
+                    and all(geom.inside(g, *v) for g in rooms_in for v in ring)
+                    and not any(_overlap(ring, c["ring"]) for c in lifts + out)
+                ):
+                    break
+            else:
+                ring = _box(at, u, *STAIR)  # nowhere clear: _blocked refuses the way in
+            out.append(dict(kind="stair", ring=ring))
+    return out + lifts
 
 
 def _foot(ring, pt):
@@ -216,23 +260,87 @@ def _foot(ring, pt):
     return best[1], best[2]
 
 
-def _lobby(entrance, spines, inside):
+def _free(p, q, ring):
+    """Does the segment p->q lie wholly inside `ring`?"""
+    if math.dist(p, q) < 1e-6:
+        return geom.inside(ring, *p)
+    pieces = rooms.clip((p, q), inside=ring)
+    return (
+        len(pieces) == 1 and math.dist(pieces[0][0], p) < 1e-6 and math.dist(pieces[0][1], q) < 1e-6
+    )
+
+
+def _path(a, b, ring):
+    """The shortest walk from `a` to `b` inside `ring`: straight when it can be, otherwise by the
+    ring's corners moved CLEAR into the floor (round a set-back, between the wings of a U). None
+    when there is none."""
+    if _free(a, b, ring):
+        return [a, b]
+    nodes = [a, b] + [v for v in inset(ring, CLEAR) if geom.inside(ring, *v)]
+    best, back, todo = {0: 0.0}, {}, {0}
+    while todo:
+        i = min(todo, key=best.get)
+        todo.discard(i)
+        if i == 1:
+            out = [1]
+            while out[-1] != 0:
+                out.append(back[out[-1]])
+            return [nodes[k] for k in reversed(out)]
+        for j, v in enumerate(nodes):
+            d = best[i] + math.dist(nodes[i], v)
+            if j != i and d < best.get(j, math.inf) and _free(nodes[i], v, ring):
+                best[j], back[j] = d, i
+                todo.add(j)
+    return None
+
+
+def _through(leg, lining, door):
+    """Does the walk's last leg cross the lining (`lining`, the path the door's opening is cut in,
+    centred on the lining's point nearest the door) PASS or more inside the opening's edges?"""
+    centre, _n = _foot(lining, door)
+    out = rooms.clip(leg, inside=lining)
+    return len(out) == 1 and math.dist(out[0][1], centre) <= ENTRANCE / 2 - PASS
+
+
+def _sides(a, b, k, part):
+    """The side walls of a clear zone LOBBY wide along a->b (ring `k` of the way in)."""
+    h = _unit(a, b)
+    w = (h[1], -h[0])
+    return [
+        (
+            part,
+            (b[0] + w[0] * s * LOBBY / 2, b[1] + w[1] * s * LOBBY / 2),
+            (a[0] + w[0] * s * LOBBY / 2, a[1] + w[1] * s * LOBBY / 2),
+            s,
+            k,
+        )
+        for s in (1, -1)
+    ]
+
+
+def _lobby(entrance, spines, inside, lining):
     """The way in from an entrance to the middle of the nearest corridor, as clear zones LOBBY
-    wide. When the straight line from the corridor to the door stays in the floor (`inside`) up
-    to the door: one lobby along it, REACH past the door. Otherwise (a door beside a corridor's
-    end, a set-back side): a porch square to the shell's side at the door, LOBBY / 2 deep, and a
-    hall from the porch to the corridor. The corridor wall on the entrance's side stops at it,
-    the far one runs on. `route` is the walk: corridor, (porch,) door."""
+    wide. When the straight line from the corridor to the door stays in the floor (`inside`) and
+    crosses the lining (`lining`) well inside the door's opening: one lobby along it, REACH past
+    the door. Otherwise (a door beside a corridor's end, a set-back side, another wing): a porch
+    square to the shell's side through the middle of the door's opening, LOBBY / 2 deep, and a
+    hall from the porch to the corridor along the shortest walk inside the floor (`_path`),
+    round its corners. The corridor wall on the entrance's side stops at it, the far one runs
+    on. `route` is the walk: corridor, (corners, porch,) door."""
     door = tuple(entrance["at"][:2])
     i, on, along = _nearest(spines, door)
     p, q = spines[i]
     u = _unit(p, q)
     side = 1 if (u[0] * (door[1] - p[1]) - u[1] * (door[0] - p[0])) > 0 else -1
-    foot, inward = _foot(inside, door)
     gap = math.dist(on, door)
-    pieces = rooms.clip((on, door), inside=inside) if gap > 0.01 else []
     out = dict(spine=i, side=side, along=along)
-    if gap <= 0.01 or (pieces and math.dist(pieces[0][1], foot) <= ENTRANCE / 2):
+    pieces = rooms.clip((on, door), inside=inside) if gap > 0.01 else []
+    straight = (
+        len(pieces) == 1
+        and math.dist(pieces[0][0], on) < 0.01
+        and _through((on, door), lining, door)
+    )
+    if gap <= 0.01 or straight:
         n = _unit(on, door) if gap > 0.01 else (-u[1] * side, u[0] * side)  # towards the door
         near = (on[0] + n[0] * (gap + REACH), on[1] + n[1] * (gap + REACH))
         w = (n[1] * side, -n[0] * side)  # the corridor's direction for a lobby square to it
@@ -242,63 +350,60 @@ def _lobby(entrance, spines, inside):
                 (near[0] + w[0] * s * LOBBY / 2, near[1] + w[1] * s * LOBBY / 2),
                 (on[0] + w[0] * s * LOBBY / 2, on[1] + w[1] * s * LOBBY / 2),
                 s,
+                0,
             )
             for s in (1, -1)
         ]
-        return dict(
-            out, rings=[_rect(on, near, LOBBY / 2)], sides=sides, route=[on, door], foot=foot
-        )
+        return dict(out, rings=[_rect(on, near, LOBBY / 2)], sides=sides, route=[on, door])
+    foot, inward = _foot(lining, door)  # the middle of the door's opening
     stand = (foot[0] + inward[0] * LOBBY / 2, foot[1] + inward[1] * LOBBY / 2)
     outside = (foot[0] - inward[0] * REACH, foot[1] - inward[1] * REACH)
-    rings, sides = [_rect(outside, stand, LOBBY / 2)], []
+    rings = [_rect(outside, stand, LOBBY / 2)]
     e = (inward[1], -inward[0])  # along the shell's side
-    for s in (1, -1):
-        sides.append(
-            (
-                "p",
-                (foot[0] + e[0] * s * LOBBY / 2, foot[1] + e[1] * s * LOBBY / 2),
-                (stand[0] + e[0] * s * LOBBY / 2, stand[1] + e[1] * s * LOBBY / 2),
-                s,
-            )
+    sides = [
+        (
+            "p",
+            (foot[0] + e[0] * s * LOBBY / 2, foot[1] + e[1] * s * LOBBY / 2),
+            (stand[0] + e[0] * s * LOBBY / 2, stand[1] + e[1] * s * LOBBY / 2),
+            s,
+            0,
         )
-    if math.dist(on, stand) > 0.01:
-        rings.append(_rect(on, stand, LOBBY / 2))
-        h = _unit(on, stand)
-        w = (h[1], -h[0])
-        for s in (1, -1):
-            sides.append(
-                (
-                    "",
-                    (stand[0] + w[0] * s * LOBBY / 2, stand[1] + w[1] * s * LOBBY / 2),
-                    (on[0] + w[0] * s * LOBBY / 2, on[1] + w[1] * s * LOBBY / 2),
-                    s,
-                )
-            )
-    return dict(out, rings=rings, sides=sides, route=[on, stand, door], foot=foot)
-
-
-def _blocked(lob, inside, cores):
-    """Why the walk in from an entrance (`lob["route"]`) is not clear, or None: it must stay in
-    the floor up to the door's opening and pass no stair or lift."""
-    legs = [
-        leg for leg in zip(lob["route"], lob["route"][1:], strict=False) if math.dist(*leg) > 0.01
+        for s in (1, -1)
     ]
+    walk = _path(on, stand, inside) or [on, stand]  # no walk inside: _blocked says so
+    legs = [(a, b) for a, b in zip(walk, walk[1:], strict=False) if math.dist(a, b) > 0.01]
+    for k, (a, b) in enumerate(legs):
+        rings.append(_rect(a, b, LOBBY / 2))
+        sides += _sides(a, b, len(rings) - 1, str(k) if k else "")
+    return dict(
+        out, rings=rings, sides=sides, route=[*walk, door]
+    )  # stand, the opening's middle and the door lie in line
+
+
+def _blocked(lob, inside, lining, cores):
+    """Why the walk in from an entrance (`lob["route"]`) is not clear, or None: it must stay in
+    the floor (`inside`) up to the lining, cross the lining within the door's opening with PASS
+    to spare and pass no stair or lift."""
+    route = lob["route"]
+    legs = [leg for leg in zip(route, route[1:], strict=False) if math.dist(*leg) > 0.01]
+    if not legs:  # the door is on the corridor: no walk, but no stair or lift may stand on it
+        for c in cores:
+            if geom.inside(inset(c["ring"], -0.01), *route[-1]):
+                return f"stands in a {c['kind']}: move it or the corridor"
+        return None
     for k, leg in enumerate(legs):
         part = rooms.clip(leg, inside=inside)
         if not part or math.dist(part[0][0], leg[0]) > 0.01:
             return "starts outside the floor"
+        if len(part) > 1:
+            return "leaves the floor: give a corridor nearer to it"
         if k < len(legs) - 1 and math.dist(part[0][1], leg[1]) > 0.01:
             return "leaves the floor: give a corridor nearer to it"
-        if k == len(legs) - 1 and math.dist(part[0][1], lob["foot"]) > ENTRANCE / 2:
-            return "leaves the floor before its door: give a corridor nearer to it"
         for c in cores:
-            free = rooms.clip(leg, keep_out=[c["ring"]])
-            if (
-                len(free) != 1
-                or math.dist(free[0][0], leg[0]) > 0.01
-                or math.dist(free[0][1], leg[1]) > 0.01
-            ):
+            if _crosses(leg, c["ring"]):
                 return f"passes a {c['kind']}: move it or the corridor"
+    if not _through(legs[-1], lining, route[-1]):
+        return "crosses the lining outside its door's opening: give a corridor nearer to it"
     return None
 
 
@@ -331,14 +436,15 @@ def _spines(r, building):
 
 
 def _outlines(r, building):
-    """Each level's outline (anticlockwise) and its floor ring, the shell's inner face."""
+    """Each level's outline (anticlockwise), its floor ring (the shell's inner face) and its
+    lining's path."""
     wall = r.get("wall", WALL)
     out = {}
     for lv in r["levels"]:
         ring = [tuple(p[:2]) for p in lv.get("outline", building)]
         if geom.area(ring) < 0:
             ring = ring[::-1]
-        out[lv["level"]] = (ring, inset(ring, wall))
+        out[lv["level"]] = (ring, inset(ring, wall), inset(ring, wall + LINING / 2))
     return out
 
 
@@ -352,7 +458,7 @@ def routes(r):
     _ends, spines = _spines(r, building)
     rings = _outlines(r, building)
     return [
-        (e["level"], _lobby(e, spines, rings[e["level"]][1])["route"])
+        (e["level"], _lobby(e, spines, *rings[e["level"]][1:])["route"])
         for e in r.get("entrances", [])
     ]
 
@@ -426,7 +532,6 @@ def floors(r):
     if problems:
         raise ValueError("; ".join(problems))
     name = r["name"]
-    wall = r.get("wall", WALL)
     corridor = r.get("corridor", CORRIDOR)
     bay = r.get("bay", BAY)
     depth = r.get("depth", DEPTH)
@@ -439,13 +544,17 @@ def floors(r):
     corridors = [_rect(*s, corridor / 2) for s in spines]
     entrances = r.get("entrances", [])
     lobbies = [
-        dict(_lobby(e, spines, rings[e["level"]][1]), level=e["level"])
+        dict(_lobby(e, spines, *rings[e["level"]][1:]), level=e["level"])
         for e in entrances
         if not dining
     ]
-    cores = [] if dining else _cores(r, ends, spines, lobbies)
+    cores = [] if dining else _cores(r, ends, spines, lobbies, rings)
+    for i, a in enumerate(cores):  # solid stairs and lifts may not stand in one another
+        for b in cores[i + 1 :]:
+            if _overlap(a["ring"], b["ring"]):
+                raise ValueError(f"{name}: a {a['kind']} and a {b['kind']} overlap: move one")
     for e, lob in zip(entrances if lobbies else [], lobbies, strict=True):
-        why = _blocked(lob, rings[e["level"]][1], cores)
+        why = _blocked(lob, *rings[e["level"]][1:], cores)
         if why:
             raise ValueError(f"{name}: the way in from the entrance at {e['at']} {why}")
     levels = r["levels"]
@@ -453,8 +562,7 @@ def floors(r):
     out = []
     for k, lv in enumerate(levels):
         z = lv["floor"]
-        outline, inside = rings[lv["level"]]  # a level's own outline: an upper block, no annex
-        lining = inset(outline, wall + LINING / 2)
+        outline, inside, lining = rings[lv["level"]]  # a level's own: an upper block, no annex
         # a core runs from the lowest floor to the roof, so it must stand inside every level
         for c in cores:
             if not all(geom.inside(inside, x, y) for x, y in c["ring"]):
@@ -525,8 +633,8 @@ def floors(r):
         for lob in here:
             if open_floor:
                 break
-            for part, a, b, s in lob["sides"]:
-                own = lob["rings"][0 if part == "p" or len(lob["rings"]) == 1 else 1]
+            for part, a, b, s, k_r in lob["sides"]:
+                own = lob["rings"][k_r]
                 walls += _runs(
                     f"SW_{tag}_lobby_{part}{'a' if s > 0 else 'b'}",
                     a,

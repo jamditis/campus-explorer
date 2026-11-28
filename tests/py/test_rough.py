@@ -51,9 +51,25 @@ def crosses(s, t):
     return d1 * d2 <= 0 and d3 * d4 <= 0 and not (d1 == d2 == 0)
 
 
+def meet(s, t):
+    """The point where segments s and t cross, or None (parallel or apart)."""
+    (a, b), (c, d) = s, t
+    r = (b[0] - a[0], b[1] - a[1])
+    q = (d[0] - c[0], d[1] - c[1])
+    den = r[0] * q[1] - r[1] * q[0]
+    if abs(den) < 1e-12:
+        return None
+    t1 = ((c[0] - a[0]) * q[1] - (c[1] - a[1]) * q[0]) / den
+    t2 = ((c[0] - a[0]) * r[1] - (c[1] - a[1]) * r[0]) / den
+    if -1e-9 <= t1 <= 1 + 1e-9 and -1e-9 <= t2 <= 1 + 1e-9:
+        return (a[0] + r[0] * t1, a[1] + r[1] * t1)
+    return None
+
+
 def walkable(test, f, route, label, blocks=()):
-    """The route from the corridor to the door stays in the floor until it reaches the lining's
-    opening at the door, and no wall but the lining crosses it."""
+    """The route from the corridor to the door stays in the floor until its last leg, crosses the
+    lining only in a door's opening (PASS or more inside its edges), and no other wall, stair or
+    lift crosses it."""
     legs = list(zip(route, route[1:], strict=False))
     for k, leg in enumerate(legs):
         inside = rooms.clip(leg, inside=f["inside"])
@@ -61,14 +77,27 @@ def walkable(test, f, route, label, blocks=()):
         test.assertLess(math.dist(inside[0][0], leg[0]), 1e-6, label)
         if k < len(legs) - 1:
             test.assertLess(math.dist(inside[0][1], leg[1]), 1e-6, f"{label}: leaves the floor")
-    exit_ = rooms.clip(legs[-1], inside=f["inside"])[0][1]
     (lining,) = [w for w in f["walls"] if "lining" in w["name"]]
     gaps = [
         ((o["at"][0] + o["to"][0]) / 2, (o["at"][1] + o["to"][1]) / 2) for o in lining["openings"]
     ]
-    test.assertLess(
-        min(math.dist(exit_, g) for g in gaps), rough.ENTRANCE, f"{label}: misses the door"
-    )
+    path = [tuple(v[:2]) for v in lining["path"]]
+    hits = []  # where the walk crosses the lining: in a door's opening, clear of its edges
+    for leg in legs:
+        for a, b in zip(path, path[1:], strict=False):
+            x = meet(leg, (a, b))
+            if x is not None:
+                hits.append(x)
+    if not hits:  # a door set in from the outline: the walk ends at it, in the opening
+        test.assertLessEqual(
+            min(math.dist(route[-1], g) for g in gaps), rough.ENTRANCE / 2, f"{label}: no door"
+        )
+    for x in hits:
+        test.assertLessEqual(
+            min(math.dist(x, g) for g in gaps),
+            rough.ENTRANCE / 2 - rough.PASS + 1e-6,
+            f"{label}: crosses the lining outside its door's opening",
+        )
     for w, p in pieces(f):
         if "lining" in w["name"]:
             continue
@@ -282,7 +311,9 @@ class Options(unittest.TestCase):
         f = rough.floors(r)[0]
         walkable(self, f, route, "west door", f["blocks"])
 
-    def test_a_way_in_that_leaves_the_floor_is_refused(self):
+    def test_a_way_in_round_a_concave_bend_follows_the_floor(self):
+        # a U: the door is on the far wing's outer face, the corridor in the near wing; the
+        # straight line crosses the open bay between the wings
         u_shape = [[0, 0], [40, 0], [40, 40], [30, 40], [30, 10], [10, 10], [10, 40], [0, 40]]
         r = dict(
             BAR,
@@ -291,7 +322,89 @@ class Options(unittest.TestCase):
             cores=[dict(kind="stair", at=[5, 5])],
             entrances=[dict(at=[40.3, 35], level=1)],
         )
-        with self.assertRaisesRegex(ValueError, "leaves the floor"):
+        ((_level, route),) = rough.routes(r)
+        self.assertGreater(len(route), 3)  # round the bend's corners
+        f = rough.floors(r)[0]
+        walkable(self, f, route, "far wing door", f["blocks"])
+
+    def test_a_bent_way_in_crosses_the_lining_in_the_middle_of_its_door(self):
+        # the door is past the corridor's end and a little off its line: the straight walk would
+        # cross the lining 2 cm outside the opening
+        r = dict(
+            BAR,
+            spines=[[[15, 6.25], [45.2, 6.25]]],
+            cores=[dict(kind="stair", at=[20, 15])],
+            entrances=[dict(at=[50.2, -1], level=1)],
+        )
+        ((_level, route),) = rough.routes(r)
+        f = rough.floors(r)[0]
+        walkable(self, f, route, "south door", f["blocks"])
+        # the last leg runs square to the side through the opening's middle
+        (a, b) = route[-2], route[-1]
+        self.assertAlmostEqual(a[0], b[0], places=6)
+
+    def test_a_default_stair_steps_aside_from_a_door_at_the_corridor_end(self):
+        r = dict(BAR, entrances=[dict(at=[-0.5, 10], level=1)])
+        ((_level, route),) = rough.routes(r)
+        f = rough.floors(r)[0]
+        walkable(self, f, route, "west door", f["blocks"])
+        cores = [b["ring"] for b in f["blocks"]]
+        self.assertEqual(len(cores), 3)  # two stairs and the lift, none in another
+        for i, a in enumerate(cores):
+            for b in cores[i + 1 :]:
+                self.assertFalse(rough._overlap(a, b))
+
+    def test_a_stair_that_steps_aside_fits_every_level(self):
+        upper = [[0, 0], [60, 0], [60, 14.1], [0, 14.1]]
+        r = dict(
+            BAR,
+            levels=[*BAR["levels"][:2], dict(level=3, floor=108.0, outline=upper)],
+            entrances=[dict(at=[-0.5, 10], level=1)],
+        )
+        ((_level, route),) = rough.routes(r)
+        fs = rough.floors(r)
+        self.assertEqual(len(fs), 3)
+        walkable(self, fs[0], route, "west door", fs[0]["blocks"])
+
+    def test_a_door_on_its_corridor_needs_no_walk(self):
+        r = dict(
+            BAR,
+            spines=[[[0.475, 10], [59, 10]]],
+            cores=[dict(kind="stair", at=[20, 15])],
+            entrances=[dict(at=[0.475, 10], level=1)],
+        )
+        self.assertEqual(len(rough.floors(r)), 3)
+
+    def test_a_door_inside_a_stair_is_refused(self):
+        r = dict(
+            BAR,
+            spines=[[[0.6, 10], [59, 10]]],
+            cores=[dict(kind="stair", at=[3.5, 10])],
+            entrances=[dict(at=[0.6, 10], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "stands in a stair"):
+            rough.floors(r)
+
+    def test_default_stairs_of_two_close_corridors_step_apart(self):
+        r = dict(BAR, entrances=[], spines=[[[1, 8], [59, 8]], [[1, 10.9], [59, 10.9]]])
+        fs = rough.floors(r)
+        cores = [b["ring"] for b in fs[0]["blocks"]]
+        self.assertEqual(len(cores), 4)
+        for i, a in enumerate(cores):
+            for b in cores[i + 1 :]:
+                self.assertFalse(rough._overlap(a, b))
+
+    def test_overlapping_cores_are_refused(self):
+        # a narrow bar: the default stair finds no clear side and the lift stands in it
+        r = dict(
+            BAR,
+            outline=[[0, 0], [60, 0], [60, 9], [0, 9]],
+            entrances=[dict(at=[7, -0.5], level=1)],
+        )
+        with self.assertRaisesRegex(ValueError, "overlap"):
+            rough.floors(r)
+        r = dict(BAR, cores=[dict(kind="stair", at=[20, 15]), dict(kind="lift", at=[21, 15])])
+        with self.assertRaisesRegex(ValueError, "overlap"):
             rough.floors(r)
 
     def test_a_way_in_through_a_lift_is_refused(self):
