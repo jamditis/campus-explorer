@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { CANOPY, canopyUv, crownShare, crownNoise, NOISE_Q } from '../viewer/farview-math.js';
+import { CANOPY, canopyUv, crownShare, crownNoise, NOISE_Q, LANDMARKS, towerTop } from '../viewer/farview-math.js';
 
 test('the canopy box is canopy.json\'s Blender box in the viewer frame', () => {
   const meta = JSON.parse(readFileSync(new URL('../viewer/canopy.json', import.meta.url)));
@@ -28,4 +28,13 @@ test('the noise quantiles match the noise, and crowns over it cover the map\'s s
     assert.ok(Math.abs(near - cover) < 0.02, `cover ${cover}: crowns ${near.toFixed(3)}`);
     assert.equal(crownShare(cover, 0.3, 0), cover, 'far: the share itself');
   }
+});
+
+test('a tower top is the highest skyline point along its bearing', () => {
+  // three columns at bearings 120, 124.5 and 130 degrees, 17 km out
+  const col = (deg, h) => { const r = deg * Math.PI / 180; return [17000 * Math.sin(r), h, -17000 * Math.cos(r)]; };
+  const pos = new Float32Array([...col(120, 300), ...col(124.5, 0), ...col(124.5, 420), ...col(124.52, 380), ...col(130, 500)]);
+  assert.deepEqual([...towerTop(pos, 124.5)].map(v => Math.round(v)), col(124.5, 420).map(v => Math.round(v)));
+  assert.equal(towerTop(pos, 140), null);
+  for (const l of LANDMARKS) assert.ok(l.name && l.lat > 40.7 && l.lat < 40.8 && l.lon > -74.1 && l.lon < -73.9 && l.color.length === 3);
 });

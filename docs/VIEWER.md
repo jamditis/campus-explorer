@@ -333,13 +333,23 @@ following the camera; a still view is not redrawn.
   formula. Its dark patches are a rough sketch of the maria (UNVERIFIED shapes). By day only its lit part shows,
   pale. It brightens the night sky with its lit fraction (`look.setMoon`).
 - **Light dome** (`look.js`, the sky shader). The night sky over Montclair is never black: a warm glow low in every
-  direction, strongest toward Midtown Manhattan (bearing 124 degrees), over a dark blue zenith. UNVERIFIED colours and
+  direction over a dark blue zenith, in two lobes: wide and strongest toward Midtown Manhattan (bearing 124 degrees),
+  weaker toward Newark and its airport (168 degrees), standing higher over the cities. UNVERIFIED colours and
   strengths, set by eye. The environment sky has it too, so night reflections and the haze colour follow.
-- **City lights.** After dark the far houses (`far_houses.glb`, the house proxies in `context.glb`) show lit windows
-  on their walls (3 m bays, 2.8 m storeys, one in four lit) and the skyline stand-in a lit speckle of about a pixel
-  per cell (0.04 degrees of bearing by 12 m), each taking the cell's mean where a pixel covers many, so they do not
-  flicker. Which windows are lit is a hash of position, as for the fake rooms behind campus windows: a pattern, not
-  data. They are the materials' own shaders, no extra draw.
+- **City lights.** The far houses (`far_houses.glb`, the house proxies in `context.glb`) light windows on their walls
+  (3 m bays, 2.8 m storeys) one by one as it gets dark, up to one in four, from the sun 2 degrees up to 6 down. The
+  skyline stand-in has windows in cells of about a pixel (0.04 degrees of bearing by 12 m) grouped in towers of 0.15
+  degrees (50 m at 20 km), each tower lit more or less and its windows warm or cool; where a pixel covers many cells
+  it takes their mean, so the speckle does not flicker and the towers' differences stay. Which windows are lit is a
+  hash of position, as for the fake rooms behind campus windows: a pattern, not data. The materials' own shaders,
+  no extra draw.
+- **Tower tops.** The Empire State Building, One World Trade Center and the Chrysler Building (`LANDMARKS` in
+  `viewer/farview-math.js`) get a lit top: one sprite each at the highest point of the skyline stand-in along the
+  landmark's bearing (`towerTop`), shown with the city lights. One draw. UNVERIFIED colours (the Empire State
+  Building's change for events).
+- **Sunset glint.** With the sun under 10 degrees and west of the campus, one tower in three in the skyline blazes
+  in the sun's colour, in window rows: the stand-in faces the campus, so its west faces mirror a low western sun
+  toward it.
 
 ## Moving to a place
 

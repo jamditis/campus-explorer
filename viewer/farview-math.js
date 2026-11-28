@@ -53,3 +53,27 @@ export function crownShare(cover, n, detail) {
   const s = 0.02, x = Math.min(1, Math.max(0, (n - noiseQuantile(1 - cover) + s) / (2 * s)));
   return x * x * (3 - 2 * x) * detail + cover * (1 - detail);
 }
+
+/**
+ * Lit tower tops on the skyline after dark: real landmarks whose tops are lit every night. Colours are a plain
+ * white or warm white (UNVERIFIED: the Empire State Building's lights change colour for events).
+ */
+export const LANDMARKS = [
+  { name: 'Empire State Building', lat: 40.74844, lon: -73.98566, color: [1, 0.93, 0.8] },
+  { name: 'One World Trade Center', lat: 40.71274, lon: -74.01338, color: [0.95, 0.97, 1] },
+  { name: 'Chrysler Building', lat: 40.75162, lon: -73.97545, color: [0.95, 0.95, 1] },
+];
+
+/**
+ * The highest point of the skyline stand-in within `tolDeg` of a bearing seen from the campus origin, from its
+ * world positions (x, y, z, ...): where a tower's top light goes. Bearing in degrees, grid (atan2(x, -z)).
+ * @returns {number[]|null} [x, y, z]
+ */
+export function towerTop(pos, bearingDeg, tolDeg = 0.06) {
+  let best = -1, top = -Infinity;
+  for (let i = 0; i < pos.length; i += 3) {
+    const b = Math.atan2(pos[i], -pos[i + 2]) * 180 / Math.PI;
+    if (Math.abs(((b - bearingDeg + 540) % 360) - 180) <= tolDeg && pos[i + 1] > top) { top = pos[i + 1]; best = i; }
+  }
+  return best < 0 ? null : [pos[best], pos[best + 1], pos[best + 2]];
+}
