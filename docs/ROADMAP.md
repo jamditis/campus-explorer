@@ -10,7 +10,6 @@ What the browser viewer at <https://jamditis.github.io/campus-explorer/> still n
 - [x] Sun shadows that follow the view (shadow box sized to view distance, texel-snapped)
 - [x] ACES filmic tone mapping and light exponential fog
 - [x] Sunlight from the real solar position for any date and time; lamps glow after dark
-- [x] Night sky: the bright stars and the moon (with its phase) at their real positions for the time shown, the glow of the New York area's lights, and lit windows on the far houses and the skyline (docs/VIEWER.md "Night sky")
 - [x] Ambient occlusion (GTAO) on the High quality setting
 - [x] World-space CC0 textures per material category (asphalt, concrete, brick, stucco, roof tile, pavers, lawn, mulch, gravel, stone, metal, wood), tinted by the model's own colours, with a second large-scale layer to hide tiling
 - [x] Lot markings painted into the asphalt from the model's own world-XY line work (ws211c, ws213, ws213z layers)
