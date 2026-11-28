@@ -34,6 +34,7 @@ export function createScenery(app) {
       o.geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
       // lifted to the campus lawn's brightness so the modelled ground does not end in a hard tonal edge
       o.material = new THREE.MeshStandardMaterial({ map: tex, color: new THREE.Color(1.35, 1.35, 1.28), roughness: 0.95, envMapIntensity: 0.3 });
+      app.look.canopy(o.material); // tree cover from the canopy map over the land cover
     });
   }
 
