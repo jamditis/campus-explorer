@@ -32,7 +32,9 @@ export function createFollow(app) {
   const track = createTrack();
   let active = false, starting = false, shown = false, gen = 0, watch = null, placing = false, placed = false, accuracy = 0;
   let heading = null, pitch = null, wantHeading = null, wantPitch = 0, offset = null, lastOrient = 0;
-  const orientEvent = 'ondeviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation';
+  // Android Chrome sends absolute readings on deviceorientationabsolute, and on deviceorientation with
+  // absolute true when it has no relative sensor; iOS sends relative ones with webkitCompassHeading. Listen to both.
+  const ORIENT = ['deviceorientationabsolute', 'deviceorientation'];
 
   const say = text => { info.textContent = text; };
 
@@ -121,7 +123,7 @@ export function createFollow(app) {
     button.setAttribute('aria-pressed', 'true'); button.classList.add('on');
     label.textContent = 'Following you'; note.textContent = 'Tap to stop';
     say('Finding you…');
-    addEventListener(orientEvent, onOrient);
+    for (const t of ORIENT) addEventListener(t, onOrient);
     watch = navigator.geolocation.watchPosition(onFix, onError, { enableHighAccuracy: true, maximumAge: 1000, timeout: 20000 });
   }
 
@@ -130,7 +132,7 @@ export function createFollow(app) {
     if (placing) { player.cancelMove(); placing = false; }
     if (watch !== null) navigator.geolocation.clearWatch(watch);
     watch = null; active = false; placed = false; track.reset();
-    removeEventListener(orientEvent, onOrient);
+    for (const t of ORIENT) removeEventListener(t, onOrient);
     player.guide = null; ring.visible = false;
     button.setAttribute('aria-pressed', 'false'); button.classList.remove('on');
     label.textContent = 'Use my location'; note.textContent = 'Stays on this device';
