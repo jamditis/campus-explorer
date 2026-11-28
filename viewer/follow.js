@@ -120,7 +120,13 @@ export function createFollow(app) {
   }
 
   button.onclick = () => (active ? stop() : start());
-  app.on('mode', ({ mode }) => { box.hidden = mode !== 'walk'; if (mode !== 'walk' && active) stop(); });
+  // sit under the header, whose height changes with the screen width (it wraps on a phone)
+  function placeBox() {
+    const bottom = document.getElementById('top')?.getBoundingClientRect().bottom ?? 0;
+    box.style.top = `${Math.round(Math.max(0, bottom)) + 8}px`;
+  }
+  app.on('resize', placeBox);
+  app.on('mode', ({ mode }) => { box.hidden = mode !== 'walk'; placeBox(); if (mode !== 'walk' && active) stop(); });
 
   app.on('frame', ({ dt }) => {
     if (!active || !placed || !player.guide) return;
